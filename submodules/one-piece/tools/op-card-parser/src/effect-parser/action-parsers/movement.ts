@@ -1,5 +1,6 @@
 import type { Action, TargetFilter, Zone } from "@tcg/op-types";
 import {
+  combineTargetGroups,
   parseTarget,
   parseTargetWithoutPlayer,
   extractTargetFilters,
@@ -76,7 +77,7 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
 
   const upTo = !!m[1];
   const amount = parseInt(m[2]!, 10);
-  const filterText = m[3]!;
+  const filterText = m[3]!.replace(/^of\s+your\s+/i, "");
 
   // Parse card name filter: [Name] or "Name"
   const nameMatch = /^\[([^\]]+)\]$|^[""\u201c]([^""\u201d]+)[""\u201d]$/i.exec(filterText);
@@ -117,7 +118,7 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
       if (multiTraitCatMatch) {
         const traitFilter = traitAlternativesFilter(
           [multiTraitCatMatch[1]!, multiTraitCatMatch[2]!],
-          "includes",
+          "ordinary",
         );
         if (traitFilter) filters.push(traitFilter);
         filters.push({
@@ -147,7 +148,7 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
           filters.push({
             filter: "trait",
             value: traitCatMatch[1]!,
-            match: "includes",
+            match: "exact",
           });
           filters.push({
             filter: "cardCategory",
@@ -175,7 +176,7 @@ export function parseAddFromTrashToHandAction(text: string): ReturnToHandAction 
             filters.push({
               filter: "trait",
               value: traitOnlyMatch[1]!,
-              match: "includes",
+              match: "exact",
             });
             if (traitOnlyMatch[2]) {
               let restText = traitOnlyMatch[2];
@@ -248,10 +249,9 @@ export function parseCompoundReturnToHand(text: string): Action[] | null {
   const target2 = parseTarget(match[2]!) ?? parseTargetWithoutPlayer(match[2]!);
   if (!target1 || !target2) return null;
 
-  return [
-    { action: "returnToHand", target: target1 },
-    { action: "returnToHand", target: target2 },
-  ];
+  const targetGroups = [target1, target2];
+  const target = combineTargetGroups(targetGroups);
+  return target ? [{ action: "returnToHand", target, targetGroups }] : null;
 }
 
 // ── ReturnToDeck action parsing ──
@@ -261,6 +261,16 @@ export function parseCompoundReturnToHand(text: string): Action[] | null {
  */
 export function parseReturnToDeckAction(text: string): ReturnToDeckAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const revealed =
+    /^place\s+the\s+revealed\s+card\s+at\s+the\s+(top|bottom)\s+of\s+your\s+deck$/i.exec(trimmed);
+  if (revealed) {
+    return {
+      action: "returnToDeck",
+      target: { player: "self", zones: ["hand"], count: { amount: 1 } },
+      position: revealed[1]!.toLowerCase() as "top" | "bottom",
+      costPaymentTargets: true,
+    };
+  }
   const inAnyOrder = /\s+in\s+any\s+order$/i.test(trimmed);
 
   const opponentPlacesTypedTrashMatch =
@@ -427,10 +437,9 @@ export function parseCompoundReturnToDeck(text: string): Action[] | null {
   if (!target1 || !target2) return null;
 
   const position = match[3]!.toLowerCase() as "top" | "bottom";
-  return [
-    { action: "returnToDeck", target: target1, position },
-    { action: "returnToDeck", target: target2, position },
-  ];
+  const targetGroups = [target1, target2];
+  const target = combineTargetGroups(targetGroups);
+  return target ? [{ action: "returnToDeck", target, targetGroups, position }] : null;
 }
 
 // ── PlaceFromHandToDeck action parsing ──

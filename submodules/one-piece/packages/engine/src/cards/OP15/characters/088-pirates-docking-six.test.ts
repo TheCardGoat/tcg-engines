@@ -10,7 +10,7 @@ describe("OP15-088 Pirates Docking Six", () => {
       {
         hand: [op15PiratesDockingSix088],
         trash: [op15RoronoaZoro094],
-        activeDon: 12,
+        activeDon: 5,
         deck: 6,
       },
       {},
@@ -32,20 +32,21 @@ describe("OP15-088 Pirates Docking Six", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("costs 11 with the +6 cost modifier", () => {
+  test("costs 5 in hand and gains +6 cost only on the field", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: [op15PiratesDockingSix088], activeDon: 11 },
+      { hand: [op15PiratesDockingSix088], activeDon: 5 },
       {},
     );
 
     engine.playCard("OP15-088");
 
     expect(engine.getView("south").players.south.activeDon).toBe(0);
+    expect(engine.getView("south").players.south.characters[0]?.cost).toBe(11);
   });
 
   test("[On Play] may be declined", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: ["OP15-088"], activeDon: 12 },
+      { hand: ["OP15-088"], activeDon: 5 },
       { character: ["OP13-013"], activeDon: 5 },
     );
 
@@ -61,7 +62,7 @@ describe("OP15-088 Pirates Docking Six", () => {
   test("[On Play] decline path (subject-bound)", () => {
     const docking = "OP15-088";
     const engine = OnePieceTestEngine.create(
-      { hand: [docking], activeDon: 12 },
+      { hand: [docking], activeDon: 5 },
       { character: ["OP13-013"], activeDon: 5 },
     );
     const before = engine.getView("south").players.south;

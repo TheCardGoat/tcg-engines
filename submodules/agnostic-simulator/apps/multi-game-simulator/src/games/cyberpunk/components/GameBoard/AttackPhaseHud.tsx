@@ -1,9 +1,10 @@
+import { getVisibleAttackStep, type VisibleAttackStep } from "../../engine/attackPresentation";
 import type { ReactNode } from "react";
 import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
 import { useAttackSelection } from "./useAttackSelection";
 import { useCardPreview } from "../CardPreview/CardPreviewContext";
 import { useCardView, type ZoneCardView } from "../../engine/zoneViews";
-import { PLAYER_SIDE_TO_ID, useEngine, type MoveLogEntry } from "../../engine";
+import { PLAYER_SIDE_TO_ID, useEngine } from "../../engine";
 import {
   collectPendingAttackTriggerSummaries,
   type AttackTriggerSummary,
@@ -14,7 +15,6 @@ interface AttackPhaseHudProps {
   compact?: boolean;
 }
 
-type VisibleAttackStep = "attack" | "react" | "fight" | "steal";
 type VisibleAttackKind = "fight" | "direct";
 
 interface AttackCueText {
@@ -123,32 +123,6 @@ export function AttackPhaseHud({ compact = false }: AttackPhaseHudProps) {
   );
 }
 
-function getVisibleAttackStep(
-  attack: {
-    attackerId?: unknown;
-    defenderId?: unknown;
-    kind?: string;
-    step?: string;
-  } | null,
-  moveLogs: ReadonlyArray<MoveLogEntry>,
-): VisibleAttackStep | undefined {
-  const step = attack?.step;
-  if (!attack || step !== "attack" || attack.kind !== "fight") {
-    return isVisibleAttackStep(step) ? step : undefined;
-  }
-
-  const wasRedirectedByBlocker = moveLogs.some((entry) => {
-    const log = entry.log;
-    return (
-      log.type === "useBlocker" &&
-      String(log.attackerId) === String(attack.attackerId) &&
-      String(log.blockerId) === String(attack.defenderId)
-    );
-  });
-
-  return wasRedirectedByBlocker ? "react" : step;
-}
-
 function getVisibleAttackTriggers(
   matchState: ReturnType<typeof useEngine>["matchState"],
 ): PendingAttackTriggerSummary[] {
@@ -162,10 +136,6 @@ function getVisibleAttackTriggers(
     }));
   }
   return collectPendingAttackTriggerSummaries(matchState);
-}
-
-function isVisibleAttackStep(step: string | undefined): step is VisibleAttackStep {
-  return step === "attack" || step === "react" || step === "fight" || step === "steal";
 }
 
 function renderCombatLine({

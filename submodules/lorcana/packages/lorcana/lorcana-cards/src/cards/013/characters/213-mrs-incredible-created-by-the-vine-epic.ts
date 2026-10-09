@@ -23,7 +23,7 @@ export const mrsIncredibleCreatedByTheVineEpic: CharacterCard = {
   franchise: "Incredibles",
   set: "013",
   cardNumber: 213,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 4,
@@ -32,12 +32,13 @@ export const mrsIncredibleCreatedByTheVineEpic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_da620721c46c4391ba18edcc056bb599",
+    tcgPlayer: "704573",
   },
   text: [
     {
       title: "TORRENT",
       description:
-        "Whenever one of your Floodborn characters quests, you pay 1{I} less for the next character you shift this turn.",
+        "Whenever one of your Floodborn characters quests, you pay 1 {I} less for the next character you shift this turn.",
     },
   ],
   classifications: ["Floodborn", "Super", "Vineling"],

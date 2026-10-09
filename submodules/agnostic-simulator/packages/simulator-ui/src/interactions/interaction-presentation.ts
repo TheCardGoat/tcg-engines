@@ -1,3 +1,4 @@
+import { inputAllowsOmission } from "@tcg/protocol";
 import type {
   InteractionAction,
   InteractionInput,
@@ -48,16 +49,19 @@ function humanizeInteractionKey(key: string): string {
 export function interactionBoundsCopy(
   input: Pick<InteractionResolutionRequirement, "min" | "max" | "required">,
   noun = "target",
+  options: { readonly includeStatus?: boolean } = {},
 ): string {
   const min = input.min;
   const max = input.max;
   const plural = max === 1 ? noun : `${noun}s`;
   const prefix = input.required ? "Required" : "Optional";
 
+  const status = options.includeStatus === false ? "" : `${prefix} · `;
+
   if (min === undefined || max === undefined) return prefix;
-  if (min === 0) return `${prefix} · Choose up to ${max} ${plural}`;
-  if (min === max) return `${prefix} · Choose exactly ${min} ${plural}`;
-  return `${prefix} · Choose ${min}–${max} ${plural}`;
+  if (min === 0) return `${status}Choose up to ${max} ${plural}`;
+  if (min === max) return `${status}Choose exactly ${min} ${plural}`;
+  return `${status}Choose ${min}–${max} ${plural}`;
 }
 
 export function requirementFromInput(input: InteractionInput): InteractionResolutionRequirement {
@@ -160,6 +164,12 @@ export function currentActionableInput(
   const inputs = activeActionableInputs(action, values);
   for (const input of inputs) {
     const value = values[input.id];
+    if (
+      value === undefined &&
+      confirmedInputIds.has(input.id) &&
+      inputAllowsOmission(input, values)
+    )
+      continue;
     if (!interactionInputComplete(input, value)) return input;
     if (!interactionInputAdvancesImmediately(input) && !confirmedInputIds.has(input.id))
       return input;

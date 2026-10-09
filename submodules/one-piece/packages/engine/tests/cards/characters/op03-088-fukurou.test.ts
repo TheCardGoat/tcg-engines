@@ -26,7 +26,7 @@ describe("OP03-088 Fukurou", () => {
     );
   });
 
-  test("cannot be K.O.'d by an opponent effect", () => {
+  test("can be selected by an opponent K.O. effect but survives", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [
@@ -46,13 +46,15 @@ describe("OP03-088 Fukurou", () => {
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected Chew's K.O. target.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(fukurouId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "north");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(fukurouId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [fukurouId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === fukurouId)).toBe(true);
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(fukurouId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.south.characters.some((card) => card?.instanceId === eligibleId)).toBe(
+      true,
+    );
     expect(view.prompts).toHaveLength(0);
   });
 });

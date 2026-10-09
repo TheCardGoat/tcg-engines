@@ -31,7 +31,7 @@ describe("Grinding Gears (EVO070) AAA", () => {
     game.untilIdle();
     Teklo.activate(grindingGearsBlue);
     game.untilIdle({ entityTargets: "pause" });
-    Teklo.targetRequired(Bravo.cardsIn("deck", snatchRed)[0]!);
+    Teklo.targetRequired(Bravo);
     game.untilIdle();
 
     expectFabCard(Bravo, snatchRed).toBeIn("graveyard");

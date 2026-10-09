@@ -38,6 +38,7 @@ export const op03RobLucci076: LeaderCard = {
     effects: [
       {
         trigger: "whenCharacterKod",
+        eventFilter: { player: "opponent" },
         conditions: [
           {
             condition: "turn",

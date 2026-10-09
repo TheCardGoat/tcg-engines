@@ -27,6 +27,7 @@ export const windstorm: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d64d3fddaf584da990cbcf6a1f9a5ff7",
+    tcgPlayer: "704695",
   },
   text: "Deal 1 damage to each opposing character and location. Then, deal 2 damage to each opposing character with Evasive and each opposing location with Evasive.",
   abilities: [

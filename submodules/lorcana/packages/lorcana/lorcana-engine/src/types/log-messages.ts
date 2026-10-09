@@ -181,8 +181,16 @@ export interface ResolveDiscardChoiceLogValues {
   targets: LogTargetId[];
 }
 
+export interface ResolveDiscardChoiceNamedLogValues extends ResolveDiscardChoiceLogValues {
+  abilityName: string;
+}
+
 export interface ResolveTargetSelectionLogValues extends ResolveDiscardChoiceLogValues {
   effectType?: string;
+}
+
+export interface ResolveTargetSelectionNamedLogValues extends ResolveTargetSelectionLogValues {
+  abilityName: string;
 }
 
 export interface ResolveChoiceSelectionLogValues {
@@ -195,6 +203,10 @@ export interface ResolveChoiceSelectionLogValues {
 export interface ResolveOptionalSelectionLogValues {
   playerId: PlayerId;
   sourceCardId: CardInstanceId;
+}
+
+export interface ResolveOptionalSelectionNamedLogValues extends ResolveOptionalSelectionLogValues {
+  abilityName: string;
 }
 
 export interface ResolveOptionalSelectionTargetsLogValues extends ResolveOptionalSelectionLogValues {
@@ -280,6 +292,12 @@ export interface MovedDamageLogValues {
   amount: number;
 }
 
+export interface RemovedDamageLogValues {
+  playerId: PlayerId;
+  targetId: CardInstanceId;
+  amount: number;
+}
+
 export interface PreventedDamageLogValues {
   playerId: PlayerId;
   targetId: CardInstanceId;
@@ -349,6 +367,22 @@ export interface LocationLoreGainedLogValues {
 export interface LoreLostLogValues {
   playerId: PlayerId;
   amount: number;
+}
+
+export interface InkDropsGainedLogValues {
+  playerId: PlayerId;
+  amount: number;
+}
+
+export interface InkDropsRemovedLogValues {
+  playerId: PlayerId;
+  amount: number;
+}
+
+export interface TriggeredAbilitySkippedLogValues {
+  playerId: PlayerId;
+  sourceCardId: CardInstanceId;
+  abilityName: string;
 }
 
 export interface OutcomeCardExertedLogValues {
@@ -441,21 +475,54 @@ export interface LorcanaLogMessageMap {
   "lorcana.bag.resolve.cancelled.named": ResolveBagCancelledNamedLogValues;
   "lorcana.effect.cancelled": EffectCancelledLogValues;
   "lorcana.effect.resolve.discardChoice": ResolveDiscardChoiceLogValues;
+  "lorcana.effect.resolve.discardChoice.named": ResolveDiscardChoiceNamedLogValues;
   "lorcana.effect.resolve.targetSelection": ResolveTargetSelectionLogValues;
+  "lorcana.effect.resolve.targetSelection.named": ResolveTargetSelectionNamedLogValues;
   "lorcana.effect.resolve.choiceSelection": ResolveChoiceSelectionLogValues;
   "lorcana.effect.resolve.optionalSelection.accepted": ResolveOptionalSelectionLogValues;
+  "lorcana.effect.resolve.optionalSelection.accepted.named": ResolveOptionalSelectionNamedLogValues;
   "lorcana.effect.resolve.optionalSelection.accepted.targets": ResolveOptionalSelectionTargetsLogValues;
   "lorcana.effect.resolve.optionalSelection.accepted.targets.named": ResolveOptionalSelectionTargetsNamedLogValues;
+  "lorcana.effect.resolve.optionalSelection.freePlay.named": ResolveOptionalSelectionTargetsNamedLogValues;
   "lorcana.effect.resolve.optionalSelection.rejected": ResolveOptionalSelectionLogValues;
+  "lorcana.effect.resolve.optionalSelection.rejected.named": ResolveOptionalSelectionNamedLogValues;
   "lorcana.effect.resolve.nameCardSelection": ResolveNameCardSelectionLogValues;
   "lorcana.effect.resolve.scrySelection": ResolveScrySelectionLogValues;
   "lorcana.effect.resolve.scrySelection.detail": ResolveScrySelectionDetailLogValues;
+  "lorcana.outcome.strengthModified": {
+    sourceId: CardInstanceId;
+    targetId: CardInstanceId;
+    modifier: number;
+  };
+  "lorcana.outcome.loreModifiedThisTurn": {
+    sourceId: CardInstanceId;
+    targetId: CardInstanceId;
+    modifier: number;
+  };
+  "lorcana.outcome.singingBlockedUntilNextStart": {
+    sourceId: CardInstanceId;
+    targetId: CardInstanceId;
+    playerId: PlayerId;
+  };
+  "lorcana.outcome.nextStartReadyBlocked": {
+    sourceId: CardInstanceId;
+    targetId: CardInstanceId;
+  };
+  "lorcana.outcome.keywordGranted": {
+    sourceId: CardInstanceId;
+    targetId: CardInstanceId;
+    keyword: string;
+  };
+  "lorcana.outcome.revealedCard": { playerId: PlayerId; revealedCardId: CardInstanceId };
   "lorcana.effect.resolve.revealTopCard": RevealTopCardLogValues;
   "lorcana.effect.resolve.revealTopCard.autoBottom": RevealTopCardAutoBottomLogValues;
   "lorcana.effect.resolve.choiceSelection.withReveal": ResolveChoiceWithRevealLogValues;
   "lorcana.outcome.combatDamage": CombatDamageLogValues;
+  "lorcana.outcome.entryDamage": EffectDamageLogValues;
   "lorcana.outcome.effectDamage": EffectDamageLogValues;
+  "lorcana.outcome.damagePut": EffectDamageLogValues;
   "lorcana.outcome.damageMoved": MovedDamageLogValues;
+  "lorcana.outcome.damageRemoved": RemovedDamageLogValues;
   "lorcana.outcome.damagePrevented": PreventedDamageLogValues;
   "lorcana.outcome.cardBanished": CardBanishedLogValues;
   "lorcana.outcome.cardsDrawn": CardsDrawnLogValues;
@@ -463,8 +530,12 @@ export interface LorcanaLogMessageMap {
   "lorcana.outcome.cardsDiscarded.detail": CardsDiscardedDetailLogValues;
   "lorcana.outcome.cardReturnedToHand": CardReturnedToHandLogValues;
   "lorcana.outcome.loreGained": LoreGainedLogValues;
+  "lorcana.outcome.revealedCardToHand": RevealTopCardAutoBottomLogValues;
   "lorcana.outcome.locationLoreGained": LocationLoreGainedLogValues;
   "lorcana.outcome.loreLost": LoreLostLogValues;
+  "lorcana.outcome.inkDropsGained": InkDropsGainedLogValues;
+  "lorcana.outcome.inkDropsRemoved": InkDropsRemovedLogValues;
+  "lorcana.outcome.triggeredAbilitySkipped": TriggeredAbilitySkippedLogValues;
   "lorcana.outcome.cardExerted": OutcomeCardExertedLogValues;
   "lorcana.outcome.inkwellCardsExerted": OutcomeInkwellCardsExertedLogValues;
   "lorcana.outcome.cardReadied": OutcomeCardReadiedLogValues;
@@ -473,6 +544,8 @@ export interface LorcanaLogMessageMap {
   "lorcana.outcome.cardsPutOnBottom": CardsPutOnBottomLogValues;
   "lorcana.move.playCard.shift": PlayCardShiftLogValues;
   "lorcana.move.playCard.sing": PlayCardSingLogValues;
+  "lorcana.outcome.privateCardInked": { playerId: PlayerId };
+  "lorcana.outcome.privateCardInkedExerted": { playerId: PlayerId };
   "lorcana.outcome.cardInked": OutcomeCardInkedLogValues;
   "lorcana.outcome.cardInkedExerted": OutcomeCardInkedExertedLogValues;
   "lorcana.private.cardsDrawn.detail": PrivateCardsDrawnDetailLogValues;
@@ -527,13 +600,18 @@ export type ActionLogMessageKey =
   | "lorcana.bag.resolve.cancelled.named"
   | "lorcana.effect.cancelled"
   | "lorcana.effect.resolve.discardChoice"
+  | "lorcana.effect.resolve.discardChoice.named"
   | "lorcana.effect.resolve.targetSelection"
+  | "lorcana.effect.resolve.targetSelection.named"
   | "lorcana.effect.resolve.choiceSelection"
   | "lorcana.effect.resolve.choiceSelection.withReveal"
   | "lorcana.effect.resolve.optionalSelection.accepted"
+  | "lorcana.effect.resolve.optionalSelection.accepted.named"
   | "lorcana.effect.resolve.optionalSelection.accepted.targets"
   | "lorcana.effect.resolve.optionalSelection.accepted.targets.named"
+  | "lorcana.effect.resolve.optionalSelection.freePlay.named"
   | "lorcana.effect.resolve.optionalSelection.rejected"
+  | "lorcana.effect.resolve.optionalSelection.rejected.named"
   | "lorcana.effect.resolve.nameCardSelection"
   | "lorcana.effect.resolve.scrySelection"
   | "lorcana.effect.resolve.scrySelection.detail"
@@ -594,27 +672,44 @@ export const LORCANA_LOG_TRANSLATION_KEYS = {
   "lorcana.bag.resolve.cancelled.named": "lorcana.bag.resolve.cancelled.named",
   "lorcana.effect.cancelled": "lorcana.effect.cancelled",
   "lorcana.effect.resolve.discardChoice": "lorcana.effect.resolve.discardChoice",
+  "lorcana.effect.resolve.discardChoice.named": "lorcana.effect.resolve.discardChoice.named",
   "lorcana.effect.resolve.targetSelection": "lorcana.effect.resolve.targetSelection",
+  "lorcana.effect.resolve.targetSelection.named": "lorcana.effect.resolve.targetSelection.named",
   "lorcana.effect.resolve.choiceSelection": "lorcana.effect.resolve.choiceSelection",
   "lorcana.effect.resolve.optionalSelection.accepted":
     "lorcana.effect.resolve.optionalSelection.accepted",
+  "lorcana.effect.resolve.optionalSelection.accepted.named":
+    "lorcana.effect.resolve.optionalSelection.accepted.named",
   "lorcana.effect.resolve.optionalSelection.accepted.targets":
     "lorcana.effect.resolve.optionalSelection.accepted.targets",
   "lorcana.effect.resolve.optionalSelection.accepted.targets.named":
     "lorcana.effect.resolve.optionalSelection.accepted.targets.named",
+  "lorcana.effect.resolve.optionalSelection.freePlay.named":
+    "lorcana.effect.resolve.optionalSelection.freePlay.named",
   "lorcana.effect.resolve.optionalSelection.rejected":
     "lorcana.effect.resolve.optionalSelection.rejected",
+  "lorcana.effect.resolve.optionalSelection.rejected.named":
+    "lorcana.effect.resolve.optionalSelection.rejected.named",
   "lorcana.effect.resolve.nameCardSelection": "lorcana.effect.resolve.nameCardSelection",
   "lorcana.effect.resolve.scrySelection": "lorcana.effect.resolve.scrySelection",
   "lorcana.effect.resolve.scrySelection.detail": "lorcana.effect.resolve.scrySelection.detail",
+  "lorcana.outcome.strengthModified": "lorcana.outcome.strengthModified",
+  "lorcana.outcome.loreModifiedThisTurn": "lorcana.outcome.loreModifiedThisTurn",
+  "lorcana.outcome.singingBlockedUntilNextStart": "lorcana.outcome.singingBlockedUntilNextStart",
+  "lorcana.outcome.nextStartReadyBlocked": "lorcana.outcome.nextStartReadyBlocked",
+  "lorcana.outcome.keywordGranted": "lorcana.outcome.keywordGranted",
+  "lorcana.outcome.revealedCard": "lorcana.outcome.revealedCard",
   "lorcana.effect.resolve.revealTopCard": "lorcana.effect.resolve.revealTopCard",
   "lorcana.effect.resolve.revealTopCard.autoBottom":
     "lorcana.effect.resolve.revealTopCard.autoBottom",
   "lorcana.effect.resolve.choiceSelection.withReveal":
     "lorcana.effect.resolve.choiceSelection.withReveal",
   "lorcana.outcome.combatDamage": "lorcana.outcome.combatDamage",
+  "lorcana.outcome.entryDamage": "lorcana.outcome.entryDamage",
   "lorcana.outcome.effectDamage": "lorcana.outcome.effectDamage",
+  "lorcana.outcome.damagePut": "lorcana.outcome.damagePut",
   "lorcana.outcome.damageMoved": "lorcana.outcome.damageMoved",
+  "lorcana.outcome.damageRemoved": "lorcana.outcome.damageRemoved",
   "lorcana.outcome.damagePrevented": "lorcana.outcome.damagePrevented",
   "lorcana.outcome.cardBanished": "lorcana.outcome.cardBanished",
   "lorcana.outcome.cardsDrawn": "lorcana.outcome.cardsDrawn",
@@ -622,8 +717,12 @@ export const LORCANA_LOG_TRANSLATION_KEYS = {
   "lorcana.outcome.cardsDiscarded.detail": "lorcana.outcome.cardsDiscarded.detail",
   "lorcana.outcome.cardReturnedToHand": "lorcana.outcome.cardReturnedToHand",
   "lorcana.outcome.loreGained": "lorcana.outcome.loreGained",
+  "lorcana.outcome.revealedCardToHand": "lorcana.outcome.revealedCardToHand",
   "lorcana.outcome.locationLoreGained": "lorcana.outcome.locationLoreGained",
   "lorcana.outcome.loreLost": "lorcana.outcome.loreLost",
+  "lorcana.outcome.inkDropsGained": "lorcana.outcome.inkDropsGained",
+  "lorcana.outcome.inkDropsRemoved": "lorcana.outcome.inkDropsRemoved",
+  "lorcana.outcome.triggeredAbilitySkipped": "lorcana.outcome.triggeredAbilitySkipped",
   "lorcana.outcome.cardExerted": "lorcana.outcome.cardExerted",
   "lorcana.outcome.inkwellCardsExerted": "lorcana.outcome.inkwellCardsExerted",
   "lorcana.outcome.cardReadied": "lorcana.outcome.cardReadied",
@@ -632,6 +731,8 @@ export const LORCANA_LOG_TRANSLATION_KEYS = {
   "lorcana.outcome.cardsPutOnBottom": "lorcana.outcome.cardsPutOnBottom",
   "lorcana.move.playCard.shift": "lorcana.move.playCard.shift",
   "lorcana.move.playCard.sing": "lorcana.move.playCard.sing",
+  "lorcana.outcome.privateCardInked": "lorcana.outcome.privateCardInked",
+  "lorcana.outcome.privateCardInkedExerted": "lorcana.outcome.privateCardInkedExerted",
   "lorcana.outcome.cardInked": "lorcana.outcome.cardInked",
   "lorcana.outcome.cardInkedExerted": "lorcana.outcome.cardInkedExerted",
   "lorcana.private.cardsDrawn.detail": "lorcana.private.cardsDrawn.detail",
@@ -679,19 +780,34 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
   "lorcana.bag.resolve.cancelled.named": ["sourceId", "abilityName", "cause"],
   "lorcana.effect.cancelled": ["sourceCardId", "cause"],
   "lorcana.effect.resolve.discardChoice": ["sourceCardId", "targets"],
+  "lorcana.effect.resolve.discardChoice.named": ["sourceCardId", "targets", "abilityName"],
   "lorcana.effect.resolve.targetSelection": ["sourceCardId", "targets"],
+  "lorcana.effect.resolve.targetSelection.named": ["sourceCardId", "abilityName", "targets"],
   "lorcana.effect.resolve.choiceSelection": ["sourceCardId", "choiceIndex"],
   "lorcana.effect.resolve.optionalSelection.accepted": ["sourceCardId"],
+  "lorcana.effect.resolve.optionalSelection.accepted.named": ["sourceCardId", "abilityName"],
   "lorcana.effect.resolve.optionalSelection.accepted.targets": ["sourceCardId", "targets"],
+  "lorcana.effect.resolve.optionalSelection.freePlay.named": [
+    "sourceCardId",
+    "targets",
+    "abilityName",
+  ],
   "lorcana.effect.resolve.optionalSelection.accepted.targets.named": [
     "sourceCardId",
     "abilityName",
     "targets",
   ],
   "lorcana.effect.resolve.optionalSelection.rejected": ["sourceCardId"],
+  "lorcana.effect.resolve.optionalSelection.rejected.named": ["sourceCardId", "abilityName"],
   "lorcana.effect.resolve.nameCardSelection": ["sourceCardId", "namedCard"],
   "lorcana.effect.resolve.scrySelection": ["sourceCardId"],
   "lorcana.effect.resolve.scrySelection.detail": ["sourceCardId", "selection"],
+  "lorcana.outcome.strengthModified": ["sourceId", "targetId", "modifier"],
+  "lorcana.outcome.loreModifiedThisTurn": ["sourceId", "targetId", "modifier"],
+  "lorcana.outcome.singingBlockedUntilNextStart": ["sourceId", "targetId", "playerId"],
+  "lorcana.outcome.nextStartReadyBlocked": ["sourceId", "targetId"],
+  "lorcana.outcome.keywordGranted": ["sourceId", "targetId", "keyword"],
+  "lorcana.outcome.revealedCard": ["playerId", "revealedCardId"],
   "lorcana.effect.resolve.revealTopCard": ["playerId", "revealedCardId", "targetPlayerId"],
   "lorcana.effect.resolve.revealTopCard.autoBottom": ["revealedCardId", "targetPlayerId"],
   "lorcana.effect.resolve.choiceSelection.withReveal": [
@@ -700,8 +816,11 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
     "revealedCardId",
   ],
   "lorcana.outcome.combatDamage": ["attackerId", "defenderId", "attackerDamage", "defenderDamage"],
+  "lorcana.outcome.entryDamage": ["sourceId", "targetId", "amount"],
   "lorcana.outcome.effectDamage": ["sourceId", "targetId", "amount"],
+  "lorcana.outcome.damagePut": ["sourceId", "targetId", "amount"],
   "lorcana.outcome.damageMoved": ["sourceId", "targetId", "amount"],
+  "lorcana.outcome.damageRemoved": ["targetId", "amount"],
   "lorcana.outcome.damagePrevented": ["targetId", "amount"],
   "lorcana.outcome.cardBanished": ["cardId"],
   "lorcana.outcome.cardsDrawn": ["amount"],
@@ -709,8 +828,12 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
   "lorcana.outcome.cardsDiscarded.detail": ["playerId", "amount", "cardIds"],
   "lorcana.outcome.cardReturnedToHand": ["cardId"],
   "lorcana.outcome.loreGained": ["playerId", "amount"],
+  "lorcana.outcome.revealedCardToHand": ["playerId", "targetPlayerId", "revealedCardId"],
   "lorcana.outcome.locationLoreGained": ["playerId", "amount", "locationCount"],
   "lorcana.outcome.loreLost": ["playerId", "amount"],
+  "lorcana.outcome.inkDropsGained": ["playerId", "amount"],
+  "lorcana.outcome.inkDropsRemoved": ["playerId", "amount"],
+  "lorcana.outcome.triggeredAbilitySkipped": ["playerId", "sourceCardId", "abilityName"],
   "lorcana.outcome.cardExerted": ["cardId"],
   "lorcana.outcome.inkwellCardsExerted": ["playerId", "amount"],
   "lorcana.outcome.cardReadied": ["cardId"],
@@ -719,6 +842,8 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
   "lorcana.outcome.cardsPutOnBottom": ["cardIds"],
   "lorcana.move.playCard.shift": ["cardId", "shiftTargetId"],
   "lorcana.move.playCard.sing": ["cardId", "singerIds"],
+  "lorcana.outcome.privateCardInked": ["playerId"],
+  "lorcana.outcome.privateCardInkedExerted": ["playerId"],
   "lorcana.outcome.cardInked": ["cardId"],
   "lorcana.outcome.cardInkedExerted": ["cardId"],
   "lorcana.private.cardsDrawn.detail": ["cardIds"],

@@ -6,8 +6,7 @@ import {
   cleanupDanglingTargetEffects,
   cleanupExpiredEffects,
 } from "../../effects/continuous-effects";
-import { createProjectionState, getEffectiveStrength } from "../../../rules/derived-state";
-import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
+import { resolveVariableAmount } from "../../shared/amount/resolve-variable-amount";
 import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
 import { resolveEffectTargets } from "../../../targeting/runtime";
@@ -36,14 +35,17 @@ export function resolveSupportEffect(
     return;
   }
 
-  const registry = getOrBuildMoveRegistry(ctx);
-  const supportAmount = getEffectiveStrength(
-    ctx.cards.getDefinition(cardPlayed.cardId) as any,
-    createProjectionState(ctx.framework.state, ctx.G),
-    cardPlayed.cardId,
-    (id) => ctx.cards.getDefinition(id) as any,
-    registry,
-  );
+  // CR 6.7.6: retained Support uses last-known Strength after the source leaves play.
+  const supportAmount =
+    resolveVariableAmount(
+      { type: "strength-of", target: "SELF" },
+      {
+        ctx,
+        sourceId: cardPlayed.cardId,
+        cardPlayed,
+        eventSnapshot: resolutionInput.eventSnapshot,
+      },
+    ).value ?? 0;
   if (!Number.isFinite(supportAmount) || supportAmount <= 0) {
     markLastEffectPerformed(resolutionInput.eventSnapshot, false);
     return;

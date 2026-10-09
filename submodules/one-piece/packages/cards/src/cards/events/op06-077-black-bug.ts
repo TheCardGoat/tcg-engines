@@ -23,7 +23,7 @@ export const op06BlackBug077: EventCard = {
   cost: 4,
   trigger:
     "Place up to 1 of your opponent's Characters with a cost of 4 or less at the bottom of the owner's deck.",
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   effect:
     "[Main] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, place up to 1 of your opponent's Characters with a cost of 5 or less at the bottom of the owner's deck.",
   effects: {

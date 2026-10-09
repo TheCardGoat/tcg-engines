@@ -164,6 +164,31 @@ describe("coachWalkDump flow reflection", () => {
     expect(walk.flowGap).toBe(FLOW_GAP_NONE);
   });
 
+  test("does not flag a core card declared as an early curve sell", () => {
+    const sale = (turnNumber: number) =>
+      dump({
+        deckAId: "authored-bbg-towerfall-control",
+        steps: [
+          acted({
+            stepIndex: 8,
+            move: "sellCard",
+            moveLogs: [
+              {
+                type: "sellCard",
+                cardId: card("les-elemens"),
+                cardName: "Les Élémens",
+                playerId: P1,
+                turnNumber,
+              },
+            ],
+          }),
+        ],
+      });
+
+    expect(coachWalkDump(sale(2)).mistake).toBe("sound");
+    expect(coachWalkDump(sale(12)).mistake).toBe("sold-engine:Les Élémens:step-8");
+  });
+
   test("does not flag Go Solo on a Legend that is not a preferred gear host", () => {
     const walk = coachWalkDump(
       dump({
@@ -214,6 +239,90 @@ describe("coachWalkDump flow reflection", () => {
     );
     expect(walk.mistake).toBe("early-go-solo:step-22");
     expect(walk.flowGap).toBe(FLOW_GAPS.keepGate);
+  });
+
+  test("does not flag early Go Solo that steals a Gig before passing", () => {
+    const walk = coachWalkDump(
+      dump({
+        deckAId: "authored-overwatch-recharge-control",
+        steps: [
+          acted({
+            stepIndex: 33,
+            move: "goSolo",
+            args: { cardId: "goro" },
+            moveLogs: [
+              {
+                type: "action",
+                messageKey: "move.playCard",
+                params: { cardName: "Goro Takemura: Hands Unclean" },
+                playerId: P1,
+                turnNumber: 6,
+              },
+            ],
+          }),
+          acted({
+            stepIndex: 34,
+            move: "attackRival",
+            args: { attackerId: "goro" },
+            moveLogs: [
+              {
+                type: "action",
+                messageKey: "move.resolveAttack.direct",
+                params: { attackerName: "Goro Takemura: Hands Unclean", count: 1 },
+                playerId: P1,
+                turnNumber: 6,
+              },
+            ],
+          }),
+          acted({ stepIndex: 35, move: "passPhase" }),
+        ],
+      }),
+    );
+
+    expect(walk.mistake).toBe("sound");
+    expect(walk.flowGap).toBe(FLOW_GAP_NONE);
+  });
+
+  test("does not flag early Go Solo that wins a fight before passing", () => {
+    const walk = coachWalkDump(
+      dump({
+        deckAId: "authored-overwatch-recharge-control",
+        steps: [
+          acted({
+            stepIndex: 22,
+            move: "goSolo",
+            args: { cardId: "goro" },
+            moveLogs: [
+              {
+                type: "action",
+                messageKey: "move.playCard",
+                params: { cardName: "Goro Takemura: Hands Unclean" },
+                playerId: P1,
+                turnNumber: 5,
+              },
+            ],
+          }),
+          acted({
+            stepIndex: 23,
+            move: "attackUnit",
+            args: { attackerId: "goro", defenderId: "rival" },
+            moveLogs: [
+              {
+                type: "action",
+                messageKey: "move.resolveAttack.fight.attackerWins",
+                params: { attackerName: "Goro Takemura: Hands Unclean" },
+                playerId: P1,
+                turnNumber: 5,
+              },
+            ],
+          }),
+          acted({ stepIndex: 24, move: "passPhase" }),
+        ],
+      }),
+    );
+
+    expect(walk.mistake).toBe("sound");
+    expect(walk.flowGap).toBe(FLOW_GAP_NONE);
   });
 });
 

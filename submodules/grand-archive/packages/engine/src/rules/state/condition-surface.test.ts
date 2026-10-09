@@ -1,3 +1,9 @@
+import { polarisTwinklingCauldron } from "@tcg/grand-archive-cards";
+import { GrandArchiveTestEngine } from "../../testing/test-engine.ts";
+import {
+  restoreGrandArchiveMatchSnapshot,
+  serializeGrandArchiveMatchSnapshot,
+} from "../../snapshot/snapshot.ts";
 import type {
   GrandArchiveAbilityDefinition,
   GrandArchiveAnyCard,
@@ -104,6 +110,78 @@ function setup() {
 }
 
 describe("Grand Archive declared condition surface", () => {
+  for (const origin of ["hand", "material-deck"] as const)
+    it(`checks the bound activation's ${origin} origin after JSON restore`, () => {
+      if (champion.layout.kind !== "single-faced") throw new Error("Expected single face");
+      const hero = {
+        ...champion,
+        layout: {
+          kind: "single-faced" as const,
+          face: { ...champion.layout.face, lineageName: "Arisanna" },
+        },
+      };
+      const game = GrandArchiveTestEngine.startFixture({
+        playerOne: {
+          champion: hero,
+          zones: {
+            hand: [item, filler],
+            memory: [filler],
+            "material-deck": [polarisTwinklingCauldron],
+          },
+        },
+        playerTwo: { champion: hero },
+      });
+      const p = game.player("player-one");
+      const target = p.card(origin === "hand" ? item : polarisTwinklingCauldron);
+      p.activate(
+        target,
+        origin === "hand"
+          ? {
+              reservePayment: [{ kind: "card", cardId: p.card(filler, { zone: "hand" }).objectId }],
+            }
+          : {},
+      );
+      const activation = game.state.stack[0]!;
+      const restored = restoreGrandArchiveMatchSnapshot(
+        game.program,
+        JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(game.state))),
+      );
+      for (const state of [game.state, restored]) {
+        for (const zone of [
+          "hand",
+          "material-deck",
+          "graveyard",
+          "memory",
+          "banishment",
+        ] as const) {
+          for (const bound of [[], [target.objectId], [activation.id]]) {
+            expect(
+              evaluateGrandArchiveCondition(
+                { kind: "bound-activation-origin", binding: "target", zone },
+                {
+                  program: game.program,
+                  state,
+                  controllerId: p.id,
+                  bindings: { target: bound },
+                },
+              ),
+            ).toBe(bound.some((id) => id === activation.id) && zone === origin);
+          }
+        }
+        expect(
+          evaluateGrandArchiveCondition(
+            { kind: "bound-activation-origin", binding: "absent", zone: origin },
+            {
+              program: game.program,
+              state,
+              controllerId: p.id,
+              bindings: {},
+            },
+          ),
+        ).toBe(false);
+      }
+    });
+
   it("evaluates object, player, collection, payment, and activation-zone conditions", () => {
     const { context, itemId, championId } = setup();
 
@@ -238,4 +316,19 @@ describe("Grand Archive declared condition surface", () => {
       ),
     ).toBe(true);
   });
+});
+
+it("uses the bound event origin without inferring an absent origin", () => {
+  const { context } = setup();
+  for (const origin of [undefined, "hand", "banishment", "effects-stack"]) {
+    expect(
+      evaluateGrandArchiveCondition(
+        { kind: "event-origin", zone: "banishment" },
+        {
+          ...context,
+          bindings: origin === undefined ? {} : { eventOrigin: origin },
+        },
+      ),
+    ).toBe(origin === "banishment");
+  }
 });

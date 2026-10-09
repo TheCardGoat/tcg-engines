@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
+import { getCard } from "@tcg/op-cards";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-021 Moby Dick", () => {
@@ -16,16 +17,9 @@ describe("OP16-021 Moby Dick", () => {
     engine.playCard("OP16-021");
     const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
     if (search?.kind !== "selectEntity") throw new Error("Expected the search choice.");
-    const legal = search.candidates.filter((candidate) => candidate.legal);
-    if (legal.length > 0) {
-      engine.resolveDecision(
-        "effectSearchSelection",
-        { selectedIds: [legal[0]!.ref.id!] },
-        "south",
-      );
-    } else {
-      engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
-    }
+    const selectedId = engine.findCardInZone("south", "deck", "OP16-004");
+    expect(search.candidates.map((candidate) => candidate.ref.id)).toContain(selectedId);
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [selectedId] }, "south");
     const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
     if (order?.kind !== "orderItems") throw new Error("Expected the remainder order.");
     engine.resolveDecision(
@@ -35,6 +29,17 @@ describe("OP16-021 Moby Dick", () => {
     );
 
     expect(engine.getView("south").players.south.stage).toBeTruthy();
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      selectedId,
+    );
+    expect(
+      engine
+        .getView("north")
+        .logs.some((entry) => entry.message.includes(getCard("OP16-004").name)),
+    ).toBe(false);
+    expect(
+      engine.getView("north").players.south.hand.some((card) => card.cardId === "OP16-004"),
+    ).toBe(false);
   });
 
   test("[Activate:Main] declined keeps the Stage in play", () => {
@@ -70,5 +75,17 @@ describe("OP16-021 Moby Dick", () => {
       "OP16-021",
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("accepting activation trashes the Stage before giving rested DON to the Leader", () => {
+    const e = OnePieceTestEngine.create({ stage: "OP16-021", restedDon: 2 });
+    const stage = e.findCardInZone("south", "stage", "OP16-021");
+    e.activateEffect(stage, "activateMain", "south");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.stage).toBeNull();
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(stage);
+    e.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(1);
+    expect(e.getView("south").players.south.restedDon).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

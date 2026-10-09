@@ -86,36 +86,58 @@ describe("Alien - True Believer", () => {
   });
 
   describe("HE HAS BEEN CHOSEN - During your turn, when banished, return another Alien from discard to hand.", () => {
-    it("returns another Alien from discard to hand when banished during your turn", () => {
-      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
-        play: [{ card: alienTrueBeliever, isDrying: false }],
+    // CR 6.2.3: the banishment triggers the ability even after its source leaves play.
+    it("returns another Alien and excludes the banished source from the choice", () => {
+      const banishAction = createMockAction({
+        id: "alien-own-turn-banish",
+        name: "Own Turn Banish",
+        cost: 1,
+        abilities: [
+          {
+            type: "action",
+            effect: { type: "banish", target: "CHOSEN_CHARACTER" },
+          },
+        ],
+      });
+      const game = LorcanaMultiplayerTestEngine.createWithFixture({
+        play: [alienTrueBeliever],
+        hand: [banishAction],
         discard: [anotherAlien],
+        inkwell: 1,
         deck: 3,
       });
-
-      // Banish alienTrueBeliever by challenging — it needs to be exerted and take lethal damage
-      // Instead, we test by having an opponent challenge it
-      // For simplicity, verify the ability structure is correct
-      expect(alienTrueBeliever.abilities).toHaveLength(2);
-      expect(alienTrueBeliever.abilities![1]).toMatchObject({
-        id: "m43-2",
-        name: "HE HAS BEEN CHOSEN",
-        type: "triggered",
-      });
+      const p1 = game.asPlayerOne();
+      expect(p1.playCard(banishAction, { targets: [alienTrueBeliever] })).toBeSuccessfulCommand();
+      expect(p1.getCardZone(alienTrueBeliever)).toBe("discard");
+      expect(game.asServer().getState().G.pendingEffects).toHaveLength(1);
+      expect(p1.resolveNextPending({ targets: [alienTrueBeliever] }).success).toBe(false);
+      expect(p1.getCardZone(alienTrueBeliever)).toBe("discard");
+      expect(p1.resolveNextPending({ targets: [anotherAlien] })).toBeSuccessfulCommand();
+      expect(p1.getCardZone(anotherAlien)).toBe("hand");
+      expect(p1.getCardZone(alienTrueBeliever)).toBe("discard");
+      expect(game.asServer().getState().G.pendingEffects).toHaveLength(0);
     });
   });
 
-  describe("source filter excludes the banished card itself", () => {
-    // Player report bugrepL-L9OusYMIjcZE0Eborf3 (gameId mg2o6_Z71R3XRvmXqeheoFb):
-    // "HE HAS BEEN CHOSEN" must return ANOTHER Alien — the banished card itself
-    // must not be a valid candidate. The engine-level fix lives in
-    // `packages/lorcana/lorcana-engine/src/runtime-moves/resolution/
-    //  action-effects/return-from-discard-effect.ts` and is unit-tested in
-    // `__tests__/return-from-discard.test.ts` (source-filter cases).
-    //
-    // The pending-selection candidate bug is covered in
-    // `packages/lorcana/lorcana-engine/src/targeting/runtime/target-availability.test.ts`.
-    it.todo("card-level repro: returns another Alien (not the banished one) when banished — blocked on trigger-firing bug", () => {});
+  it("does not return an Alien when banished during the opponent's turn", () => {
+    const banishAction = createMockAction({
+      id: "alien-opponent-turn-banish",
+      name: "Opponent Turn Banish",
+      cost: 1,
+      abilities: [{ type: "action", effect: { type: "banish", target: "CHOSEN_CHARACTER" } }],
+    });
+    const game = LorcanaMultiplayerTestEngine.createWithFixture(
+      { play: [alienTrueBeliever], discard: [anotherAlien], deck: 3 },
+      { hand: [banishAction], inkwell: 1, deck: 3 },
+    );
+    expect(game.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    expect(
+      game.asPlayerTwo().playCard(banishAction, { targets: [alienTrueBeliever] }),
+    ).toBeSuccessfulCommand();
+    expect(game.asPlayerOne().getCardZone(alienTrueBeliever)).toBe("discard");
+    expect(game.asPlayerOne().getCardZone(anotherAlien)).toBe("discard");
+    expect(game.asPlayerOne().getBagCount()).toBe(0);
+    expect(game.asServer().getState().G.pendingEffects).toHaveLength(0);
   });
 
   describe("release notes ruling", () => {
@@ -161,7 +183,7 @@ describe("Alien - True Believer", () => {
         play: [{ card: alienTrueBeliever, isDrying: false }],
         hand: [banishAction],
         inkwell: banishAction.cost,
-        discard: [stitchInDiscard],
+        discard: [stitchInDiscard, anotherAlien],
         deck: 3,
       });
 
@@ -172,12 +194,15 @@ describe("Alien - True Believer", () => {
       // Alien is in discard now.
       expect(testEngine.asPlayerOne().getCardZone(alienTrueBeliever)).toBe("discard");
 
-      // Drain any pending bag effects from He Has Been Chosen's trigger.
-      while (testEngine.asPlayerOne().getBagCount() > 0) {
-        expect(
-          testEngine.asPlayerOne().resolvePendingByCard(alienTrueBeliever),
-        ).toBeSuccessfulCommand();
-      }
+      // A live choice must exclude the Alien classification when the card name is Stitch.
+      expect(testEngine.asServer().getState().G.pendingEffects).toHaveLength(1);
+      expect(
+        testEngine.asPlayerOne().resolveNextPending({ targets: [stitchInDiscard] }).success,
+      ).toBe(false);
+      expect(
+        testEngine.asPlayerOne().resolveNextPending({ targets: [anotherAlien] }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getCardZone(anotherAlien)).toBe("hand");
 
       // Stitch must NOT have been returned to hand — name is "Stitch", not "Alien".
       expect(testEngine.asPlayerOne().getCardZone(stitchInDiscard)).toBe("discard");

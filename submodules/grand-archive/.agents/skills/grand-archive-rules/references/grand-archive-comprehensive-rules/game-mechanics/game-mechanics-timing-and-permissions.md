@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-timing-and-permissions"
+  relation: "current_index"
+---
+
 # Game Mechanics - Timing and Permissions
 
 #### Fast vs Slow&#x20;

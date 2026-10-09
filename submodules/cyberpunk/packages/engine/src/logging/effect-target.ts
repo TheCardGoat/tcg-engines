@@ -1,5 +1,11 @@
-import type { ActionLogEvent } from "../types/game-events.ts";
-import type { CardInstanceId, PlayerId } from "../types/branded.ts";
+import type { Effect } from "@tcg/cyberpunk-types";
+import type {
+  ActionLogEvent,
+  EffectTarget,
+  GameEvent,
+  GigDieRolledEvent,
+} from "../types/game-events.ts";
+import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import type { MatchState } from "../types/match-state.ts";
 import { defOf } from "../state/lookups.ts";
 import { privateField } from "./private-field.ts";
@@ -44,6 +50,64 @@ export function buildEffectTargetActionLogDetails(
     params,
     cardIds: [sourceCardId as string, ...targetIds.filter((id) => state.G.cardIndex[id])],
   };
+}
+
+export function targetResolvedMessageKey(
+  effect: Effect | undefined,
+):
+  | "trigger.targetResolved"
+  | "trigger.targetResolved.deckBottom"
+  | "trigger.targetResolved.rerollGig" {
+  if (effect?.effect === "moveCard" && effect.destination === "deckBottom") {
+    return "trigger.targetResolved.deckBottom";
+  }
+  if (effect?.effect === "rerollGig") return "trigger.targetResolved.rerollGig";
+  return "trigger.targetResolved";
+}
+
+export function buildTargetResolvedActionLog(
+  effect: Effect | undefined,
+  actionLog: EffectTargetActionLogDetails,
+  emittedEvents: readonly GameEvent[],
+  targetIds: readonly string[],
+): { messageKey: ReturnType<typeof targetResolvedMessageKey>; params: ActionLogEvent["params"] } {
+  const messageKey = targetResolvedMessageKey(effect);
+  if (messageKey !== "trigger.targetResolved.rerollGig") {
+    return { messageKey, params: actionLog.params };
+  }
+  const targetId = targetIds[0];
+  const rollEvent = emittedEvents.find(
+    (event): event is GigDieRolledEvent =>
+      event.type === "gigDieRolled" &&
+      (event.dieId as string) === targetId &&
+      event.origin === "reroll",
+  );
+  if (!rollEvent || rollEvent.previousValue === undefined) {
+    return { messageKey: "trigger.targetResolved", params: actionLog.params };
+  }
+  return {
+    messageKey,
+    params: {
+      ...actionLog.params,
+      dieId: rollEvent.dieId,
+      previousValue: rollEvent.previousValue,
+      newValue: rollEvent.result,
+    },
+  };
+}
+
+export function classifyEffectTargets(
+  state: MatchState,
+  targetIds: ReadonlyArray<string>,
+): EffectTarget[] {
+  const out: EffectTarget[] = [];
+  const playerIdSet = new Set<string>(state.ctx.playerIds.map((pid) => pid as string));
+  for (const id of targetIds) {
+    if (state.G.cardIndex[id]) out.push({ kind: "card", cardId: id as CardInstanceId });
+    else if (state.G.gigDice[id]) out.push({ kind: "gig", dieId: id as GigDieId });
+    else if (playerIdSet.has(id)) out.push({ kind: "player", playerId: id as PlayerId });
+  }
+  return out;
 }
 
 interface TargetSummary {

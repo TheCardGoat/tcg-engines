@@ -11,6 +11,7 @@ import { defOf } from "../state/lookups.ts";
 import { getCardsMarkedForEndTurnDefeat } from "../active-effects/index.ts";
 import { getMustAttackCardIds } from "./attack-requirements.ts";
 import { resolveEndOfTurnDefeats } from "./resolve-attack.ts";
+import { bothFixerAreasEmpty } from "./overtime.ts";
 
 export interface PassPhaseInput extends MoveInput {
   args: Record<string, never>;
@@ -173,22 +174,34 @@ function finishEndTurn(
   operations.game.resetTurnFlags(opponentId);
   state.G.turnMetadata.suspendedEndTurn = undefined;
 
-  const noGigTaken = !state.G.turnMetadata.gigTakenThisTurn;
-
-  // Overtime begins after the last player's 7th turn.
+  // CR 1.11.1: overtime begins after two consecutive turns where both
+  // players' Fixer areas were empty at the start of each turn.
+  // Persist the actual start-of-turn condition. Do not infer this from a fixed
+  // turn number or whether a Gig was taken later in the turn: judge corrections
+  // can change either without changing how the turn began.
   const nextTurnNumber = currentTurn + 1;
-  const overtimeThreshold = 7 * state.ctx.playerIds.length + 1;
-  const overtimeTriggered = nextTurnNumber >= overtimeThreshold;
+  const overtimeTriggered =
+    state.G.turnMetadata.previousTurnBeganWithEmptyFixer &&
+    state.G.turnMetadata.turnBeganWithEmptyFixer;
+  const nextTurnBeganWithEmptyFixer = bothFixerAreasEmpty(state);
 
   if (overtimeTriggered && !state.G.overtime) {
     state.G.overtime = true;
     state.G.turnMetadata.overtimeActive = true;
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: "game.overtimeStarted",
+      params: {},
+      playerId,
+      category: "system",
+    });
   }
 
   operations.game.setTurnMetadata({
     activePlayerId: opponentId,
     turnNumber: nextTurnNumber,
-    previousTurnNoGigTaken: noGigTaken,
+    previousTurnBeganWithEmptyFixer: state.G.turnMetadata.turnBeganWithEmptyFixer,
+    turnBeganWithEmptyFixer: nextTurnBeganWithEmptyFixer,
     gigTakenThisTurn: false,
     overtimeActive: state.G.overtime,
   });
@@ -210,6 +223,17 @@ function finishEndTurn(
     turnNumber: currentTurn + 1,
   };
   operations.event.emit(turnStartedEvent);
+  if (nextTurnBeganWithEmptyFixer && !state.G.overtime) {
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: state.G.turnMetadata.previousTurnBeganWithEmptyFixer
+        ? "game.overtimeFinalTurn"
+        : "game.overtimeFirstEmptyTurn",
+      params: {},
+      playerId: opponentId,
+      category: "system",
+    });
+  }
   processEventTriggers(turnStartedEvent, state, operations);
 
   // Start phase begins.

@@ -23,7 +23,7 @@ export const op14eb04JewelryBonney007: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   i18n: op14eb04JewelryBonney007I18n,
 };

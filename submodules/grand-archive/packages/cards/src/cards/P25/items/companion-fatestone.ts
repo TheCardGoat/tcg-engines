@@ -38,37 +38,57 @@ export const companionFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition,
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
+          effect: {
+            kind: "choose",
+            selection: {
+              id: "buff-recipient",
+              kind: "choice",
+              declared: "resolution",
               chooser: "controller",
               count: {
                 kind: "exactly",
                 amount: 1,
               },
-              unique: true,
               candidates: {
                 kind: "object",
                 zones: ["field"],
                 relationship: "controlled-by",
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "not",
+                      filter: {
+                        kind: "not-source",
+                      },
+                    },
+                    {
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["FATEBOUND"],
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
             },
-          ],
-          effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
+            effect: {
+              kind: "add-counter",
+              subject: {
+                kind: "bound",
+                binding: "buff-recipient",
+              },
+              counter: "buff",
+              amount: 1,
             },
-            counter: "buff",
-            amount: 1,
           },
         },
         {

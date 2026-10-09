@@ -23,7 +23,7 @@ export const op15Gedatsu063: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "strike",
   effect:
     "[On Play] DON!! -1: Draw 1 card.\n[On K.O.] If you have 6 or less DON!! cards on your field, K.O. up to 1 of your opponent's Characters with 2000 power or less.",

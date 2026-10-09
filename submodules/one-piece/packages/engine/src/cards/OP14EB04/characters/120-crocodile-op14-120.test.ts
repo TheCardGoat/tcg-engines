@@ -139,4 +139,20 @@ describe("OP14-120 Crocodile", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(handId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("draws with only a cost-10 opposing Character even when there is no legal attack-restriction target", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op14eb04CrocodileOp14120120],
+        activeDon: op14eb04CrocodileOp14120120.cost,
+        deck: [eb01Fourtricks025, eb01Doma005],
+      },
+      { character: [eb02Enel052] },
+    );
+    const drawn = engine.findCardInZone("south", "deck", eb01Fourtricks025);
+    engine.playCard(op14eb04CrocodileOp14120120);
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      drawn,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

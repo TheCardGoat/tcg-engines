@@ -38,6 +38,7 @@ describe("OP01-087 Officer Agents", () => {
     }
     expect(playStep.candidates.map((candidate) => candidate.ref.id)).toEqual([selectedId, otherId]);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [selectedId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.characters.some((card) => card?.instanceId === selectedId)).toBe(

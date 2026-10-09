@@ -51,6 +51,7 @@ export const op11Smoker005: CharacterCard = {
             duration: "permanent",
             restriction: "byEffect",
             byFilter: [
+              { filter: "cardCategory", value: "character" },
               {
                 filter: "attribute",
                 value: "special",

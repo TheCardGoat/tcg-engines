@@ -39,7 +39,7 @@ export const eb01MountainGod018: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Animal Land of Wano"],
+  traits: ["Animal", "Land of Wano"],
   attribute: "strike",
   i18n: eb01MountainGod018I18n,
 };

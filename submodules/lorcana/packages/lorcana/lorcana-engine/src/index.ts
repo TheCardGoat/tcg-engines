@@ -206,6 +206,7 @@ export {
   canInk,
   canQuest,
   cardHasName,
+  normalizeCardName,
   getAllKeywords,
   getAmpersandNames,
   getCardNameVariants,

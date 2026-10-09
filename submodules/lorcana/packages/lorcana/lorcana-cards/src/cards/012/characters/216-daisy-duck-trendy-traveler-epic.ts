@@ -22,7 +22,7 @@ export const daisyDuckTrendyTravelerEpic: CharacterCard = {
   inkType: ["ruby"],
   set: "012",
   cardNumber: 216,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

@@ -128,4 +128,27 @@ describe("OP02-062 Monkey.D.Luffy", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("paying while choosing no return target still grants Double Attack", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [eb01Doma005, eb01Fourtricks025],
+        character: [{ card: op02MonkeyDLuffy062, playedOnTurn: 0 }, op02Mohji060],
+      },
+      { life: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const luffyId = engine.findCardInZone("south", "character", op02MonkeyDLuffy062);
+    const untouchedId = engine.findCardInZone("south", "character", op02Mohji060);
+    engine.declareAttack(luffyId, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.north.lifeCount).toBe(1);
+    expect(engine.getView("south").players.south.trash).toHaveLength(2);
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.some((card) => card?.instanceId === untouchedId),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

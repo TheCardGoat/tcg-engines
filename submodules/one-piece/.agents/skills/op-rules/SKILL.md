@@ -15,7 +15,7 @@ Use the glossary first, then load only the indexed sections needed for the rule,
 
 ## Source Priority
 
-1. `comprehensive-rules.md` - One Piece Card Game Comprehensive Rules Version 1.2.0, last updated January 16, 2026.
+1. `comprehensive-rules.md` - One Piece Card Game Comprehensive Rules Version 1.2.1, last updated August 28, 2026.
 2. `references/rule_comprehensive.md` - alternate parsed copy of the same rules source.
 
 When the two parsed copies disagree, verify against the PDF-derived source in `references/rule_comprehensive.pdf` before changing behavior.

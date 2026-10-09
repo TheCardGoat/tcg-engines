@@ -3,12 +3,14 @@ import { describe, expect, it } from "vitest";
 import { isSetupStateStale, type SetupStateProbe } from "./setupSyncStall";
 
 function probe(overrides?: {
+  stateID?: number;
   gameEnded?: boolean;
   gamePhase?: string;
   pendingChoice?: unknown;
   hand?: unknown[];
 }): SetupStateProbe {
   return {
+    ctx: { stateID: overrides?.stateID ?? 0 },
     G: {
       gameEnded: overrides?.gameEnded ?? false,
       gamePhase: overrides?.gamePhase ?? "setup",
@@ -38,6 +40,12 @@ describe("isSetupStateStale", () => {
       pendingChoice: { type: "chooseFirstPlayer" },
     });
     expect(isSetupStateStale(state, "player")).toBe(false);
+  });
+
+  it("does not flag the waiting Rival when the server confirms a current first-player choice", () => {
+    const state = probe({ stateID: 7 });
+    expect(isSetupStateStale(state, "opponent", 7)).toBe(false);
+    expect(isSetupStateStale(state, "opponent", 6)).toBe(true);
   });
 
   it("does not flag outside the setup phase", () => {

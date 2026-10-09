@@ -23,7 +23,7 @@ export const eb02DonquixoteRosinante025: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Activate: Main] You may rest 1 of your DON!! cards and this Character: If your Leader is [Donquixote Rosinante], look at 5 cards from the top of your deck; play up to 1 Character card with a cost of 2 or less rested. Then, place the rest at the bottom of your deck in any order.",

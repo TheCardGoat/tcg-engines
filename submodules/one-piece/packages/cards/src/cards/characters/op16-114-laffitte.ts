@@ -52,6 +52,15 @@ export const op16Laffitte114: CharacterCard = {
           },
         ],
       },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onKo",
+          },
+        ],
+      },
     ],
   },
   i18n: op16Laffitte114I18n,

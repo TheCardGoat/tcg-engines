@@ -32,7 +32,7 @@ export const op15Ohm061: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "slash",
   effect:
     "[On Play] DON!! -1: Draw 1 card.\n[When Attacking] If you have 6 or less DON!! cards on your field, give up to 1 of your opponent's Characters -1000 power during this turn.",

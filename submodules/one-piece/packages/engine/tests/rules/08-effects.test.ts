@@ -531,8 +531,6 @@ describe("Comprehensive Rules 8: Activating and Resolving Effects", () => {
     const attackerId = engine.asNorth().findOnField(eb01MountainGod018);
 
     engine.asNorth().attack(attackerId, sanjiId);
-    // Decline the Counter window so the battle resolves.
-    engine.asSouth().chooseCounter();
 
     const view = engine.asSouth().view();
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(sanjiId);
@@ -569,8 +567,6 @@ describe("Comprehensive Rules 8: Activating and Resolving Effects", () => {
     );
 
     engine.asNorth().attack(engine.leader("north"), engine.asSouth().leader());
-    // Decline the Counter window so the battle resolves.
-    engine.asSouth().chooseCounter();
     engine.asSouth().activateLifeTrigger();
 
     // Page One did not react: no draw, no deck-bottom prompt.
@@ -596,8 +592,6 @@ describe("Comprehensive Rules 8: Activating and Resolving Effects", () => {
     const attackerId = engine.asSouth().findOnField(eb01MountainGod018);
 
     engine.asSouth().attack(attackerId, northLaboonId);
-    // Decline the Counter window so the battle resolves and both Laboons trigger.
-    engine.asNorth().chooseCounter();
 
     // Resolution order is an engine invariant: the turn player's prompt must lead the queue.
     const pendingPrompts = engine
@@ -630,6 +624,7 @@ describe("Comprehensive Rules 8: Activating and Resolving Effects", () => {
         leaderCardId: op14eb04BoaHancockOp14041041,
         character: [{ card: op05Mr1DazBonez075, attachedDon: 1 }],
         hand: [eb01Mr9037],
+        deck: Array(30).fill("ST02-002"),
       },
       { leaderCardId: op12Koala081 },
       NORTH_ATTACKS,

@@ -23,7 +23,7 @@ export const op15Pincers013: CharacterCard = {
   cost: 4,
   power: 2000,
   counter: 2000,
-  traits: ["Animal Alabasta"],
+  traits: ["Animal", "Alabasta"],
   attribute: "strike",
   effect:
     "If your Leader has 0 power or less, give this card in your hand -2 cost.\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { createCardCatalog } from "@tcg/cyberpunk-cards";
 import type { MoveLogEntry, Side } from "../../engine";
 
 export interface LastSoldCard {
@@ -8,12 +9,23 @@ export interface LastSoldCard {
   side: Side;
 }
 
+const soldCardArtByName = new Map(
+  [...createCardCatalog().entries()].map(([, definition]) => [
+    definition.displayName,
+    definition.imageUrl,
+  ]),
+);
+
+/** A Sell log reveals the card publicly even after it enters the face-down Eddies area. */
+export function soldCardImageUrl(cardName: string): string | undefined {
+  return soldCardArtByName.get(cardName);
+}
+
 /**
- * Whether the persistent "sell here" slot cue may advertise on the local
- * player's eddies row. Mirrors the engine's `sellCardMove.available` gates
- * (main phase, own turn, no attack in progress, not already sold, a Sell-tag
- * card in hand). Deliberately takes no eddie counts: selling is legal with
- * every Eddie spent — it adds a fresh Eddie instead of spending one.
+ * Whether the persistent "sell here" reminder appears on the local player's
+ * eddies row. It follows the turn and phase gates for the normal Sell action,
+ * but stays visible without a Sell-tag card in hand: the player may draw one
+ * later this turn. Selling also does not depend on unspent Eddies.
  */
 export interface SellCueInput {
   isOwnTurn: boolean;
@@ -21,7 +33,6 @@ export interface SellCueInput {
   gameEnded: boolean;
   soldThisTurn: boolean;
   attackInProgress: boolean;
-  hasSellableCardInHand: boolean;
 }
 
 export function canShowSellCue(input: SellCueInput): boolean {
@@ -30,8 +41,7 @@ export function canShowSellCue(input: SellCueInput): boolean {
     input.isMainPhase &&
     !input.gameEnded &&
     !input.soldThisTurn &&
-    !input.attackInProgress &&
-    input.hasSellableCardInHand
+    !input.attackInProgress
   );
 }
 

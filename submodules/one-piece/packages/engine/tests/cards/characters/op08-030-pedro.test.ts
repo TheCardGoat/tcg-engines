@@ -43,9 +43,13 @@ describe("OP08-030 Pedro", () => {
     const choice = engine.pendingDecision("effectActionChoice", "north").steps[0];
     expect(choice).toMatchObject({ kind: "chooseOption" });
     engine.resolveDecision("effectActionChoice", { optionId: "0" }, "north");
-    const donCount = engine.pendingDecision("effectRestDonCount", "north").steps[0];
-    expect(donCount).toMatchObject({ kind: "chooseOption" });
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "north");
+    const donCount = engine.pendingDecision("effectMixedRestSelection", "north").steps[0];
+    expect(donCount).toMatchObject({ kind: "payCost" });
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:south:0"] },
+      "north",
+    );
 
     expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 1 });
     expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
@@ -69,9 +73,13 @@ describe("OP08-030 Pedro", () => {
     if (choice?.kind !== "chooseOption") throw new Error("Expected Pedro's printed choice.");
     expect(choice.options.map((option) => option.label)).toEqual(["rest", "ko"]);
     engine.resolveDecision("effectActionChoice", { optionId: "0" }, "north");
-    const donCount = engine.pendingDecision("effectRestDonCount", "north").steps[0];
-    expect(donCount).toMatchObject({ kind: "chooseOption" });
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "north");
+    const donCount = engine.pendingDecision("effectMixedRestSelection", "north").steps[0];
+    expect(donCount).toMatchObject({ kind: "payCost" });
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:south:0"] },
+      "north",
+    );
 
     expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 6 });
   });

@@ -101,8 +101,13 @@ describe("OP09 shared parser regressions", () => {
     expect(
       buildCardEffects(
         "[On Play] Place 1 of your opponent's Characters with a cost of 3 or less at the top or bottom of your opponent's Life cards face-up: Your opponent trashes 1 card from their hand.",
-      )?.effects?.[0]?.actions?.[0],
-    ).toMatchObject({ action: "addToLife", position: "choice", faceUp: true });
+      )?.effects?.[0]?.costs?.[0],
+    ).toMatchObject({
+      cost: "addCharacterToLife",
+      player: "opponent",
+      position: "choice",
+      faceUp: true,
+    });
   });
 
   test("draws only after the optional hand play succeeds", () => {

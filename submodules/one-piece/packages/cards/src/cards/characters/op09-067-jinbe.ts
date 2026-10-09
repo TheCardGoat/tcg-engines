@@ -23,7 +23,7 @@ export const op09Jinbe067: CharacterCard = {
   cost: 7,
   power: 9000,
   counter: 1000,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op09Jinbe067I18n,
 };

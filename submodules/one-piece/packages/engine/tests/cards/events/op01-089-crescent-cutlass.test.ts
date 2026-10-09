@@ -48,6 +48,7 @@ describe("OP01-089 Crescent Cutlass", () => {
     ]);
     expect(returnStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(excludedOwnId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [selectedOwnId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toContain(selectedOwnId);

@@ -50,7 +50,7 @@ export const op08Milky032: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Minks",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

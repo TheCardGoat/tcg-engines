@@ -9,6 +9,7 @@ import type {
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
 import { AlphaClashServerEngine } from "./alpha-clash-server-engine";
+import { readAlphaClashUndoState } from "./undo";
 
 const SEAT_ORDER: readonly PlayerId[] = ["player-one", "player-two"];
 
@@ -118,6 +119,11 @@ export function alphaClashSerializeEngine(
     state: { ...state, stateVersion: alphaClash.getStateID() },
     historyLength: alphaClash.state.moveLog.length,
     cardsMaps,
+    metadata: {
+      undoCheckpoints: alphaClash.getUndoState().checkpoints,
+      turnStartCheckpoint: alphaClash.getUndoState().turnStart,
+      turnStartStateVersion: alphaClash.getUndoState().turnStartStateVersion,
+    },
   };
 }
 
@@ -128,11 +134,11 @@ export async function alphaClashRestoreEngine(
   const { stateVersion: _persistedVersion, ...rawState } = snapshot.state as MatchState & {
     stateVersion?: number;
   };
-  void _persistedVersion;
   return new AlphaClashServerEngine(rawState as MatchState, {
     [context.player1Id]: "player-one",
     [context.player2Id]: "player-two",
-  });
+  }, readAlphaClashUndoState(snapshot.metadata, rawState as MatchState,
+    typeof _persistedVersion === "number" ? _persistedVersion : rawState.stateID ?? rawState.moveLog.length));
 }
 
 export function alphaClashExtractCardsMapsFromSnapshot(snapshot: EngineSnapshot): CardsMaps {

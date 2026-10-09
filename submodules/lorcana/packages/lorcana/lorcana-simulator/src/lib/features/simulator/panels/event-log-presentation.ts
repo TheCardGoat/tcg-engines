@@ -149,7 +149,11 @@ export function buildEventLogRows(
 }
 
 function shouldShowEventLogEntry(entry: MoveLogEntrySnapshot): boolean {
-  return !(entry.moveId === "undo" && !entry.typedLogEntry);
+  return !(
+    entry.moveId === "undo" &&
+    !entry.typedLogEntry &&
+    typeof entry.params?.restoredCheckpointStateID !== "number"
+  );
 }
 
 function buildEventRow(

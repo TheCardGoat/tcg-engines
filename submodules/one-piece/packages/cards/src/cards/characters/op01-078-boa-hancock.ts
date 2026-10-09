@@ -56,7 +56,7 @@ export const op01BoaHancock078: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
 
   effect:

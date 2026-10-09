@@ -23,7 +23,7 @@ export const op13DouglasBullet068: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Former Roger Pirates"],
+  traits: ["FILM", "Former Roger Pirates"],
   attribute: "special",
   effect:
     'If you have 8 or more DON!! cards on your field, this Character gains +2000 power.\n[On Play] If your Leader\'s type includes "Roger Pirates", add up to 1 DON!! card from your DON!! deck and rest it.',

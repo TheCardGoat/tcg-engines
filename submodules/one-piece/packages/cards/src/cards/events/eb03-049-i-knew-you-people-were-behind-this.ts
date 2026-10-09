@@ -43,58 +43,49 @@ export const eb03IKnewYouPeopleWereBehindThis049: EventCard = {
             },
             whenTrue: [
               {
-                action: "play",
-                source: {
-                  player: "self",
-                  zone: ["hand", "trash"],
-                },
-                count: {
-                  amount: 1,
-                  upTo: true,
-                },
-                filters: [
+                action: "playGrouped",
+                source: { player: "self", zone: ["hand", "trash"] },
+                groups: [
                   {
-                    filter: "cost",
-                    comparison: "lte",
-                    value: 6,
+                    count: { amount: 1, upTo: true },
+                    filters: [
+                      {
+                        filter: "cost",
+                        comparison: "lte",
+                        value: 6,
+                      },
+                      {
+                        filter: "trait",
+                        value: "Thriller Bark Pirates",
+                        match: "exact",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
+                      },
+                    ],
                   },
                   {
-                    filter: "trait",
-                    value: "Thriller Bark Pirates",
-                    match: "includes",
-                  },
-                  {
-                    filter: "cardCategory",
-                    value: "character",
-                  },
-                ],
-              },
-              {
-                action: "play",
-                source: {
-                  player: "self",
-                  zone: ["hand", "trash"],
-                },
-                count: {
-                  amount: 1,
-                  upTo: true,
-                },
-                filters: [
-                  {
-                    filter: "cost",
-                    comparison: "lte",
-                    value: 4,
-                  },
-                  {
-                    filter: "trait",
-                    value: "Thriller Bark Pirates",
-                    match: "includes",
-                  },
-                  {
-                    filter: "cardCategory",
-                    value: "character",
+                    count: { amount: 1, upTo: true },
+                    filters: [
+                      {
+                        filter: "cost",
+                        comparison: "lte",
+                        value: 4,
+                      },
+                      {
+                        filter: "trait",
+                        value: "Thriller Bark Pirates",
+                        match: "exact",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
+                      },
+                    ],
                   },
                 ],
+                playStates: { single: "active", multiple: ["active", "active"] },
               },
             ],
           },

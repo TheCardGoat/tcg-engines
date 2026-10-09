@@ -5,6 +5,28 @@ import { prb01MonkeyDLuffyP055JollyRogerFoil055 } from "../../../../../cards/src
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-055 Monkey.D.Luffy (P-055) (Jolly Roger Foil)", () => {
+  test("FAQ: pays two hand cards even with no opposing Character to bottom", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [prb01MonkeyDLuffyP055JollyRogerFoil055, eb01Doma005, eb01Fourtricks025],
+      activeDon: prb01MonkeyDLuffyP055JollyRogerFoil055.cost,
+    });
+    const payments = [
+      engine.findCardInZone("south", "hand", eb01Doma005),
+      engine.findCardInZone("south", "hand", eb01Fourtricks025),
+    ];
+    const opponentDeck = engine.getView("south").players.north.deckCount;
+    engine.asSouth().play(prb01MonkeyDLuffyP055JollyRogerFoil055);
+    engine.asSouth().acceptOptional();
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((c) => c.instanceId)).toEqual(
+      expect.arrayContaining(payments),
+    );
+    expect(view.players.south.handCount).toBe(0);
+    expect(view.players.north.deckCount).toBe(opponentDeck);
+    expect(view.players.south.characters.some((c) => c?.cardId === "P-055")).toBe(true);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("trashes two selected own hand cards, then the opponent bottoms one of their Characters", () => {
     const engine = OnePieceTestEngine.create(
       {

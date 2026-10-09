@@ -23,7 +23,7 @@ export const op15SeaCat004: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Animal Alabasta"],
+  traits: ["Animal", "Alabasta"],
   attribute: "wisdom",
   effect:
     "[On Play] If your Leader has 0 power or less, give up to 1 of your opponent's Characters -3000 power during this turn.",

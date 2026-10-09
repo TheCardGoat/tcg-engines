@@ -23,7 +23,7 @@ export const op13KouzukiMomonosuke105: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     "[On Play] Look at all of your Life cards and place them back in your Life area in any order.",

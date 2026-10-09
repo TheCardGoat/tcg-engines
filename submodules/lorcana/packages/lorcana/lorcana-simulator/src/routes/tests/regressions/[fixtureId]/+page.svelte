@@ -33,6 +33,7 @@
   const staleRecoveryCompletionCountOverride = $derived(
     page.url.searchParams.get("recovered") === "1" ? 1 : null,
   );
+  const supportReminderOverride = $derived(page.url.searchParams.get("supportReminder") === "1" ? true : null);
   const enableMatchChat = $derived(page.url.searchParams.get("chat") === "1");
 </script>
 
@@ -42,5 +43,6 @@
   aiBot={false}
   {commandStatusOverride}
   {staleRecoveryCompletionCountOverride}
+  {supportReminderOverride}
   {enableMatchChat}
 />

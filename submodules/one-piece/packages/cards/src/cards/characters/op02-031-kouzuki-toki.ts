@@ -31,7 +31,7 @@ export const op02KouzukiToki031: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "If you have a [Kouzuki Oden] Character, this Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

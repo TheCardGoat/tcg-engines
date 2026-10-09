@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-ending-the-game"
+  relation: "current_index"
+---
+
 # General Rules - Ending the Game
 
 General Rules:

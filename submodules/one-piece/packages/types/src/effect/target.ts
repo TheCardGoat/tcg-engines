@@ -27,6 +27,7 @@ export type TargetFilter =
   | ColorFilter
   | CardCategoryFilter
   | StateFilter
+  | FaceUpFilter
   | AttachedDonFilter
   | HasKeywordFilter
   | HasTriggerFilter
@@ -102,6 +103,11 @@ export interface ColorFilter {
 export interface CardCategoryFilter {
   filter: "cardCategory";
   value: OPCardType;
+}
+
+export interface FaceUpFilter {
+  filter: "faceUp";
+  value: boolean;
 }
 
 export interface StateFilter {

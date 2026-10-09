@@ -5,7 +5,7 @@ import { PLAYER_SIDE_TO_ID, useEngine, type Side } from "../../engine";
 type RevealZone = "field" | "trash" | "hand";
 
 interface TemporaryHandRevealEvent {
-  type: "cardMoved" | "turnEnded" | "turnStarted";
+  type: "cardMoved" | "cardPlayed" | "turnEnded" | "turnStarted";
   cardId?: unknown;
   fromZone?: unknown;
   toZone?: unknown;
@@ -18,7 +18,6 @@ interface TemporaryHandRevealEventEntry {
 }
 
 const PUBLIC_REVEAL_SOURCES = new Set<RevealZone>(["field", "trash"]);
-const HIDDEN_DISCARD_DESTINATIONS = new Set<RevealZone>(["trash"]);
 
 export function useTemporaryRevealedHandCardIds(
   side: Side,
@@ -71,17 +70,16 @@ function applyTemporaryHandRevealEvent(
     return;
   }
 
-  if (event.type === "turnStarted") {
-    revealed.clear();
-    return;
-  }
-
   if (String(event.playerId) !== ownerId) {
     return;
   }
 
-  if (event.type === "turnEnded") {
+  if (event.type === "cardPlayed") {
     revealed.clear();
+    return;
+  }
+
+  if (event.type !== "cardMoved") {
     return;
   }
 
@@ -92,14 +90,6 @@ function applyTemporaryHandRevealEvent(
   if (toZone === "hand" && fromZone && PUBLIC_REVEAL_SOURCES.has(fromZone)) {
     revealed.add(cardId);
     return;
-  }
-
-  if (fromZone === "hand" && toZone && HIDDEN_DISCARD_DESTINATIONS.has(toZone)) {
-    if (!revealed.has(cardId)) {
-      revealed.clear();
-    } else {
-      revealed.delete(cardId);
-    }
   }
 }
 
@@ -114,7 +104,11 @@ function isTemporaryHandRevealEvent(event: unknown): event is TemporaryHandRevea
     fromZone?: unknown;
     toZone?: unknown;
   };
-  if (candidate.type === "turnEnded" || candidate.type === "turnStarted") {
+  if (
+    candidate.type === "turnEnded" ||
+    candidate.type === "turnStarted" ||
+    candidate.type === "cardPlayed"
+  ) {
     return candidate.playerId !== undefined;
   }
   return (
@@ -125,7 +119,10 @@ function isTemporaryHandRevealEvent(event: unknown): event is TemporaryHandRevea
 }
 
 function isTemporaryHandRevealTurnBoundary(event: unknown): boolean {
-  return isTemporaryHandRevealEvent(event) && event.type !== "cardMoved";
+  return (
+    isTemporaryHandRevealEvent(event) &&
+    (event.type === "turnEnded" || event.type === "turnStarted")
+  );
 }
 
 function zoneValue(value: unknown): RevealZone | null {

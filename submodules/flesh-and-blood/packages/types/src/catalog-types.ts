@@ -8,6 +8,18 @@ export interface FleshAndBloodFormatLegality {
   restricted: boolean;
 }
 
+/**
+ * Whether a card may be registered in this format.
+ * FAB Cube keeps `legal` separate from bans, suspensions, and Living Legend.
+ * Living Legend rotates the card out of that format (TRP 7.1). Restricted
+ * only lowers the copy limit.
+ */
+export function isFleshAndBloodFormatPlayable(
+  legality: Pick<FleshAndBloodFormatLegality, "legal" | "banned" | "suspended" | "livingLegend">,
+): boolean {
+  return legality.legal && !legality.banned && !legality.suspended && !legality.livingLegend;
+}
+
 export interface FleshAndBloodLegality {
   blitz: FleshAndBloodFormatLegality;
   cc: FleshAndBloodFormatLegality;

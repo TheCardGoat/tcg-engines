@@ -1,0 +1,122 @@
+{
+  "generatedAt": "2026-10-07T05:31:13.603Z",
+  "engineRevision": "fnv1a32:497198d2",
+  "cardCatalogHash": "fnv1a32:de23a4df",
+  "fullRulesReady": false,
+  "openIssues": [
+    "General triggered-effect response priority and player-selected ordering of same-player trigger batches are not fully modeled (603.3, 605.1)."
+  ],
+  "note": "Checks cover specified paths only. See the companion review for limits and open issues.",
+  "games": [
+    {
+      "game": "game-1",
+      "blockId": "rules-audit",
+      "legId": "game-1",
+      "seed": "alpha-clash-rules-audit-2026-10-07-1",
+      "candidateSeat": "p1",
+      "candidateDeckId": "clarity-hyper-aggro",
+      "baselineDeckId": "absence-makati",
+      "winner": "baseline",
+      "termination": "rules-win",
+      "turnCount": 10,
+      "actionCount": 236,
+      "finalStateHash": "fnv1a32:21addd21",
+      "diagnostics": {
+        "illegalProposals": 0
+      },
+      "p1Deck": "clarity-hyper-aggro",
+      "p2Deck": "absence-makati",
+      "traceHash": "fnv1a32:c9893490",
+      "replayMatches": true,
+      "structuralFailures": [],
+      "rulesAudit": {
+        "checks": {
+          "115.3b resource payment": 14,
+          "304.3 free setting": 1,
+          "504.2g simultaneous damage": 21,
+          "117.2b Contender damage": 42,
+          "504.2g Damage-Step choices": 9,
+          "Clarity reveal to hand": 4,
+          "504.2g Defeat before zone move": 1,
+          "603.3b/409.5 simultaneous Challenges": 4,
+          "104 terminal log": 1
+        },
+        "failures": []
+      },
+      "commandCoverage": {
+        "Restoration": ["deployResource"],
+        "Marcus, Ghost of the Gambit": ["playCard"],
+        "Breach the Void": ["deployResource"],
+        "Morac, the Devourer": ["setCard"],
+        "Gur, Savage Aggressor": ["playCard"],
+        "Clarity's 1911": ["deployResource"],
+        "Haven, the Resourceful Helper": ["playCard"],
+        "Webber's Binoculars": ["playCard"],
+        "From Life to Death": ["deployResource"],
+        "Death, the Dreadful": ["playCard"],
+        "Bombardment": ["deployResource"],
+        "Denver": ["playCard"],
+        "Undiscovered Passageway": ["deployResource"],
+        "Rizlac, Ferocious Threat": ["playCard"],
+        "Zhao Li, Reconaissance Agent": ["deployResource", "playCard"],
+        "The Absence, New Host": ["playCard"],
+        "Amazon Rainforest": ["deployResource"]
+      }
+    },
+    {
+      "game": "game-2",
+      "blockId": "rules-audit",
+      "legId": "game-2",
+      "seed": "alpha-clash-rules-audit-2026-10-07-2",
+      "candidateSeat": "p2",
+      "candidateDeckId": "clarity-hyper-aggro",
+      "baselineDeckId": "absence-makati",
+      "winner": "baseline",
+      "termination": "rules-win",
+      "turnCount": 9,
+      "actionCount": 215,
+      "finalStateHash": "fnv1a32:41d1f5fe",
+      "diagnostics": {
+        "illegalProposals": 0
+      },
+      "p1Deck": "absence-makati",
+      "p2Deck": "clarity-hyper-aggro",
+      "traceHash": "fnv1a32:620746be",
+      "replayMatches": true,
+      "structuralFailures": [],
+      "rulesAudit": {
+        "checks": {
+          "Clarity reveal to hand": 4,
+          "504.2g simultaneous damage": 18,
+          "117.2b Contender damage": 36,
+          "504.2g Damage-Step choices": 7,
+          "115.3b resource payment": 12,
+          "304.3 free setting": 2,
+          "603.3b/409.5 simultaneous Challenges": 3,
+          "Bombardment diminish": 1,
+          "Bombardment damage": 1,
+          "104 terminal log": 1
+        },
+        "failures": []
+      },
+      "commandCoverage": {
+        "Undiscovered Passageway": ["deployResource"],
+        "Restoration": ["deployResource"],
+        "Marcus, Ghost of the Gambit": ["playCard"],
+        "Sacrificial Strength": ["setCard"],
+        "Low Earth Orbit": ["deployResource"],
+        "Lord Krung, Ruthless Warlord": ["playCard"],
+        "Bombardment": ["deployResource", "playCard"],
+        "Webber's Binoculars": ["playCard"],
+        "Denver": ["playCard"],
+        "Cataclysmic Surge": ["deployResource"],
+        "Rizlac, Ferocious Threat": ["playCard"],
+        "Colonel Edwards, Mastermind": ["playCard"],
+        "Trugg, Unruly Scavenger": ["playCard"],
+        "Clarity's 1911": ["deployResource"],
+        "Zhao Li, Reconaissance Agent": ["playCard"],
+        "The Absence, Shadow Incarnate": ["deployResource", "playCard"]
+      }
+    }
+  ]
+}

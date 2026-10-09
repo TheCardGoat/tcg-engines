@@ -101,6 +101,7 @@ type SimulatorMoveInputSnapshot = {
 };
 
 type SimulatorMoveHistoryEntrySnapshot = {
+  restoredCheckpointStateID?: number;
   moveId: string;
   input?: SimulatorMoveInputSnapshot;
   playerId?: string;
@@ -353,18 +354,60 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
     const allRawEntries = this.#engine.getMoveHistory() as SimulatorMoveHistoryEntrySnapshot[];
     const allMoveLogs = this.#getFilteredMoveLogHistory(view);
 
-    const fallbackMoveLogs = selectFallbackMoveLogWindow(allMoveLogs, allRawEntries.length, limit);
+    // Automatic bag resolutions have visible engine logs but no user-command
+    // history entry. Include these logs between commands instead of pairing the
+    // two histories by index, which hid draws and mislabelled later commands.
+    const rows: Array<{ entry: SimulatorMoveHistoryEntrySnapshot; log?: MoveLog }> = [];
+    let logIndex = 0;
+    let turnNumber = 1;
+    const appendAutomaticLog = (log: MoveLog): void => {
+      if (log.moveType === "turnStart") turnNumber += 1;
+      rows.push({
+        entry: {
+          moveId: log.moveType,
+          playerId: log.playerId,
+          timestamp: log.timestamp,
+          turnNumber,
+        },
+        log,
+      });
+    };
+    for (const entry of allRawEntries) {
+      const matchingIndex = allMoveLogs.findIndex(
+        (log, index) =>
+          index >= logIndex &&
+          (normalizeLoggedMoveId(log.moveType) === normalizeLoggedMoveId(entry.moveId) ||
+            (entry.moveId === "resolveBag" && log.moveType === "resolveEffect")) &&
+          log.playerId === entry.playerId,
+      );
+      if (matchingIndex < 0) {
+        rows.push({ entry });
+        turnNumber = entry.turnNumber ?? turnNumber;
+        continue;
+      }
+      while (logIndex < matchingIndex) appendAutomaticLog(allMoveLogs[logIndex++]!);
+      turnNumber = entry.turnNumber ?? turnNumber;
+      rows.push({ entry, log: allMoveLogs[logIndex++] });
+    }
+    while (logIndex < allMoveLogs.length) appendAutomaticLog(allMoveLogs[logIndex++]!);
 
-    const entries = allRawEntries.slice(-limit);
+    const entries = rows.slice(-limit);
     const viewerSide = view === "playerOne" || view === "playerTwo" ? view : undefined;
 
-    return entries.map((entry, index) => {
-      const params = normalizeMoveParams(entry.input);
+    return entries.map(({ entry, log: fallbackMoveLog }, index) => {
+      const params =
+        entry.moveId === "undo" && typeof entry.restoredCheckpointStateID === "number"
+          ? {
+              ...normalizeMoveParams(entry.input),
+              restoredCheckpointStateID: entry.restoredCheckpointStateID,
+            }
+          : normalizeMoveParams(entry.input);
       const actorSide = this.#resolveSideFromOwner(entry.playerId);
       const actorId = String(entry.playerId);
-      const moveId = assertLorcanaSimulatorMoveId(entry.moveId);
-      const fallbackMoveLog = fallbackMoveLogs[index];
-
+      const moveId =
+        entry.moveId === "turnStart"
+          ? "turnStart"
+          : assertLorcanaSimulatorMoveId(normalizeLoggedMoveId(entry.moveId));
       const typedLogEntry = fallbackMoveLog
         ? (fallbackMoveLog as MoveLogEntrySnapshot["typedLogEntry"])
         : undefined;
@@ -374,6 +417,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
         id: `${entry.timestamp}-${index}-${entry.moveId}`,
         moveId,
         typedLogEntry,
+        knownPlayerIds: Object.keys(this.#engine.getBoard(view).players),
         playerId: actorId,
         params,
         timestamp: entry.timestamp,
@@ -587,8 +631,11 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
     return this.#engine
       .getServerEngine()
       .getMoveLogHistory()
-      .map((log) => composeMoveLogForViewer(log, viewerId))
-      .filter((log) => log.moveType !== "turnStart" && log.moveType !== "gameEnd");
+      .filter(
+        (log) =>
+          log.moveType !== "gameEnd" && (log.moveType !== "turnStart" || log.public.length > 0),
+      )
+      .map((log) => composeMoveLogForViewer(log, viewerId));
   }
 
   #buildCardReferenceResolver(
@@ -718,6 +765,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
       keywordValues: card?.keywordValues,
       keywords,
       hasQuestRestriction: card?.hasQuestRestriction ?? false,
+      hasChallengeRestriction: card?.hasChallengeRestriction ?? false,
       isDrying: card?.drying ?? false,
       isMasked,
       facePresentation,
@@ -806,4 +854,19 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
     }
     return undefined;
   }
+}
+
+// The engine splits alternate play costs into dedicated internal moves. The
+// simulator exposes one playCard command and reads the cost from its params.
+function normalizeLoggedMoveId(moveId: string): string {
+  if (moveId === "chooseFirstPlayer") {
+    return "chooseWhoGoesFirst";
+  }
+  if (moveId === "inkCard") {
+    return "putCardIntoInkwell";
+  }
+  if (moveId === "moveToLocation") {
+    return "moveCharacterToLocation";
+  }
+  return moveId === "singCard" || moveId === "shiftCard" ? "playCard" : moveId;
 }

@@ -66,7 +66,7 @@ export const op09Koala103: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

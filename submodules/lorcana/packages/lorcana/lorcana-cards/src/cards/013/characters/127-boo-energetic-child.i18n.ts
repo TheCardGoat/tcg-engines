@@ -45,15 +45,15 @@ export const booEnergeticChildI18n: Record<Languages, I18nProperties> = {
   },
   it: {
     name: "Boo",
-    version: "Energetic Child",
+    version: "Bambina Vivace",
     text: [
       {
-        title: "<Rush> (This character can challenge the turn they're played.)",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Kid-Tastrophe!",
+        title: "Bimbabomba!",
         description:
-          "Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
+          "Ogni volta che questo personaggio sfida un altro personaggio con 3 {S} o inferiore, esilia quel personaggio. (Nessun danno viene inflitto in quella sfida.)",
       },
     ],
   },

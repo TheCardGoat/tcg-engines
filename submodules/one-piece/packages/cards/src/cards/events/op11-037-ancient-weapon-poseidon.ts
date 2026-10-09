@@ -48,12 +48,12 @@ export const op11AncientWeaponPoseidon037: EventCard = {
                   {
                     filter: "trait",
                     value: "Neptunian",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Fish-Man Island",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

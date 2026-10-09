@@ -6,6 +6,17 @@ import { op15Koby009 } from "../../../../../cards/src/cards/characters/op15-009-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-009 Koby", () => {
+  test("plays Koby for the printed cost of one DON!!", () => {
+    const engine = OnePieceTestEngine.create({ hand: [op15Koby009], activeDon: 1 });
+    const kobyId = engine.findCardInZone("south", "hand", op15Koby009);
+    engine.playCard(op15Koby009, "south");
+    expect(engine.getView("south").players.south.activeDon).toBe(0);
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).toContain(kobyId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("keeps a 7000-or-less base power Character on the field for -2000 Leader power", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op15Koby009, eb01Doma005], activeDon: 2 },

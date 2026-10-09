@@ -770,34 +770,34 @@
   /* During combat, the chain and pending stack are peer tabletop zones. Keep
      them in one quiet row instead of floating the stack over the chain. */
   .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
-    > :is(.fab-resolution-stack, .fab-compact-resolution-panel)
-  ) {
+      > :is(.fab-resolution-stack, .fab-compact-resolution-panel)
+    ) {
     --fab-combat-stage-inset: clamp(0.75rem, 2.5vw, 2.5rem);
     --fab-combat-stage-gap: clamp(0.55rem, 1vw, 0.8rem);
     --fab-stack-panel-width: clamp(8.75rem, 11vw, 10.5rem);
   }
 
   .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
-    > .fab-compact-resolution-panel[data-stack-count="2"]
-  ) {
+      > .fab-compact-resolution-panel[data-stack-count="2"]
+    ) {
     --fab-stack-panel-width: clamp(9.5rem, 13vw, 11.5rem);
   }
 
   .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
-    > .fab-compact-resolution-panel[data-stack-count="3"]
-  ) {
+      > .fab-compact-resolution-panel[data-stack-count="3"]
+    ) {
     --fab-stack-panel-width: clamp(10.5rem, 15vw, 13rem);
   }
 
   .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
-    > .fab-resolution-stack
-  ) {
+      > .fab-resolution-stack
+    ) {
     --fab-stack-panel-width: clamp(14rem, 22vw, 18rem);
   }
 
   .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
-    > .fab-resolution-stack[data-minimized="true"]
-  ) {
+      > .fab-resolution-stack[data-minimized="true"]
+    ) {
     --fab-stack-panel-width: clamp(10rem, 17vw, 13rem);
   }
 

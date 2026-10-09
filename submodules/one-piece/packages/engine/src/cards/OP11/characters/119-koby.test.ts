@@ -91,4 +91,23 @@ describe("OP11-119 Koby", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: granting active-target attacks does not let a newly played Character attack", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op11Koby119], activeDon: op11Koby119.cost },
+      { character: [eb01Doma005] },
+    );
+    engine.asSouth().play(op11Koby119);
+    const koby = engine.findCardInZone("south", "character", op11Koby119);
+    engine.asSouth().chooseTargets(koby);
+    engine.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: koby,
+      targetId: engine.findCardInZone("north", "character", eb01Doma005),
+    });
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === koby)
+        ?.rested,
+    ).toBe(false);
+  });
 });

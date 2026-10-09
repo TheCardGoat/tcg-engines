@@ -129,13 +129,20 @@ describe("OP05-079 through OP05-092 shared parser regressions", () => {
     });
   });
 
-  test("matches Rosward's Celestial Dragons trait inclusively", () => {
+  test("matches Rosward's Celestial Dragons trait exactly", () => {
     expect(
       buildCardEffects(
         "[Your Turn] If the only Characters on your field are [Celestial Dragons] type Characters, give all of your opponent's Characters -6 cost.",
       )?.permanentEffects?.[0]?.conditions?.[1],
     ).toMatchObject({
-      filters: [{ filter: "trait", value: "Celestial Dragons", match: "includes", negate: true }],
+      condition: "compound",
+      operator: "and",
+      conditions: [
+        { condition: "zoneCount", comparison: "gte", value: 1 },
+        {
+          filters: [{ filter: "trait", value: "Celestial Dragons", match: "exact", negate: true }],
+        },
+      ],
     });
   });
 });

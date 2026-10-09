@@ -36,6 +36,14 @@ export const op17Kyo045: CharacterCard = {
   effect:
     "If one of your Characters would be removed from the field by your opponent's effect, you may trash 2 cards from your hand instead.\n\n[On Play] Draw 1 card.",
   effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        source: "opponentEffect",
+        target: { player: "self", zones: ["character"], count: { amount: 1 } },
+        replacementAction: { action: "trashFromHand", player: "self", amount: 2 },
+      },
+    ],
     effects: [
       {
         trigger: "onPlay",

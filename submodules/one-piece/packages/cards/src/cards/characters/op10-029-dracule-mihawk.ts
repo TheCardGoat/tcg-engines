@@ -23,7 +23,7 @@ export const op10DraculeMihawk029: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["The Seven Warlords of the Sea ODYSSEY"],
+  traits: ["ODYSSEY", "The Seven Warlords of the Sea"],
   attribute: "slash",
   effect:
     '[On Play] If you have 2 or more rested Characters, set up to 1 of your rested "ODYSSEY" type Characters with a cost of 5 or less as active.',
@@ -64,7 +64,7 @@ export const op10DraculeMihawk029: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

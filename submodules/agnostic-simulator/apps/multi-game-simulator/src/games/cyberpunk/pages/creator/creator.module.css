@@ -1,0 +1,456 @@
+.workbench {
+  --creator-yellow: #ffe24e;
+  --creator-line: #748b893d;
+  --creator-muted: #93aaa7;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #090f12;
+  color: #dbe5e3;
+  overflow: hidden;
+}
+.editorHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--creator-line);
+  background: linear-gradient(110deg, #1c2a2c, #0b1114 70%);
+}
+.editorHeader h1 {
+  margin: 4px 0 0;
+  font:
+    600 28px/1.1 "Cyberpunk Blender Pro",
+    sans-serif;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+.sideboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-right: 1px solid var(--creator-line);
+  overflow-y: auto;
+  background: #111b20;
+}
+.hint {
+  color: var(--creator-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 8px;
+}
+.cardWrap {
+  min-width: 0;
+  position: relative;
+  border-radius: 5px;
+}
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #060b0e;
+  color: #dbe5e3;
+  border: 1px solid #ffffff24;
+  padding: 3px;
+  border-radius: 5px;
+  text-align: left;
+  cursor: grab;
+  touch-action: none;
+}
+.card img {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: contain;
+  border-radius: 3px;
+  pointer-events: none;
+}
+.card span {
+  font-size: 10px;
+  line-height: 1.25;
+  min-height: 2.5em;
+  padding: 0 2px;
+}
+.card small {
+  font-size: 9px;
+  line-height: 1.3;
+  color: var(--creator-yellow);
+}
+.card:hover,
+.card:focus-visible,
+.selected {
+  border-color: var(--creator-yellow);
+  outline: 1px solid var(--creator-yellow);
+}
+.selection {
+  border-left: 2px solid var(--creator-yellow);
+  padding: 8px 10px;
+  background: #ffe24e0b;
+}
+.inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: #060b0e;
+  border: 1px solid var(--creator-line);
+}
+.settings {
+  border-top: 1px solid var(--creator-line);
+  padding-top: 14px;
+}
+.settings summary {
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--creator-muted);
+}
+.preview {
+  min-width: 0;
+  overflow-y: auto;
+  padding: 16px 20px;
+  background: radial-gradient(ellipse at center, #25393b75, transparent 80%), #0b1216;
+}
+.previewHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.seat {
+  border: 1px solid #8aa29f55;
+  border-top: 2px solid #53b8cc;
+  background: #0b151ba8;
+  margin-bottom: 12px;
+  padding: 10px;
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+.opponent {
+  border-top-color: #f06376;
+}
+.seatHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.seatHeader strong {
+  font:
+    600 18px "Cyberpunk Blender Pro",
+    sans-serif;
+  margin-right: auto;
+}
+.resource {
+  border: 1px solid var(--creator-line);
+  border-radius: 3px;
+  background: #17252b;
+  color: var(--creator-yellow);
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.resource small {
+  color: var(--creator-muted);
+}
+.boardZones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.zone {
+  min-width: 0;
+  border: 1px dashed #79918e62;
+  background: #03080c66;
+  border-radius: 4px;
+  padding: 6px;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.legendArea {
+  grid-column: span 1;
+}
+.field {
+  grid-column: span 3;
+}
+.hand {
+  grid-column: span 2;
+}
+.zoneTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 0 0 6px;
+  background: transparent;
+  border: 0;
+  color: #b6c9c6;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.zoneTitle span {
+  color: var(--creator-yellow);
+}
+.zoneCards {
+  display: flex;
+  gap: 6px;
+  min-height: 62px;
+  overflow-x: auto;
+  align-items: flex-start;
+  padding: 2px;
+}
+.zoneCards .cardWrap {
+  flex: 0 0 64px;
+}
+.field .zoneCards,
+.legendArea .zoneCards {
+  min-height: 116px;
+}
+.emptyZone {
+  border: 0;
+  color: #839b98;
+  background: transparent;
+  font-size: 11px;
+  width: 100%;
+  align-self: stretch;
+  cursor: pointer;
+}
+.available {
+  border-color: #ffe24e99;
+}
+.over {
+  border-color: var(--creator-yellow);
+  outline: 2px solid var(--creator-yellow);
+  background: #ffe24e18;
+}
+.gear {
+  width: 24px;
+  aspect-ratio: 5 / 7;
+  object-fit: contain;
+  margin: 3px 2px 0 0;
+}
+.previewFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 2px 12px;
+}
+.dragCard {
+  width: 90px;
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 10px 10px #000a);
+  pointer-events: none;
+}
+.dragCard img {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: contain;
+}
+.tools {
+  position: fixed;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 8px;
+  background: #0b1114eb;
+  box-shadow: 0 4px 16px #0008;
+}
+@media (min-width: 1200px) {
+  .workspace {
+    grid-template-columns: 380px minmax(0, 1fr);
+  }
+  .preview {
+    padding: 20px 32px;
+  }
+  .zoneCards .cardWrap {
+    flex-basis: 80px;
+  }
+}
+@media (max-width: 700px) {
+  .workbench {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .editorHeader {
+    padding: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .editorHeader h1 {
+    font-size: 22px;
+  }
+  .editorHeader :global(.mantine-Button-root) {
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+  .workspace {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .preview {
+    padding: 12px;
+  }
+  .previewHeading {
+    align-items: flex-start;
+  }
+  .previewHeading > p {
+    max-width: 110px;
+    text-align: right;
+  }
+  .sideboard {
+    border-top: 1px solid var(--creator-line);
+    border-right: 0;
+    overflow: visible;
+  }
+  .catalog {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .zoneCards .cardWrap {
+    flex-basis: 52px;
+  }
+  .seat {
+    padding: 8px;
+  }
+  .resource {
+    padding: 6px;
+    font-size: 11px;
+  }
+  .boardZones {
+    gap: 5px;
+  }
+}
+.hand .zoneCards .cardWrap,
+.deck .zoneCards .cardWrap,
+.trash .zoneCards .cardWrap {
+  flex-basis: 40px;
+}
+.hand .card span,
+.deck .card span,
+.trash .card span {
+  min-height: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.hand .card small,
+.deck .card small,
+.trash .card small {
+  display: none;
+}
+.hand .gear,
+.deck .gear,
+.trash .gear {
+  width: 16px;
+}
+.field .zoneCards .cardWrap,
+.legendArea .zoneCards .cardWrap {
+  flex-basis: 52px;
+}
+.field .zoneCards,
+.legendArea .zoneCards {
+  min-height: 102px;
+}
+.zoneCards .card {
+  gap: 2px;
+}
+.zoneCards .card span {
+  font-size: 9px;
+}
+.field .card small,
+.legendArea .card small {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  padding: 2px;
+  background: #000d;
+  font-size: 8px;
+}
+@media (max-width: 700px) {
+  .workbench {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  .editorHeader {
+    flex-shrink: 0;
+  }
+  .workspace {
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+  }
+  .sideboard {
+    flex: 0 0 42%;
+    min-height: 0;
+    overflow-y: auto;
+    border-top: 0;
+    border-bottom: 1px solid var(--creator-line);
+  }
+  .preview {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+.help {
+  border: 1px solid var(--creator-line);
+  border-left: 2px solid var(--creator-yellow);
+  background: #060b0e;
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+.help summary {
+  color: var(--creator-yellow);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 24px;
+  line-height: 24px;
+}
+.help summary:focus-visible {
+  outline: 2px solid var(--creator-yellow);
+  outline-offset: 3px;
+}
+.help dl {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 14px;
+}
+.help dt {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.help dd {
+  margin: 0;
+  color: var(--creator-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}

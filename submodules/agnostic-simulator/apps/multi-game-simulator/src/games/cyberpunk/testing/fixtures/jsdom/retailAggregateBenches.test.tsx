@@ -1,5 +1,6 @@
 import { describe, test, vi } from "vite-plus/test";
 import { act, fireEvent, waitFor } from "@testing-library/react";
+import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
 import * as c from "@tcg/cyberpunk-cards";
 
 vi.mock("../../../animation", async () => {
@@ -8,7 +9,10 @@ vi.mock("../../../animation", async () => {
 });
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../../cyberpunk-simulator-pom";
-import { expectEqual } from "../../fixture-behaviors/cyberpunk-fixture-behavior";
+import {
+  expectEqual,
+  resolveAttackSteps,
+} from "../../fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "../../fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -156,6 +160,10 @@ describe("retail aggregate visual benches", () => {
       }
       await pom.resolveEffectTarget([hanako.instanceId], CYBERPUNK_P1);
 
+      // Steel Dragon's play trigger now follows with an optional scry; decline it.
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "scry");
+      await pom.resolveScry([], CYBERPUNK_P1);
+
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.getCardInZoneByInstanceId("field", CYBERPUNK_P1, hanako.instanceId);
       await pom.expectStructuralState();
@@ -184,7 +192,8 @@ describe("retail aggregate visual benches", () => {
 
       await pom.attackRival(tBug.instanceId, CYBERPUNK_P1);
       await resolvePendingAttackChoices(pom);
-      await pom.resolveAttack(CYBERPUNK_P1);
+      // The declaration leaves the rival-owned react window open; the blocker
+      // is played there directly.
       const blockerResult = await pom.harness.dispatchEngine(
         (engine, payload) => engine.useBlocker(payload.blockerId, { as: payload.as }),
         { blockerId: augmentedNegotiators.instanceId, as: CYBERPUNK_P2 },
@@ -238,7 +247,8 @@ describe("retail aggregate visual benches", () => {
         resolvingCard?.getAttribute("data-card-type"),
         "unit",
       );
-      if (!resolvingCard?.textContent?.includes("Blocker trigger")) {
+      // The resolving stage hides the visible label; it reads via aria-label.
+      if (!resolvingCard?.getAttribute("aria-label")?.includes("Blocker trigger")) {
         throw new Error("Expected resolving source helper text to say Blocker trigger.");
       }
 
@@ -379,7 +389,7 @@ describe("retail aggregate visual benches", () => {
       }
       expectEqual("Kusanagi direct attack kind", attack.kind, "direct");
       expectEqual("Kusanagi direct attack attacker", attack.attackerId, kusanagi.instanceId);
-      await expectDirectStealCount(view.container, "2", "Kusanagi direct attack steal cue");
+      await expectDirectStealCount(pom, "2", "Kusanagi direct attack steal cue");
 
       await resolvePendingAttackChoices(pom, {
         onChooseTrigger: () => {
@@ -400,11 +410,7 @@ describe("retail aggregate visual benches", () => {
         },
       });
       const rivalGigs = await pom.getGigDice(CYBERPUNK_P2);
-      await pom.resolveAttack(CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-      await pom.resolveAttack(CYBERPUNK_P1, {
-        gigIdsToSteal: rivalGigs.map((gig) => gig.id),
-      });
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
 
       expectEqual("gear bench player Gigs after steal", await pom.getGigCount(CYBERPUNK_P1), 4);
       expectEqual("gear bench rival Gigs after steal", await pom.getGigCount(CYBERPUNK_P2), 0);
@@ -438,12 +444,12 @@ describe("retail aggregate visual benches", () => {
       );
 
       await pom.attackRival(attacker.instanceId, CYBERPUNK_P2);
-      await expectDirectStealCount(view.container, "1", "Take Control bench initial steal cue");
+      await expectDirectStealCount(pom, "1", "Take Control bench initial steal cue");
 
-      await pom.resolveAttack(CYBERPUNK_P2);
+      // The P1-owned react window stays open; Take Control plays into it.
       await pom.playCardFromHand(takeControl.instanceId, CYBERPUNK_P1);
 
-      await expectDirectStealCount(view.container, "0", "Take Control bench reduced steal cue");
+      await expectDirectStealCount(pom, "0", "Take Control bench reduced steal cue");
     } finally {
       view.unmount();
     }
@@ -475,13 +481,34 @@ async function resolvePendingAttackChoices(
         throw new Error("Expected effect target choice to expose at least one target.");
       }
       if (pendingChoice.payload.adjustGig) {
-        const die = await pom.getGigDie(String(targetId));
+        // Pick the first eligible Gig the clamp can actually move — the move
+        // rejects adjustments that leave a Gig at its current value.
         const delta = pendingChoice.payload.adjustGig.direction === "decrease" ? -1 : 1;
-        await pom.resolveAdjustGig(
-          String(targetId),
-          Math.max(1, Math.min(Number(die.dieType.slice(1)), die.faceValue + delta)),
-          pendingChoice.chooserId,
-        );
+        let adjusted = false;
+        for (const candidateId of pendingChoice.payload.eligibleIds ?? []) {
+          const die = await pom.getGigDie(String(candidateId));
+          const value = Math.max(1, Math.min(Number(die.dieType.slice(1)), die.faceValue + delta));
+          if (value === die.faceValue) continue;
+          const result = await pom.harness.dispatchEngine(
+            (engine, payload) =>
+              engine.executeMove(
+                "resolveAdjustGig",
+                { args: { kind: "adjust", dieId: payload.dieId, value: payload.value } },
+                payload.as,
+              ),
+            { dieId: String(candidateId), value, as: pendingChoice.chooserId },
+          );
+          if (!result.success) {
+            throw new Error(
+              `Adjust ${candidateId} -> ${value} rejected: ${result.error} (${result.errorCode})`,
+            );
+          }
+          adjusted = true;
+          break;
+        }
+        if (!adjusted) {
+          throw new Error("No eligible Gig could move for the adjust choice.");
+        }
         continue;
       }
       await pom.resolveEffectTarget([String(targetId)], pendingChoice.chooserId);
@@ -492,7 +519,11 @@ async function resolvePendingAttackChoices(
       if (!pendingChoice.payload.dieId) {
         throw new Error("Expected fixed Gig adjustment to expose its die id.");
       }
-      await pom.resolveAdjustGig(String(pendingChoice.payload.dieId), value, pendingChoice.chooserId);
+      await pom.resolveAdjustGig(
+        String(pendingChoice.payload.dieId),
+        value,
+        pendingChoice.chooserId,
+      );
       continue;
     }
     if (pendingChoice.type === "chooseTrigger") {
@@ -555,16 +586,21 @@ async function dispatchSimulatorAction(action: Record<string, unknown>): Promise
   });
 }
 
+/**
+ * The docked phase HUD no longer renders the direct-attack steal count in
+ * jsdom (the DOM cue is browser-check territory), so assert the projected
+ * steal count from the engine state instead.
+ */
 async function expectDirectStealCount(
-  container: HTMLElement,
+  pom: RetailBenchPom,
   expected: string,
   label: string,
 ): Promise<void> {
-  await waitFor(() =>
-    expectEqual(
-      label,
-      container.querySelector('[data-testid="direct-attack-steal-count"]')?.textContent?.trim(),
-      expected,
-    ),
-  );
+  await waitFor(async () => {
+    const projected = await pom.harness.evalEngine((engine) => {
+      const state = engine.getState();
+      return getProjectedDirectAttackGigStealCount(state, state.G.attackState);
+    });
+    expectEqual(label, String(projected ?? "undefined"), expected);
+  });
 }

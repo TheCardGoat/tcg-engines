@@ -29,4 +29,41 @@ describe("OP08-017 I'd Never Shoot You!!!!", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("Counter can skip its own buff and still reduce opposing Leader for the turn", () => {
+    const e = OnePieceTestEngine.create({}, { hand: ["OP08-017"], activeDon: 2, life: 3 });
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("north", "hand", "OP08-017")] },
+      "north",
+    );
+    e.asNorth().chooseTargets();
+    e.asNorth().chooseTargets(e.leader("south"));
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("south").players.south.leader.power).toBe(4000);
+    e.asSouth().endTurn();
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+  });
+  test.each(["leader", "character"] as const)(
+    "Life Trigger gives own%s1000 only for current turn",
+    (zone) => {
+      const e = OnePieceTestEngine.create({}, { life: ["OP08-017"], character: ["ST02-012"] });
+      const id =
+        zone === "leader" ? e.leader("north") : e.findCardInZone("north", "character", "ST02-012");
+      e.asSouth().attack(e.leader("south"), e.leader("north"));
+      e.asNorth().activateLifeTrigger();
+      e.asNorth().chooseTargets(id);
+      expect(
+        zone === "leader"
+          ? e.getView("north").players.north.leader.power
+          : e.getView("north").players.north.characters[0]?.power,
+      ).toBe(zone === "leader" ? 6000 : 4000);
+      e.asSouth().endTurn();
+      expect(
+        zone === "leader"
+          ? e.getView("north").players.north.leader.power
+          : e.getView("north").players.north.characters[0]?.power,
+      ).toBe(zone === "leader" ? 5000 : 3000);
+    },
+  );
 });

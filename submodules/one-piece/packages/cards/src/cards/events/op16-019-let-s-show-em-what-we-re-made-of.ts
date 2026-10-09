@@ -39,6 +39,11 @@ export const op16LetSShowEmWhatWeReMadeOf019: EventCard = {
               amount: 2,
               upTo: true,
             },
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+              { filter: "power", comparison: "eq", value: 8000 },
+            ],
           },
         ],
       },

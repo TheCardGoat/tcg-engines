@@ -35,7 +35,7 @@ export const op14eb04Pica071: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

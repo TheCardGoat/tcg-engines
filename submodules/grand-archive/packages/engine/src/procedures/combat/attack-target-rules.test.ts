@@ -67,20 +67,15 @@ const tauntAlly = card("attack-target-rules-taunt", "ALLY", { power: 1, life: 3 
   },
 ]);
 const filler = card("attack-target-rules-filler", "ACTION", {});
-const invalidUnblockableAttack = card(
-  "attack-target-rules-invalid-unblockable",
-  "ATTACK",
-  { power: 1 },
-  [
-    {
-      id: "invalidUnblockableAttack-a1",
-      kind: "static",
-      staticKind: "intrinsic",
-      text: "Unblockable",
-      keyword: { name: "unblockable" },
-    },
-  ],
-);
+const unblockableAttack = card("attack-target-rules-unblockable", "ATTACK", { power: 1 }, [
+  {
+    id: "unblockableAttack-a1",
+    kind: "static",
+    staticKind: "intrinsic",
+    text: "Unblockable",
+    keyword: { name: "unblockable" },
+  },
+]);
 const invalidTrueSightItem = card("attack-target-rules-invalid-true-sight", "ITEM", {}, [
   {
     id: "invalidTrueSightItem-a1",
@@ -134,13 +129,13 @@ function player(id: "p1" | "p2"): GrandArchiveStandardPlayerSetup {
 }
 
 describe("Grand Archive attack target rules", () => {
-  it("accepts True Sight and Unblockable only from their rules-defined participant types", () => {
+  it("accepts Unblockable from attacks but rejects True Sight from unrelated items", () => {
     const program = createGrandArchiveMatchProgram([
       champion,
       filler,
       tauntAlly,
       stealthAlly,
-      invalidUnblockableAttack,
+      unblockableAttack,
       invalidTrueSightItem,
     ]);
     const setupPlayer = (id: "p1" | "p2"): GrandArchiveStandardPlayerSetup => ({
@@ -150,7 +145,7 @@ describe("Grand Archive attack target rules", () => {
         { definitionId: filler.canonicalId, count: 6 },
         ...(id === "p1"
           ? [
-              { definitionId: invalidUnblockableAttack.canonicalId, count: 1 },
+              { definitionId: unblockableAttack.canonicalId, count: 1 },
               { definitionId: invalidTrueSightItem.canonicalId, count: 1 },
             ]
           : [
@@ -179,7 +174,7 @@ describe("Grand Archive attack target rules", () => {
       )!.id;
     const attackerId = initial.zones[p1].field[0]!;
     const opposingChampionId = initial.zones[p2].field[0]!;
-    const attackId = find(p1, invalidUnblockableAttack.canonicalId);
+    const attackId = find(p1, unblockableAttack.canonicalId);
     const itemId = find(p1, invalidTrueSightItem.canonicalId);
     const tauntId = find(p2, tauntAlly.canonicalId);
     const stealthId = find(p2, stealthAlly.canonicalId);
@@ -213,7 +208,7 @@ describe("Grand Archive attack target rules", () => {
       proposeGrandArchiveAttackDeclaration(program, positioned, p1, command(opposingChampionId), {
         resolvedAttack: true,
       }),
-    ).toThrow("legal attack target");
+    ).not.toThrow();
 
     const tauntRested = new GrandArchiveTransactionKernel().transact(positioned, [
       { type: "object-state-changed", objectId: tauntId, state: "rested", value: true },

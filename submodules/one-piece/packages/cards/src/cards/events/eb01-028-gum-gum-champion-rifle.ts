@@ -21,7 +21,7 @@ export const eb01GumGumChampionRifle028: EventCard = {
   rarity: "R",
   setId: "EB01",
   cost: 1,
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   effect:
     "[Counter] If your Leader has the [Impel Down] type, up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, your opponent returns 1 of their active Characters to the owner's hand.[Trigger] Return up to 1 Character with a cost of 3 or less to the bottom of the owner's deck.",
   effects: {
@@ -32,7 +32,7 @@ export const eb01GumGumChampionRifle028: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

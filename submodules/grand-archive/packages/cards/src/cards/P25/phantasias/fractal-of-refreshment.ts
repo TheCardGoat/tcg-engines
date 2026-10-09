@@ -48,66 +48,62 @@ export const fractalOfRefreshment: GrandArchiveCard<GrandArchiveAbilityDefinitio
             },
           },
           effect: {
-            kind: "sequence",
-            effects: [
-              {
-                kind: "optional",
-                player: "controller",
-                allOrNothing: true,
-                effect: {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "reveal",
+            kind: "optional",
+            player: "controller",
+            allOrNothing: true,
+            effect: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "reveal",
+                  player: "controller",
+                  selection: {
+                    id: "revealed-cards",
+                    kind: "choice",
+                    declared: "resolution",
+                    chooser: "controller",
+                    count: {
+                      kind: "up-to",
+                      amount: 3,
+                    },
+                    candidates: {
+                      kind: "card",
+                      zones: ["memory"],
+                      relationship: "zone-of",
                       player: "controller",
-                      selection: {
-                        id: "revealed-cards",
-                        kind: "choice",
-                        declared: "resolution",
-                        chooser: "controller",
-                        count: {
-                          kind: "up-to",
-                          amount: 3,
-                        },
-                        candidates: {
-                          kind: "card",
-                          zones: ["memory"],
-                          relationship: "zone-of",
-                          player: "controller",
-                          filter: {
-                            kind: "element",
-                            oneOf: ["WATER"],
-                          },
-                        },
+                      filter: {
+                        kind: "element",
+                        oneOf: ["WATER"],
                       },
                     },
-                    {
-                      kind: "move",
-                      subject: {
-                        kind: "bound",
-                        binding: "revealed-cards",
-                      },
-                      destination: {
-                        zone: "main-deck",
-                        placement: {
-                          kind: "bottom",
-                          orderChosenBy: "controller",
-                        },
-                      },
+                  },
+                },
+                {
+                  kind: "move",
+                  subject: {
+                    kind: "bound",
+                    binding: "revealed-cards",
+                  },
+                  destination: {
+                    zone: "main-deck",
+                    placement: {
+                      kind: "bottom",
+                      orderChosenBy: "controller",
                     },
-                  ],
+                  },
+                  bindResultAs: "returned-cards",
                 },
-              },
-              {
-                kind: "draw",
-                player: "controller",
-                amount: {
-                  kind: "modified-ability-result-amount",
-                  metric: "cards-moved",
+                {
+                  kind: "draw",
+                  player: "controller",
+                  amount: {
+                    kind: "binding-count",
+                    binding: "returned-cards",
+                  },
+                  to: "memory",
                 },
-                to: "memory",
-              },
-            ],
+              ],
+            },
           },
         },
       ],

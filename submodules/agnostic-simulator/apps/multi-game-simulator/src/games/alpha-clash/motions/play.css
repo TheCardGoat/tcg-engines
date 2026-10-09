@@ -1,0 +1,71 @@
+.play-motion-page .play-subject {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.play-motion-page .play-subject:active {
+  cursor: grabbing;
+}
+.play-motion-page .play-subject:focus-visible {
+  outline: 2px solid var(--selection-rim);
+}
+.play-motion-page .play-target {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.play-drop-zone {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 18px;
+  height: 470px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: transparent;
+  padding: 14px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 1px;
+  pointer-events: none;
+  transition:
+    background 0.16s,
+    border-color 0.16s;
+}
+.play-drop-zone[data-active="true"] {
+  border-color: #f5e64255;
+  background: #f5e64208;
+  color: #e8df9a;
+}
+.play-motion-page .motion-step {
+  width: 350px;
+}
+.resolution-summary {
+  color: #f5e642 !important;
+  font-size: 13px !important;
+}
+.resolution-summary span {
+  padding: 0 8px;
+}
+.damage-readout {
+  position: absolute;
+  z-index: 28;
+  padding: 6px 12px;
+  border-radius: 5px;
+  background: #17211de8;
+  color: #f1dfb2;
+  font-size: 13px;
+  border: 1px solid #96865b66;
+}
+.play-motion-page footer {
+  min-height: 48px;
+}
+.play-motion-page [data-phase="resolve"] {
+  color: #f5e642;
+}
+.play-vfx {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+}

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op10DamnedPunk116 } from "../../../../../cards/src/cards/events/op10-116-damned-punk.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP10-116 Damned Punk", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op10DamnedPunk116);
-  });
-});

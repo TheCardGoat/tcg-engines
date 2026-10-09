@@ -6,6 +6,51 @@ import { OnePieceTestEngine } from "../../../index.ts";
 const OPPONENTS_TURN = { firstPlayer: "south", activeSeat: "north" } as const;
 
 describe("OP15-003 Alvida", () => {
+  test("Activate Main pays opponent rested DON!! then gives own rested DON!! once per turn", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Alvida003], restedDon: 2 },
+      { character: [eb01Doma005], restedDon: 2 },
+    );
+    const sourceId = engine.findCardInZone("south", "character", op15Alvida003);
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(1);
+    expect(engine.getView("south").players.south.restedDon).toBe(1);
+    expect(engine.getView("south").players.north.restedDon).toBe(1);
+    expect(engine.getView("south").players.north.characters[0]?.attachedDon).toBe(1);
+    // Both donor pools still fund another payment; only OPT prevents it.
+    const failed = engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: sourceId,
+      trigger: "activateMain",
+    });
+    expect(failed.accepted).toBe(false);
+    expect(
+      OnePieceTestEngine.fromState(failed.state).getView("south").players.north.restedDon,
+    ).toBe(1);
+  });
+
+  test("may decline the Activate Main payment without giving either owner's DON!!", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Alvida003], restedDon: 1 },
+      { character: [eb01Doma005], restedDon: 1 },
+    );
+    const sourceId = engine.findCardInZone("south", "character", op15Alvida003);
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(engine.getView("south").players.south.restedDon).toBe(1);
+    expect(engine.getView("south").players.north.restedDon).toBe(1);
+    expect(engine.getView("south").players.north.characters[0]?.attachedDon).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("replaces its own K.O. by trashing a Character card with 6000 or less power from hand", () => {
     const engine = OnePieceTestEngine.create(
       {

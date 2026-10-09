@@ -8,7 +8,6 @@ import {
 } from "./strategy-registry.ts";
 import { boundDeckProfile, withDeckProfile } from "./bind-profile.ts";
 import type { DeckStrategyProfile } from "./deck-profile.ts";
-import currentPromotion from "./promotions/current.json" with { type: "json" };
 
 const TEST_PROFILE: DeckStrategyProfile = {
   deckId: "authored-test-deck",
@@ -23,24 +22,32 @@ describe("automated action strategy registry", () => {
     }
   });
 
-  test("default surfaces the promotion it follows", () => {
-    const promotedId = currentPromotion.promotedStrategyId;
-    const defaultOption = getAutomatedActionStrategyOption("default");
-    if (promotedId === "default") {
-      expect(defaultOption?.label).toBe("Default");
-      return;
-    }
-    const promoted = getAutomatedActionStrategyOption(promotedId);
-    expect(promoted).toBeDefined();
-    expect(defaultOption?.label).toBe(`Default (promoted: ${promoted?.label})`);
-    expect(defaultOption?.description).toContain(promoted?.label ?? "");
+  test("Recommended discloses Expert and its hidden information access", () => {
+    const recommended = getAutomatedActionStrategyOption("default");
+    expect(recommended).toMatchObject({ label: "Recommended", informationPolicy: "oracle" });
+    expect(recommended?.description).toContain("Expert (full information)");
+    expect(recommended?.description).toContain(
+      "Sees both hands, both decks in order, and face-down Legends",
+    );
   });
 
-  test("default resolves to the promoted strategy", () => {
-    expect(DEFAULT_AUTOMATED_ACTION_STRATEGY_ID).toBe(currentPromotion.promotedStrategyId);
-    expect(getSafeAutomatedActionStrategyOption("default").id).toBe(
-      currentPromotion.promotedStrategyId,
-    );
+  test("production strategies use player-facing labels", () => {
+    expect(getAutomatedActionStrategyOption("default")?.label).toBe("Recommended");
+    expect(getAutomatedActionStrategyOption("tactical")?.label).toBe("Sharp");
+    expect(getAutomatedActionStrategyOption("tactical-ability-aware")?.label).toBe("Masterful");
+  });
+
+  test("bot games default to Expert while explicit public strategies remain available", () => {
+    expect(DEFAULT_AUTOMATED_ACTION_STRATEGY_ID).toBe("expert-oracle");
+    for (const requested of [undefined, null, "default", "does-not-exist"]) {
+      const option = getSafeAutomatedActionStrategyOption(requested);
+      expect(option.id).toBe("expert-oracle");
+      expect(option.informationPolicy).toBe("oracle");
+      expect(option.testOnly).not.toBe(true);
+    }
+    expect(getSafeAutomatedActionStrategyOption("tactical").informationPolicy).toBe("public");
+    expect(getAutomatedActionStrategyOption("tactical")?.testOnly).not.toBe(true);
+    expect(getAutomatedActionStrategyOption("first-legal")?.testOnly).toBe(true);
   });
 
   test("profile binding preserves the strategy name so seats stay identifiable", () => {

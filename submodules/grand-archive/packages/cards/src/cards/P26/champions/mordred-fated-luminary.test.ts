@@ -12,3 +12,9 @@ describe("Mordred, Fated Luminary — Lineage restriction", () => {
     memoryCost: 3,
   });
 });
+
+import { proveSameLevelChampion } from "../../../testing/same-level-champion.ts";
+/** @covers KqBosnU7pU-a2 */
+describe("Mordred, Fated Luminary — same-base-level permission and draw", () => {
+  proveSameLevelChampion(mordredFatedLuminary, "Mordred");
+});

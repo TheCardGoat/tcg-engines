@@ -13,6 +13,16 @@
   margin: 0 auto;
 }
 
+.startupPage {
+  display: flex;
+  align-items: center;
+  padding-bottom: 48px;
+}
+
+.startupShell {
+  width: min(640px, 100%);
+}
+
 .header {
   margin-bottom: 24px;
 }
@@ -38,6 +48,22 @@
   color: rgb(230 244 251 / 72%);
   font-size: 14px;
   line-height: 1.6;
+}
+
+.liveSyncStatus {
+  position: fixed;
+  z-index: 50;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 4px 8px;
+  border: 1px solid rgb(74 217 255 / 36%);
+  background: #101014;
+  color: #e6f4fb;
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
 }
 
 .panel {
@@ -253,6 +279,47 @@
   background: #fff05a;
 }
 
+.recoveryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recoveryActions .button,
+.recoveryActions .buttonLink {
+  padding: 0 20px;
+}
+
+.recoveryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(74 217 255 / 60%);
+  border-radius: 6px;
+  color: #e6f4fb;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 20px;
+  text-decoration: none;
+}
+
+.recoveryLink:hover {
+  background: rgb(74 217 255 / 12%);
+}
+
+.recoveryActions :is(button, a):focus-visible {
+  outline: 2px solid #4ad9ff;
+  outline-offset: 3px;
+}
+
+.errorDetail {
+  margin: 0;
+  color: #ffc8d2;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .proposalBanner {
   position: fixed;
   z-index: 60;
@@ -426,4 +493,13 @@
   .savedReplayActions {
     justify-content: flex-start;
   }
+}
+.preparationBoard {
+  height: 100dvh;
+  overflow: hidden;
+}
+.preparationBoard :global([data-testid="opponent-hand-overlay"]),
+.preparationBoard :global([data-testid="player-hand-dock"]) {
+  /* The blocked warm-up board uses a game-start fixture; no hand exists yet in pregame. */
+  visibility: hidden;
 }

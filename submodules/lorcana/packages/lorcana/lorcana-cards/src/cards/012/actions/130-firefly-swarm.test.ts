@@ -77,7 +77,7 @@ describe("Firefly Swarm", () => {
           index: 1,
           label:
             "If 2 or more other cards were put into your discard this turn, banish chosen character",
-          legal: false,
+          legal: true,
         }),
       ],
     });
@@ -224,4 +224,17 @@ describe("Firefly Swarm", () => {
     ).toBeSuccessfulCommand();
     expect(testEngine.asPlayerTwo().getCardZone(weakTarget)).toBe("discard");
   });
+});
+
+// CR 6.1.2: a conditional "choose one" mode remains selectable when false.
+it("Firefly Swarm can choose the unmet conditional mode without banishing a character", () => {
+  const g = LorcanaMultiplayerTestEngine.createWithFixture(
+    { hand: [fireflySwarm], inkwell: fireflySwarm.cost, deck: [filler1] },
+    { play: [weakTarget], deck: [filler2] },
+  );
+  expect(g.asPlayerOne().playCard(fireflySwarm)).toBeSuccessfulCommand();
+  expect(g.asPlayerOne().respondWithChoice(1)).toBeSuccessfulCommand();
+  expect(g.asPlayerTwo().getCardZone(weakTarget)).toBe("play");
+  expect(g.asPlayerOne().getCardZone(fireflySwarm)).toBe("discard");
+  expect(g.asPlayerOne()).toHavePendingEffectCount(0);
 });

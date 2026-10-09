@@ -7,7 +7,7 @@ import {
   welcomeToNightCityRetailFloorIt,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine } from "../../src/testing/index.ts";
-import { DIE_MAX_VALUES, type DieType } from "../../src/types/gig-die.ts";
+import { DIE_MAX_VALUES, type DieType } from "@tcg/cyberpunk-types";
 
 /**
  * Ready Phase — the start-of-turn sequence (pass-phase.ts `endTurn`).

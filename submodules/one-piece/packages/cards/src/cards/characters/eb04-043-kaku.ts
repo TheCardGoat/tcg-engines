@@ -32,7 +32,7 @@ export const eb04Kaku043: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["CP0 Egghead"],
+  traits: ["Egghead", "CP0"],
   attribute: "slash",
   effect:
     "[Once Per Turn] If your black Character with a base cost of 5 or less would be K.O.'d by your opponent's effect, you may place 3 cards from your trash at the bottom of your deck in any order instead.\n[On Play] Trash 2 cards from the top of your deck.",

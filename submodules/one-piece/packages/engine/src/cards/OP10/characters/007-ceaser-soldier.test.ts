@@ -1,29 +1,15 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { CharacterCard } from "@tcg/op-types";
-import { eb01Doma005, op10CeaserSoldier007, op10Smiley009 } from "@tcg/op-cards";
+import { eb01Doma005, op10CeaserSoldier007, op10Smiley009, op10Monet016 } from "@tcg/op-cards";
 
-import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-const compoundPunkHazard: CharacterCard = {
-  ...eb01Doma005,
-  id: "TEST-OP10-007-COMPOUND-PUNK-HAZARD",
-  canonicalId: "TEST-OP10-007-COMPOUND-PUNK-HAZARD",
-  name: "Compound Punk Hazard",
-  cost: 2,
-  traits: ["Scientist Punk Hazard"],
-  effects: undefined,
-};
-
-registerCards([compoundPunkHazard]);
-
 describe("OP10-007 Ceaser Soldier", () => {
-  test("plays only an included Punk Hazard Character costing 2 or less from hand", () => {
+  test("plays only an Punk Hazard Character costing 2 or less from hand", () => {
     const engine = OnePieceTestEngine.create({
-      hand: [op10CeaserSoldier007, compoundPunkHazard, op10Smiley009, eb01Doma005],
+      hand: [op10CeaserSoldier007, op10Monet016, op10Smiley009, eb01Doma005],
       activeDon: op10CeaserSoldier007.cost,
     });
-    const eligibleId = engine.findCardInZone("south", "hand", compoundPunkHazard);
+    const eligibleId = engine.findCardInZone("south", "hand", op10Monet016);
     const expensiveId = engine.findCardInZone("south", "hand", op10Smiley009);
     const wrongTraitId = engine.findCardInZone("south", "hand", eb01Doma005);
 

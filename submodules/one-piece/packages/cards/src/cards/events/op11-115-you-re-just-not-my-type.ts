@@ -22,7 +22,7 @@ export const op11YouReJustNotMyType115: EventCard = {
   setId: "OP11",
   cost: 1,
   trigger: "K.O. up to 1 of your opponent's Characters with a cost of 2 or less.",
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   effect:
     "[Counter] If your Leader is [Shirahoshi], up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {

@@ -22,7 +22,7 @@ export const op10RadioKnife041: EventCard = {
   setId: "OP10",
   cost: 4,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Heart Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Heart Pirates"],
   effect:
     "[Main] Rest up to 1 of your opponent's Characters with a cost of 6 or less. Then, K.O. up to 1 of your opponent's rested Characters with a cost of 5 or less.",
   effects: {

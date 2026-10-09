@@ -30,7 +30,7 @@ export const op03Krieg025: CharacterCard = {
   setId: "OP03",
   cost: 6,
   power: 7000,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "ranged",
   effect:
     "[On Play] You may trash 1 card from your hand: K.O. up to 2 of your opponent's rested Characters with a cost of 4 or less.\n[DON!! x1] This Character gains [Double Attack].\n(This card deals 2 damage.)",

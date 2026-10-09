@@ -30,7 +30,7 @@ export const op12Tashigi031: CharacterCard = {
   setId: "OP12",
   cost: 5,
   power: 7000,
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   attribute: "slash",
   effect:
     "[On Play] Rest up to 1 of your opponent's Characters with a base cost of 6 or less. Then, give up to 3 rested DON!! cards to your [Roronoa Zoro] Leader.",

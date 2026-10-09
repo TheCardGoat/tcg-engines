@@ -85,46 +85,89 @@ export const recruitmentOfficer: GrandArchiveCard<GrandArchiveAbilityDefinition,
                 },
               },
               {
-                kind: "optional",
-                player: "controller",
-                allOrNothing: true,
-                effect: {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["ALLY"],
-                      },
+                kind: "choose",
+                selection: {
+                  id: "chosen-card",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "up-to",
+                    amount: 1,
+                  },
+                  unique: true,
+                  candidates: {
+                    kind: "card",
+                    binding: "referenced-cards",
+                    filter: {
+                      kind: "type",
+                      oneOf: ["ALLY"],
                     },
                   },
                 },
+                effect: {
+                  kind: "sequence",
+                  effects: [
+                    {
+                      kind: "reveal",
+                      player: "controller",
+                      selection: {
+                        id: "revealed-card",
+                        kind: "choice",
+                        declared: "resolution",
+                        chooser: "controller",
+                        count: {
+                          kind: "all",
+                        },
+                        unique: true,
+                        candidates: {
+                          kind: "card",
+                          binding: "chosen-card",
+                        },
+                      },
+                    },
+                    {
+                      kind: "move",
+                      subject: {
+                        kind: "bound",
+                        binding: "chosen-card",
+                      },
+                      destination: {
+                        zone: "hand",
+                      },
+                    },
+                  ],
+                },
               },
               {
-                kind: "move",
-                subject: {
-                  kind: "binding-remainder",
-                  binding: "referenced-cards",
-                  excluding: "selected-referenced-card",
+                kind: "choose",
+                selection: {
+                  id: "ordered-remainder",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "all",
+                  },
+                  ordered: true,
+                  unique: true,
+                  candidates: {
+                    kind: "card",
+                    binding: "referenced-cards",
+                    excluding: ["chosen-card"],
+                  },
                 },
-                destination: {
-                  zone: "main-deck",
-                  placement: {
-                    kind: "bottom",
-                    orderChosenBy: "controller",
+                effect: {
+                  kind: "move",
+                  subject: {
+                    kind: "bound",
+                    binding: "ordered-remainder",
+                  },
+                  destination: {
+                    zone: "main-deck",
+                    placement: {
+                      kind: "bottom",
+                    },
                   },
                 },
               },

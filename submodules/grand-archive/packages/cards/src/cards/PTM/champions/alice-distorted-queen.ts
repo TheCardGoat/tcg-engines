@@ -53,7 +53,9 @@ export const aliceDistortedQueen: GrandArchiveCard<GrandArchiveAbilityDefinition
               {
                 kind: "add-counter",
                 subject: {
-                  kind: "event-subject",
+                  kind: "mastery",
+                  player: "controller",
+                  name: "Phantasmagoria",
                 },
                 counter: {
                   named: "haunt",
@@ -87,7 +89,8 @@ export const aliceDistortedQueen: GrandArchiveCard<GrandArchiveAbilityDefinition
                 collection: {
                   zones: ["inner-lineage"],
                   host: {
-                    kind: "source",
+                    kind: "champion",
+                    player: "controller",
                   },
                   relationship: "lineage-of",
                 },

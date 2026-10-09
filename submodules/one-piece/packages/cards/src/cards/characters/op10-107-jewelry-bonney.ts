@@ -23,7 +23,7 @@ export const op10JewelryBonney107: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     '[Blocker]\n[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 "Supernovas" type Character card with a cost of 5 from your hand to the top of your Life cards face-up.',
@@ -53,7 +53,7 @@ export const op10JewelryBonney107: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Supernovas",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

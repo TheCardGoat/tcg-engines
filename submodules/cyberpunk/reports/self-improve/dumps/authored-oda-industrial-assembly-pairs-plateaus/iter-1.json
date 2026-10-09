@@ -1,0 +1,4686 @@
+{
+  "version": 1,
+  "seed": "improve/authored-oda-industrial-assembly-pairs-plateaus/1/authored-oda-industrial-assembly-pairs-plateaus-vs-authored-oda-industrial-assembly-pairs-plateaus/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-oda-industrial-assembly-pairs-plateaus",
+  "deckBId": "authored-oda-industrial-assembly-pairs-plateaus",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 11,
+  "stepCount": 64,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p2",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_347767227"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_453681092"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "dieId": "gd_453681092",
+          "dieType": "d12",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_453681092",
+          "dieType": "d12",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_453681092",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_395071246"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_179909873"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "cardId": "ci_179909873",
+          "cardName": "Synapse Burnout"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_179909873",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Synapse Burnout"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_238440414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_87057428"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "dieId": "gd_87057428",
+          "dieType": "d12",
+          "faceValue": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_87057428",
+          "dieType": "d12",
+          "result": 11,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_87057428",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_7751560"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_7751560",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_7751560",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_564372799",
+        "attachToId": "ci_7751560"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "Corpo Security"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_564372799",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_564372799",
+          "hostId": "ci_7751560",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_564372799",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "Corpo Security"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_395071246",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_665121592"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_511733819"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "dieId": "gd_511733819",
+          "dieType": "d10",
+          "faceValue": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_511733819",
+          "dieType": "d10",
+          "result": 10,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_511733819",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_142084554",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_142084554",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_565581628"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "cardId": "ci_565581628",
+          "cardName": "Corporate Surveillance"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_565581628",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Corporate Surveillance"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_126821970",
+        "attachToId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_126821970",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_126821970",
+          "hostId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_126821970",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_922032974"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_676607499"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "dieId": "gd_676607499",
+          "dieType": "d10",
+          "faceValue": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_676607499",
+          "dieType": "d10",
+          "result": 7,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_676607499",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_847661657",
+        "attachToId": "ci_7751560"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "Corpo Security"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_847661657",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_847661657",
+          "hostId": "ci_7751560",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_847661657",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "Corpo Security"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_968589846"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_395071246",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_800034416"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_817527421"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "dieId": "gd_817527421",
+          "dieType": "d8",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_817527421",
+          "dieType": "d8",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_817527421",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_347767227",
+        "attachToId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_347767227",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_347767227",
+          "hostId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_347767227",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_359648208"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_359648208",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_359648208",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_142084554",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_7751560"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 6,
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 10,
+            "originalAttackKind": "direct"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "attackerId": "ci_142084554",
+          "attackerName": "6th Street Recruits"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Corpo Security",
+            "attackerPower": 10,
+            "defenderPower": 6
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 5,
+          "cardId": "ci_7751560",
+          "cardName": "Corpo Security"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p1",
+          "turnNumber": 5,
+          "cardId": "ci_564372799",
+          "cardName": "Mantis Blades"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p1",
+          "turnNumber": 5,
+          "cardId": "ci_847661657",
+          "cardName": "Satori: Sword of Saburo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_7751560",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 6,
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 10,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_142084554",
+          "blockerId": "ci_7751560",
+          "originalTarget": null,
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_142084554",
+          "defenderId": "ci_7751560",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Corpo Security",
+            "attackerPower": 10,
+            "defenderPower": 6
+          },
+          "playerId": "p2",
+          "category": "combat",
+          "cardIds": ["ci_142084554", "ci_7751560"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_564372799",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_564372799",
+          "hostId": "ci_7751560",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_847661657",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_847661657",
+          "hostId": "ci_7751560",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_7751560",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_7751560",
+          "defeatedBy": "ci_142084554",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 6,
+            "attachedGearIds": ["ci_564372799", "ci_847661657"],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_564372799",
+          "defeatedBy": "ci_142084554",
+          "playerId": "p1",
+          "hostId": "ci_7751560",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "red",
+            "classifications": ["Cyberware"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 1,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": "ci_7751560"
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_847661657",
+          "defeatedBy": "ci_142084554",
+          "playerId": "p1",
+          "hostId": "ci_7751560",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "red",
+            "classifications": ["Arasaka", "Weapon"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": "ci_7751560"
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_395071246",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_453681092"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_395071246",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_453681092"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_87057428"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_87057428",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "friendlyDieType": "d12",
+          "friendlyValue": 3,
+          "rivalDieType": "d12",
+          "rivalValue": 11
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_395071246",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_87057428"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_87057428",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_453681092",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_87057428",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_453681092", "gd_87057428"],
+          "dieValues": [3, 11],
+          "dieTypes": ["d12", "d12"],
+          "playerId": "p2",
+          "fromPlayerIds": ["p2", "p1"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968589846",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_879835225"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_558620197"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "dieId": "gd_558620197",
+          "dieType": "d8",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_558620197",
+          "dieType": "d8",
+          "result": 4,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_558620197",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_238440414"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_238440414",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_238440414",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_395071246",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_828880785"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_202617103"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "dieId": "gd_202617103",
+          "dieType": "d6",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_202617103",
+          "dieType": "d6",
+          "result": 6,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_202617103",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerId": "ci_142084554",
+          "attackerName": "6th Street Recruits"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_142084554",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_676607499", "gd_558620197"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "attackerName": "6th Street Recruits",
+          "attackerPower": 10,
+          "stolenCount": 2,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 7
+            },
+            {
+              "dieType": "d8",
+              "faceValue": 4
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_676607499",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_142084554"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_676607499",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigStolen",
+          "dieId": "gd_558620197",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_142084554"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_558620197",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_142084554",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 2,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 10,
+            "count": 2,
+            "stolenGigs": "2 Gigs (D10 with value 7; D8 with value 4)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_359648208"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerId": "ci_359648208",
+          "attackerName": "MaxTac Squadron"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 4,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 3)"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_359648208",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_359648208",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "gigStolen",
+          "dieId": "gd_453681092",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_359648208"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_453681092",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_359648208",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 4,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 3)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_800034416",
+        "attachToId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_800034416",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_800034416",
+          "hostId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_800034416",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_965172251"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Yorinobu Arasaka: Embracing Destruction"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Yorinobu Arasaka: Embracing Destruction"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_359648208",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_359648208"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_965172251"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Yorinobu Arasaka: Embracing Destruction",
+            "targetId": "ci_965172251",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "legendArea",
+            "targetIndex": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_359648208",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_965172251"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Yorinobu Arasaka: Embracing Destruction",
+            "targetId": "ci_965172251",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "legendArea",
+            "targetIndex": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_359648208", "ci_965172251"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968589846",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_297094440"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_992279205"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "dieId": "gd_992279205",
+          "dieType": "d6",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_992279205",
+          "dieType": "d6",
+          "result": 5,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_992279205",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_238440414"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_238440414",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_238440414",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerId": "ci_238440414",
+          "attackerName": "MaxTac Squadron"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_87057428"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "attackerName": "MaxTac Squadron",
+          "attackerPower": 4,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_87057428",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_238440414"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_87057428",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_238440414",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 4,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_597280368"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "cardId": "ci_597280368",
+          "cardName": "Synapse Burnout"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_597280368",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_597280368",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Synapse Burnout"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_693151924"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597280368",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_693151924",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_693151924",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_238440414",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_238440414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_968589846"]
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "dieId": "gd_30812969",
+          "dieType": "d4",
+          "faceValue": 4
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Hanako Arasaka: Daughter of the Emperor",
+            "targetId": "ci_968589846",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_729163071"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Kerry Eurodyne: The Last Rockerboy",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_238440414",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_968589846"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Hanako Arasaka: Daughter of the Emperor",
+            "targetId": "ci_968589846",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_238440414", "ci_968589846"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_395071246",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_729163071"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_729163071"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Kerry Eurodyne: The Last Rockerboy",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_395071246"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_359648208",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_398688344"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_30812969",
+          "dieType": "d4",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_30812969",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_142084554"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_142084554",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_142084554",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_245990061"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerId": "ci_142084554",
+          "attackerName": "6th Street Recruits"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "abilityText": "When a friendly Unit steals a d6, increase a Gig by up to 6.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 12,
+            "count": 2,
+            "stolenGigs": "2 Gigs (D6 with value 5; D12 with value 11)"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigStolen",
+          "dieId": "gd_992279205",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_142084554"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_992279205",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigStolen",
+          "dieId": "gd_87057428",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_142084554"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_87057428",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_142084554",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "abilityText": "When a friendly Unit steals a d6, increase a Gig by up to 6.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_142084554"]
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_142084554",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 2,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 12,
+            "count": 2,
+            "stolenGigs": "2 Gigs (D6 with value 5; D12 with value 11)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_453681092",
+        "value": 9
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "6th Street Recruits",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 9,
+            "previousValue": 3,
+            "dieId": "gd_453681092",
+            "dieLabel": "D12"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_142084554",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_453681092"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "6th Street Recruits",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_142084554"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_453681092",
+          "previousValue": 3,
+          "newValue": 9,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 9,
+            "previousValue": 3,
+            "dieId": "gd_453681092",
+            "dieLabel": "D12"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_729163071"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kerry Eurodyne: The Last Rockerboy",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_179909873",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565581628",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_965172251",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_729163071",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_729163071",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kerry Eurodyne: The Last Rockerboy",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "dieId": "gd_77705654",
+          "dieType": "d4",
+          "faceValue": 3
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968589846",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968589846"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_238440414",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_597280368",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_74532575"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_77705654",
+          "dieType": "d4",
+          "result": 3,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_77705654",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_693151924"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_693151924",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_693151924",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_728880126"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerId": "ci_693151924",
+          "attackerName": "6th Street Recruits"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_395071246",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_728880126",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_87057428"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "attackerName": "6th Street Recruits",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_87057428",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_693151924"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_87057428",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_693151924",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_238440414"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerId": "ci_238440414",
+          "attackerName": "MaxTac Squadron"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_238440414",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_238440414",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_511733819"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "attackerName": "MaxTac Squadron",
+          "attackerPower": 4,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 10
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_511733819",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_238440414"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_511733819",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_238440414",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 4,
+            "count": 1,
+            "stolenGigs": "1 Gig (D10 with value 10)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_879835225"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kerry Eurodyne: The Last Rockerboy",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597280368",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_239371096",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_968589846",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_879835225",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_879835225",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kerry Eurodyne: The Last Rockerboy",
+            "cost": 4
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_74532575"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "cardId": "ci_74532575",
+          "cardName": "Sandevistan"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_74532575",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_74532575",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Sandevistan"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_432871446"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Industrial Assembly",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Industrial Assembly",
+            "abilityText": "Increase a Gig by up to 4. If you control a Gig with 8+ value, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_74532575",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_432871446",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_432871446",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Industrial Assembly",
+            "cost": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_432871446",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Industrial Assembly",
+            "abilityText": "Increase a Gig by up to 4. If you control a Gig with 8+ value, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_432871446"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_453681092",
+        "value": 10
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Industrial Assembly",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 10,
+            "previousValue": 9,
+            "dieId": "gd_453681092",
+            "dieLabel": "D12"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Industrial Assembly",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_243455174"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Corpo Security",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_432871446",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_453681092"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Industrial Assembly",
+            "targetNames": "D12",
+            "targetId": "gd_453681092",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_432871446"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_453681092",
+          "previousValue": 9,
+          "newValue": 10,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 10,
+            "previousValue": 9,
+            "dieId": "gd_453681092",
+            "dieLabel": "D12"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_243455174"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Industrial Assembly",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_243455174"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Corpo Security",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_432871446"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_238440414",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_238440414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_245990061"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Saburo Arasaka: Stubborn Patriarch",
+            "targetId": "ci_245990061",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 1
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_238440414",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_245990061"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_245990061",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Saburo Arasaka: Stubborn Patriarch",
+            "targetId": "ci_245990061",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_238440414", "ci_245990061"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

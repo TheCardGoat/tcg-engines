@@ -8,7 +8,7 @@ export { daisyDuckLovelyLady } from "./006-daisy-duck-lovely-lady";
 export { daisyDuckMusketeerSpy } from "./007-daisy-duck-musketeer-spy";
 export { mickeyMousePlayfulSorcererD23 } from "./d23-007-mickey-mouse-playful-sorcerer";
 export { donaldDuckMusketeerSoldier } from "./008-donald-duck-musketeer-soldier";
-export { flixMadrigalFunlovingFamilyMan } from "./009-flix-madrigal-fun-loving-family-man";
+export { flixMadrigalFunlovingFamilyMan } from "./009-felix-madrigal-fun-loving-family-man";
 export { gastonDespicableDealer } from "./010-gaston-despicable-dealer";
 export { goldenHarpEnchanterOfTheLand } from "./011-golden-harp-enchanter-of-the-land";
 export { goofyMusketeerSwordsman } from "./012-goofy-musketeer-swordsman";

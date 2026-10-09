@@ -18,14 +18,7 @@
   "type": "module",
   "types": "./src/index.ts",
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./practice-st01": {
-      "types": "./src/practice-st01.ts",
-      "default": "./src/practice-st01.ts"
-    },
+    ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {

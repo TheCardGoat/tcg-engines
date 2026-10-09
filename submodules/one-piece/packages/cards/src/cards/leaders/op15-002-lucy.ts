@@ -31,7 +31,7 @@ export const op15Lucy002: LeaderCard = {
   setId: "OP15",
   power: 5000,
   life: 4,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[When Attacking]/[On Your Opponent's Attack] You may trash any number of Event or Stage cards from your hand. This Leader gains +1000 power during this battle for every card trashed.\n[Activate: Main] [Once Per Turn] If you have activated an Event with a base cost of 3 or more during this turn, draw 1 card.",

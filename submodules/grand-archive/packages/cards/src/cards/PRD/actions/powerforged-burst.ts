@@ -28,47 +28,44 @@ export const powerforgedBurst: GrandArchiveCard<GrandArchiveAbilityDefinition, "
       abilities: [
         {
           id: "OWnWJNstCO-a1",
-          kind: "static",
-          staticKind: "effects",
+          kind: "card-resolution",
           text: "As an additional cost to activate this card, sacrifice X Powercell items. X can't be more than 3.",
-          effects: [
-            {
-              kind: "rule-modification",
-              mode: "add-cost",
-              action: "activate",
-              subject: {
-                kind: "source",
-              },
-              cost: {
-                kind: "select-and-sacrifice",
-                player: "controller",
-                count: {
-                  kind: "exactly",
-                  amount: {
-                    kind: "variable",
-                    symbol: "X",
-                  },
-                },
-                bindResultAs: "sacrificed-objects",
-                filter: {
-                  kind: "all",
-                  filters: [
-                    {
-                      kind: "type",
-                      oneOf: ["ITEM"],
-                    },
-                    {
-                      kind: "subtype",
-                      oneOf: ["POWERCELL"],
-                    },
-                  ],
-                },
-              },
-              duration: {
-                kind: "while-source-in-functional-zone",
+          additionalCost: {
+            kind: "select-and-sacrifice",
+            player: "controller",
+            count: {
+              kind: "exactly",
+              amount: {
+                kind: "variable",
+                symbol: "X",
               },
             },
+            bindResultAs: "sacrificed-objects",
+            filter: {
+              kind: "all",
+              filters: [
+                {
+                  kind: "type",
+                  oneOf: ["ITEM"],
+                },
+                {
+                  kind: "subtype",
+                  oneOf: ["POWERCELL"],
+                },
+              ],
+            },
+          },
+          variables: [
+            {
+              symbol: "X",
+              kind: "chosen",
+              minimum: 0,
+              maximum: 3,
+            },
           ],
+          effect: {
+            kind: "no-op",
+          },
         },
         {
           id: "OWnWJNstCO-a2",

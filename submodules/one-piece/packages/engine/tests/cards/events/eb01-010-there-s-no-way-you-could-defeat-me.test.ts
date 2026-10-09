@@ -107,7 +107,6 @@ describe("EB01-010 There's No Way You Could Defeat Me!!", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     const pendingView = engine.getView("north");

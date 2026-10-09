@@ -64,4 +64,25 @@ describe("OP14-040 Jinbe", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("can activate twice in one turn by paying two hand cards and giving four rested DON", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op14eb04JinbeOp14040040,
+      hand: ["ST02-002", "ST02-012"],
+      restedDon: 4,
+    });
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    engine.resolveDecision(
+      "effectCostTrashFromHand",
+      { selectedIds: [engine.findCardInZone("south", "hand", "ST02-002")] },
+      "south",
+    );
+    engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(4);
+    expect(engine.getView("south").players.south.restedDon).toBe(0);
+    expect(engine.getView("south").players.south.trash).toHaveLength(2);
+  });
 });

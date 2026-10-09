@@ -1,0 +1,21 @@
+{
+  "aOff": [],
+  "bOff": [
+    "search-blockers"
+  ],
+  "aConfig": {},
+  "bConfig": {},
+  "games": 360,
+  "aWins": 176,
+  "aLosses": 184,
+  "draws": 0,
+  "aWinRate": 0.4889,
+  "pairs": 180,
+  "aSweeps": 65,
+  "bSweeps": 69,
+  "splits": 46,
+  "pairedImprovement": -0.0222,
+  "failures": [],
+  "avgSteps": 95.9,
+  "elapsedMs": 275897
+}

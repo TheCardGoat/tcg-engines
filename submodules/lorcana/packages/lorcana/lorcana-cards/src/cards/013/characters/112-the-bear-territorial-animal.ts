@@ -29,9 +29,13 @@ export const theBearTerritorialAnimal: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8bdc25c7277245a5b690a2d5b4d63fd2",
+    tcgPlayer: "704622",
+  },
   text: [
     {
-      title: "Savage Fury",
+      title: "SAVAGE FURY",
       description: "While this character has damage, he gets +3 {S}.",
     },
   ],

@@ -38,8 +38,12 @@ export const vileInquisition = definePitchFamily(fabPitchFamilies["vile-inquisit
             type: "banish",
             target: {
               selector: "object",
-              declared: "on-stack",
-              player: "any",
+              declared: "at-resolution",
+              // Printed "Target hero banishes the top card of their deck":
+              // only the hero is targeted (CR 1.8.5); the deck top is
+              // determined at resolution from that hero's deck alone.
+              playerTarget: { selector: "any-hero" },
+              playerTargetBinding: "inquisition-target-hero",
               zones: ["deck"],
               position: "top",
               count: 1,
@@ -58,8 +62,10 @@ export const vileInquisition = definePitchFamily(fabPitchFamilies["vile-inquisit
             then: {
               type: "lose-life",
               amount: 1,
+              // Printed "they lose 1{h}" is the declared target hero.
               target: {
-                selector: "attack-target",
+                selector: "hero",
+                who: { binding: "inquisition-target-hero" },
               },
             },
           },

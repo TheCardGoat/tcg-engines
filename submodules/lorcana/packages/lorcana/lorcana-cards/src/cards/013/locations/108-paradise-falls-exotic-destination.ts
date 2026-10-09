@@ -29,10 +29,14 @@ export const paradiseFallsExoticDestination: LocationCard = {
   moveCost: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_a9b0f6a6854647f3b7899e37a4975368",
+    tcgPlayer: "702690",
+  },
   text: [
     {
-      title: "Quite a Sight",
-      description: "While you have a character here, this location gets +3 {L}.",
+      title: "QUITE",
+      description: "A SIGHT While you have a character here, this location gets +3 {L}.",
     },
   ],
   abilities: [

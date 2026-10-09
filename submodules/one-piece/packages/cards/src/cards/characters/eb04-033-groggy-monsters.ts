@@ -23,7 +23,7 @@ export const op14eb04GroggyMonsters033: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Fish-Man Giant Foxy Pirates"],
+  traits: ["Giant", "Fish-Man", "Foxy Pirates"],
   attribute: "strike",
   effect:
     "[On Play] DON!! -1: If you have 3 or more {Foxy Pirates} type Characters, K.O. up to 1 of your opponent's Characters with 6000 base power or less.",
@@ -65,7 +65,7 @@ export const op14eb04GroggyMonsters033: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Foxy Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

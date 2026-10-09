@@ -14,34 +14,34 @@ export const judyHoppsUncoveringCluesI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Judy Hopps",
-    version: "Auf der Suche nach Hinweisen",
+    version: "Uncovering Clues",
     text: [
       {
-        title: "Gründliche Ermittlung",
+        title: "Thorough Investigation",
         description:
-          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Detektiv daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+          "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },
     ],
   },
   fr: {
     name: "Judy Hopps",
-    version: "Découvrant des indices",
+    version: "Uncovering Clues",
     text: [
       {
-        title: "Enquête approfondie",
+        title: "Thorough Investigation",
         description:
-          "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Détective parmi elles et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+          "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },
     ],
   },
   it: {
     name: "Judy Hopps",
-    version: "Alla Scoperta di Indizi",
+    version: "Uncovering Clues",
     text: [
       {
-        title: "Indagine Meticolosa",
+        title: "Thorough Investigation",
         description:
-          "Quando giochi questo personaggio e ogni volta che va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Detective e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+          "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },
     ],
   },

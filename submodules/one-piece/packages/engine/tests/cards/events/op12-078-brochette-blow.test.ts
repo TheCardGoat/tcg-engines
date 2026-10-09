@@ -4,11 +4,24 @@ import { eb01Doma005, eb01MountainGod018, op12BrochetteBlow078 } from "@tcg/op-c
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP12-078 Brochette Blow", () => {
+  test("being ahead in DON!! prevents both draw and power reduction", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op12BrochetteBlow078], activeDon: 3 },
+      { character: [eb01MountainGod018], activeDon: 2 },
+    );
+    const before = engine.getView("south").players.south.deckCount;
+    engine.playCard(op12BrochetteBlow078);
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(before);
+    expect(view.players.north.characters[0]?.power).toBe(eb01MountainGod018.power);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("Main draws at the DON!! field boundary and gives an opposing Character -3000 power", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op12BrochetteBlow078],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, eb01MountainGod018],
         activeDon: 3,
       },
       {

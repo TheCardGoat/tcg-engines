@@ -6,10 +6,15 @@
   "type": "module",
   "scripts": {
     "bot-lab": "bun ./src/cli.ts",
+    "audit:alpha-clash": "bun ./scripts/alpha-clash-log-audit.ts",
     "test": "vp test run",
     "check-types": "vp check --no-fmt src"
   },
   "dependencies": {
+    "@tcg/alpha-clash-cards": "link:../../../alpha-clash/packages/cards",
+    "@tcg/alpha-clash-engine": "link:../../../alpha-clash/packages/engine",
+    "@tcg/alpha-clash-server-adapter": "workspace:*",
+    "@tcg/alpha-clash-types": "link:../../../alpha-clash/packages/types",
     "@tcg/bot-core": "workspace:*",
     "@tcg/cyberpunk-engine": "link:../../../cyberpunk/packages/engine",
     "@tcg/gundam-cards": "link:../../../gundam/packages/cards",
@@ -17,7 +22,8 @@
     "@tcg/gundam-token-data": "link:../../../gundam/packages/token-data",
     "@tcg/gundam-types": "link:../../../gundam/packages/types",
     "@tcg/lorcana-engine": "link:../../../lorcana/packages/lorcana/lorcana-engine",
-    "@tcg/op-engine": "link:../../../one-piece/packages/engine"
+    "@tcg/op-engine": "link:../../../one-piece/packages/engine",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

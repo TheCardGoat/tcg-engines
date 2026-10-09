@@ -32,6 +32,7 @@ export const peterPanVineDuelist: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b9337a2b2efc45c6afaaa31f2623de46",
+    tcgPlayer: "704633",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: peterPanVineDuelistI18n,

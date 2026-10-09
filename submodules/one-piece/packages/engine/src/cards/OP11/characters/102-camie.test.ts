@@ -6,6 +6,7 @@ import {
   op01Shanks120,
   op03Kuroobi026,
   op11Camie102,
+  op05TwoHundredMillionVoltsAmaru115,
 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../index.ts";
@@ -70,6 +71,8 @@ describe("OP11-102 Camie", () => {
       "north",
     );
 
+    // FAQ permits activation even though the mutable Life condition fails.
+    engine.asSouth().acceptOptional();
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(2);
     expect(view.players.north.lifeCount).toBe(1);
@@ -104,6 +107,7 @@ describe("OP11-102 Camie", () => {
       {
         character: [
           op11Camie102,
+          op05TwoHundredMillionVoltsAmaru115,
           { card: eb01Doma005, playedOnTurn: 0 },
           { card: op01Shanks120, playedOnTurn: 0 },
         ],
@@ -188,5 +192,31 @@ describe("OP11-102 Camie", () => {
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(2);
     expect(view.players.north.lifeCount).toBe(2);
+  });
+  test("FAQ: Amaru restores the second Life before Camie checks its condition", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op11Camie102, { card: op01Shanks120, playedOnTurn: 0 }],
+        life: [eb01Doma005, eb01Doma005],
+      },
+      {
+        life: [op05TwoHundredMillionVoltsAmaru115, eb01Doma005],
+        hand: [eb01Doma005, eb01Doma005],
+        deck: [eb01MountainGod018, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.asSouth().attack(op01Shanks120, engine.leader("north"));
+    engine.asNorth().chooseCounter();
+    engine.asNorth().activateLifeTrigger();
+    engine.asNorth().acceptOptional();
+    engine.asNorth().chooseOption("effectAddToLifeFromDeck", "1");
+    expect(engine.getView("south").players.north.lifeCount).toBe(2);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.north.lifeCount).toBe(1);
+    expect(engine.getView("south").players.south.lifeCount).toBe(1);
+    expect(engine.getView("south").players.north.trash.map((card) => card.cardId)).toContain(
+      eb01MountainGod018.id,
+    );
   });
 });

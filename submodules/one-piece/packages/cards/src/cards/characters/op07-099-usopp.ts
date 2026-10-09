@@ -25,7 +25,7 @@ export const op07Usopp099: CharacterCard = {
   counter: 2000,
   trigger:
     "Up to 1 of your {Egghead} type Leader or Character cards gains +2000 power until the end of your next turn.",
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "[Trigger] Up to 1 of your {Egghead} type Leader or Character cards gains +2000 power until the end of your next turn.",
@@ -47,7 +47,7 @@ export const op07Usopp099: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Egghead",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

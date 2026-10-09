@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-damage-step"
+  relation: "current_index"
+---
+
 # Combat Phase - Damage Step
 
 #### General Rules:

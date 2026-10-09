@@ -6,6 +6,22 @@ import { op15HodyJones033 } from "../../../../../cards/src/cards/characters/op15
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-033 Hody Jones", () => {
+  test("with zero Life still reactivates a Fish-Man Leader that has attacked this turn", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11Jinbe021,
+      hand: [op15HodyJones033],
+      activeDon: 4,
+      life: 0,
+    });
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    expect(engine.getView("south").players.south.leader.rested).toBe(true);
+    engine.playCard(op15HodyJones033, "south");
+    expect(engine.getView("south").players.south.leader.rested).toBe(false);
+    expect(engine.getView("south").players.south.lifeCount).toBe(0);
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] activates the Fish-Man Leader and moves top Life to hand", () => {
     const engine = OnePieceTestEngine.create(
       { leaderCardId: op11Jinbe021, hand: [op15HodyJones033], activeDon: 4 },

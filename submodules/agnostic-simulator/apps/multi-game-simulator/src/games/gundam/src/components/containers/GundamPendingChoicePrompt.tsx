@@ -85,7 +85,6 @@ export function GundamPendingChoicePrompt() {
   }, [action, adapter, summary]);
 
   // Auto-decline purely optional boolean decisions when the setting is on.
-  const autoDeclineSignature = action ? `${action.requestId}` : "";
   const autoDeclineAppliedRef = useMemo(() => new Set<string>(), []);
   if (autoDecline && action && summary && !autoDeclineAppliedRef.has(action.requestId)) {
     const purelyOptional =

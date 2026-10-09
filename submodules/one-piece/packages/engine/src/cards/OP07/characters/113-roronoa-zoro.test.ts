@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07RoronoaZoro113 } from "../../../../../cards/src/cards/characters/op07-113-roronoa-zoro.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP07-113 Roronoa Zoro", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07RoronoaZoro113);
-  });
-});

@@ -53,4 +53,71 @@ describe("OP09-061 Monkey.D.Luffy", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: two separate DON1 returns do not trigger the two-card reaction", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP09-061",
+      hand: ["OP08-075", "OP08-075"],
+      activeDon: 2,
+      donDeckCount: 8,
+    });
+    e.asSouth().play("OP08-075");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["rested-don:0"] }, "south");
+    e.asSouth().play("OP08-075");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").players.south.donDeckCount).toBe(10);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: Black Maria end-turn return still activates Your Turn reaction", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-061", character: ["OP08-074"], donDeckCount: 10 },
+      { restedDon: 3 },
+    );
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP08-074"));
+    e.resolveDecision("effectAddDon", { optionId: "5" }, "south");
+    e.asSouth().endTurn();
+    e.resolveDecision(
+      "effectReturnDon",
+      { selectedIds: ["rested-don:0", "rested-don:1"] },
+      "south",
+    );
+    e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.restedDon).toBe(4);
+    expect(e.getView("south").players.south.donDeckCount).toBe(5);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("DON aura changes existing and later Characters and ends when Leader DON returns", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP09-061",
+      character: ["ST02-012"],
+      hand: ["ST02-012", "OP08-075"],
+      activeDon: 3,
+    });
+    expect(e.getView("south").players.south.characters[0]?.cost).toBe(1);
+    e.asSouth().attachDon(e.leader("south"), 1);
+    expect(e.getView("south").players.south.characters[0]?.cost).toBe(2);
+    e.asSouth().play("ST02-012");
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter((c) => c !== null)
+        .map((c) => c.cost),
+    ).toEqual([2, 2]);
+    e.asSouth().play("OP08-075");
+    e.resolveDecision(
+      "effectCostReturnDon",
+      { selectedIds: [`attached-don:${e.leader("south")}:0`] },
+      "south",
+    );
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter((c) => c !== null)
+        .map((c) => c.cost),
+    ).toEqual([1, 1]);
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+  });
 });

@@ -32,6 +32,7 @@ export const mikeWazowskiHeroicClimberEnchanted: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c754c6ca0ba242e593252c4e8690258a",
+    tcgPlayer: "702672",
   },
   text: [
     {

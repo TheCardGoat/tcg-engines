@@ -23,7 +23,7 @@ export const op01CaesarClown069: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Punk Hazard Scientist"],
+  traits: ["Scientist", "Punk Hazard"],
   attribute: "special",
   effect:
     "[On K.O.] Play up to 1 [Smiley] from your deck, then shuffle your deck.  This card has been officially errata'd.",

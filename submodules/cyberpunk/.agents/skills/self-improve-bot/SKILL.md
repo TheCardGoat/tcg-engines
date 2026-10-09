@@ -85,6 +85,19 @@ re-walk no longer names them. Later rows record `usedFlow`.
 6. A reject still leaves n+1 runnable **after** it is recorded. Do not stamp
    reject automatically to skip the address step.
 
+## Curve loop (RRY vs BBG)
+
+The play lines are
+[`references/rry-bbg-curve-prompt.md`](references/rry-bbg-curve-prompt.md).
+`bun tools/ai-runner/src/curve-self-improve.ts --matches 20` plays the seeded
+pairing, scores each player's own turns 1–5 on the play and on the draw
+separately (turn 1 is 2 €$ on the play and 4 €$ on the draw, then 5, 6, 7, and 8), and appends one journal row
+under `reports/curve-self-improve/`. One named lesson per run: a situation
+test, then the profile field that lesson names (`curveSellCards` or
+`curveUnits`). Re-run the same command. Keep the lesson only when that miss
+count drops and `repeatedState` stays 0. Stop when the top miss is already
+followed or a re-run is worse.
+
 ## Report
 
 Per iteration: the journal row. Stop when a full pass over the 10 decks

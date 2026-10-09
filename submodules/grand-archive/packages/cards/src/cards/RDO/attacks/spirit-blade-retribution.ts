@@ -108,8 +108,21 @@ export const spiritBladeRetribution: GrandArchiveCard<GrandArchiveAbilityDefinit
                   zones: ["banishment"],
                   player: "controller",
                   filter: {
-                    kind: "type",
-                    oneOf: ["ALLY"],
+                    kind: "any",
+                    filters: [
+                      {
+                        kind: "type",
+                        oneOf: ["ALLY"],
+                      },
+                      {
+                        kind: "type",
+                        oneOf: ["ATTACK"],
+                      },
+                      {
+                        kind: "type",
+                        oneOf: ["WEAPON"],
+                      },
+                    ],
                   },
                 },
                 property: "power",

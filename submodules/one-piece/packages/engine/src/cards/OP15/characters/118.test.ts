@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
+import { getCard } from "@tcg/op-cards";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-118", () => {
@@ -46,6 +47,14 @@ describe("OP15-118", () => {
     expect(engine.getView("south").players.south.activeDon).toBe(1);
     expect(engine.getView("south").players.south.restedDon).toBe(6);
     expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(
+      engine
+        .getView("north")
+        .logs.some((entry) => entry.message.includes(getCard("OP12-013").name)),
+    ).toBe(false);
+    expect(
+      engine.getView("north").players.south.hand.some((card) => card.cardId === "OP12-013"),
+    ).toBe(false);
   });
 
   test("[On Play] declined keeps the DON!! and the deck", () => {
@@ -109,5 +118,14 @@ describe("OP15-118", () => {
     expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(enel);
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test.each([
+    [6, 10000],
+    [7, 8000],
+  ])("at %s DON!! gains the printed power only below the threshold", (don, power) => {
+    const engine = OnePieceTestEngine.create({ hand: ["OP15-118"], activeDon: don }, {});
+    engine.playCard("OP15-118");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(power);
   });
 });

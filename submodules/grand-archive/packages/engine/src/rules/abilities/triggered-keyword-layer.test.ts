@@ -441,3 +441,95 @@ describe("Grand Archive Layer D triggered keywords", () => {
     expect(runtime.state.combat?.targetIds).toEqual([interceptor.id]);
   });
 });
+
+import { GrandArchiveTestEngine } from "../../testing/test-engine.ts";
+import { executeGrandArchiveEffect } from "../../procedures/effects/effect-executor.ts";
+import { grandArchiveObjectActiveKeywords } from "./intrinsic-keywords.ts";
+import type { GrandArchiveEffect } from "@tcg/grand-archive-types";
+
+it("derives a gained static keyword grant, removes it with its ability, and restores it after expiry", () => {
+  const game = GrandArchiveTestEngine.startFixture({
+    playerOne: { champion, zones: { field: [blueSlime], "main-deck": [filler, filler] } },
+    playerTwo: { champion, zones: { field: [blueSlime], "main-deck": [filler, filler] } },
+  });
+  const p = game.player("player-one"),
+    q = game.player("player-two"),
+    hero = p.card(champion),
+    ally = p.card(blueSlime),
+    other = q.card(blueSlime);
+  const kernel = new GrandArchiveTransactionKernel();
+  const apply = (state: typeof game.state, effect: GrandArchiveEffect) =>
+    executeGrandArchiveEffect(
+      effect,
+      {
+        program: game.program,
+        state,
+        controllerId: p.id,
+        sourceId: hero.objectId,
+        sourceIncarnation: state.objects[hero.objectId]!.incarnation,
+        bindings: {},
+      },
+      (current, events) => {
+        const result = kernel.transact(current, events);
+        return { state: result.state, events: result.result.events };
+      },
+    ).state;
+  const hasVigor = (state: typeof game.state, id: typeof ally.objectId) =>
+    grandArchiveObjectActiveKeywords(game.program, state, state.objects[id]!).some(
+      (keyword) => keyword.name === "vigor",
+    );
+  expect(hasVigor(game.state, ally.objectId)).toBe(false);
+  const gained = apply(game.state, {
+    kind: "continuous",
+    subjects: { kind: "source" },
+    affectedSet: "locked",
+    duration: { kind: "permanent" },
+    layer: { layer: "D", modifies: "ability" },
+    change: {
+      kind: "grant-ability",
+      ability: {
+        id: "gainedStaticVigor-a1",
+        kind: "static",
+        staticKind: "effects",
+        text: "Allies you control have vigor.",
+        effects: [
+          {
+            kind: "continuous",
+            subjects: {
+              kind: "each",
+              collection: {
+                zones: ["field"],
+                player: "controller",
+                filter: { kind: "type", oneOf: ["ALLY"] },
+              },
+            },
+            affectedSet: "dynamic",
+            duration: { kind: "while-source-in-functional-zone" },
+            layer: { layer: "D", modifies: "ability" },
+            change: { kind: "grant-keyword", keyword: { name: "vigor" } },
+          },
+        ],
+      },
+    },
+  });
+  expect(hasVigor(gained, ally.objectId)).toBe(true);
+  expect(hasVigor(gained, other.objectId)).toBe(false);
+  const removed = apply(gained, {
+    kind: "continuous",
+    subjects: { kind: "source" },
+    affectedSet: "locked",
+    duration: { kind: "this-turn" },
+    layer: { layer: "D", modifies: "ability" },
+    change: { kind: "remove-abilities" },
+  });
+  expect(hasVigor(removed, ally.objectId)).toBe(false);
+  expect(hasVigor(gained, ally.objectId)).toBe(true);
+  const resumed = GrandArchiveTestEngine.fromState(game.program, removed);
+  for (let n = 0; n < 64 && resumed.state.turn.playerId !== q.id; n++) {
+    const wait = resumed.waitState();
+    if (wait.kind !== "opportunity") throw Error(`Unexpected ${wait.kind}`);
+    resumed.player(wait.playerId).pass();
+  }
+  expect(resumed.state.turn.playerId).toBe(q.id);
+  expect(hasVigor(resumed.state, ally.objectId)).toBe(true);
+});

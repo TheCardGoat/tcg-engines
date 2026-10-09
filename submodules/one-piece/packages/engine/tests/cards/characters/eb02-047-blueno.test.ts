@@ -78,4 +78,21 @@ describe("EB02-047 Blueno", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("can play the same CP Character discarded as its activation cost", () => {
+    const e = OnePieceTestEngine.create({
+      character: [eb02Blueno047],
+      hand: [op03Jerry084, eb01Doma005],
+    });
+    const blueno = e.findCardInZone("south", "character", eb02Blueno047);
+    const jerry = e.findCardInZone("south", "hand", op03Jerry084);
+    e.activateEffect(blueno, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostTrashFromHand", { selectedIds: [jerry] }, "south");
+    const p = e.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw Error("CP play");
+    expect(p.candidates.map((c) => c.ref.id)).toEqual([jerry]);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [jerry] }, "south");
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(jerry);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(blueno);
+  });
 });

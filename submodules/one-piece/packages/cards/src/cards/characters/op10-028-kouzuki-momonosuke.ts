@@ -23,7 +23,7 @@ export const op10KouzukiMomonosuke028: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan Punk Hazard"],
+  traits: ["Punk Hazard", "Land of Wano", "Kouzuki Clan"],
   attribute: "special",
   effect:
     '[Activate: Main] You may rest 2 of your DON!! cards and trash this Character: Look at 5 cards from the top of your deck; reveal up to 2 "The Akazaya Nine" type cards and add them to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -56,7 +56,7 @@ export const op10KouzukiMomonosuke028: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Akazaya Nine",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

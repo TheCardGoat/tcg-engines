@@ -19,9 +19,18 @@ import type {
   EngineHandle,
   MoveDecision,
 } from "../types.ts";
+import { semanticViewHash } from "../public-view-hash.ts";
 import { evaluateBoard } from "./evaluate-board.ts";
-import { enumerateCandidateActions, enumerateChoiceActions } from "./shared.ts";
-import { scoreActivatedAbility, scoreCardAbilitiesForPlay } from "../util/ability-value.ts";
+import { evaluateLateGigRace, isLateGigRace } from "./gig-race.ts";
+import { enumerateCandidateActions, enumerateChoiceActions, passPhaseAction } from "./shared.ts";
+import {
+  getAbilityGameStage,
+  scoreActivatedAbility,
+  scoreCardAbilitiesForPlay,
+  scoreReadyOnPlayAbilities,
+} from "../util/ability-value.ts";
+import { hasReadyUnitAdvantage } from "../util/board-presence.ts";
+import { bestGigsToSteal } from "../util/gig-steal-plan.ts";
 
 export interface TacticalStrategyOptions {
   maxDepth?: number;
@@ -31,6 +40,12 @@ export interface TacticalStrategyOptions {
   name?: string;
   abilityAware?: boolean;
   deckProfile?: DeckStrategyProfile;
+  /**
+   * Named heuristic lessons to turn off. Shipped behavior keeps every lesson
+   * on; the bench harness builds a baseline seat by naming the lesson under
+   * test. Names: "safe-steal", "remove-targets", "gear-power", "legend-gear".
+   */
+  disabledHeuristics?: readonly string[];
 }
 
 /**
@@ -51,6 +66,7 @@ export function isTacticalAIStrategy(strategy: AIStrategy): strategy is Tactical
 
 interface TacticalScoringOptions {
   abilityAware: boolean;
+  disabled: ReadonlySet<string>;
 }
 
 interface SearchBudget {
@@ -116,12 +132,32 @@ export function createTacticalStrategy(options: TacticalStrategyOptions = {}): T
   const fallback =
     options.fallbackStrategy ??
     (profile ? bindGreedyDeckProfile(greedyStrategy, profile) : greedyStrategy);
-  const scoring: TacticalScoringOptions = { abilityAware: options.abilityAware === true };
+  const scoring: TacticalScoringOptions = {
+    abilityAware: options.abilityAware === true,
+    disabled: new Set(options.disabledHeuristics ?? []),
+  };
 
-  const decide = (ctx: DecisionContext): MoveDecision => {
+  const decide = (ctx: DecisionContext, stallDepth = 0): MoveDecision => {
     if (!ctx.engine) return fallbackDecision(ctx, fallback);
-    const actions = actionsForPrompt(ctx.prompt, ctx, fallback);
-    if (actions.length === 0) return fallbackDecision(ctx, fallback);
+    const actions = actionsForPrompt(ctx.prompt, ctx, fallback, scoring);
+    if (actions.length === 0) {
+      // Policies may legally veto every candidate (a curve line excluding an
+      // attack the combat mandate kept, for example). The safe terminal
+      // action is passing — re-rolling through the greedy fallback would
+      // resurrect exactly the move the policies removed.
+      const pass = passPhaseAction(ctx.prompt);
+      if (pass) {
+        return withDiagnostics(pass, {
+          strategy: "tactical",
+          candidateCount: 0,
+          nodesEvaluated: 0,
+          depthReached: 0,
+          scoreGap: null,
+          cutoffReason: "complete",
+        });
+      }
+      return fallbackDecision(ctx, fallback);
+    }
     if (actions.length === 1) {
       return withDiagnostics(actions[0]!, {
         strategy: "tactical",
@@ -153,8 +189,9 @@ export function createTacticalStrategy(options: TacticalStrategyOptions = {}): T
     );
     if (scored.length === 0) return fallbackDecision(ctx, fallback);
     scored.sort(compareMaxScores);
-    const best = scored[0]!;
-    const runnerUp = scored[1];
+    const committed = committedActions(ctx, scored, stallDepth);
+    const best = committed[0] ?? scored[0]!;
+    const runnerUp = committed[1];
     return withDiagnostics(best.action, {
       strategy: "tactical",
       candidateCount: actions.length,
@@ -164,6 +201,71 @@ export function createTacticalStrategy(options: TacticalStrategyOptions = {}): T
       cutoffReason: budget.cutoffReason,
     });
   };
+
+  /**
+   * Drop a line the same chooser would immediately undo back onto this public
+   * board. Alt's replay pays nothing until a trash program is chosen, so
+   * activate-then-decline hashes identical to the action prompt and the runner
+   * records repeatedState. Search can still rank that activation above passing
+   * the turn, because the decline sits inside a shallower horizon than the
+   * choice that actually takes it.
+   */
+  function committedActions(
+    ctx: DecisionContext,
+    scored: ScoredAction[],
+    stallDepth: number,
+  ): ScoredAction[] {
+    if (stallDepth > 2) return scored.slice(0, 2);
+    const kept: ScoredAction[] = [];
+    for (const entry of scored) {
+      if (followUpRestoresBoard(ctx, entry, stallDepth)) continue;
+      kept.push(entry);
+      if (kept.length === 2) break;
+    }
+    return kept;
+  }
+
+  function followUpRestoresBoard(
+    ctx: DecisionContext,
+    entry: ScoredAction,
+    stallDepth: number,
+  ): boolean {
+    if (!ctx.engine || !entry.child) return false;
+    const before = semanticViewHash(ctx.view);
+    const opened = semanticViewHash(entry.child.getFilteredView(ctx.playerId));
+    const actor = whoActsNext(entry.child, ctx.playerId);
+    // A rival reaction is part of the line even when a scripted view has not
+    // moved yet. Only our own continuation can decline back onto this board.
+    if (!actor || actor !== ctx.playerId) return false;
+    const prompt = entry.child.getPrompt(actor);
+    if (prompt.status === "action") return opened === before;
+    if (prompt.status !== "choice" || stallDepth >= 2) return opened === before;
+    // A pending replay can change the public hash before any cost is paid.
+    // Only activations need that second look; a play that already changed the
+    // board is not the decline loop.
+    if (opened !== before && entry.action.move !== "activateAbility") return false;
+    const follow = decide(
+      {
+        view: entry.child.getFilteredView(actor),
+        playerId: actor,
+        prompt,
+        rng: ctx.rng,
+        engine: entry.child,
+      },
+      stallDepth + 1,
+    );
+    if (follow.kind !== "command") return true;
+    const resolved = applyAction(entry.child, actor, follow, {
+      nodes: 0,
+      maxNodes: 1,
+      deepest: 0,
+      cutoffReason: "complete",
+    });
+    if (!resolved) return true;
+    // The choice itself can hash differently (a pending replay is public) and
+    // the decline still lands on the board we just left.
+    return semanticViewHash(resolved.getFilteredView(ctx.playerId)) === before;
+  }
 
   return {
     tactical: true,
@@ -217,6 +319,14 @@ function scoreRootActions(
     profile,
   );
   const selected = ranked.slice(0, Math.max(branchLimit, Math.min(actions.length, 24)));
+  const rootView = engine.getFilteredView(rootPlayerId);
+  if (isLateGigRace(rootView)) {
+    selected.sort(
+      (a, b) =>
+        lateSearchPriority(b.action, rootView, rootPlayerId, profile, scoring) -
+        lateSearchPriority(a.action, rootView, rootPlayerId, profile, scoring),
+    );
+  }
   const scored: ScoredAction[] = [];
   for (const { action, child } of selected) {
     if (!child) {
@@ -227,7 +337,7 @@ function scoreRootActions(
     const after = child.getFilteredView(rootPlayerId);
     const hiddenCutoff = hiddenInformationChanged(before, after, action, rootPlayerId);
     const score = hiddenCutoff
-      ? hiddenCutoffScore(before, action, rootPlayerId, rootPlayerId, budget, profile)
+      ? hiddenCutoffScore(before, action, rootPlayerId, rootPlayerId, budget, profile, scoring)
       : search(
           child,
           rootPlayerId,
@@ -238,16 +348,72 @@ function scoreRootActions(
           fallback,
           scoring,
           profile,
+          [semanticViewHash(before)],
+          true,
         );
     scored.push({
       action,
-      score,
+      score:
+        after.gameEnded || score <= STALL_SCORE
+          ? score
+          : score + strategicActionBonus(action, before, after, rootPlayerId as string),
       abilityFit: abilityAwarePriorAdjustment(action, before, rootPlayerId as string, scoring),
       child,
     });
   }
   return scored;
 }
+
+/** A bounded preference for a ready on-play Unit or removal that took effect. */
+function strategicActionBonus(
+  action: MoveDecision & { kind: "command" },
+  before: FilteredMatchView,
+  after: FilteredMatchView,
+  actorId: string,
+): number {
+  if (action.move !== "playCard" && action.move !== "activateAbility") return 0;
+  const card = findCard(before, stringArg(action.args?.cardId));
+  let bonus = 0;
+  if (action.move === "playCard" && card?.type === "unit") {
+    const field = after.players[actorId]?.zones.field;
+    if (Array.isArray(field) && field.some((unit) => unit.instanceId === card.instanceId)) {
+      bonus = Math.min(28, scoreReadyOnPlayAbilities(card, before, actorId));
+    }
+  }
+
+  const rivalBefore = Object.entries(before.players)
+    .filter(([id]) => id !== actorId)
+    .flatMap(([, player]) => (Array.isArray(player.zones.field) ? player.zones.field : []))
+    .filter((unit) => unit.type === "unit" && !unit.faceDown);
+  const rivalAfter = new Map(
+    Object.entries(after.players)
+      .filter(([id]) => id !== actorId)
+      .flatMap(([, player]) => (Array.isArray(player.zones.field) ? player.zones.field : []))
+      .map((unit) => [unit.instanceId, unit]),
+  );
+  const hardRemoval = rivalBefore.some((unit) => !rivalAfter.has(unit.instanceId));
+  const softRemoval = rivalBefore.some((unit) => {
+    const next = rivalAfter.get(unit.instanceId);
+    return (
+      next &&
+      !unit.spent &&
+      !unit.grantedRules.includes("cantAttack") &&
+      (next.spent || next.grantedRules.includes("cantAttack"))
+    );
+  });
+  const stage = getAbilityGameStage(before);
+  const cost = action.move === "playCard" ? (card?.effectiveCost ?? card?.cost ?? 0) : 0;
+  if (hardRemoval) bonus += stage === "early" ? Math.max(0, 30 - cost * 7) : 32;
+  else if (softRemoval && stage === "late") bonus += 30;
+  return Math.min(50, bonus);
+}
+
+/**
+ * Worse than a lost game ({@link evaluateBoard} uses ±1_000_000). The runner
+ * concedes a repeated public board as repeatedState, so a line that walks
+ * back onto a board it already left must lose to every real ending.
+ */
+const STALL_SCORE = -1_000_001;
 
 function search(
   engine: EngineHandle,
@@ -259,19 +425,38 @@ function search(
   fallback: AIStrategy,
   scoring: TacticalScoringOptions,
   profile: DeckStrategyProfile | undefined,
+  ancestors: readonly string[],
+  enteredByRoot: boolean,
 ): number {
   budget.deepest = Math.max(budget.deepest, depthFromRoot);
   const rootView = engine.getFilteredView(rootPlayerId);
-  if (rootView.gameEnded) return evaluateBoard(rootView, rootPlayerId as string);
+  const hash = semanticViewHash(rootView);
+  const actorNow = whoActsNext(engine, rootPlayerId);
+  const backOnAnActionPrompt = !actorNow || engine.getPrompt(actorNow).status !== "choice";
+  // Opening a choice does not change the public board. Returning to our own
+  // earlier action prompt is a declined activation. Cutting the search off
+  // while that choice is still open is the same stall: the line never left
+  // the board. A rival reaction on an unchanged view is not, because a real
+  // attack has already spent the attacker before that prompt exists.
+  const ownUnchangedBoard = enteredByRoot && ancestors.includes(hash) && actorNow === rootPlayerId;
+  if (ownUnchangedBoard && backOnAnActionPrompt) return STALL_SCORE;
+  if (rootView.gameEnded) {
+    const terminal = evaluateBoard(rootView, rootPlayerId as string);
+    // Take a confirmed win now rather than an equally winning longer line.
+    return terminal - Math.sign(terminal) * depthFromRoot;
+  }
   if (depth <= 0) {
     if (budget.cutoffReason === "complete") budget.cutoffReason = "depth";
+    if (ownUnchangedBoard) return STALL_SCORE;
     return evaluateBoard(rootView, rootPlayerId as string);
   }
   if (budget.nodes >= budget.maxNodes) {
     budget.cutoffReason = "node-budget";
+    if (ownUnchangedBoard) return STALL_SCORE;
     return evaluateBoard(rootView, rootPlayerId as string);
   }
 
+  const nextAncestors = [...ancestors, hash];
   const actor = whoActsNext(engine, rootPlayerId);
   if (!actor) return evaluateBoard(rootView, rootPlayerId as string);
   const prompt = engine.getPrompt(actor);
@@ -291,6 +476,7 @@ function search(
     searchablePrompt,
     ctx,
     actor === rootPlayerId ? fallback : greedyStrategy,
+    scoring,
   );
   if (actions.length === 0) {
     if (actor !== rootPlayerId) {
@@ -307,7 +493,7 @@ function search(
     if (!child) return actor === rootPlayerId ? -SEARCH_FAILURE_SCORE : SEARCH_FAILURE_SCORE;
     const after = child.getFilteredView(rootPlayerId);
     return hiddenInformationChanged(before, after, action, actor)
-      ? hiddenCutoffScore(before, action, rootPlayerId, actor, budget, profile)
+      ? hiddenCutoffScore(before, action, rootPlayerId, actor, budget, profile, scoring)
       : search(
           child,
           rootPlayerId,
@@ -318,6 +504,8 @@ function search(
           fallback,
           scoring,
           profile,
+          nextAncestors,
+          actor === rootPlayerId,
         );
   }
 
@@ -348,7 +536,7 @@ function search(
     }
     const after = child.getFilteredView(rootPlayerId);
     const score = hiddenInformationChanged(before, after, action, actor)
-      ? hiddenCutoffScore(before, action, rootPlayerId, actor, budget, profile)
+      ? hiddenCutoffScore(before, action, rootPlayerId, actor, budget, profile, scoring)
       : search(
           child,
           rootPlayerId,
@@ -359,10 +547,24 @@ function search(
           fallback,
           scoring,
           profile,
+          nextAncestors,
+          actor === rootPlayerId,
         );
     best = maximizing ? Math.max(best, score) : Math.min(best, score);
   }
   return Number.isFinite(best) ? best : evaluateBoard(rootView, rootPlayerId as string);
+}
+
+function lateSearchPriority(
+  action: MoveDecision & { kind: "command" },
+  view: FilteredMatchView,
+  actor: PlayerId,
+  profile: DeckStrategyProfile | undefined,
+  scoring: TacticalScoringOptions,
+): number {
+  return action.move === "passPhase"
+    ? 1_000_000
+    : actionPrior(action, view, actor as string, profile, scoring);
 }
 
 function rankActions(
@@ -378,7 +580,22 @@ function rankActions(
   const before = engine.getFilteredView(rootPlayerId);
   const actorView = engine.getFilteredView(actor);
   const ranked: ScoredAction[] = [];
-  for (const action of actions) {
+  // A crowded board can exhaust the budget on Unit-target pairs alone. Check
+  // the turn boundary first (it can win immediately), then high-value steals.
+  // These are search priorities only; engine outcomes still choose the move.
+  const ordered = isLateGigRace(actorView)
+    ? [...actions].sort(
+        (a, b) =>
+          lateSearchPriority(b, actorView, actor, profile, scoring) -
+          lateSearchPriority(a, actorView, actor, profile, scoring),
+      )
+    : actions;
+  // Leave at least half of the remaining budget for replies and resolutions.
+  // Otherwise a large target list leaves every attack at its declaration step.
+  const rankingLimit = isLateGigRace(actorView)
+    ? Math.min(24, Math.max(1, Math.floor((budget.maxNodes - budget.nodes) / 2)))
+    : ordered.length;
+  for (const action of ordered.slice(0, rankingLimit)) {
     if (budget.nodes >= budget.maxNodes) {
       budget.cutoffReason = "node-budget";
       break;
@@ -398,6 +615,7 @@ function rankActions(
             actorView,
             actor as string,
             actor === rootPlayerId ? profile : undefined,
+            scoring,
           )
       : maximizing
         ? -SEARCH_FAILURE_SCORE
@@ -428,85 +646,852 @@ function actionsForPrompt(
   prompt: PlayerPrompt,
   ctx: DecisionContext,
   fallback: AIStrategy,
+  scoring: TacticalScoringOptions,
 ): Array<MoveDecision & { kind: "command" }> {
   if (prompt.status === "choice" && prompt.choice) {
+    if (prompt.choice.type === "chooseGigsToSteal") {
+      const { eligibleDice, count } = prompt.choice.payload;
+      const dieIds = bestGigsToSteal(ctx.view, ctx.playerId as string, eligibleDice, count);
+      if (dieIds) return [{ kind: "command", move: "resolveStealGigs", args: { dieIds } }];
+    }
     if (choiceCrossesHiddenInformation(prompt.choice.type)) {
       return fallbackChoice(prompt, ctx, fallback);
     }
-    const expanded = enumerateChoiceActions(prompt.choice);
-    return expanded.length > 0 ? expanded : fallbackChoice(prompt, ctx, fallback);
+    const expanded = expandAtomicGigAdjust(enumerateChoiceActions(prompt.choice), ctx);
+    const profile = isGreedyAIStrategy(fallback) ? fallback.deckProfile : undefined;
+    const lined = applyPlayLinePolicy(
+      expanded.length > 0 ? expanded : fallbackChoice(prompt, ctx, fallback),
+      ctx,
+      profile,
+    );
+    return lined.length > 0 ? lined : fallbackChoice(prompt, ctx, fallback);
   }
   const profile = isGreedyAIStrategy(fallback) ? fallback.deckProfile : undefined;
-  return applyMulliganPolicy(
-    applyCombatSafetyPolicy(
-      applyPreferSpendPolicy(
-        applyGoSoloHoldPolicy(
-          applyUninstalledCoreSellHold(
-            applySellCorePolicy(
-              applyGearHostPolicy(enumerateCandidateActions(prompt), ctx, profile),
-              ctx,
-              profile,
-            ),
-            ctx,
-            profile,
-          ),
-          ctx,
-          profile,
-        ),
-        ctx,
-        profile,
-      ),
-      ctx,
-      fallback,
-    ),
-    ctx,
-    fallback,
+  const enumerated = enumerateCandidateActions(prompt);
+  // Towerfall and Les Élémens are core cards and also the prompt's spare sells.
+  // The uninstalled-core hold would drop that sell, and the curve scorer still
+  // counts it as a legal spare the bot passed on.
+  const openingSell = curveOpeningSells(enumerated, ctx, profile);
+  if (openingSell) return openingSell;
+  // Apply the deck's sequencing constraints before generic combat preferences.
+  // Otherwise a mandatory steal can discard the setup/pass action that the
+  // deck policy needs and force a fallback that ignores that policy.
+  let actions = applyGearHostPolicy(enumerated, ctx, profile, scoring);
+  actions = applyPlayLinePolicy(actions, ctx, profile);
+  actions = applySellCorePolicy(actions, ctx, profile);
+  actions = applyUninstalledCoreSellHold(actions, ctx, profile);
+  actions = applyGoSoloHoldPolicy(actions, ctx, profile);
+  actions = applyPreferSpendPolicy(actions, ctx, profile);
+  actions = applyMulliganPolicy(actions, ctx, fallback);
+  actions = applyCurveSellPolicy(actions, ctx, profile);
+  actions = applyCurveUnitPolicy(actions, ctx, profile);
+  actions = dropPassWhenCurveSellIsLegal(actions, ctx, profile);
+  actions = applyPromptCurve(actions, ctx, profile);
+  return applyCombatSafetyPolicy(actions, ctx, fallback, scoring);
+}
+
+type CommandMove = MoveDecision & { kind: "command" };
+
+/** Hidden zones are a count. Curve lines only read a revealed card list. */
+function listedCards(zone: number | readonly FilteredCardView[] | undefined): FilteredCardView[] {
+  return Array.isArray(zone) ? [...zone] : [];
+}
+
+function ownTurnIndex(turnNumber: number): number {
+  return turnNumber % 2 === 1 ? (turnNumber + 1) / 2 : turnNumber / 2;
+}
+
+function cardNameOf(ctx: DecisionContext, id: string): string | undefined {
+  return findCard(ctx.view, id)?.cardName ?? undefined;
+}
+
+function playedName(ctx: DecisionContext, action: CommandMove): string | undefined {
+  const id =
+    stringArg(action.args?.cardId) ||
+    stringArg(action.args?.legendId) ||
+    stringArg(action.args?.attackerId);
+  return id ? cardNameOf(ctx, id) : undefined;
+}
+
+function isRryDeck(deckId: string | undefined): boolean {
+  return (
+    deckId === "authored-rry-llorona-steel-dragon" || deckId === "authored-rry-detonate-gear-curve"
   );
+}
+
+function keepMoves(
+  actions: CommandMove[],
+  predicate: (action: CommandMove) => boolean,
+): CommandMove[] {
+  const kept = actions.filter(predicate);
+  return kept.length > 0 ? kept : actions;
+}
+
+/**
+ * The opening sell has to win before min-gig and develop policies narrow the
+ * list to a play. Those policies never see the spare once it has been removed.
+ */
+function curveOpeningSells(
+  actions: CommandMove[],
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): CommandMove[] | null {
+  if (
+    !profile ||
+    (!isRryDeck(profile.deckId) && profile.deckId !== "authored-bbg-towerfall-control")
+  ) {
+    return null;
+  }
+  const own = ownTurnIndex(ctx.view.turnNumber);
+  if (own < 1 || own > 5) return null;
+  const player = ctx.view.players[ctx.playerId as string];
+  if (!player || player.soldThisTurn) return null;
+  const spare = new Set(profile.curveSellCards ?? []);
+  const sells = actions.filter(
+    (action) => action.move === "sellCard" && spare.has(playedName(ctx, action) ?? ""),
+  );
+  return sells.length > 0 ? sells : null;
+}
+
+/**
+ * Turns 1–5 of the RRY and BBG curve. Spendable €$ is Legends that can pay
+ * plus ready Eddies: 2 on the play and 4 on the draw after the opening sell,
+ * then 5, 6, 7, and 8. Game turn 1 is on the play; game turn 2 is on the draw.
+ */
+function applyPromptCurve(
+  actions: CommandMove[],
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): CommandMove[] {
+  if (
+    !profile ||
+    (!isRryDeck(profile.deckId) && profile.deckId !== "authored-bbg-towerfall-control")
+  ) {
+    return actions;
+  }
+  const own = ownTurnIndex(ctx.view.turnNumber);
+  if (own < 1 || own > 5) return actions;
+  const onPlay = ctx.view.turnNumber % 2 === 1;
+  const playerId = ctx.playerId as string;
+  const player = ctx.view.players[playerId];
+  if (!player) return actions;
+  if (isRryDeck(profile.deckId)) return rryCurve(actions, ctx, profile, own, onPlay);
+  return bbgCurve(actions, ctx, profile, own, onPlay);
+}
+
+function rryCurve(
+  actions: CommandMove[],
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+  own: number,
+  onPlay: boolean,
+): CommandMove[] {
+  const name = (action: CommandMove) => playedName(ctx, action);
+  const noGoSolo = (action: CommandMove) => action.move !== "goSolo";
+  if (own === 1 && onPlay) {
+    return keepMoves(actions, (action) => {
+      if (action.move !== "callLegend") return false;
+      const legend = findCard(ctx.view, stringArg(action.args?.legendId));
+      return legend?.spent === false;
+    });
+  }
+  if (own === 1 && !onPlay) {
+    return keepMoves(
+      actions,
+      (action) =>
+        (action.move === "callLegend" &&
+          (name(action) === "Muamar Reyes" || name(action) === "Dexter DeShawn")) ||
+        (action.move === "playCard" &&
+          (name(action) === "All is Lost" || name(action) === "The Heist")),
+    );
+  }
+  const hand = listedCards(ctx.view.players[ctx.playerId as string]?.zones.hand);
+  const handNames = new Set(hand.map((card) => card.cardName));
+  const curveUnitInHand = (profile.curveUnits ?? []).some((unit) => handNames.has(unit));
+  if (own === 2 && !curveUnitInHand && actions.some((action) => name(action) === "All is Lost")) {
+    return keepMoves(actions, (action) => name(action) === "All is Lost");
+  }
+  const faces = gigFaces(ctx);
+  const bladeInHand = hand.some(
+    (card) => card.cardName === "Mantis Blades" || card.cardName === "Satori",
+  );
+  if (
+    own === 2 &&
+    !bladeInHand &&
+    (faces.includes(1) || faces.includes(2)) &&
+    actions.some((action) => name(action) === "The Heist")
+  ) {
+    return keepMoves(actions, (action) => name(action) === "The Heist");
+  }
+  if (own === 3) {
+    return keepMoves(
+      actions,
+      (action) =>
+        action.move === "playCard" &&
+        (name(action) === "La Llorona" || name(action) === "Dexter DeShawn"),
+    );
+  }
+  if (own === 4) {
+    return keepMoves(
+      actions,
+      (action) =>
+        action.move === "playCard" &&
+        (name(action) === "Meredith Stout" || name(action) === "6th Street Recruits"),
+    );
+  }
+  if (own === 5) {
+    const bodies: Record<string, readonly string[]> = {
+      "Mantis Blades": [
+        "6th Street Recruits",
+        "Meredith Stout",
+        "Trauma Team Operatives",
+        "Yorinobu Arasaka",
+      ],
+      Satori: [
+        "6th Street Recruits",
+        "Meredith Stout",
+        "Trauma Team Operatives",
+        "Yorinobu Arasaka",
+      ],
+      "Zetatech Faceplate": ["Meredith Stout", "La Llorona"],
+    };
+    const kept = actions.filter((action) => {
+      if (action.move === "goSolo") return false;
+      if (action.move !== "playCard" || !action.args?.attachToId) return true;
+      const gear = name(action);
+      const host = cardNameOf(ctx, stringArg(action.args.attachToId));
+      const named = gear ? bodies[gear] : undefined;
+      return named != null && host != null && named.includes(host);
+    });
+    return kept.length > 0
+      ? kept
+      : actions.filter(
+          (action) =>
+            action.move !== "goSolo" && !(action.move === "playCard" && action.args?.attachToId),
+        );
+  }
+  return actions.filter(noGoSolo);
+}
+
+function bbgCurve(
+  actions: CommandMove[],
+  ctx: DecisionContext,
+  _profile: DeckStrategyProfile,
+  own: number,
+  onPlay: boolean,
+): CommandMove[] {
+  const name = (action: CommandMove) => playedName(ctx, action);
+  const faces = gigFaces(ctx);
+  const trustWindow = faces.some((face) => face >= 2 && face <= 4);
+  const playNamed = (action: CommandMove, card: string) =>
+    action.move === "playCard" && name(action) === card;
+  const field = listedCards(ctx.view.players[ctx.playerId as string]?.zones.field);
+  const handNames = new Set(
+    listedCards(ctx.view.players[ctx.playerId as string]?.zones.hand).map((card) => card.cardName),
+  );
+  if (own === 1 && onPlay) {
+    const playedProgram = (ctx.view.playedCardTypesThisTurn[ctx.playerId as string] ?? []).includes(
+      "program",
+    );
+    const called = ctx.view.players[ctx.playerId as string]?.calledLegendThisTurn === true;
+    if (playedProgram || called) {
+      const rest = actions.filter(
+        (action) => action.move !== "callLegend" && !playNamed(action, "Trust No One"),
+      );
+      return rest.length > 0 ? rest : actions;
+    }
+    if (trustWindow && actions.some((action) => playNamed(action, "Trust No One"))) {
+      return keepMoves(actions, (action) => playNamed(action, "Trust No One"));
+    }
+    return keepMoves(actions, (action) => action.move === "callLegend");
+  }
+  if (own === 1 && !onPlay) {
+    const playedProgram = (ctx.view.playedCardTypesThisTurn[ctx.playerId as string] ?? []).includes(
+      "program",
+    );
+    const called = ctx.view.players[ctx.playerId as string]?.calledLegendThisTurn === true;
+    const jackedInHand = handNames.has("Jacked-In Voodoo Boy");
+    const trustInHand = handNames.has("Trust No One");
+    const jackedThisTurn = field.some(
+      (card) => card.cardName === "Jacked-In Voodoo Boy" && card.hasLag,
+    );
+    const packageLive = (jackedInHand || jackedThisTurn) && (trustInHand || playedProgram);
+    if (packageLive) {
+      return keepMoves(
+        actions,
+        (action) =>
+          action.move === "callLegend" ||
+          playNamed(action, "Jacked-In Voodoo Boy") ||
+          playNamed(action, "Trust No One"),
+      );
+    }
+    if (playedProgram || called) {
+      const rest = actions.filter(
+        (action) => action.move !== "callLegend" && !playNamed(action, "Trust No One"),
+      );
+      return rest.length > 0 ? rest : actions;
+    }
+    if (trustWindow && actions.some((action) => playNamed(action, "Trust No One"))) {
+      return keepMoves(actions, (action) => playNamed(action, "Trust No One"));
+    }
+    return keepMoves(actions, (action) => action.move === "callLegend");
+  }
+  const jackedOut = field.some((card) => card.cardName === "Jacked-In Voodoo Boy");
+  if (own === 2) {
+    const quiet = actions.filter((action) => {
+      const jackedAttack =
+        (action.move === "attackUnit" || action.move === "attackRival") &&
+        name(action) === "Jacked-In Voodoo Boy";
+      const secondCopy = jackedOut && playNamed(action, "Jacked-In Voodoo Boy");
+      return !jackedAttack && !secondCopy;
+    });
+    if (!jackedOut && quiet.some((action) => playNamed(action, "Jacked-In Voodoo Boy"))) {
+      return keepMoves(quiet, (action) => playNamed(action, "Jacked-In Voodoo Boy"));
+    }
+    return quiet.length > 0 ? quiet : actions;
+  }
+  const programPlayed = (ctx.view.playedCardTypesThisTurn[ctx.playerId as string] ?? []).includes(
+    "program",
+  );
+  const paired = hasGigPair(faces);
+  if (own === 3 && !programPlayed) {
+    if (!paired && actions.some((action) => playNamed(action, "Peace Offering"))) {
+      return keepMoves(actions, (action) => playNamed(action, "Peace Offering"));
+    }
+    if (actions.some((action) => playNamed(action, "Trust No One"))) {
+      return keepMoves(actions, (action) => playNamed(action, "Trust No One"));
+    }
+    if (actions.some((action) => playNamed(action, "Floor It"))) {
+      return keepMoves(actions, (action) => playNamed(action, "Floor It"));
+    }
+  }
+  if (own === 3 && programPlayed && jackedOut) {
+    return keepMoves(
+      actions,
+      (action) =>
+        (action.move === "attackUnit" || action.move === "attackRival") &&
+        name(action) === "Jacked-In Voodoo Boy",
+    );
+  }
+  const pepeOut = field.some((card) => card.cardName === "Pepe Najarro");
+  if (own === 4 && actions.some((action) => playNamed(action, "Pepe Najarro"))) {
+    return keepMoves(actions, (action) => playNamed(action, "Pepe Najarro"));
+  }
+  if (own === 4 && pepeOut && paired && pepeWouldReadyMercs(ctx)) {
+    return keepMoves(
+      actions,
+      (action) =>
+        (action.move === "attackUnit" || action.move === "attackRival") &&
+        name(action) === "Pepe Najarro",
+    );
+  }
+  if (own === 4 && pepeOut && (!paired || !pepeWouldReadyMercs(ctx))) {
+    return actions.filter(
+      (action) => name(action) !== "Pepe Najarro" || action.move === "playCard",
+    );
+  }
+  const lizzyPrograms = new Set([
+    "Chrome Reverie",
+    "Nocturne OP55 N1",
+    "Pyramid Song",
+    "Three Mouths, One Desire",
+    "Trust No One",
+    "Peace Offering",
+    "Floor It",
+  ]);
+  const zones = ctx.view.players[ctx.playerId as string]?.zones;
+  const hasPayload = ["hand", "trash"].some(
+    (zone) =>
+      Array.isArray(zones?.[zone]) &&
+      zones[zone].some(
+        (card) =>
+          card.type === "program" &&
+          card.cost != null &&
+          card.cost <= 3 &&
+          lizzyPrograms.has(card.cardName ?? ""),
+      ),
+  );
+  if (own === 5 && hasPayload && actions.some((action) => playNamed(action, "Lizzy Wizzy"))) {
+    return keepMoves(actions, (action) => playNamed(action, "Lizzy Wizzy"));
+  }
+  return actions;
+}
+
+function gigFaces(ctx: DecisionContext): number[] {
+  const zone = ctx.view.players[ctx.playerId as string]?.zones.gigArea;
+  if (!Array.isArray(zone)) return [];
+  return zone.map((gig) => gig.effectivePower ?? gig.power ?? 0);
+}
+
+function hasGigPair(faces: number[]): boolean {
+  const seen = new Set<number>();
+  for (const face of faces) {
+    if (seen.has(face)) return true;
+    seen.add(face);
+  }
+  return false;
+}
+
+/**
+ * A unit-hosted Gear with no unit on board is stranded. Sell a spare program
+ * instead of passing the turn and skipping the curve.
+ */
+function applyCurveSellPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): Array<MoveDecision & { kind: "command" }> {
+  if (!profile?.gearHostTypes) return actions;
+  const player = ctx.view.players[ctx.playerId as string];
+  const hand = player?.zones.hand;
+  if (!Array.isArray(hand)) return actions;
+  const stranded = hand.some(
+    (card) => card.cardName != null && profile.gearHostTypes?.[card.cardName] === "unit",
+  );
+  if (!stranded) return actions;
+  const field = player?.zones.field;
+  if (Array.isArray(field) && field.some((card) => card.type === "unit")) return actions;
+  const spareSell = actions.some((action) => {
+    if (action.move !== "sellCard") return false;
+    return !isCoreCardName(findCard(ctx.view, stringArg(action.args?.cardId))?.cardName, profile);
+  });
+  if (!spareSell) return actions;
+  const kept = actions.filter((action) => action.move !== "passPhase");
+  return kept.length > 0 ? kept : actions;
+}
+
+function curveSellNames(profile: DeckStrategyProfile | undefined): readonly string[] {
+  return profile?.curveSellCards ?? [];
+}
+
+function dropPassWhenCurveSellIsLegal(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): Array<MoveDecision & { kind: "command" }> {
+  const names = curveSellNames(profile);
+  if (names.length === 0) return actions;
+  const player = ctx.view.players[ctx.playerId as string];
+  if (!player || player.soldThisTurn) return actions;
+  const spare = actions.some((action) => {
+    if (action.move !== "sellCard") return false;
+    const name = findCard(ctx.view, stringArg(action.args?.cardId))?.cardName;
+    return name != null && names.includes(name);
+  });
+  if (!spare) return actions;
+  const kept = actions.filter((action) => action.move !== "passPhase");
+  return kept.length > 0 ? kept : actions;
+}
+
+function applyCurveUnitPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): Array<MoveDecision & { kind: "command" }> {
+  const names = profile?.curveUnits;
+  if (!names || names.length === 0) return actions;
+  let cheapest = Number.POSITIVE_INFINITY;
+  for (const action of actions) {
+    if (action.move !== "playCard" || action.args?.attachToId) continue;
+    const card = findCard(ctx.view, stringArg(action.args?.cardId));
+    if (!card?.cardName || !names.includes(card.cardName)) continue;
+    const cost = card.effectiveCost ?? card.cost ?? Number.POSITIVE_INFINITY;
+    if (cost < cheapest) cheapest = cost;
+  }
+  if (!Number.isFinite(cheapest)) return actions;
+  const kept = actions.filter((action) => {
+    if (action.move !== "playCard" || action.args?.attachToId) return true;
+    const card = findCard(ctx.view, stringArg(action.args?.cardId));
+    if (!card?.cardName || !names.includes(card.cardName)) return true;
+    return (card.effectiveCost ?? card.cost ?? Number.POSITIVE_INFINITY) === cheapest;
+  });
+  return kept.length > 0 ? kept : actions;
+}
+
+/**
+ * Deck lines that search will not discover on its own: keep a payload in
+ * hand for the carrier that plays it, take that payload when the free-play
+ * choice is open, do not decline a source that must resolve, and set a min
+ * Gig when that source asks for one.
+ */
+function applyPlayLinePolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): Array<MoveDecision & { kind: "command" }> {
+  if (!profile) return actions;
+  let next = applyPriorityPlayPolicy(actions, ctx, profile);
+  next = applyCarrierFirstPolicy(next, ctx, profile);
+  next = applyPlayThroughPolicy(next, ctx, profile);
+  next = applyMinGigPlayPolicy(next, ctx, profile);
+  next = applyPreferredFreeCardPolicy(next, ctx, profile);
+  next = applyCommitSourcePolicy(next, ctx, profile);
+  next = applyMinGigPolicy(next, ctx, profile);
+  return next;
+}
+
+function applyPriorityPlayPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  const names = profile.priorityPlays;
+  if (!names || names.length === 0 || !rivalUnitCanAttack(ctx)) return actions;
+  const hand = ctx.view.players[ctx.playerId as string]?.zones.hand;
+  const holdingProgram = Array.isArray(hand) && hand.some((card) => card.type === "program");
+  if (!holdingProgram) return actions;
+  const wanted = new Set(names);
+  const plays = actions.filter((action) => {
+    if (action.move !== "playCard") return false;
+    const name = findCard(ctx.view, stringArg(action.args?.cardId))?.cardName;
+    return name != null && wanted.has(name);
+  });
+  return plays.length > 0 ? plays : actions;
+}
+
+function applyCarrierFirstPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  if (!profile.playThrough || !rivalUnitCanAttack(ctx)) return actions;
+  for (const [carrier, payloads] of Object.entries(profile.playThrough)) {
+    const payloadNames = new Set(payloads);
+    const hand = ctx.view.players[ctx.playerId as string]?.zones.hand;
+    const holdingPayload =
+      Array.isArray(hand) &&
+      hand.some((card) => card.cardName != null && payloadNames.has(card.cardName));
+    if (!holdingPayload) continue;
+    const carrierPlays = actions.filter((action) => {
+      if (action.move !== "playCard") return false;
+      return findCard(ctx.view, stringArg(action.args?.cardId))?.cardName === carrier;
+    });
+    if (carrierPlays.length > 0) return carrierPlays;
+  }
+  return actions;
+}
+
+function rivalUnitCanAttack(ctx: DecisionContext): boolean {
+  for (const [id, player] of Object.entries(ctx.view.players)) {
+    if (id === (ctx.playerId as string)) continue;
+    const field = player.zones.field;
+    if (!Array.isArray(field)) continue;
+    if (
+      field.some(
+        (card) =>
+          card.type === "unit" &&
+          !card.spent &&
+          !card.hasLag &&
+          !card.grantedRules.includes("cantAttack"),
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function expandAtomicGigAdjust(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+): Array<MoveDecision & { kind: "command" }> {
+  const choice = ctx.prompt.choice;
+  if (
+    choice?.type !== "chooseTarget" ||
+    choice.payload.type !== "effectTarget" ||
+    !choice.payload.adjustGig
+  ) {
+    return actions;
+  }
+  const spec = choice.payload.adjustGig;
+  const direction = spec.direction ?? "either";
+  const maxAmount = spec.maxAmount ?? 0;
+  const adjusted: Array<MoveDecision & { kind: "command" }> = [];
+  for (const dieId of choice.payload.eligibleIds ?? []) {
+    const gig = findCard(ctx.view, dieId);
+    if (!gig) continue;
+    const current = gig.effectivePower ?? gig.power ?? 0;
+    const maxFace = dieMaxFace(gig.definitionId) ?? current;
+    const min = direction === "increase" ? current : Math.max(1, current - maxAmount);
+    const max = direction === "decrease" ? current : Math.min(maxFace, current + maxAmount);
+    for (let value = min; value <= max; value += 1) {
+      if (value === current) continue;
+      adjusted.push({
+        kind: "command",
+        move: "resolveAdjustGig",
+        args: { kind: "adjust", dieId, value },
+      });
+    }
+  }
+  if (spec.chooseUpTo || choice.payload.canDecline || (choice.payload.min ?? 1) === 0) {
+    adjusted.push({ kind: "command", move: "resolveAdjustGig", args: { kind: "noAdjustment" } });
+  }
+  return adjusted.length > 0 ? adjusted : actions;
+}
+
+function dieMaxFace(dieType: string): number | undefined {
+  switch (dieType) {
+    case "d4":
+      return 4;
+    case "d6":
+      return 6;
+    case "d8":
+      return 8;
+    case "d10":
+      return 10;
+    case "d12":
+      return 12;
+    case "d20":
+      return 20;
+    default:
+      return undefined;
+  }
+}
+
+function applyPlayThroughPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  if (!profile.playThrough) return actions;
+  let next = actions;
+  for (const [carrier, payloads] of Object.entries(profile.playThrough)) {
+    const carrierLegal = next.some((action) => {
+      if (action.move !== "playCard") return false;
+      return findCard(ctx.view, stringArg(action.args?.cardId))?.cardName === carrier;
+    });
+    if (!carrierLegal) continue;
+    const payloadNames = new Set(payloads);
+    const hand = ctx.view.players[ctx.playerId as string]?.zones.hand;
+    const holdingPayload =
+      Array.isArray(hand) && hand.some((card) => card.cardName && payloadNames.has(card.cardName));
+    if (!holdingPayload) continue;
+    const kept = next.filter((action) => {
+      if (action.move !== "playCard") return true;
+      const name = findCard(ctx.view, stringArg(action.args?.cardId))?.cardName;
+      return !name || !payloadNames.has(name);
+    });
+    if (kept.length > 0) next = kept;
+  }
+  return next;
+}
+
+function applyPreferredFreeCardPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  const preferred = profile.preferredFreeCards;
+  if (!preferred || preferred.length === 0) return actions;
+  const names = new Set(preferred);
+  const kept = actions.filter((action) => {
+    const playedId = playedCardId(action);
+    if (!playedId) return false;
+    const name = choiceCardName(ctx, playedId);
+    return name != null && names.has(name);
+  });
+  return kept.length > 0 ? kept : actions;
+}
+
+function choiceCardName(ctx: DecisionContext, instanceId: string): string | undefined {
+  const visible = findCard(ctx.view, instanceId)?.cardName;
+  if (visible) return visible;
+  const choice = ctx.prompt.choice;
+  if (!choice) return undefined;
+  if (choice.type === "chooseTarget" || choice.type === "chooseCardToPlay") {
+    return (
+      choice.payload.cards?.find((card) => card.instanceId === instanceId)?.cardName ?? undefined
+    );
+  }
+  return undefined;
+}
+
+function playedCardId(action: MoveDecision & { kind: "command" }): string {
+  if (action.move === "resolveCardToPlay") return stringArg(action.args?.cardId);
+  if (action.move !== "resolveEffectTarget") return "";
+  const targetIds = action.args?.targetIds;
+  return Array.isArray(targetIds) && typeof targetIds[0] === "string" ? targetIds[0] : "";
+}
+
+function applyCommitSourcePolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  const sources = profile.commitSources;
+  if (!sources || sources.length === 0) return actions;
+  const sourceName = choiceSourceName(ctx);
+  if (!sourceName || !sources.includes(sourceName)) return actions;
+  const kept = actions.filter(
+    (action) => action.args?.pass !== true && action.args?.kind !== "noAdjustment",
+  );
+  return kept.length > 0 ? kept : actions;
+}
+
+function pepeWouldReadyMercs(ctx: DecisionContext): boolean {
+  const legends = ctx.view.players[ctx.playerId as string]?.zones.legendArea;
+  if (!Array.isArray(legends)) return false;
+  const mercs = new Set(["Alt Cunningham", "Jackie Welles"]);
+  return legends.some(
+    (card) =>
+      card.cardName != null &&
+      mercs.has(card.cardName) &&
+      card.spent &&
+      !card.faceDown &&
+      card.classifications.includes("Merc"),
+  );
+}
+
+function applyMinGigPlayPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  const sources = profile.minGigSources;
+  if (!sources || sources.length === 0) return actions;
+  const own = ownTurnIndex(ctx.view.turnNumber);
+  if (profile.deckId === "authored-bbg-towerfall-control" && own >= 1 && own <= 5) return actions;
+  const gigs = ctx.view.players[ctx.playerId as string]?.zones.gigArea;
+  const aboveMin =
+    Array.isArray(gigs) && gigs.some((gig) => (gig.effectivePower ?? gig.power ?? 0) > 1);
+  if (!aboveMin) return actions;
+  const kept = actions.filter((action) => {
+    if (action.move !== "playCard") return false;
+    const name = findCard(ctx.view, stringArg(action.args?.cardId))?.cardName;
+    return name != null && sources.includes(name);
+  });
+  return kept.length > 0 ? kept : actions;
+}
+
+function applyMinGigPolicy(
+  actions: Array<MoveDecision & { kind: "command" }>,
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile,
+): Array<MoveDecision & { kind: "command" }> {
+  const sources = profile.minGigSources;
+  if (!sources || sources.length === 0) return actions;
+  if (ctx.prompt.choice?.type !== "chooseTarget") return actions;
+  const payload = ctx.prompt.choice.payload;
+  const atomicAdjust = payload.type === "effectTarget" && payload.adjustGig !== undefined;
+  if (payload.type !== "adjustGig" && !atomicAdjust) return actions;
+  const sourceName = choiceSourceName(ctx);
+  if (!sourceName || !sources.includes(sourceName)) return actions;
+  const minGig = actions.filter((action) => {
+    if (action.move !== "resolveAdjustGig" || action.args?.value !== 1) return false;
+    const dieId = stringArg(action.args?.dieId);
+    return dieId !== "" && gigOwner(ctx, dieId) === (ctx.playerId as string);
+  });
+  return minGig.length > 0 ? minGig : actions;
+}
+
+function gigOwner(ctx: DecisionContext, dieId: string): string | undefined {
+  for (const [playerId, player] of Object.entries(ctx.view.players)) {
+    const gigs = player.zones.gigArea;
+    if (Array.isArray(gigs) && gigs.some((gig) => gig.instanceId === dieId)) return playerId;
+  }
+  return undefined;
+}
+
+function choiceSourceName(ctx: DecisionContext): string | undefined {
+  const choice = ctx.prompt.choice;
+  if (!choice || choice.type !== "chooseTarget") return undefined;
+  const sourceId = choice.payload.source?.cardId;
+  if (!sourceId) return undefined;
+  return findCard(ctx.view, sourceId)?.cardName ?? undefined;
 }
 
 /**
  * When a deck profile names preferred Gear hosts and at least one is a legal
  * attach target, drop every other host for that Gear. Tactical search otherwise
  * scores a high-power Unit above a face-up Legend and installs Overwatch /
- * Sandevistan on the wrong body.
+ * Sandevistan on the wrong body. Independent of a profile, a face-up Legend
+ * without [GO SOLO] never receives a Gear whose only payload is raw power.
  */
 function applyGearHostPolicy(
   actions: Array<MoveDecision & { kind: "command" }>,
   ctx: DecisionContext,
   profile: DeckStrategyProfile | undefined,
+  scoring: TacticalScoringOptions,
 ): Array<MoveDecision & { kind: "command" }> {
-  if (!profile) return actions;
-  const HOST_RANK: Record<ReturnType<typeof gearHostMatch>, number> = {
-    preferred: 0,
-    typed: 1,
-    named: 2,
-    none: 3,
-  };
-  const bestRank = new Map<string, number>();
-  for (const action of actions) {
-    if (action.move !== "playCard") continue;
-    const gearId = stringArg(action.args?.cardId);
-    const hostId = stringArg(action.args?.attachToId);
-    if (!gearId || !hostId) continue;
-    const rank =
-      HOST_RANK[
-        gearHostMatch(findCard(ctx.view, gearId)?.cardName, findCard(ctx.view, hostId), profile)
-      ];
-    const current = bestRank.get(gearId);
-    if (current === undefined || rank < current) bestRank.set(gearId, rank);
+  const legendHoldEnabled = !scoring.disabled.has("legend-gear");
+  if (!profile && !legendHoldEnabled) return actions;
+
+  let next = actions;
+  if (profile) {
+    const HOST_RANK: Record<ReturnType<typeof gearHostMatch>, number> = {
+      preferred: 0,
+      typed: 1,
+      named: 2,
+      none: 3,
+    };
+    const bestRank = new Map<string, number>();
+    for (const action of next) {
+      if (action.move !== "playCard") continue;
+      const gearId = stringArg(action.args?.cardId);
+      const hostId = stringArg(action.args?.attachToId);
+      if (!gearId || !hostId) continue;
+      const rank =
+        HOST_RANK[
+          gearHostMatch(findCard(ctx.view, gearId)?.cardName, findCard(ctx.view, hostId), profile)
+        ];
+      const current = bestRank.get(gearId);
+      if (current === undefined || rank < current) bestRank.set(gearId, rank);
+    }
+    if (bestRank.size > 0) {
+      next = next.filter((action) => {
+        if (action.move !== "playCard") return true;
+        const gearId = stringArg(action.args?.cardId);
+        const hostId = stringArg(action.args?.attachToId);
+        if (!gearId || !hostId || !bestRank.has(gearId)) return true;
+        const rank =
+          HOST_RANK[
+            gearHostMatch(findCard(ctx.view, gearId)?.cardName, findCard(ctx.view, hostId), profile)
+          ];
+        return rank === bestRank.get(gearId);
+      });
+      // Unit-hosted gear stays in hand until a unit can carry it. A Legend is
+      // a legal attach in the rules and search will take it; the curve bodies
+      // are the plan.
+      const unitHosted = next.filter((action) => {
+        if (action.move !== "playCard") return true;
+        const gearName = findCard(ctx.view, stringArg(action.args?.cardId))?.cardName;
+        if (!gearName || profile.gearHostTypes?.[gearName] !== "unit") return true;
+        const match = gearHostMatch(
+          gearName,
+          findCard(ctx.view, stringArg(action.args?.attachToId)),
+          profile,
+        );
+        return match === "preferred" || match === "typed";
+      });
+      if (unitHosted.length > 0) next = unitHosted;
+    }
   }
-  if (bestRank.size === 0) return actions;
-  return actions.filter((action) => {
+  if (!legendHoldEnabled) return next;
+  const held = next.filter((action) => {
     if (action.move !== "playCard") return true;
-    const gearId = stringArg(action.args?.cardId);
-    const hostId = stringArg(action.args?.attachToId);
-    if (!gearId || !hostId || !bestRank.has(gearId)) return true;
-    const rank =
-      HOST_RANK[
-        gearHostMatch(findCard(ctx.view, gearId)?.cardName, findCard(ctx.view, hostId), profile)
-      ];
-    return rank === bestRank.get(gearId);
+    const gear = findCard(ctx.view, stringArg(action.args?.cardId));
+    const gearName = gear?.cardName;
+    if (!gearName || !gear) return true;
+    const host = findCard(ctx.view, stringArg(action.args?.attachToId));
+    if (!host) return true;
+    // A face-up Legend stuck in the Legend area without [GO SOLO] can never
+    // fight or steal: raw power there is dead weight. Gears with real effects
+    // (or a profile-named host) still attach.
+    if (host.zone !== "legendArea" || host.faceDown) return true;
+    if (host.keywords.includes("goSolo") || host.grantedRules.includes("goSolo")) return true;
+    if (gearHasOwnEffects(gear)) return true;
+    const match = gearHostMatch(gearName, host, profile);
+    return match === "preferred" || match === "named";
   });
+  return held.length > 0 ? held : next;
+}
+
+/**
+ * True when the Gear grants something beyond its raw power (static or
+ * triggered abilities visible on the card), so a Legend host can still use it.
+ */
+function gearHasOwnEffects(gear: FilteredCardView): boolean {
+  return gear.abilityHints.length > 0 || gear.triggerHints.length > 0;
 }
 
 /**
@@ -551,8 +1536,11 @@ function applyGoSoloHoldPolicy(
   const ownGigs = ctx.view.players[ctx.playerId as string]?.gigCount ?? 0;
   if (ownGigs >= 5) return actions;
   const kept = actions.filter((action) => {
-    if (action.move !== "goSolo") return true;
     const card = findCard(ctx.view, stringArg(action.args?.cardId));
+    const leavesLegendArea =
+      action.move === "goSolo" ||
+      (action.move === "playCard" && card?.zone === "legendArea" && card.type === "legend");
+    if (!leavesLegendArea) return true;
     return !card?.cardName || !hold.has(card.cardName);
   });
   return kept.length > 0 ? kept : actions;
@@ -628,9 +1616,14 @@ function applyCombatSafetyPolicy(
   actions: Array<MoveDecision & { kind: "command" }>,
   ctx: DecisionContext,
   fallback: AIStrategy,
+  scoring: TacticalScoringOptions,
 ): Array<MoveDecision & { kind: "command" }> {
-  let filtered = filterUnsafeFights(actions, ctx.view);
-  filtered = filterUnsafeDirectAttacks(filtered, ctx.view, ctx.playerId as string);
+  // In the final Gig race, passing can win, a BLOCKER may need to stay ready,
+  // and a losing fight may open the winning steal. Compare all legal responses
+  // in the search instead of vetoing them with the normal material policy.
+  if (isLateGigRace(ctx.view)) return actions;
+  let filtered = filterUnsafeFights(actions, ctx.view, scoring);
+  filtered = filterUnsafeDirectAttacks(filtered, ctx.view, ctx.playerId as string, scoring);
 
   if (filtered.some((action) => action.move === "useBlocker")) {
     const policyDecision = fallback.decideAction(ctx);
@@ -646,9 +1639,17 @@ function applyCombatSafetyPolicy(
   return filtered;
 }
 
+/**
+ * Fights keep only rule-compliant attackers: for each defender the plan sends
+ * the weakest Unit that still wins the fight, preserving ≥10-power bodies
+ * that steal two Gigs. When such a removal exists, combat outranks
+ * developing: develop plays and passes are dropped for this prompt (the
+ * following prompt still develops).
+ */
 function filterUnsafeFights(
   actions: Array<MoveDecision & { kind: "command" }>,
   view: FilteredMatchView,
+  scoring: TacticalScoringOptions,
 ): Array<MoveDecision & { kind: "command" }> {
   const fights = actions.filter((action) => action.move === "attackUnit");
   if (fights.length === 0) return actions;
@@ -657,20 +1658,58 @@ function filterUnsafeFights(
       .map((action) => stringArg(action.args?.attackerId))
       .filter((id) => findCard(view, id)?.grantedRules.includes("mustAttack") === true),
   );
+  const removalPlanned = requiredAttackerIds.size === 0 && !scoring.disabled.has("remove-targets");
+  const preferredPairs = new Set<string>();
+  if (removalPlanned) {
+    const winnersByDefender = new Map<string, Array<{ id: string; power: number }>>();
+    for (const action of fights) {
+      const attacker = findCard(view, stringArg(action.args?.attackerId));
+      const defender = findCard(view, stringArg(action.args?.defenderId));
+      if (!attacker || !defender) continue;
+      if ((attacker.effectivePower ?? 0) <= (defender.effectivePower ?? 0)) continue;
+      const winners = winnersByDefender.get(defender.instanceId) ?? [];
+      winners.push({ id: attacker.instanceId, power: attacker.effectivePower });
+      winnersByDefender.set(defender.instanceId, winners);
+    }
+    for (const [defenderId, winners] of winnersByDefender) {
+      winners.sort((a, b) => a.power - b.power || a.id.localeCompare(b.id));
+      preferredPairs.add(`${winners[0]!.id}:${defenderId}`);
+    }
+  }
+  const removalAvailable = requiredAttackerIds.size > 0 || preferredPairs.size > 0;
+  const mandate = removalAvailable && !scoring.disabled.has("remove-targets");
   return actions.filter((action) => {
-    if (action.move !== "attackUnit") return true;
+    if (action.move !== "attackUnit") {
+      if (!mandate) return true;
+      // A removal exists: this prompt is combat. Keep steals (a second body
+      // can still take the gig race) but drop developing and passing.
+      return action.move === "attackRival";
+    }
     const attackerId = stringArg(action.args?.attackerId);
     if (requiredAttackerIds.size > 0) return requiredAttackerIds.has(attackerId);
     const attacker = findCard(view, attackerId);
     const defender = findCard(view, stringArg(action.args?.defenderId));
-    return (attacker?.effectivePower ?? 0) > (defender?.effectivePower ?? 0);
+    if (!attacker || !defender) return false;
+    if ((attacker.effectivePower ?? 0) <= (defender.effectivePower ?? 0)) return false;
+    if (!removalPlanned) return true;
+    return preferredPairs.has(`${attackerId}:${defender.instanceId}`);
   });
 }
 
+/**
+ * Direct Gig-area attacks: at parity or behind, an attacker must beat the
+ * strongest ready blocker. With more attack-ready Units than rival ready
+ * Units, weaker attackers may draw a block and leave a spare attacker.
+ * A 0-power Unit steals nothing, so it never attacks the Gig area. When no
+ * blocker can respond at all ("free steal" — no rival ready blocker and at
+ * least one Gig to take), the steal is strictly +EV: this prompt becomes the
+ * steal, plus any already-planned removal fights.
+ */
 function filterUnsafeDirectAttacks(
   actions: Array<MoveDecision & { kind: "command" }>,
   view: FilteredMatchView,
   actorId: string,
+  scoring: TacticalScoringOptions,
 ): Array<MoveDecision & { kind: "command" }> {
   const attacks = actions.filter((action) => action.move === "attackRival");
   if (attacks.length === 0) return actions;
@@ -684,12 +1723,17 @@ function filterUnsafeDirectAttacks(
   const required = attacks.filter((action) =>
     findCard(view, stringArg(action.args?.attackerId))?.grantedRules.includes("mustAttack"),
   );
+  const pressureWithSpareUnits = hasReadyUnitAdvantage(view, actorId);
   const safe =
     required.length > 0
       ? required
       : attacks.filter((action) => {
           const attacker = findCard(view, stringArg(action.args?.attackerId));
-          return rivalGigs > 0 && (attacker?.effectivePower ?? 0) > strongestBlocker;
+          return (
+            rivalGigs > 0 &&
+            (attacker?.effectivePower ?? 0) > 0 &&
+            (pressureWithSpareUnits || (attacker?.effectivePower ?? 0) > strongestBlocker)
+          );
         });
   const selected = [...safe].sort((a, b) => {
     const aId = stringArg(a.args?.attackerId);
@@ -698,7 +1742,19 @@ function filterUnsafeDirectAttacks(
       (findCard(view, bId)?.effectivePower ?? 0) - (findCard(view, aId)?.effectivePower ?? 0);
     return powerDelta !== 0 ? powerDelta : aId.localeCompare(bId);
   })[0];
-  return actions.filter((action) => action.move !== "attackRival" || action === selected);
+  const stealOnly =
+    selected !== undefined &&
+    rivalBlockers.length === 0 &&
+    !scoring.disabled.has("safe-steal") &&
+    !actions.some((action) => action.move === "useBlocker");
+  if (stealOnly) {
+    return actions.filter((action) => action === selected || action.move === "attackUnit");
+  }
+  return actions.filter(
+    (action) =>
+      action.move !== "attackRival" ||
+      (pressureWithSpareUnits ? safe.includes(action) : action === selected),
+  );
 }
 
 function readyBlockers(zone: FilteredCardView[] | number | undefined): FilteredCardView[] {
@@ -761,6 +1817,7 @@ function hiddenInformationChanged(
     const afterPlayer = after.players[playerId];
     if (!beforePlayer || !afterPlayer) continue;
     if (zoneCount(beforePlayer.zones.deck) === zoneCount(afterPlayer.zones.deck)) continue;
+    if (isPublicRivalUnitBottomDeckMove(before, action, actor, playerId)) continue;
     // A self-deck reveal activation is scored from its deterministic fork and
     // its owner sees the revealed card; the owner's own deck shrinking is not
     // unknown information. Any other deck delta stays hidden.
@@ -768,6 +1825,52 @@ function hiddenInformationChanged(
     return true;
   }
   return false;
+}
+
+/**
+ * Bottom-decking a known, face-up rival Unit changes a public board fact: that
+ * Unit left the field. The deck's identity/order stays hidden, but cutting the
+ * search off before this move would erase the removal from board evaluation.
+ */
+function isPublicRivalUnitBottomDeckMove(
+  before: FilteredMatchView,
+  action: MoveDecision & { kind: "command" },
+  actor: PlayerId,
+  changedDeckPlayerId: string,
+): boolean {
+  if (action.move !== "resolveEffectTarget" || changedDeckPlayerId === (actor as string)) {
+    return false;
+  }
+  const prompt = before.prompt;
+  if (prompt.status !== "choice" || prompt.choice?.type !== "chooseTarget") return false;
+  const choice = prompt.choice;
+  if (
+    choice.payload.type !== "effectTarget" ||
+    choice.payload.effect?.effect !== "moveCard" ||
+    choice.payload.effect.destination !== "deckBottom"
+  ) {
+    return false;
+  }
+  const targetIds = action.args?.targetIds;
+  const eligibleIds = choice.payload.eligibleIds ?? [];
+  if (
+    !Array.isArray(targetIds) ||
+    targetIds.length === 0 ||
+    !targetIds.every((id) => typeof id === "string" && eligibleIds.includes(id))
+  ) {
+    return false;
+  }
+
+  return targetIds.every((id) =>
+    Object.entries(before.players).some(([playerId, player]) => {
+      if (playerId === (actor as string) || playerId !== changedDeckPlayerId) return false;
+      const field = player.zones.field;
+      return (
+        Array.isArray(field) &&
+        field.some((card) => card.instanceId === id && card.type === "unit" && !card.faceDown)
+      );
+    }),
+  );
 }
 
 /**
@@ -899,12 +2002,23 @@ function hiddenCutoffScore(
   actor: PlayerId,
   budget: SearchBudget,
   profile: DeckStrategyProfile | undefined,
+  scoring: TacticalScoringOptions,
 ): number {
   budget.cutoffReason = "hidden-information";
   return (
     evaluateBoard(before, rootPlayerId as string) +
+    (action.move === "passPhase"
+      ? evaluateLateGigRace(before, rootPlayerId as string, true) -
+        evaluateLateGigRace(before, rootPlayerId as string)
+      : 0) +
     (actor === rootPlayerId ? 1 : -1) *
-      actionPrior(action, before, actor as string, actor === rootPlayerId ? profile : undefined)
+      actionPrior(
+        action,
+        before,
+        actor as string,
+        actor === rootPlayerId ? profile : undefined,
+        scoring,
+      )
   );
 }
 
@@ -915,11 +2029,54 @@ const HOST_PRIOR: Record<ReturnType<typeof gearHostMatch>, number> = {
   none: 0,
 };
 
+/**
+ * Gear power planning (H3): a Gear should either push its host across a
+ * steal breakpoint (10, 20, … power), or make a Unit the strict top body on
+ * the board (higher than every rival Unit — equal still loses the fight).
+ * Attaching for neither reason just pads a body; every already-stacked Gear
+ * makes the next one less interesting.
+ */
+function gearPowerPlanningPrior(
+  gear: FilteredCardView,
+  host: FilteredCardView | null,
+  view: FilteredMatchView,
+  actorId: string,
+  scoring?: TacticalScoringOptions,
+): number {
+  if (!scoring || scoring.disabled.has("gear-power")) return 0;
+  if (!host || host.faceDown) return 0;
+  const gearPower = Math.max(0, gear.effectivePower);
+  if (gearPower === 0) return 0;
+  const before = Math.max(0, host.effectivePower);
+  const after = before + gearPower;
+  const breakpointGain = Math.floor(after / 10) > Math.floor(before / 10);
+  const rivalTopPower = rivalTopUnitPower(view, actorId);
+  const becomesTopSafe = after > rivalTopPower && before <= rivalTopPower;
+  if (breakpointGain || becomesTopSafe) return 60;
+  const stackedGears = host.attachedGearIds.length;
+  return -10 - 12 * stackedGears;
+}
+
+function rivalTopUnitPower(view: FilteredMatchView, actorId: string): number {
+  let top = 0;
+  for (const [playerId, player] of Object.entries(view.players)) {
+    if (playerId === actorId) continue;
+    const field = player.zones.field;
+    if (!Array.isArray(field)) continue;
+    for (const card of field) {
+      if (card.type !== "unit" || card.faceDown) continue;
+      top = Math.max(top, card.effectivePower);
+    }
+  }
+  return top;
+}
+
 function actionPrior(
   action: MoveDecision & { kind: "command" },
   view: FilteredMatchView,
   actorId: string,
   profile?: DeckStrategyProfile,
+  scoring?: TacticalScoringOptions,
 ): number {
   switch (action.move) {
     case "concede":
@@ -944,8 +2101,16 @@ function actionPrior(
       if (!card) return 0;
       let prior = Math.max(0, card.effectivePower) * 2 + (card.cost ?? 0);
       if (isCoreCardName(card.cardName, profile)) prior += 8;
+      if (
+        profile?.pacing === "develop-first" &&
+        isCoreCardName(card.cardName, profile) &&
+        (view.players[actorId]?.gigCount ?? 0) < 5
+      ) {
+        prior += card.type === "unit" ? 150 : 40;
+      }
       const host = findCard(view, stringArg(action.args?.attachToId));
       prior += HOST_PRIOR[gearHostMatch(card.cardName, host, profile)];
+      prior += gearPowerPlanningPrior(card, host, view, actorId, scoring);
       return prior;
     }
     case "sellCard": {

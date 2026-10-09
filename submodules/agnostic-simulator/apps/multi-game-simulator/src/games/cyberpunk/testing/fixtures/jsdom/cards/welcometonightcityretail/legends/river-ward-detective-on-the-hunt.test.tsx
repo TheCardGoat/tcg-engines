@@ -8,7 +8,10 @@ import {
   welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import {
+  expectEqual,
+  resolveAttackSteps,
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -48,6 +51,8 @@ describe("River Ward - Detective on the Hunt (Retail) jsdom happy path", () => {
       await pom.activateAbility(river.instanceId, 1, CYBERPUNK_P1);
 
       // The activated ability first chooses the Gear, then its attachment host.
+      // (The banner-title copy is browser-check territory; jsdom asserts the
+      // targeting behavior.)
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
       const gearChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       if (!gearChoices.includes(gear.instanceId)) {
@@ -105,9 +110,7 @@ describe("River Ward - Detective on the Hunt (Retail) jsdom happy path", () => {
       );
 
       await pom.attackUnit(tBug.instanceId, minotaur.instanceId, CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-      await pom.resolveAttack(CYBERPUNK_P1);
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTrigger");
       const trigger = (await pom.getPendingTriggerOptions(CYBERPUNK_P1)).find(

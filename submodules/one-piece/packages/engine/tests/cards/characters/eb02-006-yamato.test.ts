@@ -65,4 +65,27 @@ describe("EB02-006 Yamato", () => {
     expect(engine.getView("south").players.south.restedDon).toBe(7);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("Wano Leader enables Rush even when declining the DON transfer and uses OPT", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP01-031",
+      hand: ["EB02-006"],
+      activeDon: 6,
+    });
+    e.asSouth().play("EB02-006");
+    const id = e.findCardInZone("south", "character", "EB02-006");
+    e.asSouth().activateMain(id);
+    e.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    expect(e.getView("south").players.south.restedDon).toBe(6);
+    e.asSouth().attack(id, e.leader("north"));
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    const f = e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: id,
+      trigger: "activateMain",
+    });
+    expect(
+      OnePieceTestEngine.fromState(f.state).getView("south").players.south.leader.attachedDon,
+    ).toBe(0);
+  });
 });

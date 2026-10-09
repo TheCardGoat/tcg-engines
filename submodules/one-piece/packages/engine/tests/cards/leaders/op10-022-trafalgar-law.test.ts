@@ -70,4 +70,48 @@ describe("OP10-022 Trafalgar Law", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("cannot activate at four total Character cost even with the attached DON", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP10-022",
+      character: ["ST01-011"],
+      life: ["OP10-101"],
+      activeDon: 1,
+    });
+    const card = e.findCardInZone("south", "character", "ST01-011");
+    e.asSouth().attachDon(e.leader("south"));
+    e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === card)).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+  });
+  test("an ineligible revealed Life card returns to the same top position face-down", () => {
+    for (const top of ["EB01-005", "OP01-026", "ST02-013"]) {
+      const e = OnePieceTestEngine.create({
+        leaderCardId: "OP10-022",
+        character: ["OP10-101"],
+        life: [top, "EB01-025"],
+        activeDon: 1,
+      });
+      const life = e.findCardInZone("south", "life", top);
+      const paid = e.findCardInZone("south", "character", "OP10-101");
+      e.asSouth().attachDon(e.leader("south"));
+      e.asSouth().activateMain(e.leader("south"));
+      e.asSouth().acceptOptional();
+      expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(paid);
+      expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+      expect(e.getView("north").players.south.life[0]).toMatchObject({
+        hidden: true,
+        instanceId: null,
+      });
+      // Hidden Life identity and exact top position are not exposed by the player view.
+      expect(e.getState().players.south.life[0]).toBe(life);
+      expect(e.getView("south").prompts).toHaveLength(0);
+    }
+  });
 });

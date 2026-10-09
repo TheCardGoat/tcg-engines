@@ -1,27 +1,27 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
+import { eb01Doma005, eb01Fourtricks025, op09Peachbeard094 } from "@tcg/op-cards";
 import { op09Laffitte095 } from "../../../../../cards/src/cards/characters/op09-095-laffitte.ts";
-import { op09Peachbeard094 } from "../../../../../cards/src/cards/characters/op09-094-peachbeard.ts";
+import { op09Stronger089 } from "../../../../../cards/src/cards/characters/op09-089-stronger.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP09-095 Laffitte", () => {
-  test("rests one DON!! and itself, finds an included Blackbeard Pirates trait, and orders the rest", () => {
+  test("rests one DON!! and itself, finds an Blackbeard Pirates type among multiple types, and orders the rest", () => {
     const engine = OnePieceTestEngine.create({
       character: [op09Laffitte095],
       deck: [
-        op09Peachbeard094,
+        op09Stronger089,
         eb01Doma005,
         eb01Fourtricks025,
-        eb01MountainGod018,
+        op09Peachbeard094,
         eb01Doma005,
         eb01Fourtricks025,
       ],
       activeDon: 1,
     });
     const laffitteId = engine.findCardInZone("south", "character", op09Laffitte095);
-    const eligibleId = engine.findCardInZone("south", "deck", op09Peachbeard094);
-    const unrelatedId = engine.findCardInZone("south", "deck", eb01MountainGod018);
+    const eligibleId = engine.findCardInZone("south", "deck", op09Stronger089);
+    const unrelatedId = engine.findCardInZone("south", "deck", op09Peachbeard094);
 
     engine.activateEffect(laffitteId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
@@ -55,10 +55,10 @@ describe("OP09-095 Laffitte", () => {
     const engine = OnePieceTestEngine.create({
       character: [op09Laffitte095],
       deck: [
-        op09Peachbeard094,
+        op09Stronger089,
         eb01Doma005,
         eb01Fourtricks025,
-        eb01MountainGod018,
+        op09Peachbeard094,
         eb01Doma005,
         eb01Fourtricks025,
       ],

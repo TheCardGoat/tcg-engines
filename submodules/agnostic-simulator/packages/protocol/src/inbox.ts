@@ -111,5 +111,6 @@ export const NEEDS_DEDUP: ReadonlySet<EventName> = new Set<EventName>([
   "proposal_decline",
   "skip_opponent_turn",
   "drop_player",
+  "forfeit_match",
   "leave_game",
 ]);

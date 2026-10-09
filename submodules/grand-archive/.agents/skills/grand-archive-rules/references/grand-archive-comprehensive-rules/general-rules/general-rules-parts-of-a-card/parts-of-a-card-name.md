@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-name"
+  relation: "current_index"
+---
+
 # Parts of a Card - Name
 
 The name of the card will be found in the middle section of the top bar between the card cost and the card element.

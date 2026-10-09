@@ -31,6 +31,7 @@ export const heraCreatedByTheVine: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_03f9ebc033fb4cff9ba721b38b6681a8",
+    tcgPlayer: "704576",
   },
   text: [
     {

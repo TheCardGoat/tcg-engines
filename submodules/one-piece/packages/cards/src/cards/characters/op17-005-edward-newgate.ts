@@ -41,11 +41,31 @@ export const op17EdwardNewgate005: CharacterCard = {
   setId: "OP17",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "If your opponent has a Character with 10000 power or more, give this card in your hand -4 cost.\n[On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase.",
   effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "conditional",
+            predicate: { condition: "leaderMulticolored" },
+            whenTrue: [],
+            whenFalse: [
+              {
+                action: "setBasePower",
+                target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+                value: 8000,
+                duration: "untilEndOfOpponentNextTurn",
+              },
+            ],
+          },
+        ],
+      },
+    ],
     permanentEffects: [
       {
         conditions: [

@@ -30,7 +30,7 @@ export const op03Arlong022: LeaderCard = {
   setId: "OP03",
   power: 5000,
   life: 4,
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   attribute: "slash",
   effect:
     "[DON!! x2] [When Attacking] ① (You may rest the specified number of DON!! cards in your cost area.): Play up to 1 Character card with a cost of 4 or less and a [Trigger] from your hand.",

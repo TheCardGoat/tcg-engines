@@ -30,6 +30,7 @@ export const peteCreatedByTheVine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1e710cb07f1e49be9b2b0616bb93b582",
+    tcgPlayer: "702651",
   },
   text: [
     {

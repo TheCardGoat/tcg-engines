@@ -28,53 +28,50 @@ export const op12ColorOfTheSupremeKingHaki018: EventCard = {
     effects: [
       {
         trigger: "counter",
-        optional: true,
         actions: [
           {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    { filter: "cardCategory", value: "character" },
+                    { filter: "name", value: "Silvers Rayleigh" },
+                  ],
+                },
+              ],
             },
             value: 2000,
             duration: "thisBattle",
           },
           {
-            action: "rest",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 1,
+            action: "optional",
+            condition: { condition: "activeDonCount", comparison: "gte", value: 1 },
+            actions: [
+              {
+                action: "rest",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: { amount: 1 },
+                  filters: [{ filter: "state", value: "active" }],
+                },
               },
-            },
-            condition: {
-              condition: "activeDonCount",
-              comparison: "gte",
-              value: 1,
-            },
-          },
-          {
-            action: "modifyPower",
-            target: {
-              player: "opponent",
-              zones: ["leader", "character"],
-              count: {
-                amount: "all",
+              {
+                action: "modifyPower",
+                target: {
+                  player: "opponent",
+                  zones: ["leader", "character"],
+                  count: { amount: "all" },
+                },
+                value: -1000,
+                duration: "thisTurn",
               },
-            },
-            value: -1000,
-            duration: "thisTurn",
-            condition: {
-              condition: "restedCardCount",
-              player: "self",
-              comparison: "gte",
-              value: 1,
-            },
+            ],
           },
         ],
       },

@@ -47,7 +47,7 @@ export const op01Izo033: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 2000,
-  traits: ["Former Whitebeard Pirates Land of Wano"],
+  traits: ["Land of Wano", "Former Whitebeard Pirates"],
   attribute: "ranged",
   effect:
     "[On Play] Rest up to 1 of your opponent's Characters with a cost of 4 or less.  This card has been officially errata'd.",

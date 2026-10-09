@@ -15,7 +15,7 @@ describe("OP03-122 Sogeking", () => {
       {
         hand: [op03Sogeking122],
         character: [eb01Doma005],
-        deck: [eb01Fourtricks025, eb01MountainGod018],
+        deck: [eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
         activeDon: op03Sogeking122.cost,
       },
       { character: [eb01MountainGod018, op03Sogeking122] },
@@ -65,7 +65,7 @@ describe("OP03-122 Sogeking", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op03Sogeking122],
-        deck: [eb01Doma005, eb01Fourtricks025],
+        deck: [eb01Doma005, eb01Fourtricks025, "EB01-025"],
         activeDon: op03Sogeking122.cost,
       },
       { character: [eb01MountainGod018] },

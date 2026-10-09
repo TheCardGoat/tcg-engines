@@ -48,7 +48,7 @@ export const op07Urouge021: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fallen Monk Pirates Supernovas"],
+  traits: ["Supernovas", "Fallen Monk Pirates"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [End of Your Turn] Set up to 1 of your DON!! cards as active.",

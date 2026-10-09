@@ -21,7 +21,7 @@ export const op14eb04ForFun037: EventCard = {
   rarity: "R",
   setId: "OP14",
   cost: 1,
-  traits: ["The Seven Warlords of the Sea East Blue"],
+  traits: ["East Blue", "The Seven Warlords of the Sea"],
   effect:
     "[Main] You may rest 3 of your cards: K.O. up to 1 of your opponent's rested Characters with 7000 base power or less.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

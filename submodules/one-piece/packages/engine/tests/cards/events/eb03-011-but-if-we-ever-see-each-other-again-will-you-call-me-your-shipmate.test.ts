@@ -112,7 +112,6 @@ describe("EB03-011 But If We Ever See Each Other Again... Will You Call Me Your 
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const targetDecision = engine.pendingDecision("effectTargetSelection", "north");

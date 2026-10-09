@@ -37,4 +37,24 @@ describe("OP15-079 Absalom", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger activates the recovery without requiring a field K.O.", () => {
+    const engine = OnePieceTestEngine.create(
+      { life: [op15Absalom079, "OP12-013"], trash: [op15DrHogback084] },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const target = engine.findCardInZone("south", "trash", op15DrHogback084);
+    const source = engine.findCardInZone("south", "life", op15Absalom079);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected recovery choice");
+    expect(choice.candidates.map((c) => c.ref.id)).toContain(target);
+    expect(choice.candidates.map((c) => c.ref.id)).not.toContain(source);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((c) => c.instanceId)).toContain(target);
+    expect(view.players.south.trash.map((c) => c.instanceId)).toContain(source);
+    expect(view.players.south.lifeCount).toBe(1);
+  });
 });

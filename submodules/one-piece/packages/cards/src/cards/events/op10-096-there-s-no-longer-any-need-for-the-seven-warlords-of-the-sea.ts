@@ -44,7 +44,7 @@ export const op10ThereSNoLongerAnyNeedForTheSevenWarlordsOfTheSea096: EventCard 
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",
@@ -69,7 +69,7 @@ export const op10ThereSNoLongerAnyNeedForTheSevenWarlordsOfTheSea096: EventCard 
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
-                  match: "includes",
+                  match: "exact",
                 },
                 { filter: "cost", comparison: "lte", value: 4 },
               ],

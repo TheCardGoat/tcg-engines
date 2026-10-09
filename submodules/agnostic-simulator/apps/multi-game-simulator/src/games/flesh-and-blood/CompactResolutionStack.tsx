@@ -52,16 +52,16 @@ function CompactResolutionCard({
       {...previewTarget.previewProps}
       onMouseEnter={
         interactionMode === "desktop"
-          ? (event) => {
-              previewTarget.occupy(event);
+          ? () => {
+              previewTarget.occupy();
               onOccupied(entry);
             }
           : undefined
       }
       onFocus={
         interactionMode === "desktop"
-          ? (event) => {
-              previewTarget.occupy(event);
+          ? () => {
+              previewTarget.occupy();
               onOccupied(entry);
             }
           : undefined

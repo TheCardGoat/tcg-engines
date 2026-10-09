@@ -66,4 +66,66 @@ describe("OP17-093 Monkey.D.Luffy", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("draws then revives a cost-two Character and its live cost grants this card Rush", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP17-079",
+        hand: ["OP17-093"],
+        trash: ["OP17-094", "EB01-005"],
+        activeDon: 10,
+        deck: ["ST02-002", "ST02-006"],
+      },
+      {},
+    );
+    const target = e.findCardInZone("south", "trash", "OP17-094");
+    e.asSouth().play("OP17-093");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST02-002"]);
+    const life = e.getView("south").players.north.lifeCount;
+    e.asSouth().attack("OP17-093", e.leader("north"));
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 1);
+  });
+  test.each([false, true])(
+    "cannot attack on its play turn after cost-twelve enabler removed=%s",
+    (remove) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "OP05-001",
+          character: remove ? ["OP06-015", "OP17-089"] : [],
+          hand: ["OP17-093"],
+          activeDon: 8,
+          deck: ["ST06-006", "ST06-006"],
+        },
+        {},
+      );
+      e.asSouth().play("OP17-093");
+      expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST06-006"]);
+      if (remove) {
+        const beforeRemoval = OnePieceTestEngine.fromState(
+          JSON.parse(JSON.stringify(e.getState())),
+        );
+        const life = beforeRemoval.getView("south").players.north.lifeCount;
+        beforeRemoval.asSouth().attack("OP17-093", beforeRemoval.leader("north"));
+        expect(beforeRemoval.getView("south").players.north.lifeCount).toBe(life - 1);
+        const enabler = e.findCardInZone("south", "character", "OP17-089");
+        e.asSouth().activateMain("OP06-015");
+        e.asSouth().acceptOptional();
+        e.resolveDecision("effectCostTrashCharacter", { selectedIds: [enabler] }, "south");
+        expect(e.getView("south").players.south.trash.some((c) => c.instanceId === enabler)).toBe(
+          true,
+        );
+      }
+      const luffy = e.findCardInZone("south", "character", "OP17-093");
+      e.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: luffy,
+        targetId: e.leader("north"),
+      });
+      expect(
+        e.getView("south").players.south.characters.find((c) => c?.instanceId === luffy)?.rested,
+      ).toBe(false);
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

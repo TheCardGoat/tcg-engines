@@ -491,6 +491,14 @@ export const EngineInteractionView = z
     status: InteractionViewStatus,
     resolution: InteractionResolutionContext.optional(),
     actions: z.array(InteractionAction),
+    /** Explicit degraded projection; consumers must not present this as an idle game state. */
+    projectionFailure: z
+      .object({
+        code: z.literal("projection_failed"),
+        retryable: z.literal(true),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 

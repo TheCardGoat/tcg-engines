@@ -1,5 +1,7 @@
+import { SimulatorLiveChatProvider } from "../../simulator/providers/live-chat-context";
 import { z } from "zod";
 import { FabActionNotice } from "./FabActionNotice";
+import { fabInteractionActorId } from "./interaction-actor";
 import {
   canEmitLiveMatchWriteFromHandle,
   createLiveMatchSession,
@@ -29,6 +31,8 @@ import {
   EngineInteractionView,
   type EngineInteractionView as EngineInteractionViewType,
   type InteractionSubmission,
+  type PendingProposal,
+  type ProposalResolvedPayload,
 } from "@tcg/protocol";
 import {
   parseFabGameAnalyticsV2,
@@ -37,6 +41,7 @@ import {
 import {
   DropClaimControl,
   resolveInteractionText,
+  SimulatorCancelledMatch,
   SimulatorRouteStatus,
   type CardInteractionAction,
 } from "@tcg/simulator-ui";
@@ -46,8 +51,12 @@ import { DROP_GATEWAY_ERROR_CODES } from "@tcg/protocol";
 import { acquireRootGatewayHandle } from "../../lib/gateway/root-socket";
 import { matchHistoryUrl } from "../../runtime/gameRuntimeApi";
 import { useSimulatorRoute } from "../../simulator/providers";
+import { LiveActionAttention } from "../../simulator/attention/LiveActionAttention";
+import { LiveMatchChatPanel } from "../../simulator/chat/LiveMatchChatPanel";
+import { useLiveMatchDocumentTitle } from "../../simulator/attention/useLiveMatchDocumentTitle";
 import { matchReturnUrl } from "../../routes/match-return-url";
 import { FabSpectatorNotice } from "./FabSpectatorNotice";
+import { FabFirstGameEntry } from "./first-game/FabFirstGameGuide";
 import {
   FabPriorityAutomationParticipantMenuItems,
   FabPriorityAutomationSettingsPanel,
@@ -72,8 +81,10 @@ import {
   type FabLiveEngineLogRecord,
 } from "./use-fab-event-log";
 import { FabPostGameSummary } from "./FabPostGameSummary";
-import { downloadHostedReplay, saveHostedReplayOnDevice } from "../../runtime/replayActions";
+import { downloadHostedReplay } from "../../runtime/replayActions";
+import { saveFabReplayOnDevice } from "./replayActions";
 import {
+  createFabPostGameResult,
   createFabPostGameSummary,
   fabMatchSummaryFromAnalytics,
   fabPostGameBackendDataFromAnalytics,
@@ -175,6 +186,8 @@ interface FabLiveSnapshot {
   animationPlan?: unknown;
   correlationId?: string;
   engineLogs?: unknown;
+  undoable?: boolean;
+  undoTurnAvailable?: boolean;
 }
 
 type FabRecoveryStage = "checking" | "reconnecting" | "syncing" | "needs-help";
@@ -282,7 +295,7 @@ function FabLiveRecoveryNotice({
   );
 }
 
-export function LiveMatchPage() {
+function LiveMatchPageContent() {
   const route = useSimulatorRoute();
   const session = route.session;
   const viewer = session?.viewer ?? route.matchPageData?.viewer;
@@ -300,7 +313,15 @@ export function LiveMatchPage() {
           />
         );
       case "cancelled":
-        return <SimulatorRouteStatus title="Match cancelled" message={session.reason} />;
+        return (
+          <SimulatorCancelledMatch
+            reason={session.reason}
+            matchmakingHref={matchReturnUrl(
+              "flesh-and-blood",
+              typeof window === "undefined" ? "" : window.location.search,
+            )}
+          />
+        );
       case "playing":
       case "finished":
         return <LiveGamePage key={`${session.game.gameId}:${session.phase}:${viewerKey}`} />;
@@ -351,6 +372,22 @@ function LiveGamePage() {
     );
   });
   const gameEnded = Boolean(state?.result);
+  useLiveMatchDocumentTitle({
+    game: "Flesh and Blood",
+    turn:
+      state?.activePlayerId && actorId
+        ? state.activePlayerId === actorId
+          ? "self"
+          : "opponent"
+        : null,
+    priority:
+      state?.priorityPlayerId && actorId
+        ? state.priorityPlayerId === actorId
+          ? "self"
+          : "opponent"
+        : null,
+    finished: gameEnded,
+  });
   const [clock, setClock] = useState(() => readFabClock(bootstrap?.game.view));
   const bootstrapRef = useRef(bootstrap);
   bootstrapRef.current = bootstrap;
@@ -400,10 +437,27 @@ function LiveGamePage() {
   const [matchAnalytics, setMatchAnalytics] = useState<readonly FabGameAnalyticsV2[]>([]);
   const [summaryOpen, setSummaryOpen] = useState(true);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
+  const [replayBusy, setReplayBusy] = useState(false);
   const interactionRef = useRef(interactionView);
   const stateVersionRef = useRef(stateVersion);
   const inFlightRef = useRef<FabLiveCommandRequest | null>(null);
   const [pending, setPending] = useState(false);
+  const [canUndo, setCanUndo] = useState(bootstrap?.game.undoable === true);
+  const [canUndoTurn, setCanUndoTurn] = useState(bootstrap?.game.undoTurnAvailable === true);
+  const [undoPending, setUndoPending] = useState(false);
+  const undoRequestRef = useRef<string | null>(null);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
   const [recovering, setRecovering] = useState(false);
   const [recoveryAttempts, setRecoveryAttempts] = useState(0);
   const [terminalRecovery, setTerminalRecovery] = useState(false);
@@ -432,7 +486,14 @@ function LiveGamePage() {
   // batches. Append-only via the pure accumulator, so the identity (and the
   // projection memo below) only changes when a batch lands.
   const [engineLogRecords, setEngineLogRecords] = useState<readonly FabLiveEngineLogRecord[]>(() =>
-    appendFabEngineLogRecords([], bootstrap?.history?.engineLogs?.map((entry) => entry.data) ?? []),
+    appendFabEngineLogRecords(
+      [],
+      bootstrap?.history?.engineLogs?.map((entry) => ({
+        log: entry.data,
+        timestamp: entry.ts,
+        stateVersion: entry.stateVersion,
+      })) ?? [],
+    ),
   );
 
   useEffect(() => {
@@ -504,6 +565,8 @@ function LiveGamePage() {
       setState(next);
       setClock(readFabClock(payload.state));
       setStateVersion(version);
+      setCanUndo(payload.undoable === true);
+      setCanUndoTurn(payload.undoTurnAvailable === true);
       const inFlight = inFlightRef.current;
       if (
         inFlight &&
@@ -571,12 +634,69 @@ function LiveGamePage() {
       }
     };
     acceptSnapshotRef.current = accept;
+    const resolveUndo = (payload: ProposalResolvedPayload) => {
+      if (payload.gameId !== gameId || payload.actionType !== "undo") return;
+      undoRequestRef.current = null;
+      setUndoPending(false);
+      setUndoProposal(null);
+      if (payload.resolution !== "accepted") {
+        setActionError(
+          payload.resolution === "declined"
+            ? "The undo request was declined."
+            : "The action could not be undone.",
+        );
+      }
+      handle.emit("request_game_state_sync", { gameId });
+    };
     const unsubscribers = [
+      handle.on("proposal_received", (payload) => {
+        if (payload.gameId !== gameId || payload.actionType !== "undo") return;
+        setUndoPending(false);
+        setUndoProposal({ ...payload, actionType: "undo" });
+      }),
+      handle.on("proposal_resolved", resolveUndo),
+      handle.on("proposal_expired", (payload) => {
+        if (payload.gameId !== gameId || payload.actionType !== "undo") return;
+        undoRequestRef.current = null;
+        setUndoPending(false);
+        setUndoProposal(null);
+        setActionError("The undo request expired.");
+      }),
+      handle.on("proposal_send:response", (response) => {
+        if (undoRequestRef.current !== "proposal_send") return;
+        undoRequestRef.current = null;
+        setUndoPending(false);
+        if (response.status === "err") {
+          setActionError(response.data.message);
+        } else if ("resolution" in response.data) {
+          resolveUndo(response.data);
+        } else if (response.data.actionType === "undo") {
+          setUndoProposal({ ...response.data, actionType: "undo" });
+        }
+      }),
+      ...(["proposal_accept:response", "proposal_decline:response"] as const).map((event) =>
+        handle.on(event, (response) => {
+          if (`${undoRequestRef.current}:response` !== event) return;
+          undoRequestRef.current = null;
+          setUndoPending(false);
+          if (response.status === "err") setActionError(response.data.message);
+          else resolveUndo(response.data);
+        }),
+      ),
       handle.on("game_joined", (payload) => {
         if (payload.gameId !== gameId) return;
         setPresence(payload.players);
+        setUndoProposal(
+          payload.pendingProposal?.actionType === "undo" ? payload.pendingProposal : null,
+        );
+        setUndoPending(false);
+        undoRequestRef.current = null;
+        setCanUndo(payload.undoable === true);
+        setCanUndoTurn(payload.undoTurnAvailable === true);
         if (payload.dropEligibility) setDropEligibility(payload.dropEligibility);
-        accept(payload, "sync");
+        // A current client receives join metadata without a redundant snapshot.
+        // Do not treat that acknowledgement as malformed game state.
+        if (payload.state != null) accept(payload, "sync");
       }),
       handle.on("drop_eligibility", (payload) => {
         if (payload.gameId !== gameId) return;
@@ -684,6 +804,8 @@ function LiveGamePage() {
         presentation: bootstrap.game.presentation,
         stateVersion: bootstrap.game.stateVersion,
         interactionView: bootstrap.game.interactionView,
+        undoable: bootstrap.game.undoable,
+        undoTurnAvailable: bootstrap.game.undoTurnAvailable,
       },
       "sync",
     );
@@ -844,6 +966,47 @@ function LiveGamePage() {
     },
     [submitInteraction],
   );
+
+  const sendUndo = (
+    event: "proposal_send" | "proposal_accept" | "proposal_decline",
+    undoScope: "last_move" | "turn_start" = "last_move",
+  ) => {
+    if (!gameId || !actorId || !bootstrap || pending || recovering || undoPending) return;
+    const handle = acquireRootGatewayHandle("flesh-and-blood");
+    const gate = canEmitLiveMatchWriteFromHandle({
+      handle,
+      viewer: bootstrap.viewer,
+      capabilities: { actions: bootstrap.capabilities?.actions ?? true },
+      gameStatus: bootstrap.game.status,
+      bootstrapGameId: bootstrap.game.gameId,
+      emitGameId: gameId,
+    });
+    if (!gate.ok) {
+      handle.release();
+      setActionError("Reconnect before requesting an undo.");
+      return;
+    }
+    undoRequestRef.current = event;
+    setUndoPending(true);
+    setActionError(null);
+    handle.emit(event, {
+      gameId,
+      actionType: "undo",
+      ...(event === "proposal_send" ? { undoScope } : {}),
+    });
+    handle.release();
+  };
+
+  useEffect(() => {
+    if (!undoPending) return;
+    const timeout = window.setTimeout(() => {
+      undoRequestRef.current = null;
+      setUndoPending(false);
+      setActionError("The undo request was not confirmed. Synchronizing the match.");
+      requestAuthoritativeSync();
+    }, 10_000);
+    return () => window.clearTimeout(timeout);
+  }, [undoPending, requestAuthoritativeSync]);
 
   const cardActions = useMemo(
     () => fabCardActionsFromInteractionView(interactionView),
@@ -1042,12 +1205,20 @@ function LiveGamePage() {
             },
           });
         })()
-      : null;
-  const result = state.result;
-  const spectatorResultLabel =
-    result?.kind === "win"
-      ? `${bootstrap.match.participants.find((participant) => participant.id === result.winnerId)?.displayName ?? "Winner"} wins`
-      : "Game ended";
+      : state.result
+        ? createFabPostGameResult({
+            presentation: state,
+            viewerId,
+            participantLabel: (playerId) =>
+              bootstrap.match.participants.find((participant) => participant.id === playerId)
+                ?.displayName ?? playerId,
+            participantSubscriptionTier: (playerId) =>
+              bootstrap.match.participants.find((participant) => participant.id === playerId)
+                ?.subscriptionTier,
+            sessionFormatLabel: "Hosted match",
+            spectator: spectating,
+          })
+        : null;
   const mainMenuHref = matchReturnUrl(
     "flesh-and-blood",
     typeof window === "undefined" ? "" : window.location.search,
@@ -1070,9 +1241,42 @@ function LiveGamePage() {
       setInteractionError("Could not copy support details. Please use Support in the player menu.");
     });
   };
+  const attentionActorId = fabInteractionActorId(state, interactionView);
 
   return (
     <>
+      <LiveActionAttention
+        gameId={gameId}
+        view={interactionView}
+        viewerId={actorId}
+        stateVersion={stateVersion}
+        canAct={canAct && attentionActorId === actorId && !recoveryActive && !gameEnded}
+        submitting={pending}
+      />
+      {undoProposal && actorId ? (
+        <Modal opened onClose={() => {}} withCloseButton={false} title="Undo request">
+          <Text>
+            {undoProposal.senderPlayerId === actorId
+              ? "Waiting for your opponent to approve the undo."
+              : undoProposal.undoScope === "turn_start"
+                ? "Your opponent requests an undo of their turn."
+                : "Your opponent requests an undo of their last action."}
+          </Text>
+          {undoProposal.senderPlayerId !== actorId ? (
+            <Group mt="md">
+              <Button
+                disabled={!canAct || undoPending}
+                onClick={() => sendUndo("proposal_decline")}
+              >
+                Decline undo
+              </Button>
+              <Button disabled={!canAct || undoPending} onClick={() => sendUndo("proposal_accept")}>
+                Accept undo
+              </Button>
+            </Group>
+          ) : null}
+        </Modal>
+      ) : null}
       <SimulatorSidebarTips enabled={!state.result && !confirmingConcede}>
         {(actionError || interactionError) && !recoveryActive ? (
           <FabActionNotice
@@ -1084,6 +1288,7 @@ function LiveGamePage() {
             }}
           />
         ) : null}
+        <FabFirstGameEntry surface="board" />
         <FleshAndBloodTabletop
           matchNotice={
             !gameEnded && recoveryActive ? (
@@ -1112,14 +1317,21 @@ function LiveGamePage() {
               />
             ) : undefined
           }
-          pending={pending || recoveryActive}
+          pending={pending || undoPending || recoveryActive}
           readOnly={!canAct || recoveryActive}
           readOnlyLabel={spectating ? "Spectating · read only" : undefined}
           activityLogLabel={spectating ? "Spectating" : undefined}
           matchActions={
             spectating ? (
               <FabSpectatorNotice displayName={selfParticipant?.displayName ?? "First player"} />
-            ) : undefined
+            ) : (
+              <Button
+                disabled={!canAct || !canUndoTurn || undoPending || Boolean(undoProposal)}
+                onClick={() => sendUndo("proposal_send", "turn_start")}
+              >
+                Undo turn
+              </Button>
+            )
           }
           spectatorReturnHref={
             spectating ? matchReturnUrl("flesh-and-blood", window.location.search) : undefined
@@ -1143,7 +1355,10 @@ function LiveGamePage() {
           onSubmitInteraction={actorId ? submitInteraction : undefined}
           participantPresentation={participantPresentation}
           eventLog={eventLog}
+          chat={actorId ? <LiveMatchChatPanel /> : undefined}
           matchHistory={matchHistory}
+          onUndo={actorId ? () => sendUndo("proposal_send") : undefined}
+          canUndo={canAct && canUndo && !undoPending && !undoProposal}
           confirmConcede={false}
           onConcede={concedeActionId ? () => setConfirmingConcede(true) : undefined}
           onOpenGameSummary={state.result && !summaryOpen ? () => setSummaryOpen(true) : undefined}
@@ -1152,65 +1367,64 @@ function LiveGamePage() {
       {postGameSummary && summaryOpen ? (
         <FabPostGameSummary
           summary={postGameSummary}
-          onWatchReplay={() =>
-            window.location.assign(
-              `/flesh-and-blood/simulator/replay/${encodeURIComponent(gameId)}`,
-            )
-          }
-          onSaveReplay={() => {
-            if (!gameId) return;
+          onWatchReplay={() => {
+            if (!gameId || replayBusy) return;
+            setReplayBusy(true);
             setReplayStatus("Saving replay…");
-            void saveHostedReplayOnDevice("flesh-and-blood", gameId).then(
-              () => setReplayStatus("Saved on this device. Browser storage has no set expiry."),
-              () => setReplayStatus("Could not save on this device. Download the replay instead."),
+            void saveFabReplayOnDevice(gameId).then(
+              () =>
+                window.location.assign(
+                  `/flesh-and-blood/simulator/replay/${encodeURIComponent(gameId)}?source=device`,
+                ),
+              (error: unknown) => {
+                setReplayStatus(error instanceof Error ? error.message : "Could not open replay.");
+                setReplayBusy(false);
+              },
             );
           }}
-          onDownloadReplay={() => {
-            if (!gameId) return;
-            setReplayStatus("Preparing download…");
-            void downloadHostedReplay("flesh-and-blood", gameId).then(
-              () => setReplayStatus("Replay downloaded."),
-              () => setReplayStatus("Replay download failed."),
-            );
-          }}
+          onSaveReplay={
+            spectating
+              ? undefined
+              : () => {
+                  if (!gameId || replayBusy) return;
+                  setReplayBusy(true);
+                  setReplayStatus("Saving replay…");
+                  void saveFabReplayOnDevice(gameId)
+                    .then(
+                      () =>
+                        setReplayStatus("Saved on this device. Browser storage has no set expiry."),
+                      (error: unknown) =>
+                        setReplayStatus(
+                          error instanceof Error ? error.message : "Could not save on this device.",
+                        ),
+                    )
+                    .finally(() => setReplayBusy(false));
+                }
+          }
+          onDownloadReplay={
+            spectating
+              ? undefined
+              : () => {
+                  if (!gameId || replayBusy) return;
+                  setReplayBusy(true);
+                  setReplayStatus("Preparing download…");
+                  void downloadHostedReplay("flesh-and-blood", gameId)
+                    .then(
+                      () => setReplayStatus("Replay downloaded."),
+                      () => setReplayStatus("Replay download failed."),
+                    )
+                    .finally(() => setReplayBusy(false));
+                }
+          }
           replayStatus={replayStatus}
+          replayBusy={replayBusy}
           onInspectBoard={() => setSummaryOpen(false)}
           onMainMenu={() => window.location.assign(mainMenuHref)}
-          onPlayAgain={() => window.location.assign("/flesh-and-blood/matchmaking")}
+          onPlayAgain={
+            spectating ? undefined : () => window.location.assign("/flesh-and-blood/matchmaking")
+          }
         />
       ) : null}
-      <Modal
-        opened={Boolean(state.result) && !postGameSummary && summaryOpen}
-        onClose={() => setSummaryOpen(false)}
-        centered
-        title={
-          state.result?.kind === "draw"
-            ? "Draw"
-            : spectating
-              ? spectatorResultLabel
-              : state.result?.kind === "win" && state.result.winnerId === viewerId
-                ? "Victory"
-                : "Defeat"
-        }
-      >
-        <Text size="sm">The game has ended.</Text>
-        <Button
-          variant="default"
-          onClick={() =>
-            window.location.assign(
-              `/flesh-and-blood/simulator/replay/${encodeURIComponent(gameId)}`,
-            )
-          }
-        >
-          Watch replay
-        </Button>
-        <Group justify="flex-end" mt="lg">
-          <Button variant="default" onClick={() => setSummaryOpen(false)}>
-            Inspect board
-          </Button>
-          <Button onClick={() => window.location.assign(mainMenuHref)}>Main menu</Button>
-        </Group>
-      </Modal>
       <Modal
         opened={confirmingConcede && !gameEnded}
         onClose={() => setConfirmingConcede(false)}
@@ -1230,5 +1444,21 @@ function LiveGamePage() {
         </Group>
       </Modal>
     </>
+  );
+}
+
+export function LiveMatchPage() {
+  const { matchPageData: bootstrap } = useSimulatorRoute();
+  if (!bootstrap || bootstrap.viewer.role !== "player") return <LiveMatchPageContent />;
+  return (
+    <SimulatorLiveChatProvider
+      gameSlug="flesh-and-blood"
+      gameId={bootstrap.game.gameId}
+      viewerId={bootstrap.viewer.actorId}
+      initialMessages={bootstrap.history.chatMessages}
+      initialFreeTextEnabled={bootstrap.history.freeTextEnabled}
+    >
+      <LiveMatchPageContent />
+    </SimulatorLiveChatProvider>
   );
 }

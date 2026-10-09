@@ -31,6 +31,7 @@ describe("OP06-096 ...Nothing...at All!!!", () => {
     engine.declareAttack(attackerId, defenderId, "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(
       engine

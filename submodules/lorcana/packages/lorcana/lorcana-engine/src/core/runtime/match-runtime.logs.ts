@@ -11,7 +11,7 @@ import type { MoveLog } from "../../types/move-log";
 import type { CardInstanceId, PlayerId } from "../types";
 import { MoveOutcomeAccumulator } from "../../runtime-game/move-outcome-accumulator";
 import { buildMoveLog, buildSystemMoveLog } from "../../runtime-game/move-log-factory";
-import type { CardsDrawnPayload } from "../../types/domain-events";
+import type { CardsDrawnPayload, CardReadiedPayload } from "../../types/domain-events";
 import type { LorcanaLogMessage } from "../../types/log-messages";
 
 export interface ProjectGameLogInput {
@@ -29,6 +29,8 @@ export interface ProjectGameLogOutput {
    * because that canonical entry was already emitted in a prior move's batch.
    */
   mandatoryDraws?: { playerId: PlayerId; cardIds: CardInstanceId[] }[];
+  /** Ready-step outcomes waiting for a turnStart entry from an earlier batch. */
+  startOfTurnReadiedCards?: CardInstanceId[];
 }
 
 export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput {
@@ -44,6 +46,7 @@ export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput
   const pendingSystemLogs: MoveLog[] = [];
   // Mandatory draws accumulate here; injected into the pending turnStart log at flush time.
   const pendingMandatoryDraws: { playerId: PlayerId; cardId: CardInstanceId }[] = [];
+  const pendingStartOfTurnReadiedCards: CardInstanceId[] = [];
 
   const flushPendingMove = () => {
     if (!pendingMove) return;
@@ -90,6 +93,9 @@ export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput
     }
     // System events (TURN_STARTED, GAME_ENDED) that belong to this move's resolution
     moveLogs.push(...pendingSystemLogs);
+    if (appendStartOfTurnReadyMessages(moveLogs, pendingStartOfTurnReadiedCards)) {
+      pendingStartOfTurnReadiedCards.length = 0;
+    }
     pendingSystemLogs.length = 0;
     pendingMove = null;
   };
@@ -123,7 +129,21 @@ export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput
       }
     }
 
-    // Feed every event to the outcome accumulator
+    // A ready step can finish while an end-turn ability resolves. Keep it on
+    // the new turn's entry rather than attributing it to that ability.
+    if (ge.kind === "CUSTOM" && ge.customType === "cardReadied") {
+      const readyData = ge.data as CardReadiedPayload;
+      if (
+        readyData.source === "start-of-turn" &&
+        readyData.zone === "play" &&
+        !readyData.isManual
+      ) {
+        pendingStartOfTurnReadiedCards.push(readyData.cardId);
+        continue;
+      }
+    }
+
+    // Feed effect events to the outcome accumulator
     accumulator.accumulate(publishedEvent, { state });
 
     // System events: TURN_STARTED, GAME_ENDED
@@ -143,6 +163,9 @@ export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput
 
   // Flush the last pending move
   flushPendingMove();
+  if (appendStartOfTurnReadyMessages(moveLogs, pendingStartOfTurnReadiedCards)) {
+    pendingStartOfTurnReadiedCards.length = 0;
+  }
 
   // Expose any leftover mandatory draws (not injected because no turnStart log was in this batch)
   // so the caller can retroactively update the full log history.
@@ -157,7 +180,37 @@ export function projectGameLog(input: ProjectGameLogInput): ProjectGameLogOutput
     mandatoryDraws = [...byPlayer.entries()].map(([playerId, cardIds]) => ({ playerId, cardIds }));
   }
 
-  return { moveLogs, ...(mandatoryDraws ? { mandatoryDraws } : {}) };
+  return {
+    moveLogs,
+    ...(mandatoryDraws ? { mandatoryDraws } : {}),
+    ...(pendingStartOfTurnReadiedCards.length > 0
+      ? { startOfTurnReadiedCards: pendingStartOfTurnReadiedCards }
+      : {}),
+  };
+}
+
+/** Attach public ready-step outcomes to the latest turn, including delayed choices. */
+export function appendStartOfTurnReadyMessages(
+  history: MoveLog[],
+  cardIds: CardInstanceId[],
+): boolean {
+  if (cardIds.length === 0) return false;
+  for (let i = history.length - 1; i >= 0; i--) {
+    const log = history[i];
+    if (log?.moveType !== "turnStart") continue;
+    history[i] = {
+      ...log,
+      public: [
+        ...log.public,
+        ...cardIds.map((cardId) => ({
+          key: "lorcana.outcome.cardReadied" as const,
+          values: { playerId: log.playerId, cardId },
+        })),
+      ],
+    };
+    return true;
+  }
+  return false;
 }
 
 function appendPrivateMessage(

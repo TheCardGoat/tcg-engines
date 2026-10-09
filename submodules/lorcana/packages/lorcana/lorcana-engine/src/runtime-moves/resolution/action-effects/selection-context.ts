@@ -24,7 +24,7 @@ import type {
 import type { SearchDeckEffect } from "@tcg/lorcana-types";
 import { matchesSearchFilter } from "./search-deck-effect";
 import { matchesCardFilterArray } from "./card-filter-match-utils";
-import { analyzeEffectTargets } from "../../../targeting/runtime";
+import { analyzeEffectTargets, isChosenPlayerTarget } from "../../../targeting/runtime";
 import {
   analyzeTargetSelectionAvailabilityFromAnalysis,
   normalizeSelectedTargets,
@@ -295,7 +295,7 @@ function resolveChoiceChooserId(
     const selectedTargets =
       normalizeSelectedTargets(getCombinedSelectionInput(resolutionInput)) ?? [];
 
-    if (effect.chooser === "CHOSEN_PLAYER") {
+    if (isChosenPlayerTarget(effect.chooser)) {
       return (
         resolveSelectedPlayerIds(
           ctx.framework.state.playerIds,
@@ -368,7 +368,7 @@ function resolveOptionalChooserId(
   const selectedTargets =
     normalizeSelectedTargets(getCombinedSelectionInput(resolutionInput)) ?? [];
 
-  if (effect.chooser === "CHOSEN_PLAYER") {
+  if (isChosenPlayerTarget(effect.chooser)) {
     return (
       resolveSelectedPlayerIds(
         ctx.framework.state.playerIds,
@@ -402,6 +402,7 @@ function resolveOptionalChooserId(
 
 function buildChosenPlayerTargetSelectionContext(
   args: ResolutionSelectionBuildBase & {
+    chooserTarget?: unknown;
     chooserId?: PlayerId;
     originatesFromOptional?: boolean;
     canDeclineSelection?: boolean;
@@ -419,7 +420,16 @@ function buildChosenPlayerTargetSelectionContext(
     canDeclineSelection: args.canDeclineSelection,
     targetDsl: [{ selector: "chosen", count: 1 }],
     cardCandidateIds: [],
-    playerCandidateIds: [...args.ctx.framework.state.playerIds],
+    playerCandidateIds: args.ctx.framework.state.playerIds.filter((id) => {
+      const chooser = args.chooserTarget;
+      return !(
+        typeof chooser === "object" &&
+        chooser !== null &&
+        "excludeSelf" in chooser &&
+        chooser.excludeSelf === true &&
+        id === args.cardPlayed.playerId
+      );
+    }),
     allowedZones: [],
     minSelections: 1,
     maxSelections: 1,
@@ -579,6 +589,7 @@ function buildChoiceSelectionContext(
 function deriveLegalChoiceIndices(
   args: ResolutionSelectionBuildBase,
   options: readonly unknown[],
+  allowNoEffectModes: boolean,
 ): number[] {
   return options.flatMap((option, index) => {
     const optionRecord = asRecord(option);
@@ -594,7 +605,9 @@ function deriveLegalChoiceIndices(
         ? (optionRecord.then ?? optionRecord.effect ?? optionRecord.ifTrue)
         : (optionRecord.else ?? optionRecord.ifFalse);
       if (!effectiveOption) {
-        return [];
+        // A false conditional in "choose one" is a legal no-effect mode.
+        // Only an "or" branch must be performable (CR 6.1.2, 6.1.5.2).
+        return allowNoEffectModes ? [index] : [];
       }
     }
     if (
@@ -632,6 +645,21 @@ function deriveLegalChoiceIndices(
     if (optionContext?.kind === "target-selection" || optionContext?.kind === "discard-choice") {
       const candidateCount =
         optionContext.cardCandidateIds.length + optionContext.playerCandidateIds.length;
+      if (asRecord(effectiveOption)?.type === "put-on-bottom") {
+        // CR 6.1.5.2: an "or" option must be performed in full. The normal
+        // target prompt caps its minimum at available cards for partial effects.
+        const analysis = analyzeEffectTargets(
+          effectiveOption,
+          args.cardPlayed.playerId,
+          args.ctx,
+          args.sourceCardId,
+          {
+            includeDeferredChosenSelections: true,
+            eventSnapshot: args.resolutionInput.eventSnapshot,
+          },
+        );
+        return candidateCount >= analysis.minSelections ? [index] : [];
+      }
       return candidateCount >= optionContext.minSelections ? [index] : [];
     }
     return [index];
@@ -832,7 +860,7 @@ function buildGenericTargetSelectionContext(
   const effectTarget = effectRecord?.target;
   const effectTargetRequiresSelection = effectTargetUsesSelectionContext(effectTarget);
   const effectTargetSelection = getEffectTargetSelectionInput(effectTarget, args.resolutionInput);
-  const runtimeCardCandidates =
+  const unscopedCardCandidates =
     effectTarget !== undefined && effectTargetRequiresSelection
       ? resolveCandidateTargets(
           chooserScopedCtx,
@@ -846,6 +874,14 @@ function buildGenericTargetSelectionContext(
           },
         )
       : analysis.cardCandidates;
+  // A chosen discard is made by the affected player from their own cards,
+  // even when a relative OPPONENT query sees several opponents.
+  const runtimeCardCandidates =
+    args.kind === "discard-choice"
+      ? unscopedCardCandidates.filter(
+          (id) => args.ctx.framework.zones.getCardOwner(id) === args.chooserId,
+        )
+      : unscopedCardCandidates;
   const runtimePlayerCandidates =
     effectTarget !== undefined && effectTargetRequiresSelection
       ? resolveTargetPlayerIds(chooserScopedCtx, effectTarget, {
@@ -932,10 +968,31 @@ function buildGenericTargetSelectionContext(
   const minSelections = allowEmptyResolution ? 0 : Math.min(analysis.minSelections, maxSelections);
   const requiredSelectionCount = minSelections;
   const hasEnoughSelections = currentTargetCount >= requiredSelectionCount;
+  // A total count cannot complete a movement choice unless each typed slot
+  // is filled. Two locations are not a character plus a location.
+  const hasUnfilledMovementSlot =
+    expectedSlottedKind === "move-to-location" &&
+    analysis.targetDsl.some((descriptor) => {
+      const normalized = normalizeTargetDescriptor(descriptor);
+      if (normalized?.selector !== "chosen") return false;
+      const required = getRequiredSelectionCount(normalized);
+      if (required === 0) return false;
+      const selected = normalizeSelectedTargets(currentSelection.targets) ?? [];
+      const resolved =
+        resolveEffectTargets(
+          chooserScopedCtx,
+          args.cardPlayed,
+          normalized,
+          selected,
+          args.resolutionInput.eventSnapshot,
+        ) ?? [];
+      return resolved.length < required;
+    });
   if (
     !allowEmptyResolution &&
     hasEnoughSelections &&
-    currentTargetCount >= analysis.maxSelections
+    currentTargetCount >= analysis.maxSelections &&
+    !hasUnfilledMovementSlot
   ) {
     return undefined;
   }
@@ -1014,7 +1071,10 @@ function getCardPlural(cardType: string): string {
 function getSelectionCardLabel(effect: Record<string, unknown>): string {
   const cardType = getRecordString(effect, "cardType") ?? "card";
   const count = resolveLabelAmount(effect.count);
-  const countPrefix = count && count > 1 ? `${count} ${getCardPlural(cardType)}` : `a ${cardType}`;
+  const countPrefix =
+    count && count > 1
+      ? `${count} ${getCardPlural(cardType)}`
+      : `${cardType === "item" || cardType === "action" ? "an" : "a"} ${cardType}`;
   const restriction = asRecord(effect.costRestriction);
   const comparison = restriction?.comparison;
   const restrictionValue = restriction?.value;
@@ -1204,7 +1264,10 @@ function deriveAutoResolvedSlots(
     }
     return auto.length > 0 ? auto : undefined;
   }
-  if (kind === "move-to-location" && effectRecord.includeSelf === true) {
+  if (
+    kind === "move-to-location" &&
+    (effectRecord.includeSelf === true || isSelfTargetDescriptor(effectRecord.character))
+  ) {
     return ["subject"];
   }
   // Other slotted kinds (shift-and-choose, banish-and-play) currently don't
@@ -1285,6 +1348,7 @@ function isNameRestrictedPlayCard(effectRecord: Record<string, unknown>): boolea
     filterRecord.sameNameAsChosenCard === true ||
     filterRecord.sameInstanceAsSource === true ||
     filterRecord.sameInstanceAsTriggerSubject === true ||
+    filterRecord.inEventSnapshotDiscardedCards === true ||
     filterRecord.inEventSnapshotCardsUnder === true
   );
 }
@@ -1297,6 +1361,7 @@ function isContextDependentPlayCardFilter(filter: unknown): boolean {
   return (
     f.excludeChosenCard === true ||
     f.sameNameAsChosenCard === true ||
+    f.inEventSnapshotDiscardedCards === true ||
     f.inEventSnapshotCardsUnder === true ||
     f.maxCost === "chosen-card-cost" ||
     (typeof f.maxCost === "object" &&
@@ -1495,6 +1560,13 @@ function getEligibleZoneCardsForPlayCardEffect(
       if (filterRecord.inEventSnapshotCardsUnder === true) {
         const cardsUnderIds = args.resolutionInput.eventSnapshot?.cardsUnderIdsBeforeBanish;
         if (!Array.isArray(cardsUnderIds) || !cardsUnderIds.includes(cardId)) {
+          return false;
+        }
+      }
+
+      if (filterRecord.inEventSnapshotDiscardedCards === true) {
+        const discardedCardIds = args.resolutionInput.eventSnapshot?.discardedCardIds;
+        if (!Array.isArray(discardedCardIds) || !discardedCardIds.includes(cardId)) {
           return false;
         }
       }
@@ -1813,7 +1885,7 @@ function buildImmediateSelectionContext(
   // optional-selection. Inner prompts that are not target-selection (name-a-card, choice,
   // scry, optional nested inside optional, etc.) still surface optional-selection first.
   if (effectRecord.type === "optional") {
-    if (effectRecord.chooser === "CHOSEN_PLAYER") {
+    if (isChosenPlayerTarget(effectRecord.chooser)) {
       const selectedPlayers = resolveSelectedPlayerIds(
         args.ctx.framework.state.playerIds,
         getCombinedSelectionInput(args.resolutionInput),
@@ -1821,6 +1893,7 @@ function buildImmediateSelectionContext(
       if ((selectedPlayers?.length ?? 0) === 0) {
         return buildChosenPlayerTargetSelectionContext({
           ...args,
+          chooserTarget: effectRecord.chooser,
           chooserId: args.chooserId,
           originatesFromOptional: true,
           canDeclineSelection: true,
@@ -1889,7 +1962,7 @@ function buildImmediateSelectionContext(
   }
 
   if (effectRecord.type === "choice" || effectRecord.type === "or") {
-    if (effectRecord.chooser === "CHOSEN_PLAYER") {
+    if (isChosenPlayerTarget(effectRecord.chooser)) {
       const selectedPlayers = resolveSelectedPlayerIds(
         args.ctx.framework.state.playerIds,
         getCombinedSelectionInput(args.resolutionInput),
@@ -1897,6 +1970,7 @@ function buildImmediateSelectionContext(
       if ((selectedPlayers?.length ?? 0) === 0) {
         return buildChosenPlayerTargetSelectionContext({
           ...args,
+          chooserTarget: effectRecord.chooser,
           chooserId: args.chooserId,
           originatesFromOptional: args.originatesFromOptional,
         });
@@ -1925,7 +1999,9 @@ function buildImmediateSelectionContext(
         ...args,
         chooserId,
         effect: effectRecord,
-        legalChoiceIndices: args.legalChoiceIndices ?? deriveLegalChoiceIndices(args, options),
+        legalChoiceIndices:
+          args.legalChoiceIndices ??
+          deriveLegalChoiceIndices(args, options, effectRecord.type === "choice"),
       });
     }
 
@@ -1953,7 +2029,7 @@ function buildImmediateSelectionContext(
     return undefined;
   }
 
-  if (effectRecord.chooser === "CHOSEN_PLAYER" || effectRecord.target === "CHOSEN_PLAYER") {
+  if (isChosenPlayerTarget(effectRecord.chooser) || isChosenPlayerTarget(effectRecord.target)) {
     const selectedPlayers = resolveSelectedPlayerIds(
       args.ctx.framework.state.playerIds,
       getCombinedSelectionInput(args.resolutionInput),
@@ -1961,6 +2037,7 @@ function buildImmediateSelectionContext(
     if ((selectedPlayers?.length ?? 0) === 0) {
       return buildChosenPlayerTargetSelectionContext({
         ...args,
+        chooserTarget: effectRecord.chooser ?? effectRecord.target,
         originatesFromOptional: args.originatesFromOptional,
       });
     }

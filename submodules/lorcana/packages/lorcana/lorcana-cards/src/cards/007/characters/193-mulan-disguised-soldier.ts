@@ -31,6 +31,7 @@ export const mulanDisguisedSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51c56768845241c9b79c30510bf3af72",
+    tcgPlayer: "619519",
   },
   text: [
     {

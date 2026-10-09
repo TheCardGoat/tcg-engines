@@ -48,6 +48,29 @@ describe("browser-fixture", () => {
     expect(hydratedFixture.skipPreGame).toBe(true);
   });
 
+  it("round-trips pre-banked Hyperia City ink drops", () => {
+    const encodedFixture = encodeInlineFixtureParam(
+      serializeInlineFixture({
+        playerOne: {
+          play: [moanaDeterminedExplorer],
+          inkDrops: 3,
+        },
+        playerTwo: {
+          inkDrops: 1,
+        },
+        seed: "ink-drops-inline-fixture",
+        skipPreGame: true,
+      }),
+    );
+
+    const fixture = decodeInlineFixtureParam(encodedFixture);
+    expect(fixture).toBeDefined();
+
+    const hydratedFixture = deserializeInlineFixture(fixture!);
+    expect(hydratedFixture.playerOne.inkDrops).toBe(3);
+    expect(hydratedFixture.playerTwo.inkDrops).toBe(1);
+  });
+
   it("preserves registered simulator fixture metadata when serialized", async () => {
     const preGameFixture = await getLorcanaFixture("pre-game");
     const hydratedFixture = deserializeInlineFixture(serializeInlineFixture(preGameFixture));

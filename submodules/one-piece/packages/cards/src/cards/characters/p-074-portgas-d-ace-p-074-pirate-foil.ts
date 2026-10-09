@@ -35,7 +35,7 @@ export const prb02PortgasDAceP074PirateFoil074: CharacterCard = {
   traits: ["Whitebeard Pirates"],
   attribute: "special",
   effect:
-    "[Activate:Main] You may return this Character to the owner's hand: Look at 5 cards from the top of your deck and place them as the top or bottom of the deck in any order.Disclaimer: This card was reprinted from the original set with a different border (Note: the original print had a full art border).",
+    "[Activate: Main] You may return this Character to the owner's hand: Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",
   effects: {
     effects: [
       {

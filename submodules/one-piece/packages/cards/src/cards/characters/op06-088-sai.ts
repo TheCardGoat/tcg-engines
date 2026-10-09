@@ -23,7 +23,7 @@ export const op06Sai088: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Dressrosa Happosui Army"],
+  traits: ["Dressrosa", "Happosui Army"],
   attribute: "slash",
   effect:
     "If your Leader has the {Dressrosa} type and is active, this Character gains +2000 power.",
@@ -35,7 +35,7 @@ export const op06Sai088: CharacterCard = {
             condition: "compound",
             operator: "and",
             conditions: [
-              { condition: "leaderTrait", trait: "Dressrosa", match: "includes" },
+              { condition: "leaderTrait", trait: "Dressrosa", match: "exact" },
               {
                 condition: "hasCard",
                 player: "self",

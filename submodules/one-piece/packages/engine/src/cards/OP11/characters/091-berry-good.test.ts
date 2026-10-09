@@ -66,4 +66,20 @@ describe("OP11-091 Berry Good", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().players.north.deck.slice(-3)).toEqual(submittedOrder);
   });
+  test("FAQ: returns both available Events without taking a Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op11BerryGood091], activeDon: op11BerryGood091.cost },
+      { trash: [op01RoundTable027, op01SheepSHorn117, eb01Doma005] },
+    );
+    const first = engine.findCardInZone("north", "trash", op01RoundTable027);
+    const second = engine.findCardInZone("north", "trash", op01SheepSHorn117);
+    engine.asSouth().play(op11BerryGood091);
+    engine.asNorth().chooseTargets(first, second);
+    engine.asNorth().orderCards("effectReturnToDeckOwnerOrder", [second, first]);
+    expect(engine.getView("north").players.north.trash.map((card) => card.cardId)).toEqual([
+      eb01Doma005.id,
+    ]);
+    // Hidden deck order is not exposed in the public view.
+    expect(engine.getState().players.north.deck.slice(-2)).toEqual([second, first]);
+  });
 });

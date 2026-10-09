@@ -28,6 +28,12 @@ export const op17Yamato074: CharacterCard = {
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] Add up to 1 DON!! card as rested from your DON!! deck.",
   effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "rested" }],
+      },
+    ],
     keywords: ["blocker"],
   },
   i18n: op17Yamato074I18n,

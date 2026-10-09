@@ -18,3 +18,9 @@ describe("Piccarda, Night Rider — printed keywords", () => {
     ],
   });
 });
+
+import { proveDefenderDependentPower } from "../../../testing/defender-dependent-power.ts";
+/** @covers ooGvrzxTmr-a3 */
+describe("piccardaNightRider defender-dependent power", () => {
+  proveDefenderDependentPower(piccardaNightRider, "champion", 4);
+});

@@ -100,7 +100,7 @@ export function OnePieceCardContextController({
         normalizeCardAction(descriptor, entityId, commandRef(descriptor)),
       );
       const printedText = (entity.details?.rules ?? [])
-        .map((rule) => `${rule.label ?? ""} ${rule.text}`)
+        .map((rule) => [rule.label, rule.text].filter(Boolean).join(" "))
         .join(" ")
         .toLocaleLowerCase();
 

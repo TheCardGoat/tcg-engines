@@ -27,6 +27,7 @@ export const putThatThingBack: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_44225a9fb50548479dbb5730fd53a88e",
+    tcgPlayer: "704612",
   },
   text: "Return chosen character or item to their player's hand.",
   actionSubtype: "song",

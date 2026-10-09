@@ -4,7 +4,13 @@ import { getBotLabAdapter, listBotLabGames } from "./registry.ts";
 
 describe("BotLab adapter registry", () => {
   it("lists supported games without importing every adapter", () => {
-    expect(listBotLabGames()).toEqual(["cyberpunk", "gundam", "lorcana", "one-piece"]);
+    expect(listBotLabGames()).toEqual([
+      "alpha-clash",
+      "cyberpunk",
+      "gundam",
+      "lorcana",
+      "one-piece",
+    ]);
   });
 
   // Dynamic import of the Gundam adapter graph is heavy under concurrent CI

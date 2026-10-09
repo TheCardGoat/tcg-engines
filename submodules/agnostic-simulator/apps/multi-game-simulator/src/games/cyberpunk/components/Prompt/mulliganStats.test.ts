@@ -16,9 +16,9 @@ function card(overrides: Partial<MulliganStatsCard> = {}): MulliganStatsCard {
 }
 
 describe("computeMulliganStats", () => {
-  test("bands costs into low (1–2), mid (3–5), and high (6+)", () => {
+  test("bands costs into low (0–2), mid (3–5), and high (6+)", () => {
     const stats = computeMulliganStats([
-      card({ cost: 1 }),
+      card({ cost: 0 }),
       card({ cost: 2 }),
       card({ cost: 3 }),
       card({ cost: 5 }),
@@ -35,7 +35,14 @@ describe("computeMulliganStats", () => {
       card({ cardType: "gear" }),
       card({ cardType: "program" }),
     ]);
-    expect(stats).toMatchObject({ units: 2, nonUnits: 2, counted: 4 });
+    expect(stats).toMatchObject({
+      units: 2,
+      gear: 1,
+      programs: 1,
+      otherTypes: 0,
+      nonUnits: 2,
+      counted: 4,
+    });
   });
 
   test("counts sell-tag cards", () => {
@@ -53,6 +60,8 @@ describe("computeMulliganStats", () => {
       hidden: 1,
       lowCost: 1,
       units: 1,
+      gear: 0,
+      programs: 0,
       nonUnits: 0,
       sellable: 1,
     });
@@ -79,6 +88,9 @@ describe("computeMulliganStats", () => {
       highCost: 0,
       uncosted: 0,
       units: 0,
+      gear: 0,
+      programs: 0,
+      otherTypes: 0,
       nonUnits: 0,
       sellable: 0,
     });

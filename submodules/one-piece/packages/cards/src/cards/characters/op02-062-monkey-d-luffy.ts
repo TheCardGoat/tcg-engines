@@ -30,7 +30,7 @@ export const op02MonkeyDLuffy062: CharacterCard = {
   setId: "OP02",
   cost: 6,
   power: 7000,
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] / [When Attacking] You may trash 2 cards from your hand: Return up to 1 Character with a cost of 4 or less to the owner's hand. Then, this Character gains [Double Attack] during this turn. (This card deals 2 damage.)",

@@ -57,8 +57,28 @@ export const weightOfLookingUp: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                         relationship: "zone-of",
                         player: "controller",
                         filter: {
-                          kind: "type",
-                          oneOf: ["CHAMPION"],
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["CHAMPION"],
+                            },
+                            {
+                              kind: "numeric",
+                              comparison: {
+                                left: {
+                                  kind: "property",
+                                  subject: {
+                                    kind: "candidate",
+                                  },
+                                  property: "level",
+                                  basis: "base",
+                                },
+                                operator: "gte",
+                                right: 3,
+                              },
+                            },
+                          ],
                         },
                       },
                     },

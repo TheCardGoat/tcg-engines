@@ -54,31 +54,25 @@ export const eventideSpear: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               },
               fromZone: "material-deck",
               condition: {
-                kind: "compare",
-                comparison: {
-                  left: {
-                    kind: "count",
-                    collection: {
-                      zones: ["field"],
-                      player: "each-opponent",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY", "CHAMPION"],
-                          },
-                          {
-                            kind: "object-state",
-                            state: "rested",
-                          },
-                        ],
-                      },
+                kind: "player-zone-count",
+                players: "each-opponent",
+                quantifier: "any",
+                zone: "field",
+                filter: {
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
                     },
-                  },
-                  operator: "gte",
-                  right: 2,
+                    {
+                      kind: "object-state",
+                      state: "rested",
+                    },
+                  ],
                 },
+                operator: "gte",
+                value: 2,
               },
               duration: {
                 kind: "while-source-in-functional-zone",

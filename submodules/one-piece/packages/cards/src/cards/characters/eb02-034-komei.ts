@@ -23,7 +23,7 @@ export const eb02Komei034: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Navy Foxy Pirates"],
+  traits: ["Navy", "Foxy Pirates"],
   attribute: "wisdom",
   i18n: eb02Komei034I18n,
 };

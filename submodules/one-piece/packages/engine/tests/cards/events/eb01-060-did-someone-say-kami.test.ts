@@ -144,4 +144,23 @@ describe("EB01-060 Did Someone Say...Kami?", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each([0, 1])("Main keeps %i Life unchanged after its first effect", (lifeCount) => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB01-060", "OP05-100"],
+      activeDon: 4,
+      life: lifeCount,
+    });
+    e.playCard("EB01-060");
+    e.resolveDecision(
+      "effectPlaySelection",
+      { selectedIds: [e.findCardInZone("south", "hand", "OP05-100")] },
+      "south",
+    );
+    expect(e.getView("south").players.south.characters.some((c) => c?.cardId === "OP05-100")).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(lifeCount);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual(["EB01-060"]);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

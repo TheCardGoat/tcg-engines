@@ -3,6 +3,27 @@ import { eb01Doma005, op14eb04Chambres017, op14eb04ScaledNeptunian011 } from "@t
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP14-017 Chambres", () => {
+  test("the remaining Character keeps its swapped base power after its partner leaves", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op14eb04Chambres017, "ST01-015"], activeDon: 7 },
+      { character: [eb01Doma005, op14eb04ScaledNeptunian011] },
+    );
+    const south = engine.asSouth();
+    const lowId = engine.findCardInZone("north", "character", eb01Doma005);
+    const highId = engine.findCardInZone("north", "character", op14eb04ScaledNeptunian011);
+    south.play(op14eb04Chambres017);
+    south.play("ST01-015");
+    south.chooseTargets(highId);
+    expect(south.view().players.north.trash.map((card) => card.instanceId)).toContain(highId);
+    expect(
+      south.view().players.north.characters.find((card) => card?.instanceId === lowId)?.power,
+    ).toBe(8000);
+    south.endTurn();
+    expect(
+      south.view().players.north.characters.find((card) => card?.instanceId === lowId)?.power,
+    ).toBe(3000);
+  });
+
   test("swaps two opposing Characters' base power for the turn", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op14eb04Chambres017], activeDon: 3 },

@@ -60,4 +60,31 @@ describe("OP10-008 Scotch", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(scotchId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("FAQ: replacing Rock on a full field lets Scotch play another Rock", () => {
+    const e = OnePieceTestEngine.create({
+      character: ["ST02-012", "ST02-012", "ST02-012", "ST02-012"],
+      hand: ["OP10-017", "OP10-008", "OP10-017"],
+      activeDon: 3,
+    });
+    const rocks = e
+      .getView("south")
+      .players.south.hand.filter((c) => c.cardId === "OP10-017")
+      .map((c) => c.instanceId);
+    const scotch = e.findCardInZone("south", "hand", "OP10-008");
+    e.asSouth().play("OP10-017");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [scotch] }, "south");
+    e.resolveDecision("effectPlayCharacterReplacement", { selectedIds: [rocks[0]!] }, "south");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [rocks[1]!] }, "south");
+    e.resolveDecision(
+      "effectPlayCharacterReplacement",
+      { selectedIds: [e.findCardInZone("south", "character", "ST02-012")] },
+      "south",
+    );
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(5);
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toEqual(
+      expect.arrayContaining([scotch, rocks[1]]),
+    );
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(rocks[0]);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

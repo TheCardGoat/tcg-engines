@@ -32,6 +32,7 @@ describe("OP10-115 Let's Meet Again in the New World", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toContain(drawnId);

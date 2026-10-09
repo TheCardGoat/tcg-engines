@@ -79,4 +79,17 @@ describe("OP01-024 Monkey.D.Luffy", () => {
       slashEngine.getView("south").players.south.trash.map((card) => card.instanceId),
     ).toContain(unprotectedLuffyId);
   });
+  test("Strike Leader battle still K.O.s Luffy with 2 DON!! attached", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op01MonkeyDLuffy024, attachedDon: 2, rested: true }] },
+      { leaderCardId: "ST01-001" },
+      { activeSeat: "north" },
+    );
+    const luffy = engine.findCardInZone("south", "character", op01MonkeyDLuffy024);
+    engine.declareAttack(engine.leader("north"), luffy, "north");
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      luffy,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -25,6 +25,10 @@ export const attackOfTheVine: ActionCard = {
   rarity: "rare",
   cost: 6,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_5e9c10f7a6b0481a8db5185d783f1bae",
+    tcgPlayer: "704694",
+  },
   text: "Your Floodborn characters gain Resist +2 and can challenge ready characters this turn.",
   abilities: [
     {

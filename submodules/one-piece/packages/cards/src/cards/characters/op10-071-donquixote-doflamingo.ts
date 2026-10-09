@@ -30,7 +30,7 @@ export const op10DonquixoteDoflamingo071: CharacterCard = {
   setId: "OP10",
   cost: 8,
   power: 9000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     '[On Play] DON!! −1: Play up to 1 "Donquixote Pirates" type Character card with a cost of 5 or less from your hand.\n[On Your Opponent\'s Attack] [Once Per Turn] You may rest 1 of your DON!! cards: Add up to 1 DON!! card from your DON!! deck and set it as active.',
@@ -64,7 +64,7 @@ export const op10DonquixoteDoflamingo071: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

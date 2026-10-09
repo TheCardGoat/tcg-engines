@@ -66,7 +66,7 @@ export const op14eb04Ryuma089: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

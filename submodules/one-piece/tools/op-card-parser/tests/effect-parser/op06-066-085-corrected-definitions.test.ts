@@ -25,7 +25,7 @@ describe("OP06-066 through OP06-085 corrected definition parser regressions", ()
                 { filter: "cost", comparison: "eq", value: cost },
                 { filter: "name", value: name },
               ],
-              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "exact" },
             },
           ],
           optional: true,
@@ -75,12 +75,12 @@ describe("OP06-066 through OP06-085 corrected definition parser regressions", ()
                 zones: ["trash"],
                 count: { amount: 2, upTo: true },
                 filters: [
-                  { filter: "trait", value: "FILM", match: "includes" },
+                  { filter: "trait", value: "FILM", match: "exact" },
                   { filter: "cardCategory", value: "character" },
                   { filter: "cost", comparison: "lte", value: 4 },
                 ],
               },
-              condition: { condition: "leaderTrait", trait: "FILM", match: "includes" },
+              condition: { condition: "leaderTrait", trait: "FILM", match: "exact" },
             },
           ],
           optional: true,
@@ -143,7 +143,7 @@ describe("OP06-066 through OP06-085 corrected definition parser regressions", ()
     });
   });
 
-  test("OP06-082 duplicates its inclusive Leader condition and draw-then-trash actions for both triggers", () => {
+  test("OP06-082 duplicates its exact Leader condition and draw-then-trash actions for both triggers", () => {
     expect(
       buildCardEffects(
         "[On Play] / [On K.O.] If your Leader has the [Thriller Bark Pirates] type, draw 2 cards and trash 2 cards from your hand.",
@@ -155,7 +155,7 @@ describe("OP06-066 through OP06-085 corrected definition parser regressions", ()
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

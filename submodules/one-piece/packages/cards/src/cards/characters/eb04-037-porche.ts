@@ -35,7 +35,7 @@ export const op14eb04Porche037: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Foxy Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -54,7 +54,7 @@ export const op14eb04Porche037: CharacterCard = {
               {
                 filter: "trait",
                 value: "Foxy Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

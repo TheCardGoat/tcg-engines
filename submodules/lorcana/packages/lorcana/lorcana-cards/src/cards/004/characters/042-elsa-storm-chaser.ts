@@ -65,7 +65,9 @@ export const elsaStormChaser: CharacterCard = {
           {
             duration: "this-turn",
             keyword: "Rush",
-            target: { ref: "previous-target" },
+            target: {
+              ref: "previous-target",
+            },
             type: "gain-keyword",
           },
         ],

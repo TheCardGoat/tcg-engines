@@ -23,7 +23,7 @@ export const op01Bartolomeo019: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Barto Club Pirates Supernovas"],
+  traits: ["Supernovas", "Barto Club"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [DON!! x2] [Opponent's Turn] This Character gains +3000 power.",

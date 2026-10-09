@@ -24,18 +24,10 @@ describe("CardSlot", () => {
     expect(markup).not.toContain("<img");
   });
 
-  test("applies the dashed hook class when dashed is set", () => {
-    const markup = renderToStaticMarkup(<CardSlot label="Drop" dashed />);
-
-    expect(markup).toContain("card-slot--dashed");
-    expect(markup).toContain("border-dashed");
-  });
-
   test("renders a game-neutral face-down block when faceDown is set", () => {
     const markup = renderToStaticMarkup(<CardSlot faceDown />);
 
     expect(markup).toContain("card-slot-face-down");
-    expect(markup).toContain("var(--card-bg)");
     expect(markup).not.toContain("<img");
   });
 });

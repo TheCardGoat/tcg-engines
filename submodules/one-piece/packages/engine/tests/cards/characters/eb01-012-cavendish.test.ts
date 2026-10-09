@@ -55,4 +55,16 @@ describe("EB01-012 Cavendish", () => {
     expect(view.players.south.restedDon).toBe(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("a different printing named Cavendish prevents the On Play refresh", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op01TrafalgarLaw002,
+      character: ["OP01-008"],
+      hand: [eb01Cavendish012],
+      activeDon: 5,
+    });
+    engine.playCard(eb01Cavendish012);
+    expect(engine.getView("south").players.south.activeDon).toBe(0);
+    expect(engine.getView("south").players.south.restedDon).toBe(5);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

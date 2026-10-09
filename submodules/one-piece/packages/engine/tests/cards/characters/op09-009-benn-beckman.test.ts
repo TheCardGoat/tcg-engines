@@ -30,4 +30,18 @@ describe("OP09-009 Benn.Beckman", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+  test("FAQ: trashing Lucky Roux does not activate its OnKO", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP09-009"], activeDon: 7, character: ["ST02-012"] },
+      { character: ["OP09-015"], leaderCardId: "OP09-001" },
+    );
+    const target = e.findCardInZone("north", "character", "OP09-015");
+    e.asSouth().play("OP09-009");
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").players.south.characters.map((c) => c?.cardId)).toEqual(
+      expect.arrayContaining(["OP09-009", "ST02-012"]),
+    );
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
 });

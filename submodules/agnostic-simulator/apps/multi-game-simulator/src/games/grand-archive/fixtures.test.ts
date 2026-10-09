@@ -21,6 +21,7 @@ describe("Grand Archive visual fixtures", () => {
 
   it("projects each named engine wait state without fabricated controls", () => {
     expect(GRAND_ARCHIVE_VISUAL_FIXTURES.map((fixture) => fixture.id)).toEqual([
+      "field-rows",
       "champion-lineage",
       "counter-identity",
       "combat-retaliation",

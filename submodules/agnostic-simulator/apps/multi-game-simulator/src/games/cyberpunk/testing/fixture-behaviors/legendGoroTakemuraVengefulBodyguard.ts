@@ -14,9 +14,7 @@ import {
 export const legendGoroTakemuraVengefulBodyguardBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendGoroTakemuraVengefulBodyguard",
   label: "Goro Takemura - Vengeful Bodyguard grants BLOCKER",
-  references: [
-    "packages/engine/src/cards/welcometonightcityretail/legends/goro-takemura-vengeful-bodyguard.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/goro-takemura-vengeful-bodyguard.test.ts"],
   async run(pom) {
     const goro = await pom.getCardInZoneByDefinitionId(
       "legendArea",

@@ -6,14 +6,13 @@ import {
 } from "@tcg/op-cards";
 import type {
   CardSummary,
-  CardsMaps,
-  DeckBuildInput,
   DeckCard,
   DeckFormatResult,
   GameAdapter,
 } from "@tcg/shared/game-adapter";
 import {
   buildColorMetadataFacets,
+  materializeDeckInstances,
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
@@ -25,6 +24,7 @@ import {
   onePieceSerializeEngine,
 } from "./one-piece-engine-lifecycle";
 import { onePieceDeckInterchangeAdapter } from "./deck-interchange";
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 
 const onePieceCanonicalByPublicId: ReadonlyMap<string, string> = (() => {
   const map = new Map<string, string>();
@@ -58,6 +58,7 @@ const onePieceCardByAnyId = (() => {
 export const onePieceServerAdapter: GameAdapter = {
   slug: "one-piece",
   deckInterchange: onePieceDeckInterchangeAdapter,
+  proposalPolicy: hostedUndoProposalPolicy,
 
   createGameId(): string {
     return `one-piece-game-${crypto.randomUUID()}`;
@@ -67,29 +68,7 @@ export const onePieceServerAdapter: GameAdapter = {
     return `pirate-${gameProfileId.slice(0, 6)}`;
   },
 
-  buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
-    const cardInstances: Record<string, string> = {};
-    const owners: Record<string, string[]> = {};
-    const instanceSections: Record<string, string> = {};
-    let hasSections = false;
-    for (const { owner, deck } of decks) {
-      const ownerInstances: string[] = [];
-      let counter = 0;
-      for (const entry of deck) {
-        for (let i = 0; i < entry.qty; i++) {
-          const instanceId = `${owner}-${entry.cardId}-${counter++}`;
-          cardInstances[instanceId] = entry.cardId;
-          ownerInstances.push(instanceId);
-          if (entry.sectionId) {
-            instanceSections[instanceId] = entry.sectionId;
-            hasSections = true;
-          }
-        }
-      }
-      owners[owner] = ownerInstances;
-    }
-    return hasSections ? { cardInstances, owners, instanceSections } : { cardInstances, owners };
-  },
+  buildCardInstances: materializeDeckInstances,
 
   getCardById(publicId: string): CardSummary | null {
     const card = onePieceCardByAnyId.get(publicId);

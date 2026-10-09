@@ -10,7 +10,7 @@ export const unitElSombreronLaVenganzaLentaBehavior: CyberpunkFixtureBehavior = 
   scenarioId: "unitElSombreronLaVenganzaLenta",
   label: "El Sombreron - attack trigger doubles fight power",
   references: [
-    "packages/engine/src/cards/welcometonightcityretail/units/el-sombreron-la-venganza-lenta.test.ts",
+    "packages/engine/src/cards/units/el-sombreron-la-venganza-lenta.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

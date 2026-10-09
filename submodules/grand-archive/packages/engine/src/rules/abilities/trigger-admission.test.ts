@@ -1,4 +1,4 @@
-import { trivialTrinket } from "@tcg/grand-archive-cards";
+import { flowerbud, trivialTrinket } from "@tcg/grand-archive-cards";
 import type {
   GrandArchiveAbilityDefinition,
   GrandArchiveAbilityId,
@@ -67,7 +67,13 @@ function triggered(
 
 function setup(abilities: readonly GrandArchiveAbilityDefinition[]) {
   const watcher = card("trigger-admission-watcher", "ITEM", abilities);
-  const program = createGrandArchiveMatchProgram([champion, filler, watcher, trivialTrinket]);
+  const program = createGrandArchiveMatchProgram([
+    champion,
+    filler,
+    watcher,
+    trivialTrinket,
+    flowerbud,
+  ]);
   const player = (id: "p1" | "p2"): GrandArchiveStandardPlayerSetup => ({
     id,
     name: id,
@@ -119,6 +125,58 @@ function pendingAbilityIds(
 }
 
 describe("Grand Archive trigger occurrence admission", () => {
+  for (const own of [false, true])
+    for (const hosted of [false, true])
+      for (const hostType of ["CHAMPION", "ITEM"] as const)
+        it(`matches and binds the destination host: own=${own}, hosted=${hosted}, type=${hostType}`, () => {
+          const fixture = setup([
+            triggered("lineageHost-a1", {
+              kind: "event",
+              event: {
+                name: "card-moved",
+                to: hosted ? "inner-lineage" : "graveyard",
+                host: {
+                  kind: "event-object",
+                  filter: { kind: "type", oneOf: [hostType] },
+                  bindAs: "host",
+                },
+              },
+            }),
+          ]);
+          const host = Object.values(fixture.state.objects).find(
+            (object) =>
+              object.definitionId === champion.canonicalId &&
+              object.controllerId === (own ? fixture.p1 : fixture.p2),
+          )!;
+          const sourceId = fixture.fillerIds[0]!;
+          const moved = fixture.kernel.transact(fixture.state, [
+            {
+              type: "object-moved",
+              objectId: sourceId,
+              from: fixture.state.objects[sourceId]!.zone,
+              to: hosted ? "inner-lineage" : "graveyard",
+              ...(hosted ? { hostId: host.id } : {}),
+            },
+          ]);
+          const restored = restoreGrandArchiveMatchSnapshot(
+            fixture.program,
+            JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(moved.state))),
+          );
+          for (const state of [moved.state, restored]) {
+            const triggers = collectGrandArchiveTriggeredAbilityEvents(
+              fixture.program,
+              state,
+              moved.result.events,
+            );
+            expect(pendingAbilityIds(triggers)).toEqual(
+              hosted && hostType === "CHAMPION" ? ["lineageHost-a1"] : [],
+            );
+            for (const event of triggers)
+              if (event.type === "pending-trigger-added")
+                expect(event.trigger.bindings.host).toEqual([host.id]);
+          }
+        });
+
   it("distinguishes each-event triggers from one-or-more game-event batches", () => {
     const fixture = setup([
       triggered("triggerEach-a1", {
@@ -156,6 +214,42 @@ describe("Grand Archive trigger occurrence admission", () => {
 
     expect(abilityIds.filter((id) => id === "triggerEach-a1")).toHaveLength(2);
     expect(abilityIds.filter((id) => id === "triggerGrouped-a1")).toHaveLength(1);
+  });
+
+  it("admits each token entry separately while grouping one-or-more token entries", () => {
+    const fixture = setup([
+      triggered("tokenEach-a1", {
+        kind: "event",
+        cardinality: "each-event",
+        event: { name: "object-entered-field" },
+      }),
+      triggered("tokenGrouped-a1", {
+        kind: "event",
+        cardinality: "one-or-more",
+        event: { name: "object-entered-field" },
+      }),
+    ]);
+    const summoned = executeGrandArchiveEffect(
+      { kind: "summon", object: "Flowerbud", controller: "opponent", amount: 4 },
+      {
+        program: fixture.program,
+        state: fixture.state,
+        controllerId: fixture.p1,
+        sourceId: fixture.watcherId,
+        abilityBearerId: fixture.watcherId,
+        bindings: {},
+      },
+      (state, events) => {
+        const transaction = fixture.kernel.transact(state, events);
+        return { state: transaction.state, events: transaction.result.events };
+      },
+    );
+    expect(summoned.events.filter((event) => event.type === "tokens-summoned")).toHaveLength(1);
+    const abilityIds = pendingAbilityIds(
+      collectGrandArchiveTriggeredAbilityEvents(fixture.program, summoned.state, summoned.events),
+    );
+    expect(abilityIds.filter((id) => id === "tokenEach-a1")).toHaveLength(4);
+    expect(abilityIds.filter((id) => id === "tokenGrouped-a1")).toHaveLength(1);
   });
 
   it("derives each discrete Trivial Trinket mill from the current top of the deck", () => {
@@ -407,4 +501,91 @@ describe("Grand Archive trigger occurrence admission", () => {
       ?.trigger.triggerLimitUsageKey;
     expect(secondUsageKey).not.toBe(oldUsageKey);
   });
+});
+
+import { GrandArchiveTestEngine } from "../../testing/test-engine.ts";
+
+describe("Champion transition trigger discovery", () => {
+  for (const nextLevel of [0, 1])
+    for (const sameBaseLevel of [false, true]) {
+      it(`uses the old face for leveling and the new face for entry: next=${nextLevel}, same=${sameBaseLevel}`, () => {
+        const previous = card("previous-champion", "CHAMPION", [
+          triggered("previous-champion-a1", {
+            kind: "event",
+            event: {
+              name: "champion-leveled-up",
+              actor: "controller",
+              previousObject: { kind: "source" },
+              sameBaseLevel,
+            },
+          }),
+          triggered("previous-champion-a2", {
+            kind: "event",
+            event: {
+              name: "object-entered-field",
+              subject: { kind: "source" },
+            },
+          }),
+        ]);
+        const baseNext = card("next-champion", "CHAMPION", [
+          triggered("next-champion-a1", {
+            kind: "event",
+            event: {
+              name: "champion-leveled-up",
+              actor: "controller",
+              previousObject: { kind: "source" },
+            },
+          }),
+          triggered("next-champion-a2", {
+            kind: "event",
+            event: {
+              name: "object-entered-field",
+              subject: { kind: "source" },
+            },
+          }),
+        ]);
+        if (baseNext.layout.kind !== "single-faced") throw new Error("Expected one fixture face");
+        const next: GrandArchiveAnyCard<GrandArchiveAbilityDefinition> = {
+          ...baseNext,
+          layout: {
+            kind: "single-faced",
+            face: { ...baseNext.layout.face, stats: { level: nextLevel, life: 20 } },
+          },
+        };
+        const game = GrandArchiveTestEngine.startFixture({
+          playerOne: { champion: previous, zones: { "material-deck": [next] } },
+          playerTwo: { champion },
+        });
+        const p = game.player("player-one");
+        const hero = p.card(previous),
+          destination = p.card(next);
+        const transitioned = new GrandArchiveTransactionKernel().transact(game.state, [
+          {
+            type: "champion-leveled-up",
+            championId: hero.objectId,
+            cardId: destination.objectId,
+            actorId: p.id,
+          },
+        ]);
+        const restored = restoreGrandArchiveMatchSnapshot(
+          game.program,
+          JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(transitioned.state))),
+        );
+        for (const state of [transitioned.state, restored]) {
+          const ids = pendingAbilityIds(
+            collectGrandArchiveTriggeredAbilityEvents(
+              game.program,
+              state,
+              transitioned.result.events,
+            ),
+          );
+          expect([...ids].sort()).toEqual(
+            [
+              "next-champion-a2",
+              ...((nextLevel === 0) === sameBaseLevel ? ["previous-champion-a1"] : []),
+            ].sort(),
+          );
+        }
+      });
+    }
 });

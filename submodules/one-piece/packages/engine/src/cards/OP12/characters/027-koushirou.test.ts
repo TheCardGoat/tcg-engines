@@ -66,4 +66,26 @@ describe("OP12-027 Koushirou", () => {
 
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
+  test("two active copies can rest to protect each other from one simultaneous K.O. effect", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op12Koushirou027, op12Koushirou027] },
+      { leaderCardId: "OP01-061", hand: ["OP01-094"], activeDon: 10 },
+      { activeSeat: "north" },
+    );
+    const ids = engine
+      .getView("south")
+      .players.south.characters.flatMap((c) => (c ? [c.instanceId] : []));
+    engine.asNorth().play("OP01-094");
+    engine.asNorth().acceptOptional();
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+    expect(
+      engine.getView("south").players.south.characters.flatMap((c) => (c ? [c.instanceId] : [])),
+    ).toEqual(ids);
+    expect(engine.getView("south").players.south.characters.filter((c) => c?.rested)).toHaveLength(
+      2,
+    );
+    expect(engine.getView("south").players.south.trash).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

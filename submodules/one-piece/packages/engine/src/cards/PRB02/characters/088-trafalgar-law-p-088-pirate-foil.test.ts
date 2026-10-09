@@ -10,7 +10,7 @@ describe("P-088 Trafalgar Law - P-088 (Pirate Foil)", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: prb02ShanksP083PirateFoil083, playedOnTurn: 0 }],
-        life: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
+        life: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
       },
       {
         leaderCardId: op01TrafalgarLaw002,
@@ -27,6 +27,7 @@ describe("P-088 Trafalgar Law - P-088 (Pirate Foil)", () => {
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const view = engine.getView("north");
+    expect(view.players.south.lifeCount + view.players.north.lifeCount).toBe(5);
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(lawId);
     expect(view.players.north.hand.map((card) => card.instanceId)).not.toContain(lawId);
     expect(view.prompts).toHaveLength(0);

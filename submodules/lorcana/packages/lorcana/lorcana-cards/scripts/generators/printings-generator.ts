@@ -38,6 +38,9 @@ function nextAvailableNumericSuffix(
 
 /**
  * Map rarity string to output format
+ * Ravensburger shortened SUPER_RARE to SUPER and added EPIC/ICONIC around
+ * set 12 (Wilds Unknown); unknown tokens must fail loudly instead of
+ * silently degrading to common.
  */
 function mapRarity(rarity: string): Rarity {
   const rarityMap: Record<string, Rarity> = {
@@ -45,12 +48,21 @@ function mapRarity(rarity: string): Rarity {
     UNCOMMON: "uncommon",
     RARE: "rare",
     SUPER_RARE: "super_rare",
+    SUPER: "super_rare",
     LEGENDARY: "legendary",
     ENCHANTED: "enchanted",
+    EPIC: "epic",
+    ICONIC: "iconic",
     SPECIAL: "special",
   };
 
-  return rarityMap[rarity.toUpperCase()] || "common";
+  const mapped = rarityMap[rarity.toUpperCase()];
+  if (!mapped) {
+    throw new Error(
+      `Unknown rarity: "${rarity}" — extend mapRarity instead of defaulting to common`,
+    );
+  }
+  return mapped;
 }
 
 /**

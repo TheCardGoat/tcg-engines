@@ -1,6 +1,6 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
+import { processAttackDeclarationTriggers } from "../ability-executor.ts";
 import { consumeRuleUse, getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
 import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
@@ -52,6 +52,9 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       return { valid: false, error: "Not in main phase", errorCode: "WRONG_PHASE" };
     if (state.G.attackState)
       return { valid: false, error: "Attack already in progress", errorCode: "ATTACK_IN_PROGRESS" };
+
+    if (state.G.turnMetadata.activePlayerId !== playerId)
+      return { valid: false, error: "Not your turn", errorCode: "NOT_YOUR_TURN" };
 
     const attacker = state.G.cardIndex[attackerId];
     if (!attacker)
@@ -148,6 +151,7 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       rivalId: opponentId,
       kind: "fight",
       step: "attack",
+      unblockableAtDeclaration: getEffectiveRules(state, attackerId).includes("cantBeBlocked"),
     });
     const attackerName = state.G.cardIndex[attackerId]
       ? getDefinitionFor(state.G, attackerId).displayName
@@ -160,6 +164,7 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       type: "attackDeclared" as const,
       attackerId: attackerId as CardInstanceId,
       defenderId: defenderId as CardInstanceId,
+      rivalId: opponentId,
       attackKind: "fight" as const,
       playerId,
     };
@@ -173,13 +178,8 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       playerId,
     });
 
-    processCardSpentEventsSince(
+    processAttackDeclarationTriggers(
       eventsBeforeSpend,
-      state as import("../types/match-state.ts").MatchState,
-      operations,
-    );
-
-    processEventTriggers(
       attackDeclaredEvent,
       state as import("../types/match-state.ts").MatchState,
       operations,

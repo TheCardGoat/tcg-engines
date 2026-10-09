@@ -27,46 +27,14 @@ included here.
   and utilities.
 - `submodules/riftbound` - Riftbound catalog types, cards, and ingestion
   tooling.
-- `submodules/star-wars-unlimited` - Star Wars Unlimited catalog types,
-  cards, early engine work, and ingestion tooling.
 
-## Game Maturity
+## Simulator Support
 
-Not every TCG in this repository is at the same level of maturity. Each game
-falls into one of three stages:
-
-### Feature complete
-
-Cards, rules engine, and simulator are fully implemented, and the game is
-playable on [tcg.online](https://tcg.online):
-
-- **Lorcana** - cards, engine, simulator, replay tooling, and server adapter.
-- **Cyberpunk** - cards, engine, simulator, and server adapter.
-- **Gundam** - cards, engine, simulator, website, and server adapter.
-- **Flesh and Blood** - cards, engine, and simulator; our most recent full
-  launch.
-
-### In progress
-
-Card data is in place and engine or simulator work has started, but the game
-is not fully playable yet:
-
-- **One Piece** - a deep rules engine and full card database are
-  implemented; the public simulator is still being built out.
-- **Grand Archive** - card catalog and rules engine in active development;
-  early simulator.
-- **Naruto** - provisional Preview engine and card snapshot awaiting the
-  official rulebook; early simulator.
-- **Star Wars Unlimited** - card catalog plus an early engine scaffold; the
-  simulator has not been started.
-
-### Cards only
-
-Only the official card data ships today; the rules engine and simulator are
-not implemented yet:
-
-- **Riftbound** - official card catalog, translations, and deck data with
-  ingestion tooling. No rules engine yet.
+- **Supported:** Lorcana, Cyberpunk, Gundam, Naruto (provisional preview
+  rules), One Piece, and — newly added — Flesh and Blood.
+- **Not yet implemented:** Grand Archive, Riftbound, and Star Wars
+  Unlimited. Their engine and card workspaces ship in this repository
+  first, and their simulators are still in development.
 
 ## Requirements
 

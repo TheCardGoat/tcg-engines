@@ -63,7 +63,7 @@ export const op07Otama022: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

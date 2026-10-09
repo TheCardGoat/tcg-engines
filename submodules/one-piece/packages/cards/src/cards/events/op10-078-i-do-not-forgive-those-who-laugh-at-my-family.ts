@@ -21,7 +21,7 @@ export const op10IDoNotForgiveThoseWhoLaughAtMyFamily078: EventCard = {
   rarity: "R",
   setId: "OP10",
   cost: 1,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     '[Main]/[Counter] Look at 3 cards from the top of your deck; reveal up to 1 "Donquixote Pirates" type card other than [I Do Not Forgive Those Who Laugh at My Family!!!] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -48,7 +48,7 @@ export const op10IDoNotForgiveThoseWhoLaughAtMyFamily078: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",
@@ -78,7 +78,7 @@ export const op10IDoNotForgiveThoseWhoLaughAtMyFamily078: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

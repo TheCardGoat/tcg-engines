@@ -77,8 +77,17 @@ export const reinforcingAir: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["HUMAN"],
+                    },
+                  ],
                 },
               },
             },

@@ -13,7 +13,7 @@ export const russellSeniorWildernessExplorer: CharacterCard = {
       artId: "set13-079",
       setCode: "set13",
       collectorNumber: "79",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const russellSeniorWildernessExplorer: CharacterCard = {
   franchise: "Up",
   set: "013",
   cardNumber: 79,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 3,
   willpower: 5,
@@ -33,6 +33,7 @@ export const russellSeniorWildernessExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_13e8c5a70412446ab5b3af9e39bfd691",
+    tcgPlayer: "702687",
   },
   text: [
     {
@@ -40,11 +41,11 @@ export const russellSeniorWildernessExplorer: CharacterCard = {
     },
     {
       title: "BASE CAMP",
-      description: "Your characters at locations get +1{S}.",
+      description: "Your characters at locations get +1 {S}.",
     },
     {
       title: "GOOD LEADERSHIP",
-      description: "Whenever one of your characters with 4{S} or more quests, gain 1 lore.",
+      description: "Whenever one of your characters with 4 {S} or more quests, gain 1 lore.",
     },
   ],
   classifications: ["Floodborn", "Hero"],

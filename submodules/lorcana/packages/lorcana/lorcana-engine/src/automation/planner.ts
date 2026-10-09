@@ -1160,7 +1160,7 @@ function getForcedChoiceIndex(args: {
     return undefined;
   }
 
-  const legalIndices = options.flatMap((option, index) =>
+  const legalIndices = options.flatMap((option: Effect, index: number) =>
     isProjectedOrOptionLegal(adapter, option as Effect, analysisPlayerId, sourceCardId)
       ? [index]
       : [],
@@ -2415,7 +2415,9 @@ function buildAbilityCostSelectionGroups(args: {
     (characterId) => !(ability.cost?.exert === true && characterId === cardId),
   );
   const banishItemPool = actorPlayCards.filter(
-    (candidateId) => adapter.getDefinitionByInstanceId(candidateId)?.cardType === "item",
+    (candidateId) =>
+      adapter.getDefinitionByInstanceId(candidateId)?.cardType === "item" &&
+      !(ability.cost?.banishItemTarget === "another" && candidateId === cardId),
   );
   const banishCharacterPool = actorCharacters.filter(
     (candidateId) => !(ability.cost?.banishCharacterTarget === "another" && candidateId === cardId),

@@ -5,7 +5,7 @@ export const op04Mr2BonKureiBentham069: CharacterCard = {
   id: "OP04-069",
   canonicalId: "OP04-069",
   slug: "mr-2-bon-kurei-bentham/op04-069",
-  name: "Mr.2.Bon.Kurei (Bentham)",
+  name: "Mr.2.Bon.Kurei(Bentham)",
   printings: [
     {
       id: "OP04-069",

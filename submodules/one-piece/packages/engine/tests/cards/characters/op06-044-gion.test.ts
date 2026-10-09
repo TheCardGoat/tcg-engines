@@ -75,6 +75,7 @@ describe("OP06-044 Gion", () => {
     const selectedId = handIds[0]!;
     engine.resolveDecision("effectTargetSelection", { selectedIds: [selectedId] }, "north");
 
+    engine.asNorth().chooseCounter();
     expect(engine.getState().players.north.deck.at(-1)).toBe(selectedId);
     expect(engine.getView("north").prompts).toHaveLength(0);
 
@@ -104,6 +105,7 @@ describe("OP06-044 Gion", () => {
       "north",
     );
 
+    engine.asNorth().chooseCounter();
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(
       handIds[1],

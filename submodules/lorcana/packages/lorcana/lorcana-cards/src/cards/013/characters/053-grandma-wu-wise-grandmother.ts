@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { challenger } from "../../../helpers/abilities/challenger";
 import { grandmaWuWiseGrandmotherI18n } from "./053-grandma-wu-wise-grandmother.i18n";
+
+import { challenger } from "../../../helpers/abilities/challenger";
 
 export const grandmaWuWiseGrandmother: CharacterCard = {
   id: "R3I",
@@ -30,12 +31,16 @@ export const grandmaWuWiseGrandmother: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_62fca261d4f546d4b10f5d600193d026",
+    tcgPlayer: "704574",
+  },
   text: [
     {
       title: "Challenger +2",
     },
     {
-      title: "Ancestral Understanding",
+      title: "ANCESTRAL UNDERSTANDING",
       description: "When you shift a character on top of this character, gain 1 lore.",
     },
   ],

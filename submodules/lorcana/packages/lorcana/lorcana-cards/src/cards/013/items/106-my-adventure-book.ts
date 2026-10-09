@@ -27,12 +27,13 @@ export const myAdventureBook: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a2348103280d45639331013b3de78bf8",
+    tcgPlayer: "704615",
   },
   text: [
     {
       title: "NEW MEMORIES",
       description:
-        "{E}, 1{I} — Reveal the top card of your deck. If it's a non-character card or a character card named Kevin, put it into your hand. Otherwise, put it on the bottom of your deck.",
+        "{E}, 1 {I} — Reveal the top card of your deck. If it's a non-character card or a character card named Kevin, put it into your hand. Otherwise, put it on the bottom of your deck.",
     },
   ],
   abilities: [

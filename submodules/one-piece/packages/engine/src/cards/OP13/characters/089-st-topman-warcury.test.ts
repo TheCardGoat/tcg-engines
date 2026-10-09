@@ -32,7 +32,7 @@ describe("OP13-089 St. Topman Warcury", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("at seven trash is excluded from an opponent effect's removal targets", () => {
+  test("at seven trash survives being selected for opponent-effect removal", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op13StTopmanWarcury089, eb01Doma005],
@@ -48,13 +48,13 @@ describe("OP13-089 St. Topman Warcury", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Red Roc's removal target.");
     const candidates = target.candidates.map((candidate) => candidate.ref.id);
-    expect(candidates).not.toContain(warcuryId);
+    expect(candidates).toContain(warcuryId);
     expect(candidates).toContain(removableId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [removableId] }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [warcuryId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(warcuryId);
-    expect(engine.findCardInZone("south", "deck", eb01Doma005)).toBe(removableId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(removableId);
     expect(view.prompts).toHaveLength(0);
   });
 });

@@ -16,6 +16,7 @@ export type SimulatorRouteKind =
   | "practice-vs-ai"
   | "tests"
   | "test-engine-state"
+  | "test-demo"
   | "test-fixture"
   | "match-landing"
   | "live-match"

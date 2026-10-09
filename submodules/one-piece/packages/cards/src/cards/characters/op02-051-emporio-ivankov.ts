@@ -30,7 +30,7 @@ export const op02EmporioIvankov051: CharacterCard = {
   setId: "OP02",
   cost: 7,
   power: 7000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[On Play] Draw card(s) so that you have 3 cards in your hand and then play up to 1 blue [Impel Down] type Character card with a cost of 6 or less from your hand.",
@@ -68,7 +68,7 @@ export const op02EmporioIvankov051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

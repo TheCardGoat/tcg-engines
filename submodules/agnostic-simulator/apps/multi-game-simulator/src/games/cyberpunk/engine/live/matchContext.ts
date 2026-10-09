@@ -20,13 +20,15 @@ import { cyberpunkRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runt
 import type { ChatPresetKey } from "../chat";
 import { defaultMatchmakingUrl, matchReturnUrl } from "../../../../routes/match-return-url.ts";
 import { buildMountedHref } from "../../../../routes/router-paths.ts";
+import { CYBERPUNK_SIMULATOR_BASE_PATH } from "../../pages/simulatorPaths";
 import { MatchResolutionSchema, type LiveMatchBootstrapV1 } from "@tcg/game-page-contract";
 import { isFilteredMatchView, isMatchState, viewerProjectionToMatchState } from "./liveState";
+import { logHandVisibilityDiagnostics } from "./handVisibilityDiagnostics";
 
 export interface LiveMatchContext {
   match: {
     matchId: string;
-    status: "in_progress" | "completed" | "abandoned";
+    status: "waiting" | "in_progress" | "completed" | "abandoned";
     format: "best_of_1" | "best_of_3";
     currentGameId?: string;
     gameIds: string[];
@@ -152,7 +154,9 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
     throw new Error("Live bootstrap did not include a Cyberpunk viewer projection.");
   }
   const matchStatus = bootstrap.match.status;
-  if (matchStatus === "waiting") {
+  // The series waits during sideboarding while its previous game remains
+  // available as a completed board and post-game summary.
+  if (matchStatus === "waiting" && bootstrap.game.status !== "completed") {
     throw new Error("Live bootstrap cannot initialize Cyberpunk before the match starts.");
   }
   const viewerId = bootstrap.viewer.role === "player" ? bootstrap.viewer.actorId : undefined;
@@ -164,12 +168,23 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
     resources && typeof resources === "object" && "cardsMaps" in resources
       ? (resources as { cardsMaps?: unknown }).cardsMaps
       : undefined;
+  const actorIds = viewerId && opponentId ? { player: viewerId, opponent: opponentId } : undefined;
+  if (isFilteredMatchView(viewerState)) {
+    logHandVisibilityDiagnostics({
+      source: "bootstrap",
+      gameId: bootstrap.game.gameId,
+      matchId: bootstrap.match.matchId,
+      version: bootstrap.game.stateVersion,
+      projection: viewerState,
+      actorIds,
+    });
+  }
   return {
     match: {
       matchId: bootstrap.match.matchId,
       status: matchStatus,
       format: bootstrap.match.format === "best_of_3" ? "best_of_3" : "best_of_1",
-      currentGameId: bootstrap.game.gameId,
+      currentGameId: bootstrap.match.currentGameId ?? bootstrap.game.gameId,
       gameIds: bootstrap.match.gameIds,
       winnerId: bootstrap.match.winnerId,
       player1Score: bootstrap.match.scores?.[bootstrap.match.participants[0]?.id ?? ""],
@@ -177,9 +192,18 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
       participants: bootstrap.match.participants.map((participant) => ({
         id: participant.id,
         displayName: participant.displayName,
+        subscriptionTier: participant.subscriptionTier,
+        isMobile: participant.isMobile,
+        mmrAtMatch: participant.mmrAtMatch,
         seat: participant.seat === 2 ? 2 : 1,
         ...(participant.userId ? { userId: participant.userId } : {}),
         ...(participant.isBot ? { isBot: true } : {}),
+        ...(participant.visualSettings?.playmatId
+          ? { playmatId: participant.visualSettings.playmatId }
+          : {}),
+        ...(participant.visualSettings?.cardBackId
+          ? { cardBackId: participant.visualSettings.cardBackId }
+          : {}),
       })),
     },
     game: {
@@ -187,7 +211,7 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
       gameNumber: bootstrap.game.gameNumber,
       status: bootstrap.game.status,
       authority: bootstrap.game.authority,
-      ...(viewerId && opponentId ? { actorIds: { player: viewerId, opponent: opponentId } } : {}),
+      ...(actorIds ? { actorIds } : {}),
       state:
         viewerState === null
           ? null
@@ -236,7 +260,7 @@ export function parseRemoteChatMessages(value: unknown): RemoteChatMessage[] {
 export function resolveMatchOverviewDestination(
   overview: LiveMatchOverview,
   currentPathSearch: string,
-  basename = import.meta.env.BASE_URL,
+  basename = CYBERPUNK_SIMULATOR_BASE_PATH,
   gameSlug: GameSlug = CYBERPUNK_GAME_SLUG,
 ): { type: "game"; href: string } | { type: "return"; href: string } {
   if (overview.status === "completed" || !overview.currentGameId) {
@@ -253,39 +277,11 @@ export function resolveMatchOverviewDestination(
   };
 }
 
-export function resolveSeriesDestination(
-  context: LiveMatchContext,
-  currentPathSearch: string,
-  basename = import.meta.env.BASE_URL,
-  gameSlug: GameSlug = CYBERPUNK_GAME_SLUG,
-): { type: "stay" } | { type: "nextGame"; href: string } | { type: "return"; href: string } {
-  const currentGameId = context.match.currentGameId;
-  if (
-    context.match.status !== "completed" &&
-    currentGameId &&
-    currentGameId !== context.game.gameId
-  ) {
-    return {
-      type: "nextGame",
-      href: buildLiveMatchGameHref(
-        context.match.matchId,
-        currentGameId,
-        currentPathSearch,
-        basename,
-      ),
-    };
-  }
-  if (context.match.status !== "completed" && !currentGameId) {
-    return { type: "return", href: getMatchmakingReturnUrl(gameSlug, currentPathSearch) };
-  }
-  return { type: "stay" };
-}
-
 export function buildLiveMatchGameHref(
   matchId: string,
   gameId: string,
   currentPathSearch: string,
-  basename = import.meta.env.BASE_URL,
+  basename = CYBERPUNK_SIMULATOR_BASE_PATH,
 ): string {
   const path = `/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(gameId)}`;
   const params = new URLSearchParams(currentPathSearch);
@@ -368,13 +364,30 @@ export function projectSimulatorValueForLive<T>(
   return replaceExactStrings(value, replacements) as T;
 }
 
-function moveLogFromCanonical(log: CanonicalEngineMoveLog): MoveLog {
+function moveLogFromCanonical(log: CanonicalEngineMoveLog): MoveLog | null {
   const values: Record<string, unknown> = {};
   for (const message of log.public) {
-    Object.assign(values, message.values);
+    mergeMessageValues(values, message.values);
   }
 
   delete values.playerId;
+
+  // Hosted turn-start undo commands use distinct protocol move names, while
+  // the native Cyberpunk move log represents both undo scopes as `undo`.
+  if (log.moveType === "undoToTurnStart" || log.moveType === "rewindToTurnStart") {
+    const playerId =
+      log.playerId === String(P1) ? P1 : log.playerId === String(P2) ? P2 : undefined;
+    if (!playerId) {
+      return null;
+    }
+    return {
+      type: "undo",
+      scope: "turnStart",
+      playerId,
+      timestamp: log.timestamp,
+      turnNumber: typeof log.turnNumber === "number" ? log.turnNumber : 0,
+    };
+  }
 
   return {
     ...values,
@@ -383,6 +396,32 @@ function moveLogFromCanonical(log: CanonicalEngineMoveLog): MoveLog {
     timestamp: log.timestamp,
     turnNumber: typeof log.turnNumber === "number" ? log.turnNumber : 0,
   } as MoveLog;
+}
+
+/**
+ * Canonical logs contain a public message followed by a viewer-specific
+ * appendix for the same message. A shallow merge would replace the public
+ * `params` object with its private fields, losing public facts such as the
+ * source card and draw count. Preserve both layers before the native log
+ * projection formats the entry.
+ */
+function mergeMessageValues(target: Record<string, unknown>, source: unknown): void {
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    return;
+  }
+
+  for (const [key, value] of Object.entries(source)) {
+    const existing = target[key];
+    if (isRecord(existing) && isRecord(value)) {
+      mergeMessageValues(existing, value);
+      continue;
+    }
+    target[key] = value;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 function isCanonicalEngineMoveLog(value: unknown): value is CanonicalEngineMoveLog {

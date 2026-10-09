@@ -39,41 +39,53 @@ describe("OP03-013 Marco", () => {
     );
   });
 
-  test("on K.O., may trash an Event to replay the same physical card rested", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
-      {
-        character: [{ card: op03Marco013, rested: true }],
-        hand: [op02Seaquake021, op01ParadiseWaterfall057, eb01Doma005],
-      },
-      { firstPlayer: "north", activeSeat: "south" },
-    );
-    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const marcoId = engine.findCardInZone("north", "character", op03Marco013);
-    const eventId = engine.findCardInZone("north", "hand", op02Seaquake021);
-    const otherEventId = engine.findCardInZone("north", "hand", op01ParadiseWaterfall057);
-    const characterId = engine.findCardInZone("north", "hand", eb01Doma005);
+  test.each([true, false])(
+    "after paying an Event, may choose whether to replay Marco: %s",
+    (replay) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+        {
+          character: [{ card: op03Marco013, rested: true }],
+          hand: [op02Seaquake021, op01ParadiseWaterfall057, eb01Doma005],
+        },
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+      const marcoId = engine.findCardInZone("north", "character", op03Marco013);
+      const eventId = engine.findCardInZone("north", "hand", op02Seaquake021);
+      const otherEventId = engine.findCardInZone("north", "hand", op01ParadiseWaterfall057);
+      const characterId = engine.findCardInZone("north", "hand", eb01Doma005);
 
-    engine.declareAttack(attackerId, marcoId, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+      engine.declareAttack(attackerId, marcoId, "south");
+      engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+      engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
 
-    const cost = engine.pendingDecision("effectCostTrashFromHand", "north").steps[0];
-    expect(cost?.kind).toBe("payCost");
-    if (cost?.kind !== "payCost") throw new Error("Expected Marco's Event cost.");
-    expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(eventId);
-    expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(otherEventId);
-    expect(cost.candidates.map((candidate) => candidate.ref.id)).not.toContain(characterId);
-    engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [eventId] }, "north");
+      const cost = engine.pendingDecision("effectCostTrashFromHand", "north").steps[0];
+      expect(cost?.kind).toBe("payCost");
+      if (cost?.kind !== "payCost") throw new Error("Expected Marco's Event cost.");
+      expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(eventId);
+      expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(otherEventId);
+      expect(cost.candidates.map((candidate) => candidate.ref.id)).not.toContain(characterId);
+      engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [eventId] }, "north");
+      const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
+      if (play?.kind !== "selectEntity") throw new Error("Expected optional Marco replay.");
+      expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([marcoId]);
+      engine.resolveDecision(
+        "effectPlaySelection",
+        { selectedIds: replay ? [marcoId] : [] },
+        "north",
+      );
 
-    const view = engine.getView("north");
-    expect(view.players.north.characters.find((card) => card?.instanceId === marcoId)?.rested).toBe(
-      true,
-    );
-    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
-    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(marcoId);
-    expect(view.prompts).toHaveLength(0);
-  });
+      const view = engine.getView("north");
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === marcoId)?.rested,
+      ).toBe(replay ? true : undefined);
+      expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+      expect(view.players.north.trash.some((card) => card.instanceId === marcoId)).toBe(!replay);
+      expect(view.players.north.hand.map((card) => card.instanceId)).not.toContain(eventId);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
 
   test("may decline On K.O. so Event stays and Marco stays trashed", () => {
     const engine = OnePieceTestEngine.create(

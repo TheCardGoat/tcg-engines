@@ -174,13 +174,14 @@ describe("# 6. ABILITIES, EFFECTS, AND RESOLVING", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
         hand: [lookAtThisFamily],
         inkwell: lookAtThisFamily.cost,
+        // Deck arrays run from bottom to top; Huey is outside the five cards looked at.
         deck: [
+          hueySavvyNephew,
           aladdinPrinceAli,
           healingGlow,
           simbaProtectiveCub,
           arielOnHumanLegs,
           minnieMouseAlwaysClassy,
-          hueySavvyNephew,
         ],
       });
 
@@ -198,11 +199,17 @@ describe("# 6. ABILITIES, EFFECTS, AND RESOLVING", () => {
               ],
             },
           ],
-        }).success,
-      ).toBe(true);
+        }),
+      ).toBeSuccessfulCommand();
       expect(testEngine.asPlayerOne().getZonesCardCount().hand).toBe(0);
-      expect(testEngine.asPlayerOne().getCardZone(aladdinPrinceAli)).toBe("deck");
-      expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE)[0]).toBe(hueySavvyNephew.id);
+      expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE)).toEqual([
+        aladdinPrinceAli.id,
+        healingGlow.id,
+        simbaProtectiveCub.id,
+        arielOnHumanLegs.id,
+        minnieMouseAlwaysClassy.id,
+        hueySavvyNephew.id,
+      ]);
     });
 
     describe(`6.1.5. Some effects are considered sequential effects. These effects require a player to make a decision or pay a cost in order to resolve them. These are normally written as "[A] to [B], "[A] or [B]," or "[A]. If you do, [B]." Note that both [A] and [B] can have multiple parts.`, () => {

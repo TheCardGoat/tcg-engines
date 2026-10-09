@@ -280,3 +280,39 @@ describe("GrandArchiveTestEngine", () => {
     ).toBe(true);
   });
 });
+
+describe("ordered main-deck fixtures", () => {
+  for (const randomSeed of [7, 29]) {
+    it(`preserves explicit order and duplicate copies after arranging hand, seed=${randomSeed}`, () => {
+      const other: GrandArchiveAnyCard<GrandArchiveAbilityDefinition> = {
+        ...action,
+        canonicalId: "other-testing-action",
+        slug: "other-testing-action",
+      };
+      const ordered = [action, other, action, other, other];
+      const game = GrandArchiveTestEngine.startFixture({
+        randomSeed,
+        playerOne: {
+          champion,
+          preserveMainDeckOrder: true,
+          zones: { "main-deck": ordered, hand: [action, other] },
+        },
+        playerTwo: { champion },
+      });
+      const p = game.player("player-one");
+      expect(p.zone("main-deck").map((c) => c.definitionId)).toEqual(
+        ordered.map((c) => c.canonicalId),
+      );
+      expect(new Set(p.zone("main-deck").map((c) => c.objectId)).size).toBe(5);
+      expect(
+        p
+          .zone("hand")
+          .map((c) => c.definitionId)
+          .sort(),
+      ).toEqual([action.canonicalId, other.canonicalId].sort());
+      expect(
+        p.zone("hand").every((c) => !p.zone("main-deck").some((d) => d.objectId === c.objectId)),
+      ).toBe(true);
+    });
+  }
+});

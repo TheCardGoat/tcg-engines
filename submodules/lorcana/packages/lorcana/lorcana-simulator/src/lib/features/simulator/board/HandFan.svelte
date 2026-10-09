@@ -25,7 +25,11 @@
   }: HandFanProps = $props();
 
   const MAX_VISIBLE_HIDDEN_CARDS = 10;
+  // Real hands stay well under this; fixtures that stage whole sets need a
+  // horizontally scrollable strip instead of an unreadable fan.
+  const BROWSE_MODE_THRESHOLD = 20;
   const effectiveTotal = $derived(Math.max(totalCards ?? cards.length, cards.length));
+  const isBrowseMode = $derived(cards.length > BROWSE_MODE_THRESHOLD);
   const hiddenPlaceholderCount = $derived(
     cards.length === 0 ? Math.min(effectiveTotal, MAX_VISIBLE_HIDDEN_CARDS) : 0,
   );
@@ -33,7 +37,7 @@
 
   // Calculate fan rotation for each card
   function getFanRotation(index: number, total: number): number {
-    if (total <= 1) return 0;
+    if (isBrowseMode || total <= 1) return 0;
     const maxSpread = isOpponent ? 15 : 10;
     const step = maxSpread / (total - 1);
     return -maxSpread / 2 + step * index;
@@ -44,10 +48,24 @@
     return playableCardIds.includes(card.cardId);
   }
 
+  function handleWheel(event: WheelEvent) {
+    if (!isBrowseMode) return;
+    const container = event.currentTarget;
+    if (!(container instanceof HTMLDivElement)) return;
+    const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+    if (delta === 0) return;
+    event.preventDefault();
+    container.scrollLeft += delta;
+  }
+
 </script>
 
 <div class="hand-fan" class:hand-fan--opponent={isOpponent}>
-  <div class="hand-container">
+  <div
+    class="hand-container"
+    class:hand-container--browse={isBrowseMode}
+    onwheel={handleWheel}
+  >
     {#if cards.length > 0}
       {#each cards as card, index (card.cardId)}
         {@const rotation = getFanRotation(index, cards.length)}
@@ -128,6 +146,37 @@
     align-items: flex-start;
     margin-bottom: 0;
     margin-top: var(--hand-container-offset);
+  }
+
+  /* Oversized hands (whole-set fixtures) become a scrollable strip: the fan
+     overlap would leave only a sliver of each card visible. */
+  .hand-container--browse {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: min(94vw, 1560px);
+    height: 190px;
+    padding: 0 1.5rem 0.4rem;
+    --hand-card-overlap: -0.75rem;
+    --hand-card-overlap-hover: 0.2rem;
+    --hover-scale: 1.2;
+    --hover-translate-y: -4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(112, 153, 204, 0.55) transparent;
+  }
+
+  .hand-container--browse::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .hand-container--browse::-webkit-scrollbar-track {
+    background: rgba(7, 18, 31, 0.5);
+    border-radius: 999px;
+  }
+
+  .hand-container--browse::-webkit-scrollbar-thumb {
+    background: rgba(112, 153, 204, 0.55);
+    border-radius: 999px;
   }
 
   .hand-card {

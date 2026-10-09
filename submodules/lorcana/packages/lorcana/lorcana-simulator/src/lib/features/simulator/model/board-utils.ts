@@ -1,4 +1,8 @@
-import { type MatchStaticResources, hasMayEnterPlayExertedOption } from "@tcg/lorcana-engine";
+import {
+  type MatchStaticResources,
+  hasMayEnterPlayExertedOption,
+  getCardNameVariants,
+} from "@tcg/lorcana-engine";
 import type { LorcanaCard, LorcanaCardDefinition } from "@tcg/lorcana-engine";
 import type { Languages } from "@tcg/lorcana-types";
 import type { LorcanaProjectedBoardView, LorcanaProjectedCard } from "@tcg/lorcana-engine";
@@ -83,6 +87,12 @@ function resolveCardI18nLocale(): Languages {
   }
 }
 
+function getLocalizedCardText(
+  definition: LorcanaCardDefinition | undefined,
+): LocalizedCardTextSource | undefined {
+  return definition?.i18n?.[resolveCardI18nLocale()]?.text ?? definition?.text;
+}
+
 function flattenCardText(text?: LocalizedCardTextSource): string | undefined {
   if (!text) {
     return undefined;
@@ -135,6 +145,20 @@ function projectCardTextEntries(
     .filter((entry): entry is LorcanaCardTextEntrySnapshot => entry !== null);
 
   return entries.length > 0 ? entries : undefined;
+}
+
+function projectAbilityTextEntries(
+  definition: LorcanaCardDefinition | undefined,
+  localizedText: LocalizedCardTextSource | undefined,
+): (LorcanaCardTextEntrySnapshot | undefined)[] | undefined {
+  const printedEntries = projectCardTextEntries(definition?.text);
+  const localizedEntries = projectCardTextEntries(localizedText);
+  return definition?.abilities?.map((ability) => {
+    const name = ability.name?.trim();
+    if (!name) return undefined;
+    const index = printedEntries?.findIndex((entry) => entry.title === name) ?? -1;
+    return index >= 0 ? localizedEntries?.[index] : undefined;
+  });
 }
 
 function normalizeImageSetCode(value: string | undefined): string | undefined {
@@ -557,9 +581,17 @@ function summarizeProjectedActiveEffect(args: {
     typeof payload.ability === "string"
   ) {
     const abilityTitle =
-      "abilityName" in payload && typeof payload.abilityName === "string"
+      "abilityName" in payload &&
+      typeof payload.abilityName === "string" &&
+      payload.abilityName.trim()
         ? payload.abilityName
-        : payload.ability;
+        : "abilityText" in payload &&
+            typeof payload.abilityText === "string" &&
+            payload.abilityText.trim()
+          ? payload.abilityText
+          : payload.ability === "can-challenge-ready"
+            ? m["sim.effect.canChallengeReady"]()
+            : payload.ability;
     const label = abilityTitle || "Granted ability";
     return {
       id: effect.id,
@@ -673,7 +705,10 @@ function dedupeAndSortEffects(
 
   const deduped = new Map<string, LorcanaActiveEffectSummary>();
   for (const effect of effects) {
-    const key = `${effect.type}:${effect.label}:${effect.sourceCardId ?? "none"}`;
+    const key =
+      effect.type === "stat-modifier"
+        ? `${effect.type}:${effect.id}`
+        : `${effect.type}:${effect.label}:${effect.sourceCardId ?? "none"}`;
     if (!deduped.has(key)) {
       deduped.set(key, effect);
     }
@@ -763,7 +798,7 @@ function buildSupplementalCardSnapshot(args: {
   const ownerId = indexEntry.ownerID;
   const ownerSide = getSideForOwnerId(board, ownerId) ?? "playerOne";
   const zoneId = normalizeZoneId(indexEntry.zoneKey);
-  const cardText = definition.text as LocalizedCardTextSource | undefined;
+  const cardText = getLocalizedCardText(definition);
   const imageMetadata = getCardImageMetadata(definition);
 
   return {
@@ -774,6 +809,7 @@ function buildSupplementalCardSnapshot(args: {
     ownerId,
     ownerSide,
     zoneId,
+    nameVariants: getCardNameVariants(definition),
     cardType: definition.cardType,
     actionSubtype:
       definition.cardType === "action" ? (definition.actionSubtype ?? undefined) : undefined,
@@ -785,6 +821,7 @@ function buildSupplementalCardSnapshot(args: {
     inkable: definition.inkable,
     text: flattenCardText(cardText),
     textEntries: projectCardTextEntries(cardText),
+    abilityTextEntries: projectAbilityTextEntries(definition, cardText),
     choiceOptionTexts: getLocalizedChoiceOptionTexts(definition),
     strength: definition.cardType === "character" ? definition.strength : undefined,
     baseStrength: definition.cardType === "character" ? definition.strength : undefined,
@@ -839,9 +876,8 @@ export function mergeSupplementalScryCardSnapshots(args: {
   staticResources: MatchStaticResources;
   authoritativeState: AuthoritativeCardStateView;
   snapshots: CardSnapshotMap;
-  viewerPlayerId?: string | null;
 }): CardSnapshotMap {
-  const { board, staticResources, authoritativeState, snapshots, viewerPlayerId } = args;
+  const { board, staticResources, authoritativeState, snapshots } = args;
   const nextSnapshots: CardSnapshotMap = { ...snapshots };
   const revealedCardIds = new Set<string>();
 
@@ -855,27 +891,8 @@ export function mergeSupplementalScryCardSnapshots(args: {
     }
   }
 
-  if (viewerPlayerId) {
-    const shouldRevealViewerInkwell = [...board.pendingEffects, ...board.bagEffects].some(
-      (effect) => {
-        const context = effect.selectionContext;
-        return (
-          context?.kind === "target-selection" &&
-          context.chooserId === viewerPlayerId &&
-          context.allowedZones.includes("inkwell")
-        );
-      },
-    );
-
-    if (shouldRevealViewerInkwell) {
-      const viewerInkwellCards = board.players[viewerPlayerId]?.inkwell ?? [];
-      for (const cardId of viewerInkwellCards) {
-        if (typeof cardId === "string" && cardId.length > 0) {
-          revealedCardIds.add(cardId);
-        }
-      }
-    }
-  }
+  // A return target in the inkwell does not permit a private look. Keep the
+  // engine's mask; an accepted look already supplies visible board cards.
 
   for (const cardId of revealedCardIds) {
     const existingSnapshot = nextSnapshots[cardId];
@@ -925,7 +942,7 @@ export function buildCardSnapshotMap(
           : "unknown";
     const facePresentation = zoneId === "inkwell" ? (isMasked ? "faceDown" : "faceUp") : "faceUp";
     const cardName = getCardDisplayName(projectedCard.fullName, definition);
-    const cardText = definition?.text as LocalizedCardTextSource | undefined;
+    const cardText = getLocalizedCardText(definition);
     const imageMetadata = getCardImageMetadata(definition);
     const locationCard =
       projectedCard.atLocationId !== undefined
@@ -955,6 +972,7 @@ export function buildCardSnapshotMap(
           ? definition.willpower
           : undefined,
       cardNumber: definition?.cardNumber,
+      nameVariants: definition ? getCardNameVariants(definition) : undefined,
       cardType: definition?.cardType,
       actionSubtype:
         definition?.cardType === "action" ? (definition.actionSubtype ?? undefined) : undefined,
@@ -981,6 +999,7 @@ export function buildCardSnapshotMap(
       isDrying: projectedCard.drying ?? false,
       isMasked,
       hasQuestRestriction: projectedCard.hasQuestRestriction ?? false,
+      hasChallengeRestriction: projectedCard.hasChallengeRestriction ?? false,
       keywordValues: projectedCard.keywordValues,
       keywords: mergeDerivedKeywordSignals(projectedCard.keywords, projectedCard),
       mayEnterPlayExertedOption:
@@ -1004,6 +1023,7 @@ export function buildCardSnapshotMap(
       temporaryRestrictions: projectedCard.temporaryRestrictions,
       grantSources: buildGrantSources(cardId, projectedCard, staticResources),
       text: flattenCardText(cardText),
+      abilityTextEntries: projectAbilityTextEntries(definition, cardText),
       textEntries: mergeTextEntries(
         projectCardTextEntries(cardText),
         projectedCard.grantedAbilityTextEntries,

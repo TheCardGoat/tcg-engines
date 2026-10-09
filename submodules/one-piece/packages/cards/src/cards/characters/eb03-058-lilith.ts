@@ -24,7 +24,7 @@ export const eb03Lilith058: CharacterCard = {
   power: 6000,
   counter: 1000,
   trigger: "If your Leader is [Vegapunk], play this card.",
-  traits: ["Scientist Egghead"],
+  traits: ["Egghead", "Scientist"],
   attribute: "wisdom",
   effect: "[Your Turn] [On Play] If you have 2 or less Life cards, draw 1 card.",
   effects: {

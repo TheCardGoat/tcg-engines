@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07GeckoMoria083 } from "../../../../../cards/src/cards/characters/op07-083-gecko-moria.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP07-083 Gecko Moria", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07GeckoMoria083);
-  });
-});

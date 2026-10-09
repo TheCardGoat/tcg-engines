@@ -41,7 +41,18 @@ export const sparklingAdornment: GrandArchiveCard<GrandArchiveAbilityDefinition,
               },
               cost: {
                 kind: "select-and-remove-counters",
+                singleObject: true,
                 player: "each-player",
+                bindResultAs: "removed-sheen-counters",
+                objectFilter: {
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "zone",
+                      oneOf: ["field"],
+                    },
+                  ],
+                },
                 counter: {
                   named: "sheen",
                 },
@@ -95,6 +106,16 @@ export const sparklingAdornment: GrandArchiveCard<GrandArchiveAbilityDefinition,
               symbol: "X",
             },
           },
+          variables: [
+            {
+              symbol: "X",
+              kind: "derived",
+              amount: {
+                kind: "binding-count",
+                binding: "removed-sheen-counters",
+              },
+            },
+          ],
         },
         {
           id: "okZKM5DGRu-a3",

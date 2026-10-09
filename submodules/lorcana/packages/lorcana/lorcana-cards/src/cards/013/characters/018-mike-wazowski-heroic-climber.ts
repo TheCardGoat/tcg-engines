@@ -11,7 +11,7 @@ export const mikeWazowskiHeroicClimber: CharacterCard = {
       artId: "set13-018",
       setCode: "set13",
       collectorNumber: "18",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -23,7 +23,7 @@ export const mikeWazowskiHeroicClimber: CharacterCard = {
   franchise: "Monsters, Inc.",
   set: "013",
   cardNumber: 18,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 2,
   strength: 0,
   willpower: 4,
@@ -31,6 +31,7 @@ export const mikeWazowskiHeroicClimber: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c754c6ca0ba242e593252c4e8690258a",
+    tcgPlayer: "702672",
   },
   text: [
     {

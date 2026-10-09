@@ -24,7 +24,7 @@ export const op14eb04KikunojoOp14023023: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect: "[End of Your Turn] Set this Character as active.",
   effects: {

@@ -23,7 +23,7 @@ export const op12Gin068: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "strike",
   i18n: op12Gin068I18n,
 };

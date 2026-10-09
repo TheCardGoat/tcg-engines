@@ -29,9 +29,13 @@ export const carlsHouseFlyingHigh: LocationCard = {
   moveCost: 0,
   lore: 0,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_2016e177aa05436fa2c7fc5a747572fb",
+    tcgPlayer: "704641",
+  },
   text: [
     {
-      title: "Moving Day",
+      title: "MOVING DAY",
       description:
         "Once during your turn, you may move chosen character from here to another location for free. If you do, gain 1 lore.",
     },

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "game": "alpha-clash",
+  "date": "2026-10-06",
+  "verifiedMatches": 56,
+  "finalEngineRevision": "fnv1a32:c8337234",
+  "reports": [
+    {
+      "report": "calibration-report.json",
+      "matches": 8,
+      "engineRevision": "fnv1a32:c8337234",
+      "currentRevision": true
+    },
+    {
+      "report": "iteration-v2-report.json",
+      "matches": 16,
+      "engineRevision": "fnv1a32:53f5ede9",
+      "currentRevision": false
+    },
+    {
+      "report": "iteration-report.json",
+      "matches": 32,
+      "engineRevision": "fnv1a32:c8337234",
+      "currentRevision": true
+    }
+  ]
+}

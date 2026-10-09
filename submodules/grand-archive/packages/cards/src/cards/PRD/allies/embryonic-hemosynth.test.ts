@@ -20,3 +20,8 @@ describe("Embryonic Hemosynth — printed keywords", () => {
     ],
   });
 });
+
+import { proveClassBulwark } from "../../../testing/class-bulwark.ts";
+/** @covers JQQXhhIla9-a2 */
+describe("Embryonic Hemosynth — class-gated Bulwark entry", () =>
+  proveClassBulwark(embryonicHemosynth, true));

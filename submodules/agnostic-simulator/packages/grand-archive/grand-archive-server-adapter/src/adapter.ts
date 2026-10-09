@@ -16,6 +16,7 @@ import {
 } from "@tcg/grand-archive-engine/runtime";
 import { GrandArchiveMatchRuntime } from "@tcg/grand-archive-engine/simulator";
 import { registerGameAdapter } from "@tcg/shared/game-adapter";
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 import type {
   CardsMaps,
   DeckBuildInput,
@@ -27,6 +28,7 @@ import type { EngineSnapshot, ServerEngineCreateInput } from "@tcg/shared/game-e
 import { grandArchiveDeckInterchangeAdapter } from "./deck-interchange.ts";
 import { GrandArchiveServerEngine } from "./server-engine.ts";
 import { parseGrandArchiveReplayJournal, type GrandArchiveReplayJournalV1 } from "./replay.ts";
+import { readGrandArchiveUndoState, type GrandArchiveUndoCheckpoint } from "./undo.ts";
 
 const program = createGrandArchiveMatchProgram(grandArchiveCards);
 const GRAND_ARCHIVE_DECK_SECTIONS = [
@@ -139,6 +141,7 @@ async function createEngine(input: ServerEngineCreateInput): Promise<GrandArchiv
 }
 
 export const grandArchiveServerAdapter: GameAdapter = {
+  proposalPolicy: hostedUndoProposalPolicy,
   slug: "grand-archive",
   pregame: grandArchivePregameAdapter,
   deckInterchange: grandArchiveDeckInterchangeAdapter,
@@ -332,6 +335,9 @@ export const grandArchiveServerAdapter: GameAdapter = {
       metadata: {
         schemaVersion: 1,
         replayJournal: engine.replayJournal,
+        undoCheckpoints: engine.getUndoState().checkpoints,
+        turnStartCheckpoint: engine.getUndoState().turnStart,
+        turnStartStateVersion: engine.getUndoState().turnStartStateVersion,
         presentation: {
           catalog: engine.art.catalog,
           printingIdByObjectId: engine.art.printingIdByObjectId,
@@ -354,6 +360,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
       new GrandArchiveMatchRuntime(program, state),
       replayJournal,
       await restoreGrandArchiveArt(metadata.presentation),
+      readGrandArchiveUndoState(metadata, serializeGrandArchiveMatchSnapshot(state)),
     );
   },
   extractCardsMapsFromSnapshot(snapshot) {
@@ -365,6 +372,9 @@ export const grandArchiveServerAdapter: GameAdapter = {
 interface GrandArchiveAdapterMetadataV1 {
   readonly schemaVersion: 1;
   readonly replayJournal: GrandArchiveReplayJournalV1;
+  readonly undoCheckpoints?: readonly GrandArchiveUndoCheckpoint[];
+  readonly turnStartCheckpoint?: GrandArchiveUndoCheckpoint | null;
+  readonly turnStartStateVersion?: number | null;
   readonly presentation?: GrandArchiveArtPin;
 }
 

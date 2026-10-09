@@ -39,4 +39,21 @@ describe("EB02-037 Franky", () => {
     });
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each(["wrongLeader", "moreDON"])("does not add DON for the %s boundary", (boundary) => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: boundary === "wrongLeader" ? "ST02-001" : eb02MonkeyDLuffy010,
+        hand: [eb02Franky037],
+        activeDon: 4,
+      },
+      { activeDon: boundary === "wrongLeader" ? 5 : 3 },
+    );
+    const before = e.getView("south").players.south.donDeckCount;
+    e.playCard(eb02Franky037);
+    expect(e.getView("south").players.south.donDeckCount).toBe(before);
+    expect(
+      e.getView("south").players.south.activeDon + e.getView("south").players.south.restedDon,
+    ).toBe(4);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

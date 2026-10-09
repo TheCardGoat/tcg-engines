@@ -31,7 +31,7 @@ export const op11Kujyaku004: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "special",
   effect:
     '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 "Navy" type card other than "Kujyaku" and add it to your hand. Then, place the rest at the bottom of your deck in any order.[Activate: Main] You may trash this Character: Up to 1 of your Characters gains +1000 power during this turn.',
@@ -59,7 +59,7 @@ export const op11Kujyaku004: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

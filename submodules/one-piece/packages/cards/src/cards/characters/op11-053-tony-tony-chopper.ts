@@ -23,7 +23,7 @@ export const op11TonyTonyChopper053: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op11TonyTonyChopper053I18n,
 };

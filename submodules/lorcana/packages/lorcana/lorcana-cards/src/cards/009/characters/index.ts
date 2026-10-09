@@ -7,11 +7,13 @@ export { aliceAccidentallyAdriftP3Promo } from "./p3-002-alice-accidentally-adri
 export { stitchRockStar } from "./003-stitch-rock-star";
 export { theQueenConceitedRulerP3Challenge } from "./p3-003-the-queen-conceited-ruler-challenge";
 export { beastGraciousPrince } from "./004-beast-gracious-prince";
+export { mulanEliteArcherCC1Promo } from "./cc1-004-mulan-elite-archer-promo";
 export { maleficentMonstrousDragonP3Challenge as maleficentMonstrousDragonP3ChallengeP3004MaleficentMonstrousDragonChallenge } from "./p3-004-maleficent-monstrous-dragon-challenge";
 export { minnieMouseSweetheartPrincess } from "./005-minnie-mouse-sweetheart-princess";
 export { maleficentMonstrousDragonP3Challenge as maleficentMonstrousDragonP3ChallengeP3005MaleficentMonstrousDragonChallenge } from "./p3-005-maleficent-monstrous-dragon-challenge";
 export { pegasusGiftForHerculesC2Challenge as pegasusGiftForHerculesC2ChallengeC2005PegasusGiftForHerculesChallenge } from "./c2-005-pegasus-gift-for-hercules-challenge";
 export { auroraHoldingCourt } from "./006-aurora-holding-court";
+export { tinkerBellGiantFairyCC1Promo } from "./cc1-006-tinker-bell-giant-fairy-promo";
 export { theQueenRegalMonarch } from "./007-the-queen-regal-monarch";
 export { cursedMerfolkUrsulasHandiworkP3Challenge } from "./p3-007-cursed-merfolk-ursulas-handiwork-challenge";
 export { rapunzelSunshine } from "./008-rapunzel-sunshine";

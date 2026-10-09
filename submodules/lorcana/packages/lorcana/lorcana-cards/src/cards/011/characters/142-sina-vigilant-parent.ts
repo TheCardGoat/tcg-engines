@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { sinaVigilantParentI18n } from "./142-sina-vigilant-parent.i18n";
 
 export const sinaVigilantParent: CharacterCard = {
@@ -30,7 +29,8 @@ export const sinaVigilantParent: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  abilities: [alert],
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_6f3a637fc61e4ad084fc878c55ff543c",
     tcgPlayer: "673739",

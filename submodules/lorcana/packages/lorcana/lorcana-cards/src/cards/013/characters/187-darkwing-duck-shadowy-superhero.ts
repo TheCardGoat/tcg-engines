@@ -31,6 +31,7 @@ export const darkwingDuckShadowySuperhero: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f4a78d79c003420c839e09c533d7a381",
+    tcgPlayer: "704682",
   },
   text: [
     {

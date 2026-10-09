@@ -766,6 +766,7 @@ function assertEntryLinkChoiceWasPlanned(
 
 function tokenSummonEvents(
   objects: readonly GrandArchiveCardInstance[],
+  evaluation: GrandArchiveEvaluationContext,
 ): readonly GrandArchiveProposedEvent[] {
   const byController = new Map<GrandArchivePlayerId, GrandArchiveCardInstance[]>();
   for (const object of objects) {
@@ -784,7 +785,9 @@ function tokenSummonEvents(
       playerId,
       objects: [first, ...group.slice(1)] as const,
       actorId: playerId,
-      cause: { kind: "rule" as const, rule: "summon-effect" },
+      cause: evaluation.resolvingStackItemId
+        ? { kind: "stack-item" as const, stackItemId: evaluation.resolvingStackItemId }
+        : { kind: "rule" as const, rule: "summon-effect" },
     };
   });
 }
@@ -1197,15 +1200,19 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       return true;
     }
     case "mill": {
-      const amount = evaluateGrandArchiveAmount(effect.amount, evaluation);
-      if (!Number.isSafeInteger(amount) || amount < 0) {
+      const amount =
+        typeof effect.amount === "object" && effect.amount.kind === "all"
+          ? null
+          : evaluateGrandArchiveAmount(effect.amount, evaluation);
+      if (amount !== null && (!Number.isSafeInteger(amount) || amount < 0)) {
         throw new GrandArchiveUnsupportedRuleError("mill amount must be a non-negative integer");
       }
       const gameEventId = grandArchiveGameEventId(
         `game-event-${execution.state.nextEventOrdinal}-${execution.proposedActionCount + 1}`,
       );
       for (const playerId of resolveGrandArchivePlayers(effect.player, evaluation)) {
-        for (let millIndex = 0; millIndex < amount; millIndex += 1) {
+        const millCount = amount ?? execution.state.zones[playerId]["main-deck"].length;
+        for (let millIndex = 0; millIndex < millCount; millIndex += 1) {
           const objectId = execution.state.zones[playerId]["main-deck"][0];
           if (!objectId) break;
           commit(execution, [
@@ -1459,7 +1466,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       commit(
         execution,
         resolveGrandArchiveSubjectObjects(effect.subject, evaluation).flatMap((object) =>
-          object.zone === "graveyard"
+          object.zone === "graveyard" || (effect.kind === "sacrifice" && object.zone !== "field")
             ? []
             : [
                 {
@@ -1558,7 +1565,6 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       commit(execution, counterChangeEvents(effect, execution));
       return true;
     case "move-counter": {
-      const amount = evaluateGrandArchiveAmount(effect.amount, evaluation);
       const from =
         effect.from.kind === "mastery"
           ? (() => {
@@ -1600,6 +1606,10 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
               from.mastery,
               effect.counter,
             );
+      const amount =
+        typeof effect.amount === "object" && effect.amount.kind === "all"
+          ? available
+          : evaluateGrandArchiveAmount(effect.amount, evaluation);
       const moved = Math.min(amount, available);
       const fromEvent: GrandArchiveProposedEvent =
         from.kind === "object"
@@ -1813,7 +1823,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
             (objectId) => execution.state.objects[objectId]?.hostId === champion.id,
           );
           const cardId = lineage.at(-1);
-          return cardId
+          return cardId && !(lineage.length === 1 && champion.baseLineageCardId)
             ? [
                 {
                   type: "champion-deleveled",
@@ -1866,6 +1876,17 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
               state: effect.state,
               value: effect.value,
             },
+            // Preserve 3: directly preserving a card also makes it public in the
+            // material deck; this is not limited to the Preserve keyword path.
+            ...(effect.state === "preserved" && effect.value && object.zone === "material-deck"
+              ? [
+                  {
+                    type: "object-facing-changed" as const,
+                    objectId: object.id,
+                    facing: "face-up" as const,
+                  },
+                ]
+              : []),
           ];
         },
       );
@@ -2446,6 +2467,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
         createdObjectsForEffect(effect, evaluation).map((object) =>
           applyEntryLinkHost(object, execution),
         ),
+        evaluation,
       );
       commit(execution, events);
       return true;
@@ -2455,6 +2477,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
         createdObjectsForEffect(effect, evaluation).map((object) =>
           applyEntryLinkHost(object, execution),
         ),
+        evaluation,
       );
       commit(execution, events);
       return events.length > 0;
@@ -2848,10 +2871,16 @@ function updateModifiedAbilityResultBindings(
 
 function execute(effect: GrandArchiveEffect, execution: MutableExecution): boolean {
   const before = execution.events.length;
+  const previousResult =
+    "bindResultAs" in effect && effect.bindResultAs
+      ? execution.bindings[effect.bindResultAs]
+      : undefined;
   const succeeded = executeCore(effect, execution);
   const committedEvents = execution.events.slice(before);
   if ("bindResultAs" in effect && effect.bindResultAs) {
-    if (execution.bindings[effect.bindResultAs] === undefined) {
+    // A repeated effect must publish this execution's result. Preserve specialized results
+    // written by executeCore, while replacing an unchanged result from an earlier iteration.
+    if (execution.bindings[effect.bindResultAs] === previousResult) {
       execution.bindings[effect.bindResultAs] =
         effect.kind === "remove-counter"
           ? committedCounterRemovalAmount(committedEvents, grandArchiveCounterKey(effect.counter))

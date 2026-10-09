@@ -23,7 +23,7 @@ export const op11Megalo112: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Fish-Man Island"],
+  traits: ["Animal", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[Opponent's Turn] If your Leader is [Shirahoshi], this Character gains +4000 power.",

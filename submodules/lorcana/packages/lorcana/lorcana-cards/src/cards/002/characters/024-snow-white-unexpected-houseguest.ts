@@ -31,6 +31,7 @@ export const snowWhiteUnexpectedHouseguest: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_332e095b11d44545865d7878ea27b58d",
+    tcgPlayer: "526378",
   },
   text: [
     {

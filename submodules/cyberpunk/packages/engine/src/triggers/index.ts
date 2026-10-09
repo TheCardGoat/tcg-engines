@@ -78,7 +78,13 @@ export function matchTriggers(event: GameEvent, state: MatchState): TriggerMatch
       checkCardAbilities(
         state,
         event.cardId,
-        (ability) => ability.trigger?.trigger === "defeated",
+        // A defeated card can also observe its own defeat through generic
+        // event text (e.g. "an Arasaka Unit"). It has already left the field,
+        // so the active-zone broadcast cannot find it. Event filters and
+        // limits still apply in the normal resolution pipeline.
+        (ability) =>
+          ability.trigger?.trigger === "defeated" ||
+          (ability.trigger?.trigger === "event" && ability.trigger.event.event === "cardDefeated"),
         matches,
       );
       break;

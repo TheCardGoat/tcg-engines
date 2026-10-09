@@ -229,3 +229,21 @@ test("mixed printing layouts use exact ratios while retained square catalogs kee
   expect(grandArchivePinnedImageAspectRatio(art, id, "object", "board")).toBe(1);
   expect(grandArchivePinnedImageAspectRatio(art, id, "object")).toBe(5 / 7);
 });
+
+test("retired inner-frame pins migrate art while preserving exact printing bindings", async () => {
+  const current = currentGrandArchiveArt();
+  const card = Object.values(current.records.records)[0]!;
+  const bindings = { object: card.defaultPrintingId! };
+  const restored = await restoreGrandArchiveArt({
+    catalog: {
+      revision: "de8d6cef5102f3b020479f81db34c96e48148644e2b9effbd392905e60391005",
+      url: "https://cdn.tcg.online/public/grand-archive/presentation/de8d6cef5102f3b020479f81db34c96e48148644e2b9effbd392905e60391005.json",
+    },
+    printingIdByObjectId: bindings,
+  });
+  expect(restored.catalog).toEqual(current.catalog);
+  expect(restored.printingIdByObjectId).toEqual(bindings);
+  expect(grandArchivePinnedImage(restored, card.canonicalId, "object", "board")).toBe(
+    card.printings[bindings.object]!.boardImageUrl,
+  );
+});

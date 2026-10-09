@@ -30,7 +30,7 @@ export const op13Stussy110: CharacterCard = {
   setId: "OP13",
   cost: 7,
   power: 7000,
-  traits: ["CP0 Egghead"],
+  traits: ["Egghead", "CP0"],
   attribute: "special",
   effect:
     '[Blocker]\n[On Play] If your Leader has the "Egghead" type, play up to 1 Character card with a cost of 5 or less and a [Trigger] from your hand.',
@@ -43,7 +43,7 @@ export const op13Stussy110: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -14,7 +14,7 @@ const site = "https://rules.gatcg.com";
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const referenceDirectory = resolve(
   scriptDirectory,
-  "../references/grand-archieve-comprehensive-rules",
+  "../references/grand-archive-comprehensive-rules",
 );
 const concurrency = 8;
 
@@ -48,7 +48,17 @@ async function fetchMarkdown(page) {
 
   const outputPath = outputPathFor(page.pathname);
   await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, markdown.endsWith("\n") ? markdown : `${markdown}\n`);
+  const officialUrl = new URL(page.pathname, site).toString();
+  const provenance = [
+    "---",
+    "official_source:",
+    '  publisher: "Weebs of the Shore"',
+    `  url: ${JSON.stringify(officialUrl)}`,
+    '  relation: "current_index"',
+    "---",
+    "",
+  ].join("\n");
+  await writeFile(outputPath, `${provenance}${markdown.trimEnd()}\n`);
 }
 
 async function runPool(items, worker) {

@@ -20,7 +20,14 @@ describe("OP03-094 Air Door", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op03RobLucci076,
       hand: [op03AirDoor094],
-      deck: [op03Jerry084, op03Kaku080, op03RobLucci092, op03AirDoor094, eb01Fourtricks025],
+      deck: [
+        op03Jerry084,
+        op03Kaku080,
+        op03RobLucci092,
+        op03AirDoor094,
+        eb01Fourtricks025,
+        eb01Doma005,
+      ],
       activeDon: 4,
     });
     const eventId = engine.findCardInZone("south", "hand", op03AirDoor094);
@@ -65,7 +72,7 @@ describe("OP03-094 Air Door", () => {
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     view = engine.getView("south");
-    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 4, deckCount: 0 });
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 4, deckCount: 1 });
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });

@@ -23,7 +23,7 @@ export const op07Pythagoras105: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
   effect:
     "[On K.O.] If you have 2 or less Life cards, play up to 1 {Egghead} type Character card with a cost of 4 or less from your trash rested. [Trigger] If your Leader is [Vegapunk], play this card.",
@@ -59,7 +59,7 @@ export const op07Pythagoras105: CharacterCard = {
               {
                 filter: "trait",
                 value: "Egghead",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -13,3 +13,18 @@ describe("Winbless Kiteshield — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveClassBonusMaterializationDiscount } from "../../../testing/class-bonus-materialization-discount.ts";
+
+/** @covers uoy5ttkat9-a1 */
+describe("winblessKiteshield — Class Bonus materialization discount", () => {
+  proveClassBonusMaterializationDiscount(winblessKiteshield, true);
+});
+
+import { proveLinkedVigor } from "../../../testing/linked-vigor.ts";
+
+/** @covers uoy5ttkat9-a3 */
+describe("winblessKiteshield — linked Vigor", () => {
+  proveLinkedVigor(winblessKiteshield, {});
+  proveLinkedVigor(winblessKiteshield, { championHost: true });
+});

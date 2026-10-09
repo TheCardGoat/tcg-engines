@@ -198,7 +198,7 @@ describe("parseTarget", () => {
       player: "self",
       zones: ["leader", "character"],
       count: { amount: 1, upTo: true },
-      filters: [{ filter: "trait", value: "SWORD", match: "includes" }],
+      filters: [{ filter: "trait", value: "SWORD", match: "exact" }],
     });
   });
 
@@ -225,8 +225,8 @@ describe("parseTarget", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Amazon Lily", match: "includes" },
-            { filter: "trait", value: "Kuja Pirates", match: "includes" },
+            { filter: "trait", value: "Amazon Lily", match: "exact" },
+            { filter: "trait", value: "Kuja Pirates", match: "exact" },
           ],
         },
       ],
@@ -239,7 +239,7 @@ describe("parseTarget", () => {
       player: "self",
       zones: ["leader", "character", "stage", "costArea"],
       count: { amount: 1, upTo: true },
-      filters: [{ filter: "trait", value: "Cross Guild", match: "includes" }],
+      filters: [{ filter: "trait", value: "Cross Guild", match: "exact" }],
     });
   });
 });

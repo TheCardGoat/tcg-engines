@@ -48,4 +48,19 @@ describe("OP03-040 Nami", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("does not mill when its attack K.O.s a Character instead of dealing Life damage", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op03Nami040, deck: [eb01Doma005], activeDon: 1 },
+      { character: [{ card: eb01Doma005, rested: true }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const target = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.attachDon(engine.leader("south"), 1, "south");
+    engine.declareAttack(engine.leader("south"), target, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(target);
+    expect(view.players.south.deckCount).toBe(1);
+    expect(view.status).toBe("active");
+    expect(view.prompts).toHaveLength(0);
+  });
 });

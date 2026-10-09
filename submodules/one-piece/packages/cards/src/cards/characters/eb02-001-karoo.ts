@@ -23,7 +23,7 @@ export const eb02Karoo001: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Animal Alabasta"],
+  traits: ["Animal", "Alabasta"],
   attribute: "strike",
   i18n: eb02Karoo001I18n,
 };

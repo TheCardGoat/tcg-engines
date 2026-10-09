@@ -23,7 +23,7 @@ export const op12Bastille088: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Navy Dressrosa"],
+  traits: ["Dressrosa", "Navy"],
   attribute: "slash",
   i18n: op12Bastille088I18n,
 };

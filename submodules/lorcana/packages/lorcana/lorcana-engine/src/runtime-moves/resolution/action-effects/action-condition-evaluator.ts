@@ -16,6 +16,13 @@ export function evaluateActionCondition(
   ctx: ActionConditionRuntimeContext,
   cardPlayed: CardPlayedPayload,
   resolutionInput: ActionResolutionInput,
+  /**
+   * The triggering play event's subject, when different from the ability
+   * source. `sourceCardId`/`playerId` always anchor to `cardPlayed` (the
+   * ability source: `has-card-under`, controller-scoped "you" conditions);
+   * event-identity conditions (`played-card-name` etc.) read this payload.
+   */
+  eventCardPlayed?: CardPlayedPayload,
 ): boolean {
   if (!condition) {
     return true;
@@ -25,7 +32,7 @@ export function evaluateActionCondition(
     ctx,
     playerId: cardPlayed.playerId,
     sourceCardId: cardPlayed.cardId,
-    cardPlayed,
+    cardPlayed: eventCardPlayed ?? cardPlayed,
     resolutionInput,
   });
 

@@ -31,7 +31,7 @@ export const op02DonquixoteRosinante108: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

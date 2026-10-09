@@ -3,12 +3,21 @@ import { Notifications } from "@mantine/notifications";
 import { act, cleanup, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CyberpunkTestEngine, firstLegalStrategy, type AIStrategy } from "@tcg/cyberpunk-engine";
+import {
+  welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+  welcomeToNightCityRetailFloorIt,
+} from "@tcg/cyberpunk-cards";
+import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 
 import { CardPreviewProvider } from "../components/CardPreview/CardPreviewContext";
 import { CardInspectProvider } from "../components/GameBoard/CardInspectContext";
 import { UserConfigProvider } from "../engine";
-import { AI_STALL_FALLBACK_MS, AI_STALL_RETRY_MS } from "../engine/EngineProvider";
-import { DEFAULT_SCENARIO, P2 } from "../engine/fixtures/scenarios";
+import {
+  AI_STALL_FALLBACK_MS,
+  AI_STALL_RETRY_MS,
+  pickAuthoritativeBotEscape,
+} from "../engine/EngineProvider";
+import { DEFAULT_SCENARIO, P1, P2 } from "../engine/fixtures/scenarios";
 import { BoardSharedPage } from "../pages/BoardShared.page";
 import { theme } from "../theme";
 
@@ -146,5 +155,54 @@ describe("cyberpunk AI stall watchdog", () => {
     // before any watchdog intervention (forced === 0).
     expect(engine.getState().G.players[P2]?.mulliganDone).toBe(true);
     expect(calls).toBe(1);
+  });
+
+  it("uses the authoritative Alt cancellation before passing or conceding", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      legendArea: [
+        {
+          card: welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+          faceDown: false,
+          spent: false,
+        },
+      ],
+      trash: [welcomeToNightCityRetailFloorIt],
+      eddies: 3,
+    });
+    engine.activateAbility(welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, 1, {
+      as: P1,
+    });
+    const state = engine.getState();
+    const view = buildCyberpunkInteractionView({
+      actorId: P1,
+      stateVersion: state.ctx.stateID,
+      prompt: engine.getPrompt(P1),
+      state,
+    });
+
+    expect(pickAuthoritativeBotEscape(view)).toEqual({
+      actionId: "cancelPendingResolution",
+      values: {},
+    });
+  });
+
+  it("concedes only when the authoritative view exposes no safer exit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({ eddies: 1 });
+    const state = engine.getState();
+    const view = buildCyberpunkInteractionView({
+      actorId: P1,
+      stateVersion: state.ctx.stateID,
+      prompt: engine.getPrompt(P1),
+      state,
+    });
+    const concedeOnly = {
+      ...view,
+      actions: view.actions.filter((action) => action.id === "concede"),
+    };
+
+    expect(pickAuthoritativeBotEscape(concedeOnly)).toEqual({
+      actionId: "concede",
+      values: {},
+    });
   });
 });

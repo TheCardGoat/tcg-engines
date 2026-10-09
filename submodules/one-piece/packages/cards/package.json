@@ -16,17 +16,10 @@
     "dist"
   ],
   "type": "module",
-  "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./preconstructed-decks": {
-      "types": "./src/preconstructed-decks.ts",
-      "default": "./src/preconstructed-decks.ts"
-    },
+    ".": "./dist/index.mjs",
+    "./preconstructed-decks": "./dist/preconstructed-decks.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {

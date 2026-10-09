@@ -23,7 +23,7 @@ export const op07Bluejam011: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Goa Kingdom Bluejam Pirates"],
+  traits: ["Goa Kingdom", "Bluejam Pirates"],
   attribute: "ranged",
   effect:
     "[DON!! x1][When Attacking] K.O. up to 1 of your opponent's Characters with 2000 power or less.",

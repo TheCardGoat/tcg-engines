@@ -25,7 +25,7 @@ export const op08GeckoMoriaSp004: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[On Play] Add up to 1 [The Seven Warlords of the Sea] or [Thriller Bark Pirates] type Character with a cost of 4 or less other than [Gecko Moria] from your trash to your hand.",
@@ -50,12 +50,12 @@ export const op08GeckoMoriaSp004: CharacterCard = {
                     {
                       filter: "trait",
                       value: "The Seven Warlords of the Sea",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Thriller Bark Pirates",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

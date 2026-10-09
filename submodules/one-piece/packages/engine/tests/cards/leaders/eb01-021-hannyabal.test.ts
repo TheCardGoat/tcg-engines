@@ -12,6 +12,23 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
  * Character with cost ≥2 to hand → add up to 1 active DON!! from the DON!! deck.
  */
 describe("EB01-021 Hannyabal", () => {
+  test("may return a Character even with no DON!! left in the DON!! deck (FAQ Q635)", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: eb01Hannyabal021,
+      character: [eb01PrinceBellett026],
+      activeDon: 10,
+      donDeckCount: 0,
+    });
+    const id = engine.findCardInZone("south", "character", eb01PrinceBellett026);
+    engine.endTurn("south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(id);
+    expect(view.players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(view.players.south).toMatchObject({ activeDon: 10, donDeckCount: 0 });
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("returns an eligible Impel Down Character before adding active DON at end of turn", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: eb01Hannyabal021,

@@ -69,7 +69,7 @@ describe("computeTemporaryRevealedHandCardIds", () => {
     expect([...revealed]).toEqual([]);
   });
 
-  it("clears reveals at the owner's turn end", () => {
+  it("keeps the reveal through its owner's turn end", () => {
     const revealed = computeTemporaryRevealedHandCardIds(
       [
         {
@@ -89,7 +89,7 @@ describe("computeTemporaryRevealedHandCardIds", () => {
       ["card-1"],
     );
 
-    expect([...revealed]).toEqual([]);
+    expect([...revealed]).toEqual(["card-1"]);
   });
 
   it("keeps reveals through another player's turn end", () => {
@@ -115,7 +115,53 @@ describe("computeTemporaryRevealedHandCardIds", () => {
     expect([...revealed]).toEqual(["card-1"]);
   });
 
-  it("clears reveals when the next turn starts", () => {
+  it("clears a temporary reveal when its owner plays their next card", () => {
+    const revealed = computeTemporaryRevealedHandCardIds(
+      [
+        {
+          events: [
+            {
+              type: "cardMoved",
+              cardId: "recovered-gear",
+              fromZone: "trash",
+              toZone: "hand",
+              playerId: "p2",
+            },
+            { type: "cardPlayed", cardId: "next-card", playerId: "p2" },
+          ],
+        },
+      ],
+      "p2",
+      ["recovered-gear"],
+    );
+
+    expect([...revealed]).toEqual([]);
+  });
+
+  it("keeps the reveal when the other player plays a card", () => {
+    const revealed = computeTemporaryRevealedHandCardIds(
+      [
+        {
+          events: [
+            {
+              type: "cardMoved",
+              cardId: "recovered-gear",
+              fromZone: "trash",
+              toZone: "hand",
+              playerId: "p2",
+            },
+            { type: "cardPlayed", cardId: "opponent-card", playerId: "p1" },
+          ],
+        },
+      ],
+      "p2",
+      ["recovered-gear"],
+    );
+
+    expect([...revealed]).toEqual(["recovered-gear"]);
+  });
+
+  it("keeps the reveal when the next turn starts", () => {
     const revealed = computeTemporaryRevealedHandCardIds(
       [
         {
@@ -135,7 +181,7 @@ describe("computeTemporaryRevealedHandCardIds", () => {
       ["card-1"],
     );
 
-    expect([...revealed]).toEqual([]);
+    expect([...revealed]).toEqual(["card-1"]);
   });
 
   it("keeps cards moved from public zones after a new turn starts revealed", () => {
@@ -161,7 +207,7 @@ describe("computeTemporaryRevealedHandCardIds", () => {
     expect([...revealed]).toEqual(["card-1"]);
   });
 
-  it("clears reveals from turn-ended move logs when engine events have no turn boundary", () => {
+  it("keeps reveals through turn-ended move logs when events have no turn boundary", () => {
     const revealed = computeTemporaryRevealedHandCardIds(
       [
         {
@@ -184,10 +230,10 @@ describe("computeTemporaryRevealedHandCardIds", () => {
       ["card-1"],
     );
 
-    expect([...revealed]).toEqual([]);
+    expect([...revealed]).toEqual(["card-1"]);
   });
 
-  it("clears reveals when a hidden hand card is discarded", () => {
+  it("keeps reveals when another hidden hand card is discarded", () => {
     const revealed = computeTemporaryRevealedHandCardIds(
       [
         {
@@ -213,7 +259,7 @@ describe("computeTemporaryRevealedHandCardIds", () => {
       ["card-1"],
     );
 
-    expect([...revealed]).toEqual([]);
+    expect([...revealed]).toEqual(["card-1"]);
   });
 
   it("drops revealed cards that are no longer in hand", () => {

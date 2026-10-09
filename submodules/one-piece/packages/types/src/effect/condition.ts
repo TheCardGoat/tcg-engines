@@ -40,10 +40,24 @@ export type Condition =
   | BattledOpponentCharacterThisTurnCondition
   | ActiveDonCountCondition
   | PlayerTurnCountCondition
-  | ActivatedEventCondition;
+  | ActivatedEventCondition
+  | CharacterKodThisTurnCondition
+  | CardTrashedFromHandByEffectThisTurnCondition;
+
+/** A card owned by this player was actually discarded by an effect this turn. */
+export interface CardTrashedFromHandByEffectThisTurnCondition {
+  condition: "cardTrashedFromHandByEffectThisTurn";
+  player: Player;
+}
+
+export interface CharacterKodThisTurnCondition {
+  condition: "characterKodThisTurn";
+  player: Player;
+}
 
 export interface ActiveDonCountCondition {
   condition: "activeDonCount";
+  player?: "self" | "opponent";
   comparison: Comparison;
   value: number;
 }
@@ -93,6 +107,7 @@ export interface OncePerTurnCondition {
 export interface LeaderNameCondition {
   condition: "leaderName";
   name: string;
+  match?: "exact" | "includes";
 }
 
 export interface LeaderAttributeCondition {
@@ -108,11 +123,12 @@ export interface LeaderTraitCondition {
 
 export interface ZoneCountCondition {
   condition: "zoneCount";
-  player: Player;
+  player: Player | "any";
   zone: Zone;
   comparison: Comparison;
   value: number;
   filters?: TargetFilter[];
+  distinctNames?: boolean;
 }
 
 export interface ZoneValueTotalCondition {

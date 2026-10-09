@@ -59,7 +59,7 @@ export const op06LilyCarnation015: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "power",

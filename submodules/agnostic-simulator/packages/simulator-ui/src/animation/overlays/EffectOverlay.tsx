@@ -1,16 +1,35 @@
+import { cinematicSceneRefs, type AnimationRef } from "@tcg/protocol/animations";
 import type { AnimationPhase } from "@tcg/simulator-runtime/animation";
 import { motion } from "motion/react";
-import { useLayoutEffect, useRef } from "react";
+import {
+  createContext,
+  useContext,
+  type ComponentType,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 import { TargetingArrow } from "../../components/TargetingArrow";
 import { SimulatorEntityVisual } from "../components/SimulatorEntityVisual";
 import { useAnimationRegistryVersion } from "../hooks/useAnimationRegistryVersion";
+import { animationRefKey } from "../lib/node-registry";
 import { useAnimationRuntime } from "../provider/contexts";
-import { centerForBoardOverlay, centerForRef, overlayPortalRoot } from "./overlay-utils";
+import {
+  centerForBoardOverlay,
+  centerForRef,
+  overlayPortalRoot,
+  simulatorBoardCenterAnimationRef,
+  captureOverlayScroll,
+  overlayScrollDisplacement,
+} from "./overlay-utils";
 import classes from "./EffectOverlay.module.css";
+import { SceneEffect } from "./SceneEffect";
+import { CinematicEffect } from "./CinematicEffect";
 
-interface EffectArrowProps {
+export interface EffectArrowProps {
+  readonly sourceId?: string;
   readonly id: string;
   readonly source: { readonly x: number; readonly y: number };
   readonly destination: { readonly x: number; readonly y: number };
@@ -18,12 +37,16 @@ interface EffectArrowProps {
   readonly durationMs: number;
 }
 
+/** Optional game renderer; source-card staging and timing remain owned by this overlay. */
+export const EffectConnectionsContext = createContext<ComponentType<{
+  connections: readonly EffectArrowProps[];
+  playbackStartedAtMs?: number;
+}> | null>(null);
+
 export interface SourceCardEffectTiming {
   readonly impactAtMs: number;
   readonly arrowStartMs: number;
   readonly arrowDurationMs: number;
-  readonly targetStartMs: number;
-  readonly targetDurationMs: number;
 }
 
 export function sourceCardEffectTiming(durationMs: number): SourceCardEffectTiming {
@@ -31,14 +54,10 @@ export function sourceCardEffectTiming(durationMs: number): SourceCardEffectTimi
   const impactAtMs = Math.round(duration * 0.5);
   const arrowStartMs = Math.round(duration * 0.25);
   const arrowEndMs = Math.min(duration, impactAtMs + Math.round(duration * 0.14));
-  const targetStartMs = Math.round(duration * 0.4);
-  const targetEndMs = Math.min(duration, impactAtMs + Math.round(duration * 0.28));
   return {
     impactAtMs,
     arrowStartMs,
     arrowDurationMs: Math.max(0, arrowEndMs - arrowStartMs),
-    targetStartMs,
-    targetDurationMs: Math.max(0, targetEndMs - targetStartMs),
   };
 }
 
@@ -74,37 +93,77 @@ export function shouldRenderEffectOverlay(phase: AnimationPhase | null | undefin
 
 export function EffectOverlay() {
   const runtime = useAnimationRuntime();
+  const Connections = useContext(EffectConnectionsContext);
   const registryVersion = useAnimationRegistryVersion(runtime.registry);
-  const sourceEntryRects = useRef(new Map<string, DOMRect>());
+  const entryGeometry = useRef<{
+    transitionId: string;
+    rects: Map<string, DOMRect>;
+    scroll: ReturnType<typeof captureOverlayScroll>;
+  }>({
+    transitionId: "",
+    rects: new Map<string, DOMRect>(),
+    scroll: { x: 0, y: 0, parents: [] },
+  });
   const activeTransition = runtime.activeTransition;
 
+  const [, updateScroll] = useState(0);
   useLayoutEffect(() => {
+    if (!activeTransition) return;
+    const update = () => updateScroll((value) => value + 1);
+    window.addEventListener("scroll", update, true);
+    return () => window.removeEventListener("scroll", update, true);
+  }, [activeTransition?.id]);
+
+  useLayoutEffect(() => {
+    if (entryGeometry.current.transitionId !== (activeTransition?.id ?? "")) {
+      const sceneBoard = runtime.compiledPlan?.steps.flatMap((entry) =>
+        entry.step.type === "effect" && entry.step.scene ? [entry.step.scene.board] : [],
+      )[0];
+      entryGeometry.current = {
+        transitionId: activeTransition?.id ?? "",
+        rects: new Map(),
+        scroll: captureOverlayScroll(runtime.registry, sceneBoard),
+      };
+    }
     if (activeTransition?.phase !== "preparing" || !runtime.compiledPlan) return;
     for (const compiled of runtime.compiledPlan.steps) {
-      if (
-        compiled.step.type !== "effect" ||
-        compiled.step.presentation !== "source-card" ||
-        !compiled.step.source
-      ) {
-        continue;
-      }
-      const node = runtime.registry.getPreferred(compiled.step.source)?.node;
-      if (!node) continue;
-      const rect = node.getBoundingClientRect();
-      if (rect.width > 0 && rect.height > 0) {
-        sourceEntryRects.current.set(`${activeTransition.id}:${compiled.step.id}`, rect);
+      if (compiled.step.type !== "effect") continue;
+      // Preparing still renders fromState. Once running starts, a target may
+      // already be registered in its destination zone (or have no old node).
+      const refs = [
+        simulatorBoardCenterAnimationRef,
+        ...(compiled.step.source ? [compiled.step.source] : []),
+        ...compiled.step.targets,
+        ...(compiled.step.scene ? cinematicSceneRefs(compiled.step.scene) : []),
+      ];
+      for (const ref of refs) {
+        const dragOrigin =
+          compiled.step.presentation === "source-card" &&
+          ref === compiled.step.source &&
+          ref.kind === "entity"
+            ? runtime.registry.takeDragOrigin(ref.id)
+            : null;
+        const rect =
+          dragOrigin ??
+          entryGeometry.current.rects.get(animationRefKey(ref)) ??
+          runtime.registry.getPreferred(ref)?.node.getBoundingClientRect();
+        if (rect && rect.width > 0 && rect.height > 0) {
+          entryGeometry.current.rects.set(animationRefKey(ref), rect);
+        }
       }
     }
   }, [activeTransition, registryVersion, runtime.compiledPlan, runtime.registry]);
 
-  if (
-    typeof document === "undefined" ||
-    !shouldRenderEffectOverlay(runtime.activeTransition?.phase)
-  ) {
-    return null;
-  }
+  const capturedRect = (ref: AnimationRef): DOMRect | null => {
+    const captured = entryGeometry.current.rects.get(animationRefKey(ref));
+    if (!captured) return runtime.registry.getPreferred(ref)?.node.getBoundingClientRect() ?? null;
+    const { x: dx, y: dy } = overlayScrollDisplacement(entryGeometry.current.scroll);
+    return new DOMRect(captured.left + dx, captured.top + dy, captured.width, captured.height);
+  };
+  if (typeof document === "undefined") return null;
+  const visible = shouldRenderEffectOverlay(runtime.activeTransition?.phase);
   const boardCenter = centerForBoardOverlay(runtime.registry);
-  const items = (runtime.compiledPlan?.steps ?? []).flatMap((compiled) => {
+  const items = (visible ? (runtime.compiledPlan?.steps ?? []) : []).flatMap((compiled) => {
     if (compiled.step.type !== "effect") return [];
     const effectCompiled = { ...compiled, step: compiled.step };
     const sourceCardCenter =
@@ -129,8 +188,8 @@ export function EffectOverlay() {
       : [];
     const sourceEntryNode = sourceRecords.find((record) => record.presence === "exiting")?.node;
     const sourceEntryRect =
+      (effectCompiled.step.source ? capturedRect(effectCompiled.step.source) : undefined) ??
       sourceEntryNode?.getBoundingClientRect() ??
-      sourceEntryRects.current.get(`${runtime.activeTransition!.id}:${compiled.step.id}`) ??
       null;
     const sourceExitNode = effectCompiled.step.sourceExitTo
       ? (sourceRecords.find(
@@ -139,32 +198,26 @@ export function EffectOverlay() {
         )?.node ?? runtime.registry.getPreferred(effectCompiled.step.sourceExitTo)?.node)
       : null;
     const sourceExitRect = sourceExitNode?.getBoundingClientRect() ?? null;
-    const lines = effectCompiled.step.targets.flatMap((target) => {
-      const destination = centerForRef(runtime.registry, target);
-      const destinationNode = runtime.registry.getPreferred(target)?.node;
-      const destinationRect = destinationNode?.getBoundingClientRect();
-      return source && destination
-        ? [
-            {
-              compiled: effectCompiled,
-              source,
-              destination,
-              destinationRect: destinationRect
-                ? {
-                    left: destinationRect.left,
-                    top: destinationRect.top,
-                    width: destinationRect.width,
-                    height: destinationRect.height,
-                  }
-                : null,
-            },
-          ]
-        : [];
+    const targetPoints = effectCompiled.step.targets.flatMap((target) => {
+      const destinationRect = capturedRect(target);
+      const destination =
+        destinationRect && destinationRect.width > 0 && destinationRect.height > 0
+          ? {
+              x: destinationRect.left + destinationRect.width / 2,
+              y: destinationRect.top + destinationRect.height / 2,
+            }
+          : null;
+      return destination ? [destination] : [];
     });
+    const lines = source
+      ? targetPoints.map((destination) => ({ compiled: effectCompiled, source, destination }))
+      : [];
     return [
       {
         compiled: effectCompiled,
         lines,
+        source,
+        targetPoints,
         sourceCardCenter,
         sourceEntity,
         sourceEntryRect,
@@ -172,67 +225,103 @@ export function EffectOverlay() {
       },
     ];
   });
-  if (items.length === 0) return null;
+  if (items.length === 0 && !Connections) return null;
   return createPortal(
     overlayPortalRoot(
       <>
-        <svg width="100%" height="100%">
-          {items.flatMap(({ lines }) =>
-            lines.map(({ compiled, source, destination }, index) => (
-              <EffectArrow
-                key={`${compiled.step.id}:${index}`}
-                id={`${compiled.step.id}:${index}`}
-                source={source}
-                destination={destination}
-                startAtMs={
-                  compiled.step.presentation === "source-card"
-                    ? compiled.startAtMs + sourceCardEffectTiming(compiled.durationMs).arrowStartMs
-                    : compiled.startAtMs
-                }
-                durationMs={
-                  compiled.step.presentation === "source-card"
-                    ? sourceCardEffectTiming(compiled.durationMs).arrowDurationMs
-                    : compiled.durationMs
-                }
-              />
-            )),
-          )}
-        </svg>
-        {items.flatMap(({ lines }) =>
-          lines.flatMap(({ compiled, destinationRect }, index) =>
-            compiled.step.presentation === "source-card" && destinationRect ? (
-              <motion.div
-                key={`${compiled.step.id}:target:${index}`}
-                className={classes.targetImpact}
-                data-animation-effect-target="true"
-                initial={{ opacity: 0, transform: "translate3d(0, 0, 0) scale(0.92)" }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  transform: [
-                    "translate3d(0, 0, 0) scale(0.92)",
-                    "translate3d(0, 0, 0) scale(1.04)",
-                    "translate3d(0, 0, 0) scale(1)",
-                    "translate3d(0, 0, 0) scale(1)",
-                  ],
-                }}
-                transition={{
-                  delay:
-                    (compiled.startAtMs +
-                      sourceCardEffectTiming(compiled.durationMs).targetStartMs) /
-                    1_000,
-                  duration: sourceCardEffectTiming(compiled.durationMs).targetDurationMs / 1_000,
-                  ease: [0.16, 1, 0.3, 1],
-                  times: [0, 0.2, 0.78, 1],
-                }}
-                style={destinationRect}
-              >
-                <span className={classes.targetLabel}>Target</span>
-              </motion.div>
-            ) : (
-              []
-            ),
-          ),
+        {Connections ? (
+          <Connections
+            playbackStartedAtMs={runtime.playbackStartedAtMs}
+            connections={items
+              .filter(({ compiled }) => !compiled.step.cinematic && !compiled.step.scene)
+              .flatMap(({ lines }) =>
+                lines.map(({ compiled, source, destination }, index) => ({
+                  id: `${compiled.step.id}:${index}`,
+                  source,
+                  destination,
+                  sourceId: compiled.step.source?.id,
+                  startAtMs:
+                    compiled.startAtMs +
+                    (compiled.step.presentation === "source-card"
+                      ? sourceCardEffectTiming(compiled.durationMs).arrowStartMs
+                      : 0),
+                  durationMs:
+                    compiled.step.presentation === "source-card"
+                      ? sourceCardEffectTiming(compiled.durationMs).arrowDurationMs
+                      : compiled.durationMs,
+                })),
+              )}
+          />
+        ) : (
+          <svg width="100%" height="100%">
+            {items
+              .filter(({ compiled }) => !compiled.step.cinematic && !compiled.step.scene)
+              .flatMap(({ lines }) =>
+                lines.map(({ compiled, source, destination }, index) => (
+                  <EffectArrow
+                    key={`${compiled.step.id}:${index}`}
+                    id={`${compiled.step.id}:${index}`}
+                    source={source}
+                    destination={destination}
+                    startAtMs={
+                      compiled.step.presentation === "source-card"
+                        ? compiled.startAtMs +
+                          sourceCardEffectTiming(compiled.durationMs).arrowStartMs
+                        : compiled.startAtMs
+                    }
+                    durationMs={
+                      compiled.step.presentation === "source-card"
+                        ? sourceCardEffectTiming(compiled.durationMs).arrowDurationMs
+                        : compiled.durationMs
+                    }
+                  />
+                )),
+              )}
+          </svg>
         )}
+        {!runtime.spatialMotionSuppressed && (
+          <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
+            {items.map(({ compiled, source, targetPoints }) =>
+              compiled.step.cinematic ? (
+                <CinematicEffect
+                  key={compiled.step.id}
+                  style={compiled.step.cinematic}
+                  source={source}
+                  targets={targetPoints}
+                  center={compiled.step.targets.length === 0 ? boardCenter : null}
+                  startAtMs={
+                    compiled.startAtMs +
+                    (compiled.step.presentation === "source-card"
+                      ? sourceCardEffectTiming(compiled.durationMs).arrowStartMs
+                      : 0)
+                  }
+                  durationMs={
+                    compiled.step.presentation === "source-card"
+                      ? sourceCardEffectTiming(compiled.durationMs).arrowDurationMs
+                      : compiled.durationMs
+                  }
+                  tone={compiled.step.tone}
+                />
+              ) : null,
+            )}
+          </svg>
+        )}
+        {!runtime.spatialMotionSuppressed &&
+          runtime.activeTransition?.phase === "running" &&
+          items.map(({ compiled }) =>
+            compiled.step.scene ? (
+              <SceneEffect
+                key={compiled.step.id}
+                scene={compiled.step.scene}
+                startAtMs={compiled.startAtMs}
+                durationMs={compiled.durationMs}
+                registry={runtime.registry}
+                scopeId={runtime.scopeId}
+                rectFor={capturedRect}
+                playbackStartedAtMs={runtime.playbackStartedAtMs}
+              />
+            ) : null,
+          )}
         {items.map(
           ({ compiled, sourceCardCenter, sourceEntity, sourceEntryRect, sourceExitRect }) =>
             compiled.step.presentation === "source-card" && sourceCardCenter && sourceEntity ? (
@@ -260,19 +349,26 @@ export function EffectOverlay() {
                   ease: [0.16, 1, 0.3, 1],
                   times: [0, 0.14, 0.84, 1],
                 }}
-                style={{ left: sourceCardCenter.x, top: sourceCardCenter.y }}
+                style={{
+                  left: sourceCardCenter.x,
+                  top: sourceCardCenter.y,
+                  aspectRatio: sourceEntity.imageAspectRatio ?? 1,
+                }}
               >
-                <motion.span
-                  className={classes.sourceLabel}
-                  animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
-                  transition={{
-                    delay: compiled.startAtMs / 1_000,
-                    duration: Math.min(compiled.durationMs, 1_600) / 1_000,
-                    times: [0, 0.32, 0.4, 0.82, 1],
-                  }}
-                >
-                  Source
-                </motion.span>
+                {compiled.step.showText === false ? null : (
+                  <motion.span
+                    className={classes.sourceLabel}
+                    data-animation-label
+                    animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
+                    transition={{
+                      delay: compiled.startAtMs / 1_000,
+                      duration: Math.min(compiled.durationMs, 1_600) / 1_000,
+                      times: [0, 0.32, 0.4, 0.82, 1],
+                    }}
+                  >
+                    Source
+                  </motion.span>
+                )}
                 <motion.div
                   className={classes.sourceCardFrame}
                   animate={{
@@ -293,39 +389,46 @@ export function EffectOverlay() {
                 >
                   <SimulatorEntityVisual entity={sourceEntity} density="normal" />
                 </motion.div>
-                <motion.span
-                  className={classes.sourceName}
-                  animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
-                  transition={{
-                    delay: compiled.startAtMs / 1_000,
-                    duration: Math.min(compiled.durationMs, 1_600) / 1_000,
-                    times: [0, 0.32, 0.4, 0.82, 1],
-                  }}
-                >
-                  {sourceEntity.title}
-                </motion.span>
-                <motion.div
-                  className={classes.impactCopy}
-                  data-tone={compiled.step.tone ?? "neutral"}
-                  animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
-                  transition={{
-                    delay: compiled.startAtMs / 1_000,
-                    duration: Math.min(compiled.durationMs, 1_600) / 1_000,
-                    times: [0, 0.32, 0.4, 0.82, 1],
-                  }}
-                >
-                  {compiled.step.valueLabel ? (
-                    <strong className={classes.impactValue}>{compiled.step.valueLabel}</strong>
-                  ) : null}
-                  {compiled.step.label ? (
-                    <span className={classes.impactLabel}>{compiled.step.label}</span>
-                  ) : null}
-                </motion.div>
+                {compiled.step.showText === false ? null : (
+                  <motion.span
+                    className={classes.sourceName}
+                    data-animation-label
+                    animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
+                    transition={{
+                      delay: compiled.startAtMs / 1_000,
+                      duration: Math.min(compiled.durationMs, 1_600) / 1_000,
+                      times: [0, 0.32, 0.4, 0.82, 1],
+                    }}
+                  >
+                    {sourceEntity.title}
+                  </motion.span>
+                )}
+                {compiled.step.showText === false ? null : (
+                  <motion.div
+                    className={classes.impactCopy}
+                    data-animation-label
+                    data-tone={compiled.step.tone ?? "neutral"}
+                    animate={{ opacity: sourceExitRect ? [0, 0, 1, 1, 0] : 1 }}
+                    transition={{
+                      delay: compiled.startAtMs / 1_000,
+                      duration: Math.min(compiled.durationMs, 1_600) / 1_000,
+                      times: [0, 0.32, 0.4, 0.82, 1],
+                    }}
+                  >
+                    {compiled.step.valueLabel ? (
+                      <strong className={classes.impactValue}>{compiled.step.valueLabel}</strong>
+                    ) : null}
+                    {compiled.step.label ? (
+                      <span className={classes.impactLabel}>{compiled.step.label}</span>
+                    ) : null}
+                  </motion.div>
+                )}
               </motion.div>
-            ) : (
+            ) : compiled.step.showText === false ? null : (
               <motion.div
                 key={compiled.step.id}
                 data-animation-overlay="effect"
+                data-animation-label-only
                 initial={{ opacity: 0, transform: "translate3d(-50%, -50%, 0) scale(0.9)" }}
                 animate={{
                   opacity: [0, 1, 0],

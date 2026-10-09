@@ -32,7 +32,7 @@ export const op14eb04Megalo018: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Animal Fish-Man Island"],
+  traits: ["Animal", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[On Play] You may rest this Character: K.O. up to 1 of your opponent's rested Characters with 8000 power or less.",

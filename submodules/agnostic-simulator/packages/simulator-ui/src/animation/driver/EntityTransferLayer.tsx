@@ -4,9 +4,12 @@ import type { AnimationSequence } from "motion";
 import { useAnimate } from "motion/react";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { CARD_PRESENTATION_LAYERS } from "../../components/CardPresentationPlane";
 
 import { SimulatorEntityVisual, projectEntityVisual } from "../components/SimulatorEntityVisual";
+import { simulatorAnimationDebug } from "../debug";
 import { useAnimationRegistryVersion } from "../hooks/useAnimationRegistryVersion";
+import { captureOverlayScroll, overlayScrollDisplacement } from "../overlays/overlay-utils";
 import { type AnimationNodeRecord } from "../lib/node-registry";
 import { useAnimationRuntime, type SimulatorSpatialTransfer } from "../provider/contexts";
 
@@ -17,6 +20,7 @@ interface PortalTransfer {
   readonly source: AnimationNodeRecord | null;
   readonly destination: AnimationNodeRecord | null;
   readonly sourceRect: DOMRect | null;
+  readonly sourcePose?: SimulatorSpatialTransfer["sourcePose"];
   readonly destinationRect: DOMRect | null;
 }
 
@@ -29,10 +33,25 @@ export function EntityTransferLayer() {
   const runtime = useAnimationRuntime();
   const transition = runtime.activeTransition;
   const registryVersion = useAnimationRegistryVersion(runtime.registry);
+  const [scrollOffset, setScrollOffset] = useState({ x: 0, y: 0 });
+  useLayoutEffect(() => {
+    setScrollOffset({ x: 0, y: 0 });
+    if (!transition) return;
+    const origin = captureOverlayScroll(runtime.registry);
+    const update = () => setScrollOffset(overlayScrollDisplacement(origin));
+    window.addEventListener("scroll", update, true);
+    return () => window.removeEventListener("scroll", update, true);
+  }, [transition?.id, runtime.registry]);
+
   const [elapsedMs, setElapsedMs] = useState(0);
   const [captureReadyId, setCaptureReadyId] = useState<string | null>(null);
   const [transfers, setTransfers] = useState<readonly PortalTransfer[]>([]);
-  const sources = useRef(new Map<string, { node: AnimationNodeRecord; rect: DOMRect }>());
+  const sources = useRef(
+    new Map<
+      string,
+      { node: AnimationNodeRecord; rect: DOMRect; pose?: SimulatorSpatialTransfer["sourcePose"] }
+    >(),
+  );
   const sourceTransition = useRef<string | null>(null);
   const unresolvedTransfersRef = useRef(new Map<string, () => void>());
   const capturedTransfersRef = useRef<TransferCaptureState>({
@@ -48,22 +67,17 @@ export function EntityTransferLayer() {
     [runtime.compiledPlan],
   );
 
-  // Let the destination presentation commit its entity registrations before
-  // falling back to an aggregate zone (deck, resource pile, etc.).
+  // Arm capture in the same pre-paint layout pass that commits the destination
+  // presentation. React flushes this layout-effect update before paint, so a
+  // transfer that already has both endpoints can begin on the same frame as
+  // its overlays instead of appearing one animation frame later. Endpoints
+  // that register later still retry through registryVersion below.
   useLayoutEffect(() => {
     if (transition?.phase !== "running") {
       setCaptureReadyId(null);
       return;
     }
-    // Hidden documents never fire rAF (background tabs, occluded panes). Without
-    // arming here the transfer is never captured, the suppressed source has no
-    // flying clone, and the entity reads as vanished when the document returns.
-    if (document.hidden) {
-      setCaptureReadyId(transition.id);
-      return;
-    }
-    const frame = requestAnimationFrame(() => setCaptureReadyId(transition.id));
-    return () => cancelAnimationFrame(frame);
+    setCaptureReadyId(transition.id);
   }, [transition?.id, transition?.phase]);
 
   useLayoutEffect(() => {
@@ -86,14 +100,23 @@ export function EntityTransferLayer() {
         );
         if (node) {
           const entity = runtime.getEntity(transition.fromState, step.entity.id, step.sourceFace);
+          const dragOrigin = runtime.registry.takeDragOrigin(step.entity.id);
           sources.current.set(step.id, {
             node,
-            rect: transferNodeRect(
-              node,
-              step.entity.id,
-              entity?.imageAspectRatio ??
-                (entity?.kind === "card" ? STANDARD_CARD_IMAGE_ASPECT_RATIO : undefined),
-            ),
+            pose: dragOrigin
+              ? { rect: dragOrigin, rotationDeg: 0 }
+              : transferNodePose(
+                  node,
+                  entity?.imageAspectRatio ?? STANDARD_CARD_IMAGE_ASPECT_RATIO,
+                ),
+            rect:
+              dragOrigin ??
+              transferNodeRect(
+                node,
+                step.entity.id,
+                entity?.imageAspectRatio ??
+                  (entity?.kind === "card" ? STANDARD_CARD_IMAGE_ASPECT_RATIO : undefined),
+              ),
           });
         }
       }
@@ -203,8 +226,11 @@ export function EntityTransferLayer() {
     // keep the first valid geometry for the whole transition: registry churn
     // from AnimatePresence must not restart an in-flight Motion transform.
     const captured = pendingCaptures.map<PortalTransfer>((transfer) => {
+      const prepared = sources.current.get(transfer.step.id);
+      const dragOrigin = prepared ? null : runtime.registry.takeDragOrigin(transfer.step.entity.id);
       const sourceRect =
-        sources.current.get(transfer.step.id)?.rect ??
+        prepared?.rect ??
+        dragOrigin ??
         (transfer.source
           ? transferNodeRect(
               transfer.source,
@@ -233,6 +259,15 @@ export function EntityTransferLayer() {
       );
       return {
         ...transfer,
+        sourcePose:
+          prepared?.pose ??
+          (dragOrigin ? { rect: dragOrigin, rotationDeg: 0 } : undefined) ??
+          (transfer.source
+            ? transferNodePose(
+                transfer.source,
+                transfer.sourceEntity.imageAspectRatio ?? STANDARD_CARD_IMAGE_ASPECT_RATIO,
+              )
+            : undefined),
         sourceRect: normalizedRects.source,
         destinationRect: normalizedRects.destination,
       };
@@ -245,6 +280,33 @@ export function EntityTransferLayer() {
 
     capturedTransfersRef.current = { transitionId: transition.id, transfers: nextTransfers };
     setTransfers(nextTransfers);
+    simulatorAnimationDebug("transfer-capture", {
+      transitionId: transition.id,
+      now: Math.round(performance.now()),
+      playbackStartedAtMs: runtime.playbackStartedAtMs,
+      captureLatencyMs:
+        runtime.playbackStartedAtMs !== undefined
+          ? Math.round(performance.now() - runtime.playbackStartedAtMs)
+          : null,
+      captured: nextTransfers.map((transfer) => ({
+        stepId: transfer.step.id,
+        entity: transfer.step.entity.id,
+        sourceRect: transfer.sourceRect
+          ? {
+              left: Math.round(transfer.sourceRect.left),
+              top: Math.round(transfer.sourceRect.top),
+              width: Math.round(transfer.sourceRect.width),
+            }
+          : null,
+        destinationRect: transfer.destinationRect
+          ? {
+              left: Math.round(transfer.destinationRect.left),
+              top: Math.round(transfer.destinationRect.top),
+              width: Math.round(transfer.destinationRect.width),
+            }
+          : null,
+      })),
+    });
   }, [captureReadyId, entitySteps, registryVersion, runtime, transition]);
 
   // Only visual handoff boundaries update React. These never control gameplay
@@ -340,11 +402,18 @@ export function EntityTransferLayer() {
   return createPortal(
     <div
       aria-hidden
+      data-animation-scope={runtime.scopeId}
       data-animation-transfer-layer={running && transfers.length > 0 ? "" : undefined}
       data-animation-spatial-renderer={SpatialTransferRenderer ? "custom" : "dom"}
       data-animation-spatial-transfer-count={spatialTransfers.length}
       data-animation-visible-transfer-count={visibleTransfers.length}
-      style={{ position: "fixed", inset: 0, zIndex: 1000, pointerEvents: "none" }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: CARD_PRESENTATION_LAYERS.motion,
+        pointerEvents: "none",
+        transform: `translate(${scrollOffset.x}px, ${scrollOffset.y}px)`,
+      }}
     >
       {/* Custom renderers own persistent graphics resources. Empty input clears
           transient visuals without destroying and recreating those resources. */}
@@ -391,6 +460,7 @@ function buildSpatialTransfer(
       transfer.step.destinationFace,
     ),
     sourceRect,
+    sourcePose: transfer.sourcePose,
     destinationRect,
     density: transfer.source?.density ?? transfer.destination?.density ?? "normal",
     startAtMs: compiled?.startAtMs ?? 0,
@@ -400,6 +470,7 @@ function buildSpatialTransfer(
       transfer.step.sourceFace !== transfer.step.destinationFace,
     sourceVisible: transfer.sourceRect !== null,
     destinationVisible: transfer.destinationRect !== null,
+    holdsAtSource: transfer.step.sourcePresentation === "hold",
   };
 }
 
@@ -413,7 +484,7 @@ export function entityTransferSuppressesEndpoint(
 ): boolean {
   return endpoint === "source"
     ? step.sourcePresentation !== "copy"
-    : step.destinationPresentation !== "overlay";
+    : step.destinationPresentation !== "overlay" && step.destinationPresentation !== "underlay";
 }
 
 function PortalTransferVisual({ transfer }: { readonly transfer: PortalTransfer }) {
@@ -468,6 +539,7 @@ function CapturedPortalTransferVisual({
     transfer.step.sourceFace !== transfer.step.destinationFace;
   const startAtSeconds = (compiled?.startAtMs ?? 0) / 1_000;
   const durationSeconds = (compiled?.durationMs ?? 0) / 1_000;
+  const underlay = transfer.step.destinationPresentation === "underlay";
   const destinationOpacity = transfer.destinationRect ? 1 : 0;
   const spatialMotionSuppressed = runtime.spatialMotionSuppressed;
   const sourceZoneId =
@@ -495,15 +567,30 @@ function CapturedPortalTransferVisual({
         Math.max(0, performance.now() - (runtime.playbackStartedAtMs ?? performance.now())) / 1_000;
       return () => controls.stop();
     }
-    const transform = [transferTransform(0, 0, 0, 1), transferTransform(deltaX, deltaY, 0, scale)];
+    const transform = underlay
+      ? [
+          transferTransform(0, 0, 0, 1),
+          transferTransform(deltaX, deltaY + destinationRect.height, 0, scale),
+          transferTransform(deltaX, deltaY, 0, scale),
+        ]
+      : [transferTransform(0, 0, 0, 1), transferTransform(deltaX, deltaY, 0, scale)];
     const sequence: AnimationSequence = [
       [
         scope.current,
-        { transform, opacity: [transfer.sourceRect ? 1 : 0, destinationOpacity] },
+        {
+          transform,
+          opacity: underlay
+            ? [transfer.sourceRect ? 1 : 0, destinationOpacity, destinationOpacity]
+            : [transfer.sourceRect ? 1 : 0, destinationOpacity],
+          ...(underlay
+            ? { clipPath: ["inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(100% 0 0 0)"] }
+            : {}),
+        },
         {
           at: startAtSeconds,
           duration: durationSeconds,
-          ease: [0.16, 1, 0.3, 1],
+          ease: underlay ? "linear" : [0.16, 1, 0.3, 1],
+          ...(underlay ? { times: [0, 0.7, 1] } : {}),
         },
       ],
     ];
@@ -523,8 +610,8 @@ function CapturedPortalTransferVisual({
         "[data-animation-transfer-flip]",
         { transform: ["rotateY(0deg)", "rotateY(180deg)"] },
         {
-          at: startAtSeconds + durationSeconds * 0.24,
-          duration: durationSeconds * 0.52,
+          at: startAtSeconds + durationSeconds * (underlay ? 0.04 : 0.24),
+          duration: durationSeconds * (underlay ? 0.3 : 0.52),
           ease: [0.16, 1, 0.3, 1],
         },
       ]);
@@ -541,6 +628,8 @@ function CapturedPortalTransferVisual({
     deltaX,
     deltaY,
     destinationOpacity,
+    destinationRect.height,
+    underlay,
     durationSeconds,
     faceChanges,
     scale,
@@ -603,7 +692,9 @@ function CapturedPortalTransferVisual({
         height,
         transformOrigin: "top left",
         transform: transferTransform(0, 0, 0, 1),
-        opacity: 0,
+        // A held transfer parks visible at its source until its own beat starts
+        // (the presentation state has already moved the entity away).
+        opacity: transfer.step.sourcePresentation === "hold" && sourceRect ? 1 : 0,
         perspective: faceChanges ? 800 : undefined,
         willChange: "transform, opacity",
       }}
@@ -753,6 +844,32 @@ function restoreNode(node: HTMLElement): void {
     node.setAttribute("data-simulator-animation-suppressed", previous.suppressedAttribute);
   }
   suppressedStyles.delete(node);
+}
+
+/** Surfaces opt into planar pose capture; other endpoint measurements stay unchanged. */
+export function transferNodePose(
+  record: AnimationNodeRecord,
+  aspectRatio: number,
+): SimulatorSpatialTransfer["sourcePose"] {
+  const raw = record.node.getAttribute("data-sim-animation-rotation-deg");
+  if (raw === null) return undefined;
+  const rotationDeg = Number(raw);
+  if (!Number.isFinite(rotationDeg) || !Number.isFinite(aspectRatio) || aspectRatio <= 0)
+    return undefined;
+  const bounds = record.node.getBoundingClientRect();
+  const radians = (rotationDeg * Math.PI) / 180;
+  const height =
+    bounds.width / (aspectRatio * Math.abs(Math.cos(radians)) + Math.abs(Math.sin(radians)));
+  const width = height * aspectRatio;
+  return {
+    rotationDeg,
+    rect: new DOMRect(
+      bounds.left + (bounds.width - width) / 2,
+      bounds.top + (bounds.height - height) / 2,
+      width,
+      height,
+    ),
+  };
 }
 
 // A registered slot can include status bands or stretch to fill a grid cell.

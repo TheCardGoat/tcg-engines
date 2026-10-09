@@ -1,10 +1,58 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01ConquererOfThreeWorldsRagnaraku039, eb01Doma005 } from "@tcg/op-cards";
+import {
+  eb01ConquererOfThreeWorldsRagnaraku039,
+  eb01Doma005,
+  op01BoaHancock078,
+  op11Nami041,
+} from "@tcg/op-cards";
 import { op15Buggy012 } from "../../../../../cards/src/cards/characters/op15-012-buggy.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-012 Buggy", () => {
+  test("giving DON!! during the attack enables Hancock's later On Block draw", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op15Buggy012, playedOnTurn: 0 }] },
+      { character: [op01BoaHancock078], restedDon: 1, hand: [], deck: [eb01Doma005, eb01Doma005] },
+    );
+    const buggyId = engine.findCardInZone("south", "character", op15Buggy012);
+    const boaId = engine.findCardInZone("north", "character", op01BoaHancock078);
+    const drawnId = engine.findCardInZone("north", "deck", eb01Doma005);
+    engine.declareAttack(buggyId, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [boaId] }, "south");
+    engine.resolveDecision("battleBlocker", { selectedIds: [boaId] }, "north");
+    expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(
+      drawnId,
+    );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    expect(engine.getView("north").players.north.lifeCount).toBe(4);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+
+  test("giving DON!! after declaration does not retroactively trigger Nami's attack observer", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op15Buggy012, playedOnTurn: 0 }] },
+      { leaderCardId: op11Nami041, restedDon: 1, hand: [eb01Doma005] },
+    );
+    const buggyId = engine.findCardInZone("south", "character", op15Buggy012);
+    engine.declareAttack(buggyId, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("north")] },
+      "south",
+    );
+    expect(() => engine.pendingDecision("effectOptional", "north")).toThrow();
+    expect(engine.getView("north").players.north.leader.attachedDon).toBe(1);
+    expect(engine.getView("north").players.north.leader.power).toBe(5000);
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    expect(engine.getView("north").players.north.handCount).toBe(1);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+
   test("[When Attacking] moves one rested opposing DON!! onto their Leader or Character", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op15Buggy012], activeDon: 4 },

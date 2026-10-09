@@ -23,7 +23,7 @@ export const op08SouthBird100: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Sky Island Jaya"],
+  traits: ["Animal", "Jaya", "Sky Island"],
   attribute: "wisdom",
   effect:
     "[On Play] Look at 7 cards from the top of your deck and play up to 1 [Upper Yard]. Then, place the rest at the bottom of your deck in any order.",

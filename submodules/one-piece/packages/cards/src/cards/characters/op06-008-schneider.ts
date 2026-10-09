@@ -23,7 +23,7 @@ export const op06Schneider008: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["FILM Mugiwara Chase"],
+  traits: ["FILM", "Mugiwara Chase"],
   attribute: "wisdom",
   i18n: op06Schneider008I18n,
 };

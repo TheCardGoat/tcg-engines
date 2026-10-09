@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-text-box"
+  relation: "current_index"
+---
+
 # Parts of a Card - Text Box
 
 General Rules:&#x20;

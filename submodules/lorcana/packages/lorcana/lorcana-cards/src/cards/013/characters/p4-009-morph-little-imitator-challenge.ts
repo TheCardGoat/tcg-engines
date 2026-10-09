@@ -32,6 +32,7 @@ export const morphLittleImitatorP4Challenge: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d11c04c567842fd981951674665889a",
+    tcgPlayer: "702681",
   },
   text: [
     {

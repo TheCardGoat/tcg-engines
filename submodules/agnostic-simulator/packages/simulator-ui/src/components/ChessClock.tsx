@@ -11,12 +11,13 @@ export function ChessClock({ timerMs, timerState = "running" }: ChessClockProps)
   const [displayMs, setDisplayMs] = useState(timerMs);
 
   useEffect(() => {
+    setDisplayMs(Math.max(0, timerMs));
     if (timerState !== "running") {
-      setDisplayMs(timerMs);
       return;
     }
+    const startedAt = performance.now();
     const interval = setInterval(() => {
-      setDisplayMs((prev) => Math.max(0, prev - 100));
+      setDisplayMs(Math.max(0, timerMs - (performance.now() - startedAt)));
     }, 100);
     return () => clearInterval(interval);
   }, [timerState, timerMs]);

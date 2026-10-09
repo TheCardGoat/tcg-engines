@@ -38,7 +38,7 @@ export const op03GumGumJetGatling072: EventCard = {
   rarity: "R",
   setId: "OP03",
   cost: 0,
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   effect:
     "[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle. [Trigger] Add up to 1 DON!! card from your DON!! deck and set it as active.",
   effects: {

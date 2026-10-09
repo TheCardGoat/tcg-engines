@@ -33,7 +33,7 @@ export const op14eb04Chew050: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Fish-Man",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

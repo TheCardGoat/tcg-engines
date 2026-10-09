@@ -21,7 +21,7 @@ export const op01GumGumFireFistPistolRedHawk026: EventCard = {
   rarity: "R",
   setId: "OP01",
   cost: 2,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, K.O. up to 1 of your opponent's Characters with 4000 power or less. [Trigger] Give up to 1 of your opponent's Leader or Character cards -10000 power during this turn.  This card has been officially errata'd.",
   effects: {

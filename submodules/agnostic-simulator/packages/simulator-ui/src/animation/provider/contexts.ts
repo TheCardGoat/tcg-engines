@@ -34,6 +34,8 @@ export interface SimulatorSpatialTransfer {
   readonly sourceEntity: SimulatorEntity;
   readonly destinationEntity: SimulatorEntity;
   readonly sourceRect: DOMRect;
+  /** Optional planar pose captured before the source leaves its layout. */
+  readonly sourcePose?: { readonly rect: DOMRect; readonly rotationDeg: number };
   readonly destinationRect: DOMRect;
   readonly density: AnimationNodeDensity;
   readonly startAtMs: number;
@@ -41,6 +43,13 @@ export interface SimulatorSpatialTransfer {
   readonly faceChanges: boolean;
   readonly sourceVisible: boolean;
   readonly destinationVisible: boolean;
+  /**
+   * The step declared `sourcePresentation: "hold"`: the entity has already left
+   * its source zone in the destination state, so the transfer visual parks
+   * visible at the source rect until its own start time instead of leaving it
+   * invisible during earlier beats of the same transition.
+   */
+  readonly holdsAtSource: boolean;
 }
 
 export interface SimulatorSpatialTransferRendererProps {

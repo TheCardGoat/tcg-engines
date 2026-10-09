@@ -64,6 +64,7 @@ describe("OP14-100 Absalom", () => {
     const exactId = engine.findCardInZone("north", "trash", op06Inuppe082);
     const expensiveId = engine.findCardInZone("north", "trash", op06GeckoMoria086);
     const wrongTraitId = engine.findCardInZone("north", "trash", eb01Doma005);
+    const resolvingTriggerId = engine.findCardInZone("north", "life", op14eb04Absalom100);
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
@@ -71,6 +72,7 @@ describe("OP14-100 Absalom", () => {
     expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([candidateId, exactId]);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(expensiveId);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongTraitId);
+    expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(resolvingTriggerId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [candidateId] }, "north");
     expect(
       engine

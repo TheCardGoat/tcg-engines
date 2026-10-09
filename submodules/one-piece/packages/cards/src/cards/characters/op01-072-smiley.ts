@@ -23,7 +23,7 @@ export const op01Smiley072: CharacterCard = {
   cost: 3,
   power: 1000,
   counter: 1000,
-  traits: ["Biological Weapon Punk Hazard"],
+  traits: ["Biological Weapon", "Punk Hazard"],
   attribute: "special",
   effect: "[DON!! x1] [Your Turn] This Character gains +1000 power for every card in your hand.",
   effects: {

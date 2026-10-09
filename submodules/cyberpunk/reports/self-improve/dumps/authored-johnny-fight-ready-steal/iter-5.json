@@ -1,0 +1,4474 @@
+{
+  "version": 1,
+  "seed": "improve/authored-johnny-fight-ready-steal/5/authored-johnny-fight-ready-steal-vs-authored-johnny-fight-ready-steal/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-johnny-fight-ready-steal",
+  "deckBId": "authored-johnny-fight-ready-steal",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 10,
+  "stepCount": 63,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "mulligan",
+      "moveLogs": [
+        {
+          "type": "mulligan",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "drawnCount": 6,
+          "drawn": {
+            "__private": true,
+            "value": [
+              "ci_715882095",
+              "ci_866167302",
+              "ci_738337613",
+              "ci_886526063",
+              "ci_778207107",
+              "ci_598942409"
+            ],
+            "visibleTo": ["p2"]
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "deckShuffled",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 6,
+          "cardIds": [
+            "ci_715882095",
+            "ci_866167302",
+            "ci_738337613",
+            "ci_886526063",
+            "ci_778207107",
+            "ci_598942409"
+          ]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_736680310"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_878306063"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "dieId": "gd_878306063",
+          "dieType": "d12",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_878306063",
+          "dieType": "d12",
+          "result": 6,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_878306063",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_294205673"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_17593393"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "cardId": "ci_17593393",
+          "cardName": "Peace Offering"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_17593393",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Peace Offering"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_102056187"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_694903864"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "dieId": "gd_694903864",
+          "dieType": "d12",
+          "faceValue": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_694903864",
+          "dieType": "d12",
+          "result": 12,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_694903864",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_798744717"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_598942409"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "cardId": "ci_598942409",
+          "cardName": "Industrial Assembly"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_598942409",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Industrial Assembly"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_886526063",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_886526063",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_989012435"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_439676561"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "dieId": "gd_439676561",
+          "dieType": "d10",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_439676561",
+          "dieType": "d10",
+          "result": 4,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_439676561",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_296513756"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_296513756",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_296513756",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_736680310"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_736680310",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_736680310",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_37840004"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_776274211"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "dieId": "gd_776274211",
+          "dieType": "d10",
+          "faceValue": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_776274211",
+          "dieType": "d10",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_776274211",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_37840004",
+        "attachToId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "MaxTac Squadron"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_37840004",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_37840004",
+          "hostId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_37840004",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_738337613",
+        "attachToId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "MaxTac Squadron"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_738337613",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_738337613",
+          "hostId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_738337613",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Mantis Blades",
+            "cost": 1,
+            "attachedToName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_778207107"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "cardId": "ci_778207107",
+          "cardName": "Peace Offering"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_778207107",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Peace Offering"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_886526063",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_296513756"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 8,
+            "originalAttackKind": "direct"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_296513756",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 8,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_886526063",
+          "blockerId": "ci_296513756",
+          "originalTarget": null,
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "attackerId": "ci_886526063",
+          "attackerName": "MaxTac Squadron"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "abilityText": "When this Unit wins a fight against a rival Unit, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Satori: Sword of Saburo",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_657361959"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "defenderName": "Corpo Security",
+            "attackerPower": 8,
+            "defenderPower": 2
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 4,
+          "cardId": "ci_296513756",
+          "cardName": "Corpo Security"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_886526063",
+          "defenderId": "ci_296513756",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_37840004",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "abilityText": "When this Unit wins a fight against a rival Unit, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_37840004"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_657361959"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Satori: Sword of Saburo",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_657361959"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_37840004"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "defenderName": "Corpo Security",
+            "attackerPower": 8,
+            "defenderPower": 2
+          },
+          "playerId": "p2",
+          "category": "combat",
+          "cardIds": ["ci_886526063", "ci_296513756"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_296513756",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_296513756",
+          "defeatedBy": "ci_886526063",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_102056187"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corporate Surveillance",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Corporate Surveillance",
+            "abilityText": "Spend a rival Unit with cost 4 or less.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_102056187",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_102056187",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corporate Surveillance",
+            "cost": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_102056187",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Corporate Surveillance",
+            "abilityText": "Spend a rival Unit with cost 4 or less.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_102056187"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_736680310"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Corporate Surveillance",
+            "targetNames": "Corpo Security",
+            "targetId": "ci_736680310",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_102056187",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_736680310"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_736680310",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Corporate Surveillance",
+            "targetNames": "Corpo Security",
+            "targetId": "ci_736680310",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_102056187", "ci_736680310"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_886526063",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_798744717"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_886526063",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_798744717"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063", "ci_798744717"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_736680310",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_840661781"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_970698505"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "dieId": "gd_970698505",
+          "dieType": "d8",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_970698505",
+          "dieType": "d8",
+          "result": 5,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_970698505",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_279508280",
+        "attachToId": "ci_736680310"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "Corpo Security"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_279508280",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_279508280",
+          "hostId": "ci_736680310",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_279508280",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "cost": 2,
+            "attachedToName": "Corpo Security"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_162861492"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_293540661", "ci_148335981", "ci_653196792"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Satori: Sword of Saburo, Riot Shield, Peace Offering",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_162861492",
+          "effectType": "call",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_162861492"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_293540661",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_148335981",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_653196792",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_293540661", "ci_148335981", "ci_653196792"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Satori: Sword of Saburo, Riot Shield, Peace Offering",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_162861492", "ci_293540661", "ci_148335981", "ci_653196792"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_653196792"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "V: Streetkid",
+            "targetNames": "Peace Offering",
+            "targetId": "ci_653196792",
+            "targetKind": "program",
+            "targetOwnerId": "p1",
+            "targetZone": "trash",
+            "targetIndex": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_162861492",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_653196792"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_653196792",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "V: Streetkid",
+            "targetNames": "Peace Offering",
+            "targetId": "ci_653196792",
+            "targetKind": "program",
+            "targetOwnerId": "p1",
+            "targetZone": "trash",
+            "targetIndex": 3
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_162861492", "ci_653196792"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_610504877"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_341545382"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "dieId": "gd_341545382",
+          "dieType": "d8",
+          "faceValue": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_341545382",
+          "dieType": "d8",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_341545382",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "goSolo",
+      "args": {
+        "cardId": "ci_798744717"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Hands Unclean",
+            "cost": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 5,
+          "forWhat": "goSolo"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_798744717",
+          "fromZone": "legendArea",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_798744717",
+          "playerId": "p2",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Hands Unclean",
+            "cost": 5
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_798744717"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_798744717",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "attackerId": "ci_798744717",
+          "attackerName": "Goro Takemura: Hands Unclean"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_878306063"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "attackerName": "Goro Takemura: Hands Unclean",
+          "attackerPower": 7,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 6
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_878306063",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_798744717"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_878306063",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_798744717",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean",
+            "attackerPower": 7,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 6)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_886526063",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_628500231"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_736680310"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 4,
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 8,
+            "originalAttackKind": "direct"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "attackerId": "ci_886526063",
+          "attackerName": "MaxTac Squadron"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "abilityText": "When this Unit wins a fight against a rival Unit, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Satori: Sword of Saburo",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_313797276"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Synapse Burnout",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "defenderName": "Corpo Security",
+            "attackerPower": 8,
+            "defenderPower": 4
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 6,
+          "cardId": "ci_736680310",
+          "cardName": "Corpo Security"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p1",
+          "turnNumber": 6,
+          "cardId": "ci_279508280",
+          "cardName": "Satori: Sword of Saburo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_736680310",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 4,
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 8,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_886526063",
+          "blockerId": "ci_736680310",
+          "originalTarget": null,
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_886526063",
+          "defenderId": "ci_736680310",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_37840004",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Satori: Sword of Saburo",
+            "abilityText": "When this Unit wins a fight against a rival Unit, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_37840004"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_313797276"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Satori: Sword of Saburo",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_313797276"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Synapse Burnout",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_37840004"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "defenderName": "Corpo Security",
+            "attackerPower": 8,
+            "defenderPower": 4
+          },
+          "playerId": "p2",
+          "category": "combat",
+          "cardIds": ["ci_886526063", "ci_736680310"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_279508280",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_279508280",
+          "hostId": "ci_736680310",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_736680310",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_736680310",
+          "defeatedBy": "ci_886526063",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 4,
+            "attachedGearIds": ["ci_279508280"],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_279508280",
+          "defeatedBy": "ci_886526063",
+          "playerId": "p1",
+          "hostId": "ci_736680310",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "red",
+            "classifications": ["Arasaka", "Weapon"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": "ci_736680310"
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_886526063",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_798744717"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_886526063",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_798744717"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063", "ci_798744717"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_902120125"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_795034137"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "dieId": "gd_795034137",
+          "dieType": "d6",
+          "faceValue": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_795034137",
+          "dieType": "d6",
+          "result": 2,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_795034137",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_623521874"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_623521874",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_623521874",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_97853347"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_425287507"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "dieId": "gd_425287507",
+          "dieType": "d6",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_425287507",
+          "dieType": "d6",
+          "result": 6,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_425287507",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_886526063"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "attackerId": "ci_886526063",
+          "attackerName": "MaxTac Squadron"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_886526063",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_886526063",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MaxTac Squadron"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_439676561"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerName": "MaxTac Squadron",
+          "attackerPower": 8,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 4
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_439676561",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_886526063"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_439676561",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_886526063",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MaxTac Squadron",
+            "attackerPower": 8,
+            "count": 1,
+            "stolenGigs": "1 Gig (D10 with value 4)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_798744717"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "attackerId": "ci_798744717",
+          "attackerName": "Goro Takemura: Hands Unclean"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_798744717",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_970698505"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerName": "Goro Takemura: Hands Unclean",
+          "attackerPower": 7,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 5
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_970698505",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_798744717"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_970698505",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_798744717",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Goro Takemura: Hands Unclean",
+            "attackerPower": 7,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 5)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_97853347"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_598942409",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_778207107",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_97853347",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_97853347",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_9656843"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_893307116", "ci_245464228", "ci_664055040"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "MaxTac Squadron, Peace Offering, Goro Takemura: Losing His Way",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_9656843",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_9656843",
+          "effectType": "call",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_9656843"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_893307116",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_245464228",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_664055040",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_893307116", "ci_245464228", "ci_664055040"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "MaxTac Squadron, Peace Offering, Goro Takemura: Losing His Way",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_9656843", "ci_893307116", "ci_245464228", "ci_664055040"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_245464228"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "V: Streetkid",
+            "targetNames": "Peace Offering",
+            "targetId": "ci_245464228",
+            "targetKind": "program",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_9656843",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_245464228"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_245464228",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "V: Streetkid",
+            "targetNames": "Peace Offering",
+            "targetId": "ci_245464228",
+            "targetKind": "program",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 2
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_9656843", "ci_245464228"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_313797276"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "cardId": "ci_313797276",
+          "cardName": "Synapse Burnout"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_313797276",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_313797276",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Synapse Burnout"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_886526063",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "abilityText": "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_798744717"]
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "dieId": "gd_926380051",
+          "dieType": "d4",
+          "faceValue": 1
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_886526063",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_798744717"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "MaxTac Squadron",
+            "targetNames": "Goro Takemura: Hands Unclean",
+            "targetId": "ci_798744717",
+            "targetKind": "legend",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_886526063", "ci_798744717"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_481912921"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_926380051",
+          "dieType": "d4",
+          "result": 1,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_926380051",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_623521874"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_623521874",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_623521874",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_623521874",
+          "effectType": "attack",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_623521874"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_623521874", "ci_623521874"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_798744717"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Goro Takemura: Hands Unclean",
+            "blockerPower": 7,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 10,
+            "originalAttackKind": "direct"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_798744717",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Goro Takemura: Hands Unclean",
+            "blockerPower": 7,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 10,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_623521874",
+          "blockerId": "ci_798744717",
+          "originalTarget": null,
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_602077576"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerId": "ci_623521874",
+          "attackerName": "Goro Takemura: Losing His Way"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Goro Takemura: Hands Unclean",
+            "attackerPower": 10,
+            "defenderPower": 7
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 9,
+          "cardId": "ci_798744717",
+          "cardName": "Goro Takemura: Hands Unclean"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_313797276",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Saburo Arasaka: Stubborn Patriarch"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_602077576",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_623521874",
+          "defenderId": "ci_798744717",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Goro Takemura: Hands Unclean",
+            "attackerPower": 10,
+            "defenderPower": 7
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_623521874", "ci_798744717"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_798744717",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_798744717",
+          "defeatedBy": "ci_623521874",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["legend", "unit"],
+            "color": "green",
+            "classifications": ["Arasaka", "Corpo"],
+            "keywords": ["goSolo", "blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 5,
+            "effectivePower": 7,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_798744717",
+          "fromZone": "trash",
+          "toZone": "removedFromGame",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_840661781"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_17593393",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_162861492",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_628500231",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_840661781",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_840661781",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Squadron",
+            "cost": 3
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_653196792"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_294205673",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_653196792",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_653196792",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_653196792",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_653196792"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_694903864", "gd_878306063"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.copyGigValue",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "dieId": "gd_878306063",
+            "sourceDieType": "D12",
+            "sourceValue": 12,
+            "targetDieType": "D12",
+            "previousValue": 6,
+            "targetMax": 12,
+            "newValue": 12
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_653196792",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_694903864"
+            },
+            {
+              "kind": "gig",
+              "dieId": "gd_878306063"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_878306063",
+          "previousValue": 6,
+          "newValue": 12,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.copyGigValue",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "dieId": "gd_878306063",
+            "sourceDieType": "D12",
+            "sourceValue": 12,
+            "targetDieType": "D12",
+            "previousValue": 6,
+            "targetMax": 12,
+            "newValue": 12
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_653196792"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_653196792"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "end"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

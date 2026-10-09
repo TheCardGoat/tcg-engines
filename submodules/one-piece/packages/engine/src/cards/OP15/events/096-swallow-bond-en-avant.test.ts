@@ -32,4 +32,24 @@ describe("OP15-096 Swallow Bond: En Avant", () => {
     expect(south.deckCount).toBe(8);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each([true, false])("Counter's optional discard accepted=%s", (accept) => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP15-096", "ST02-002", "ST02-003"], activeDon: 5 },
+      { activeDon: 2 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const payment = e.findCardInZone("south", "hand", "ST02-002");
+    e.asNorth().attachDon(e.leader("north"), 2);
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP15-096");
+    e.resolveDecision("effectOptional", { optionId: accept ? "yes" : "no" }, "south");
+    if (accept) {
+      e.resolveDecision("effectCostTrashFromHand", { selectedIds: [payment] }, "south");
+      e.asSouth().chooseTargets(e.leader("south"));
+    }
+    expect(e.getView("south").players.south.leader.power).toBe(accept ? 8000 : 5000);
+    expect(e.getView("south").players.south.handCount).toBe(accept ? 1 : 2);
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+  });
 });

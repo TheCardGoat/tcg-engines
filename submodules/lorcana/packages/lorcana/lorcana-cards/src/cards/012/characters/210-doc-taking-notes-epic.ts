@@ -23,7 +23,7 @@ export const docTakingNotesEpic: CharacterCard = {
   franchise: "Snow White",
   set: "012",
   cardNumber: 210,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 3,

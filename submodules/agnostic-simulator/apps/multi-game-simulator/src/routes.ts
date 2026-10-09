@@ -2,10 +2,40 @@ import { index, route, type RouteConfig } from "@react-router/dev/routes";
 
 export default [
   index("routes/index.tsx"),
+  route("cyberpunk/simulator/creator", "routes/cyberpunk-creator.tsx"),
   route("flesh-and-blood/simulator/tests/analytics-preview", "routes/fab-analytics-preview.tsx"),
+  route("cyberpunk/simulator/tests/sidebar-preview", "routes/cyberpunk-sidebar-preview.tsx"),
+  route("cyberpunk/simulator/tutorial", "routes/cyberpunk-first-game-tutorial.tsx"),
+  route("flesh-and-blood/simulator/tutorial", "routes/fab-first-game-tutorial.tsx"),
   route("cyberpunk/simulator/tests/endgame-preview", "routes/cyberpunk-endgame-preview.tsx"),
+  route(
+    "cyberpunk/simulator/tests/preparation-preview",
+    "routes/cyberpunk-preparation-preview.tsx",
+  ),
   route("animation-fixtures", "routes/animation-fixtures.tsx"),
+  route(":gameSlug/simulator/tests/opening-preview", "routes/opening-preview.tsx"),
+  route("alpha-clash/simulator/tests/card-motions", "routes/card-motions.tsx"),
+  route("alpha-clash/simulator/tests/play-preview", "routes/play-preview.tsx"),
+  route("grand-archive/simulator/tests/card-motions", "routes/grand-archive-card-motions.tsx"),
+  route("grand-archive/simulator/tests/play-preview", "routes/grand-archive-play-preview.tsx"),
   route("simulator-ui-fixtures", "routes/simulator-ui-fixtures.tsx"),
+  route(
+    "simulator-ui-fixtures/connection-clocks",
+    "routes/simulator-ui-fixtures-connection-clocks.tsx",
+  ),
+  route("component-catalog", "routes/component-catalog.tsx"),
+  route(
+    "simulator-ui-fixtures/game-interactions/:gameSlug",
+    "routes/simulator-ui-fixtures-game-interactions.tsx",
+  ),
+  route(
+    "simulator-ui-fixtures/interactions/:scenario?",
+    "routes/simulator-ui-fixtures-interactions.tsx",
+  ),
+  route(
+    "simulator-ui-fixtures/cancelled-match",
+    "routes/simulator-ui-fixtures-cancelled-match.tsx",
+  ),
   route(
     "simulator-ui-fixtures/interaction-prompt",
     "routes/simulator-ui-fixtures-interaction-prompt.tsx",
@@ -18,6 +48,7 @@ export default [
   route("flesh-and-blood/simulator/tests/sidebar-preview", "routes/fab-sidebar-preview.tsx"),
   route(":gameSlug/simulator/tests", "routes/simulator-tests.tsx"),
   route(":gameSlug/simulator/tests/test-engine-state", "routes/simulator-test-engine-state.tsx"),
+  route(":gameSlug/simulator/tests/demo", "routes/simulator-test-demo.tsx"),
   route(":gameSlug/simulator/tests/:fixtureId", "routes/simulator-test-fixture.tsx"),
   route(":gameSlug/simulator/matches/:matchId", "routes/simulator-match-landing.tsx"),
   route(":gameSlug/simulator/matches/:matchId/games/:gameId", "routes/simulator-live-match.tsx"),

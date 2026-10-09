@@ -687,6 +687,11 @@ class LorcanaSimulatorDndController implements LorcanaSimulatorDndContextValue {
     }
 
     const disabled = input.disabled ?? !this.isCardDraggable(card);
+    // A card can still be selected or previewed when dragging is unavailable.
+    // Do not let the drag wrapper mark those child buttons as disabled.
+    if (disabled) {
+      return createNoopDraggable();
+    }
 
     try {
       const draggable = createDraggable({

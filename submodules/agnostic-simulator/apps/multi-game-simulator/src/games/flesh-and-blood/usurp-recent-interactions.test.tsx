@@ -211,7 +211,9 @@ describe("recent Usurp card interaction QA", () => {
       screen.getByLabelText("Restless Cleric, card, player-1, Face down, visible only to you"),
     ).toBeDefined();
     expect(screen.getByRole("button", { name: /^Snatch, card, player-1,/ })).toBeDefined();
-    await waitFor(() => expect(historyText()).toContain("Restless Cleric was destroyed"));
+    await waitFor(() =>
+      expect(historyText()).toContain("Tome of Necrosis destroyed Restless Cleric"),
+    );
     expectReadableHistory();
   }, 30_000);
 

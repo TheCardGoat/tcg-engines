@@ -2,6 +2,7 @@ import { describe, expect, test } from "vite-plus/test";
 import {
   eb02Enel052,
   op05Enel100,
+  op05Enel098,
   op06JigoroOfTheWind084,
   op06Oars083,
   op06TheArkMaxim117,
@@ -91,5 +92,23 @@ describe("OP06-117 The Ark Maxim", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("can pay with an Enel Leader when no Enel Character is present", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op05Enel098, stage: op06TheArkMaxim117 },
+      { character: [op06JigoroOfTheWind084, op06Oars083] },
+    );
+    const south = engine.asSouth();
+    south.activateMain(op06TheArkMaxim117);
+    south.acceptOptional();
+    expect(south.view().players.south.leader.rested).toBe(true);
+    expect(south.view().players.south.stage?.rested).toBe(true);
+    expect(
+      south
+        .view()
+        .players.north.characters.filter(Boolean)
+        .map((card) => card?.cardId),
+    ).toEqual([op06Oars083.id]);
+    expect(south.view().prompts).toHaveLength(0);
   });
 });

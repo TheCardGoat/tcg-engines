@@ -1,12 +1,26 @@
+import { ordinaryTraitMatch } from "../target-parser.ts";
 import type { Condition, OPAttribute } from "@tcg/op-types";
 
-function leaderTrait(trait: string): Condition {
-  return { condition: "leaderTrait", trait, match: "includes" };
+function leaderTrait(trait: string, includes = false): Condition {
+  return {
+    condition: "leaderTrait",
+    trait,
+    match: includes ? "includes" : ordinaryTraitMatch(),
+  };
 }
 
 export function parseLeaderCondition(text: string): Condition | null {
   const t = text.trim();
   let m: RegExpExecArray | null;
+
+  // Mixed alternatives retain each printed property, rather than treating the name as a type.
+  m = /^your\s+Leader\s+has\s+the\s+\{([^}]+)\}\s+type\s+or\s+is\s+\[([^\]]+)\]$/i.exec(t);
+  if (m)
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [leaderTrait(m[1]!), { condition: "leaderName", name: m[2]! }],
+    };
 
   // Leader trait or attribute: your Leader has the "X" type or the "Y" attribute
   m =
@@ -45,7 +59,7 @@ export function parseLeaderCondition(text: string): Condition | null {
     return {
       condition: "compound",
       operator: "or",
-      conditions: [leaderTrait(m[1]!), leaderTrait(m[2]!)],
+      conditions: [leaderTrait(m[1]!), leaderTrait(m[2]!, true)],
     };
   }
 
@@ -55,7 +69,7 @@ export function parseLeaderCondition(text: string): Condition | null {
 
   // Leader trait: your Leader's type includes "X"
   m = /^your Leader's type includes [""]([^""]+)[""]$/i.exec(t);
-  if (m) return leaderTrait(m[1]!);
+  if (m) return leaderTrait(m[1]!, true);
 
   // Leader name (multi): your Leader is [X], [Y] or [Z]
   m = /^your\s+Leader\s+is\s+(\[.+?\](?:,\s*\[.+?\])*\s+or\s+\[.+?\])$/i.exec(t);
@@ -70,6 +84,20 @@ export function parseLeaderCondition(text: string): Condition | null {
       };
     }
   }
+
+  // The name and printed type are alternative Leader qualifications.
+  m = /^your\s+Leader\s+is\s+\[([^\]]+)\]\s+or\s+has\s+the\s+["[{]([^"\]}]+)["\]}]\s+type$/i.exec(
+    t,
+  );
+  if (m)
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        { condition: "leaderName", name: m[1]! },
+        { condition: "leaderTrait", trait: m[2]!, match: "exact" },
+      ],
+    };
 
   // Leader name or multicolored: "your Leader is [X] or multicolored"
   m = /^your\s+Leader\s+is\s+\[([^\]]+)\]\s+or\s+multicolored$/i.exec(t);
@@ -104,6 +132,28 @@ export function parseLeaderCondition(text: string): Condition | null {
     return { condition: "leaderMulticolored" };
   }
 
+  m =
+    /^your opponent['’]s Leader has the [<(](strike|slash|special|ranged|wisdom)[>)] attribute$/i.exec(
+      t,
+    );
+  if (m) {
+    const attribute = m[1]!.toLowerCase();
+    if (
+      attribute === "strike" ||
+      attribute === "slash" ||
+      attribute === "special" ||
+      attribute === "ranged" ||
+      attribute === "wisdom"
+    ) {
+      return {
+        condition: "hasCard",
+        player: "opponent",
+        zone: "leader",
+        filters: [{ filter: "attribute", value: attribute }],
+      };
+    }
+  }
+
   // Leader attribute: "your Leader has the (Attribute) attribute"
   m = /^your\s+Leader\s+has\s+the\s+\(([^)]+)\)\s+attribute$/i.exec(t);
   if (m) {
@@ -125,7 +175,7 @@ export function parseLeaderCondition(text: string): Condition | null {
   // "your Leader's type includes "X""
   m = /^your\s+Leader[''\u2019]s\s+type\s+includes?\s+[""\u201c]([^""\u201d]+)[""\u201d]$/i.exec(t);
   if (m) {
-    return leaderTrait(m[1]!);
+    return leaderTrait(m[1]!, true);
   }
 
   return null;

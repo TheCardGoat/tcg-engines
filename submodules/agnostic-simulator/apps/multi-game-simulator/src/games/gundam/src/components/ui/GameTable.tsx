@@ -191,6 +191,8 @@ export function GameTable({ children }: { children: React.ReactNode }) {
       ref={tableRef}
       className="board-bg flex h-full min-h-0 min-w-0 flex-1 flex-col relative overflow-hidden"
       data-sim-board
+      data-action-attention-target
+      tabIndex={-1}
     >
       {layoutMode === "mobile" && verticalOverflow.before ? (
         <button

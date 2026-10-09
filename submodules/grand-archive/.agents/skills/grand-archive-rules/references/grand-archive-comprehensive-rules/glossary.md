@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/glossary"
+  relation: "current_index"
+---
+
 # Glossary
 
 This section will explain terms found throughout the game of Grand Archive. Terms are divided into two main categories with an additional type list:

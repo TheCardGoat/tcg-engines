@@ -1,3 +1,5 @@
+import { automaticCombatActor, type CombatProgression } from "../flow/combat-progression.ts";
+import { resolveAttackMove } from "../moves/resolve-attack.ts";
 import { create } from "mutative";
 import type {
   MatchState,
@@ -46,6 +48,7 @@ export function processCommand(
   state: MatchState,
   command: CommandEnvelope,
   playerId: PlayerId,
+  combatProgression: CombatProgression = "automatic",
 ): CommandResult {
   const timestamp = command.timestamp ?? Date.now();
   const move = moveRegistry[command.move];
@@ -88,6 +91,7 @@ export function processCommand(
 
   const events: import("../types/game-events.ts").GameEvent[] = [];
   const logs: MoveLog[] = [];
+  const moveLogs: MoveLog[] = [];
 
   const previousEffectiveActivePlayer = getEffectiveActivePlayerId(state);
   const previousPhase = state.G.gamePhase;
@@ -119,6 +123,40 @@ export function processCommand(
       // recomputation. If that changes, the fix is to call recomputeActiveEffects once
       // at the top of processEventTriggers (ability-executor.ts) rather than per-trigger.
       recomputeActiveEffects(draft as MatchState);
+      moveLogs.push(
+        ...synthesizeMoveLogs({
+          explicitLogs: logs,
+          events,
+          playerId,
+          moveId: command.move,
+          state: draft as MatchState,
+        }),
+      );
+      if (combatProgression === "automatic") {
+        for (let steps = 0; ; steps++) {
+          const actor = automaticCombatActor(draft as MatchState);
+          if (!actor) break;
+          if (steps >= 32) throw new Error("Combat failed to reach a decision boundary");
+          const eventOffset = events.length;
+          const logOffset = logs.length;
+          resolveAttackMove.execute({
+            state: draft as MatchState,
+            playerId: actor,
+            input: { args: { pass: true } },
+            operations: ops,
+          });
+          recomputeActiveEffects(draft as MatchState);
+          moveLogs.push(
+            ...synthesizeMoveLogs({
+              explicitLogs: logs.slice(logOffset),
+              events: events.slice(eventOffset),
+              playerId: actor,
+              moveId: "resolveAttack",
+              state: draft as MatchState,
+            }),
+          );
+        }
+      }
       applyDynamicClockAfterCommand({
         state: draft as MatchState,
         actorId: playerId,
@@ -134,18 +172,11 @@ export function processCommand(
     },
   );
 
-  const moveLogs = synthesizeMoveLogs({
-    explicitLogs: logs,
-    events,
-    playerId,
-    moveId: command.move,
-    state: newState as MatchState,
-  });
-
   const undoable = move.undoable !== false;
 
   const animationScript = buildAnimationScript({
     command,
+    actorId: playerId,
     fromState: state,
     toState: newState as MatchState,
     events,
@@ -194,7 +225,7 @@ function applyDynamicClockAfterCommand(input: {
   }
 
   const actorClock = clockState[input.actorId as string];
-  if (actorClock) {
+  if (actorClock && input.moveId !== "setCombatPriority") {
     const actionBonus = config.perActionBonusMs ?? 0;
     const turnPassBonus =
       input.moveId === "passPhase" && input.previousPhase === "main"

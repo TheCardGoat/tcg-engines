@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/index.ts";
 
 describe("OP05-033 through OP05-048 parser regressions", () => {
-  test("builds Baby 5's ordered DON!! and self-rest costs before inclusive hand play", () => {
+  test("builds Baby 5's ordered DON!! and self-rest costs before exact hand play", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] (1) (You may rest the specified number of DON!! cards in your cost area.) You may rest this Character: Play up to 1 [Donquixote Pirates] type Character card with a cost of 2 or less from your hand.",
@@ -20,7 +20,7 @@ describe("OP05-033 through OP05-048 parser regressions", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 2 },
-                { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+                { filter: "trait", value: "Donquixote Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -31,7 +31,7 @@ describe("OP05-033 through OP05-048 parser regressions", () => {
     });
   });
 
-  test("builds Baby 5's paid inclusive top-five Donquixote search", () => {
+  test("builds Baby 5's paid exact top-five Donquixote search", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] (1) (You may rest the specified number of DON!! cards in your cost area.) You may rest this Character: Look at 5 cards from the top of your deck; reveal up to 1 [Donquixote Pirates] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -47,7 +47,7 @@ describe("OP05-033 through OP05-048 parser regressions", () => {
               lookCount: 5,
               source: { player: "self", zone: "deck" },
               revealCount: { amount: 1, upTo: true },
-              revealFilters: [{ filter: "trait", value: "Donquixote Pirates", match: "includes" }],
+              revealFilters: [{ filter: "trait", value: "Donquixote Pirates", match: "exact" }],
               revealDestination: "hand",
               remainderPosition: "bottom",
             },
@@ -74,6 +74,7 @@ describe("OP05-033 through OP05-048 parser regressions", () => {
               lookCount: 3,
               source: { player: "self", zone: "deck" },
               revealCount: { amount: 1, upTo: true },
+              reveal: false,
               revealDestination: "hand",
               remainderPosition: "any",
             },

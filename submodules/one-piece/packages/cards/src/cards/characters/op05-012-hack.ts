@@ -23,7 +23,7 @@ export const op05Hack012: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Revolutionary Army"],
+  traits: ["Fish-Man", "Revolutionary Army"],
   attribute: "strike",
   i18n: op05Hack012I18n,
 };

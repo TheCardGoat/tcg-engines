@@ -10,7 +10,8 @@ describe("OP14-088 Miss.MerryChristmas(Drophy)", () => {
       {
         leaderCardId: op14eb04CrocodileOp14079079,
         character: [op14eb04MissMerrychristmasDrophy088],
-        deck: [eb01Doma005],
+        // Keep a bottom card so deck-empty defeat does not end this effect test.
+        deck: [eb01Doma005, eb01Doma005],
       },
       { hand: [op02Vista011], stage: eb01MiniMerry011, activeDon: op02Vista011.cost },
       { firstPlayer: "south", activeSeat: "north" },

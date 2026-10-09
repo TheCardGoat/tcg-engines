@@ -36,4 +36,18 @@ describe("EB02-016 Chopperman", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("Animal Kingdom is not Animal and an Animal above cost three is ineligible", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB02-016", "EB01-006", "ST04-002", "EB02-001"],
+      activeDon: 5,
+    });
+    const valid = e.findCardInZone("south", "hand", "EB01-006");
+    e.asSouth().play("EB02-016");
+    const p = e.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw Error("Animal play");
+    expect(p.candidates.map((c) => c.ref.id)).toEqual([valid]);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.handCount).toBe(3);
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
+  });
 });

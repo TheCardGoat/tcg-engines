@@ -68,7 +68,6 @@ describe("OP04-117 Heavenly Fire", () => {
     const handCardId = engine.findCardInZone("north", "hand", op04GunModoki115);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
 
@@ -116,7 +115,6 @@ describe("OP04-117 Heavenly Fire", () => {
     const handCardId = engine.findCardInZone("north", "hand", op04GunModoki115);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const before = engine.getView("north").players.north;
     const lifeCountBefore = before.lifeCount;

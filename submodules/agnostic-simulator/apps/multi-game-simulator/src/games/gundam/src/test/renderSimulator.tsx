@@ -1,6 +1,7 @@
 import { render, type RenderResult } from "@testing-library/react";
 import { afterEach } from "vite-plus/test";
 import { cleanup } from "@testing-library/react";
+import { MantineProvider } from "@mantine/core";
 import { MemoryRouter } from "react-router";
 
 import { SimulatorSettingsProvider } from "../../../../simulator/settings";
@@ -91,15 +92,17 @@ export function renderSimulator(
     // root; in tests we wrap with `MemoryRouter` so those hooks
     // resolve to a no-op in-memory navigator.
     <MemoryRouter initialEntries={["/vs-ai"]}>
-      <SimulatorSettingsProvider>
-        <SimulatorApp
-          runtime={dev.runtime}
-          staticResources={dev.staticResources}
-          viewerId={overrides.viewerId ?? dev.p1Id}
-          bot={overrides.bot ?? dev.bot}
-          onRestartScenario={overrides.onRestartScenario}
-        />
-      </SimulatorSettingsProvider>
+      <MantineProvider defaultColorScheme="dark" env="test">
+        <SimulatorSettingsProvider>
+          <SimulatorApp
+            runtime={dev.runtime}
+            staticResources={dev.staticResources}
+            viewerId={overrides.viewerId ?? dev.p1Id}
+            bot={overrides.bot ?? dev.bot}
+            onRestartScenario={overrides.onRestartScenario}
+          />
+        </SimulatorSettingsProvider>
+      </MantineProvider>
     </MemoryRouter>,
   );
   return Object.assign(result, { dev });

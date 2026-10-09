@@ -15,7 +15,7 @@ export const liloStitchFunlovingFriends: CharacterCard = {
       artId: "set13-031",
       setCode: "set13",
       collectorNumber: "31",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -27,7 +27,7 @@ export const liloStitchFunlovingFriends: CharacterCard = {
   franchise: "Lilo and Stitch",
   set: "013",
   cardNumber: 31,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 3,
   willpower: 5,
@@ -35,6 +35,7 @@ export const liloStitchFunlovingFriends: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dadb6d9a8ac54b6c8caad9225f07afa8",
+    tcgPlayer: "702650",
   },
   text: [
     {

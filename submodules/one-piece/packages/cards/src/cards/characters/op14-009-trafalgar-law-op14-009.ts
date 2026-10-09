@@ -32,7 +32,7 @@ export const op14eb04TrafalgarLawOp14009009: CharacterCard = {
   setId: "OP14",
   cost: 9,
   power: 10000,
-  traits: ["Heart Pirates Supernovas The Seven Warlords of the Sea"],
+  traits: ["Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Rush] [On Your Opponent's Attack] [Once Per Turn] You may trash 2 cards from your hand: Select your Leader and 1 Character. Swap the base power of the selected cards with each other during this battle.",

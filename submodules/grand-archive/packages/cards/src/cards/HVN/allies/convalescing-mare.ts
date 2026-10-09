@@ -87,10 +87,6 @@ export const convalescingMare: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                     {
                       kind: "not-source",
                     },
-                    {
-                      kind: "subtype",
-                      oneOf: ["OTHER"],
-                    },
                   ],
                 },
               },

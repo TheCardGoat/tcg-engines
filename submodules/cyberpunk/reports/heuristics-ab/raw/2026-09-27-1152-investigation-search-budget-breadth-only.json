@@ -1,0 +1,24 @@
+{
+  "aOff": [],
+  "bOff": [],
+  "aConfig": {
+    "maxNodes": 128,
+    "branchLimit": 16
+  },
+  "bConfig": {},
+  "aPoverride": {},
+  "bPoverride": {},
+  "games": 360,
+  "aWins": 180,
+  "aLosses": 180,
+  "draws": 0,
+  "aWinRate": 0.5,
+  "pairs": 180,
+  "aSweeps": 59,
+  "bSweeps": 59,
+  "splits": 62,
+  "pairedImprovement": 0,
+  "failures": [],
+  "avgSteps": 95,
+  "elapsedMs": 362368
+}

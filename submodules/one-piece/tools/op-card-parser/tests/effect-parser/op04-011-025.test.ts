@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/index.ts";
 
 describe("OP04-011 through OP04-025 parser regressions", () => {
-  test("preserves Nami's conditional reveal, power threshold, and bottom placement", () => {
+  test("gates Nami's power and bottom placement together, keeping failed reveals on top", () => {
     expect(
       buildCardEffects(
         "[When Attacking] Reveal 1 card from the top of your deck. If the revealed card is a Character card with 6000 power or more, this Character gains +3000 power during this turn. Then, place the revealed card at the bottom of your deck.",
@@ -17,6 +17,7 @@ describe("OP04-011 through OP04-025 parser regressions", () => {
               action: "revealTopDeckCard",
               player: "self",
               conditional: {
+                finalPosition: "bottom",
                 filters: [
                   { filter: "cardCategory", value: "character" },
                   { filter: "basePower", comparison: "gte", value: 6000 },
@@ -35,7 +36,7 @@ describe("OP04-011 through OP04-025 parser regressions", () => {
                   },
                 ],
               },
-              finalPosition: "bottom",
+              finalPosition: "top",
             },
           ],
         },
@@ -43,7 +44,7 @@ describe("OP04-011 through OP04-025 parser regressions", () => {
     });
   });
 
-  test("preserves Cobra's included Alabasta type and source exclusion", () => {
+  test("preserves Cobra's exact Alabasta type and source exclusion", () => {
     expect(
       buildCardEffects(
         "[Your Turn] All of your [Alabasta] type Characters other than this Character gain +1000 power.",
@@ -60,7 +61,7 @@ describe("OP04-011 through OP04-025 parser regressions", () => {
                 zones: ["character"],
                 count: { amount: "all" },
                 filters: [
-                  { filter: "trait", value: "Alabasta", match: "includes" },
+                  { filter: "trait", value: "Alabasta", match: "exact" },
                   { filter: "excludeSelf" },
                 ],
               },
@@ -114,7 +115,7 @@ describe("OP04-011 through OP04-025 parser regressions", () => {
         {
           condition: "leaderTrait",
           trait: "Donquixote Pirates",
-          match: "includes",
+          match: "exact",
         },
       ],
       oncePerTurn: true,

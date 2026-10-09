@@ -27,8 +27,9 @@ export const youveGotSomePunch: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c42cf87af57a4bb4923dfbcdc9792b99",
+    tcgPlayer: "704582",
   },
-  text: "Chosen character gains rush and Challenger +2 this turn. (They can challenge the turn they're played. They get +2 strength while challenging.)",
+  text: "Chosen character gains Rush and Challenger +2 this turn. (They can challenge the turn they're played. They get +2 {S} while challenging.)",
   actionSubtype: "song",
   abilities: [
     {

@@ -50,7 +50,7 @@ export const op04Tonoyasu109: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

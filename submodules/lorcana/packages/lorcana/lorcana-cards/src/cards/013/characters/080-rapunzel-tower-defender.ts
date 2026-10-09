@@ -31,10 +31,11 @@ export const rapunzelTowerDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e41470068ad646b8855b398e4450d196",
+    tcgPlayer: "704595",
   },
   text: [
     {
-      title: "THE FATE'S DESIGN",
+      title: "THE FATES' DESIGN",
       description:
         "When you play this character, you may choose and discard a card. If you do, return chosen character to their player's hand.",
     },

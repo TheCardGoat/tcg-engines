@@ -1,3 +1,4 @@
+import { ordinaryTraitMatch } from "../target-parser.ts";
 import type { Action, TargetFilter } from "@tcg/op-types";
 import { parseComparison } from "../helpers.ts";
 import { traitAlternativesFilter } from "../target-parser.ts";
@@ -25,6 +26,40 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
     .trim()
     .replace(/\s+rested$/i, "")
     .trim();
+
+  // OP12-017's official FAQ makes red shared across both alternatives.
+  if (/^red Events? or up to 1 Character card with a cost of 3 or more$/i.test(rest)) {
+    return [
+      { filter: "color", value: "red" },
+      {
+        filter: "anyOf",
+        filters: [
+          { filter: "cardCategory", value: "event" },
+          {
+            filter: "allOf",
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "cost", comparison: "gte", value: 3 },
+            ],
+          },
+        ],
+      },
+    ];
+  }
+
+  // Repeating the quantity starts a separate candidate description. Parse
+  // before extracting color/cost/exclusion qualifiers so each stays on its
+  // own branch unless the official wording has a shared qualifier handled above.
+  const independentAlternative = /^(.+?)\s+or\s+up\s+to\s+1\s+(.+)$/i.exec(rest);
+  if (independentAlternative) {
+    const left = parsePlayDescription(independentAlternative[1]!);
+    const right = parsePlayDescription(independentAlternative[2]!);
+    if (left?.length && right?.length) {
+      const branch = (nested: TargetFilter[]): TargetFilter =>
+        nested.length === 1 ? nested[0]! : { filter: "allOf", filters: nested };
+      return [{ filter: "anyOf", filters: [branch(left), branch(right)] }];
+    }
+  }
 
   // A trailing named-card alternative is independent of an exclusion printed
   // on the first trait branch: `Trait card other than [A] or up to 1 [B]`.
@@ -196,7 +231,11 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
     filters.push({
       filter: "anyOf",
       filters: [
-        { filter: "trait", value: quotedTraitNameMatch[1]!, match: "includes" },
+        {
+          filter: "trait",
+          value: quotedTraitNameMatch[1]!,
+          match: ordinaryTraitMatch(),
+        },
         { filter: "name", value: quotedTraitNameMatch[3]! },
       ],
     });
@@ -216,7 +255,11 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
       filter: "anyOf",
       filters: [
         { filter: "name", value: mixedNameTraitMatch[1]! },
-        { filter: "trait", value: mixedNameTraitMatch[2]!, match: "includes" },
+        {
+          filter: "trait",
+          value: mixedNameTraitMatch[2]!,
+          match: ordinaryTraitMatch(),
+        },
       ],
     });
     const category = mixedNameTraitMatch[3]?.toLowerCase();
@@ -236,7 +279,11 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
       filter: "anyOf",
       filters: [
         { filter: "name", value: bracketedNameTraitMatch[1]! },
-        { filter: "trait", value: bracketedNameTraitMatch[2]!, match: "includes" },
+        {
+          filter: "trait",
+          value: bracketedNameTraitMatch[2]!,
+          match: ordinaryTraitMatch(),
+        },
       ],
     });
     const category = bracketedNameTraitMatch[3]?.toLowerCase();
@@ -248,7 +295,8 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
 
   // Named alternatives remain names even when the printed text uses a plural
   // suffix: "[Plague Rounds] or [Ice Oni] cards".
-  const nameAlternativesMatch = /^(\[[^\]]+\](?:\s+or\s+\[[^\]]+\])+)(?:\s+cards?)?$/i.exec(rest);
+  const nameAlternativesMatch =
+    /^(\[[^\]]+\](?:(?:,\s*(?:or\s+)?|\s+or\s+)\[[^\]]+\])+)(?:\s+cards?)?$/i.exec(rest);
   if (nameAlternativesMatch) {
     const names = [...nameAlternativesMatch[1]!.matchAll(/\[([^\]]+)\]/g)].map(
       (match) => match[1]!,
@@ -277,7 +325,7 @@ function parsePlayDescription(text: string): TargetFilter[] | null {
         .replace(/[[\]{}"\u201c\u201d]$/g, "")
         .trim(),
     );
-    const traitFilter = traitAlternativesFilter(traits, "includes");
+    const traitFilter = traitAlternativesFilter(traits, "ordinary");
     if (traitFilter) filters.push(traitFilter);
     rest = rest.slice(traitMatch[0].length);
   }
@@ -339,6 +387,7 @@ export function parseSearchAction(
   if (!lookMatch) return null;
 
   const lookCount = parseInt((lookMatch[1] ?? lookMatch[2] ?? lookMatch[3])!, 10);
+  const lookCountUpTo = /^look at up to /i.test(trimmed);
   const afterLook = trimmed.slice(lookMatch[0].length);
 
   // Remainder pattern: place the rest at the top, bottom, or chosen top/bottom of the deck.
@@ -354,6 +403,31 @@ export function parseSearchAction(
       ? "any"
       : (match[1].toLowerCase() as "top" | "bottom");
   };
+
+  const lifeAdd =
+    /^add\s+up\s+to\s+(\d+)\s+(.+?)\s+to\s+the\s+top\s+of\s+your\s+Life\s+cards\s+face-(up|down)/i.exec(
+      afterLook,
+    );
+  if (lifeAdd) {
+    const filters = parsePlayDescription(lifeAdd[2]!);
+    const after = afterLook.slice(lifeAdd[0].length);
+    const remainder = REMAINDER_RE.exec(after);
+    if (filters && remainder) {
+      return {
+        action: {
+          action: "search",
+          lookCount,
+          source: { player: "self", zone: "deck" },
+          revealCount: { amount: Number(lifeAdd[1]), upTo: true },
+          revealFilters: filters,
+          revealDestination: "life",
+          lifeFaceUp: lifeAdd[3]!.toLowerCase() === "up",
+          remainderPosition: remainderPositionFor(remainder),
+        },
+        remaining: after.slice(remainder.index + remainder[0].length).replace(/^\.?\s*/, ""),
+      };
+    }
+  }
 
   // Pattern 1: "reveal up to N / a total of N <desc> and add it/them to your hand [and|. Then,] <remainder>"
   const revealPattern =
@@ -381,6 +455,7 @@ export function parseSearchAction(
     const action: SearchAction = {
       action: "search",
       lookCount,
+      ...(lookCountUpTo && { lookCountUpTo: true }),
       source: { player: "self", zone: "deck" },
       revealCount: { amount: parseInt(revealMatch[1]!, 10), upTo: true },
       ...(filters && filters.length > 0 && { revealFilters: filters }),
@@ -411,6 +486,7 @@ export function parseSearchAction(
     const action: SearchAction = {
       action: "search",
       lookCount,
+      ...(lookCountUpTo && { lookCountUpTo: true }),
       source: { player: "self", zone: "deck" },
       revealCount: { amount: parseInt(playMatch[1]!, 10), upTo: true },
       ...(filters && filters.length > 0 && { revealFilters: filters }),
@@ -439,8 +515,10 @@ export function parseSearchAction(
     const action: SearchAction = {
       action: "search",
       lookCount,
+      ...(lookCountUpTo && { lookCountUpTo: true }),
       source: { player: "self", zone: "deck" },
       revealCount: { amount: parseInt(addMatch[1]!, 10), upTo: true },
+      ...(!lookMatch[3] && { reveal: false }),
       revealDestination: "hand",
       remainderPosition,
     };

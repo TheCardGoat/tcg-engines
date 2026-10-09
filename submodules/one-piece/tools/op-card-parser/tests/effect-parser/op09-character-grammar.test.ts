@@ -21,7 +21,7 @@ describe("OP09 Character parser grammar", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Cross Guild", match: "includes" },
+                  { filter: "trait", value: "Cross Guild", match: "exact" },
                   { filter: "trait", value: "Baroque Works", match: "includes" },
                 ],
               },

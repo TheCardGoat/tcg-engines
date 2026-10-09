@@ -31,12 +31,13 @@ export const mingLeeProudParent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4ce702771dcf4edeb10ba61698ecc3a0",
+    tcgPlayer: "702670",
   },
   text: [
     {
       title: "BIGGEST FAN",
       description:
-        "If you have a character named Meilin Lee in play, you pay 1 {I} less to play this character.",
+        "If you have a character named Mei Lee in play, you pay 1 {I} less to play this character.",
     },
     {
       title: "FOLLOW THE MUSIC",

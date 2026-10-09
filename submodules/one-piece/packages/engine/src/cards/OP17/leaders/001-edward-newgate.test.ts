@@ -111,8 +111,19 @@ describe("OP17-001 Edward.Newgate", () => {
     engine.declareAttack(secondAttackerId, leaderId, "north");
     const prompts = engine.getView("south").prompts;
     expect(prompts).toHaveLength(1);
-    expect(prompts[0]?.details).toContain("counter cards or pass");
+    expect(prompts[0]?.details).toContain("Counter card, or pass");
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
     expect(engine.getView("south").players.south.leader?.power).toBe(5000);
+  });
+  test("empty hand cannot pay the defensive bonus", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-001", hand: [] },
+      {},
+      { activeSeat: "north" },
+    );
+    const life = e.getView("south").players.south.lifeCount;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    expect(e.getView("south").players.south.lifeCount).toBe(life - 1);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

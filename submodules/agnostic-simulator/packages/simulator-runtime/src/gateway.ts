@@ -194,7 +194,7 @@ export function parseGatewayEvent(
   type: keyof ServerToClientEvents,
   payload: unknown,
 ): GatewayMessage | null {
-  const envelope = {
+  const envelope: Record<string, unknown> = {
     ...(payload && typeof payload === "object" ? (payload as Record<string, unknown>) : {}),
     type,
   };
@@ -202,6 +202,21 @@ export function parseGatewayEvent(
     return parseGameJoinedEvent(envelope);
   }
   const parsed = RawGatewayServerMessageSchema.safeParse(envelope);
+  if (
+    !parsed.success &&
+    (type === "state_sync" || type === "state_update" || type === "move_accepted")
+  ) {
+    // Report only schema locations and codes. Snapshots contain private cards
+    // and must never be copied into diagnostics.
+    console.error("[gateway] authoritative snapshot rejected", {
+      event: type,
+      stateVersion: typeof envelope.stateVersion === "number" ? envelope.stateVersion : undefined,
+      issues: parsed.error.issues.map((issue) => ({
+        path: issue.path.join("."),
+        code: issue.code,
+      })),
+    });
+  }
   return parsed.success ? parsed.data : null;
 }
 

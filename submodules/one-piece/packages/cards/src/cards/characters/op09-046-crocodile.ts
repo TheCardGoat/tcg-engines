@@ -39,7 +39,7 @@ export const op09Crocodile046: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["Former Baroque Works Cross Guild"],
+  traits: ["Cross Guild", "Former Baroque Works"],
   attribute: "special",
 
   effect:
@@ -74,7 +74,7 @@ export const op09Crocodile046: CharacterCard = {
                       {
                         filter: "trait",
                         value: "Cross Guild",
-                        match: "includes",
+                        match: "exact",
                       },
                       {
                         filter: "cardCategory",

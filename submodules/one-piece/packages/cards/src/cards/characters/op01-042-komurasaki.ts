@@ -23,7 +23,7 @@ export const op01Komurasaki042: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     '[On Play] (3) (You may rest the specified number of DON!! cards in your cost area): If your Leader is [Kouzuki Oden], set up to 1 of your "Land of Wano" type Character cards with a cost of 3 or less as active.',
@@ -51,7 +51,7 @@ export const op01Komurasaki042: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

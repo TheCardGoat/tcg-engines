@@ -68,7 +68,6 @@ describe("EB01-030 Loguetown", () => {
     const handCountBeforeDamage = engine.getView("north").players.north.handCount;
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     const pendingView = engine.getView("north");

@@ -23,7 +23,7 @@ export const op12Buggy049: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["The Four Emperors Cross Guild"],
+  traits: ["The Four Emperors", "Cross Guild"],
   attribute: "slash",
   i18n: op12Buggy049I18n,
 };

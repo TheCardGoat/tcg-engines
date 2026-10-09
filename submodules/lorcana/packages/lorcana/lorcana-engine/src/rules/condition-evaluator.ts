@@ -36,6 +36,12 @@ export const CONDITION_VARIANT_TYPES = [
   "during-turn",
   "exerted",
   "first-turn-non-otp",
+  "opponent-count",
+  "played-card-name",
+  "played-card-this-turn",
+  "revealed-has-keyword",
+  "has-character-with-highest-cost",
+  "discarded-card-is-card-type",
   "has-another-character",
   "has-any-damage",
   "has-card-under",
@@ -112,6 +118,7 @@ import { normalizeSelectedTargets, resolveTargetQuery } from "../targeting/runti
 import { didLastEffectPerform } from "../runtime-moves/resolution/action-effects/event-snapshot-utils";
 import { getCombinedSelectionInput } from "../runtime-moves/resolution/action-effects/selection-state";
 import { resolveTurnOwnerId } from "../core/runtime/turn-owner";
+import { getInkDropCount } from "../runtime-moves/rules/ink-drops";
 
 export interface PlayZoneCardTypeCache {
   charactersByPlayer: Map<PlayerId, CardInstanceId[]>;
@@ -594,6 +601,24 @@ function evaluateTurnMetricCondition(
       );
       break;
 
+    case "ink-drops-gained":
+      value = resolveScopedPlayerCount(
+        ctx.G.turnMetadata?.inkDropsGainedThisTurn ?? {},
+        condition.playerScope,
+        controllerId,
+        ctx.framework.state.playerIds,
+      );
+      break;
+
+    case "ink-drops-removed":
+      value = resolveScopedPlayerCount(
+        ctx.G.turnMetadata?.inkDropsRemovedThisTurn ?? {},
+        condition.playerScope,
+        controllerId,
+        ctx.framework.state.playerIds,
+      );
+      break;
+
     default:
       value = 0;
       break;
@@ -618,6 +643,14 @@ function evaluatePlayContextCondition(
         condition.comparison.operator,
         condition.comparison.value,
       );
+    }
+
+    case "paid-with-ink-drop": {
+      const paidDrops = cardPlayed?.paidWithInkDrops ?? 0;
+      if (!condition.comparison) {
+        return paidDrops > 0;
+      }
+      return compareOperator(paidDrops, condition.comparison.operator, condition.comparison.value);
     }
 
     case "characters-sang-this-song": {
@@ -838,6 +871,11 @@ function evaluateResourceCountCondition(
         );
       case "damage-on-self":
         return ctx.sourceCardId ? Number(ctx.cards.require(ctx.sourceCardId).meta?.damage ?? 0) : 0;
+      case "ink-drops":
+        return playerIds.reduce(
+          (total, playerId) => total + getInkDropCount({ G: ctx.G }, playerId),
+          0,
+        );
       default:
         return 0;
     }
@@ -1136,6 +1174,130 @@ export function evaluateCondition(
       return turnsCompleted === 0;
     }
 
+    case "played-card-this-turn": {
+      const playedCards = (ctx.G.turnMetadata?.cardsPlayedThisTurn ?? []) as CardInstanceId[];
+      const cardType = (condition as { cardType?: string }).cardType;
+      const excludeSource = (condition as { excludeSource?: boolean }).excludeSource === true;
+      const sourceId = excludeSource ? ctx.cardPlayed?.cardId : undefined;
+      return playedCards.some((cardId) => {
+        if (sourceId && cardId === (sourceId as CardInstanceId)) return false;
+        if (!cardType) return true;
+        const def = ctx.cards.getDefinition(cardId as CardInstanceId) as
+          | { cardType?: string; actionSubtype?: string }
+          | undefined;
+        if (!def) return false;
+        if (cardType === "song") {
+          return def.cardType === "action" && def.actionSubtype === "song";
+        }
+        return def.cardType === cardType;
+      });
+    }
+
+    case "revealed-has-keyword": {
+      const revealedCardId = ctx.resolutionInput?.eventSnapshot?.revealedCardIds?.[0] as
+        | CardInstanceId
+        | undefined;
+      if (!revealedCardId) return false;
+      const def = ctx.cards.getDefinition(revealedCardId) as
+        | { keywords?: string[]; abilities?: { keyword?: string }[] }
+        | undefined;
+      if (!def) return false;
+      const keyword = String((condition as { keyword?: string }).keyword ?? "").toLowerCase();
+      if (Array.isArray(def.keywords) && def.keywords.some((k) => k.toLowerCase() === keyword)) {
+        return true;
+      }
+      return (
+        Array.isArray(def.abilities) &&
+        def.abilities.some(
+          (ability) =>
+            typeof ability?.keyword === "string" && ability.keyword.toLowerCase() === keyword,
+        )
+      );
+    }
+
+    case "has-character-with-highest-cost": {
+      let highest = -1;
+      const costsByPlayer = new Map<PlayerId, number[]>();
+      for (const playerId of ctx.framework.state.playerIds) {
+        const costs: number[] = [];
+        for (const cardId of ctx.framework.zones.getCards({
+          zone: "play",
+          playerId,
+        })) {
+          const def = ctx.cards.getDefinition(cardId as CardInstanceId) as
+            | { cardType?: string; cost?: number }
+            | undefined;
+          if (def?.cardType !== "character") continue;
+          const cost = Number(def.cost ?? 0);
+          costs.push(cost);
+          if (cost > highest) highest = cost;
+        }
+        costsByPlayer.set(playerId, costs);
+      }
+      const myCosts = costsByPlayer.get(ctx.playerId) ?? [];
+      return highest >= 0 && myCosts.some((cost) => cost === highest);
+    }
+
+    case "discarded-card-is-card-type": {
+      const wanted = String((condition as { cardType?: string }).cardType ?? "");
+      const discarded = (ctx.resolutionInput?.eventSnapshot?.discardedCardIds ??
+        []) as CardInstanceId[];
+      return discarded.some((cardId) => {
+        const def = ctx.cards.getDefinition(cardId) as
+          | { cardType?: string; actionSubtype?: string }
+          | undefined;
+        if (!def) return false;
+        if (wanted === "song") {
+          return def.cardType === "action" && def.actionSubtype === "song";
+        }
+        return def.cardType === wanted;
+      });
+    }
+
+    case "played-card-name": {
+      const zone = (condition as { zone?: "discard" | "play" }).zone ?? "discard";
+      const cardTypes = (condition as { cardTypes?: string[] }).cardTypes;
+      const excludeSelf = (condition as { excludeSelf?: boolean }).excludeSelf === true;
+      const requireAbsent = (condition as { requireAbsent?: boolean }).requireAbsent === true;
+
+      const playedDef = ctx.cardPlayed
+        ? (ctx.cards.getDefinition(ctx.cardPlayed.cardId) as
+            | { name?: string; cardType?: string }
+            | undefined)
+        : undefined;
+      const playedName = playedDef?.name;
+      if (!ctx.cardPlayed || !playedName) return false;
+
+      let matches = false;
+      for (const cardId of ctx.framework.zones.getCards({
+        zone,
+        playerId: ctx.cardPlayed.playerId as PlayerId,
+      })) {
+        if (excludeSelf && cardId === (ctx.cardPlayed.cardId as unknown)) continue;
+        const def = ctx.cards.getDefinition(cardId as CardInstanceId) as
+          | { name?: string; cardType?: string }
+          | undefined;
+        if (!def) continue;
+        if (cardTypes && cardTypes.length > 0 && !cardTypes.includes(def.cardType as never)) {
+          continue;
+        }
+        if (def.name === playedName) {
+          matches = true;
+          break;
+        }
+      }
+      return requireAbsent ? !matches : matches;
+    }
+
+    case "opponent-count": {
+      const opponentCount = ctx.framework.state.playerIds.filter(
+        (playerId) => playerId !== ctx.playerId,
+      ).length;
+      const comparison = (condition as { comparison?: string }).comparison ?? "greater-or-equal";
+      const value = Number((condition as { value?: unknown }).value ?? 0);
+      return compareOperator(opponentCount, comparison as never, value);
+    }
+
     case "revealed-matches-chosen-name": {
       const revealedCardId = ctx.resolutionInput?.eventSnapshot?.revealedCardIds?.[0] as
         | CardInstanceId
@@ -1190,7 +1352,17 @@ export function evaluateCondition(
       const expectedCardTypes = Array.isArray(condition.cardType)
         ? condition.cardType
         : [condition.cardType];
-      return (expectedCardTypes as readonly string[]).includes(revealedCardTypeDef.cardType);
+      for (const expected of expectedCardTypes as readonly string[]) {
+        if (expected === revealedCardTypeDef.cardType) return true;
+        if (
+          expected === "song" &&
+          revealedCardTypeDef.cardType === "action" &&
+          (revealedCardTypeDef as { actionSubtype?: string }).actionSubtype === "song"
+        ) {
+          return true;
+        }
+      }
+      return false;
     }
 
     case "revealed-is-character-named": {

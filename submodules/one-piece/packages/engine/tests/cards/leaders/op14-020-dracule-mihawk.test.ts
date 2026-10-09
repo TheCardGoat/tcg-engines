@@ -63,7 +63,7 @@ describe("OP14-020 Dracule Mihawk", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("applies Character play restriction even without a cost-5 Character for DON!! set", () => {
+  test("does not restrict Character play when neither field has a cost-five Character", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op14eb04DraculeMihawkOp14020020,
@@ -71,6 +71,7 @@ describe("OP14-020 Dracule Mihawk", () => {
         hand: [op13PortgasDRouge014],
         character: [op13PortgasDRouge014],
         restedDon: 3,
+        activeDon: 1,
       },
       { leaderCardId: op13GolDRoger003 },
     );
@@ -85,13 +86,27 @@ describe("OP14-020 Dracule Mihawk", () => {
     const view = engine.getView("south");
     // No cost-5+ Character → DON!! stay rested.
     expect(view.players.south.restedDon).toBe(restedBefore);
-    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.activeDon).toBe(1);
     expect(view.players.south.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
       true,
     );
-    // "Then" restriction still applies after paying the rest cost.
+    engine.playCard(op13PortgasDRouge014, "south");
     expect(
-      engine.expectFailure({ type: "playCard", seat: "south", instanceId: blockedCardId }).reason,
-    ).toBe("A card effect prevents this card from being played.");
+      engine
+        .getView("south")
+        .players.south.characters.some((card) => card?.instanceId === blockedCardId),
+    ).toBe(true);
+  });
+  test("can rest DON as payment and use an opponent's cost-five Character for the condition", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op14eb04DraculeMihawkOp14020020, activeDon: 1, restedDon: 2 },
+      { character: [op14eb04XDrake016] },
+    );
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    engine.resolveDecision("effectCostRestCards", { selectedIds: ["active-don:south:0"] }, "south");
+    engine.resolveDecision("effectSetActiveDon", { optionId: "3" }, "south");
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 3, restedDon: 0 });
+    expect(engine.getView("south").players.south.leader.rested).toBe(false);
   });
 });

@@ -9,6 +9,31 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP14-059 Please Take Me with You!! I Can Be of Great Help to You!!", () => {
+  test("exactly three cards before payment satisfies the two-card hand gate", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11Jinbe021,
+      hand: [op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059, eb01Doma005, eb01Doma005],
+      activeDon: 1,
+    });
+    engine.asSouth().play(op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059);
+    expect(engine.asSouth().view().players.south.hand).toHaveLength(4);
+  });
+
+  test("three cards remaining after payment prevents the draw", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11Jinbe021,
+      hand: [
+        op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+      ],
+      activeDon: 1,
+    });
+    engine.asSouth().play(op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059);
+    expect(engine.asSouth().view().players.south.hand).toHaveLength(3);
+  });
+
   test("Main draws two for Jinbe after Event payment leaves two or fewer cards in hand", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op11Jinbe021,

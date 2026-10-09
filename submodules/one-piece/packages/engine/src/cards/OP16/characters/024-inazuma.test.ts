@@ -3,6 +3,19 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-024 Inazuma", () => {
+  test("Blocker redirects a Leader attack and protects Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["OP16-024"], hand: [], life: 3 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const blockerId = engine.findCardInZone("south", "character", "OP16-024");
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [blockerId] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("rests up to 1 opposing Character when K.O.'d by an opposing effect", () => {
     const engine = OnePieceTestEngine.create(
       { character: ["OP16-024"] },

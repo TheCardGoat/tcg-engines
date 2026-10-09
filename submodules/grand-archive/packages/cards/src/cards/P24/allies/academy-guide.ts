@@ -37,6 +37,10 @@ export const academyGuide: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "rule-modification",
               mode: "modify-cost",
               action: "materialize",
+              subject: {
+                kind: "player",
+                player: "controller",
+              },
               filter: {
                 kind: "type",
                 oneOf: ["CHAMPION"],

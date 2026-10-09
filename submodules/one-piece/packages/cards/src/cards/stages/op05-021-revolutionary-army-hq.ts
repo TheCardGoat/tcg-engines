@@ -70,7 +70,7 @@ export const op05RevolutionaryArmyHq021: StageCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -61,4 +61,25 @@ describe("EB02-019 Roronoa Zoro", () => {
     ).toBe("The selected attacker cannot attack.");
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("Character Rush actually attacks a Character but not the Leader on the play turn", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST02-001", hand: ["EB02-019"], activeDon: 4 },
+      { character: [{ cardId: "EB01-005", rested: true }, "EB01-025"] },
+    );
+    e.asSouth().play("EB02-019");
+    const zoro = e.findCardInZone("south", "character", "EB02-019"),
+      target = e.findCardInZone("north", "character", "EB01-005");
+    const f = e.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: zoro,
+      targetId: e.leader("north"),
+    });
+    const restored = OnePieceTestEngine.fromState(f.state);
+    restored.asSouth().attack(zoro, target);
+    expect(restored.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(
+      target,
+    );
+    expect(restored.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
 });

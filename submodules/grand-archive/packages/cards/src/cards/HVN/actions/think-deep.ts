@@ -45,8 +45,17 @@ export const thinkDeep: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
                   zones: ["field"],
                   player: "controller",
                   filter: {
-                    kind: "subtype",
-                    oneOf: ["FATEBOUND"],
+                    kind: "any",
+                    filters: [
+                      {
+                        kind: "subtype",
+                        oneOf: ["FATESTONE"],
+                      },
+                      {
+                        kind: "subtype",
+                        oneOf: ["FATEBOUND"],
+                      },
+                    ],
                   },
                 },
               },

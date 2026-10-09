@@ -7,7 +7,7 @@ import {
 import { loadReplayWithSource } from "@tcg/simulator-runtime/replay-library";
 import { SimulatorRouteStatus } from "@tcg/simulator-ui";
 import { playUrl } from "../../runtime/gameRuntimeApi";
-import { isRiftboundClientMatchStateV1 } from "./state";
+import { parseRiftboundClientSnapshotV1 } from "@tcg/riftbound-tabletop";
 import { RiftboundTabletop } from "./RiftboundTabletop";
 
 export function RiftboundReplayPage() {
@@ -50,10 +50,11 @@ export function RiftboundReplayPage() {
 
   if (error) return <SimulatorRouteStatus title="Replay unavailable" message={error} />;
   if (!controller || !snapshot) return <SimulatorRouteStatus title="Loading replay" />;
-  if (!isRiftboundClientMatchStateV1(snapshot.state)) {
+  const restored = parseRiftboundClientSnapshotV1(snapshot.state)?.state;
+  if (!restored) {
     return <SimulatorRouteStatus title="Replay unavailable" message="Invalid Riftbound state." />;
   }
-  const state = snapshot.state;
+  const state = restored;
   const viewerId = controller.playback.replay.participants[0]?.id ?? state.players[0];
   return (
     <RiftboundTabletop

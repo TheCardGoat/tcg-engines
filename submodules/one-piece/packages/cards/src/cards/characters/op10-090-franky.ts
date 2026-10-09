@@ -31,7 +31,7 @@ export const op10Franky090: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Blocker]\n[On K.O.] Play up to 1 "Dressrosa" type Character card with a cost of 3 or less from your trash rested.',
@@ -60,7 +60,7 @@ export const op10Franky090: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

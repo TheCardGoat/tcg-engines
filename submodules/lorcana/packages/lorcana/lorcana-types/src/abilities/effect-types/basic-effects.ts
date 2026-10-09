@@ -35,6 +35,11 @@ export type SelfReplacementCondition =
       value: number;
     }
   | {
+      /** True when the first selected target already has damage on it
+       * (e.g. "If that character has damage, deal 5 damage instead."). */
+      type: "selected-target-has-damage";
+    }
+  | {
       /**
        * Evaluates a general `Condition` against the current game state.
        *
@@ -100,6 +105,17 @@ export interface DiscardEffect {
  * @example "Each opponent puts the top 2 cards of their deck into their discard."
  * @example "Chosen player puts the top card of their deck into their discard."
  */
+/**
+ * Reveal each player's top card and route the highest-cost card (or all cards
+ * tied for highest cost) into its player's hand; the rest go to the bottom of
+ * their players' decks.
+ *
+ * @example Thomas O'Malley - Savvy Vagabond: "LUCKY BREAK ..."
+ */
+export interface RevealTopsHighestCostToHandEffect {
+  type: "reveal-tops-highest-cost-to-hand";
+}
+
 export interface MillEffect {
   type: "mill";
   amount: AmountExpr;
@@ -206,6 +222,28 @@ export interface LoseLoreEffect {
 }
 
 // ============================================================================
+// Ink Drop Effects (Hyperia City)
+// ============================================================================
+
+/**
+ * Gain ink drop effect
+ *
+ * Ink drops are player-attached counters introduced in Hyperia City.
+ * A player may remove an ink drop to pay 1 {I} of any ink cost.
+ *
+ * @example "get 1 ink drop"
+ * @example "each player gets 1 ink drop"
+ */
+export interface GainInkDropEffect {
+  type: "gain-ink-drop";
+  amount?: AmountExpr;
+  target?: PlayerTarget | LorcanaPlayerTarget;
+  /** Runtime continuation of a gain whose optional replacement was declined.
+   * Prevents asking about the same incoming drop again after the choice resumes. */
+  replacementDecision?: "keep-drop";
+}
+
+// ============================================================================
 // Card State Effects
 // ============================================================================
 
@@ -281,6 +319,6 @@ export interface LookAtCardsEffect {
  */
 export interface PutInHandEffect {
   type: "put-in-hand";
-  source: "deck" | "discard" | "revealed";
+  source: "deck" | "discard" | "revealed" | "inkwell";
   target: PlayerTarget;
 }

@@ -59,7 +59,7 @@ export const op13SaboSp120: CharacterCard = {
   setId: "OP13",
   cost: 6,
   power: 7000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[Blocker]\n[Activate: Main] [Once Per Turn] Up to 1 of your Characters gains +2 cost until the end of your opponent's next turn. Then, give up to 1 rested DON!! card to your Leader.",

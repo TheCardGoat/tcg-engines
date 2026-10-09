@@ -58,3 +58,51 @@ describe("card ability coverage inventory", () => {
     expect(new Set(exportedCardIds)).toEqual(new Set(sourceCardIds));
   });
 });
+
+// Structural guard only: the per-card command tests must still prove every clause.
+// This catches an omitted timing even when a card's other ability has a passing test.
+test("printed activation headings have executable effect blocks", () => {
+  const timings = new Map([
+    ["On Play", "onPlay"],
+    ["When Attacking", "whenAttacking"],
+    ["On Block", "onBlock"],
+    ["On K.O.", "onKo"],
+    ["Activate: Main", "activateMain"],
+    ["Counter", "counter"],
+    ["Main", "main"],
+    ["Trigger", "trigger"],
+    ["On Your Opponent's Attack", "onOpponentAttack"],
+    ["At the End of Your Turn", "endOfYourTurn"],
+    ["At the End of Your Opponent's Turn", "endOfOpponentTurn"],
+  ]);
+  const missing: string[] = [];
+  const seen = new Set<string>();
+  for (const card of exportedCards) {
+    if (seen.has(card.canonicalId || card.id)) continue;
+    seen.add(card.canonicalId || card.id);
+    const declared = new Set(card.effects?.effects?.map((block) => block.trigger) ?? []);
+    const text = card.effect ?? card.i18n?.en?.effect ?? "";
+    for (const clause of text.split(/\n|\.\s+(?=\[)/)) {
+      // Bracket references later in a sentence (e.g. a card "with [Trigger]")
+      // describe filters, not activation headings.
+      const normalizedClause = clause.trim().replace(/^Trigger\s+(?=\S)/, "[Trigger] ");
+      const prefix = normalizedClause.match(/^(?:\[[^\]]+\][\s/]*)+/)?.[0] ?? "";
+      for (const heading of prefix.matchAll(/\[([^\]]+)\]/g)) {
+        const timing = timings.get(heading[1]!);
+        if (timing && ![...declared].some((value) => value === timing)) {
+          missing.push(`${card.id}: [${heading[1]}]`);
+        }
+      }
+    }
+    if (
+      "trigger" in card &&
+      typeof card.trigger === "string" &&
+      card.trigger.trim() &&
+      !/^(?:NULL|-)$/i.test(card.trigger.trim()) &&
+      !declared.has("trigger")
+    ) {
+      missing.push(`${card.id}: Life Trigger`);
+    }
+  }
+  expect([...new Set(missing)]).toEqual([]);
+});

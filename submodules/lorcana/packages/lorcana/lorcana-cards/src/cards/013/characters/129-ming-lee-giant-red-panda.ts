@@ -13,7 +13,7 @@ export const mingLeeGiantRedPanda: CharacterCard = {
       artId: "set13-129",
       setCode: "set13",
       collectorNumber: "129",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,12 +25,16 @@ export const mingLeeGiantRedPanda: CharacterCard = {
   franchise: "Turning Red",
   set: "013",
   cardNumber: 129,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 9,
   strength: 10,
   willpower: 10,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8f82636c01e44a3ba84432bb823e0199",
+    tcgPlayer: "702692",
+  },
   text: [
     {
       title: "Temporary Shift 7 {I}",
@@ -38,7 +42,7 @@ export const mingLeeGiantRedPanda: CharacterCard = {
         "(You may pay 7 {I} to play this on top of one of your characters named Ming Lee. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
     },
     {
-      title: "Path of Destruction",
+      title: "PATH OF DESTRUCTION",
       description:
         "Whenever this character challenges another character, ready her. She can't quest for the rest of this turn.",
     },

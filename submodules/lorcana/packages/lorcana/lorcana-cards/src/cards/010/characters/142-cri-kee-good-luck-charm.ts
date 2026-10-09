@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { crikeeGoodLuckCharmI18n } from "./142-cri-kee-good-luck-charm.i18n";
 
 export const crikeeGoodLuckCharm: CharacterCard = {
@@ -30,7 +29,8 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  abilities: [alert],
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_7b35f4aed143419a821f8426d17be7bf",
     tcgPlayer: "659454",

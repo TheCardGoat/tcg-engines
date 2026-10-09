@@ -173,11 +173,17 @@ export interface AbilityCost {
   /** Ink to pay from inkwell (must be positive if present) */
   ink?: number;
 
+  /** Ink drops to remove (Hyperia City). Each removed ink drop pays 1 {I} of any color. */
+  inkDrops?: number;
+
   /** Banish this card (mutually exclusive with banishItem/banishCharacter) */
   banishSelf?: boolean;
 
   /** Banish your items (mutually exclusive with banishSelf/banishCharacter). Use `true` for 1 item, or a number for multiple. */
   banishItem?: boolean | number;
+
+  /** Excludes the activating item from the banish-item cost. */
+  banishItemTarget?: "another";
 
   /** Banish one of your characters (mutually exclusive with banishSelf/banishItem) */
   banishCharacter?: boolean;
@@ -196,6 +202,12 @@ export interface AbilityCost {
 
   /** Number of cards to discard from hand */
   discardCards?: number;
+
+  /** Number of own hand cards to reveal as an activation cost. */
+  revealCards?: number;
+
+  /** Revealed cost cards must have the same card name (versions may differ). */
+  revealSameName?: boolean;
 
   /** Alias for discardCards (singular form) */
   discardCard?: number;
@@ -342,6 +354,7 @@ export function isFreeCost(cost: AbilityCost): boolean {
       cost.banishItem ||
       cost.banishCharacter ||
       cost.discardCards ||
+      cost.revealCards ||
       cost.damageSelf ||
       cost.returnSelfToHand ||
       cost.returnCharacterToHand ||

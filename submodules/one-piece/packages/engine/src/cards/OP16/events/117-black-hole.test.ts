@@ -23,27 +23,48 @@ describe("OP16-117 Black Hole", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Optional] declined leaves the board unchanged", () => {
-    const engine = OnePieceTestEngine.create({ hand: ["OP16-117"], activeDon: 4 }, {});
-
-    engine.playCard("OP16-117");
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-117");
-    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("declining a payable Trigger discard preserves the Blocker", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP16-117", "OP15-019"], activeDon: 2 },
+      { character: ["ST01-006"] },
+    );
+    e.playCard("OP16-117");
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP15-019"]);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.pendingDecision("battleBlocker", "north");
+  });
+  test("negating a Blocker permits damage, then expires after the turn", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP16-117", "OP15-019"], activeDon: 2 },
+      { character: ["ST01-006"] },
+    );
+    const blocker = e.findCardInZone("north", "character", "ST01-006");
+    const life = e.getView("south").players.north.lifeCount;
+    e.playCard("OP16-117");
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseTargets(blocker);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 1);
+    e.endTurn("south");
+    e.endTurn("north");
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.pendingDecision("battleBlocker", "north");
+  });
+  test("Life Trigger recovers a Blackbeard Event and cannot recover the resolving Trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP16-117", "ST02-002"], trash: ["OP16-115", "ST02-002"] },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const event = e.findCardInZone("south", "trash", "OP16-115");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    const choice = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice.kind !== "selectEntity") throw new Error("Expected recovery choice");
+    expect(choice.candidates.map((c) => c.ref.id)).toEqual([event]);
+    e.asSouth().chooseTargets(event);
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([event]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-117");
   });
 });

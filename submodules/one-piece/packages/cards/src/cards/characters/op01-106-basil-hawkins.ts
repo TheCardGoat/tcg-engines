@@ -23,7 +23,7 @@ export const op01BasilHawkins106: CharacterCard = {
   cost: 4,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Hawkins Pirates"],
+  traits: ["Animal Kingdom Pirates", "Hawkins Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Add up to 1 DON!! card from your DON!! deck and rest it. [Trigger] Play this card.  This card has been officially errata'd.",

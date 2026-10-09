@@ -43,7 +43,7 @@ describe("EB04-030 Kaido", () => {
     ).toBe(true);
   });
 
-  test("still pays DON!! -2 and rests a target without the Leader gate, but does not gain Rush", () => {
+  test("pays DON!! -2 without the Leader gate but neither gains Rush nor rests a target", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op14eb04Kaido030], activeDon: 9 },
       { character: [eb01MountainGod018] },
@@ -60,7 +60,7 @@ describe("EB04-030 Kaido", () => {
       { selectedIds: ["active-don:0", "active-don:1"] },
       "south",
     );
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+    expect(engine.getView("south").prompts).toHaveLength(0);
 
     const attack = engine.expectFailure({
       type: "declareAttack",
@@ -77,7 +77,7 @@ describe("EB04-030 Kaido", () => {
     });
     expect(
       view.players.north.characters.find((card) => card?.instanceId === targetId)?.rested,
-    ).toBe(true);
+    ).toBe(false);
   });
 
   test("may decline the DON!! -2 cost without resting a target or gaining Rush", () => {

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op02WhiteyBay014 } from "../../../../../cards/src/cards/characters/op02-014-whitey-bay.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP02-014 Whitey Bay", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op02WhiteyBay014);
-  });
-});

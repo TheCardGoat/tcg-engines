@@ -7,12 +7,15 @@ export { agustinMadrigalExceptionallyKind } from "./006-agustin-madrigal-excepti
 export { alanadaleLoyalBard } from "./007-alan-a-dale-loyal-bard";
 export { princeEricNobleSwordsman } from "./008-prince-eric-noble-swordsman";
 export { doloresMadrigalHearsEverything } from "./009-dolores-madrigal-hears-everything";
+export { woodyLeaderOfTheToysD23 } from "./d23-009-woody-leader-of-the-toys";
 export { rexProtectiveDinosaur } from "./010-rex-protective-dinosaur";
 export { hammPiggyBank } from "./011-hamm-piggy-bank";
 export { montereyJackHypnotizedByCheese } from "./012-monterey-jack-hypnotized-by-cheese";
 export { boPeepCaringShepherd } from "./013-bo-peep-caring-shepherd";
 export { chipRetrievalExpert } from "./014-chip-retrieval-expert";
 export { woodyJungleGuide } from "./015-woody-jungle-guide";
+export { pegasusSearchingHighAndLowPD1Promo } from "./pd1-015-pegasus-searching-high-and-low-promo";
+export { mrIncredibleTakingOutTheTrashD23 } from "./d23-015-mr-incredible-taking-out-the-trash";
 export { isabelaMadrigalSuchALovelyVoice } from "./016-isabela-madrigal-such-a-lovely-voice";
 export { bullseyeLoyalHorse } from "./017-bullseye-loyal-horse";
 export { arielCuriousTraveler } from "./018-ariel-curious-traveler";
@@ -60,7 +63,9 @@ export { woodyJungleGuideP3Challenge as woodyJungleGuideP3ChallengeP3054WoodyJun
 export { maleficentImperiousTraveler } from "./055-maleficent-imperious-traveler";
 export { violetParrLearningNewPowersP3Promo } from "./p3-055-violet-parr-learning-new-powers-promo";
 export { pepaMadrigalCalmBeforeTheStorm } from "./056-pepa-madrigal-calm-before-the-storm";
+export { buzzLightyearOnTheWayP3Promo } from "./p3-056-buzz-lightyear-on-the-way-promo";
 export { morduSavageCursedPrince } from "./057-mordu-savage-cursed-prince";
+export { buzzLightyearSpaceRangerP3Promo } from "./p3-057-buzz-lightyear-space-ranger-promo";
 export { almaMadrigalKeeperOfTheFlame } from "./058-alma-madrigal-keeper-of-the-flame";
 export { frozoneSuperCool } from "./059-frozone-super-cool";
 export { luisaMadrigalConfidentClimber } from "./060-luisa-madrigal-confident-climber";

@@ -65,6 +65,69 @@ describe("CyberpunkReplayOrchestrator", () => {
     expect(orchestrator.currentState.ctx.stateID).toBe(4);
     orchestrator.dispose();
   });
+
+  it("replays engine_log wrappers and reveals chat as the cursor passes each timestamp", () => {
+    const initialState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const playback = playbackFor(initialState, [
+      {
+        patches: [{ op: "replace", path: "/ctx/stateID", value: 4 }],
+        acceptedMove: {
+          stateVersion: 4,
+          turnNumber: 1,
+          actorId: "p1",
+          moveId: "mulligan",
+          timestamp: 1_000,
+        },
+        logs: [
+          {
+            tag: "engine_log",
+            ts: 1_000,
+            data: {
+              moveType: "mulligan",
+              playerId: "p1",
+              timestamp: 1_000,
+              turnNumber: 1,
+              public: [
+                {
+                  key: "cyberpunk.move.mulligan",
+                  values: { playerId: "p1", drawnCount: 6 },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ]);
+    playback.chatMessages = [
+      {
+        id: "early",
+        senderPlayerId: "p1",
+        senderSeat: 1,
+        kind: "preset",
+        presetKey: "good_luck",
+        timestamp: 0,
+      },
+      {
+        id: "late",
+        senderPlayerId: "p2",
+        senderSeat: 2,
+        kind: "text",
+        text: "gg",
+        timestamp: 5_000,
+      },
+    ];
+    const orchestrator = new CyberpunkReplayOrchestrator(playback);
+
+    expect(orchestrator.currentMoveLogs).toEqual([]);
+    expect(orchestrator.currentChatMessages.map((message) => message.id)).toEqual(["early"]);
+    orchestrator.nextStep();
+    expect(orchestrator.currentMoveLogs.map((log) => log.type)).toEqual(["mulligan"]);
+    expect(orchestrator.currentChatMessages.map((message) => message.id)).toEqual([
+      "early",
+      "late",
+    ]);
+    orchestrator.dispose();
+  });
 });
 
 function playbackFor(

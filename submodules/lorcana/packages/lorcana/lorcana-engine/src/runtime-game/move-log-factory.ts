@@ -9,6 +9,7 @@
  */
 
 import type { CardInstanceId, LogValue, PlayerId, PublishedGameEvent } from "#core";
+import { asPlayerId } from "#core";
 import type {
   ActionLogMessageKey,
   LorcanaGameLogEntry,
@@ -48,8 +49,13 @@ type BagLogInput = {
 };
 
 type EffectLogResolution =
-  | { kind: "targetSelection"; targets: Array<CardInstanceId | PlayerId>; effectType?: string }
-  | { kind: "discardChoice"; discarded: Array<CardInstanceId | PlayerId> }
+  | {
+      kind: "targetSelection";
+      targets: Array<CardInstanceId | PlayerId>;
+      effectType?: string;
+      abilityName?: string;
+    }
+  | { kind: "discardChoice"; abilityName?: string; discarded: Array<CardInstanceId | PlayerId> }
   | {
       kind: "choiceSelection";
       choiceIndex: number;
@@ -107,7 +113,10 @@ function buildVisibleMoveLog(
 ): MoveLog | undefined {
   // Find the primary action entry (the one from ctx.framework.log() in the move handler)
   const actionEntry = moveLogEntries.find(
-    (e) => e.typedEntry?.category === "action" && e.typedEntry?.type.startsWith("lorcana."),
+    (e) =>
+      e.typedEntry?.category === "action" &&
+      e.typedEntry?.type.startsWith("lorcana.") &&
+      !e.typedEntry.type.startsWith("lorcana.outcome."),
   );
 
   if (!actionEntry?.typedEntry) {
@@ -158,6 +167,78 @@ function appendSecondaryProjectedMessages(
 
     const typedEntry = entry.typedEntry;
     if (!typedEntry) {
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.effect.cancelled") {
+      visible.public.push(createLogMessage("lorcana.effect.cancelled", typedEntry.values));
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.cardReturnedToHand") {
+      if (entry.visibility.mode === "PRIVATE") {
+        pushPrivate(visible, entry.visibility.visibleTo, typedEntry.type, typedEntry.values);
+      } else {
+        visible.public.push(createLogMessage(typedEntry.type, typedEntry.values));
+      }
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.revealedCardToHand") {
+      visible.public.push(
+        createLogMessage("lorcana.outcome.revealedCardToHand", typedEntry.values),
+      );
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.locationLoreGained") {
+      // The Set-step gain belongs to the incoming player, not the player
+      // who passed. Keep the published rules event and its original owner.
+      visible.public.push(
+        createLogMessage("lorcana.outcome.locationLoreGained", typedEntry.values),
+      );
+      continue;
+    }
+
+    if (
+      typedEntry.type === "lorcana.outcome.strengthModified" ||
+      typedEntry.type === "lorcana.outcome.loreModifiedThisTurn"
+    ) {
+      visible.public.push(createLogMessage(typedEntry.type, typedEntry.values));
+      continue;
+    }
+    if (
+      typedEntry.type === "lorcana.outcome.singingBlockedUntilNextStart" ||
+      typedEntry.type === "lorcana.outcome.nextStartReadyBlocked"
+    ) {
+      visible.public.push(createLogMessage(typedEntry.type, typedEntry.values));
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.entryDamage") {
+      const message = createLogMessage("lorcana.outcome.entryDamage", typedEntry.values);
+      const banishIndex = visible.public.findIndex(
+        (entry) =>
+          entry.key === "lorcana.outcome.cardBanished" &&
+          entry.values.cardId === typedEntry.values.targetId,
+      );
+      if (banishIndex >= 0) visible.public.splice(banishIndex, 0, message);
+      else visible.public.push(message);
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.damagePrevented") {
+      visible.public.push(createLogMessage("lorcana.outcome.damagePrevented", typedEntry.values));
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.keywordGranted") {
+      visible.public.push(createLogMessage("lorcana.outcome.keywordGranted", typedEntry.values));
+      continue;
+    }
+
+    if (typedEntry.type === "lorcana.outcome.revealedCard") {
+      visible.public.push(createLogMessage("lorcana.outcome.revealedCard", typedEntry.values));
       continue;
     }
 
@@ -354,13 +435,18 @@ const ACTION_LOG_MESSAGE_KEYS = {
   "lorcana.bag.resolve.cancelled.named": true,
   "lorcana.effect.cancelled": true,
   "lorcana.effect.resolve.discardChoice": true,
+  "lorcana.effect.resolve.discardChoice.named": true,
   "lorcana.effect.resolve.targetSelection": true,
+  "lorcana.effect.resolve.targetSelection.named": true,
   "lorcana.effect.resolve.choiceSelection": true,
   "lorcana.effect.resolve.choiceSelection.withReveal": true,
   "lorcana.effect.resolve.optionalSelection.accepted": true,
+  "lorcana.effect.resolve.optionalSelection.accepted.named": true,
   "lorcana.effect.resolve.optionalSelection.accepted.targets": true,
   "lorcana.effect.resolve.optionalSelection.accepted.targets.named": true,
+  "lorcana.effect.resolve.optionalSelection.freePlay.named": true,
   "lorcana.effect.resolve.optionalSelection.rejected": true,
+  "lorcana.effect.resolve.optionalSelection.rejected.named": true,
   "lorcana.effect.resolve.nameCardSelection": true,
   "lorcana.effect.resolve.scrySelection": true,
   "lorcana.effect.resolve.scrySelection.detail": true,
@@ -407,6 +493,19 @@ function buildFromMoveId(
     case "passTurn": {
       const visible = createVisibleMoveLog("passTurn", playerId, timestamp);
       pushPublic(visible, "lorcana.move.passTurn", { playerId });
+      // Expiry can banish damaged cards during the turn transition.
+      for (const cardId of outcomes?.cardsBanished ?? []) {
+        pushPublic(visible, "lorcana.outcome.cardBanished", { playerId, cardId });
+      }
+      for (const skipped of outcomes?.triggeredAbilitiesSkipped ?? []) {
+        visible.public.push(
+          createLogMessage("lorcana.outcome.triggeredAbilitySkipped", {
+            playerId: skipped.playerId,
+            sourceCardId: skipped.sourceCardId,
+            abilityName: skipped.abilityName,
+          }),
+        );
+      }
       return visible;
     }
     case "concede": {
@@ -449,6 +548,22 @@ function convertProjectedEntry(
     case "lorcana.move.passTurn": {
       const visible = createVisibleMoveLog("passTurn", playerId, timestamp);
       pushPublic(visible, "lorcana.move.passTurn", { playerId });
+      // Expiry can banish damaged cards during the turn transition.
+      for (const cardId of outcomes?.cardsBanished ?? []) {
+        pushPublic(visible, "lorcana.outcome.cardBanished", { playerId, cardId });
+      }
+      // The turn transition deliberately renders no generic outcomes on pass
+      // turn (the next player's draw/readies belong to their turnStart log),
+      // but suppressed triggered abilities have nowhere else to surface.
+      for (const skipped of outcomes?.triggeredAbilitiesSkipped ?? []) {
+        visible.public.push(
+          createLogMessage("lorcana.outcome.triggeredAbilitySkipped", {
+            playerId: skipped.playerId,
+            sourceCardId: skipped.sourceCardId,
+            abilityName: skipped.abilityName,
+          }),
+        );
+      }
       return visible;
     }
 
@@ -508,6 +623,7 @@ function convertProjectedEntry(
         characterId: v.characterId as CardInstanceId,
         locationId: v.locationId as CardInstanceId,
       });
+      appendOutcomeMessages(visible, playerId, outcomes);
       return visible;
     }
 
@@ -539,15 +655,14 @@ function convertProjectedEntry(
         attackerId,
         defenderId,
       });
-      if (damage.attacker > 0 || damage.defender > 0) {
-        pushPublic(visible, "lorcana.outcome.combatDamage", {
-          playerId,
-          attackerId,
-          defenderId,
-          attackerDamage: damage.attacker,
-          defenderDamage: damage.defender,
-        });
-      }
+      appendCombatDamageMessages(
+        visible,
+        playerId,
+        attackerId,
+        defenderId,
+        damage.attacker,
+        damage.defender,
+      );
       for (const cardId of banished) {
         pushPublic(visible, "lorcana.outcome.cardBanished", { playerId, cardId });
       }
@@ -653,11 +768,13 @@ function convertProjectedEntry(
 
     // ── Effect resolution ─────────────────────────────────
     case "lorcana.effect.resolve.targetSelection":
+    case "lorcana.effect.resolve.targetSelection.named":
       return buildResolveEffectMoveLog(
         {
           kind: "targetSelection",
           targets: (v.targets as Array<CardInstanceId | PlayerId>) ?? [],
           effectType: typeof v.effectType === "string" ? v.effectType : undefined,
+          abilityName: typeof v.abilityName === "string" ? v.abilityName : undefined,
         },
         v,
         timestamp,
@@ -666,8 +783,13 @@ function convertProjectedEntry(
       );
 
     case "lorcana.effect.resolve.discardChoice":
+    case "lorcana.effect.resolve.discardChoice.named":
       return buildResolveEffectMoveLog(
-        { kind: "discardChoice", discarded: (v.targets as Array<CardInstanceId | PlayerId>) ?? [] },
+        {
+          kind: "discardChoice",
+          abilityName: typeof v.abilityName === "string" ? v.abilityName : undefined,
+          discarded: (v.targets as Array<CardInstanceId | PlayerId>) ?? [],
+        },
         v,
         timestamp,
         outcomes,
@@ -703,8 +825,13 @@ function convertProjectedEntry(
       );
 
     case "lorcana.effect.resolve.optionalSelection.accepted":
+    case "lorcana.effect.resolve.optionalSelection.accepted.named":
       return buildResolveEffectMoveLog(
-        { kind: "optionalSelection", accepted: true },
+        {
+          kind: "optionalSelection",
+          accepted: true,
+          abilityName: typeof v.abilityName === "string" ? v.abilityName : undefined,
+        },
         v,
         timestamp,
         outcomes,
@@ -724,6 +851,23 @@ function convertProjectedEntry(
         fallbackPlayerId,
       );
 
+    case "lorcana.effect.resolve.optionalSelection.freePlay.named": {
+      const visible = createVisibleMoveLog(
+        "resolveEffect",
+        (v.playerId ?? fallbackPlayerId ?? "") as PlayerId,
+        timestamp,
+      );
+      visible.public.push(
+        createLogMessage("lorcana.effect.resolve.optionalSelection.freePlay.named", {
+          playerId: (v.playerId ?? fallbackPlayerId ?? "") as PlayerId,
+          sourceCardId: v.sourceCardId as CardInstanceId,
+          abilityName: v.abilityName as string,
+          targets: (v.targets as Array<CardInstanceId | PlayerId>) ?? [],
+        }),
+      );
+      appendOutcomeMessages(visible, (v.playerId ?? fallbackPlayerId ?? "") as PlayerId, outcomes);
+      return visible;
+    }
     case "lorcana.effect.resolve.optionalSelection.accepted.targets.named":
       return buildResolveEffectMoveLog(
         {
@@ -739,8 +883,13 @@ function convertProjectedEntry(
       );
 
     case "lorcana.effect.resolve.optionalSelection.rejected":
+    case "lorcana.effect.resolve.optionalSelection.rejected.named":
       return buildResolveEffectMoveLog(
-        { kind: "optionalSelection", accepted: false },
+        {
+          kind: "optionalSelection",
+          accepted: false,
+          abilityName: typeof v.abilityName === "string" ? v.abilityName : undefined,
+        },
         v,
         timestamp,
         outcomes,
@@ -836,7 +985,10 @@ function buildResolveScryEffectLog(
           ? (detailValues.destinations as ScryDestinationEntry[])
           : undefined;
         if (destinations) {
-          const publicRevealed = destinations.filter((d) => d.revealed === true);
+          // Discard and play destinations are public even when the look was private.
+          const publicRevealed = destinations.filter(
+            (d) => d.revealed === true || d.zone === "discard" || d.zone === "play",
+          );
           return buildResolveEffectMoveLog(
             {
               kind: "scrySelection",
@@ -983,6 +1135,42 @@ function appendAbilityActivationMessage(
   });
 }
 
+function appendCombatDamageMessages(
+  visible: ReturnType<typeof createVisibleMoveLog>,
+  playerId: PlayerId,
+  attackerId: CardInstanceId,
+  defenderId: CardInstanceId,
+  attackerDamage: number,
+  defenderDamage: number,
+): void {
+  if (attackerDamage > 0 && defenderDamage > 0) {
+    pushPublic(visible, "lorcana.outcome.combatDamage", {
+      playerId,
+      attackerId,
+      defenderId,
+      attackerDamage,
+      defenderDamage,
+    });
+    return;
+  }
+  if (attackerDamage > 0) {
+    pushPublic(visible, "lorcana.outcome.effectDamage", {
+      playerId,
+      sourceId: attackerId,
+      targetId: defenderId,
+      amount: attackerDamage,
+    });
+  }
+  if (defenderDamage > 0) {
+    pushPublic(visible, "lorcana.outcome.effectDamage", {
+      playerId,
+      sourceId: defenderId,
+      targetId: attackerId,
+      amount: defenderDamage,
+    });
+  }
+}
+
 function appendOutcomeMessages(
   visible: MoveLog,
   actorPlayerId: PlayerId,
@@ -990,6 +1178,29 @@ function appendOutcomeMessages(
   options: { skipCombatDamage?: boolean; skipBanished?: boolean; skipEffectDamage?: boolean } = {},
 ): void {
   if (!outcomes) return;
+
+  for (const discarded of outcomes.cardsDiscarded ?? []) {
+    visible.public.push(
+      createLogMessage("lorcana.outcome.cardsDiscarded.detail", {
+        playerId: discarded.playerId,
+        amount: discarded.amount,
+        cardIds: discarded.detail,
+      }),
+    );
+  }
+
+  if (visible.moveType !== "moveToLocation") {
+    for (const moved of outcomes.cardsMovedToZone ?? []) {
+      if (!moved.zone.startsWith("location:")) continue;
+      const locationId = moved.zone.slice("location:".length);
+      if (!locationId) continue;
+      pushPublic(visible, "lorcana.move.moveCharacterToLocation", {
+        playerId: actorPlayerId,
+        characterId: moved.cardId,
+        locationId: locationId as CardInstanceId,
+      });
+    }
+  }
 
   for (const cardsDrawn of outcomes.cardsDrawn ?? []) {
     visible.public.push(
@@ -1015,31 +1226,53 @@ function appendOutcomeMessages(
     }
   }
 
-  for (const damage of outcomes.damageDealt ?? []) {
+  const damageEntries = outcomes.damageDealt ?? [];
+  for (let index = 0; index < damageEntries.length; index += 1) {
+    const damage = damageEntries[index]!;
     if (damage.kind === "combat") {
       if (options.skipCombatDamage) continue;
-      visible.public.push(
-        createLogMessage("lorcana.outcome.combatDamage", {
-          playerId: actorPlayerId,
-          attackerId: damage.sourceId,
-          defenderId: damage.targetId,
-          attackerDamage: damage.amount,
-          defenderDamage: 0,
-        }),
+      // The accumulator records the two sides of a challenge consecutively.
+      // Show one exchange instead of inventing a zero-damage return for each side.
+      const returnDamage = damageEntries[index + 1];
+      const paired =
+        returnDamage?.kind === "combat" &&
+        returnDamage.sourceId === damage.targetId &&
+        returnDamage.targetId === damage.sourceId;
+      if (paired) index += 1;
+      appendCombatDamageMessages(
+        visible,
+        actorPlayerId,
+        damage.sourceId,
+        damage.targetId,
+        damage.amount,
+        paired ? returnDamage.amount : 0,
       );
       continue;
     }
 
     if (!options.skipEffectDamage) {
       visible.public.push(
-        createLogMessage("lorcana.outcome.effectDamage", {
-          playerId: actorPlayerId,
-          sourceId: damage.sourceId,
-          targetId: damage.targetId,
-          amount: damage.amount,
-        }),
+        createLogMessage(
+          damage.kind === "put" ? "lorcana.outcome.damagePut" : "lorcana.outcome.effectDamage",
+          {
+            playerId: actorPlayerId,
+            sourceId: damage.sourceId,
+            targetId: damage.targetId,
+            amount: damage.amount,
+          },
+        ),
       );
     }
+  }
+
+  for (const removed of outcomes.damageRemoved ?? []) {
+    visible.public.push(
+      createLogMessage("lorcana.outcome.damageRemoved", {
+        playerId: actorPlayerId,
+        targetId: removed.targetId,
+        amount: removed.amount,
+      }),
+    );
   }
 
   for (const moved of outcomes.damageMoved ?? []) {
@@ -1065,6 +1298,30 @@ function appendOutcomeMessages(
             playerId: loreChanged.playerId,
             amount: loreChanged.amount,
           }),
+    );
+  }
+
+  for (const inkDropsChanged of outcomes.inkDropsChanged ?? []) {
+    visible.public.push(
+      inkDropsChanged.operation === "add"
+        ? createLogMessage("lorcana.outcome.inkDropsGained", {
+            playerId: inkDropsChanged.playerId,
+            amount: inkDropsChanged.amount,
+          })
+        : createLogMessage("lorcana.outcome.inkDropsRemoved", {
+            playerId: inkDropsChanged.playerId,
+            amount: inkDropsChanged.amount,
+          }),
+    );
+  }
+
+  for (const skipped of outcomes.triggeredAbilitiesSkipped ?? []) {
+    visible.public.push(
+      createLogMessage("lorcana.outcome.triggeredAbilitySkipped", {
+        playerId: skipped.playerId,
+        sourceCardId: skipped.sourceCardId,
+        abilityName: skipped.abilityName,
+      }),
     );
   }
 
@@ -1115,7 +1372,7 @@ function appendOutcomeMessages(
     );
   }
 
-  for (const { cardId, exerted } of outcomes.cardsInked ?? []) {
+  for (const { cardId, exerted, playerId } of outcomes.cardsInked ?? []) {
     const key = exerted ? "lorcana.outcome.cardInkedExerted" : "lorcana.outcome.cardInked";
     if (typeof cardId === "string") {
       visible.public.push(createLogMessage(key, { playerId: actorPlayerId, cardId }));
@@ -1123,6 +1380,14 @@ function appendOutcomeMessages(
     }
     const privateCard = getPrivateField(cardId);
     if (privateCard) {
+      visible.public.push(
+        createLogMessage(
+          exerted ? "lorcana.outcome.privateCardInkedExerted" : "lorcana.outcome.privateCardInked",
+          {
+            playerId: playerId ?? asPlayerId(privateCard.visibleTo[0] ?? actorPlayerId),
+          },
+        ),
+      );
       pushPrivate(visible, privateCard.visibleTo, key, {
         playerId: actorPlayerId,
         cardId: privateCard.value,
@@ -1224,19 +1489,31 @@ function appendResolveEffectMessages(visible: MoveLog, moveLog: EffectLogInput):
   switch (moveLog.resolution.kind) {
     case "targetSelection":
       visible.public.push(
-        createLogMessage("lorcana.effect.resolve.targetSelection", {
-          ...commonValues,
-          targets: moveLog.resolution.targets,
-          effectType: moveLog.resolution.effectType,
-        }),
+        createLogMessage(
+          moveLog.resolution.abilityName
+            ? "lorcana.effect.resolve.targetSelection.named"
+            : "lorcana.effect.resolve.targetSelection",
+          {
+            ...commonValues,
+            abilityName: moveLog.resolution.abilityName,
+            targets: moveLog.resolution.targets,
+            effectType: moveLog.resolution.effectType,
+          },
+        ),
       );
       return;
     case "discardChoice":
       visible.public.push(
-        createLogMessage("lorcana.effect.resolve.discardChoice", {
-          ...commonValues,
-          targets: moveLog.resolution.discarded,
-        }),
+        createLogMessage(
+          moveLog.resolution.abilityName
+            ? "lorcana.effect.resolve.discardChoice.named"
+            : "lorcana.effect.resolve.discardChoice",
+          {
+            abilityName: moveLog.resolution.abilityName,
+            ...commonValues,
+            targets: moveLog.resolution.discarded,
+          },
+        ),
       );
       return;
     case "choiceSelection":
@@ -1258,7 +1535,12 @@ function appendResolveEffectMessages(visible: MoveLog, moveLog: EffectLogInput):
     case "optionalSelection": {
       if (!moveLog.resolution.accepted) {
         visible.public.push(
-          createLogMessage("lorcana.effect.resolve.optionalSelection.rejected", commonValues),
+          moveLog.resolution.abilityName
+            ? createLogMessage("lorcana.effect.resolve.optionalSelection.rejected.named", {
+                ...commonValues,
+                abilityName: moveLog.resolution.abilityName,
+              })
+            : createLogMessage("lorcana.effect.resolve.optionalSelection.rejected", commonValues),
         );
         return;
       }
@@ -1279,7 +1561,12 @@ function appendResolveEffectMessages(visible: MoveLog, moveLog: EffectLogInput):
         return;
       }
       visible.public.push(
-        createLogMessage("lorcana.effect.resolve.optionalSelection.accepted", commonValues),
+        moveLog.resolution.abilityName
+          ? createLogMessage("lorcana.effect.resolve.optionalSelection.accepted.named", {
+              ...commonValues,
+              abilityName: moveLog.resolution.abilityName,
+            })
+          : createLogMessage("lorcana.effect.resolve.optionalSelection.accepted", commonValues),
       );
       return;
     }
@@ -1381,32 +1668,11 @@ function getPrivateField<T>(value: T | PrivateField<T> | undefined): PrivateFiel
   return undefined;
 }
 
-/**
- * If outcomes.cardsInked contains entries with PrivateField-wrapped cardIds,
- * return the single owner those cardIds are visible to. Returns undefined
- * when no private inked entries exist (so resolveBag targets stay public).
- * Private targets are omitted from the public bag sentence; the named card is
- * appended for the owner through the private card-inked outcome message.
- */
-function getPrivateCardsInkedOwner(outcomes?: MoveOutcomes): PlayerId | undefined {
-  const entries = outcomes?.cardsInked;
-  if (!entries) return undefined;
-  for (const entry of entries) {
-    const cardId = entry.cardId as
-      | CardInstanceId
-      | { __private: true; value: CardInstanceId; visibleTo: string[] };
-    if (
-      typeof cardId === "object" &&
-      cardId !== null &&
-      "__private" in cardId &&
-      cardId.__private === true &&
-      Array.isArray(cardId.visibleTo) &&
-      cardId.visibleTo.length === 1
-    ) {
-      return cardId.visibleTo[0] as PlayerId;
-    }
-  }
-  return undefined;
+/** Private ink targets never belong in a public bag sentence, including blind inks. */
+function hasPrivateCardsInked(outcomes?: MoveOutcomes): boolean {
+  return (
+    outcomes?.cardsInked?.some((entry) => getPrivateField(entry.cardId) !== undefined) ?? false
+  );
 }
 
 function buildResolveBagMoveLog(
@@ -1417,7 +1683,7 @@ function buildResolveBagMoveLog(
   fallbackPlayerId?: PlayerId,
 ): MoveLog {
   const targets = v.targets as Array<CardInstanceId | PlayerId> | undefined;
-  const ownerOnlyViewer = getPrivateCardsInkedOwner(outcomes);
+  const privateInkTargets = hasPrivateCardsInked(outcomes);
   const playerId = (v.playerId ?? fallbackPlayerId ?? "") as PlayerId;
   const visible = createVisibleMoveLog("resolveBag", playerId, timestamp);
 
@@ -1427,7 +1693,7 @@ function buildResolveBagMoveLog(
     abilityName: v.abilityName as string | undefined,
     status,
     cancelReason: v.cause as BagLogInput["cancelReason"],
-    targets: ownerOnlyViewer ? undefined : targets,
+    targets: privateInkTargets ? undefined : targets,
     effectType: v.effectType === "play-card" ? "play-card" : undefined,
     sourceZone: v.sourceZone === "discard" ? "discard" : undefined,
   });

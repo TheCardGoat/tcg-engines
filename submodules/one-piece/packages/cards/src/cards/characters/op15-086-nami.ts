@@ -44,7 +44,7 @@ export const op15Nami086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -62,7 +62,7 @@ export const op15Nami086: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cost",

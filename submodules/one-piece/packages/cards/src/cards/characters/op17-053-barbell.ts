@@ -22,7 +22,7 @@ export const op17Barbell053: CharacterCard = {
   setId: "OP17",
   cost: 5,
   power: 7000,
-  traits: ["Fish-Man Rocks Pirates"],
+  traits: ["Fish-Man", "Rocks Pirates"],
   attribute: "strike",
   effect:
     "[On K.O.] Your opponent places 2 cards from their hand at the bottom of their deck in any order.\n\n[Activate: Main] [Once Per Turn] You may trash 1 card from your hand: This Character gains +3000 power during this turn",

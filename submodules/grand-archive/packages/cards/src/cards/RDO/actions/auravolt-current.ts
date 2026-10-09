@@ -81,6 +81,7 @@ export const auravoltCurrent: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
             },
             amount: 1,
           },
+          functionalZones: ["memory"],
         },
         {
           id: "foy5mdrVCR-a3",
@@ -140,13 +141,19 @@ export const auravoltCurrent: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                           },
                         },
                       },
+                      bindResultAs: "actually-banished-memory-cards",
                     },
                     {
                       kind: "draw",
                       player: {
                         binding: "affected-player",
                       },
-                      amount: 2,
+                      amount: {
+                        kind: "count",
+                        collection: {
+                          binding: "actually-banished-memory-cards",
+                        },
+                      },
                       to: "memory",
                     },
                   ],

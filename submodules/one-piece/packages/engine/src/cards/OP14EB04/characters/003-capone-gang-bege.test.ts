@@ -5,7 +5,7 @@ import { op14eb04CaponeGangBege003 } from "../../../../../cards/src/cards/charac
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe('OP14-003 Capone"Gang"Bege', () => {
-  test("is excluded from a 5000-or-less opponent Character effect but remains a legal battle target", () => {
+  test("survives selection by a 5000-or-less opponent Character effect", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op14eb04CaponeGangBege003, eb01Doma005],
@@ -22,13 +22,13 @@ describe('OP14-003 Capone"Gang"Bege', () => {
     engine.playCard(op02Vista011, "north");
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Vista's K.O. target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(begeId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(begeId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(vulnerableId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [vulnerableId] }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [begeId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(begeId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(vulnerableId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(vulnerableId);
     expect(view.prompts).toHaveLength(0);
   });
 

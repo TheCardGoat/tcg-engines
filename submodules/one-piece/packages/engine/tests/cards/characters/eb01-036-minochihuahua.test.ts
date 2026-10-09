@@ -30,7 +30,7 @@ describe("EB01-036 Minochihuahua", () => {
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
 
     engine.declareAttack(opponentAttackerId, minochihuahuaId, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const addDon = engine.pendingDecision("effectAddDon", "south").steps[0];
     expect(addDon?.kind).toBe("chooseOption");

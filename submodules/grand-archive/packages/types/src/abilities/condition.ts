@@ -23,6 +23,7 @@ export type GrandArchiveCondition =
   | {
       readonly kind: "subject-matches";
       readonly subject: GrandArchiveSubject;
+      readonly basis?: "current" | "last-known";
       readonly filter: GrandArchiveCardFilter;
     }
   | {
@@ -135,7 +136,14 @@ export type GrandArchiveCondition =
       readonly operator: import("./primitives.ts").GrandArchiveComparisonOperator;
       readonly value: GrandArchiveAmount;
     }
+  | { readonly kind: "event-origin"; readonly zone: import("./primitives.ts").GrandArchiveZone }
   | { readonly kind: "activation-state"; readonly state: GrandArchiveActivationState }
+  | {
+      /** True when a bound, pending card activation originated in this zone. */
+      readonly kind: "bound-activation-origin";
+      readonly binding: string;
+      readonly zone: import("./primitives.ts").GrandArchiveZone;
+    }
   | {
       readonly kind: "source-activation-context";
       readonly phase?: GrandArchivePhase;
@@ -242,6 +250,8 @@ export type GrandArchiveCondition =
       readonly itemTypes?: readonly ("ability" | "card-activation" | "materialization")[];
       readonly stackItemController?: GrandArchiveRelativePlayer;
       readonly eventAmountMinimum?: GrandArchiveAmount;
+      /** Minimum sum of amounts across the matching historical events. */
+      readonly totalAmountMinimum?: GrandArchiveAmount;
       readonly minimum?: GrandArchiveAmount;
     }
   | {

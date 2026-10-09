@@ -3,12 +3,14 @@ import type {
   CardZone,
   CardTargetDSL,
   CostModifier,
+  PerCountValue,
   RuleModifier,
   Effect,
   DelayedEffect,
   ScryDestination,
   CardType,
   Condition,
+  TargetDSL,
 } from "@tcg/cyberpunk-types";
 import type { ZoneRuntimeState } from "@tcg/engine-core";
 import type { GameEvent } from "./game-events.ts";
@@ -23,18 +25,42 @@ export type GamePhase = "setup" | "start" | "main" | "end";
 
 export type AttackKind = "fight" | "direct";
 
-export interface AttackState {
+interface AttackStateBase {
   attackerId: CardInstanceId;
   defenderId: CardInstanceId | null;
   rivalId: PlayerId;
   kind: AttackKind;
-  step: AttackStep;
+  /** An attack that began unblockable stays unblockable for its React step. */
+  unblockableAtDeclaration?: boolean;
   redirectedByBlocker?: boolean;
+  /** Targets replaced by BLOCKER, from the declared target to the latest prior target. */
+  redirectedTargets?: (CardInstanceId | null)[];
   gigsToSteal?: number;
-  fightResult?: FightResult;
 }
 
-export type AttackStep = "attack" | "react" | "fight" | "steal";
+export type AttackState =
+  | (AttackStateBase & {
+      step: "attack" | "react" | "fight" | "steal";
+      fightResolution?: never;
+    })
+  | (AttackStateBase & {
+      kind: "fight";
+      step: "fightResult";
+      fightResolution: {
+        result: FightResult;
+        attackerPower: number;
+        defenderPower: number;
+        protectedCardIds: CardInstanceId[];
+        preventionSourceCardNames: string[];
+        /**
+         * Losers whose defeat a sacrificial Gear will absorb. Cosmetic: the
+         * mechanical substitution still happens in defeatHostAndAttachedGear.
+         */
+        preventedCardIds?: CardInstanceId[];
+      };
+    });
+
+export type AttackStep = "attack" | "react" | "fight" | "fightResult" | "steal";
 
 export type FightResult = "attackerWins" | "defenderWins" | "mutual";
 
@@ -57,6 +83,12 @@ export interface ActiveEffect {
   targetCardId: CardInstanceId;
   kind: ActiveEffectKind;
   powerModifier?: number;
+  powerModifierFormula?: {
+    value: PerCountValue;
+    sourcePlayerId: PlayerId;
+    contextTargets: Record<string, string[]>;
+    boundTargets: Record<string, string[]>;
+  };
   powerMultiplier?: number;
   rule?: RuleModifier;
   costModifier?: CostModifier;
@@ -93,11 +125,12 @@ export interface FiredAbilityEntry {
   abilityIndex: number;
 }
 
-export interface QueuedTrigger {
+interface TriggerBase {
+  /** Payment triggers wait until the paid card has resolved its play effects. */
+  waitForTriggerIds?: string[];
   id: string;
   sourceCardId: CardInstanceId;
   sourcePlayerId: PlayerId;
-  abilityIndex: number;
   abilityText: string;
   optional?: boolean;
   event: GameEvent;
@@ -106,12 +139,28 @@ export interface QueuedTrigger {
   order: number;
 }
 
-export interface ResolvingTrigger extends QueuedTrigger {
+export type QueuedTrigger = TriggerBase &
+  (
+    | { kind: "authored"; abilityIndex: number }
+    | {
+        kind: "delayed";
+        abilityIndex?: never;
+        activeEffectId: string;
+        sourceAbilityIndex: number;
+        resolution:
+          | { kind: "effects"; effects: Effect[] }
+          | { kind: "fightProtection"; protectedCardId: CardInstanceId };
+      }
+  );
+
+export type ResolvingTrigger = QueuedTrigger & {
   /**
    * Resume index into the main ability `effects` list (not option/nested bodies).
    */
   nextEffectIndex: number;
   costsPaid?: boolean;
+  /** Optional player-selected resources for this ability's Eddie costs. */
+  paymentSourceIds?: CardInstanceId[];
   lastGigAdjustment?: {
     dieId: GigDieId;
     previousValue: number;
@@ -127,12 +176,15 @@ export interface ResolvingTrigger extends QueuedTrigger {
     nextIndex: number;
   };
   remainingEffects?: Effect[];
-}
+};
 
 export interface TurnMetadata {
   turnNumber: number;
   activePlayerId: PlayerId;
-  previousTurnNoGigTaken: boolean;
+  /** Both players' Fixer areas were empty when the previous turn began. */
+  previousTurnBeganWithEmptyFixer: boolean;
+  /** Both players' Fixer areas were empty when this turn began. */
+  turnBeganWithEmptyFixer: boolean;
   gigTakenThisTurn: boolean;
   playedCardTypesThisTurn: Partial<Record<string, CardType[]>>;
   overtimeActive: boolean;
@@ -142,6 +194,11 @@ export interface TurnMetadata {
   };
   pendingChoice?: PendingChoice;
   abilityFiredThisTurn: FiredAbilityEntry[];
+  /** First-event facts include actions taken before a listening source enters play. */
+  firstTimeEventsThisTurn: {
+    event: Extract<GameEvent, { type: "cardDefeated" | "cardPlayed" | "attackDeclared" }>;
+    card: CardInstance | undefined;
+  }[];
   triggerQueue: QueuedTrigger[];
   currentTrigger?: ResolvingTrigger;
   nextTriggerId: number;
@@ -179,8 +236,11 @@ export interface ScryPendingChoice {
     destinations: ScryDestination[];
     /** Card instance IDs snapshotted at creation time — the revealed search window. */
     revealedCardIds: CardInstanceId[];
-    sourceCardId?: CardInstanceId;
-    sourcePlayerId?: PlayerId;
+    sourceCardId: CardInstanceId;
+    sourcePlayerId: PlayerId;
+    abilityIndex: number;
+    contextTargets: Record<string, string[]>;
+    boundTargets: Record<string, string[]>;
   };
 }
 
@@ -237,7 +297,7 @@ export interface ChooseTargetPendingChoice {
     contextTargets?: Record<string, string[]>;
     boundTargets?: Record<string, string[]>;
     selectedBindingId?: string;
-    targetPurpose?: "attachHost" | "playCard";
+    targetPurpose?: "attachHost" | "gearToPlay" | "playCard";
     availableEddiesAfterCosts?: number;
     effectiveCostsByCardId?: Record<string, number>;
   };
@@ -281,7 +341,7 @@ export interface ChooseTriggerOption {
   triggerId: string;
   sourceCardId: CardInstanceId;
   sourcePlayerId: PlayerId;
-  abilityIndex: number;
+  abilityIndex?: number;
   abilityText: string;
   cardName: string;
   optional?: boolean;
@@ -334,6 +394,7 @@ export interface PreventGigStealPendingChoice {
     effectSteal?: {
       sourcePlayerId: PlayerId;
       sourceCardId: CardInstanceId;
+      sourceCardName: string;
     };
   };
 }
@@ -377,8 +438,6 @@ export type DefeatReplacementContinuation =
       kind: "fight";
       remainingCardIds: CardInstanceId[];
       fightPlayerId: PlayerId;
-      attackerPower: number;
-      defenderPower: number;
     }
   | {
       kind: "effect";
@@ -405,7 +464,7 @@ export interface ChooseCardToPlayPendingChoice {
   payload: {
     cardIds: CardInstanceId[];
     free?: boolean;
-    attachTo?: unknown;
+    attachTo?: TargetDSL;
     resolvedAttachToId?: string;
     boundTargets?: Record<string, string[]>;
     sourceCardId?: CardInstanceId;
@@ -418,6 +477,8 @@ export interface ChooseCardToPlayPendingChoice {
      */
     elseEffects?: Effect[];
     canDecline?: boolean;
+    /** How to continue the enclosing ability when this play offer is declined. */
+    onDecline?: "abandonTrigger" | "resumeTrigger";
   };
 }
 
@@ -482,6 +543,7 @@ export interface GainGigPendingChoice {
 }
 
 export interface PlayerState {
+  combatPriority: "automatic" | "hold";
   zones: Record<CardZone, CardInstanceId[]>;
   eddies: number;
   spentEddies: number;
@@ -496,6 +558,15 @@ export interface PlayerState {
 }
 
 export interface GameState {
+  /** Version 2 records every semantic card defeat in move logs. Absent in older replays. */
+  eventLogVersion?: 2;
+  /**
+   * D.2.2 setup. Before opening hands, each missing Legend becomes one
+   * face-down ready Eddie taken from the top of the deck.
+   */
+  blankEddiesForMissingLegends?: boolean;
+  /** Set once blank Eddies have been placed, so a second opening-hand call cannot draw more. */
+  blankEddiesPlaced?: boolean;
   players: Record<string, PlayerState>;
   cardIndex: Record<string, CardInstance>;
   gigDice: Record<string, GigDie>;

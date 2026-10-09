@@ -23,7 +23,7 @@ export const op02LittleoarsJr020: CharacterCard = {
   cost: 7,
   power: 9000,
   counter: 1000,
-  traits: ["Giant Whitebeard Pirates Allies"],
+  traits: ["Giant", "Whitebeard Pirates Allies"],
   attribute: "strike",
   i18n: op02LittleoarsJr020I18n,
 };

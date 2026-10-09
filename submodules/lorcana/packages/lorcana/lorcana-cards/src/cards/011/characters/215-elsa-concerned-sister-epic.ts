@@ -23,7 +23,7 @@ export const elsaConcernedSisterEpic: CharacterCard = {
   franchise: "Frozen",
   set: "011",
   cardNumber: 215,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 2,

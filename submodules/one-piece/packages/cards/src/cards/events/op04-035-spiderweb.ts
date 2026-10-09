@@ -21,7 +21,7 @@ export const op04Spiderweb035: EventCard = {
   rarity: "R",
   setId: "OP04",
   cost: 2,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, set up to 1 of your Characters as active. [Trigger] Up to 1 of your Leader gains +2000 power during this turn.",
   effects: {

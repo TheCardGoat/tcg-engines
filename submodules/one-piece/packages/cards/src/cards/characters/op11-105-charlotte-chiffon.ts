@@ -23,7 +23,7 @@ export const op11CharlotteChiffon105: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Firetank Pirates Former Big Mom Pirates"],
+  traits: ["Firetank Pirates", "Former Big Mom Pirates"],
   attribute: "wisdom",
   i18n: op11CharlotteChiffon105I18n,
 };

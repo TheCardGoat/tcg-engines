@@ -32,7 +32,7 @@ export const op14eb04TrafalgarLawOp14001001: LeaderCard = {
   setId: "OP14",
   power: 5000,
   life: 5,
-  traits: ["Heart Pirates Supernovas The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Activate:Main] [Once Per Turn] Select 2 of your {Supernovas} or {Heart Pirates} type Characters. Swap the base power of the selected Characters with each other during this turn.",
@@ -49,6 +49,15 @@ export const op14eb04TrafalgarLawOp14001001: LeaderCard = {
               count: {
                 amount: 2,
               },
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    { filter: "trait", value: "Supernovas", match: "exact" },
+                    { filter: "trait", value: "Heart Pirates", match: "exact" },
+                  ],
+                },
+              ],
             },
             duration: "thisTurn",
           },

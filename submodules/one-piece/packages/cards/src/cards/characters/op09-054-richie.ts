@@ -23,7 +23,7 @@ export const op09Richie054: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Cross Guild"],
+  traits: ["Animal", "Cross Guild"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

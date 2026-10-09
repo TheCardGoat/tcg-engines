@@ -57,6 +57,10 @@ it("keeps preparation interactive for a waiting player and exposes recovery", ()
     },
     preparation: {
       object: "game_pregame",
+      phase: "selecting",
+      phaseToken: "test-phase",
+      serverTime: new Date().toISOString(),
+      selectionOutcome: "pending",
       kind: "fab",
       matchId: "m1",
       gameId: "g1",
@@ -87,17 +91,17 @@ it("keeps preparation interactive for a waiting player and exposes recovery", ()
   );
   const { rerender } = render(page());
   expect(screen.getByRole("heading", { name: "Starting deck" })).toBeTruthy();
-  expect(screen.queryByRole("button", { name: "Refresh match" })).toBeNull();
+  expect(screen.queryByRole("button", { name: "Retry connection" })).toBeNull();
 
   recovery.error = "Could not refresh the match.";
   rerender(page());
   expect(screen.getByRole("alert").textContent).toBe(recovery.error);
-  fireEvent.click(screen.getByRole("button", { name: "Refresh match" }));
+  fireEvent.click(screen.getByRole("button", { name: "Retry connection" }));
   expect(recovery.refresh).toHaveBeenCalledOnce();
 
   recovery.error = null;
   rerender(page());
-  expect(screen.queryByRole("button", { name: "Refresh match" })).toBeNull();
+  expect(screen.queryByRole("button", { name: "Retry connection" })).toBeNull();
   expect(screen.queryByRole("alert")).toBeNull();
 
   const waitingSession = MatchSessionSchema.parse({

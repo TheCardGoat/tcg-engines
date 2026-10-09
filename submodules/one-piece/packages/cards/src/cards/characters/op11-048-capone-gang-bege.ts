@@ -23,7 +23,7 @@ export const op11CaponeGangBege048: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Firetank Pirates Supernovas"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "ranged",
   effect:
     '[On Play] Look at 4 cards from the top of your deck; reveal up to 1 "Firetank Pirates" or "Straw Hat Crew" type card with a cost of 2 or more and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -55,12 +55,12 @@ export const op11CaponeGangBege048: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Firetank Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

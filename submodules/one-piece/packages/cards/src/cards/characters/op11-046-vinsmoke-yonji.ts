@@ -23,7 +23,7 @@ export const op11VinsmokeYonji046: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\nIf you only have Characters with a type including \"GERMA\", this Character cannot be K.O.'d or rested by your opponent's effects.",

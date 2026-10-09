@@ -44,4 +44,36 @@ describe("OP08-098 Kalgara", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("declines optional eligible play without moving top Life", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP08-098",
+      hand: ["OP06-105"],
+      life: ["ST02-012"],
+      activeDon: 3,
+    });
+    e.asSouth().attachDon(e.leader("south"), 1);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asSouth().chooseNoPlay();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP06-105"]);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+  });
+  test("FAQ: zero Life still permits successful eligible Character play", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP08-098",
+      hand: ["OP06-105"],
+      life: 0,
+      activeDon: 3,
+    });
+    const id = e.findCardInZone("south", "hand", "OP06-105");
+    e.asSouth().attachDon(e.leader("south"), 1);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asSouth().choosePlay(id);
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === id)).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(0);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

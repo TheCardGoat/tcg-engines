@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it } from "vite-plus/test";
+import { SeededRNG } from "../../src/state/rng.ts";
 import {
   structuredCards,
   theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
@@ -76,6 +77,78 @@ describe("CR real-card: setup, start phase, deckbuilding", () => {
     expect(engine.getCardsInZone("legendArea", firstAfter)[1]!.meta.spent).toBe(true);
     expect(first ?? firstAfter).toBeTruthy();
     expect(engine.getFixerDice(P1).length + engine.getGigCount(P1)).toBe(6);
+  });
+
+  it("lets the chooser see both presented decks and face-up Legends, then hides and shuffles them", () => {
+    cover("4.3", "5.7.1", "5.7.4", "5.7.4.1", "7.5", "7.7", "7.7.1", "7.7.3");
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {},
+      {},
+      { skipSetup: false, autoChooseFirstPlayer: false, seed: "present-legends" },
+    );
+    const pending = engine.getState().G.turnMetadata.pendingChoice;
+    expect(pending?.type).toBe("chooseFirstPlayer");
+    if (pending?.type !== "chooseFirstPlayer") throw new Error("expected chooseFirstPlayer");
+    const chooser = pending.chooserId;
+    const rival = chooser === P1 ? P2 : P1;
+    const presented = engine.getCardsInZone("legendArea", rival).map((card) => card.definitionId);
+    expect(presented).toHaveLength(3);
+    expect(engine.getCardsInZone("legendArea", rival).every((card) => !card.meta.faceDown)).toBe(
+      true,
+    );
+    expect(engine.getCardsInZone("legendArea", chooser).every((card) => !card.meta.faceDown)).toBe(
+      true,
+    );
+
+    const view = engine.getFilteredView(chooser);
+    const rivalLegends = view.players[rival as string]?.zones.legendArea;
+    expect(Array.isArray(rivalLegends)).toBe(true);
+    if (!Array.isArray(rivalLegends)) throw new Error("expected presented legends");
+    expect(rivalLegends.map((card) => card.definitionId)).toEqual(presented);
+    expect(rivalLegends.every((card) => card.faceDown === false && card.cardName)).toBe(true);
+    expect(view.players[chooser as string]?.zones.deck).toBeGreaterThan(0);
+    expect(view.players[rival as string]?.zones.deck).toBeGreaterThan(0);
+
+    const before = engine.getState();
+    const expectedOrder = new Map(
+      before.ctx.playerIds.map((playerId) => {
+        const rng = new SeededRNG(`${before.ctx.seed}:legends:${playerId as string}`);
+        return [
+          playerId as string,
+          rng.shuffle(
+            before.G.players[playerId as string]!.zones.legendArea.map((id) => id as string),
+          ),
+        ] as const;
+      }),
+    );
+
+    const result = engine.resolveFirstPlayer(true, { as: chooser });
+    expect(result.gameEvents.filter((event) => event.type === "legendsShuffled")).toEqual(
+      before.ctx.playerIds.map((playerId) => ({ type: "legendsShuffled", playerId })),
+    );
+    for (const playerId of before.ctx.playerIds) {
+      expect(
+        engine.getCardsInZone("legendArea", playerId).map((card) => card.instanceId as string),
+      ).toEqual(expectedOrder.get(playerId as string));
+    }
+    expect(engine.getCardsInZone("legendArea", rival).every((card) => card.meta.faceDown)).toBe(
+      true,
+    );
+
+    const hidden = engine.getFilteredView(chooser).players[rival as string]?.zones.legendArea;
+    expect(Array.isArray(hidden)).toBe(true);
+    if (!Array.isArray(hidden)) throw new Error("expected hidden legends");
+    expect(
+      hidden.every((card) => card.faceDown && card.definitionId === "" && card.cardName === null),
+    ).toBe(true);
+    expect(
+      engine.getCardsInZone("legendArea", engine.getState().G.turnMetadata.activePlayerId)[0]!.meta
+        .spent,
+    ).toBe(true);
+    expect(
+      engine.getCardsInZone("legendArea", engine.getState().G.turnMetadata.activePlayerId)[1]!.meta
+        .spent,
+    ).toBe(true);
   });
 
   it("lets the random winner choose to go second", () => {

@@ -32,7 +32,7 @@ export const eb04RoronoaZoro007: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 9000,
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[On Play] Your Leader gains +2000 power until the end of your opponent's next End Phase.[Activate: Main] [Once Per Turn] If your opponent has a Character with 8000 power or more, this Character gains [Rush: Character] during this turn.",

@@ -17,7 +17,7 @@ export const mushuStealthyDragon: CharacterCard = {
       imageUrl: "",
     },
   ],
-  reprints: ["set13-097"],
+  reprints: ["set13-d23-012", "set13-097"],
   cardType: "character",
   name: "Mushu",
   version: "Stealthy Dragon",
@@ -31,12 +31,16 @@ export const mushuStealthyDragon: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_bf600b734e644e82ab7a90529c6f0cb8",
+    tcgPlayer: "704609",
+  },
   text: [
     {
       title: "Evasive",
     },
     {
-      title: "Tip the Scales",
+      title: "TIP THE SCALES",
       description:
         "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
     },

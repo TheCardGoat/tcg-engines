@@ -1,5 +1,23 @@
+import type { ReplacementProcess } from "./effects/replacement-process.ts";
 import type { Patch } from "immer";
-import type { Action, Duration, EffectTrigger, Keyword, OPAttribute } from "@tcg/op-types";
+import type {
+  Action,
+  Cost,
+  Duration,
+  EffectTrigger,
+  Keyword,
+  OPAttribute,
+  EffectBlock,
+} from "@tcg/op-types";
+
+export interface ReplacementSelection {
+  id: string;
+  sourceInstanceId: string;
+  replacementEffectIndex: number;
+  replacementEffectKey: string;
+  replacementAction: Action;
+  replacementTargetIds: string[];
+}
 
 export type MatchSeat = "north" | "south";
 export type Viewer = MatchSeat | "judge" | "spectator";
@@ -61,7 +79,8 @@ export type ChoiceKind =
   | "orderCards"
   | "confirm"
   | "costPayment"
-  | "chooseOption";
+  | "chooseOption"
+  | "chooseNumber";
 export type EngineActor = MatchSeat | "judge" | "system";
 export type LogVisibility = "public" | "private" | "judge";
 export type ResolutionStatus = "idle" | "running" | "waitingForPrompt";
@@ -72,6 +91,7 @@ export interface ReturnToDeckOwnerGroup {
 }
 
 export interface ReturnToDeckContinuation {
+  removalCostPaymentId?: string;
   owner: MatchSeat;
   allTargetIds: string[];
   publicTargetIds: string[];
@@ -81,25 +101,60 @@ export interface ReturnToDeckContinuation {
   finalizeOwnerGroup: boolean;
 }
 
+export interface CostPaymentProgress {
+  /** A prior printed cost could only be paid in part; the effect body must not resolve. */
+  incomplete: boolean;
+  sourceZoneChangeCounter?: number;
+  /** Current reduced payment, without changing the captured printed requirements. */
+  adjustedCost?: Cost | null;
+}
+
+export interface RestCostProcess {
+  continuation: Extract<ResolutionItem, { kind: "effectBlock" }>;
+  block: EffectBlock;
+  entries: Array<
+    | { kind: "card"; instanceId: string; zone: CardZone; zoneChangeCounter: number }
+    | { kind: "don"; token: string; seat: MatchSeat }
+  >;
+  index: number;
+  incomplete: boolean;
+  donProcessId?: string;
+}
+
 export interface EffectBlockContinuation {
   sourceInstanceId: string;
   controller: MatchSeat;
   trigger: EffectTrigger;
   blockIndex: number;
+  /** Requirements captured when activation starts; survives payment and area changes. */
+  activatedBlock?: EffectBlock;
+  orderedCostPayments?: boolean;
+  paidCostCount?: number;
+  costPaymentProgress?: CostPaymentProgress;
+  selectedAlternativeCostIndex?: number;
   trashHandIds?: string[];
   costPaymentIds?: string[];
   costPaymentIdsByType?: {
     giveDon?: string[];
+    giveDonSources?: string[];
+    restDon?: string[];
+    returnDonSources?: string[];
+    restCardsSources?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   };
   costsPaid?: boolean;
   confirmed?: boolean;
   triggerEvent?: {
+    baseCostAtActivation?: number;
     instanceId: string;
+    lifeCountAfterRemoval?: number;
+    battlePowerCompared?: boolean;
+    targetZoneChangeCounter?: number;
     instanceController?: MatchSeat;
     effectController: MatchSeat;
     koCause?: "battle" | "effect";
+    koBasePower?: number;
     attachedDon?: number;
     targetInstanceId?: string;
     amount?: number;
@@ -150,9 +205,24 @@ export interface ModifierState {
   targetId: string;
   // 4-9-2-1: "basePower" modifiers set a card's base power to an absolute
   // value; competing set values resolve to the highest rather than summing
-  // like additive "power" modifiers. ("baseCost" may join per 4-9-2-2.)
-  type: "power" | "basePower" | "cost" | "keyword" | "flag" | "attackRestriction" | "attribute";
+  // like additive "power" modifiers. Base cost follows the same highest-setting rule.
+  type:
+    | "lifeValue"
+    | "power"
+    | "basePower"
+    | "baseCost"
+    | "cost"
+    | "setCost"
+    | "keyword"
+    | "flag"
+    | "attackRestriction"
+    | "attribute"
+    | "activationRequirements";
   value?: number;
+  /** Physical object to which a base-cost setting was applied. */
+  baseCostTargetGeneration?: number;
+  /** Physical DON generation for a restriction while it remains in the cost area. */
+  donIdentity?: string;
   keyword?: Keyword;
   attribute?: OPAttribute;
   flag?:
@@ -171,6 +241,12 @@ export interface ModifierState {
     | "cannotPlay"
     | "cannotDrawByOwnEffects"
     | "cannotSetDonActiveByCharacterEffects";
+  activationRequirements?: {
+    effectTypes?: EffectTrigger[];
+    costs?: import("@tcg/op-types").Cost[];
+    conditions?: import("@tcg/op-types").Condition[];
+    targetZoneChangeCounter: number;
+  };
   negatedEffectTypes?: EffectTrigger[];
   playerScope?: boolean;
   koRestriction?: "inBattle" | "byEffect";
@@ -181,11 +257,12 @@ export interface ModifierState {
   createdBySeat?: MatchSeat;
   expiresAtBattleId: string | null;
   expiresOnTurnStartOfSeat: MatchSeat | null;
-  consumeOnPlay?: boolean;
+  nextPaidPlay?: { controller: MatchSeat; target: import("@tcg/op-types").Target };
   attackRestriction?: "mustAttack" | "cannotAttack" | "cannotAttackOtherThan";
   attackTargetFilters?: import("@tcg/op-types").TargetFilter[];
   playRestrictionFilters?: import("@tcg/op-types").TargetFilter[];
   playRestrictionSourceZones?: CardZone[];
+  playRestrictionOrigin?: "command" | "effect";
 }
 
 export interface PromptOption {
@@ -199,6 +276,13 @@ export interface PromptOption {
 // What remains of an effect-driven play once the 3-7-6-1 replacement choice
 // trash resolved and the played Character entered the freed slot.
 export type EffectPlayReplacementContinuation =
+  | {
+      kind: "groupedPlay";
+      action: Extract<Action, { action: "playGrouped" }>;
+      remainingIds: string[];
+      playedCards: Array<{ instanceId: string; zoneChangeCounter: number }>;
+      activeId: string;
+    }
   | {
       kind: "playAction";
       action: Extract<Action, { action: "play" }>;
@@ -225,15 +309,29 @@ export type EffectPlayReplacementContinuation =
       kind: "playCardCost";
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       selectedIds: string[];
       trashHandIds?: string[];
       costPaymentIdsByType?: {
         giveDon?: string[];
+        giveDonSources?: string[];
+        restDon?: string[];
+        returnDonSources?: string[];
+        restCardsSources?: string[];
         restCards?: string[];
         returnCharacter?: string[];
       };
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
         targetInstanceId?: string;
         amount?: number;
@@ -243,7 +341,100 @@ export type EffectPlayReplacementContinuation =
       };
     };
 
+export interface LifeReplacementMovedCard {
+  instanceId: string;
+  zoneChangeCounter: number;
+  owner: MatchSeat;
+  destinationSeat: MatchSeat;
+}
+
+export interface LifeReplacementOrderGroup {
+  owner: MatchSeat;
+  destinationSeat: MatchSeat;
+  cards: Array<{ instanceId: string; zoneChangeCounter: number }>;
+}
+
+export interface SimultaneousStateChangeProcess {
+  donProcessId?: string;
+  effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+  sourceInstanceId: string;
+  controller: MatchSeat;
+  action: Extract<Action, { action: "simultaneousStateChange" }>;
+  groups: Array<{
+    index: number;
+    chooser: MatchSeat;
+    candidateIds: string[];
+    minimum: number;
+    maximum: number;
+    selectedIds?: string[];
+  }>;
+  snapshots: Record<
+    string,
+    {
+      zoneChangeCounter: number;
+      zone: CardZone | "costArea";
+      canRest: boolean;
+      canActivate?: boolean;
+      donSeat?: MatchSeat;
+      cost: number;
+      power: number;
+    }
+  >;
+  winners?: Array<{ id: string; rested: boolean; replaced?: boolean }>;
+  replacementIndex: number;
+}
+
+export type DonIdentityLocation =
+  | { seat: MatchSeat; area: "active" | "rested" }
+  | { attachedTo: string };
+export interface DonTransferProcess {
+  controller: MatchSeat;
+  sourceInstanceId: string;
+  moves: Array<{
+    from: DonIdentityLocation;
+    to: DonIdentityLocation;
+    count: number;
+    candidates: string[];
+    selected?: string[];
+  }>;
+  afterActions?: Action[];
+  effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+}
+
+export type DonPaymentCommand = Extract<
+  GameCommand,
+  { type: "playCard" | "attachDon" | "resolvePrompt" }
+>;
+
 export type PromptResolutionContext =
+  | {
+      intent: "commandDonPayment";
+      controller: MatchSeat;
+      command: DonPaymentCommand;
+      amount: number;
+      candidateIds: string[];
+      objectId: string;
+      objectGeneration: number;
+      battleId?: string;
+    }
+  | { intent: "effectDonTransferSelection"; process: DonTransferProcess; index: number }
+  | {
+      intent: "effectCostDonIdentity";
+      continuation: EffectBlockContinuation;
+      amount: number;
+      candidates: string[];
+      paymentType: "restDon" | "giveDonSources";
+    }
+  | {
+      intent: "effectSimultaneousStateSelection";
+      process: SimultaneousStateChangeProcess;
+      groupIndex: number;
+    }
+  | { intent: "startOfGameSearch"; controller: MatchSeat }
+  | { intent: "startOfGameStage"; controller: MatchSeat; candidateIds: string[] }
+  | { intent: "continuousCostOrder"; fingerprint: string; candidateIds: string[] }
+  | { intent: "readyEffectOrder"; controller: MatchSeat; candidateIds: string[] }
+  | { intent: "loopIterations" }
   | {
       intent: "battleAttackHandTrashCost";
       attackerId: string;
@@ -262,6 +453,8 @@ export type PromptResolutionContext =
     }
   | {
       intent: "battleKoReplacement";
+      replacementChoices?: ReplacementSelection[];
+      replacementRequired?: boolean;
       battleId: string;
       targetId: string;
       controller: MatchSeat;
@@ -274,6 +467,7 @@ export type PromptResolutionContext =
     }
   | {
       intent: "lifeTrigger";
+      lifeCountAfterRemoval: number;
       sourceInstanceId: string;
       controller: MatchSeat;
       trigger: "trigger";
@@ -283,6 +477,7 @@ export type PromptResolutionContext =
     }
   | {
       intent: "lifeTrigger";
+      lifeCountAfterRemoval: number;
       sourceInstanceId: string;
       controller: MatchSeat;
       trigger: "trigger";
@@ -298,15 +493,32 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       trashHandIds?: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
         targetInstanceId?: string;
         amount?: number;
         sourceInstanceId?: string;
       };
+    }
+  | {
+      intent: "effectAlternativeCost";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      affordableIndexes: number[];
+      continuation: EffectBlockContinuation;
     }
   | {
       intent: "effectActionOptional";
@@ -324,6 +536,10 @@ export type PromptResolutionContext =
     }
   | {
       intent: "effectKoReplacement";
+      koCompletionId?: string;
+      removalCostPaymentId?: string;
+      replacementChoices?: ReplacementSelection[];
+      replacementRequired?: boolean;
       targetId: string;
       controller: MatchSeat;
       replacementSourceInstanceId: string;
@@ -338,6 +554,10 @@ export type PromptResolutionContext =
     }
   | {
       intent: "effectRestReplacement";
+      restCostProcess?: RestCostProcess;
+      simultaneousStateChange?: SimultaneousStateChangeProcess;
+      replacementChoices?: ReplacementSelection[];
+      replacementRequired?: boolean;
       targetId: string;
       controller: MatchSeat;
       replacementSourceInstanceId: string;
@@ -351,6 +571,10 @@ export type PromptResolutionContext =
     }
   | {
       intent: "effectRemovalReplacement";
+      movementCompletionId?: string;
+      removalCostPaymentId?: string;
+      replacementChoices?: ReplacementSelection[];
+      replacementRequired?: boolean;
       targetId: string;
       controller: MatchSeat;
       replacementSourceInstanceId: string;
@@ -362,9 +586,10 @@ export type PromptResolutionContext =
       removalController: MatchSeat;
       removalAction: Extract<
         Action,
-        { action: "returnToHand" | "returnToDeck" | "trashFromField" }
+        { action: "returnToHand" | "returnToDeck" | "trashFromField" | "addToLife" }
       >;
       remainingTargetIds: string[];
+      skipRemovalReplacementIds?: string[];
       returnToDeckContinuation?: ReturnToDeckContinuation;
       returnCharacterCostContinuation?: EffectBlockContinuation;
     }
@@ -375,14 +600,6 @@ export type PromptResolutionContext =
       action: Extract<Action, { action: "guessTopDeckCost" }>;
       revealedInstanceId: string;
       owner: MatchSeat;
-    }
-  | {
-      intent: "effectRestDonCount";
-      sourceInstanceId: string;
-      controller: MatchSeat;
-      action: Extract<Action, { action: "rest" }>;
-      targetSeat: MatchSeat;
-      maximum: number;
     }
   | {
       intent: "effectMixedRestSelection";
@@ -405,12 +622,21 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
-      cost: Extract<import("@tcg/op-types").Cost, { cost: "giveDon" }>;
       candidateIds: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -420,13 +646,23 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       cost: Extract<import("@tcg/op-types").Cost, { cost: "trashFromHand" }>;
       candidateIds: string[];
       costPaymentIds?: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
         targetInstanceId?: string;
         amount?: number;
@@ -441,10 +677,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
         targetInstanceId?: string;
         amount?: number;
@@ -459,14 +705,30 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       trashHandIds?: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
+    }
+  | {
+      intent: "effectCostAddCharacterToLife" | "effectCostTurnLifeFaceUp";
+      continuation: EffectBlockContinuation;
+      candidateIds: string[];
+      amount: number;
     }
   | {
       intent: "effectCostReturnCharacterToDeck";
@@ -474,11 +736,21 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       trashHandIds?: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -488,11 +760,21 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -502,8 +784,18 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -513,8 +805,18 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -524,10 +826,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -537,10 +849,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -550,10 +872,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       handAmount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -563,11 +895,23 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
+      costPaymentIds?: string[];
+      trashHandIds?: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -577,10 +921,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -590,10 +944,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -603,10 +967,20 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       amount: number;
       candidateIds: string[];
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         effectController: MatchSeat;
       };
     }
@@ -615,6 +989,10 @@ export type PromptResolutionContext =
       sourceInstanceId: string;
       controller: MatchSeat;
       action: Action;
+      groupedRemovalSelection?: {
+        action: Extract<Action, { action: "ko" | "returnToDeck" | "returnToHand" }>;
+        selectedGroups: string[][];
+      };
       previousActionTargetIds?: string[];
       opaqueCandidateIds?: Record<string, string>;
     }
@@ -674,13 +1052,11 @@ export type PromptResolutionContext =
       selectedIds: string[];
     }
   | {
-      intent: "effectGroupedPlayOnPlayOrder";
+      intent: "effectSearchLookCount";
       sourceInstanceId: string;
       controller: MatchSeat;
-      playedCards: Array<{
-        instanceId: string;
-        zoneChangeCounter: number;
-      }>;
+      action: Extract<Action, { action: "search" }>;
+      maximum: number;
     }
   | {
       intent: "effectSearchSelection";
@@ -696,6 +1072,10 @@ export type PromptResolutionContext =
       controller: MatchSeat;
       action: Extract<Action, { action: "search" }>;
       remainderIds: string[];
+    }
+  | {
+      intent: "effectLifeReplacementOrder";
+      groups: LifeReplacementOrderGroup[];
     }
   | {
       intent: "effectReturnToDeckOwnerOrder";
@@ -781,6 +1161,7 @@ export type PromptResolutionContext =
     }
   | {
       intent: "effectLifePosition";
+      removalCostPaymentId?: string;
       sourceInstanceId: string;
       controller: MatchSeat;
       action:
@@ -845,6 +1226,7 @@ export type PromptResolutionContext =
       returningSeat: MatchSeat;
       amount: number;
       candidateIds: string[];
+      action: Extract<Action, { action: "opponentReturnDon" }>;
     }
   | {
       intent: "effectReturnDon";
@@ -880,6 +1262,14 @@ export type PromptResolutionContext =
       maximum: number;
     }
   | {
+      intent: "effectGiveDonEachCount";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "giveDon" }>;
+      recipients: Array<{ instanceId: string; zoneChangeCounter: number }>;
+      allocations: Array<{ amount: number; active: number }>;
+    }
+  | {
       intent: "effectGiveDonCount";
       sourceInstanceId: string;
       controller: MatchSeat;
@@ -887,9 +1277,18 @@ export type PromptResolutionContext =
       maximum: number;
     }
   | {
+      intent: "effectGiveDonSource";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "giveDon" }>;
+      targetId: string;
+    }
+  | {
       // 3-7-6-1: playing a Character into a full Character area first trashes
       // 1 of the player's Characters as rule processing (not a K.O., 10-2-1-3).
       intent: "playCharacterReplacement";
+      paidCost?: number;
+      sourceGeneration?: number;
       controller: MatchSeat;
       instanceId: string;
       candidateIds: string[];
@@ -913,6 +1312,9 @@ export type PromptResolutionContext =
     };
 
 export interface PromptState {
+  effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+  replacementGroup?: string[];
+  replacementProcess?: ReplacementProcess;
   id: string;
   kind: PromptKind;
   choiceKind: ChoiceKind | null;
@@ -945,9 +1347,13 @@ export interface BattleState {
   damageRemaining: number | null;
   result: "pending" | "hit" | "ko" | "blocked" | "no_damage";
   completionQueued?: boolean;
+  powerCompared?: boolean;
+  comparedParticipants?: { instanceId: string; zoneChangeCounter: number }[];
 }
 
 export interface SetupState {
+  openingHandsDrawn: boolean;
+  pendingStartOfGameSeats: MatchSeat[];
   started: boolean;
   joKenPo: {
     round: number;
@@ -985,6 +1391,28 @@ export interface EngineCapabilityIssue {
 export type ResolutionItem =
   | {
       id: string;
+      kind: "effectRestCostContinue";
+      process: RestCostProcess;
+      replacementProcess?: ReplacementProcess;
+      effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+    }
+  | {
+      id: string;
+      kind: "effectAfterCostSettlement";
+      continuation: Extract<ResolutionItem, { kind: "effectBlock" }>;
+      block: EffectBlock;
+    }
+  | { id: string; kind: "startOfGameContinue" }
+  | { id: string; kind: "effectComplete" }
+  | {
+      id: string;
+      kind: "effectRemovalCostComplete";
+      continuation: Extract<ResolutionItem, { kind: "effectBlock" }>;
+      targetIds: string[];
+      paidTargetIds: string[];
+    }
+  | {
+      id: string;
       kind: "beginTurn";
       seat: MatchSeat;
       skipDraw: boolean;
@@ -1003,10 +1431,17 @@ export type ResolutionItem =
   | {
       id: string;
       kind: "effectBlock";
+      readyEffectSelected?: boolean;
       sourceInstanceId: string;
       controller: MatchSeat;
       trigger: EffectTrigger;
       blockIndex: number;
+      /** Requirements captured when activation starts; survives payment and area changes. */
+      activatedBlock?: EffectBlock;
+      orderedCostPayments?: boolean;
+      paidCostCount?: number;
+      costPaymentProgress?: CostPaymentProgress;
+      selectedAlternativeCostIndex?: number;
       sourceZoneChangeCounter?: number;
       trashHandIds?: string[];
       costPaymentIds?: string[];
@@ -1014,11 +1449,16 @@ export type ResolutionItem =
       costsPaid?: boolean;
       confirmed?: boolean;
       triggerEvent?: {
+        baseCostAtActivation?: number;
         instanceId: string;
+        lifeCountAfterRemoval?: number;
+        battlePowerCompared?: boolean;
+        targetZoneChangeCounter?: number;
         instanceController?: MatchSeat;
         effectController: MatchSeat;
         fromZone?: CardZone;
         koCause?: "battle" | "effect";
+        koBasePower?: number;
         attachedDon?: number;
         targetInstanceId?: string;
         amount?: number;
@@ -1030,6 +1470,11 @@ export type ResolutionItem =
   | {
       id: string;
       kind: "effectAction";
+      effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+      movementCompletionId?: string;
+      koCompletionId?: string;
+      removalCostPaymentId?: string;
+      replacementProcess?: ReplacementProcess;
       sourceInstanceId: string;
       controller: MatchSeat;
       action: Action;
@@ -1038,6 +1483,32 @@ export type ResolutionItem =
       skipRemovalReplacementIds?: string[];
       returnToDeckContinuation?: ReturnToDeckContinuation;
       setPowerFromSourceIds?: string[];
+    }
+  | {
+      id: string;
+      kind: "effectStateChangeContinue";
+      process: SimultaneousStateChangeProcess;
+      replacementProcess?: ReplacementProcess;
+      effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+    }
+  | {
+      id: string;
+      kind: "effectMovementComplete";
+      delayedActionChainId?: string;
+      replacedLifeCards?: LifeReplacementMovedCard[];
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      movedIds: string[];
+    }
+  | {
+      id: string;
+      kind: "effectKoComplete";
+      effectTriggerEvent?: EffectBlockContinuation["triggerEvent"];
+      sourceInstanceId: string;
+      sourceZoneChangeCounter: number;
+      controller: MatchSeat;
+      successfulTargetIds: string[];
+      actions: Action[];
     }
   | {
       id: string;
@@ -1071,6 +1542,7 @@ export type ResolutionItem =
   | {
       id: string;
       kind: "battleLifeTriggerPrompt";
+      lifeCountAfterRemoval: number;
       battleId: string;
       lifeCardId: string;
     }
@@ -1126,6 +1598,8 @@ export interface PlayerState {
    * for the turn number it happened so stale turns never satisfy conditions.
    */
   activatedEvent?: { turnNumber: number; bestBaseCost: number };
+  /** Last turn when an effect actually trashed a card from this player's hand. */
+  handTrashedByEffectOnTurn?: number;
 }
 
 export interface EngineEvent {
@@ -1140,6 +1614,7 @@ export interface EngineEvent {
     | "mulligan"
     | "gameStarted"
     | "phaseChanged"
+    | "characterKod"
     | "cardPlayed"
     | "cardMoved"
     | "donAttached"
@@ -1224,7 +1699,70 @@ export interface DelayedEffectAction {
   previousActionTargetIds?: string[];
 }
 
+export interface OptionalLoopBoundary {
+  /** Strict scalar DON cycle proof; never mixed with rest/ready or moving evidence. */
+  donSourceInstanceId?: string;
+  donSourceInstanceIds?: string[];
+  movingSourceInstanceIds?: string[];
+  movingSourceInstanceId?: string;
+  fingerprint: string;
+  cardState: string;
+  effectKey: string;
+  controller: MatchSeat;
+}
+
+export interface OptionalLoopPlan {
+  boundaries: OptionalLoopBoundary[];
+  participants: MatchSeat[];
+  declarations: Partial<Record<MatchSeat, number>>;
+  phase: "declare" | "stop";
+  representativeCycle?: "start" | "return";
+  stopSeat?: MatchSeat;
+}
+
+export interface ContinuousCostProcess {
+  basePowerContributions?: Record<string, Record<string, number>>;
+  baseCostContributions?: Record<string, Record<string, number>>;
+  powerContributions?: Record<string, Record<string, number>>;
+  contributions: Record<string, Record<string, number>>;
+  remaining: string[];
+  controller: MatchSeat;
+  stage: 0 | 1;
+  roundStart: string;
+}
+
+export interface ContinuousCostState {
+  basePowerContributions?: Record<string, Record<string, number>>;
+  basePowerValues?: Record<string, number>;
+  baseCostValues?: Record<string, number>;
+  baseCostContributions?: Record<string, Record<string, number>>;
+  powerContributions?: Record<string, Record<string, number>>;
+  powerValues?: Record<string, number>;
+  fingerprint: string;
+  contributions: Record<string, Record<string, number>>;
+  values: Record<string, number>;
+  pending?: ContinuousCostProcess;
+  unsupported?: boolean;
+}
+
 export interface MatchState {
+  donIdentities?: {
+    next: number;
+    processes: string[];
+    south: { active: string[]; rested: string[] };
+    north: { active: string[]; rested: string[] };
+    attached: Record<string, string[]>;
+  };
+  continuousCosts?: ContinuousCostState;
+  pendingAutoEffects?: Array<Extract<ResolutionItem, { kind: "effectBlock" }>>;
+  readyEffectGroup?: {
+    turnPlayer: MatchSeat;
+    effects: Array<Extract<ResolutionItem, { kind: "effectBlock" }>>;
+  };
+  effectResolving?: boolean;
+  optionalLoopEvidence?: OptionalLoopBoundary[];
+  optionalLoopPlan?: OptionalLoopPlan;
+  stoppedOptionalLoops?: OptionalLoopBoundary[];
   config: Required<
     Pick<
       MatchConfig,
@@ -1239,6 +1777,8 @@ export interface MatchState {
   status: MatchStatus;
   activeSeat: MatchSeat;
   extraTurnSeat: MatchSeat | null;
+  /** Defeat owed at the end of the turn, even if the empty deck is refilled. */
+  deferredEmptyDeckLossTurnBySeat?: Partial<Record<MatchSeat, number>>;
   turnNumber: number;
   phase: MatchPhase;
   players: Record<MatchSeat, PlayerState>;
@@ -1263,6 +1803,7 @@ export interface MatchState {
 }
 
 export interface PromptResolution {
+  iterations?: number;
   promptId: string;
   optionId?: string;
   selectedIds?: string[];
@@ -1396,6 +1937,7 @@ export interface PotentialCardCommandDescriptor extends LegalCommandDescriptor {
 }
 
 export type ProjectedDecisionKind =
+  | "chooseNumber"
   | "chooseAction"
   | "chooseOption"
   | "selectCards"
@@ -1450,6 +1992,15 @@ export interface ProjectedActionCandidate {
 }
 
 export type ProjectedDecisionStep =
+  | {
+      id: string;
+      kind: "chooseNumber";
+      label: string;
+      min: number;
+      max: number;
+      integer: true;
+      field: "iterations";
+    }
   | {
       id: string;
       kind: "chooseAction";
@@ -1559,6 +2110,8 @@ export interface ProjectedCard {
   zone: CardZone;
   rested: boolean;
   attachedDon: number;
+  /** Current Leader Life characteristic; not the number of cards in Life. */
+  lifeValue: number | null;
   power: number | null;
   cost: number | null;
   /** Effective attributes including granted ones; null for hidden cards. */

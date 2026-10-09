@@ -13,3 +13,10 @@ describe("CookTech Apron — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveLinkedStats } from "../../../testing/linked-stats.ts";
+
+/** @covers oJIuGCrzPG-a2 */
+describe("Linked stat bonus", () => {
+  proveLinkedStats({ card: cooktechApron, host: "ally", power: 0, life: 2 });
+});

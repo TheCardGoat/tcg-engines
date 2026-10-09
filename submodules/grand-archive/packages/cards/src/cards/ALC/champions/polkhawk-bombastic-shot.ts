@@ -49,9 +49,22 @@ export const polkhawkBombasticShot: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "rule-modification",
               mode: "modify-cost",
               action: "activate",
+              subject: {
+                kind: "player",
+                player: "controller",
+              },
               filter: {
-                kind: "subtype",
-                oneOf: ["REACTION"],
+                kind: "all",
+                filters: [
+                  {
+                    kind: "subtype",
+                    oneOf: ["RANGER"],
+                  },
+                  {
+                    kind: "subtype",
+                    oneOf: ["REACTION"],
+                  },
+                ],
               },
               costKind: "reserve",
               costOperation: "subtract",

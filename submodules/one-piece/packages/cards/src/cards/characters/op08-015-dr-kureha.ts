@@ -66,7 +66,7 @@ export const op08DrKureha015: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Drum Kingdom",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

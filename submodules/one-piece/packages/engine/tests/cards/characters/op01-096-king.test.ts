@@ -37,6 +37,12 @@ describe("OP01-096 King", () => {
     expect(firstKo.candidates.map((candidate) => candidate.ref.id)).not.toContain(excludedId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [costThreeId] }, "south");
 
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === costThreeId),
+    ).toBe(true);
+
     const secondKo = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(secondKo?.kind).toBe("selectEntity");
     if (secondKo?.kind !== "selectEntity") throw new Error("Expected King's cost-2 K.O. choice.");

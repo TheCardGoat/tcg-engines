@@ -22,7 +22,7 @@ export const minnieMouseSweetheartPrincessIconic: CharacterCard = {
   inkType: ["amber"],
   set: "009",
   cardNumber: 241,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 4,
   strength: 2,

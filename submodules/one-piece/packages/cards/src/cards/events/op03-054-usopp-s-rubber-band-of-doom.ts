@@ -21,7 +21,7 @@ export const op03UsoppSRubberBandOfDoom054: EventCard = {
   rarity: "C",
   setId: "OP03",
   cost: 1,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, you may trash 1 card from the top of your deck. [Trigger] Draw 1 card and you may trash 1 card from the top of your deck.  This card has been officially errata'd.",
   effects: {

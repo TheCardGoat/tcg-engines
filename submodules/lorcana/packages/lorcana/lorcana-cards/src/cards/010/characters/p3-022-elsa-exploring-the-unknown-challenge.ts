@@ -20,7 +20,7 @@ export const elsaExploringTheUnknownP3Challenge: CharacterCard = {
   name: "Elsa",
   version: "Exploring the Unknown",
   inkType: ["amethyst"],
-  franchise: "Frozen",
+  franchise: "Clio Schaffner",
   set: "010",
   cardNumber: 22,
   rarity: "special",

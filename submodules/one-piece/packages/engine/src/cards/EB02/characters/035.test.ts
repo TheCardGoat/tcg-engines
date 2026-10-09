@@ -34,9 +34,58 @@ describe("EB02-035", () => {
     engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
     const add = engine.pendingDecision("effectAddDon", "south").steps[0];
     if (add?.kind !== "chooseOption") throw new Error("Expected the DON!! count choice.");
+    const beforeAdd = engine.getView("south").players.south;
     engine.resolveDecision("effectAddDon", { optionId: "1" }, "south");
 
     expect(engine.getView("south").prompts).toHaveLength(0);
-    expect(engine.getView("south").players.south.activeDon).toBeGreaterThan(0);
+    expect(engine.getView("south").players.south.activeDon).toBe(beforeAdd.activeDon + 1);
+    expect(engine.getView("south").players.south.donDeckCount).toBe(beforeAdd.donDeckCount - 1);
+  });
+  test("returning only one DON!! does not trigger the two-DON ability", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-058", character: ["EB02-035"], activeDon: 1 },
+      {},
+    );
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const south = engine.getView("south").players.south;
+    expect(south.activeDon).toBe(0);
+    expect(south.donDeckCount).toBe(donDeckBefore + 1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("two separate DON minus one payments do not count as a simultaneous return", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB02-035"], hand: ["OP01-117", "OP01-117"], activeDon: 6 },
+      { character: ["EB01-005"] },
+    );
+    const before = e.getView("south").players.south.donDeckCount;
+    e.playCard("OP01-117");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    let p = e.pendingDecision("effectCostReturnDon", "south").steps[0];
+    if (p?.kind !== "payCost") throw Error("DON cost");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: [p.candidates[0]!.ref.id] }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    e.playCard("OP01-117");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    p = e.pendingDecision("effectCostReturnDon", "south").steps[0];
+    if (p?.kind !== "payCost") throw Error("DON cost");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: [p.candidates[0]!.ref.id] }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.donDeckCount).toBe(before + 2);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("Luffy-Tarou's returned DON makes the newly played Sanji and Pudding draw at equality", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["ST18-005", "EB02-035"], activeDon: 7, deck: ["ST02-002", "EB01-005"] },
+      { activeDon: 6 },
+    );
+    e.playCard("ST18-005");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const card = e.findCardInZone("south", "hand", "EB02-035");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [card] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST02-002"]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(card);
   });
 });

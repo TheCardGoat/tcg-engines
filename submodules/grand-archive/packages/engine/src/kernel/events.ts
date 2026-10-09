@@ -65,6 +65,8 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
     | {
         readonly type: "object-created";
         readonly object: GrandArchiveCardInstance;
+        /** Separate a previously implicit base champion card without replacing its field object. */
+        readonly separatedChampionBaseId?: GrandArchiveObjectId;
         /** Position within an ordered destination zone. */
         readonly placement?: "top" | "bottom" | "unordered";
       }
@@ -272,6 +274,8 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
       }
     | {
         readonly type: "damage-marked";
+        /** Damage source before resolution moves it out of its functional zone. */
+        readonly sourceSnapshot?: GrandArchiveCardInstance;
         readonly objectId: GrandArchiveObjectId;
         readonly amount: number;
         readonly sourceId?: GrandArchiveObjectId;
@@ -402,7 +406,14 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
             readonly objectIncarnation: number;
           }
       ))
-    | { readonly type: "replacement-effect-consumed"; readonly replacementId: string }
+    | {
+        readonly type: "replacement-effect-consumed";
+        readonly replacementId: string;
+        readonly retainFor?: {
+          readonly gameEventId: GrandArchiveGameEventId;
+          readonly sourceId?: GrandArchiveObjectId;
+        };
+      }
     | { readonly type: "replacement-effect-expired"; readonly replacementId: string }
     | { readonly type: "replacement-limit-used"; readonly usageKey: string }
     | {

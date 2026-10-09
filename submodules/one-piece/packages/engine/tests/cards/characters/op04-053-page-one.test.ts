@@ -139,6 +139,7 @@ describe("OP04-053 Page One", () => {
     expect(returnStep.candidates.map((candidate) => candidate.ref.id)).toContain(drawnId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [drawnId] }, "north");
 
+    engine.asNorth().chooseCounter();
     expect(engine.getState().players.north.deck.at(-1)).toBe(drawnId);
     const view = engine.getView("north");
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(counterId);

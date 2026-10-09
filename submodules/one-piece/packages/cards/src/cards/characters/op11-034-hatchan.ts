@@ -23,7 +23,7 @@ export const op11Hatchan034: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Former Arlong Pirates Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "Former Arlong Pirates"],
   attribute: "slash",
   effect:
     '[Activate: Main] You may rest this Character: If your Leader has the "Fish-Man" or "Merfolk" type, up to 1 of your opponent\'s Characters with a cost of 3 or less cannot be rested until the end of your opponent\'s next turn.',
@@ -62,12 +62,12 @@ export const op11Hatchan034: CharacterCard = {
                 {
                   condition: "leaderTrait",
                   trait: "Fish-Man",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   condition: "leaderTrait",
                   trait: "Merfolk",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

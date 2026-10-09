@@ -128,6 +128,7 @@ export interface LorcanaCardSnapshot {
   zoneId: LorcanaZoneId;
 
   // Optional gameplay + display metadata
+  nameVariants?: string[];
   cardType?: "character" | "action" | "item" | "location";
   actionSubtype?: string;
   cost?: number;
@@ -138,6 +139,8 @@ export interface LorcanaCardSnapshot {
   inkable?: boolean;
   text?: string;
   textEntries?: LorcanaCardTextEntrySnapshot[];
+  /** Printed text for each engine branch, including branches sharing one ability. */
+  abilityTextEntries?: (LorcanaCardTextEntrySnapshot | undefined)[];
   /** Localized option labels for cards with a ChoiceEffect (index-parallel to ChoiceEffect.options) */
   choiceOptionTexts?: string[];
   strength?: number;
@@ -166,6 +169,7 @@ export interface LorcanaCardSnapshot {
   readyState?: CardReadyState;
   isDrying?: boolean;
   hasQuestRestriction?: boolean;
+  hasChallengeRestriction?: boolean;
   temporaryRestrictions?: Record<string, number>;
   atLocationId?: string;
   atLocationLabel?: string;
@@ -370,6 +374,7 @@ export interface ResolutionAmountSelectionState {
 
 export interface ResolutionChoiceAvailableMovesSelectionState extends AvailableMovesSelectionBase {
   mode: "resolution-choice";
+  abilityIndex?: number | null;
   entries: AvailableMovesSelectionEntry[];
   targetCard?: LorcanaCardSnapshot | null;
 }
@@ -505,10 +510,12 @@ export interface MoveLogEntrySnapshot {
   id: string;
   timestamp: number;
   turnNumber: number;
-  moveId: LorcanaSimulatorMoveId;
+  moveId: LorcanaSimulatorMoveId | "turnStart";
   actorSide?: LorcanaPlayerSide;
   title: string;
   typedLogEntry?: LorcanaGameLogEntry | MoveLog;
+  /** Public player IDs used to distinguish player targets from card targets. */
+  knownPlayerIds?: readonly string[];
   playerId?: string;
   params?: SimulatorSerializedObject;
 }
@@ -535,6 +542,8 @@ export interface SimulatorMoveError {
 
 export interface LorcanaPlayerSummary {
   lore: number;
+  /** Hyperia City ink drops held by this player (public counter). */
+  inkDrops: number;
   deckCount: number;
   handCount: number;
   discardCount: number;
@@ -582,6 +591,7 @@ export const LORCANA_SIMULATOR_MOVE_ID_REGISTRY = {
   manualDryCard: true,
   manualSetDamage: true,
   manualSetLore: true,
+  manualSetInkDrops: true,
   manualShuffleDeck: true,
   manualPassTurn: true,
   turnSkipped: true,
@@ -609,6 +619,8 @@ export function assertLorcanaSimulatorMoveId(value: string): LorcanaSimulatorMov
 export type LorcanaSimulatorMoveParams = ExactMoveParamMap<{
   activateAbility: {
     cardId: string;
+    /** Ink drops removed toward the activated ability ink cost. */
+    inkDrops?: LorcanaRuntimeMoveParams["activateAbility"]["inkDrops"];
     ability?: string;
     abilityIndex?: number;
     targets?: string[];
@@ -616,17 +628,20 @@ export type LorcanaSimulatorMoveParams = ExactMoveParamMap<{
     costs?: {
       exertCharacters?: string[];
       discardCards?: string[];
+      revealCards?: string[];
     };
   };
   challenge: { attackerId: string; defenderId: string };
   chooseWhoGoesFirst: { playerId: string; side?: LorcanaPlayerSide };
   concede: { playerId: string };
-  moveCharacterToLocation: { characterId: string; locationId: string };
+  moveCharacterToLocation: { characterId: string; locationId: string; inkDrops?: number };
   alterHand: { playerId: string; cardsToMulligan: string[] };
   passTurn: Record<string, never>;
   playCard: {
     cardId: string;
     cost: LorcanaRuntimeMoveParams["playCard"]["cost"];
+    /** Ink drops the payer removes toward the ink cost (Hyperia City, opt-in). */
+    inkDrops?: number;
     discardCards?: string[];
     shiftTarget?: string;
     additionalShiftTargets?: string[];
@@ -663,6 +678,7 @@ export type LorcanaSimulatorMoveParams = ExactMoveParamMap<{
   manualDryCard: { cardId: string };
   manualSetDamage: { cardId: string; damage: number };
   manualSetLore: { playerId: string; amount: number };
+  manualSetInkDrops: { playerId: string; amount: number };
   manualShuffleDeck: { playerId: string };
   manualPassTurn: Record<string, never>;
   turnSkipped: { skipperPlayerId: string; stallerPlayerId: string };
@@ -708,6 +724,7 @@ export const LORCANA_SIMULATOR_JUDGE_MOVE_IDS = [
   "manualDryCard",
   "manualSetDamage",
   "manualSetLore",
+  "manualSetInkDrops",
   "manualShuffleDeck",
   "manualPassTurn",
 ] as const;

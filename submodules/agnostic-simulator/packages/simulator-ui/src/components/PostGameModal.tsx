@@ -1,16 +1,19 @@
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import confetti from "canvas-confetti";
+import { IconMinus } from "@tabler/icons-react";
 import classes from "./PostGameModal.module.css";
 
 export interface PostGameModalProps {
   open: boolean;
+  /** Compact summary with an always visible, independently scrolling detail area. */
+  layout?: "versus" | "compact";
   outcome: "win" | "loss" | "draw";
   reason?: string;
   returnUrl?: string;
   /** Flanking identity cards for the versus header (viewer left, opponent right). */
   participants?: { left: ReactNode; right: ReactNode };
-  /** Small contextual chips rendered under the outcome reason (format, series, duration...). */
+  /** Compact match metadata (format, series, duration...). */
   meta?: ReactNode;
   sections?: ReadonlyArray<{
     id: string;
@@ -72,6 +75,7 @@ function fireWinConfetti(): () => void {
 
 export function PostGameModal({
   open,
+  layout = "versus",
   outcome,
   reason,
   returnUrl,
@@ -86,13 +90,13 @@ export function PostGameModal({
   dataPostGameSurface,
   celebrationKey,
 }: PostGameModalProps) {
-  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
+  const [activeSectionId, setActiveSectionId] = useState<string | null>(sections[0]?.id ?? null);
   const celebratedKeyRef = useRef<string | null>(null);
 
   const headline = useMemo(() => {
-    if (outcome === "win") return "You win";
-    if (outcome === "loss") return "Rival wins";
-    return "Match ended";
+    if (outcome === "win") return "Victory";
+    if (outcome === "loss") return "Defeat";
+    return "Draw";
   }, [outcome]);
 
   useEffect(() => {
@@ -122,6 +126,28 @@ export function PostGameModal({
 
   const activeSection = sections.find((s) => s.id === activeSectionId);
 
+  const detailContent = (
+    <div className={classes.detailsContent}>
+      <nav className={classes.tabs} aria-label="Post-game sections">
+        {sections.map((section) => (
+          <TabButton
+            key={section.id}
+            active={activeSectionId === section.id}
+            icon={section.icon}
+            label={section.label}
+            onClick={() => setActiveSectionId(section.id)}
+          />
+        ))}
+      </nav>
+      <div
+        key={layout === "compact" ? activeSectionId : undefined}
+        className={classes.body}
+      >
+        {activeSection ? activeSection.content : null}
+      </div>
+    </div>
+  );
+
   return (
     <div
       className={classes.overlay}
@@ -134,7 +160,7 @@ export function PostGameModal({
       data-remote={dataRemote}
       data-post-game-surface={dataPostGameSurface}
     >
-      <div className={classes.card} data-outcome={outcome}>
+      <div className={classes.card} data-outcome={outcome} data-layout={layout}>
         {onClose ? (
           <button
             type="button"
@@ -143,52 +169,52 @@ export function PostGameModal({
             aria-label="Minimize post-game summary"
             title="Minimize"
           >
-            <span>Minimize</span>
+            <IconMinus size={18} aria-hidden="true" />
           </button>
         ) : null}
 
-        <header
-          className={participants ? `${classes.header} ${classes.headerVersus}` : classes.header}
-        >
-          <div className={classes.headerCopy}>
-            <p className={classes.eyebrow}>Match ended</p>
-            <h2 className={classes.headline} data-testid="post-game-headline">
-              {headline}
-            </h2>
-            {reason ? (
-              <p className={classes.reason} data-testid="post-game-reason">
-                {reason}
-              </p>
+        <div className={classes.content}>
+          <header
+            className={participants ? `${classes.header} ${classes.headerVersus}` : classes.header}
+          >
+            <div className={classes.headerCopy}>
+              <h2 className={classes.headline} data-testid="post-game-headline">
+                {headline}
+              </h2>
+              {reason ? (
+                <p className={classes.reason} data-testid="post-game-reason">
+                  {reason}
+                </p>
+              ) : null}
+            </div>
+            {layout === "compact" && meta ? <div className={classes.headerMeta}>{meta}</div> : null}
+            {participants ? (
+              <>
+                <div className={classes.versusSide} data-side="left">
+                  {participants.left}
+                </div>
+                <div className={classes.versusSide} data-side="right">
+                  {participants.right}
+                </div>
+              </>
             ) : null}
-            {meta ? <div className={classes.headerMeta}>{meta}</div> : null}
-          </div>
-          {participants ? (
-            <>
-              <div className={classes.versusSide} data-side="left">
-                {participants.left}
-              </div>
-              <div className={classes.versusSide} data-side="right">
-                {participants.right}
-              </div>
-            </>
+          </header>
+
+          {layout !== "compact" && meta ? <div className={classes.headerMeta}>{meta}</div> : null}
+
+          {sections.length > 0 ? (
+            layout === "compact" ? (
+              <section className={classes.details} aria-label="Match details">
+                {detailContent}
+              </section>
+            ) : (
+              <details className={classes.details}>
+                <summary>Match details</summary>
+                {detailContent}
+              </details>
+            )
           ) : null}
-        </header>
-
-        {sections.length > 0 ? (
-          <nav className={classes.tabs} aria-label="Post-game sections">
-            {sections.map((section) => (
-              <TabButton
-                key={section.id}
-                active={activeSectionId === section.id}
-                icon={section.icon}
-                label={section.label}
-                onClick={() => setActiveSectionId(section.id)}
-              />
-            ))}
-          </nav>
-        ) : null}
-
-        <main className={classes.body}>{activeSection ? activeSection.content : null}</main>
+        </div>
 
         <footer className={classes.footer}>
           <div className={classes.actions}>{actions}</div>

@@ -32,7 +32,7 @@ export const op17MonkeyDLuffy093: CharacterCard = {
   setId: "OP17",
   cost: 8,
   power: 8000,
-  traits: ["Straw Hat Crew The Four Emperors Elbaph"],
+  traits: ["Elbaph", "The Four Emperors", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains [Rush].\n[On Play] Draw 1 card and play up to 1 Character card with a cost of 2 or less from your trash.",

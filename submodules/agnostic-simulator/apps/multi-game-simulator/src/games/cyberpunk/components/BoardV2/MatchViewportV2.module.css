@@ -1,0 +1,259 @@
+.viewport {
+  height: 100dvh;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0b1114;
+  color: #dbe5e3;
+}
+
+/* Floating control cluster: framed plates like every other V2 instrument,
+   hovering over the board art instead of claiming a layout row. */
+.utilities {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  max-width: calc(100vw - 24px);
+  align-items: stretch;
+  gap: 7px;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  filter: drop-shadow(0 6px 16px #0009);
+}
+.utilities button {
+  touch-action: manipulation;
+}
+.menu,
+.undo {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border: 6px solid transparent;
+  border-image: url("./assets/prompt-control-v2.svg") 12 fill / 6px stretch;
+  background: transparent;
+  color: #dbe5e3;
+  font:
+    600 16px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  cursor: pointer;
+}
+.undo {
+  width: 44px;
+  padding: 3px;
+}
+.undo:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.menu:hover:not(:disabled),
+.undo:hover:not(:disabled),
+.toggles button:hover:not(:disabled) {
+  color: var(--v2-yellow, #ffe24e);
+}
+.toggles {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 7px;
+}
+/* Icon-only plates: the labeled variants keep the stable accessible names
+   ("Manual payment", "Hold to react"); only the text is put away. */
+.toggles button span,
+.toggles button strong {
+  display: none;
+}
+.toggles .undo {
+  padding: 3px;
+}
+.toggles button {
+  position: relative;
+  padding: 6px 10px;
+}
+/* Indicator light in the plate corner — the old bar's "● Off" readout as an
+   instrument: dark dot when the mode is off, lit and glowing when armed. */
+.toggles button::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #5b6a70;
+  box-shadow: inset 0 1px 2px #0009;
+}
+.toggles button[data-active="true"] {
+  color: #f5d88c;
+}
+/* Armed plates light up: gold wash over the frame fill plus the gold rail,
+   so the state survives color-blind viewing and bright surface art. */
+.toggles .labeled.labeled[data-active="true"] {
+  box-shadow:
+    inset 0 0 0 999px #f5d88c33,
+    inset 0 -3px #e8cf87;
+}
+.toggles button[data-active="true"]::after {
+  background: #f5d88c;
+  box-shadow: 0 0 7px #f5d88cb3;
+}
+.utilities button:focus-visible {
+  outline: 2px solid #f5d88c;
+  outline-offset: 1px;
+}
+.tabletop {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+.tabletop > section {
+  height: 100%;
+}
+.drawer {
+  background: linear-gradient(130deg, #243034, #0d1519 65%);
+  border: 12px solid transparent;
+  border-image: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/overlay-panel.webp")
+    72 / 12px stretch;
+  color: #dbe5e3;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background: transparent;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+.title {
+  font:
+    24px/1.2 "Cyberpunk Refinery 25",
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px 4px;
+  /* The sidebar owns the scroll, not the drawer: match status, the automation
+     row and the undo/pass/concede dock stay pinned like the V1 sidebar, and
+     only the log scrolls inside the shared Activity region. overflow-y stays
+     as a floor for viewports shorter than the sidebar's fixed rows. */
+  overflow-y: auto;
+}
+.body > * {
+  min-height: 0;
+}
+/* The shared sidebar is a height:100% grid with a flexible Activity row —
+   hand it the drawer's remaining height. The live-match variants wrap it in
+   a frame div, so bound that too. The 20rem floor is the sidebar's fixed
+   chrome (participants, automation, action dock): shorter viewports fall
+   back to the body scrolling instead of clipping the dock away. */
+.body > aside,
+.body > [data-testid="cyberpunk-human-match-sidebar"],
+.body > [data-testid="cyberpunk-spectator-sidebar"] {
+  flex: 1 1 0;
+  min-height: 20rem;
+}
+.body [aria-label="Match actions"] {
+  flex-shrink: 0;
+}
+.body
+  :is(
+    [aria-label="Opponent match status"],
+    [aria-label="Your match status"],
+    [aria-label="Opponent controls"],
+    [aria-label="Match actions"],
+    [aria-label="Activity"]
+  ) {
+  background: transparent;
+  border-color: #71848640;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+}
+.body [aria-label="Activity"] {
+  min-height: 180px;
+}
+/* Board-of-play view controls stay reachable while the log scrolls. */
+.drawerExtras {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  gap: 8px;
+  margin: 10px -4px 0;
+  padding: 10px 4px 2px;
+  background: linear-gradient(130deg, #243034, #0d1519 65%);
+  border-top: 1px solid #71848640;
+}
+.drawerExtras > * {
+  flex: 1;
+  min-width: 0;
+}
+.drawerExtras .drawerReturn {
+  min-height: 40px;
+  border: 1px solid #66777e;
+  background: #141d21;
+  color: #c1d2da;
+  padding: 5px 12px;
+  cursor: pointer;
+  font:
+    600 13px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.drawerExtras .drawerReturn:hover {
+  border-color: #ffe24e;
+  color: #ffe24e;
+}
+.drawerExtras .drawerReturn:focus-visible {
+  outline: 2px solid #f5d88c;
+  outline-offset: 1px;
+}
+@media (width <= 600px) {
+  .utilities {
+    gap: 4px;
+  }
+  .menu {
+    font-size: 14px;
+    padding: 4px 7px;
+  }
+  .toggles {
+    gap: 4px;
+  }
+  .undo {
+    width: 36px;
+  }
+  .drawerExtras {
+    flex-direction: column;
+  }
+}
+@media (width <= 420px) {
+  .menu {
+    width: 38px;
+    padding: 3px;
+  }
+  .menu span {
+    display: none;
+  }
+}
+
+.botShortcuts {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 7px;
+}
+.botShortcuts button[aria-pressed="true"] {
+  color: #ffe24e;
+}
+
+.utilitiesRow {
+  display: contents;
+}
+.utilitiesRow[hidden] {
+  display: none;
+}

@@ -24,7 +24,7 @@ export const op01Monet082: CharacterCard = {
   power: 3000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Donquixote Pirates Punk Hazard"],
+  traits: ["Donquixote Pirates", "Punk Hazard"],
   attribute: "special",
   effect: "[Trigger] Play this card.",
   effects: {

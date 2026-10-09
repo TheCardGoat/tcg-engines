@@ -38,4 +38,14 @@ describe("EB01-054 Gan.Fall", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("two opposing Life cards prevent On Play K.O. even with an eligible target", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB01-054"], activeDon: 3 },
+      { life: 2, character: ["EB01-005"] },
+    );
+    const id = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("EB01-054");
+    expect(e.getView("south").players.north.characters.map((c) => c?.instanceId)).toContain(id);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

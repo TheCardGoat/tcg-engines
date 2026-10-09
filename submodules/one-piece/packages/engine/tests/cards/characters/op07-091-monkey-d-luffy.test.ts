@@ -64,4 +64,33 @@ describe("OP07-091 Monkey.D.Luffy", () => {
       op07MonkeyDLuffy091.power,
     );
   });
+  test.each([5, 6])(
+    "returns %i eligible Characters and grants power only for complete groups of three",
+    (count) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [{ card: op07MonkeyDLuffy091, playedOnTurn: 0 }],
+          trash: Array.from({ length: count }, () => eb01MountainGod018),
+        },
+        {},
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const luffyId = engine.findCardInZone("south", "character", op07MonkeyDLuffy091);
+      const ids = engine.getView("south").players.south.trash.map((card) => {
+        if (!card.instanceId) throw new Error("Expected public trash identity.");
+        return card.instanceId;
+      });
+      const deckBefore = engine.getView("south").players.south.deckCount;
+      engine.declareAttack(luffyId, engine.leader("north"), "south");
+      engine.resolveDecision("effectTargetSelection", { selectedIds: ids }, "south");
+      engine.resolveDecision("effectReturnToDeckOwnerOrder", { selectedIds: ids }, "south");
+      expect(engine.getView("south").players.south.trash).toHaveLength(0);
+      expect(engine.getView("south").players.south.deckCount).toBe(deckBefore + count);
+      expect(
+        engine
+          .getView("south")
+          .players.south.characters.find((card) => card?.instanceId === luffyId)?.power,
+      ).toBe((op07MonkeyDLuffy091.power ?? 0) + Math.floor(count / 3) * 1000);
+    },
+  );
 });

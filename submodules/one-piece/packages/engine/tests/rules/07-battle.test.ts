@@ -44,7 +44,6 @@ describe("Comprehensive Rules 7: Card Attacks and Battles", () => {
     ).toBe(true);
 
     engine.asSouth().attack(engine.leader("south"), engine.asNorth().leader());
-    engine.asNorth().chooseCounter();
     expect(engine.asSouth().view().players.south.leader.rested).toBe(true);
     expect(engine.asSouth().view().players.north.lifeCount).toBe(2);
   });
@@ -210,7 +209,7 @@ describe("Comprehensive Rules 7: Card Attacks and Battles", () => {
     expect(engine.asNorth().view().players.north.lifeCount).toBe(5);
   });
 
-  test("7-1-3-2: the attacked player may perform Counter Step actions as many times as they wish", () => {
+  test("7-1-3-1: the attacked player may perform Counter Step actions as many times as they wish", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: op05Hack012, playedOnTurn: 0 }] },
       { hand: [eb01Doma005, eb01Doma005] },
@@ -223,7 +222,7 @@ describe("Comprehensive Rules 7: Card Attacks and Battles", () => {
       .filter((instanceId): instanceId is string => Boolean(instanceId));
 
     engine.asSouth().attack(attackerId, engine.asNorth().leader());
-    engine.asNorth().choose("battleCounter", counterIds);
+    for (const id of counterIds) engine.asNorth().chooseCounter(id);
 
     const view = engine.asNorth().view();
     expect(view.players.north.trash.map((card) => card.instanceId)).toEqual(
@@ -477,7 +476,6 @@ describe("Comprehensive Rules 7: Card Attacks and Battles", () => {
     expect(engine.asSouth().view().battle).toBeNull();
 
     engine.asSouth().attack(secondAttackerId, engine.asNorth().leader());
-    engine.asNorth().chooseCounter();
 
     const view = engine.asSouth().view();
     expect(view.activeSeat).toBe("south");

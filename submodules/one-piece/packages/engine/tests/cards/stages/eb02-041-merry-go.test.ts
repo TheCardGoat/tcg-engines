@@ -16,7 +16,7 @@ describe("EB02-041 Merry Go", () => {
     const eligibleEngine = OnePieceTestEngine.create({
       leaderCardId: op13MonkeyDLuffy001,
       hand: [eb02MerryGo041],
-      deck: [op13Otama043],
+      deck: [op13Otama043, op13Higuma013],
       activeDon: 1,
     });
     eligibleEngine.playCard(eb02MerryGo041);
@@ -24,12 +24,12 @@ describe("EB02-041 Merry Go", () => {
     const eligibleView = eligibleEngine.getView("south");
     expect(eligibleView.players.south.stage?.cardId).toBe(eb02MerryGo041.id);
     expect(eligibleView.players.south.hand.map((card) => card.cardId)).toEqual([op13Otama043.id]);
-    expect(eligibleView.players.south.deckCount).toBe(0);
+    expect(eligibleView.players.south.deckCount).toBe(1);
 
     const ineligibleEngine = OnePieceTestEngine.create({
       leaderCardId: eb01Hannyabal021,
       hand: [eb02MerryGo041],
-      deck: [op13Otama043],
+      deck: [op13Otama043, op13Higuma013],
       activeDon: 1,
     });
     ineligibleEngine.playCard(eb02MerryGo041);
@@ -37,19 +37,19 @@ describe("EB02-041 Merry Go", () => {
     const ineligibleView = ineligibleEngine.getView("south");
     expect(ineligibleView.players.south.stage?.cardId).toBe(eb02MerryGo041.id);
     expect(ineligibleView.players.south.handCount).toBe(0);
-    expect(ineligibleView.players.south.deckCount).toBe(1);
+    expect(ineligibleView.players.south.deckCount).toBe(2);
   });
 
   test("lets its controller give a Straw Hat Crew Character +2 cost through the opponent's next turn", () => {
     const aheadEngine = OnePieceTestEngine.create(
       {
         stage: eb02MerryGo041,
-        character: [{ card: op13Higuma013, attachedDon: 2 }],
+        character: [{ card: op13RoronoaZoro037, attachedDon: 2 }],
       },
       { activeDon: 1 },
     );
     const aheadStageId = aheadEngine.findCardInZone("south", "stage", eb02MerryGo041);
-    const aheadCharacterId = aheadEngine.findCardInZone("south", "character", op13Higuma013);
+    const aheadCharacterId = aheadEngine.findCardInZone("south", "character", op13RoronoaZoro037);
     aheadEngine.activateEffect(aheadStageId, "activateMain");
     aheadEngine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     const aheadView = aheadEngine.getView("south");
@@ -57,7 +57,7 @@ describe("EB02-041 Merry Go", () => {
     expect(
       aheadView.players.south.characters.find((card) => card?.instanceId === aheadCharacterId)
         ?.cost,
-    ).toBe(op13Higuma013.cost);
+    ).toBe(op13RoronoaZoro037.cost);
     expect(aheadView.prompts).toHaveLength(0);
 
     const engine = OnePieceTestEngine.create(
@@ -135,6 +135,7 @@ describe("EB02-041 Merry Go", () => {
     const trashBefore = before.trash.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const after = engine.getView("south").players.south;
+    expect(after.stage?.rested).toBe(false);
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(after.hand.length).toBe(handBefore);

@@ -12,6 +12,7 @@ import { all010Cards, all010CardsById } from "./010";
 import { all011Cards, all011CardsById } from "./011";
 import { all012Cards, all012CardsById } from "./012";
 import { all013Cards, all013CardsById } from "./013";
+import { all014Cards, all014CardsById } from "./014";
 
 export const allCards: (CharacterCard | ActionCard | ItemCard | LocationCard)[] = [
   ...all001Cards,
@@ -27,6 +28,7 @@ export const allCards: (CharacterCard | ActionCard | ItemCard | LocationCard)[] 
   ...all011Cards,
   ...all012Cards,
   ...all013Cards,
+  ...all014Cards,
 ];
 
 export const allCardsById: Record<string, CharacterCard | ActionCard | ItemCard | LocationCard> = {
@@ -43,4 +45,5 @@ export const allCardsById: Record<string, CharacterCard | ActionCard | ItemCard 
   ...all011CardsById,
   ...all012CardsById,
   ...all013CardsById,
+  ...all014CardsById,
 };

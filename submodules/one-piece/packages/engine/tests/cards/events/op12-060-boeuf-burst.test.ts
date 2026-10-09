@@ -35,8 +35,8 @@ describe("OP12-060 Boeuf Burst", () => {
   test("Main's second choice draws two at the post-payment six-hand-or-less boundary", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op11MonkeyDLuffy040,
-      hand: [op12BoeufBurst060, ...Array(5).fill(eb01MountainGod018)],
-      deck: [eb01Doma005, op09Usopp024],
+      hand: [op12BoeufBurst060, ...Array(6).fill(eb01MountainGod018)],
+      deck: [eb01Doma005, op09Usopp024, eb01Doma005],
       activeDon: 3,
     });
     const handBefore = engine.getView("south").players.south.hand.length;
@@ -47,5 +47,18 @@ describe("OP12-060 Boeuf Burst", () => {
     expect(engine.getView("south").players.south.hand).toHaveLength(handBefore + 1);
     expect(engine.getView("south").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("draw choice does nothing with seven cards left after playing the Event", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11MonkeyDLuffy040,
+      hand: [op12BoeufBurst060, ...Array(7).fill(eb01MountainGod018)],
+      deck: [eb01Doma005, op09Usopp024, eb01Doma005],
+      activeDon: 3,
+    });
+    engine.asSouth().play(op12BoeufBurst060);
+    engine.resolveDecision("effectActionChoice", { optionId: "1" }, "south");
+    expect(engine.getView("south").players.south.handCount).toBe(7);
+    expect(engine.getView("south").players.south.deckCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

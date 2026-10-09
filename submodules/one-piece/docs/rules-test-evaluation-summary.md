@@ -1,8 +1,10 @@
 # Comprehensive Rules Test Evaluation Summary
 
-This document summarizes how each **executable** Comprehensive Rules (CR 1.2.0)
-clause is proven in `packages/engine/tests/rules/`, and how those proofs show the
-engine implements the rules correctly—including **negative** and **edge** cases.
+This is the original 285-test evaluation snapshot for Comprehensive Rules
+1.2.0. Its per-file and aggregate counts are historical, not current suite totals.
+The engine now uses CR 1.2.1; later synthetic and real-card proofs, remaining
+limits, and current checkpoint results are recorded in the coverage inventory
+below. This snapshot does not establish complete engine or catalog coverage.
 
 Source of truth for mapping and non-executable classifications:
 [`rules-test-coverage.md`](./rules-test-coverage.md).
@@ -15,7 +17,7 @@ cd packages/engine && vp test run tests/rules
 
 ## How evaluation works
 
-Every executable rule test follows the same contract:
+The original command-driven rule tests use this contract:
 
 1. **Arrange** with real `@tcg/op-cards` catalog definitions (or the public
    deck-validation API for construction rules).
@@ -85,10 +87,10 @@ These are **not** missing defining mechanics, but would strengthen the map:
 | --- | ----- |
 | 10-2-8 [End of Your Opponent's Turn] | Non-executable today (no catalog card in suite) |
 | 10-2-4-1-2 negative half | “Cannot activate Counter unless text says so” only partly covered |
-| 10-2-13-5 mid-payment OPT | Unreachable (atomic cost validation) — classified |
+| 10-2-13-5 replaced K.O. cost | Covered by a synthetic once-per-turn Hakuba variant; real replacement behavior uses Hakuba/Kyros and Hakuba/Thatch |
 | Simultaneous both-players lose (9-2-1 both) | Not separately proven as double empty-deck |
 | Effect “you lose” (1-2-5 lose half) | Suite has effect **win**; lose-by-effect needs a catalog card |
-| Grouped play into full Character area | Known limitation: `playGrouped` still caps open slots |
+| Grouped play into full Character area | Covered by chained rule-trash choices and deferred On Play tests; see rules-test-coverage.md |
 
 ---
 
@@ -374,6 +376,7 @@ _32 tests; 15 negative/edge-named or expectFailure._
 | `8-6-1` | an effect playing a Character on the opponent's turn resolves the turn player's reaction first | commands: attack, resolve prompt; assert: getView, zone/power state | positive |
 | `8-6-1` | a Counter Event activation resolves the turn player's reaction first | commands: attack, give DON!!, resolve prompt; assert: getView, zone/power state | positive |
 | `8-6-1` | effect damage dealt by the non-turn player resolves the turn player's reaction first | commands: play, attack, give DON!!, end turn, resolve prompt; assert: prompts, getView, zone/power state | positive |
+| `8-6-1, 8-6-1-1` | original owner-selected ready groups precede newly triggered effects; A/B before C | public synthetic attack/play commands and real Moria choices; assert outcomes, cost enabling, stale source exclusion, snapshot restore | positive + negative/edge |
 | `8-6-2` | an effect whose timing is fulfilled during damage processing waits until it completes | commands: play, attack, give DON!!, end turn, resolve prompt; assert: prompts, getView, zone/power state | positive |
 | `8-6-2-1` | a [Trigger] checked during damage processing may suspend that processing | commands: play, attack, resolve prompt; assert: prompts, getView, zone/power state | positive |
 | `8-6-3` | a reaction to a card activation resolves after that activation completes | commands: play, resolve prompt; assert: getView, zone/power state | positive |
@@ -456,7 +459,7 @@ _6 tests; 1 negative/edge-named or expectFailure._
 
 | Rule cite(s) | What the test proves | How engine correctness is evaluated | Kind |
 | --- | --- | --- | --- |
-| `11-1` | the draw outcome is representable — the game ends with no winner | commands: activate, resolve prompt; assert: win/loss, getView, zone/power state | positive |
+| `11-1` | audited rest/active and moving-card loops, plus fixed DON!! loops: mandatory draws, optional finite declarations, saved-state continuation and restart restrictions; two-player stopping is proved for bounded rest/active, moving-card and DON!! families; see the coverage inventory for later extensions and exact admission limits | commands: activate, resolve prompt; assert: outcomes, projected decisions, logs | positive and negative/edge |
 | `11-2-1` | a card moved from deck to hand by a named search is revealed to both players | commands: activate, resolve prompt; assert: getView, zone/power state | positive |
 | `11-2-2` | a card revealed by an effect becomes unrevealed after that effect resolves | commands: play, activate, resolve prompt; assert: prompts, getView, zone/power state | positive |
 | `11-3-1` | a look-at effect exposes the secret card's identity only to the effect's player | commands: play, activate, resolve prompt; assert: prompts, getView | negative/edge |

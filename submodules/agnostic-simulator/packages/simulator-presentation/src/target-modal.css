@@ -1,0 +1,387 @@
+.tcg-target {
+  color: #e7e2d4;
+  background: radial-gradient(ellipse at top, #1c2b33, #09131b 75%);
+  border: 1px solid #9c896c66;
+  border-radius: 12px;
+  box-shadow: 0 30px 90px #000b;
+  overflow: hidden;
+}
+.tcg-target__header {
+  background: transparent;
+  padding: 22px 26px 8px;
+}
+.tcg-target__title {
+  font:
+    500 21px Georgia,
+    serif;
+  color: #e2cda7;
+}
+.tcg-target__close {
+  color: #c6c1b5;
+}
+.tcg-target__body {
+  padding: 8px 26px 22px;
+}
+.tcg-target__summary {
+  color: #99aeb5;
+  font-size: 12px;
+}
+.tcg-target__summary > span {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tcg-target__summary p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+.tcg-target__search {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 1px solid #526570;
+  border-radius: 5px;
+  background: #071119;
+  color: #e7e2d4;
+}
+.tcg-target__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 160px));
+  justify-content: center;
+  align-items: start;
+  gap: 24px 16px;
+  max-height: 62svh;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #58666b transparent;
+  padding: 28px 16px;
+}
+.tcg-target__card {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 7%;
+  background: #14252e;
+  color: #dfe7e6;
+  cursor: pointer;
+  box-shadow: 0 8px 16px #0008;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+.tcg-target__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+.tcg-target__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 22px #000a;
+}
+.tcg-target__card[data-selected] {
+  transform: translateY(calc(-1 * var(--selection-lift))) scale(var(--selection-scale));
+  box-shadow:
+    0 0 0 2px var(--selection-rim),
+    0 0 22px var(--selection-glow),
+    0 14px 22px #000a;
+}
+.tcg-target__card:focus-visible,
+.tcg-target__footer button:focus-visible {
+  outline: 2px solid #e2cda7;
+  outline-offset: 4px;
+}
+.tcg-target__fallback {
+  display: grid;
+  place-content: center;
+  height: 100%;
+  padding: 12px;
+}
+.tcg-target__empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: #acbec4;
+}
+.tcg-target__empty > span {
+  font-size: 35px;
+  color: #b29b71;
+}
+.tcg-target__empty p {
+  margin: 12px 0 0;
+}
+.tcg-target__footer {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  border-top: 1px solid #a4b2b51c;
+  padding-top: 15px;
+}
+.tcg-target__footer button {
+  color: #decdae;
+  background: transparent;
+  border: 0;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.tcg-target__footer kbd {
+  margin-left: 12px;
+  color: #83989f;
+  font: 10px system-ui;
+}
+@media (max-height: 550px) {
+  .tcg-target__cards {
+    max-height: 50svh;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 125px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcg-target__card {
+    transition: none;
+  }
+}
+
+.tcg-target__groups {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 16px;
+  max-height: 58svh;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #58666b transparent;
+}
+.tcg-target__groups h3 {
+  margin: 16px 16px 0;
+  font: 500 12px system-ui;
+  color: #b5c8ce;
+  letter-spacing: 0.07em;
+}
+.tcg-target__groups .tcg-target__cards {
+  max-height: none;
+  overflow: visible;
+}
+.tcg-target__candidate {
+  min-width: 0;
+  text-align: center;
+}
+.tcg-target__card[aria-disabled="true"] {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+.tcg-target__card[aria-disabled="true"]:hover {
+  transform: none;
+}
+.tcg-target__reason {
+  display: block;
+  margin-top: 10px;
+  color: #bfc4c0;
+  font-size: 11px;
+}
+.tcg-target__inspect {
+  border: 0;
+  color: #adbec4;
+  background: none;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 11px;
+}
+.tcg-target__source {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0 18px;
+}
+.tcg-target__source img {
+  width: 50px;
+  aspect-ratio: 5/7;
+  object-fit: contain;
+  border-radius: 5px;
+}
+.tcg-target__source small {
+  display: block;
+  color: #90a4af;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+.tcg-target__source strong {
+  color: #e3cda8;
+  font-weight: 500;
+}
+.tcg-target__source p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #b9c9cb;
+}
+.tcg-target__footer {
+  flex-wrap: wrap;
+}
+.tcg-target__footer button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tcg-target__footer button[data-primary] {
+  border: 1px solid #a08a5e;
+  background: #6d583929;
+  border-radius: 4px;
+  min-height: 40px;
+}
+.tcg-prompt-banner {
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: min(740px, 94%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid #8f82575c;
+  border-radius: 8px;
+  background: linear-gradient(110deg, #15232ef5, #071019f5);
+  color: #e4dfd1;
+  box-shadow: 0 10px 40px #0007;
+}
+.tcg-prompt-banner > img {
+  width: 45px;
+  aspect-ratio: 5/7;
+  object-fit: contain;
+  border-radius: 5px;
+}
+.tcg-prompt-banner__copy {
+  flex: 1;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.tcg-prompt-banner__copy small,
+.tcg-prompt-banner__copy span {
+  color: #afc0c7;
+  font-size: 12px;
+}
+.tcg-prompt-banner__copy strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.tcg-prompt-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tcg-prompt-banner button {
+  border: 1px solid #8d825e70;
+  border-radius: 4px;
+  color: #ead4a6;
+  background: #1a292e;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+.tcg-prompt-banner button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+@media (max-width: 650px) {
+  .tcg-prompt-banner {
+    bottom: 18%;
+    flex-wrap: wrap;
+  }
+  .tcg-prompt-banner__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+.tcg-target__groups > section {
+  min-width: 0;
+  max-width: 100%;
+  flex-shrink: 1;
+}
+.tcg-prompt-inputs {
+  --board-surface: #11202a;
+  --board-surface-soft: #1c303a;
+  --board-text: #e3e6dd;
+  --board-muted: #a9bdc5;
+  --board-border: #566e78;
+  --prompt-accent: #d8bd89;
+  --mantine-color-body: #11202a;
+  --mantine-color-text: #e3e6dd;
+  max-height: 55svh;
+  overflow: auto;
+  padding: 15px 0;
+}
+.tcg-prompt-candidate-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 7%;
+}
+
+.tcg-target__order {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e3d0a4;
+  border-radius: 50%;
+  color: #101b22;
+  background: #dec99b;
+  box-shadow: 0 3px 8px #0008;
+  font-weight: 700;
+}
+
+/* Keep the close/confirm rail visible while dense prompt content scrolls. */
+.tcg-target {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100svh - 40px);
+}
+.tcg-target__header {
+  flex-shrink: 0;
+}
+.tcg-target__body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.tcg-target__source,
+.tcg-target__summary,
+.tcg-target__footer {
+  flex-shrink: 0;
+}
+.tcg-target__groups,
+.tcg-prompt-inputs {
+  min-height: 0;
+}
+.tcg-target__source img {
+  width: 38px;
+}
+.tcg-target__footer {
+  margin-top: 8px;
+}
+
+@media (max-width: 650px) {
+  .tcg-target__header {
+    padding: 18px 18px 8px;
+  }
+  .tcg-target__body {
+    padding: 8px 14px 18px;
+  }
+  .tcg-target__cards {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 130px));
+    gap: 18px 12px;
+    padding: 22px 8px;
+  }
+  .tcg-target__footer {
+    gap: 4px;
+  }
+  .tcg-target__footer button,
+  .tcg-target__inspect {
+    min-height: 44px;
+  }
+}

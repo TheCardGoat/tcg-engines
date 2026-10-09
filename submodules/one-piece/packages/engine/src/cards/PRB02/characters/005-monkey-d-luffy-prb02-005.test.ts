@@ -5,6 +5,38 @@ import { prb02MonkeyDLuffyPrb02005005 } from "../../../../../cards/src/cards/cha
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("PRB02-005 Monkey.D.Luffy", () => {
+  test("two delayed effects cannot select the DON already rested by the first", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op02Sanji026,
+        hand: [prb02MonkeyDLuffyPrb02005005, prb02MonkeyDLuffyPrb02005005],
+        activeDon: prb02MonkeyDLuffyPrb02005005.cost * 2,
+      },
+      { activeDon: 7, donDeckCount: 0 },
+    );
+    engine.playCard(prb02MonkeyDLuffyPrb02005005, "south");
+    engine.playCard(prb02MonkeyDLuffyPrb02005005, "south");
+    engine.endTurn("south");
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "north",
+    );
+    const second = engine.pendingDecision("effectMixedRestSelection", "north").steps[0];
+    if (second?.kind !== "payCost") throw new Error("Expected second active DON choice.");
+    expect(second.candidates).toHaveLength(6);
+    expect(second.candidates.every((candidate) => candidate.ref.id.startsWith("active-don:"))).toBe(
+      true,
+    );
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "north",
+    );
+    expect(engine.getView("north").players.north).toMatchObject({ activeDon: 5, restedDon: 2 });
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+
   test("with a multicolored Leader schedules one opposing DON!! to rest only at the start of their next Main Phase", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -20,12 +52,16 @@ describe("PRB02-005 Monkey.D.Luffy", () => {
 
     engine.endTurn("south");
 
-    const restDecision = engine.pendingDecision("effectRestDonCount", "north").steps[0];
-    if (restDecision?.kind !== "chooseOption") {
+    const restDecision = engine.pendingDecision("effectMixedRestSelection", "north").steps[0];
+    if (restDecision?.kind !== "payCost") {
       throw new Error("Expected the opponent's mandatory one-DON!! rest decision.");
     }
-    expect(restDecision.options.map((option) => option.id)).toEqual(["1"]);
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "north");
+    expect(restDecision).toMatchObject({ min: 1, max: 1 });
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "north",
+    );
 
     const view = engine.getView("north");
     expect(view.players.north).toMatchObject({ activeDon: 6, restedDon: 1 });

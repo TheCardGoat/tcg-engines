@@ -47,7 +47,7 @@ export const op16Tsuru067: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

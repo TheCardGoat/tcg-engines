@@ -1,8 +1,11 @@
 import type { CardInstanceId, PlayerId } from "#core";
 import type { PlayCardExecutionContext } from "../../runtime-moves/resolution/action-effects/types";
 import { PLAYER_ONE, PLAYER_TWO, type TestCardDefinition } from "./fixtures";
+import { createInitialLorcanaG } from "../../types";
 
 export type CreateTestContextArgs = {
+  /** Optional log recorder for effect-outcome assertions. */
+  log?: PlayCardExecutionContext["framework"]["log"];
   /** Turn number reported by framework.state.status.turn. Defaults to 1. */
   turn?: number;
   /** One Time Player override (status.otp). */
@@ -21,6 +24,8 @@ export type CreateTestContextArgs = {
   zoneCards?: Record<string, readonly (CardInstanceId | string)[]>;
   /** Per-player lore totals. */
   lore?: Partial<Record<PlayerId, number>>;
+  /** Per-player ink drop counters (Hyperia City). */
+  inkDrops?: Partial<Record<PlayerId, number>>;
 };
 
 /**
@@ -58,6 +63,17 @@ export function createTestContext(args: CreateTestContextArgs = {}): PlayCardExe
   const playerId = args.playerId ?? currentPlayer;
 
   const zonesApi = {
+    mill: (
+      from: { zone: string; playerId: PlayerId },
+      to: { zone: string; playerId: PlayerId },
+      count: number,
+    ): CardInstanceId[] => {
+      const cards = [...(zoneCards[`${from.zone}:${from.playerId}`] ?? [])]
+        .reverse()
+        .slice(0, Math.max(0, count));
+      for (const cardId of cards) zonesApi.moveCard(cardId, to);
+      return cards;
+    },
     getCards: ({ zone, playerId: p }: { zone: string; playerId: PlayerId }): CardInstanceId[] => [
       ...(zoneCards[`${zone}:${p}`] ?? []),
     ],
@@ -152,33 +168,27 @@ export function createTestContext(args: CreateTestContextArgs = {}): PlayCardExe
     [PLAYER_TWO]: args.lore?.[PLAYER_TWO] ?? 0,
   } as Record<PlayerId, number>;
 
+  const G = {
+    // Start from the real initial G so the harness grows with LorcanaG
+    // (triggered-ability state, ink drops, turn metadata) instead of drifting.
+    ...createInitialLorcanaG(PLAYER_ONE, PLAYER_TWO),
+    lore: loreTotals,
+    inkDrops: {
+      [PLAYER_ONE]: args.inkDrops?.[PLAYER_ONE] ?? 0,
+      [PLAYER_TWO]: args.inkDrops?.[PLAYER_TWO] ?? 0,
+    } as Record<PlayerId, number>,
+  };
+
   return {
-    G: {
-      lore: loreTotals,
-      pendingEffects: [],
-      turnsCompletedByPlayer: {
-        [PLAYER_ONE]: 0,
-        [PLAYER_TWO]: 0,
-      },
-      turnMetadata: {
-        cardsPlayedThisTurn: [],
-        charactersQuesting: [],
-        inkedThisTurn: [],
-        shiftPlayedThisTurn: [],
-        challengesByPlayerThisTurn: {},
-        damagedCharactersByOwnerThisTurn: {},
-        damageRemovedByPlayerThisTurn: {},
-        banishedCharactersThisTurn: [],
-        discardCardsLeftThisTurn: 0,
-        cardsPutIntoDiscardThisTurnByOwner: {},
-      },
-    },
+    G,
     playerId,
     cards: cardsApi,
     framework: {
+      log: args.log ?? (() => undefined),
       cards: cardsApi,
       events: { emit: () => undefined },
       state: {
+        G,
         priority: { holder: currentPlayer },
         status: { turn: args.turn ?? 1, otp: args.otp },
         _zonesPrivate: {

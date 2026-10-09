@@ -181,6 +181,7 @@ export function resolveTemporaryEffectWindow(
   options?: {
     currentPlayerId?: PlayerId;
     targetOwnerId?: PlayerId;
+    playerIds?: readonly PlayerId[];
   },
 ): { startsAtTurn: number; expiresAtTurn: number } {
   return resolveEffectWindow(currentTurn, duration, options);

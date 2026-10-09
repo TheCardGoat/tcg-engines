@@ -107,29 +107,6 @@ export const greaterBoonOfTheUnderdog: GrandArchiveCard<GrandArchiveAbilityDefin
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
-                },
-              },
-            },
-          ],
           effect: {
             kind: "sequence",
             effects: [
@@ -139,13 +116,37 @@ export const greaterBoonOfTheUnderdog: GrandArchiveCard<GrandArchiveAbilityDefin
                 amount: 2,
               },
               {
-                kind: "add-counter",
-                subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                kind: "choose",
+                selection: {
+                  id: "target-1",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  unique: true,
+                  candidates: {
+                    kind: "object",
+                    zones: ["field"],
+                    relationship: "controlled-by",
+                    player: "controller",
+                    filter: {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                  },
                 },
-                counter: "buff",
-                amount: 2,
+                effect: {
+                  kind: "add-counter",
+                  subject: {
+                    kind: "bound",
+                    binding: "target-1",
+                  },
+                  counter: "buff",
+                  amount: 2,
+                },
               },
             ],
           },

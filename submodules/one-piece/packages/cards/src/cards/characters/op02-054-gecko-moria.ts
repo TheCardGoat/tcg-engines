@@ -23,7 +23,7 @@ export const op02GeckoMoria054: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   i18n: op02GeckoMoria054I18n,
 };

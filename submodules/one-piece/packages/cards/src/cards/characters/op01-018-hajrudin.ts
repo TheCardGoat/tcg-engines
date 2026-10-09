@@ -23,7 +23,7 @@ export const op01Hajrudin018: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Giant New Giant Pirate Crew"],
+  traits: ["Giant", "New Giant Pirates"],
   attribute: "strike",
   i18n: op01Hajrudin018I18n,
 };

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="160" viewBox="0 0 512 160">
+  <defs>
+    <linearGradient id="alloy" x2="0" y2="1"><stop stop-color="#485255"/><stop offset=".16" stop-color="#20292c"/><stop offset=".66" stop-color="#11181b"/><stop offset="1" stop-color="#30393a"/></linearGradient>
+    <linearGradient id="well" x2="0" y2="1"><stop stop-color="#050a0c"/><stop offset="1" stop-color="#182125"/></linearGradient>
+    <filter id="cast" x="-15%" y="-40%" width="130%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <path d="M27 18H477L505 44V116L477 142H27L7 118V42Z" fill="#000" opacity=".55" filter="url(#cast)"/>
+  <path d="M26 9H472L506 39V116L476 150H27L5 124V36Z" fill="url(#alloy)" stroke="#111719" stroke-width="3"/>
+  <path d="M33 17H466L497 43V110L469 141H32L14 120V39Z" fill="none" stroke="#778082" stroke-opacity=".68" stroke-width="2"/>
+  <path d="M52 30H453L481 53V104L457 128H53L32 111V49Z" fill="url(#well)" stroke="#080d10" stroke-width="6"/>
+  <path d="M50 32H453L478 52" fill="none" stroke="#9aa6a4" stroke-opacity=".38" stroke-width="2"/>
+  <path d="M55 125H455L478 103" fill="none" stroke="#697573" stroke-opacity=".48" stroke-width="2"/>
+  <path d="M19 53L30 45V114L19 106Z" fill="#c45a43" opacity=".68"/>
+  <path d="M492 53L482 46V113L492 106Z" fill="#6eb8c0" opacity=".52"/>
+  <g fill="#080d0f" stroke="#899392" stroke-width="2"><circle cx="24" cy="34" r="5"/><circle cx="24" cy="125" r="5"/><circle cx="484" cy="34" r="5"/><circle cx="484" cy="125" r="5"/></g>
+  <g stroke="#4f5c5d" stroke-width="1"><path d="M22 34h4m-4 91h4m456-91h4m-4 91h4"/></g>
+</svg>

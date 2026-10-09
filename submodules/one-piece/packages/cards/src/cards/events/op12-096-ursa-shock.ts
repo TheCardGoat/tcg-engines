@@ -22,7 +22,7 @@ export const op12UrsaShock096: EventCard = {
   setId: "OP12",
   cost: 4,
   trigger: "Draw 1 card and trash 1 card from the top of your deck.",
-  traits: ["Revolutionary Army The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Revolutionary Army"],
   effect:
     "[Main] K.O. up to 1 of your opponent's Characters with a cost of 4 or less. If you have a Character with a cost of 8 or more, you may select your opponent's Character with a cost of 6 or less instead.",
   effects: {

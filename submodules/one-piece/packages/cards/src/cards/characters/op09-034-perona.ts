@@ -39,7 +39,7 @@ export const op09Perona034: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Thriller Bark Pirates Muggy Kingdom"],
+  traits: ["Muggy Kingdom", "Thriller Bark Pirates"],
   attribute: "special",
 
   effect:
@@ -71,7 +71,7 @@ export const op09Perona034: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Thriller Bark Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

@@ -39,7 +39,7 @@ export const prb01BlastBreathJollyRogerFoil016: EventCard = {
   rarity: "C",
   setId: "ST04",
   cost: 1,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   effect:
     "[Counter] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {

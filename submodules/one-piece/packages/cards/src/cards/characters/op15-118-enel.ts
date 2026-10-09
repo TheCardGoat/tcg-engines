@@ -58,6 +58,7 @@ export const op15Enel118: CharacterCard = {
         actions: [
           {
             action: "search",
+            reveal: false,
             lookCount: 5,
             source: {
               player: "self",
@@ -90,6 +91,12 @@ export const op15Enel118: CharacterCard = {
           },
         ],
         actions: [
+          {
+            action: "modifyPower",
+            target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+            value: 2000,
+            duration: "permanent",
+          },
           {
             action: "cannotBeRemoved",
             target: {

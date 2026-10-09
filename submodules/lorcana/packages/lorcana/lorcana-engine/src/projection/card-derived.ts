@@ -34,6 +34,7 @@ import {
   getActiveTemporaryKeywordNames,
   getActiveTemporaryMap,
   getDerivedHasQuestRestriction,
+  getDerivedHasChallengeRestriction,
   getAppliedCostReductions,
   type DerivedStateContext,
 } from "../rules/derived-state";
@@ -84,6 +85,7 @@ export function createDefaultProjectedLorcanaCardDerived(args?: {
     hasReckless: projection?.hasReckless ?? false,
     hasRush: projection?.hasRush ?? false,
     hasQuestRestriction: projection?.hasQuestRestriction ?? false,
+    hasChallengeRestriction: projection?.hasChallengeRestriction ?? false,
     classifications: projection?.classifications ?? definition?.classifications ?? [],
     fullName: projection?.fullName ?? (definition ? getFullName(definition) : "FALLBACK NAME"),
     keywords: projection?.keywords ?? [],
@@ -126,6 +128,14 @@ export function projectLorcanaCardDerived(args: {
     getDefinitionByInstanceId,
   });
   derived.hasQuestRestriction = getDerivedHasQuestRestriction(
+    meta,
+    currentTurn,
+    state,
+    cardInstanceId,
+    getDefinitionByInstanceId,
+    registry,
+  );
+  derived.hasChallengeRestriction = getDerivedHasChallengeRestriction(
     meta,
     currentTurn,
     state,

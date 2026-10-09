@@ -57,7 +57,7 @@ export const op05ChopaEmon068: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "power",

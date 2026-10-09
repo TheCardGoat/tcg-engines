@@ -53,6 +53,7 @@ describe("OP14-089 Ryuma", () => {
     const candidate = engine.findCardInZone("north", "trash", op06Inuppe082);
     const tooExpensive = engine.findCardInZone("north", "trash", op06GeckoMoria086);
     const wrongTrait = engine.findCardInZone("north", "trash", eb01Doma005);
+    const resolvingTriggerId = engine.findCardInZone("north", "life", op14eb04Ryuma089);
     engine.declareAttack(attacker, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
@@ -60,6 +61,7 @@ describe("OP14-089 Ryuma", () => {
     expect(play.candidates.map((entry) => entry.ref.id)).toContain(candidate);
     expect(play.candidates.map((entry) => entry.ref.id)).not.toContain(tooExpensive);
     expect(play.candidates.map((entry) => entry.ref.id)).not.toContain(wrongTrait);
+    expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(resolvingTriggerId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [candidate] }, "north");
     expect(
       engine

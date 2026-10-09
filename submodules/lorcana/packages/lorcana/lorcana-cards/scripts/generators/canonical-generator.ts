@@ -709,9 +709,24 @@ export function generateCanonicalCardsFromPrintings(
       lorcastCardIndex,
     );
     const existingI18n = existingCanonicalCards?.[printingId]?.i18n;
-    canonicalCards[printingId] = existingI18n
+    const result = existingI18n
       ? { ...canonical, i18n: existingI18n }
       : { ...canonical, i18n: buildPlaceholderI18n(canonical) };
+
+    // Preserve external reference IDs across regeneration. Lorcast reprints in
+    // newer sets add duplicate name|version rows, so the freshly-derived ids
+    // depend on arbitrary duplicate-row selection; existing cards keep their
+    // committed refs, missing keys are still enriched from the fresh index.
+    const existingExternalIds = existingCanonicalCards?.[printingId]?.externalIds;
+    if (existingExternalIds?.lorcast || existingExternalIds?.tcgPlayer) {
+      result.externalIds = {
+        ...result.externalIds,
+        ...(existingExternalIds.lorcast ? { lorcast: existingExternalIds.lorcast } : {}),
+        ...(existingExternalIds.tcgPlayer ? { tcgPlayer: existingExternalIds.tcgPlayer } : {}),
+      };
+    }
+
+    canonicalCards[printingId] = result;
   }
 
   // Fix canonicalIds shared across cards with different full names

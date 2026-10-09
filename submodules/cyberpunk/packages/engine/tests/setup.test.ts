@@ -432,8 +432,21 @@ describe("Game Setup", () => {
       const engine = createSetupEngine("full-flow-none");
       const { first, second } = openingSeats(engine);
 
-      engine.keepHand({ as: first });
-      engine.keepHand({ as: second });
+      const firstKeep = engine.keepHand({ as: first });
+      const secondKeep = engine.keepHand({ as: second });
+
+      expect(firstKeep.animationScript.steps).toMatchObject([
+        {
+          kind: "actionEmphasis",
+          target: { kind: "zone", zone: "hand", playerId: first },
+          durationMs: 800,
+        },
+      ]);
+      expect(secondKeep.animationScript.steps[0]).toMatchObject({
+        kind: "actionEmphasis",
+        target: { kind: "zone", zone: "hand", playerId: second },
+        durationMs: 800,
+      });
 
       expect(engine.getPhase()).toBe("main");
       expect(engine.isMulliganDone(first)).toBe(true);

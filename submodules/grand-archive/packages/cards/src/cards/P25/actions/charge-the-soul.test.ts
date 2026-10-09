@@ -7,3 +7,9 @@ import { chargeTheSoul } from "./charge-the-soul.ts";
 describe("Charge the Soul — Class Bonus Floating Memory", () => {
   proveClassBonusFloatingMemory({ card: chargeTheSoul });
 });
+
+import { proveDamageAndOptionalAetherwingLoad } from "../../../testing/damage-aetherwing-load.ts";
+/** @covers ra9950o14t-a1 */
+describe("Charge the Soul — damage and optional loading", () => {
+  proveDamageAndOptionalAetherwingLoad(chargeTheSoul, 1, true);
+});

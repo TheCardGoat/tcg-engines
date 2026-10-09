@@ -23,7 +23,7 @@ export const op11Otohime100: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[On Play] If your Leader is [Shirahoshi], you may turn 1 card from the top of your Life cards face-down: Draw 1 card.",

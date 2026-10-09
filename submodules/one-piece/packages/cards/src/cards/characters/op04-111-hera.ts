@@ -37,7 +37,7 @@ export const op04Hera111: CharacterCard = {
             amount: 1,
             filters: [
               { filter: "excludeSelf" },
-              { filter: "trait", value: "Homies", match: "includes" },
+              { filter: "trait", value: "Homies", match: "exact" },
             ],
           },
           {

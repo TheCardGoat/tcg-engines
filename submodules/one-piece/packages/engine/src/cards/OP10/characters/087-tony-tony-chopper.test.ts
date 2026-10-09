@@ -64,6 +64,29 @@ describe("OP10-087 Tony Tony.Chopper", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
+  test("pays both rest costs at four opposing hand cards without discard or mill", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op10Usopp042,
+        character: [op10TonyTonyChopper087],
+        deck: [eb01Doma005, eb01Doma005, eb01Doma005],
+      },
+      { hand: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005] },
+    );
+    const chopper = engine.findCardInZone("south", "character", op10TonyTonyChopper087);
+    engine.activateEffect(chopper, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.leader.rested).toBe(true);
+    expect(view.players.south.characters.find((card) => card?.instanceId === chopper)?.rested).toBe(
+      true,
+    );
+    expect(view.players.south.deckCount).toBe(3);
+    expect(view.players.south.trash).toHaveLength(0);
+    expect(view.players.north.handCount).toBe(4);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create(
       {

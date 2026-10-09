@@ -36,6 +36,26 @@ describe("OP14-078 Bullet String", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("a non-Donquixote Leader may pay DON minus one but receives neither bonus", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [op14eb04BulletString078], activeDon: 3 },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const north = engine.asNorth();
+    const before = north.view().players.north;
+    engine.asSouth().attack(eb01MountainGod018, engine.leader("north"));
+    north.chooseCounter(op14eb04BulletString078);
+    north.acceptOptional();
+    engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "north");
+    const after = north.view().players.north;
+    expect(after.activeDon + after.restedDon).toBe(2);
+    expect(after.donDeckCount).toBe(before.donDeckCount + 1);
+    expect(after.leader.power).toBe(before.leader.power);
+    expect(after.lifeCount).toBe(before.lifeCount - 1);
+    expect(north.view().prompts).toHaveLength(0);
+  });
+
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },

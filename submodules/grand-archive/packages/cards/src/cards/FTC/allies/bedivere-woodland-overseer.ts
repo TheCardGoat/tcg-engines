@@ -45,6 +45,7 @@ export const bedivereWoodlandOverseer: GrandArchiveCard<GrandArchiveAbilityDefin
                 collection: {
                   zones: ["field"],
                   player: "controller",
+                  excludingSource: true,
                   filter: {
                     kind: "all",
                     filters: [

@@ -21,7 +21,7 @@ export const eb04DistortedFuture008: EventCard = {
   rarity: "R",
   setId: "EB04",
   cost: 1,
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   effect:
     "[Main] If you have 2 or less Life cards, give up to 1 of your opponent's Characters -3000 power during this turn.[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

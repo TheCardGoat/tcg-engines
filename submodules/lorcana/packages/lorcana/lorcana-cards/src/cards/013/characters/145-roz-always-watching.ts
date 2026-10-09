@@ -29,9 +29,13 @@ export const rozAlwaysWatching: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_6b2039370f684b6d9a258e69d6f0d323",
+    tcgPlayer: "704644",
+  },
   text: [
     {
-      title: "Always",
+      title: "ALWAYS",
       description: "Each opponent plays with the top card of their deck faceup.",
     },
   ],

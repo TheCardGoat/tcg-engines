@@ -21,7 +21,7 @@ export const op03GalleyLaCompany075: StageCard = {
   rarity: "C",
   setId: "OP03",
   cost: 3,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   effect:
     "[Activate:Main] You may rest this Stage: If your Leader is [Iceburg], add up to 1 DON!! card from your DON!! deck and rest it.",
   effects: {

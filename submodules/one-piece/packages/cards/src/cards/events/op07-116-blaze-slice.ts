@@ -21,7 +21,7 @@ export const op07BlazeSlice116: EventCard = {
   rarity: "R",
   setId: "OP07",
   cost: 1,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   effect:
     "[Main] / [Counter] Up to 1 of your Leader or Character cards gains +1000 power during this turn. Then, if your opponent has 2 or less Life cards, rest up to 1 of your opponent's Characters with a cost of 4 or less. [Trigger] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {

@@ -56,7 +56,8 @@ describe("Grand Archive generation manifest", () => {
       snapshot: { source: "gatcg-index-api", sha256: expect.stringMatching(/^[a-f0-9]{64}$/u) },
       compilerVersion: expect.any(Number),
       cardCount: 2495,
-      abilityCount: 4545,
+      // Return to the Depths links its prevention and restricted follow-up into one ability.
+      abilityCount: 4544,
       outputFingerprint: { algorithm: "sha256" },
     });
     expect(manifest.outputFingerprint.files).toEqual(

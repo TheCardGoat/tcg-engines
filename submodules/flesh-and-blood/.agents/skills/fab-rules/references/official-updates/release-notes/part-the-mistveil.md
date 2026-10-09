@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/part-the-mistveil/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Part the Mistveil"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/part-the-mistveil/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 968d4fc32b11f70740a1499bbebfaf6cfb2ab6b576e367a310faafbced9a5155
 ---

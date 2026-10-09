@@ -32,7 +32,7 @@ export const eb02Usopp022: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "[On Play] If you have 2 or less Characters with 5000 power or more, play up to 1 Character card with 6000 power or less and no base effect from your hand.",

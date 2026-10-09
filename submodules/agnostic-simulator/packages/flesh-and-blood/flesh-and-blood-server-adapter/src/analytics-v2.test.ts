@@ -50,6 +50,55 @@ function receipt(
 }
 
 describe("FAB authoritative transition analytics V2", () => {
+  it("removes undone pitch consequences while retaining authoritative receipt coverage", () => {
+    const pitched = card("pitched");
+    const undo = parseFabAnalyticsTransitionReceiptV2(
+      receipt(2, [{ ...base, eventId: "undo", kind: "undo", restoredCheckpointStateID: 0 }]),
+    );
+    const analytics = buildFabGameAnalyticsV2({
+      gameId: "undo-stats",
+      initialTurnPlayerId: "p1",
+      startedAt: 0,
+      players: [
+        {
+          playerId: "p1",
+          seat: 1,
+          heroName: "Azalea",
+          heroCanonicalId: "azalea",
+          initialLife: 20,
+          openingHand: [pitched],
+        },
+        {
+          playerId: "p2",
+          seat: 2,
+          heroName: "Dash",
+          heroCanonicalId: "dash",
+          initialLife: 20,
+          openingHand: [],
+        },
+      ],
+      transitionReceipts: [
+        receipt(1, [
+          {
+            ...base,
+            eventId: "pitch",
+            kind: "card-pitched",
+            playerId: "p1",
+            card: pitched,
+            from: "hand",
+            resourcesGenerated: 3,
+            chiGenerated: 0,
+          },
+        ]),
+        undo,
+      ],
+    });
+    expect(analytics.coverage.missingStateVersions).toEqual([]);
+    expect(analytics.players.p1?.handCycles[0]?.endingCards).toEqual([pitched]);
+    expect(analytics.players.p1?.handCycles[0]?.actions.map((c) => c.kind)).not.toContain(
+      "pitched",
+    );
+  });
   it("projects source zones and draw-to-intellect from real committed rules receipts", () => {
     const game = FabTestEngine.start(
       {

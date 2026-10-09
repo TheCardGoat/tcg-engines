@@ -11,7 +11,7 @@ export const intoTheUnknown: ActionCard = {
       artId: "set8-081",
       setCode: "set8",
       collectorNumber: "81",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const intoTheUnknown: ActionCard = {
   franchise: "Frozen",
   set: "008",
   cardNumber: 81,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 3,
   inkable: true,
   externalIds: {

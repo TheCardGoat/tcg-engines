@@ -20,10 +20,7 @@ export {
 
 export {
   type GigDie,
-  type DieType,
   type GigDieLocation,
-  DIE_MAX_VALUES,
-  STANDARD_GIG_DICE,
   rollDie,
   getGigsStolenForPower,
   getStreetCred,

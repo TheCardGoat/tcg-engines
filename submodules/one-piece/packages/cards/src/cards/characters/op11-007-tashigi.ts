@@ -50,7 +50,7 @@ export const op11Tashigi007: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -59,7 +59,7 @@ export const op11Tashigi007: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Navy",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

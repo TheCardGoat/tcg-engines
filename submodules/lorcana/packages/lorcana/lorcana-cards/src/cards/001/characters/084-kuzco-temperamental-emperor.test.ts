@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, PLAYER_ONE, PLAYER_TWO } from "@tcg/lorcana-engine/testing";
 import { kuzcoTemperamentalEmperor } from "./084-kuzco-temperamental-emperor";
-import { teKTheBurningOne } from "./126-te-k-the-burning-one";
+import { teKTheBurningOne } from "./126-te-ka-the-burning-one";
 
 describe("Kuzco - Temperamental Emperor", () => {
   describe("NO TOUCHY! When this character is challenged and banished, you may banish the challenging character.", () => {

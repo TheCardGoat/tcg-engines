@@ -44,8 +44,17 @@ export const lesserBoonOfNourishment: GrandArchiveCard<GrandArchiveAbilityDefini
             action: "scavenge",
             amount: 13,
             filter: {
-              kind: "subtype",
-              oneOf: ["FOOD"],
+              kind: "any",
+              filters: [
+                {
+                  kind: "subtype",
+                  oneOf: ["KITCHEN"],
+                },
+                {
+                  kind: "subtype",
+                  oneOf: ["FOOD"],
+                },
+              ],
             },
           },
         },

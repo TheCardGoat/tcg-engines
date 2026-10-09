@@ -1,0 +1,6365 @@
+{
+  "version": 1,
+  "seed": "improve/authored-rry-llorona-steel-dragon/3/authored-rry-llorona-steel-dragon-vs-authored-rry-llorona-steel-dragon/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-rry-llorona-steel-dragon",
+  "deckBId": "authored-rry-llorona-steel-dragon",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 11,
+  "stepCount": 85,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p2",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_478684908"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_508579878"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "dieId": "gd_508579878",
+          "dieType": "d12",
+          "faceValue": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_508579878",
+          "dieType": "d12",
+          "result": 7,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_508579878",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_249275624"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "cardId": "ci_249275624",
+          "cardName": "The Heist"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_249275624",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "The Heist"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_789738609"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_851162429", "ci_863223373", "ci_486975780"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Zetatech Faceplate, 6th Street Recruits, Satori: Sword of Saburo",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "effectName": "move card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_789738609",
+          "effectType": "call",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_789738609"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_851162429",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_863223373",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_486975780",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_851162429", "ci_863223373", "ci_486975780"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Zetatech Faceplate, 6th Street Recruits, Satori: Sword of Saburo",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_789738609", "ci_851162429", "ci_863223373", "ci_486975780"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "effectName": "move card"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_789738609"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_478684908"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "All is Lost",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "All is Lost",
+            "abilityText": "Trash 3. Add a Unit from among them to your hand.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "All is Lost",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_248848025", "ci_482133274", "ci_518242522"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Mantis Blades, Trauma Team Operatives, Over the Edge",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_478684908",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_478684908",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "All is Lost",
+            "cost": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_478684908",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "All is Lost",
+            "abilityText": "Trash 3. Add a Unit from among them to your hand.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_478684908"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_248848025",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_482133274",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_518242522",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "All is Lost",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_248848025", "ci_482133274", "ci_518242522"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Mantis Blades, Trauma Team Operatives, Over the Edge",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_478684908", "ci_248848025", "ci_482133274", "ci_518242522"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_482133274"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "All is Lost",
+            "targetNames": "Trauma Team Operatives",
+            "targetId": "ci_482133274",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_478684908",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_482133274"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_482133274",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "All is Lost",
+            "targetNames": "Trauma Team Operatives",
+            "targetId": "ci_482133274",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 5
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_478684908", "ci_482133274"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_46596161"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_365330624"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "dieId": "gd_365330624",
+          "dieType": "d12",
+          "faceValue": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_365330624",
+          "dieType": "d12",
+          "result": 11,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_365330624",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_180231054"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "cardId": "ci_180231054",
+          "cardName": "Bonnie and Clyde"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_180231054",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Bonnie and Clyde"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_890710475"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Dexter DeShawn: Off the Grid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid",
+            "abilityText": "CALL Choose one effect. Give a friendly Unit +2 power this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Dexter DeShawn: Off the Grid"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_890710475",
+          "effectType": "call",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid",
+            "abilityText": "CALL Choose one effect. Give a friendly Unit +2 power this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_890710475"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "draw"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_400477734"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Bonnie and Clyde",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_400477734"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_400477734"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Bonnie and Clyde",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_890710475"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_933017528"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_225020384"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "dieId": "gd_225020384",
+          "dieType": "d10",
+          "faceValue": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_225020384",
+          "dieType": "d10",
+          "result": 10,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_225020384",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_859223840"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "cardId": "ci_859223840",
+          "cardName": "Bonnie and Clyde"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_859223840",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Bonnie and Clyde"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_149219631"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Muamar Reyes: El Capitán"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Muamar Reyes: El Capitán",
+            "abilityText": "CALL Choose one effect. A friendly Unit can't be defeated in a fight this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Muamar Reyes: El Capitán"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_149219631",
+          "effectType": "call",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Muamar Reyes: El Capitán",
+            "abilityText": "CALL Choose one effect. A friendly Unit can't be defeated in a fight this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_149219631"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "protect"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Muamar Reyes: El Capitán",
+            "effectName": "grant rule"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Muamar Reyes: El Capitán",
+            "effectName": "grant rule"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_149219631"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_209919345",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_209919345",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_455212515"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_160164314"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "dieId": "gd_160164314",
+          "dieType": "d10",
+          "faceValue": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_160164314",
+          "dieType": "d10",
+          "result": 2,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_160164314",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_455212515"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "cardId": "ci_455212515",
+          "cardName": "The Heist"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_455212515",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "The Heist"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_46596161"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_46596161",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_46596161",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_326371430"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_919045792", "ci_373053392", "ci_516590136"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Trauma Team Operatives, Mantis Blades, Satori: Sword of Saburo",
+              "visibleTo": ["p1"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "effectName": "move card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "V: Streetkid"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_326371430",
+          "effectType": "call",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "V: Streetkid",
+            "abilityText": "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_326371430"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_919045792",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_373053392",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_516590136",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "trashedCount": 3,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_919045792", "ci_373053392", "ci_516590136"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Trauma Team Operatives, Mantis Blades, Satori: Sword of Saburo",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_326371430", "ci_919045792", "ci_373053392", "ci_516590136"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "V: Streetkid",
+            "effectName": "move card"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_326371430"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_422966915"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_827076675"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "dieId": "gd_827076675",
+          "dieType": "d8",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_827076675",
+          "dieType": "d8",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_827076675",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_592223868"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_592223868",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_592223868",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_161699756"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Dexter DeShawn: Off the Grid"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid",
+            "abilityText": "CALL Choose one effect. Give a friendly Unit +2 power this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Dexter DeShawn: Off the Grid"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_161699756",
+          "effectType": "call",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid",
+            "abilityText": "CALL Choose one effect. Give a friendly Unit +2 power this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_161699756"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "buff"
+      },
+      "moveLogs": [],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_209919345"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "Meredith Stout: Stone Cold Corpo",
+            "powerChange": "+2"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "Meredith Stout: Stone Cold Corpo",
+            "targetId": "ci_209919345",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_161699756",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_209919345"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "Meredith Stout: Stone Cold Corpo",
+            "powerChange": "+2"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_161699756", "ci_209919345"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "Meredith Stout: Stone Cold Corpo",
+            "targetId": "ci_209919345",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_161699756", "ci_209919345"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_209919345",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_46596161"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Meredith Stout: Stone Cold Corpo",
+            "blockerPower": 5,
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 7,
+            "originalAttackKind": "direct"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "attackerId": "ci_209919345",
+          "attackerName": "Meredith Stout: Stone Cold Corpo"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 7,
+            "defenderPower": 5
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 5,
+          "cardId": "ci_46596161",
+          "cardName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_46596161",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Meredith Stout: Stone Cold Corpo",
+            "blockerPower": 5,
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 7,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_209919345",
+          "blockerId": "ci_46596161",
+          "originalTarget": null,
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_209919345",
+          "defenderId": "ci_46596161",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 7,
+            "defenderPower": 5
+          },
+          "playerId": "p2",
+          "category": "combat",
+          "cardIds": ["ci_209919345", "ci_46596161"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_46596161",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_46596161",
+          "defeatedBy": "ci_209919345",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "red",
+            "classifications": ["Corpo", "Militech"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 4,
+            "effectivePower": 5,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_29774063"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "dieId": "gd_29774063",
+          "dieType": "d8",
+          "faceValue": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_29774063",
+          "dieType": "d8",
+          "result": 7,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_29774063",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_400477734"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "cardId": "ci_400477734",
+          "cardName": "Bonnie and Clyde"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_400477734",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Bonnie and Clyde"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_339718303"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Play} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_339718303",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_339718303",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "cost": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_339718303",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Play} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 3
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 2,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_339718303",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 2,
+          "newValue": 3,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 2,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_247369312",
+        "attachToId": "ci_339718303"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 2,
+            "attachedToName": "Dexter DeShawn: One Last Chance"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_247369312",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_247369312",
+          "hostId": "ci_339718303",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_247369312",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 2,
+            "attachedToName": "Dexter DeShawn: One Last Chance"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_940047611"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Muamar Reyes: El Capitán"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Muamar Reyes: El Capitán",
+            "abilityText": "CALL Choose one effect. A friendly Unit can't be defeated in a fight this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Muamar Reyes: El Capitán"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_940047611",
+          "effectType": "call",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Muamar Reyes: El Capitán",
+            "abilityText": "CALL Choose one effect. A friendly Unit can't be defeated in a fight this turn. // Draw 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_940047611"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "draw"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Muamar Reyes: El Capitán",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_141109209"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Dexter DeShawn: One Last Chance",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_141109209"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Muamar Reyes: El Capitán",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_141109209"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Dexter DeShawn: One Last Chance",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_940047611"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_565928396"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_670167645"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "dieId": "gd_670167645",
+          "dieType": "d6",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_670167645",
+          "dieType": "d6",
+          "result": 5,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_670167645",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_565928396"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "cardId": "ci_565928396",
+          "cardName": "All is Lost"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_565928396",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_565928396",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "All is Lost"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerId": "ci_209919345",
+          "attackerName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_209919345",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_29774063"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "attackerName": "Meredith Stout: Stone Cold Corpo",
+          "attackerPower": 5,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 7
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_29774063",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_209919345"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_29774063",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_209919345",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 5,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 7)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_592223868"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerId": "ci_592223868",
+          "attackerName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_592223868",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_592223868",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_365330624"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "attackerName": "Meredith Stout: Stone Cold Corpo",
+          "attackerPower": 5,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_365330624",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_592223868"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_365330624",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_592223868",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 5,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_933017528"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565928396",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_933017528",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_933017528",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_720233903",
+        "attachToId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 2,
+            "attachedToName": "Meredith Stout: Stone Cold Corpo"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_720233903",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_720233903",
+          "hostId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_720233903",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 2,
+            "attachedToName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_309477771"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_41021950"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "dieId": "gd_41021950",
+          "dieType": "d6",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_41021950",
+          "dieType": "d6",
+          "result": 3,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_41021950",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_309477771"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "cardId": "ci_309477771",
+          "cardName": "All is Lost"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_309477771",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_309477771",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "All is Lost"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_339718303"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Zetatech Faceplate | Dexter DeShawn: One Last Chance",
+            "triggerIds": ["trigger-9", "trigger-10"],
+            "sourceCardIds": ["ci_247369312", "ci_339718303"],
+            "abilityIndexes": ["0", "1"]
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_339718303",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_339718303",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_247369312",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_339718303",
+          "effectType": "attack",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Zetatech Faceplate | Dexter DeShawn: One Last Chance",
+            "triggerIds": ["trigger-9", "trigger-10"],
+            "sourceCardIds": ["ci_247369312", "ci_339718303"],
+            "abilityIndexes": ["0", "1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312", "ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-10"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-10",
+            "selectedSourceCardId": "ci_339718303",
+            "selectedAbilityIndex": 1,
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Zetatech Faceplate",
+            "remainingTriggerIds": ["trigger-9"],
+            "remainingSourceCardIds": ["ci_247369312"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-10",
+            "selectedSourceCardId": "ci_339718303",
+            "selectedAbilityIndex": 1,
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Zetatech Faceplate",
+            "remainingTriggerIds": ["trigger-9"],
+            "remainingSourceCardIds": ["ci_247369312"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312", "ci_339718303"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 4
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 3,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_339718303",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 3,
+          "newValue": 4,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 3,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 5
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 5,
+            "previousValue": 4,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerId": "ci_339718303",
+          "attackerName": "Dexter DeShawn: One Last Chance"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_247369312",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 4,
+          "newValue": 5,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 5,
+            "previousValue": 4,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_247369312"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_365330624"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "attackerName": "Dexter DeShawn: One Last Chance",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_365330624",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_339718303"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_365330624",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_339718303",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_646172079"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Yorinobu Arasaka: Steel Dragon",
+            "cost": 7
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Yorinobu Arasaka: Steel Dragon",
+            "abilityText": "Play You may play a Unit with cost 4 or less from your hand or trash for free. It can attack rival Units this turn.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_309477771",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 7,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_646172079",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_646172079",
+          "playerId": "p1",
+          "cost": 7
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Yorinobu Arasaka: Steel Dragon",
+            "cost": 7
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_646172079",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Yorinobu Arasaka: Steel Dragon",
+            "abilityText": "Play You may play a Unit with cost 4 or less from your hand or trash for free. It can attack rival Units this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_646172079"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_42101957"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Yorinobu Arasaka: Steel Dragon",
+            "targetNames": "6th Street Recruits",
+            "targetId": "ci_42101957",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_646172079",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_42101957"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Yorinobu Arasaka: Steel Dragon",
+            "targetNames": "6th Street Recruits",
+            "targetId": "ci_42101957",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_646172079", "ci_42101957"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_42101957",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_42101957",
+          "playerId": "p1",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "6th Street Recruits",
+            "cost": 0
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackUnit",
+      "args": {
+        "attackerId": "ci_42101957",
+        "defenderId": "ci_592223868"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.attackUnit",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerId": "ci_42101957",
+          "attackerName": "6th Street Recruits"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 6,
+            "defenderPower": 5
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 8,
+          "cardId": "ci_592223868",
+          "cardName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_42101957",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_42101957",
+          "defenderId": "ci_592223868",
+          "attackKind": "fight",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackUnit",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_42101957",
+          "defenderId": "ci_592223868",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 6,
+            "defenderPower": 5
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_42101957", "ci_592223868"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_592223868",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_592223868",
+          "defeatedBy": "ci_42101957",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "red",
+            "classifications": ["Corpo", "Militech"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 4,
+            "effectivePower": 5,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "dieId": "gd_88284499",
+          "dieType": "d4",
+          "faceValue": 3
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_149219631",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_565928396",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_398595608"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_88284499",
+          "dieType": "d4",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_88284499",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_209919345",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_720233903",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_720233903"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 4
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 5,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_343429300"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "6th Street Recruits",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerId": "ci_209919345",
+          "attackerName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_720233903",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_720233903"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_160164314",
+          "previousValue": 5,
+          "newValue": 4,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 5,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_343429300"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_343429300"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "6th Street Recruits",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_720233903"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_160164314"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerName": "Meredith Stout: Stone Cold Corpo",
+          "attackerPower": 7,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 4
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_160164314",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_209919345"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_160164314",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_209919345",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 7,
+            "count": 1,
+            "stolenGigs": "1 Gig (D10 with value 4)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_933017528"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerId": "ci_933017528",
+          "attackerName": "6th Street Recruits"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_933017528",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_933017528",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_365330624"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerName": "6th Street Recruits",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_365330624",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_933017528"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_365330624",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_933017528",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_398595608"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_249275624",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_859223840",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_565928396",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_789738609",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_398595608",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_398595608",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Meredith Stout: Stone Cold Corpo",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_161699756",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_827076675",
+        "value": 6
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "D8",
+            "targetId": "gd_827076675",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 4,
+            "dieId": "gd_827076675",
+            "dieLabel": "D8"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_161699756",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_827076675"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "D8",
+            "targetId": "gd_827076675",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_161699756"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_827076675",
+          "previousValue": 4,
+          "newValue": 6,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 4,
+            "dieId": "gd_827076675",
+            "dieLabel": "D8"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_161699756",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "dieId": "gd_893005611",
+          "dieType": "d4",
+          "faceValue": 2
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_339718303",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_42101957",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_309477771",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 4
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_500638744"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_893005611",
+          "dieType": "d4",
+          "result": 2,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_893005611",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_408317380"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "cardId": "ci_408317380",
+          "cardName": "Over the Edge"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_408317380",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_408317380",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Over the Edge"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_42101957"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_42101957",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_42101957",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "6th Street Recruits"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_398595608"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Meredith Stout: Stone Cold Corpo",
+            "blockerPower": 5,
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 6,
+            "originalAttackKind": "direct"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerId": "ci_42101957",
+          "attackerName": "6th Street Recruits"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 6,
+            "defenderPower": 5
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 10,
+          "cardId": "ci_398595608",
+          "cardName": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_398595608",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Meredith Stout: Stone Cold Corpo",
+            "blockerPower": 5,
+            "attackerName": "6th Street Recruits",
+            "attackerPower": 6,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_42101957",
+          "blockerId": "ci_398595608",
+          "originalTarget": null,
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_42101957",
+          "defenderId": "ci_398595608",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "6th Street Recruits",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 6,
+            "defenderPower": 5
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_42101957", "ci_398595608"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_398595608",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_398595608",
+          "defeatedBy": "ci_42101957",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "red",
+            "classifications": ["Corpo", "Militech"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 4,
+            "effectivePower": 5,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackUnit",
+      "args": {
+        "attackerId": "ci_646172079",
+        "defenderId": "ci_209919345"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.attackUnit",
+          "params": {
+            "attackerName": "Yorinobu Arasaka: Steel Dragon",
+            "defenderName": "Meredith Stout: Stone Cold Corpo"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerId": "ci_646172079",
+          "attackerName": "Yorinobu Arasaka: Steel Dragon"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Yorinobu Arasaka: Steel Dragon",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 9,
+            "defenderPower": 7
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 10,
+          "cardId": "ci_209919345",
+          "cardName": "Meredith Stout: Stone Cold Corpo"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p2",
+          "turnNumber": 10,
+          "cardId": "ci_720233903",
+          "cardName": "Zetatech Faceplate"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_646172079",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_646172079",
+          "defenderId": "ci_209919345",
+          "attackKind": "fight",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackUnit",
+          "params": {
+            "attackerName": "Yorinobu Arasaka: Steel Dragon",
+            "defenderName": "Meredith Stout: Stone Cold Corpo"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_646172079",
+          "defenderId": "ci_209919345",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Yorinobu Arasaka: Steel Dragon",
+            "defenderName": "Meredith Stout: Stone Cold Corpo",
+            "attackerPower": 9,
+            "defenderPower": 7
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_646172079", "ci_209919345"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_720233903",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_720233903",
+          "hostId": "ci_209919345",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_209919345",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_209919345",
+          "defeatedBy": "ci_646172079",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "red",
+            "classifications": ["Corpo", "Militech"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 4,
+            "effectivePower": 7,
+            "attachedGearIds": ["ci_720233903"],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_720233903",
+          "defeatedBy": "ci_646172079",
+          "playerId": "p2",
+          "hostId": "ci_209919345",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "yellow",
+            "classifications": ["Cyberware", "Zetatech"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": "ci_209919345"
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 74,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_339718303"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Zetatech Faceplate | Dexter DeShawn: One Last Chance",
+            "triggerIds": ["trigger-14", "trigger-15"],
+            "sourceCardIds": ["ci_247369312", "ci_339718303"],
+            "abilityIndexes": ["0", "1"]
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_339718303",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_339718303",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_247369312",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_339718303",
+          "effectType": "attack",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Zetatech Faceplate | Dexter DeShawn: One Last Chance",
+            "triggerIds": ["trigger-14", "trigger-15"],
+            "sourceCardIds": ["ci_247369312", "ci_339718303"],
+            "abilityIndexes": ["0", "1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312", "ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 75,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-14"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-14",
+            "selectedSourceCardId": "ci_247369312",
+            "selectedAbilityIndex": 0,
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Dexter DeShawn: One Last Chance",
+            "remainingTriggerIds": ["trigger-15"],
+            "remainingSourceCardIds": ["ci_339718303"],
+            "remainingAbilityIndexes": ["1"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-14",
+            "selectedSourceCardId": "ci_247369312",
+            "selectedAbilityIndex": 0,
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Dexter DeShawn: One Last Chance",
+            "remainingTriggerIds": ["trigger-15"],
+            "remainingSourceCardIds": ["ci_339718303"],
+            "remainingAbilityIndexes": ["1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312", "ci_339718303"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 76,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 3
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 4,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_247369312",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_247369312"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 4,
+          "newValue": 3,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 4,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_247369312"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Attack} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 77,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 2
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 3,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerId": "ci_339718303",
+          "attackerName": "Dexter DeShawn: One Last Chance"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_339718303",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_339718303"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 3,
+          "newValue": 2,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 3,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 78,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_365330624"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "attackerName": "Dexter DeShawn: One Last Chance",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 11
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_365330624",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_339718303"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_365330624",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_339718303",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Dexter DeShawn: One Last Chance",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 11)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 79,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_365823495"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trauma Team Operatives",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_180231054",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_455212515",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_400477734",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_309477771",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_365823495",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_365823495",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trauma Team Operatives",
+            "cost": 4
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 80,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_141109209"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Play} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_408317380",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_326371430",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_940047611",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_141109209",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_141109209",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "cost": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_141109209",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Dexter DeShawn: One Last Chance",
+            "abilityText": "{Play} Adjust a Gig by up to 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_141109209"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 81,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_29774063",
+        "value": 6
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D8",
+            "targetId": "gd_29774063",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 7,
+            "dieId": "gd_29774063",
+            "dieLabel": "D8"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_141109209",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_29774063"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: One Last Chance",
+            "targetNames": "D8",
+            "targetId": "gd_29774063",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_141109209"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_29774063",
+          "previousValue": 7,
+          "newValue": 6,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 7,
+            "dieId": "gd_29774063",
+            "dieLabel": "D8"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 82,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_890710475",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Dexter DeShawn: Off the Grid"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 83,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_160164314",
+        "value": 3
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 2,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_890710475",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_160164314"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Dexter DeShawn: Off the Grid",
+            "targetNames": "D10",
+            "targetId": "gd_160164314",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_890710475"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_160164314",
+          "previousValue": 2,
+          "newValue": 3,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 2,
+            "dieId": "gd_160164314",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_890710475",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 84,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "end"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

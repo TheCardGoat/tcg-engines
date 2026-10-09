@@ -27,6 +27,7 @@ export const lookWhatYouveDone: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_73a3b09749fa4a318ee0432abc9da30a",
+    tcgPlayer: "702663",
   },
   text: "Deal 2 damage to chosen character. During your turn, when you discard this card, you may play it from your discard. (You pay all costs.)",
   abilities: [

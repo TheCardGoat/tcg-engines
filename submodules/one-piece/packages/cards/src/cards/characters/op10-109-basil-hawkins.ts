@@ -41,7 +41,7 @@ export const op10BasilHawkins109: CharacterCard = {
   power: 5000,
   counter: 1000,
   trigger: "Draw 2 cards and trash 1 card from your hand.",
-  traits: ["Hawkins Pirates Supernovas"],
+  traits: ["Supernovas", "Hawkins Pirates"],
   attribute: "slash",
   effect: "[On K.O.] Trash up to 1 card from the top of your opponent's Life cards.",
   effects: {

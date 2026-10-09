@@ -25,7 +25,7 @@ describe("OP05-105 Satori", () => {
     const otherId = engine.findCardInZone("north", "hand", op05MaryGeoise097);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
 
@@ -77,7 +77,7 @@ describe("OP05-105 Satori", () => {
     const otherId = engine.findCardInZone("north", "hand", op05MaryGeoise097);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const handBefore = engine.getView("north").players.north.hand.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");

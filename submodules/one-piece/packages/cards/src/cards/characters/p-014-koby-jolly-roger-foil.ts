@@ -41,7 +41,7 @@ export const prb01KobyJollyRogerFoil014: CharacterCard = {
   setId: "P",
   cost: 3,
   power: 3000,
-  traits: ["Navy"],
+  traits: ["FILM", "Navy"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[Trigger] Play this card.",

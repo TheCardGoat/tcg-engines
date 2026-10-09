@@ -545,7 +545,7 @@ function decisionInput(
         max: decision.max,
         ordered: false,
         candidates: decision.candidates.map((candidate) => ({
-          entity: decisionCandidateEntity(runtime, candidate.instanceId),
+          entity: decisionCandidateEntity(runtime, candidate),
           text: { key: candidate.label },
           enabled: true,
         })),
@@ -703,10 +703,19 @@ function previewOptionalFollowUp(
     : null;
 }
 
-function decisionCandidateEntity(runtime: FabMatchRuntime, instanceId: string): EntityRef {
+function decisionCandidateEntity(
+  runtime: FabMatchRuntime,
+  candidate: string | { instanceId: string; hidden?: boolean },
+): EntityRef {
+  const instanceId = typeof candidate === "string" ? candidate : candidate.instanceId;
   const state = runtime.getState();
   const object = state.objects[instanceId];
   if (!object) return { kind: "card" as const, instanceId };
+  // CR 1.8.6b: hidden candidates are not public to the chooser — the payload
+  // must not carry their card identity.
+  if (typeof candidate !== "string" && candidate.hidden === true) {
+    return { kind: "card" as const, instanceId };
+  }
   const ownerZones = state.containers.zonesByPlayerId[object.ownerId];
   const zone = ownerZones
     ? Object.entries(ownerZones).find(([, ids]) => ids.includes(instanceId))?.[0]

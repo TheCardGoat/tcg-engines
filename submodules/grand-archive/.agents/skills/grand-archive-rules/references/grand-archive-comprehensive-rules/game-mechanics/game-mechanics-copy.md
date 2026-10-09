@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-copy"
+  relation: "current_index"
+---
+
 # Game Mechanics - Copy
 
 Some cards or abilities can become a copy of a card activation/materialization, object, or ability, or may create an object that is a copy of a card, object, or ability. Copying can refer to the effect of copying an object or card activation. A copy can refer to the copied card activation/materialization, object, or ability.&#x20;

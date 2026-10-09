@@ -17,19 +17,20 @@ import { LegendsZone } from "./LegendsZone";
 import { PInfoZone } from "./PInfoZone";
 import { TrashZone } from "./TrashZone";
 import { useGameState } from "./gameStateContext";
+import { useCyberpunkBoardRuntime } from "../BoardRuntimeContext";
 import { useMoveSelectionForSide } from "./MoveSelectionContext";
 import { ClockDisplay, PassTurnControl } from "./CenterRow";
 import {
   PLAYER_SIDE_TO_ID,
   useBoardMode,
   useEngine,
-  type MoveLogEntry,
   type Side,
   type ZoneCardView,
 } from "../../engine";
 import { useSideZones } from "../../engine/zoneViews";
 import { canShowSellCue } from "./useLastSoldCard";
 import { useDeckRevealForSide } from "./deckReveal";
+import { usePeekedLegendsForSide } from "./peekedLegends";
 import classes from "./GameBoard.module.css";
 
 interface GameBoardProps {
@@ -78,6 +79,8 @@ export function GameBoard({
     canUndo,
     canUndoToTurnStart,
     dispatch,
+    humanSide,
+    pendingRemoteActionId,
     boardCorrectionEnabled,
     boardCorrectionProposalPending,
     boardCorrectionNeedsConsent,
@@ -85,9 +88,10 @@ export function GameBoard({
     requestBoardCorrection,
     exitBoardCorrection,
   } = useEngine();
-  // The persistent "sell here" slot cue mirrors the engine's sellCard
-  // availability and belongs to the local player's row only. It must not read
-  // unspent eddie counts — selling is legal with every eddie spent.
+  const { liveMatchSidebar } = useCyberpunkBoardRuntime();
+  const canConcede = !opponent && (!liveMatchSidebar || Boolean(liveMatchSidebar.localPlayerId));
+  // Remind the local player while the normal Sell action remains unused this
+  // turn. A later draw may provide a Sell-tag card even if the hand has none now.
   const sellCue =
     !opponent &&
     canShowSellCue({
@@ -96,7 +100,6 @@ export function GameBoard({
       gameEnded,
       soldThisTurn: zones.soldThisTurn,
       attackInProgress: matchState.G.attackState != null,
-      hasSellableCardInHand: zones.hand.some((c) => c.hasSellTag),
     });
   const deckReveal = useDeckRevealForSide(side);
   const peekedLegends = usePeekedLegendsForSide(
@@ -193,6 +196,7 @@ export function GameBoard({
   const totalEddieCount = eddieCardCount + zones.legendArea.length;
 
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+  const [confirmingConcede, setConfirmingConcede] = useState(false);
   const [trashViewerOpen, setTrashViewerOpen] = useState(false);
   const trashViewerOwnerId = String(PLAYER_SIDE_TO_ID[side]);
   const trashViewerZoneId = opponent ? "opp-trash" : "p-trash";
@@ -257,6 +261,16 @@ export function GameBoard({
         disabled: !canUndoToTurnStart,
         run: () => dispatch({ type: "undoToTurnStart" }),
       },
+      ...(canConcede
+        ? [
+            {
+              id: "concede",
+              label: pendingRemoteActionId === "concede" ? "Conceding…" : "Concede…",
+              disabled: gameEnded || pendingRemoteActionId === "concede",
+              run: () => setConfirmingConcede(true),
+            },
+          ]
+        : []),
       ...(bannerState
         ? [
             {
@@ -295,6 +309,8 @@ export function GameBoard({
     advancePhase,
     canUndo,
     canUndoToTurnStart,
+    canConcede,
+    pendingRemoteActionId,
     dispatch,
     bannerState,
     boardCorrectionEnabled,
@@ -432,6 +448,20 @@ export function GameBoard({
           y={contextMenu.y}
           actions={contextMenuActions}
           onClose={() => setContextMenu(null)}
+        />
+      ) : null}
+      {canConcede ? (
+        <ConfirmDialog
+          opened={confirmingConcede && !gameEnded}
+          title="Concede match?"
+          body="This concedes the match and cannot be undone."
+          cancelLabel="Keep playing"
+          confirmLabel="Concede"
+          onCancel={() => setConfirmingConcede(false)}
+          onConfirm={() => {
+            setConfirmingConcede(false);
+            dispatch({ type: "concede", as: PLAYER_SIDE_TO_ID[humanSide] });
+          }}
         />
       ) : null}
     </div>
@@ -585,50 +615,4 @@ function trashCardToSimulatorEntity(
       "data-card-color": card.color,
     },
   };
-}
-
-function usePeekedLegendsForSide(
-  moveLogs: ReadonlyArray<MoveLogEntry>,
-  side: Side,
-  turnNumber: number,
-): { ids: Set<string>; indexes: Set<number> } {
-  const ownerId = String(PLAYER_SIDE_TO_ID[side]);
-  return useMemo(() => {
-    const ids = new Set<string>();
-    const indexes = new Set<number>();
-    for (const entry of moveLogs) {
-      const log = entry.log;
-      if (
-        log.type === "lookAtCards" &&
-        log.turnNumber === turnNumber &&
-        log.zone === "legendArea" &&
-        log.ownerId === ownerId &&
-        Array.isArray(log.cardIds)
-      ) {
-        for (const cardId of log.cardIds) {
-          ids.add(cardId);
-        }
-        continue;
-      }
-      if (
-        log.type !== "action" ||
-        log.turnNumber !== turnNumber ||
-        log.messageKey !== "trigger.targetResolved" ||
-        log.params.sourceCardName !== "Kiroshi Optics" ||
-        log.params.targetKind !== "legend" ||
-        log.params.targetZone !== "legendArea" ||
-        log.params.targetOwnerId !== ownerId ||
-        typeof log.params.targetNames !== "string"
-      ) {
-        continue;
-      }
-      if (typeof log.params.targetId === "string") {
-        ids.add(log.params.targetId);
-      }
-      if (typeof log.params.targetIndex === "number") {
-        indexes.add(log.params.targetIndex);
-      }
-    }
-    return { ids, indexes };
-  }, [moveLogs, ownerId, turnNumber]);
 }

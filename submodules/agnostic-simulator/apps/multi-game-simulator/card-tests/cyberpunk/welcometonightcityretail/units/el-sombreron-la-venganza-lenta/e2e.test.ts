@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 
 import {
   welcomeToNightCityRetailCorpoSecurity,
-  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailElSombreronLaVenganzaLenta,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -19,7 +19,7 @@ test("El Sombreron (Retail) - attack trigger doubles fight power", async ({ page
   const elSombreron = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    welcomeToNightCityRetailElSombreroNLaVenganzaLenta.id,
+    welcomeToNightCityRetailElSombreronLaVenganzaLenta.id,
   );
   const target = await pom.getCardInZoneByDefinitionId(
     "field",

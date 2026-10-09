@@ -60,4 +60,24 @@ describe("OP12-098 Hair Removal Fist", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each(["OP12-065", "OP01-120"])(
+    "grants only 2000 when %s misses one extra-power condition",
+    (character) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+        { hand: [op12HairRemovalFist098, eb01Doma005], character: [character], activeDon: 1 },
+      );
+      engine
+        .asSouth()
+        .attack(
+          engine.findCardInZone("south", "character", eb01MountainGod018),
+          engine.leader("north"),
+        );
+      engine.asNorth().chooseCounter(op12HairRemovalFist098);
+      engine.asNorth().chooseTargets(engine.leader("north"));
+      expect(engine.getView("north").players.north.leader.power).toBe(7000);
+      engine.asNorth().chooseCounter();
+      expect(engine.getView("north").players.north.leader.power).toBe(5000);
+    },
+  );
 });

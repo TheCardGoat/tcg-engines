@@ -57,4 +57,22 @@ describe("OP09-030 Trafalgar Law", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(candidateId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("FAQ: returns this Law itself and still plays another eligible Odyssey Character", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP09-030", "OP09-029"], activeDon: 3 });
+    const law = e.findCardInZone("south", "hand", "OP09-030");
+    const chopper = e.findCardInZone("south", "hand", "OP09-029");
+    e.asSouth().play("OP09-030");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(law);
+    const play = e.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (play?.kind !== "selectEntity") throw Error("play");
+    expect(play.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual([chopper]);
+    e.asSouth().choosePlay(chopper);
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === chopper)).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === law)).toBe(
+      false,
+    );
+  });
 });

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-main-deck"
+  relation: "current_index"
+---
+
 # Game Zones - Main Deck
 
 #### General Rules:

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op05FraNosuke070 } from "../../../../../cards/src/cards/characters/op05-070-fra-nosuke.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP05-070 Fra-Nosuke", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op05FraNosuke070);
-  });
-});

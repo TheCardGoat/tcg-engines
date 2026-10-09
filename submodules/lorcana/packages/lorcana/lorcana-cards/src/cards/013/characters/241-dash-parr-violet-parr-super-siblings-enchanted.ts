@@ -1,6 +1,9 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { dashParrVioletParrSuperSiblings } from "./133-dash-parr-violet-parr-super-siblings";
 import { dashParrVioletParrSuperSiblingsEnchantedI18n } from "./241-dash-parr-violet-parr-super-siblings-enchanted.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
+import { resist } from "../../../helpers/abilities/resist";
+import { comboShift } from "../../../helpers/abilities/shift";
 
 export const dashParrVioletParrSuperSiblingsEnchanted: CharacterCard = {
   id: "6a4",
@@ -31,6 +34,10 @@ export const dashParrVioletParrSuperSiblingsEnchanted: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_265cccda001b4d478baab353b45b23b6",
+    tcgPlayer: "704634",
+  },
   text: [
     {
       title: "Combo Shift 6 {I}",
@@ -39,12 +46,50 @@ export const dashParrVioletParrSuperSiblingsEnchanted: CharacterCard = {
       title: "Evasive, Resist +1",
     },
     {
-      title: "Incredible Tactics",
+      title: "INCREDIBLE TACTICS",
       description:
         "Whenever this character quests or challenges, draw a card for each card under them.",
     },
   ],
   classifications: ["Storyborn", "Team", "Super", "Hero"],
-  abilities: dashParrVioletParrSuperSiblings.abilities,
+  abilities: [
+    comboShift(["Dash Parr", "Violet Parr"], 6),
+    evasive,
+    resist(1),
+    {
+      type: "triggered",
+      name: "INCREDIBLE TACTICS",
+      text: "INCREDIBLE TACTICS Whenever this character quests, draw a card for each card under them.",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+        timing: "whenever",
+      },
+      effect: {
+        type: "draw",
+        amount: {
+          type: "cards-under-self",
+        },
+        target: "CONTROLLER",
+      },
+    },
+    {
+      type: "triggered",
+      name: "INCREDIBLE TACTICS",
+      text: "INCREDIBLE TACTICS Whenever this character challenges, draw a card for each card under them.",
+      trigger: {
+        event: "challenge",
+        on: "SELF",
+        timing: "whenever",
+      },
+      effect: {
+        type: "draw",
+        amount: {
+          type: "cards-under-self",
+        },
+        target: "CONTROLLER",
+      },
+    },
+  ],
   i18n: dashParrVioletParrSuperSiblingsEnchantedI18n,
 };

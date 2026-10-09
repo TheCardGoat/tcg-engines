@@ -40,7 +40,7 @@ export const op10Cavendish105: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Beautiful Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Beautiful Pirates"],
   attribute: "slash",
   i18n: op10Cavendish105I18n,
 };

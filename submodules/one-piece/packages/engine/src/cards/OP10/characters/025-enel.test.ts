@@ -17,7 +17,8 @@ describe("OP10-025 Enel", () => {
         { card: eb01Doma005, rested: true },
         { card: eb01Doma005, rested: true },
       ],
-      deck: [eb01Fourtricks025, eb01MountainGod018, op01Shanks120],
+      // Keep a bottom card so deck-empty defeat does not end this effect test.
+      deck: [eb01Fourtricks025, eb01MountainGod018, op01Shanks120, eb01Doma005],
       activeDon: op10Enel025.cost,
     });
     const keptId = engine.findCardInZone("south", "hand", eb01Doma005);

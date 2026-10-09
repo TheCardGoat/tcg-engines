@@ -8,6 +8,8 @@ export type SupporterPerkConfig = {
   monthlyInkmarks: number;
   cosmeticProgressMultiplier: number;
   eventTicketMultiplier: number;
+  /** Grants temporary access to every alternate card art while subscribed. */
+  allAlternateArts: boolean;
   /** Automatic cloud replay retention measured from game completion. */
   replayRetentionDays: number;
 };
@@ -25,6 +27,7 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 50,
     cosmeticProgressMultiplier: 2,
     eventTicketMultiplier: 2,
+    allAlternateArts: false,
     replayRetentionDays: 30,
   },
   tier3: {
@@ -33,6 +36,7 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 100,
     cosmeticProgressMultiplier: 3,
     eventTicketMultiplier: 3,
+    allAlternateArts: false,
     replayRetentionDays: 60,
   },
   tier4: {
@@ -41,6 +45,7 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 150,
     cosmeticProgressMultiplier: 5,
     eventTicketMultiplier: 5,
+    allAlternateArts: true,
     replayRetentionDays: 90,
   },
 } as const satisfies Record<SupporterPerkTier, SupporterPerkConfig>;

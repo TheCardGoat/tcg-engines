@@ -1,19 +1,6 @@
 import { DSL_VERSION, type StructuredCardDefinition } from "@tcg/cyberpunk-types";
-import { prm01Cards } from "./PRM01/index.ts";
-import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
-import { promoCards } from "./promo/index.ts";
-import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
-import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
-import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
-
-const structuredCards: StructuredCardDefinition[] = [
-  ...promoCards,
-  ...prm01Cards,
-  ...boxToppersRetailCards,
-  ...theHeistRetailStarterDeckCards,
-  ...embracingPowerRetailStarterDeckCards,
-  ...welcomeToNightCityRetailCards,
-];
+import { structuredCards } from "./cards/index.ts";
+import { getMergedCyberpunkCards, getMergedCyberpunkCardsById } from "./merged.ts";
 
 /**
  * DSL version of every card in {@link cardBundle}. External consumers should
@@ -38,21 +25,24 @@ export interface CardCatalog {
 }
 
 /**
- * Construct a {@link CardCatalog} backed by {@link cardBundle}. The catalog is
+ * Construct the canonical runtime catalog used by server and browser. Authored
+ * source ids and stored canonical aliases resolve through the same merged pool.
+ * The catalog is
  * lightweight; create one per session/match. Tests can extend the result by
  * wrapping it or by using the engine's `overrideDefinition` overlay.
  */
 export function createCardCatalog(): CardCatalog {
-  const entries = Object.entries(cardBundle);
+  const cards = getMergedCyberpunkCards();
+  const byId = getMergedCyberpunkCardsById();
   return {
     get(id) {
-      return cardBundle[id];
+      return byId.get(id);
     },
     *entries() {
-      for (const e of entries) yield e as [string, StructuredCardDefinition];
+      for (const card of cards) yield [card.id, card];
     },
     get size() {
-      return entries.length;
+      return cards.length;
     },
   };
 }
@@ -61,20 +51,21 @@ export function createCardCatalog(): CardCatalog {
 // (`@tcg/cyberpunk-cards`) can reach it through either entry. Authoritative
 // implementation + JSDoc live in `src/atelier.ts`.
 export {
-  CYBERPUNK_ALT_ART_SET_CODES,
-  CYBERPUNK_RARITY_RANK,
   CYBERPUNK_RARITY_TO_CODE,
+  CYBERPUNK_LEGACY_ART_ID_TO_ART_ID,
   cyberpunkPrintingEffectiveRarityCode,
   cyberpunkRarityCode,
   defaultCyberpunkPrintingId,
+  getCyberpunkArtIdForPrinting,
   getCyberpunkCanonicalForCardId,
   getCyberpunkCardDisplay,
+  getCyberpunkFreeArtIdsForCanonical,
   getCyberpunkPrintingImageUrl,
   getCyberpunkPrintingInfo,
   getCyberpunkPrintingInfosForCanonical,
+  isCyberpunkAlternateArtId,
   isCyberpunkAlternateArtPrinting,
   isCyberpunkPrintingOfCanonical,
   type CyberpunkPrintingInfo,
-  type CyberpunkPrintingSetRef,
   type CyberpunkRarityCode,
 } from "./atelier.ts";

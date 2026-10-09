@@ -38,7 +38,7 @@ export const op04DonquixoteRosinante119: CharacterCard = {
   setId: "OP04",
   cost: 8,
   power: 8000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
 
   effect:

@@ -59,6 +59,7 @@ describe("OP06-017 Meteor-Strike of Love", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toContain(lifeCardId);

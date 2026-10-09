@@ -7,17 +7,22 @@ import {
   abandonCurrentTrigger,
   enqueueEventTriggers,
   executeAbilityEffects,
+  emitEffectNoActionLog,
   resumeCurrentTrigger,
 } from "../ability-executor.ts";
-import { buildEffectTargetActionLogDetails } from "../logging/effect-target.ts";
+import {
+  buildEffectTargetActionLogDetails,
+  buildTargetResolvedActionLog,
+  classifyEffectTargets,
+  targetResolvedMessageKey,
+} from "../logging/effect-target.ts";
 import { defOf } from "../state/lookups.ts";
 import type { MatchState } from "../types/match-state.ts";
-import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
-import type { EffectTarget, GameEvent, GigDieRolledEvent } from "../types/game-events.ts";
+import type { CardInstanceId } from "../types/branded.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 import { computeEffectiveCost } from "./compute-effective-cost.ts";
 import { availableEddies } from "./eddie-resources.ts";
-import { isValidGigCopyPair } from "../effects/gig-copy-selection.ts";
+import { validateGigCopyPair } from "../effects/gig-copy-selection.ts";
 
 export interface ResolveEffectTargetInput extends MoveInput {
   args: {
@@ -87,15 +92,19 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         return { valid: false, error: "Target is not a valid choice", errorCode: "INVALID_CHOICE" };
       }
     }
-    if (
-      choice.payload.pairConstraint !== undefined &&
-      !isValidGigCopyPair(state as MatchState, targetIds, choice.payload.pairConstraint)
-    ) {
-      return {
-        valid: false,
-        error: "Selected Gigs do not form a legal ordered value-copy pair",
-        errorCode: "INVALID_CHOICE",
-      };
+    if (choice.payload.pairConstraint !== undefined) {
+      const pair = validateGigCopyPair(
+        state as MatchState,
+        targetIds,
+        choice.payload.pairConstraint,
+      );
+      if (!pair.valid) {
+        return {
+          valid: false,
+          error: gigCopyPairError(pair.reason),
+          errorCode: "INVALID_CHOICE",
+        };
+      }
     }
     if (choice.payload.targetPurpose === "playCard") {
       const remaining =
@@ -129,6 +138,19 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       input.args.pass ||
       ((payload.canDecline || (payload.min ?? 1) === 0) && targetIds.length === 0)
     ) {
+      const currentTrigger = state.G.turnMetadata.currentTrigger;
+      const provisionalRoll = currentTrigger?.event;
+      const sourceCard = currentTrigger
+        ? state.G.cardIndex[currentTrigger.sourceCardId as string]
+        : undefined;
+      const isRollReplacement =
+        sourceCard && currentTrigger?.kind === "authored"
+          ? defOf(sourceCard).abilities?.[currentTrigger.abilityIndex]?.timing ===
+            "gigRollReplacement"
+          : false;
+      if (isRollReplacement && provisionalRoll?.type === "gigDieRolled") {
+        enqueueEventTriggers(provisionalRoll, state, operations, true);
+      }
       if (payload.selectedBindingId) {
         const current = state.G.turnMetadata.currentTrigger;
         if (current) {
@@ -177,7 +199,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     // selectedBindingId path returns early, and a missing effectTargeted there
     // would silently skip the animation for every Program/Gear that targets
     // via a bound ability.
-    const effectTargets = classifyTargets(state, targetIds);
+    const effectTargets = classifyEffectTargets(state, targetIds);
     if (effectTargets.length > 0) {
       operations.event.emit({
         type: "effectTargeted",
@@ -233,6 +255,12 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         : ({
             ...effect,
             target: { selector: "bound", id: SELECTED_TARGET_BINDING },
+            // The choose-target prompt already collected the optional "may"
+            // decision via its canDecline. Rebinding a moveCard must not let
+            // handleMoveCard's optional branch raise a second chooseCardToMove
+            // prompt for the card the player just picked (e.g. Meredith Stout
+            // trash recovery).
+            ...(effect.effect === "moveCard" ? { optional: false } : {}),
           } as Effect);
 
     const eventsBefore = operations.event.getEmittedEvents().length;
@@ -251,6 +279,13 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       }
     }
     const eventsAfter = operations.event.getEmittedEvents();
+    if (
+      result.status === "noAction" &&
+      effect.effect !== "defeat" &&
+      !eventsAfter.slice(eventsBefore).some((event) => event.type === "actionLog")
+    ) {
+      emitEffectNoActionLog(effect, ctx, operations);
+    }
     for (let i = eventsBefore; i < eventsAfter.length; i++) {
       const emitted = eventsAfter[i]!;
       if (
@@ -295,10 +330,26 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         cardIds: actionLog.cardIds,
       });
     }
-    if (effect.effect === "defeat") {
+    if (
+      effect.effect === "defeat" &&
+      eventsAfter
+        .slice(eventsBefore)
+        .some(
+          (event) => event.type === "cardDefeated" && targetIds.includes(event.cardId as string),
+        )
+    ) {
       operations.event.emit({
         type: "actionLog",
         messageKey: "trigger.defeatedTarget",
+        params: actionLog.params,
+        playerId,
+        category: "trigger",
+        cardIds: actionLog.cardIds,
+      });
+    } else if (effect.effect === "defeat" && result.status !== "suspended") {
+      operations.event.emit({
+        type: "actionLog",
+        messageKey: "trigger.defeatFailed",
         params: actionLog.params,
         playerId,
         category: "trigger",
@@ -311,69 +362,19 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
   },
 };
 
-function targetResolvedMessageKey(
-  effect: Effect | undefined,
-):
-  | "trigger.targetResolved"
-  | "trigger.targetResolved.deckBottom"
-  | "trigger.targetResolved.rerollGig" {
-  if (effect?.effect === "moveCard" && effect.destination === "deckBottom") {
-    return "trigger.targetResolved.deckBottom";
+function gigCopyPairError(
+  reason: import("../effects/gig-copy-selection.ts").GigCopyPairInvalidReason,
+) {
+  switch (reason) {
+    case "same-player":
+      return "Choose one Gig from each player. The source and target cannot belong to the same player.";
+    case "duplicate":
+      return "Choose two different Gigs: first the source, then the target.";
+    case "wrong-count":
+      return "Choose exactly two Gigs: first the source, then the target.";
+    case "missing-gig":
+      return "One of the selected Gigs is no longer available. Choose the source and target again.";
   }
-  if (effect?.effect === "rerollGig") {
-    return "trigger.targetResolved.rerollGig";
-  }
-  return "trigger.targetResolved";
-}
-
-function buildTargetResolvedActionLog(
-  effect: Effect | undefined,
-  actionLog: ReturnType<typeof buildEffectTargetActionLogDetails>,
-  emittedEvents: readonly GameEvent[],
-  targetIds: readonly string[],
-): {
-  messageKey: ReturnType<typeof targetResolvedMessageKey>;
-  params: typeof actionLog.params;
-} {
-  const messageKey = targetResolvedMessageKey(effect);
-  if (messageKey !== "trigger.targetResolved.rerollGig") {
-    return { messageKey, params: actionLog.params };
-  }
-
-  const targetId = targetIds[0];
-  const rollEvent = emittedEvents.find(
-    (event): event is GigDieRolledEvent =>
-      event.type === "gigDieRolled" &&
-      (event.dieId as string) === targetId &&
-      event.origin === "reroll",
-  );
-  if (!rollEvent || rollEvent.previousValue === undefined) {
-    return { messageKey: "trigger.targetResolved", params: actionLog.params };
-  }
-
-  return {
-    messageKey,
-    params: {
-      ...actionLog.params,
-      previousValue: rollEvent.previousValue,
-      newValue: rollEvent.result,
-    },
-  };
-}
-
-function classifyTargets(state: MatchState, targetIds: ReadonlyArray<string>): EffectTarget[] {
-  const out: EffectTarget[] = [];
-  const playerIdSet = new Set<string>(state.ctx.playerIds.map((pid) => pid as string));
-  for (const id of targetIds) {
-    if (state.G.cardIndex[id]) {
-      out.push({ kind: "card", cardId: id as CardInstanceId });
-    } else if (state.G.gigDice[id]) {
-      out.push({ kind: "gig", dieId: id as GigDieId });
-    } else if (playerIdSet.has(id)) {
-      out.push({ kind: "player", playerId: id as PlayerId });
-    }
-  }
-  return out;
 }
 
 function isOrderedGigCopyTargetChoice(

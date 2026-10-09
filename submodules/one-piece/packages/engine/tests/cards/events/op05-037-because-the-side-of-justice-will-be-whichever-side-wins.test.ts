@@ -107,6 +107,7 @@ describe("OP05-037 Because the Side of Justice Will Be Whichever Side Wins!!", (
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toContain(costId);

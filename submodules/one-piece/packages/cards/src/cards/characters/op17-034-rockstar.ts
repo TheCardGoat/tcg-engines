@@ -70,7 +70,7 @@ export const op17Rockstar034: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Red-Haired Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -49,6 +49,7 @@ export const op16Yamato079: LeaderCard = {
         actions: [
           {
             action: "grantKeyword",
+            triggerEventTarget: true,
             target: {
               player: "self",
               zones: ["character"],
@@ -60,7 +61,7 @@ export const op16Yamato079: LeaderCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

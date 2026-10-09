@@ -346,9 +346,21 @@ describe("schemas", () => {
       schemaVersion: 1,
       trust: "server_authoritative",
       publishedAt: "2026-05-06T00:02:00Z",
+      chatMessages: [
+        {
+          id: "chat-1",
+          senderPlayerId: "p1",
+          senderSeat: 1,
+          kind: "preset",
+          presetKey: "good_luck",
+          timestamp: 1,
+        },
+      ],
       replay: file,
     };
     expect(ReplayPlaybackV1Schema.parse(playback)).toEqual(playback);
+    const { chatMessages: _chatMessages, ...legacyPlayback } = playback;
+    expect(ReplayPlaybackV1Schema.parse(legacyPlayback)).toEqual(legacyPlayback);
   });
 
   test("rejects unknown ServerMsg type", () => {

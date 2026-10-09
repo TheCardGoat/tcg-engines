@@ -39,7 +39,10 @@ import {
   type GrandArchiveEvaluationContext,
 } from "../../procedures/effects/evaluation.ts";
 import { grandArchiveDurationStatus, type GrandArchiveDurationStatus } from "./durations.ts";
-import { grandArchiveObjectActiveAbilities } from "../abilities/intrinsic-keywords.ts";
+import {
+  grandArchiveObjectActiveAbilities,
+  grandArchiveObjectActiveKeywordInstances,
+} from "../abilities/intrinsic-keywords.ts";
 import type {
   GrandArchiveCardInstance,
   GrandArchiveContinuousEffectInstance,
@@ -353,7 +356,11 @@ function continuousStaticAbilities(
   source: GrandArchiveCardInstance,
   context: GrandArchiveEvaluationContext,
 ) {
-  const printedAbilities = grandArchiveObjectPrintedAbilities(context.program, source);
+  const printedAbilities = grandArchiveObjectPrintedAbilities(
+    context.program,
+    source,
+    context.state,
+  );
   const currentAbilities = objectHasAbilityLayerModifier(source, context)
     ? grandArchiveObjectActiveAbilities(context.program, context.state, source, {
         ...(context.resolutionStartedEventHistoryIndex !== undefined
@@ -394,7 +401,8 @@ function continuousStaticSources(
   if (
     context.state.continuousEffects.some(
       (instance) =>
-        isObjectContinuousEffect(instance.effect) && isAbilityLayerChange(instance.effect.change),
+        isObjectContinuousEffect(instance.effect) &&
+        isStaticAbilityLayerChange(instance.effect.change),
     )
   )
     return Object.values(context.state.objects);
@@ -407,7 +415,7 @@ function continuousStaticSources(
   if (existing) return existing;
   const sources = Object.values(context.state.objects).filter((source) => {
     const face = grandArchiveObjectFace(context.program, source);
-    return grandArchiveObjectPrintedAbilities(context.program, source).some(
+    return grandArchiveObjectPrintedAbilities(context.program, source, context.state).some(
       (ability) =>
         ability.kind === "static" &&
         ability.staticKind === "effects" &&
@@ -425,6 +433,59 @@ function collectNumericModifiers(
   scope: NumericModifierScope = "object",
 ): readonly NumericModifier[] {
   const modifiers: NumericModifier[] = [];
+  const combat = context.state.combat;
+  if (
+    scope === "object" &&
+    property === "power" &&
+    object.zone === "field" &&
+    object.states.has("attacking") &&
+    combat?.attackerId === object.id &&
+    combat.intentIds.some((id) => {
+      const intent = context.state.objects[id];
+      return (
+        intent?.zone === "intent" &&
+        grandArchiveObjectActiveKeywordInstances(context.program, context.state, intent, {
+          derivingProperties: context.derivingProperties,
+        }).some(({ keyword }) => keyword.name === "command")
+      );
+    })
+  ) {
+    for (const instance of grandArchiveObjectActiveKeywordInstances(
+      context.program,
+      context.state,
+      object,
+      { derivingProperties: context.derivingProperties },
+    )) {
+      if (instance.keyword.name !== "commanded-will") continue;
+      const effect: GrandArchiveContinuousEffect = {
+        kind: "continuous",
+        subjects: { kind: "bound", binding: "commanded-will-unit" },
+        affectedSet: "dynamic",
+        duration: { kind: "while-source-in-functional-zone" },
+        layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
+        change: {
+          kind: "numeric",
+          property: "power",
+          operation: "add",
+          amount: instance.keyword.value,
+        },
+      };
+      modifiers.push({
+        id: `commanded-will:${object.id}:${instance.originId}`,
+        effect,
+        affectedObjectIds: [],
+        affectedObjectIncarnations: {},
+        evaluation: {
+          ...context,
+          ...instance.evaluation,
+          derivingProperties: context.derivingProperties,
+          bindings: { ...instance.evaluation.bindings, "commanded-will-unit": [object.id] },
+        },
+        applicationLayer: grandArchiveContinuousApplicationLayer(effect),
+        timestamp: grandArchiveObjectTimestamp(object, context),
+      });
+    }
+  }
   for (const source of continuousStaticSources(context)) {
     const face = grandArchiveObjectFace(context.program, source);
     for (const ability of continuousStaticAbilities(source, context)) {
@@ -643,9 +704,18 @@ function isCharacteristicChange(
   );
 }
 
-function isAbilityLayerChange(change: GrandArchiveCharacteristicChange): boolean {
+function isStaticAbilityLayerChange(change: GrandArchiveCharacteristicChange): boolean {
+  if (change.kind === "grant-ability") {
+    const abilities =
+      change.ability.kind === "composite" ? change.ability.abilities : [change.ability];
+    // Only static effects contribute to the scans below. Deriving applicability
+    // for triggered/activated grants here can recursively scan every object while
+    // their subject filters are themselves reading derived characteristics.
+    return abilities.some(
+      (ability) => ability.kind === "static" && ability.staticKind === "effects",
+    );
+  }
   return (
-    change.kind === "grant-ability" ||
     change.kind === "remove-abilities" ||
     change.kind === "copy-abilities" ||
     change.kind === "copy-abilities-from-collection" ||
@@ -691,7 +761,7 @@ function objectHasAbilityLayerModifier(
     return (
       grandArchiveContinuousEffectIsActive(instance, evaluation) &&
       isObjectContinuousEffect(instance.effect) &&
-      isAbilityLayerChange(instance.effect.change) &&
+      isStaticAbilityLayerChange(instance.effect.change) &&
       (!instance.effect.condition ||
         evaluateGrandArchiveCondition(instance.effect.condition, evaluation)) &&
       grandArchiveContinuousEffectAffectsObject(

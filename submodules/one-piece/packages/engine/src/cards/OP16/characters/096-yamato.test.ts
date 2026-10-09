@@ -3,6 +3,18 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-096 Yamato", () => {
+  test("[Unblockable] prevents interception by an active opposing Blocker", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["OP16-096"] },
+      { character: ["OP16-088"] },
+    );
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+    engine.asSouth().attack("OP16-096", engine.leader("north"));
+    expect(() => engine.asNorth().chooseBlocker("OP16-088")).toThrow();
+    expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore - 1);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+
   test("[On K.O.] may play a [Yamato] of cost 6 or less from trash", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ cardId: "OP16-096", rested: true }], trash: ["OP16-098"] },

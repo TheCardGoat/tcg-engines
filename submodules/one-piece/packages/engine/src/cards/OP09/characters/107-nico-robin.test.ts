@@ -35,7 +35,7 @@ describe("OP09-107 Nico Robin", () => {
     const saulId = engine.findCardInZone("north", "hand", op09JaguarDSaul109);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
     if (play?.kind !== "selectEntity") throw new Error("Expected Robin's play choice.");

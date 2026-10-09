@@ -52,4 +52,17 @@ describe("OP12-070 Sanji", () => {
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 0 });
     expect(view.prompts).toHaveLength(0);
   });
+  test("may decline the DON replacement and return to hand without paying", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [op12Sanji070], activeDon: 1 },
+      { hand: [op02ArabesqueBrickFist067], activeDon: 2 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const id = e.findCardInZone("south", "character", op12Sanji070);
+    e.asNorth().play(op02ArabesqueBrickFist067);
+    e.asNorth().chooseTargets(id);
+    e.asSouth().chooseOption("effectRemovalReplacement", "no");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+  });
 });

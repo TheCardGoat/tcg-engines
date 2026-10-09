@@ -35,7 +35,7 @@ export const op16MonkeyDGarp075: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

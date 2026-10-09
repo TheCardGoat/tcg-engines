@@ -52,6 +52,28 @@ function generateUniqueShortId(usedIds: Set<string>, printingId: string): string
 }
 
 /**
+ * Collect the 3-char ids that existing printings still own and must keep.
+ * Random generation must never hand these out to a different printing,
+ * otherwise identity-registry validation detects shortId drift and the
+ * pipeline fails (a later new printing can randomly steal an id that an
+ * earlier-ordered existing printing still intends to reuse).
+ */
+function collectReservedExistingIds(
+  existingCanonicalCards?: Record<string, CanonicalCard>,
+  existingSourceCardIds?: Record<string, string>,
+): Set<string> {
+  const reserved = new Set<string>();
+  for (const id of Object.values(existingSourceCardIds ?? {})) {
+    if (id && id.length === CARD_IRD_LENGTH) reserved.add(id);
+  }
+  for (const card of Object.values(existingCanonicalCards ?? {})) {
+    const id = (card as { id?: unknown }).id;
+    if (typeof id === "string" && id.length === CARD_IRD_LENGTH) reserved.add(id);
+  }
+  return reserved;
+}
+
+/**
  * Assign one unique 3-char id per printing. Reuses existing card .id from
  * existingCanonicalCards when valid (exactly 3 chars) and not yet in usedIds;
  * otherwise generates a new id. No id-mapping file: existing ids come only from
@@ -68,6 +90,7 @@ export function assignPrintingIds(
 ): PipelineIdMapping {
   const byPrintingId: Record<string, string> = {};
   const usedIds = new Set<string>();
+  const reservedIds = collectReservedExistingIds(existingCanonicalCards, existingSourceCardIds);
 
   let idx = 0;
   for (const { card } of printingItems) {
@@ -82,7 +105,7 @@ export function assignPrintingIds(
     if (valid && !usedIds.has(existingId)) {
       shortId = existingId;
     } else {
-      shortId = generateUniqueShortId(usedIds, printingId);
+      shortId = generateUniqueShortId(new Set([...usedIds, ...reservedIds]), printingId);
     }
     usedIds.add(shortId);
     byPrintingId[printingId] = shortId;
@@ -174,6 +197,7 @@ export function extendWithPrintingIds(
       }
     }
   }
+  const reservedIds = collectReservedExistingIds(existingCanonicalCards);
 
   let idx = 0;
   for (const { card } of printingItems) {
@@ -204,7 +228,7 @@ export function extendWithPrintingIds(
       usedShortIds.add(canonicalShortId);
       continue;
     }
-    const shortId = generateUniqueShortId(usedShortIds, printingId);
+    const shortId = generateUniqueShortId(new Set([...usedShortIds, ...reservedIds]), printingId);
     usedShortIds.add(shortId);
     byPrintingId[printingId] = shortId;
   }

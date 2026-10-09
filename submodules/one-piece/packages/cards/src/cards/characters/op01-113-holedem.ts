@@ -23,7 +23,7 @@ export const op01Holedem113: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "special",
   effect:
     "[On K.O.] Add up to 1 DON!! card from your DON!! deck and rest it.  This card has been officially errata'd.",

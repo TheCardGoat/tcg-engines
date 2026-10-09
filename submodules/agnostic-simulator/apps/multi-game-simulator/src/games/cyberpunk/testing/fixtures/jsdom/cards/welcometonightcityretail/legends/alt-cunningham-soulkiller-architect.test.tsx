@@ -15,7 +15,7 @@ import {
 import { WindowCyberpunkHarnessClient } from "@cyberpunk/testing/window-cyberpunk-harness-client";
 
 describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () => {
-  test("shows both activated abilities in the Contacts menu", async () => {
+  test("projects the printed activated ability to the trash Program selection", async () => {
     ensureJsdomAnimationSupport();
     const view = renderCyberpunkSimulatorScenario({
       scenarioId: "legendAltCunninghamSoulkillerArchitectRetail",
@@ -38,33 +38,14 @@ describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () =
       }
       fireEvent.click(altCard);
 
-      let actions: HTMLButtonElement[] = [];
+      // Both Alt abilities are exposed now; the trash-Program play is index 1.
+      await pom.activateAbility(alt.instanceId, 1, CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+
       await waitFor(() => {
-        actions = [
-          ...document.querySelectorAll<HTMLButtonElement>(
-            '[data-testid="card-context-menu"] [data-action-id*="activateAbility"]',
-          ),
-        ];
-        expectEqual("Alt Cunningham Contacts ability count", actions.length, 2);
+        const targetCards = document.querySelectorAll('[data-testid="target-modal-card"]');
+        expectEqual("Alt trash Program target count", targetCards.length, 2);
       });
-      expectEqual("Alt Cunningham Contacts ability count", actions.length, 2);
-      expectEqual(
-        "Alt Cunningham Contacts ability indexes",
-        actions.map((action) => action.dataset.actionId?.split(":").at(-1) ?? "").join(","),
-        "0,1",
-      );
-      expectEqual(
-        "Alt discount ability uses printed text",
-        actions[0]?.textContent?.includes(
-          "Your next Program this turn plays for -1 €$ for each friendly min Gig",
-        ),
-        true,
-      );
-      expectEqual(
-        "Alt trash-play ability uses printed text",
-        actions[1]?.textContent?.includes("Play a Program from your trash"),
-        true,
-      );
     } finally {
       view.unmount();
     }
@@ -86,8 +67,8 @@ describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () =
         welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
       );
 
+      // The trash-Program play is ability index 1 (index 0 is the discount).
       await pom.activateAbility(alt.instanceId, 1, CYBERPUNK_P1);
-
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
       const spendEligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       expectEqual("trash Program eligible spend targets", spendEligible.length, 2);
@@ -128,6 +109,7 @@ describe("Alt Cunningham - Soulkiller Architect (Retail) jsdom happy path", () =
         CYBERPUNK_P1,
         welcomeToNightCityRetailAltCunninghamSoulkillerArchitect.id,
       );
+      // The trash-Program play is ability index 1 (index 0 is the discount).
       await pom.activateAbility(alt.instanceId, 1, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
 

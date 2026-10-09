@@ -65,20 +65,11 @@ export const sacramentalRite: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 relationship: "zone-of",
                 player: "controller",
                 filter: {
-                  kind: "all",
-                  filters: [
-                    {
-                      kind: "type",
-                      oneOf: ["CHAMPION"],
-                    },
-                    {
-                      kind: "not",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["CHAMPION"],
-                      },
-                    },
-                  ],
+                  kind: "not",
+                  filter: {
+                    kind: "type",
+                    oneOf: ["CHAMPION"],
+                  },
                 },
               },
             },

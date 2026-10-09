@@ -63,7 +63,7 @@ export const op11Kuzan084: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

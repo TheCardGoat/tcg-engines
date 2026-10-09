@@ -1,5 +1,7 @@
 import {
   LocalEngine,
+  COMBAT_STATE_VERSION,
+  restoreCombatState,
   createMatchState,
   createPlayerId as createCyberpunkPlayerId,
   setCardRegistry,
@@ -10,8 +12,7 @@ import {
   type PlayerSetup,
   type TurnStartCheckpoint,
 } from "@tcg/cyberpunk-engine";
-import { getMergedCyberpunkCards, getMergedCyberpunkCardsById } from "@tcg/cyberpunk-cards";
-import type { CardDefinition as CyberpunkCardDefinition } from "@tcg/cyberpunk-types";
+import { createCardCatalog } from "@tcg/cyberpunk-cards";
 import type { CardsMaps } from "@tcg/shared/game-adapter";
 import type {
   EngineSnapshot,
@@ -51,25 +52,9 @@ type CyberpunkTimeControlConfig =
  * structured pool alone cannot.
  */
 function getCyberpunkCatalog(): CardCatalog {
-  if (registeredCatalog) return registeredCatalog;
-  const mergedCards = getMergedCyberpunkCards();
-  const defsByLookupKey = new Map<string, CyberpunkCardDefinition>(getMergedCyberpunkCardsById());
-  const catalog: CardCatalog = {
-    get(idOrSlug: string) {
-      return defsByLookupKey.get(idOrSlug);
-    },
-    *entries(): IterableIterator<[string, CyberpunkCardDefinition]> {
-      for (const card of mergedCards) {
-        yield [card.id, card];
-      }
-    },
-    get size() {
-      return mergedCards.length;
-    },
-  };
-  setCardRegistry(catalog);
-  registeredCatalog = catalog;
-  return catalog;
+  registeredCatalog ??= createCardCatalog();
+  setCardRegistry(registeredCatalog);
+  return registeredCatalog;
 }
 
 /**
@@ -91,6 +76,8 @@ export async function cyberpunkCreateServerEngine(
     const legends: string[] = [];
     const mainDeck: string[] = [];
     for (const instanceId of instanceIds) {
+      const section = input.cardsMaps.instanceSections?.[instanceId];
+      if (section === "side" || section === "sideboard") continue;
       const slug = input.cardsMaps.cardInstances[instanceId];
       if (!slug) continue;
       const def = catalog.get(slug);
@@ -107,6 +94,9 @@ export async function cyberpunkCreateServerEngine(
     seed: input.seed,
     matchId: input.matchID,
     timeControl: toCyberpunkTimeControl(input.timeControl),
+    firstPlayerChooserId: input.firstPlayerChooserId,
+    firstTurnPlayerId: input.firstTurnPlayerId,
+    ...(input.formatId === "six-pack" ? { setup: { blankEddiesForMissingLegends: true } } : {}),
   });
   return new CyberpunkServerEngine(new LocalEngine(state));
 }
@@ -124,7 +114,10 @@ export function cyberpunkSerializeEngine(
     state: cyberpunk.getRawState(),
     historyLength: 0,
     cardsMaps,
-    metadata: { continuation: cyberpunk.engine.getContinuationSnapshot() },
+    metadata: {
+      combatStateVersion: COMBAT_STATE_VERSION,
+      continuation: cyberpunk.engine.getContinuationSnapshot(),
+    },
   };
 }
 
@@ -136,11 +129,30 @@ export async function cyberpunkRestoreEngine(
   _context: ServerEngineRestoreContext,
 ): Promise<ServerGameEngine> {
   getCyberpunkCatalog();
+  const metadata = snapshot.metadata;
+  const version =
+    metadata && typeof metadata === "object" && "combatStateVersion" in metadata
+      ? metadata.combatStateVersion
+      : 1;
+  if (version !== COMBAT_STATE_VERSION)
+    throw new Error("Unsupported Cyberpunk combat snapshot version");
   const continuation = parseContinuation(snapshot.metadata);
+  if (continuation) {
+    continuation.undoStack = continuation.undoStack.map((entry) => ({
+      ...entry,
+      state: restoreCombatState(entry.state, version),
+    }));
+    if (continuation.turnStartCheckpoint)
+      continuation.turnStartCheckpoint = {
+        ...continuation.turnStartCheckpoint,
+        state: restoreCombatState(continuation.turnStartCheckpoint.state, version),
+      };
+  }
   return new CyberpunkServerEngine(
-    new LocalEngine(snapshot.state as MatchState, {
-      ...(continuation ? { continuation } : { initializeTurnStartCheckpoint: false }),
-    }),
+    new LocalEngine(
+      restoreCombatState(snapshot.state as MatchState, version),
+      continuation ? { continuation } : { initializeTurnStartCheckpoint: false },
+    ),
   );
 }
 

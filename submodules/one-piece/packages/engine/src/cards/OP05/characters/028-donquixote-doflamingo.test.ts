@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op05DonquixoteDoflamingo028 } from "../../../../../cards/src/cards/characters/op05-028-donquixote-doflamingo.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP05-028 Donquixote Doflamingo", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op05DonquixoteDoflamingo028);
-  });
-});

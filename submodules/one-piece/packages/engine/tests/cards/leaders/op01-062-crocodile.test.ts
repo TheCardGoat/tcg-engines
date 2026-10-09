@@ -41,7 +41,7 @@ describe("OP01-062 Crocodile", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("may decline optional so paid effect does not apply", () => {
+  test("declining the first Event draw still permits drawing for the second Event", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op01Crocodile062,
@@ -70,6 +70,14 @@ describe("OP01-062 Crocodile", () => {
     expect(after.lifeCount).toBe(lifeBefore);
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.playCard(op02IceAge117, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      eb01Doma005.id,
+    ]);
+    expect(engine.getView("south").players.south.deckCount).toBe(deckBefore - 1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

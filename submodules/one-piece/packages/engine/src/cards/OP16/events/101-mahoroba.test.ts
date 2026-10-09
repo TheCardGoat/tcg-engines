@@ -3,11 +3,11 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-101 Mahoroba", () => {
-  test("[Main] boosts a card and with 10+ trash K.O.s a cost-2-or-less Character", () => {
+  test("[Main] paid Event is the tenth trash card and enables K.O. after power", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: ["OP16-101"],
-        trash: Array.from({ length: 10 }, () => "OP13-013"),
+        trash: Array.from({ length: 9 }, () => "OP13-013"),
         activeDon: 2,
       },
       { character: ["OP16-002"], activeDon: 5 },
@@ -51,5 +51,33 @@ describe("OP16-101 Mahoroba", () => {
       izoId,
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("Life Trigger returns only Yamato from the owner's trash to hand", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", life: ["OP16-101"], trash: ["OP01-121", "EB01-005"] },
+      { leaderCardId: "OP01-001", activeDon: 2 },
+      { activeSeat: "north" },
+    );
+    const yamato = engine.asSouth().findInZone("trash", "OP01-121");
+    engine.asNorth().attachDon(engine.asNorth().leader(), 2);
+    engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+    engine.asSouth().activateLifeTrigger();
+    const step = engine.asSouth().pendingDecision("effectTargetSelection").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Yamato recovery choice");
+    expect(step.candidates.map((card) => card.ref.id)).toEqual([yamato]);
+    engine.asSouth().chooseTargets(yamato);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.hand.map((card) => card.instanceId),
+    ).toEqual([yamato]);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).toContain("OP16-101");
   });
 });

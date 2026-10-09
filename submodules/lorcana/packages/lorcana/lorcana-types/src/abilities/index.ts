@@ -232,6 +232,7 @@ export type {
   GainKeywordEffect,
   GainKeywordsEffect,
   // Lore effects
+  GainInkDropEffect,
   GainLoreEffect,
   GrantAbilityEffect,
   LoseKeywordEffect,
@@ -274,6 +275,7 @@ export type {
   RevealRouteDestination,
   RevealHandEffect,
   RevealInkwellEffect,
+  RevealTopsHighestCostToHandEffect,
   RevealUntilMatchEffect,
   // Reveal effects
   RevealTopCardEffect,
@@ -344,6 +346,8 @@ export type {
   AttributeStringFilter,
   // Filters
   CardFilter,
+  CardQuery,
+  PlayedThisTurnFilter,
   // Card references
   CardReference,
   // Card targeting

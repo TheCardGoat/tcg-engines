@@ -1,7 +1,7 @@
 import type { Action, Comparison, TargetFilter, Zone } from "@tcg/op-types";
 import type { ParseActionsResult } from "../types.ts";
 import { parseTarget, parseModifyPowerTarget, extractTargetFilters } from "../target-parser.ts";
-import { parseComparison, parseZoneList } from "../helpers.ts";
+import { parseComparison } from "../helpers.ts";
 import { parseConditionText } from "../condition-parser/index.ts";
 
 import {
@@ -57,6 +57,7 @@ import {
 import {
   parseEachModifyPowerActions,
   parseModifyPowerAction,
+  parseGroupedPowerAndCostActions,
   parseSetPowerAction,
   parseModifyCostAction,
   parseCostReductionAction,
@@ -115,6 +116,382 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     )
     .trim();
   if (!text) return { parsed: [], unparsed: "" };
+
+  const delayedSuffix = /^(?:(.+?)\.\s*Then,\s*)?at the end of this turn,\s*(.+)$/is.exec(text);
+  if (delayedSuffix) {
+    const first = delayedSuffix[1] ? parseActions(delayedSuffix[1]) : { parsed: [], unparsed: "" };
+    const following = parseActions(delayedSuffix[2]!);
+    if (!first.unparsed && !following.unparsed && following.parsed.length)
+      return {
+        parsed: [
+          ...first.parsed,
+          { action: "delayed", timing: "endOfThisTurn", actions: following.parsed },
+        ],
+        unparsed: "",
+      };
+  }
+  const selectedRestedKo =
+    /^Select up to (\d+) of your opponent's rested Characters?\. If the chosen Character has a cost equal to the number of DON!! cards given to it, K\.O\. it\.?$/i.exec(
+      text,
+    );
+  if (selectedRestedKo)
+    return {
+      parsed: [
+        {
+          action: "ko",
+          target: {
+            player: "opponent",
+            zones: ["character"],
+            count: { amount: Number(selectedRestedKo[1]), upTo: true },
+            filters: [{ filter: "state", value: "rested" }],
+          },
+          selectedTargetFilters: [
+            { filter: "dynamicCost", comparison: "eq", source: "candidateAttachedDon" },
+          ],
+        },
+      ],
+      unparsed: "",
+    };
+
+  const optionalHandTrash =
+    /^(?:(.+?)\.\s*Then,\s*)?you may trash (\d+) cards? from your hand\.\s*If you do,\s*(.+)$/is.exec(
+      text,
+    );
+  if (optionalHandTrash) {
+    const leading = optionalHandTrash[1]
+      ? parseActions(optionalHandTrash[1])
+      : { parsed: [], unparsed: "" };
+    const following = parseActions(optionalHandTrash[3]!);
+    if (!leading.unparsed && !following.unparsed && following.parsed.length)
+      return {
+        parsed: [
+          ...leading.parsed,
+          {
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromHand",
+                player: "self",
+                amount: Number(optionalHandTrash[2]),
+                thenRequiresFullAmount: true,
+                thenActions: following.parsed,
+              },
+            ],
+          },
+        ],
+        unparsed: "",
+      };
+  }
+
+  const opponentActiveDonChoice =
+    /^Your opponent may return (\d+) of their active DON!! cards? to their DON!! deck\.\s*If they do not,\s*(.+)$/is.exec(
+      text,
+    );
+  if (opponentActiveDonChoice) {
+    const following = parseActions(opponentActiveDonChoice[2]!);
+    const amount = Number(opponentActiveDonChoice[1]);
+    if (!following.unparsed && following.parsed.length)
+      return {
+        parsed: [
+          {
+            action: "conditional",
+            predicate: {
+              condition: "activeDonCount",
+              player: "opponent",
+              comparison: "gte",
+              value: amount,
+            },
+            whenTrue: [
+              {
+                action: "choice",
+                player: "opponent",
+                options: [
+                  [{ action: "returnDon", player: "opponent", amount, donState: "active" }],
+                  following.parsed,
+                ],
+              },
+            ],
+            whenFalse: following.parsed,
+          },
+        ],
+        unparsed: "",
+      };
+  }
+
+  const optionalDonRest =
+    /^(.+?)\.\s*Then,\s*you may rest (\d+) of your DON!! cards?\.\s*If you do,\s*(.+)$/is.exec(
+      text,
+    );
+  if (optionalDonRest) {
+    const leading = parseActions(optionalDonRest[1]!);
+    const following = parseActions(optionalDonRest[3]!);
+    if (
+      !leading.unparsed &&
+      !following.unparsed &&
+      leading.parsed.length &&
+      following.parsed.length
+    ) {
+      const amount = Number(optionalDonRest[2]);
+      return {
+        parsed: [
+          ...leading.parsed,
+          {
+            action: "optional",
+            condition: { condition: "activeDonCount", comparison: "gte", value: amount },
+            actions: [
+              {
+                action: "rest",
+                target: {
+                  player: "self",
+                  zones: ["costArea"],
+                  count: { amount },
+                  filters: [{ filter: "state", value: "active" }],
+                },
+              },
+              ...following.parsed,
+            ],
+          },
+        ],
+        unparsed: "",
+      };
+    }
+  }
+
+  if (
+    /^Your\s+face-up\s+Life\s+cards\s+are\s+placed\s+at\s+the\s+bottom\s+of\s+your\s+deck\s+instead\s+of\s+being\s+added\s+to\s+your\s+hand,\s+according\s+to\s+the\s+rules\.?$/i.test(
+      text,
+    )
+  ) {
+    return {
+      parsed: [
+        {
+          action: "lifeToHandReplacement",
+          player: "self",
+          faceUp: true,
+          destination: "deck",
+          position: "bottom",
+        },
+      ],
+      unparsed: "",
+    };
+  }
+  if (/^Trash\s+all\s+your\s+face-up\s+Life\s+cards\.?$/i.test(text)) {
+    return {
+      parsed: [
+        {
+          action: "trashFromField",
+          target: {
+            player: "self",
+            zones: ["life"],
+            count: { amount: "all" },
+            filters: [{ filter: "faceUp", value: true }],
+          },
+        },
+      ],
+      unparsed: "",
+    };
+  }
+  const namedEach =
+    /^Play\s+up\s+to\s+1\s+each\s+of\s+(\[[^\]]+\](?:(?:,\s*(?:and\s+)?|\s+and\s+)\[[^\]]+\])+)\s+with\s+a\s+cost\s+of\s+(\d+)\s+from\s+your\s+hand\.?$/i.exec(
+      text,
+    );
+  if (namedEach) {
+    const names = [...namedEach[1]!.matchAll(/\[([^\]]+)\]/g)].map((m) => m[1]!);
+    return {
+      parsed: [
+        {
+          action: "playGrouped",
+          source: { player: "self", zone: "hand" },
+          groups: names.map((value) => ({
+            count: { amount: 1, upTo: true },
+            filters: [
+              { filter: "name", value },
+              { filter: "cost", comparison: "eq", value: Number(namedEach[2]) },
+            ],
+          })),
+          playStates: {
+            single: "active",
+            multiple: ["active", ...names.slice(1).map(() => "active" as const)],
+            byGroup: true,
+          },
+        },
+      ],
+      unparsed: "",
+    };
+  }
+
+  // Preserve the decision owner and each complete option before clause splitting.
+  const opponentChoice = /^your\s+opponent\s+chooses\s+one:\s*[-•]\s*([\s\S]+)$/i.exec(text);
+  if (opponentChoice) {
+    const options = opponentChoice[1]!
+      .split(/(?:\s+|(?<=\.))[-•]\s+/)
+      .map((item) => parseActions(item));
+    if (options.length > 1 && options.every((option) => !option.unparsed && option.parsed.length)) {
+      return {
+        parsed: [
+          { action: "choice", player: "opponent", options: options.map((option) => option.parsed) },
+        ],
+        unparsed: "",
+      };
+    }
+  }
+  const opponentHandTrash = parseOpponentChosenTrashAction(text);
+  if (opponentHandTrash) return { parsed: [opponentHandTrash], unparsed: "" };
+
+  // The Life look's internal "and place" belongs to the same private action.
+  const lifeLookThen = /^(look\s+at\s+.+?Life\s+cards?)\.\s*Then,\s*(.+)$/is.exec(text);
+  if (lifeLookThen) {
+    const look = parseLifeCardLookAction(lifeLookThen[1]!);
+    const following = parseActions(lifeLookThen[2]!);
+    if (look && !following.unparsed && following.parsed.length) {
+      return { parsed: [look, ...following.parsed], unparsed: "" };
+    }
+  }
+  const handBottomRedraw =
+    /^(?:you may )?place all cards in your hand at the bottom of your deck in any order\. If you do, draw cards equal to the number you placed at the bottom of your deck\.?$/i.test(
+      text,
+    );
+  if (handBottomRedraw)
+    return {
+      parsed: [
+        {
+          action: "returnToDeck",
+          target: { player: "self", zones: ["hand"], count: { amount: "all" } },
+          position: "bottom",
+          order: "any",
+        },
+        { action: "draw", player: "self", amount: 0, amountFromPreviousActionTargets: true },
+      ],
+      unparsed: "",
+    };
+  const plainTrashForPower =
+    /^(?:you may )?trash any number of cards from your hand\. (.+?) gains? \+(\d+) power (during this (?:turn|battle)) for every card trashed\.?$/i.exec(
+      text,
+    );
+  if (plainTrashForPower) {
+    const target = parseModifyPowerTarget(plainTrashForPower[1]!);
+    if (target)
+      return {
+        parsed: [
+          { action: "trashFromHand", player: "self", amount: "all", upTo: true },
+          {
+            action: "modifyPower",
+            target,
+            value: 0,
+            valuePerPreviousActionTarget: Number(plainTrashForPower[2]),
+            duration: parseFullDuration(plainTrashForPower[3]!),
+          },
+        ],
+        unparsed: "",
+      };
+  }
+  const returnForPower =
+    /^(?:you may )?return any number of Characters on your field to the owner['’]s hand\. (.+?) gains? \+(\d+) power (during this (?:turn|battle)) for every returned Character\.?$/i.exec(
+      text,
+    );
+  if (returnForPower) {
+    const target = parseModifyPowerTarget(returnForPower[1]!);
+    if (target)
+      return {
+        parsed: [
+          {
+            action: "returnToHand",
+            target: { player: "self", zones: ["character"], count: { amount: "all", upTo: true } },
+          },
+          {
+            action: "modifyPower",
+            target,
+            value: 0,
+            valuePerPreviousActionTarget: Number(returnForPower[2]),
+            duration: parseFullDuration(returnForPower[3]!),
+          },
+        ],
+        unparsed: "",
+      };
+  }
+  if (/^(?:you may )?add this Character card to your hand\.?$/i.test(text))
+    return {
+      parsed: [
+        {
+          action: "returnToHand",
+          target: { player: "self", zones: ["trash"], count: { amount: 1 }, self: true },
+        },
+      ],
+      unparsed: "",
+    };
+  const selfAndLeaderPower =
+    /^This Character and up to (\d+) of your Leader gain \+(\d+) power (during this (?:turn|battle))\.?$/i.exec(
+      text,
+    );
+  if (selfAndLeaderPower)
+    return {
+      parsed: [
+        {
+          action: "modifyPower",
+          target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+          value: Number(selfAndLeaderPower[2]),
+          duration: parseFullDuration(selfAndLeaderPower[3]!),
+        },
+        {
+          action: "modifyPower",
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: { amount: Number(selfAndLeaderPower[1]), upTo: true },
+          },
+          value: Number(selfAndLeaderPower[2]),
+          duration: parseFullDuration(selfAndLeaderPower[3]!),
+        },
+      ],
+      unparsed: "",
+    };
+  const drawThenLookOrProtection = /^(draw\s+\d+\s+cards?)(?:,\s*|\s+and\s+)(.+)$/is.exec(text);
+  if (drawThenLookOrProtection) {
+    const draw = parseDrawAction(drawThenLookOrProtection[1]!);
+    const following =
+      parseLifeCardLookAction(drawThenLookOrProtection[2]!) ??
+      parseCannotBeKodAction(drawThenLookOrProtection[2]!) ??
+      parseSetPowerAction(drawThenLookOrProtection[2]!);
+    if (draw && following) return { parsed: [draw, following], unparsed: "" };
+  }
+
+  // A postfix draw condition also gates its connected Then clause (OP05-047).
+  // Evaluate once before drawing, since the draw can change the hand count.
+  const conditionedDrawThen = /^(draw\s+\d+\s+cards?\s+if\s+.+?)\.\s*Then,\s*(.+)$/is.exec(text);
+  if (conditionedDrawThen) {
+    const draw = parseDrawWithConditionAction(conditionedDrawThen[1]!);
+    const following = parseActions(conditionedDrawThen[2]!);
+    if (draw?.condition && !following.unparsed && following.parsed.length > 0) {
+      const { condition, ...unconditionalDraw } = draw;
+      return {
+        parsed: [
+          {
+            action: "conditional",
+            predicate: condition,
+            whenTrue: [unconditionalDraw, ...following.parsed],
+          },
+        ],
+        unparsed: "",
+      };
+    }
+  }
+
+  const groupedActionThen = /^(.*?\band\s+up\s+to\s+\d+.*?)\.\s*Then,\s*(.+)$/is.exec(text);
+  if (groupedActionThen && /^(?:K\.O\.|place|return|play)\s/i.test(text)) {
+    const leading = parseActions(groupedActionThen[1]!);
+    const first = leading.parsed[0];
+    if (
+      !leading.unparsed &&
+      leading.parsed.length === 1 &&
+      first &&
+      ("targetGroups" in first || first.action === "playGrouped")
+    ) {
+      const trailing = parseActions(groupedActionThen[2]!);
+      if (!trailing.unparsed && trailing.parsed.length > 0) {
+        return { parsed: [...leading.parsed, ...trailing.parsed], unparsed: "" };
+      }
+    }
+  }
 
   const lookAtLifeThenAddThisMatch =
     /^(look\s+at\s+up\s+to\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+or\s+your\s+opponent['’]s\s+Life\s+cards,?\s+and\s+place\s+it\s+at\s+the\s+top\s+or\s+bottom\s+of\s+the\s+Life\s+cards)\.\s*Then,\s+add\s+this\s+card\s+to\s+your\s+hand\.?$/i.exec(
@@ -179,6 +556,38 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       };
     }
   }
+
+  // Preserve a Life choice when the may clause is nested after another action.
+  const optionalLifeRemoval = /^you may\s+/i.test(text)
+    ? parseRemoveFromLifeAction(text.replace(/^you may\s+/i, ""))
+    : null;
+  if (
+    optionalLifeRemoval?.action === "removeFromLife" &&
+    !("untilRemaining" in optionalLifeRemoval.count)
+  ) {
+    return {
+      parsed: [{ ...optionalLifeRemoval, count: { ...optionalLifeRemoval.count, upTo: true } }],
+      unparsed: "",
+    };
+  }
+
+  // A paid ability can independently permit, rather than require, replaying
+  // its own card. Preserve that decision after the activation cost is paid.
+  if (
+    /^you may play this (?:Character )?card from your (?:hand|trash|deck)(?: rested)?\.?$/i.test(
+      text,
+    )
+  ) {
+    const optionalPlay = parsePlayAction(text.replace(/^you may\s+/i, ""));
+    if (optionalPlay?.action === "play") {
+      return {
+        parsed: [{ ...optionalPlay, count: { ...optionalPlay.count, upTo: true } }],
+        unparsed: "",
+      };
+    }
+  }
+
+  const optionalPrefix = /^you\s+may\s+/i.test(text);
 
   // Strip "you may" prefix (for replacement effects and optional actions)
   text = text
@@ -300,7 +709,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     const excludeNameMatch = /other\s+than\s+\[([^\]]+)\]/i.exec(description);
     if (excludeNameMatch) filters.push({ filter: "excludeName", value: excludeNameMatch[1]! });
     if (traitMatch) {
-      filters.push({ filter: "trait", value: traitMatch[1]!, match: "includes" });
+      filters.push({ filter: "trait", value: traitMatch[1]!, match: "exact" });
     }
     if (categoryMatch) {
       filters.push({
@@ -342,7 +751,6 @@ export function parseActions(rawActionText: string): ParseActionsResult {
                 },
               ],
               playStates: { single: "active", multiple: ["active", "rested"] },
-              chooseOnPlayOrder: true,
               previousActionTargets: true,
             },
           ],
@@ -353,7 +761,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
   }
 
   const revealThenAddSameCardToLifeMatch =
-    /^reveal\s+up\s+to\s+(\d+)\s+(.+?)\s+from\s+your\s+hand\s+and\s+add\s+(?:it|them)\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?\s+face-(up|down)\.\s*Then,\s*(.+)$/i.exec(
+    /^reveal\s+up\s+to\s+(\d+)\s+(.+?)\s+from\s+your\s+hand\s+and\s+add\s+(?:it|them)\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?\s+face-(up|down)(?:\.\s*Then,\s*(.+))?\.?$/i.exec(
       text,
     );
   if (revealThenAddSameCardToLifeMatch) {
@@ -365,7 +773,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
         description,
       );
     if (traitMatch && !filters.some((filter) => filter.filter === "trait")) {
-      filters.unshift({ filter: "trait", value: traitMatch[1]!, match: "includes" });
+      filters.unshift({ filter: "trait", value: traitMatch[1]!, match: "exact" });
     }
     if (/\bCharacter\s+card\b/i.test(description)) {
       filters.push({ filter: "cardCategory", value: "character" });
@@ -374,8 +782,13 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     } else if (/\bStage\s+card\b/i.test(description)) {
       filters.push({ filter: "cardCategory", value: "stage" });
     }
-    const trailing = parseActions(revealThenAddSameCardToLifeMatch[5]!);
-    if (trailing.unparsed === "" && trailing.parsed.length > 0) {
+    const trailing = revealThenAddSameCardToLifeMatch[5]
+      ? parseActions(revealThenAddSameCardToLifeMatch[5])
+      : { parsed: [], unparsed: "" };
+    if (
+      trailing.unparsed === "" &&
+      (!revealThenAddSameCardToLifeMatch[5] || trailing.parsed.length > 0)
+    ) {
       const target = {
         player: "self" as const,
         zones: ["hand" as const],
@@ -454,7 +867,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     if (negate && !Array.isArray(negate)) {
       return {
         parsed: [
-          negate,
+          { ...negate, duration: parseFullDuration(negateThenCannotAttackMatch[2]!) },
           {
             action: "cannotAttack",
             target: negate.target,
@@ -835,6 +1248,46 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     }
   }
 
+  const selectedCharacterProtectionMatch =
+    /^(.+?)\.\s*If\s+that\s+card\s+is\s+a\s+Character,\s*that\s+Character\s+cannot\s+be\s+K\.O\.[’']?d\s+(during\s+this\s+(?:turn|battle)|until\s+.+)$/i.exec(
+      textAfterSearch,
+    );
+  if (selectedCharacterProtectionMatch) {
+    const leading = parseActions(selectedCharacterProtectionMatch[1]!);
+    if (!leading.unparsed && leading.parsed.at(-1)?.action === "modifyPower") {
+      preParsed.push(...leading.parsed, {
+        action: "cannotBeKod",
+        target: { player: "self", zones: ["character"], count: { amount: 1, upTo: true } },
+        previousActionTargets: true,
+        condition: {
+          condition: "previousActionTarget",
+          filters: [{ filter: "cardCategory", value: "character" }],
+        },
+        duration: parseFullDuration(selectedCharacterProtectionMatch[2]!),
+      });
+      textAfterSearch = "";
+    }
+  }
+
+  const additionalSameTargetPower =
+    /^(.+?)\.\s*Then,\s*that\s+card\s+gains?\s+an\s+additional\s+([+-]?\d+)\s+power\s+(during\s+this\s+(?:turn|battle)|until\s+.+)$/i.exec(
+      textAfterSearch,
+    );
+  if (additionalSameTargetPower) {
+    const leading = parseActions(additionalSameTargetPower[1]!);
+    const previous = leading.parsed.at(-1);
+    if (!leading.unparsed && previous?.action === "modifyPower") {
+      preParsed.push(...leading.parsed, {
+        action: "modifyPower",
+        target: previous.target,
+        value: parseInt(additionalSameTargetPower[2]!, 10),
+        duration: parseFullDuration(additionalSameTargetPower[3]!),
+        previousActionTargets: true,
+      });
+      textAfterSearch = "";
+    }
+  }
+
   const dependentConditionalSameTargetMatch =
     /^(.+?)\.\s*Then,\s*if\s+(.+?),\s*that\s+card\s+gains?\s+(?:an\s+additional\s+)?([+-]?\d+)\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
       textAfterSearch,
@@ -966,7 +1419,13 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     const lifeAction = parseRemoveFromLifeAction(lifeThenMatch[1]!.replace(/^you\s+may\s+/i, ""));
     const thenActions = parseActions(lifeThenMatch[2]!).parsed;
     if (lifeAction?.action === "removeFromLife" && thenActions.length > 0) {
-      preParsed.push({ ...lifeAction, thenActions });
+      const optional = optionalPrefix || /^you\s+may\s+/i.test(lifeThenMatch[1]!);
+      preParsed.push({
+        ...lifeAction,
+        ...(optional &&
+          "amount" in lifeAction.count && { count: { ...lifeAction.count, upTo: true } }),
+        thenActions,
+      });
       textAfterSearch = "";
     }
   }
@@ -982,7 +1441,70 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     const trashDeck = parseTrashFromDeckAction(trashDeckThenSelfMatch[1]!);
     const trashSelf = parseTrashThisCardAction(trashDeckThenSelfMatch[2]!);
     if (trashDeck && trashSelf) {
-      preParsed.push({ ...trashDeck, thenActions: [trashSelf] });
+      preParsed.push({ ...trashDeck, thenRequiresFullAmount: true, thenActions: [trashSelf] });
+      textAfterSearch = "";
+    }
+  }
+
+  const revealTopAndAdd =
+    /^Reveal\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+deck\s+and\s+add\s+up\s+to\s+1\s+(.+?)\s+to\s+your\s+hand\.\s*Then,\s*place\s+the\s+rest\s+at\s+the\s+bottom\s+of\s+your\s+deck\.?$/i.exec(
+      textAfterSearch,
+    );
+  if (revealTopAndAdd) {
+    const filters = parsePlayDescription(revealTopAndAdd[1]!);
+    if (filters?.length) {
+      preParsed.push({
+        action: "revealTopDeckCard",
+        player: "self",
+        conditional: {
+          filters,
+          actions: [
+            {
+              action: "search",
+              lookCount: 1,
+              source: { player: "self", zone: "deck" },
+              revealCount: { amount: 1, upTo: true },
+              revealFilters: filters,
+              revealDestination: "hand",
+              remainderPosition: "bottom",
+            },
+          ],
+        },
+        finalPosition: "bottom",
+      });
+      textAfterSearch = "";
+    }
+  }
+
+  // Revealing the top card is mandatory even when its optional play is declined.
+  const revealTopAndPlayMatch =
+    /^Reveal\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+deck(?:,\s*|\s+and\s+)play\s+up\s+to\s+1\s+(.+?)\.\s*Then,\s*place\s+the\s+rest\s+at\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+your\s+deck\.?$/i.exec(
+      textAfterSearch,
+    );
+  if (revealTopAndPlayMatch) {
+    const description = revealTopAndPlayMatch[1]!;
+    const rested = /\s+rested$/i.test(description);
+    const filters = parsePlayDescription(description.replace(/\s+rested$/i, ""));
+    if (filters) {
+      const position = revealTopAndPlayMatch[2]!.toLowerCase();
+      preParsed.push({
+        action: "revealTopDeckCard",
+        player: "self",
+        conditional: {
+          filters,
+          actions: [
+            {
+              action: "play",
+              source: { player: "self", zone: "deck" },
+              count: { amount: 1, upTo: true },
+              filters,
+              topOnly: true,
+              ...(rested && { playState: "rested" as const }),
+            },
+          ],
+        },
+        finalPosition: position === "top or bottom" ? "choice" : (position as "top" | "bottom"),
+      });
       textAfterSearch = "";
     }
   }
@@ -1135,7 +1657,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
           {
             filter: "trait" as const,
             value: drawForEachMatch[1]!,
-            match: "includes" as const,
+            match: "exact" as const,
           },
         ],
       };
@@ -1200,7 +1722,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
             {
               filter: "trait",
               value: revealLifeTraitMatch[1]!,
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "cardCategory",
@@ -1249,7 +1771,6 @@ export function parseActions(rawActionText: string): ParseActionsResult {
           },
         ],
         playStates: { single: "active", multiple: ["active", "rested"] },
-        chooseOnPlayOrder: true,
       });
       textAfterSearch = "";
     }
@@ -1261,41 +1782,6 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     if (compoundPlay) {
       textAfterSearch = "";
       preParsed.push(...compoundPlay);
-    }
-  }
-
-  // Try "Place N of ... at the top or bottom of ... Life cards face-up: action"
-  if (preParsed.length === 0) {
-    const placeToLifeColonMatch =
-      /^Place\s+(\d+)\s+of\s+(your\s+opponent[''\u2019]s)\s+(.+?)\s+at\s+the\s+(top\s+or\s+bottom|top|bottom)\s+of\s+(?:your\s+opponent[''\u2019]s|the\s+owner[''\u2019]s)\s+Life\s+cards?\s*(?:face-up)?[:.]\s*(.+)$/i.exec(
-        textAfterSearch.trim().replace(/\.+$/, ""),
-      );
-    if (placeToLifeColonMatch) {
-      const amount = parseInt(placeToLifeColonMatch[1]!, 10);
-      const { filters } = extractTargetFilters(placeToLifeColonMatch[3]!);
-      const zones = parseZoneList(placeToLifeColonMatch[3]!.replace(/\s+with\s+.+$/i, ""));
-      const faceUp = /face-up/i.test(textAfterSearch);
-      preParsed.push({
-        action: "addToLife",
-        target: {
-          player: "opponent" as const,
-          zones: zones ?? ["character"],
-          count: { amount },
-          ...(filters.length > 0 && { filters }),
-        },
-        position:
-          placeToLifeColonMatch[4]!.toLowerCase() === "top or bottom"
-            ? ("choice" as const)
-            : (placeToLifeColonMatch[4]!.toLowerCase() as "top" | "bottom"),
-        ...(faceUp && { faceUp: true }),
-      } as Action);
-      // Parse remaining action after colon
-      const remaining = placeToLifeColonMatch[5]!;
-      const followUp = parseActions(remaining);
-      if (followUp.parsed.length > 0) {
-        preParsed.push(...followUp.parsed);
-      }
-      textAfterSearch = "";
     }
   }
 
@@ -1326,7 +1812,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
         player: "self" as const,
         amount: "all",
         upTo: true,
-        filters: [{ filter: "trait", value: trashForPowerMatch[1]!, match: "includes" }],
+        filters: [{ filter: "trait", value: trashForPowerMatch[1]!, match: "exact" }],
       } as Action);
       const targetText = trashForPowerMatch[2]!;
       const target = /^Your\s+Leader\s+or\s+1\s+of\s+your\s+Characters$/i.test(targetText)
@@ -1417,7 +1903,7 @@ export function parseActions(rawActionText: string): ParseActionsResult {
                   {
                     filter: "trait",
                     value: leaderOrTraitChar[2]!,
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               ],
@@ -1476,10 +1962,18 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       const elseActions = parseActions(oppMayTrashMatch[2]!).parsed;
       if (elseActions.length > 0) {
         preParsed.push({
-          action: "choice",
-          player: "opponent",
-          options: [[trashAction], elseActions],
-        } as Action);
+          action: "conditional",
+          predicate: {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "gte",
+            value: parseInt(oppMayTrashMatch[1]!, 10),
+          },
+          whenTrue: [
+            { action: "choice", player: "opponent", options: [[trashAction], elseActions] },
+          ],
+          whenFalse: elseActions,
+        });
         textAfterSearch = "";
       }
     }
@@ -1537,8 +2031,9 @@ export function parseActions(rawActionText: string): ParseActionsResult {
                 ...(conditionalTopDeckPlayMatch[2] && { playState: "rested" as const }),
               },
             ],
+            finalPosition: conditionalTopDeckPlayMatch[3]!.toLowerCase() as "bottom" | "top",
           },
-          finalPosition: conditionalTopDeckPlayMatch[3]!.toLowerCase() as "bottom" | "top",
+          finalPosition: "top",
         });
         textAfterSearch = "";
       }
@@ -1565,8 +2060,32 @@ export function parseActions(rawActionText: string): ParseActionsResult {
               },
             ],
             actions: followUp.parsed,
+            finalPosition: conditionalCostRevealMatch[4]!.toLowerCase() as "bottom" | "top",
           },
-          finalPosition: conditionalCostRevealMatch[4]!.toLowerCase() as "bottom" | "top",
+          // FAQ Q640: a failed cost condition leaves the revealed card on top.
+          finalPosition: "top",
+        });
+        textAfterSearch = "";
+      }
+    }
+  }
+
+  if (preParsed.length === 0) {
+    const revealTrait =
+      /^Reveal\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+deck\.\s*If\s+that\s+card\s+is\s+a\s+\{([^}]+)\}\s+type\s+card,\s*(.+)$/i.exec(
+        textAfterSearch,
+      );
+    if (revealTrait) {
+      const following = parseActions(revealTrait[2]!);
+      if (following.parsed.length && !following.unparsed) {
+        preParsed.push({
+          action: "revealTopDeckCard",
+          player: "self",
+          finalPosition: "top",
+          conditional: {
+            filters: [{ filter: "trait", value: revealTrait[1]!, match: "exact" }],
+            actions: following.parsed,
+          },
         });
         textAfterSearch = "";
       }
@@ -1594,8 +2113,9 @@ export function parseActions(rawActionText: string): ParseActionsResult {
               },
             ],
             actions: followUp,
+            finalPosition: "bottom",
           },
-          finalPosition: "bottom",
+          finalPosition: "top",
         });
         textAfterSearch = "";
       }
@@ -1658,6 +2178,16 @@ export function parseActions(rawActionText: string): ParseActionsResult {
         });
         textAfterSearch = "";
       }
+    }
+  }
+
+  const rearrangeThen = /^(.+?)\.\s*Then,\s*(.+)$/i.exec(textAfterSearch);
+  if (rearrangeThen) {
+    const rearrange = parseRearrangeDeckAction(rearrangeThen[1]!);
+    const following = parseActions(rearrangeThen[2]!);
+    if (rearrange && following.parsed.length && !following.unparsed) {
+      preParsed.push(rearrange, ...following.parsed);
+      textAfterSearch = "";
     }
   }
 
@@ -1844,6 +2374,19 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       continue;
     }
 
+    // The continuation refers to the Character chosen for Rest, not a second target.
+    const restAndFreeze =
+      /^(rest\s+.+?)\s+and\s+that\s+Character\s+will\s+not\s+become\s+active\s+in\s+your\s+opponent['’]s\s+next\s+Refresh\s+Phase$/i.exec(
+        clause,
+      );
+    if (restAndFreeze) {
+      const rest = parseRestAction(restAndFreeze[1]!);
+      if (rest) {
+        parsed.push(rest, { action: "freeze", target: rest.target, previousActionTargets: true });
+        continue;
+      }
+    }
+
     const compoundRest = parseCompoundRestActions(clause);
     if (compoundRest) {
       parsed.push(...compoundRest);
@@ -1916,6 +2459,11 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       continue;
     }
 
+    const groupedStats = parseGroupedPowerAndCostActions(clause);
+    if (groupedStats) {
+      parsed.push(...groupedStats);
+      continue;
+    }
     const modPower = parseModifyPowerAction(clause);
     if (modPower) {
       parsed.push(modPower);

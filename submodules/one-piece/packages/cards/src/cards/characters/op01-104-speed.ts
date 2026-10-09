@@ -24,7 +24,7 @@ export const op01Speed104: CharacterCard = {
   power: 3000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "strike",
   effect: "[Trigger] Play this card.",
   effects: {

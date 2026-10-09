@@ -225,7 +225,7 @@ export class OnePieceTestPlayer {
     return this.chooseCards("battleBlocker", [card]);
   }
 
-  /** Resolve the battle Counter step with zero or more Counter cards from hand. */
+  /** Use one Counter card from hand, or pass with no card. */
   chooseCounter(...cards: Array<CardRef | string>): ApplyCommandResult {
     return this.chooseCards("battleCounter", cards);
   }

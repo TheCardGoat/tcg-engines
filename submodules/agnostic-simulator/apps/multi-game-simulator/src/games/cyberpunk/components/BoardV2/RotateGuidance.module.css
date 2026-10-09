@@ -1,0 +1,211 @@
+/* Portrait guidance for the V2 board: one floating card over a light scrim.
+   The plate language matches the V2 error recovery panel so guidance reads as
+   first-class chrome, not leftover text. */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 160;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 42%, #101c22d9 0, #070b0ee6 55%, #05080ad9 100%);
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(88vw, 340px);
+  padding: 30px 26px 26px;
+  border: 1px solid #52626a;
+  border-top: 2px solid var(--v2-cyan, #45d9ee);
+  text-align: center;
+  background:
+    linear-gradient(145deg, #1c262bdc, #090d11f2 72%),
+    repeating-linear-gradient(135deg, #ffffff05 0 1px, transparent 1px 8px);
+  box-shadow:
+    0 18px 60px #0009,
+    inset 0 1px #ffffff12,
+    0 0 28px #45d9ee1c;
+  clip-path: polygon(
+    0 14px,
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%
+  );
+}
+
+.iconPlate {
+  display: grid;
+  width: 56px;
+  aspect-ratio: 1;
+  place-items: center;
+  margin-bottom: 4px;
+  border: 1px solid #45d9ee;
+  color: var(--v2-cyan, #45d9ee);
+  background: #45d9ee14;
+  box-shadow:
+    inset 0 0 16px #45d9ee1b,
+    0 0 14px #45d9ee2b;
+}
+
+.iconPlate svg {
+  animation: sweep 2.6s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0%,
+  100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  color: #7fdcee;
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #f5f7f8;
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+}
+
+.body {
+  margin: 0 0 8px;
+  color: #aab8bd;
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+.primary,
+.secondary {
+  cursor: pointer;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  white-space: nowrap;
+}
+
+.primary {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 20px;
+  border: 1px solid #ffe24e;
+  color: #111518;
+  background: linear-gradient(180deg, #ffe96d, #e4bd32);
+  box-shadow:
+    0 3px 0 #806820,
+    0 0 18px #ffe24e25;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    filter 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.primary::after {
+  content: "→";
+  font-size: 18px;
+  line-height: 1;
+}
+
+.primary:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    0 3px 0 #806820,
+    0 0 24px #ffe24e4a;
+}
+
+.primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #806820;
+}
+
+.secondary {
+  min-height: 42px;
+  border: 1px solid #3d5964;
+  color: #9fdbe8;
+  background: #101c22;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.secondary:hover {
+  border-color: var(--v2-cyan, #45d9ee);
+  color: #cdf1f8;
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.peekPill:focus-visible {
+  outline: 2px solid var(--v2-cyan, #45d9ee);
+  outline-offset: 3px;
+}
+
+/* Session-level peek: the board stays visible and this small pill keeps the
+   way back one tap away. */
+.peekPill {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #8a7a33;
+  color: #ffe24e;
+  background: #10171cf0;
+  box-shadow: 0 10px 28px #0009;
+  cursor: pointer;
+  font:
+    600 12px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.peekPill:hover {
+  border-color: #ffe24e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconPlate svg {
+    animation: none;
+  }
+
+  .primary,
+  .secondary {
+    transition: none;
+  }
+}

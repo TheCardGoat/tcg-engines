@@ -48,35 +48,13 @@ export const jovianHiltXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["WEAPON"],
-                },
-              },
-            },
-          ],
           effect: {
             kind: "sequence",
             effects: [
               {
                 kind: "add-counter",
                 subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                  kind: "linked-object",
                 },
                 counter: "durability",
                 amount: 1,
@@ -89,8 +67,7 @@ export const jovianHiltXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                     left: {
                       kind: "counter-count",
                       subject: {
-                        kind: "bound",
-                        binding: "target-1",
+                        kind: "linked-object",
                       },
                       counter: "static",
                     },

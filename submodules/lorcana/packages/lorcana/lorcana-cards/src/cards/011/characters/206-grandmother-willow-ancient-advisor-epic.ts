@@ -23,7 +23,7 @@ export const grandmotherWillowAncientAdvisorEpic: CharacterCard = {
   franchise: "Pocahontas",
   set: "011",
   cardNumber: 206,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 1,

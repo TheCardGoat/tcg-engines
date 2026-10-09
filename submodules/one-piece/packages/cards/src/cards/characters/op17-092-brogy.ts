@@ -23,7 +23,7 @@ export const op17Brogy092: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["Giant Elbaph Giant Pirates"],
+  traits: ["Giant", "Elbaph", "Giant Pirates"],
   attribute: "slash",
   effect:
     "This Character gains +12 cost. [On Play] If your Leader has the {Elbaph} type, play up to 1 [Dorry] with a cost of 5 or less from your hand or trash. Then, you cannot play Character cards during this turn.",
@@ -35,7 +35,7 @@ export const op17Brogy092: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Elbaph",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

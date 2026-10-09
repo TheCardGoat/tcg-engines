@@ -1,3 +1,4 @@
+import { selectionVariables } from "@tcg/simulator-presentation/selection";
 import "@mantine/core/styles.css";
 
 import { useEffect, type ReactNode } from "react";
@@ -19,7 +20,9 @@ export function AlphaClashSimulatorProviders({ children }: AlphaClashSimulatorPr
   return (
     <MantineProvider defaultColorScheme="light">
       <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
-        <div className="alpha-clash-root">{children}</div>
+        <div className="alpha-clash-root" style={selectionVariables}>
+          {children}
+        </div>
       </SimulatorEntityVisualProvider>
     </MantineProvider>
   );

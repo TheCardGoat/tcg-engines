@@ -1,29 +1,49 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01Fourtricks025 } from "@tcg/op-cards";
-import { op09Kuzan101 } from "../../../../../cards/src/cards/characters/op09-101-kuzan.ts";
-import { op09VascoShot091 } from "../../../../../cards/src/cards/characters/op09-091-vasco-shot.ts";
-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP09-101 Kuzan", () => {
-  test("lets its controller choose top or bottom for the opposing Character added to Life", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: [op09Kuzan101], activeDon: op09Kuzan101.cost },
-      { character: [eb01Doma005, op09VascoShot091], hand: [eb01Fourtricks025] },
-    );
-    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
-
-    engine.playCard(op09Kuzan101, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
-
-    const position = engine.pendingDecision("effectLifePosition", "south").steps[0];
-    if (position?.kind !== "chooseOption") {
-      throw new Error("Expected Kuzan's printed top-or-bottom Life choice.");
+  test("pays an opposing cost-three Character face-up into the chosen Life endpoint before opponent discard", () => {
+    for (const position of ["top", "bottom"] as const) {
+      const engine = OnePieceTestEngine.create(
+        { hand: ["OP09-101"], activeDon: 5 },
+        { character: ["ST09-007", "OP09-108"], life: ["EB01-025"], hand: ["EB01-005", "EB01-018"] },
+      );
+      const paid = engine.findCardInZone("north", "character", "ST09-007");
+      const tooLarge = engine.findCardInZone("north", "character", "OP09-108");
+      const discarded = engine.findCardInZone("north", "hand", "EB01-018");
+      engine.asSouth().play("OP09-101");
+      // One eligible payment automatically selects the physical Character.
+      engine.resolveDecision("effectLifePosition", { optionId: position }, "south");
+      expect(
+        engine.getView("north").players.north.characters.map((c) => c?.instanceId),
+      ).not.toContain(paid);
+      expect(engine.getView("north").players.north.characters.map((c) => c?.instanceId)).toContain(
+        tooLarge,
+      );
+      const life = engine.getView("south").players.north.life;
+      expect(life[position === "top" ? 0 : life.length - 1]).toMatchObject({
+        instanceId: paid,
+        cardId: "ST09-007",
+      });
+      engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [discarded] }, "north");
+      expect(engine.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(
+        discarded,
+      );
+      expect(engine.getView("north").players.north.hand).toHaveLength(1);
+      expect(engine.getView("south").prompts).toHaveLength(0);
     }
-    expect(position.options.map((option) => option.id)).toEqual(["top", "bottom"]);
+  });
 
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-    expect(engine.getView("south").players.south.leader).toBeTruthy();
-    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
+  test("cannot charge the discard when no opposing Character can pay the cost", () => {
+    for (const character of [[], ["OP09-108"]]) {
+      const engine = OnePieceTestEngine.create(
+        { hand: ["OP09-101"], activeDon: 5 },
+        { character, hand: ["EB01-005", "EB01-018"] },
+      );
+      engine.asSouth().play("OP09-101");
+      expect(engine.getView("north").players.north.hand).toHaveLength(2);
+      expect(engine.getView("north").players.north.trash).toHaveLength(0);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    }
   });
 });

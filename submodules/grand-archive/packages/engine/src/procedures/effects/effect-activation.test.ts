@@ -354,3 +354,85 @@ describe("effect-granted card activation and play", () => {
     });
   });
 });
+
+import { listGrandArchiveLegalCommands } from "../../commands/legal-commands.ts";
+
+describe("optional play declarations", () => {
+  for (const route of ["play-action", "play-regalia", "activate-card", "materialize-card"] as const)
+    for (const optional of [false, true])
+      for (const complete of [false, true])
+        it(`preserves payment, decline, and continuation across restore: route=${route}, optional=${optional}, complete=${complete}`, () => {
+          const material = route === "play-regalia" || route === "materialize-card";
+          const played = card(
+            `optional-${route}`,
+            material ? "ITEM" : "ACTION",
+            material ? { kind: "memory", amount: 0 } : { kind: "reserve", amount: 1 },
+            [],
+            material ? { supertypes: ["REGALIA"] } : {},
+          );
+          const play: GrandArchiveEffect = {
+            kind: route === "play-action" || route === "play-regalia" ? "play-card" : route,
+            subject: { kind: "bound", binding: "chosen-card" },
+            payCosts: true,
+          };
+          const source = sourceCard({
+            kind: "sequence",
+            effects: [
+              optional
+                ? { kind: "optional", player: "controller", allOrNothing: true, effect: play }
+                : play,
+              { kind: "draw", player: "controller", amount: 1 },
+            ],
+          });
+          const fixture = setup(source, played);
+          let runtime = new GrandArchiveMatchRuntime(fixture.program, fixture.state);
+          resolveToChoice(runtime, fixture.sourceId);
+          answer(runtime, [fixture.playedId]);
+          if (optional) answer(runtime, true);
+          const kind = material ? "announce-effect-materialization" : "announce-effect-activation";
+          expect(runtime.state.decision).toMatchObject({ kind });
+          const p1 = grandArchivePlayerId("p1");
+          expect(
+            listGrandArchiveLegalCommands(fixture.program, runtime.state, p1).some(
+              ({ command }) => command.move === "answer-decision" && command.answer === false,
+            ),
+          ).toBe(optional);
+          runtime = new GrandArchiveMatchRuntime(
+            fixture.program,
+            restoreGrandArchiveMatchSnapshot(
+              fixture.program,
+              JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(runtime.state))),
+            ),
+          );
+          const before = runtime.state;
+          expect(() =>
+            answer(runtime, material ? { floatingMemoryCardIds: [fixture.playedId] } : {}),
+          ).toThrow();
+          expect(runtime.state).toEqual(before);
+          if (!optional) {
+            expect(() => answer(runtime, false)).toThrow();
+            expect(runtime.state).toEqual(before);
+          }
+          const deckBefore = Object.values(runtime.state.objects).filter(
+            (object) => object.ownerId === p1 && object.zone === "main-deck",
+          ).length;
+          if (optional && !complete) answer(runtime, false);
+          else
+            answer(
+              runtime,
+              material ? {} : { reservePayment: [{ kind: "card", cardId: fixture.paymentId }] },
+            );
+          expect(runtime.state.decision).toBeNull();
+          expect(runtime.state.objects[fixture.playedId]!.zone).toBe(
+            optional && !complete ? "banishment" : "effects-stack",
+          );
+          expect(runtime.state.objects[fixture.paymentId]!.zone).toBe(
+            !material && (!optional || complete) ? "memory" : "hand",
+          );
+          expect(
+            Object.values(runtime.state.objects).filter(
+              (object) => object.ownerId === p1 && object.zone === "main-deck",
+            ),
+          ).toHaveLength(deckBefore - 1);
+        });
+});

@@ -31,7 +31,7 @@ export const op10Sanji005: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Straw Hat Crew Punk Hazard"],
+  traits: ["Punk Hazard", "Straw Hat Crew"],
   attribute: "special",
   effect: "[Your Turn] This Character gains +3000 power.\n[On K.O.] Draw 1 card.",
   effects: {

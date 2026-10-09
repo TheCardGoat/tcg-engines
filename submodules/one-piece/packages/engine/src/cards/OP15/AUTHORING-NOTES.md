@@ -16,8 +16,9 @@ in this directory.
   `flatMap((c) => (c ? [c.power] : []))` for board-wide assertions.
 - Character view fields: `rested: boolean`, `attachedDon`, `power`, `cost`.
   There is no `state` field.
-- `trashFromDeck` with a **non-upTo amount silently no-ops** when the deck has
-  fewer cards than requested (see `actions.ts` `case "trashFromDeck"`).
+- `trashFromDeck` trashes all remaining cards when fewer than the printed
+  amount remain. `thenActions` also run with an empty deck; use
+  `thenRequiresFullAmount` for the distinct "If you do" continuation.
 - Optional blocks surface as `effectOptional` (`{ optionId: "yes" | "no" }`).
   Costs that are "You may …" payments surface a _leading optional_ first:
   `engine.acceptLeadingOptional(seat)` then resolve the cost prompt.
@@ -60,8 +61,8 @@ in this directory.
 - Events played from hand dispatch `whenYouActivateEvent`; the engine records
   the activation per turn (`activatedEvent` condition reads it).
 - Empty-deck defeat runs immediately on deck movement and at turn end;
-  `deferEmptyDeckLoss` replacement (Brook) defers the immediate defeat to the
-  end-of-turn check in `endTurnFinalize`.
+  `deferEmptyDeckLoss` replacement (Brook) records defeat due at the end of
+  that turn. Refilling the deck does not cancel it (official OP15 Q1196).
 
 ## More harness facts
 

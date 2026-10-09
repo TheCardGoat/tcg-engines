@@ -184,7 +184,6 @@ describe("Grand Archive tracked mode choices", () => {
       sourceId: fixture.huntId,
       abilityId: "Y6PZntlVDl-a2",
       modeIds: ["mode-2"],
-      targets: { "target-1": [fixture.knightId] },
     };
     const proposal = proposeGrandArchiveAbilityActivation(
       fixture.program,

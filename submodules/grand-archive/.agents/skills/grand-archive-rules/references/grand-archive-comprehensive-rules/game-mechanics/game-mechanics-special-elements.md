@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-special-elements"
+  relation: "current_index"
+---
+
 # Game Mechanics - Special Elements
 
 This section contains rules governing any special elements.

@@ -3,6 +3,7 @@ import {
   type ReplayPlaybackV1,
   type ReplayTrust,
 } from "@tcg/game-page-contract";
+import { withParticipantReplayChat } from "./replay-chat-fetch";
 
 const DB_NAME = "tcg-replays";
 const DB_VERSION = 1;
@@ -223,13 +224,21 @@ export async function fetchAndSaveReplay(
   url: string,
   gameSlug: string,
   fetcher: typeof fetch = fetch,
+  signal?: AbortSignal,
 ): Promise<SavedBrowserReplaySummary> {
   const response = await fetcher(url, {
     credentials: "include",
     headers: { Accept: "application/json" },
+    signal,
   });
   if (!response.ok) throw new Error(`Failed to fetch replay (${response.status}).`);
-  return saveReplayOnDevice(gameSlug, ReplayPlaybackV1Schema.parse(await response.json()));
+  const playback = await withParticipantReplayChat(
+    ReplayPlaybackV1Schema.parse(await response.json()),
+    url,
+    fetcher,
+    signal,
+  );
+  return saveReplayOnDevice(gameSlug, playback);
 }
 
 export async function loadReplayWithSource(params: {
@@ -240,16 +249,24 @@ export async function loadReplayWithSource(params: {
   fetcher?: typeof fetch;
 }): Promise<{ playback: ReplayPlaybackV1; source: "cloud" | "device" }> {
   if (params.preferredSource === "device") {
-    const local = await loadReplayFromDevice(params.gameSlug, params.gameId);
-    if (local) return { playback: local, source: "device" };
-    throw new Error("This replay is not saved on this device.");
+    try {
+      const local = await loadReplayFromDevice(params.gameSlug, params.gameId);
+      if (local) return { playback: local, source: "device" };
+    } catch {
+      // Private replay storage can be missing or blocked. The cloud copy can still play.
+    }
   }
   const response = await (params.fetcher ?? fetch)(params.cloudUrl, {
     credentials: "include",
     headers: { Accept: "application/json" },
   });
   if (!response.ok) throw new Error(`Failed to fetch replay (${response.status}).`);
-  return { playback: ReplayPlaybackV1Schema.parse(await response.json()), source: "cloud" };
+  const playback = await withParticipantReplayChat(
+    ReplayPlaybackV1Schema.parse(await response.json()),
+    params.cloudUrl,
+    params.fetcher ?? fetch,
+  );
+  return { playback, source: "cloud" };
 }
 
 function crc32(bytes: Uint8Array): number {

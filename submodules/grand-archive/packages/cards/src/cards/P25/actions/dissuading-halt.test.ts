@@ -7,3 +7,9 @@ import { dissuadingHalt } from "./dissuading-halt.ts";
 describe("Dissuading Halt — Class Bonus Floating Memory", () => {
   proveClassBonusFloatingMemory({ card: dissuadingHalt });
 });
+
+import { proveTargetAttackReduction } from "../../../testing/target-attack-reduction.ts";
+/** @covers y7wbtbasch-a1 */
+describe("dissuadingHalt attack reduction", () => {
+  proveTargetAttackReduction(dissuadingHalt, "action", "y7wbtbasch-a1");
+});

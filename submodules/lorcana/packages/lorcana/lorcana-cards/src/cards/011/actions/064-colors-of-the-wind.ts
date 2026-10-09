@@ -11,7 +11,7 @@ export const colorsOfTheWind: ActionCard = {
       artId: "set11-064",
       setCode: "set11",
       collectorNumber: "64",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const colorsOfTheWind: ActionCard = {
   franchise: "Pocahontas",
   set: "011",
   cardNumber: 64,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   inkable: true,
   externalIds: {

@@ -22,7 +22,7 @@ export const op06SharkArrows040: EventCard = {
   setId: "OP06",
   cost: 2,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Fish-Man New Fish-Man Pirates"],
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
   effect: "[Main] K.O. up to 2 of your opponent's rested Characters with a cost of 3 or less.",
   effects: {
     effects: [

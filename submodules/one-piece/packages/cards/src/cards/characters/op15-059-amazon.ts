@@ -39,31 +39,55 @@ export const op15Amazon059: CharacterCard = {
         ],
         actions: [
           {
-            action: "choice",
-            player: "opponent",
-            options: [
-              [
-                {
-                  action: "returnDon",
-                  player: "opponent",
-                  amount: 1,
-                },
-              ],
-              [
-                {
-                  action: "modifyPower",
-                  target: {
-                    player: "opponent",
-                    zones: ["leader", "character"],
-                    count: {
+            action: "conditional",
+            predicate: {
+              condition: "activeDonCount",
+              player: "opponent",
+              comparison: "gte",
+              value: 1,
+            },
+            whenTrue: [
+              {
+                action: "choice",
+                player: "opponent",
+                options: [
+                  [
+                    {
+                      action: "returnDon",
+                      player: "opponent",
                       amount: 1,
-                      upTo: true,
+                      donState: "active",
                     },
-                  },
-                  value: -2000,
-                  duration: "thisTurn",
+                  ],
+                  [
+                    {
+                      action: "modifyPower",
+                      target: {
+                        player: "opponent",
+                        zones: ["leader", "character"],
+                        count: {
+                          amount: 1,
+                          upTo: true,
+                        },
+                      },
+                      value: -2000,
+                      duration: "thisTurn",
+                    },
+                  ],
+                ],
+              },
+            ],
+            whenFalse: [
+              {
+                action: "modifyPower",
+                target: {
+                  player: "opponent",
+                  zones: ["leader", "character"],
+                  count: { amount: 1, upTo: true },
                 },
-              ],
+                value: -2000,
+                duration: "thisTurn",
+              },
             ],
           },
         ],

@@ -32,7 +32,7 @@ export const op04EnchantingVertigoDance018: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Alabasta",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

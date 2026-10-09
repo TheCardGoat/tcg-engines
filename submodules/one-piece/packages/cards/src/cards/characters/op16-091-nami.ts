@@ -23,7 +23,7 @@ export const op16Nami091: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Land of Wano Straw Hat Crew"],
+  traits: ["Land of Wano", "Straw Hat Crew"],
   attribute: "special",
   effect:
     "[On Play] If your Leader has the {Land of Wano} type, look at 4 cards from the top of your deck; reveal up to 1 {Land of Wano} type card other than [Nami] and add it to your hand. Then, trash the rest.",
@@ -35,7 +35,7 @@ export const op16Nami091: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Land of Wano",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -58,7 +58,7 @@ export const op16Nami091: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

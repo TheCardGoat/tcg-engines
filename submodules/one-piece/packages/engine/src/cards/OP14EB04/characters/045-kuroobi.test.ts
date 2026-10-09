@@ -1,4 +1,6 @@
 import {
+  op07Vegapunk097,
+  op09Brook111,
   eb01Doma005,
   eb01Fourtricks025,
   eb01MountainGod018,
@@ -12,6 +14,46 @@ import { op14eb04Kuroobi045 } from "../../../../../cards/src/cards/characters/op
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP14-045 Kuroobi", () => {
+  test("opponent Brook Life Trigger grants Rush after trashing this controller's hand cards", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: op14eb04Kuroobi045, playedOnTurn: 3 },
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+        ],
+        hand: Array.from({ length: 6 }, () => eb01Doma005),
+      },
+      { leaderCardId: op07Vegapunk097, life: [op09Brook111, eb01Doma005], hand: [] },
+      { firstPlayer: "north", activeSeat: "south", turnNumber: 3 },
+    );
+    const subjectId = engine.findCardInZone("south", "character", op14eb04Kuroobi045);
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    expect(
+      engine.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: subjectId,
+        targetId: engine.leader("north"),
+      }).accepted,
+    ).toBe(false);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const discard = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
+    if (discard?.kind !== "selectEntity") throw new Error("Expected Brook discard.");
+    const selectedIds = discard.candidates.slice(0, 2).map((candidate) => candidate.ref.id);
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds }, "south");
+    engine.declareAttack(subjectId, engine.leader("north"), "south");
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.find((card) => card?.instanceId === subjectId)?.rested,
+    ).toBe(true);
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining(selectedIds),
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("gains Rush this turn after its controller trashes a physical hand card for another effect", () => {
     const engine = OnePieceTestEngine.create(
       {

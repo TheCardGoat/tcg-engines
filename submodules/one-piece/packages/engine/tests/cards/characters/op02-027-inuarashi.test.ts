@@ -25,16 +25,16 @@ describe("OP02-027 Inuarashi", () => {
     engine.playCard(op01XDrake054, "south");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected X.Drake's K.O. choice.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([legalId]);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(inuarashiId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [legalId] }, "south");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([inuarashiId, legalId]);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(inuarashiId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [inuarashiId] }, "south");
 
     const view = engine.getView("north");
     expect(view.players.north.characters.some((card) => card?.instanceId === inuarashiId)).toBe(
       true,
     );
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(inuarashiId);
-    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(legalId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(legalId);
     expect(view.prompts).toHaveLength(0);
   });
 

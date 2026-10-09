@@ -125,7 +125,7 @@ export function checkLoreWinCondition(
  * Check whether a player has no cards remaining in their deck (§1.8.1.2).
  *
  * A player loses the game if their turn ends with no cards in their deck.
- * Called from passTurn before the turn-transition state machine begins.
+ * Called after end-turn abilities and this-turn stat expiry finish, before the next turn.
  */
 export function checkDeckEmptyForPlayer(ctx: DeckCheckCtx, playerId: PlayerId): boolean {
   const deckCards = ctx.framework.zones.getCards({ zone: "deck", playerId });

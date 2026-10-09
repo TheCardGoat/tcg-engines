@@ -45,7 +45,7 @@ export const op08Miyagi031: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

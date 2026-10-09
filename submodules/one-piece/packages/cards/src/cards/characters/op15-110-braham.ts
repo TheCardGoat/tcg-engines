@@ -23,7 +23,7 @@ export const op15Braham110: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[On K.O.] If your Leader has the {Shandian Warrior} type, add up to 1 card from the top of your deck to the top of your Life cards.",
@@ -35,7 +35,7 @@ export const op15Braham110: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Shandian Warrior",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

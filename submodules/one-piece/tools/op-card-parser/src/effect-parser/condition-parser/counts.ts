@@ -1,6 +1,25 @@
 import type { Condition, OPColor } from "@tcg/op-types";
 import { parseComparison } from "../helpers.ts";
 
+// "Only X Characters" requires an occupied Character area (EB03 FAQ Q1084).
+function onlyCharacterTrait(trait: string, match: "exact" | "includes" = "exact"): Condition {
+  return {
+    condition: "compound",
+    operator: "and",
+    conditions: [
+      { condition: "zoneCount", player: "self", zone: "character", comparison: "gte", value: 1 },
+      {
+        condition: "zoneCount",
+        player: "self",
+        zone: "character",
+        comparison: "eq",
+        value: 0,
+        filters: [{ filter: "trait", value: trait, match, negate: true }],
+      },
+    ],
+  };
+}
+
 export function parseCountCondition(text: string): Condition | null {
   const t = text;
   let m: RegExpExecArray | null;
@@ -202,7 +221,7 @@ export function parseCountCondition(text: string): Condition | null {
       value: parseInt(m[1]!, 10),
       filters: [
         { filter: "state", value: "rested" as const },
-        { filter: "trait", value: m[3]!, match: "includes" },
+        { filter: "trait", value: m[3]!, match: "exact" },
       ],
     };
   }
@@ -221,7 +240,7 @@ export function parseCountCondition(text: string): Condition | null {
       value: parseInt(m[1]!, 10),
       filters: [
         ...(m[3] ? [{ filter: "color", value: m[3].toLowerCase() as OPColor } as const] : []),
-        { filter: "trait", value: m[4]!, match: "includes" },
+        { filter: "trait", value: m[4]!, match: "exact" },
       ],
     };
   }
@@ -288,9 +307,20 @@ export function parseCountCondition(text: string): Condition | null {
     };
   }
 
+  m = /^either you or your opponent has (\d+) DON!! cards on the field$/i.exec(t);
+  if (m)
+    return {
+      condition: "compound",
+      operator: "or",
+      conditions: [
+        { condition: "donFieldCount", player: "self", comparison: "eq", value: Number(m[1]) },
+        { condition: "donFieldCount", player: "opponent", comparison: "eq", value: Number(m[1]) },
+      ],
+    };
+
   // Compound DON!! field count: you have 0 or N or more DON!! cards on your field
   m =
-    /^you\s+have\s+(\d+)\s+or\s+(\d+)\s+or\s+(less|more)\s+DON!!\s+cards?\s+on\s+your\s+field$/i.exec(
+    /^you\s+have\s+(\d+)(?:\s+DON!!\s+cards?\s+on\s+your\s+field)?\s+or\s+(\d+)\s+or\s+(less|more)\s+DON!!\s+cards?\s+on\s+your\s+field$/i.exec(
       t,
     );
   if (m) {
@@ -387,6 +417,18 @@ export function parseCountCondition(text: string): Condition | null {
       value: parseInt(m[1]!, 10),
     };
   }
+
+  const ownBasePowerCount =
+    /^you\s+have\s+(\d+)\s+or\s+(more|less)\s+Characters\s+with\s+(\d+)\s+base\s+power$/i.exec(t);
+  if (ownBasePowerCount)
+    return {
+      condition: "zoneCount",
+      player: "self",
+      zone: "character",
+      comparison: parseComparison(ownBasePowerCount[2]),
+      value: Number(ownBasePowerCount[1]),
+      filters: [{ filter: "basePower", comparison: "eq", value: Number(ownBasePowerCount[3]) }],
+    };
 
   // Opponent rested cards/Characters: your opponent has N or more rested cards/Characters
   m = /^your\s+opponent\s+has\s+(\d+)\s+or\s+(less|more)\s+rested\s+(cards?|Characters?)$/i.exec(t);
@@ -501,7 +543,7 @@ export function parseCountCondition(text: string): Condition | null {
       zone: "character",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      filters: [{ filter: "trait", value: m[3]!, match: "includes" }],
+      filters: [{ filter: "trait", value: m[3]!, match: "exact" }],
     };
   }
 
@@ -521,8 +563,8 @@ export function parseCountCondition(text: string): Condition | null {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: m[3]!, match: "includes" },
-            { filter: "trait", value: m[4]!, match: "includes" },
+            { filter: "trait", value: m[3]!, match: "exact" },
+            { filter: "trait", value: m[4]!, match: "exact" },
           ],
         },
       ],
@@ -569,14 +611,7 @@ export function parseCountCondition(text: string): Condition | null {
       t,
     );
   if (m) {
-    return {
-      condition: "zoneCount",
-      player: "self",
-      zone: "character",
-      comparison: "eq",
-      value: 0,
-      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
-    };
+    return onlyCharacterTrait(m[1]!);
   }
 
   // Only type on field: you only have [X] type Characters
@@ -585,14 +620,7 @@ export function parseCountCondition(text: string): Condition | null {
       t,
     );
   if (m) {
-    return {
-      condition: "zoneCount",
-      player: "self",
-      zone: "character",
-      comparison: "eq",
-      value: 0,
-      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
-    };
+    return onlyCharacterTrait(m[1]!, "includes");
   }
 
   m =
@@ -600,14 +628,7 @@ export function parseCountCondition(text: string): Condition | null {
       t,
     );
   if (m) {
-    return {
-      condition: "zoneCount",
-      player: "self",
-      zone: "character",
-      comparison: "eq",
-      value: 0,
-      filters: [{ filter: "trait", value: m[1]!, match: "includes", negate: true }],
-    };
+    return onlyCharacterTrait(m[1]!);
   }
 
   // Has card (Characters with power): you have N or less Characters with N power or more

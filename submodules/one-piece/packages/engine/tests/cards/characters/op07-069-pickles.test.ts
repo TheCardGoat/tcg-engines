@@ -59,7 +59,7 @@ describe("OP07-069 Pickles", () => {
   test("at equal DON!! protects other included Foxy Pirates from opponent-effect K.O., but not Pickles", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op07Pickles069, op07Capote063], activeDon: 1 },
-      { hand: [koCharacter], activeDon: 1 },
+      { hand: [koCharacter, koCharacter], activeDon: 1 },
       { firstPlayer: "south", activeSeat: "north" },
     );
     const picklesId = engine.findCardInZone("south", "character", op07Pickles069);
@@ -69,7 +69,12 @@ describe("OP07-069 Pickles", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the opponent's K.O. target.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(picklesId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).toContain(protectedId);
+    engine.playCard(koCharacter, "north");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [picklesId] }, "north");
 
     const view = engine.getView("south");

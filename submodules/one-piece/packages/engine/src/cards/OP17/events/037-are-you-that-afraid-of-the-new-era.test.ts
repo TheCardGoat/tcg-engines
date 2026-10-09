@@ -14,6 +14,9 @@ describe("OP17-037 Are You That Afraid of the New Era?", () => {
     );
 
     engine.playCard("OP17-037");
+    expect(
+      engine.getView("south").players.south.trash.find((c) => c.cardId === "OP17-037")?.name,
+    ).toBe("Are You That Afraid of the New Era?!!");
     const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
     if (search?.kind !== "selectEntity") throw new Error("Expected the search choice.");
     const legal = search.candidates.filter((candidate) => candidate.legal);
@@ -34,21 +37,89 @@ describe("OP17-037 Are You That Afraid of the New Era?", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
+  test.each(["leader", "character", "stage"])(
+    "Counter pays by resting a %s and saves the Leader",
+    (payment) => {
+      const engine = OnePieceTestEngine.create(
+        { hand: ["OP17-037"], character: ["EB01-005"], stage: "ST01-017", activeDon: 1 },
+        { activeDon: 2 },
+        { activeSeat: "north" },
+      );
+      const south = engine.getView("south").players.south;
+      const paymentId =
+        payment === "leader"
+          ? engine.leader("south")
+          : engine.findCardInZone(
+              "south",
+              payment === "stage" ? "stage" : "character",
+              payment === "stage" ? "ST01-017" : "EB01-005",
+            );
+      engine.asNorth().attachDon(engine.leader("north"), 2);
+      engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+      engine.asSouth().chooseCounter("OP17-037");
+      engine.asSouth().acceptOptional();
+      engine.resolveDecision("effectCostRestCards", { selectedIds: [paymentId] }, "south");
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [engine.leader("south")] },
+        "south",
+      );
+      const after = engine.getView("south").players.south;
+      expect(after.lifeCount).toBe(south.lifeCount);
+      expect(after.leader.power).toBe(south.leader.power);
+      const paid = [after.leader, ...after.characters, after.stage].find(
+        (c) => c?.instanceId === paymentId,
+      );
+      expect(paid?.rested).toBe(true);
+      expect(after.trash.map((c) => c.cardId)).toContain("OP17-037");
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
+
+  test("Counter can rest an active DON!! after paying the Event cost", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-022", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+      { hand: ["OP17-037"], activeDon: 2 },
+      { activeDon: 2 },
+      { activeSeat: "north" },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-022",
+    const before = engine.getView("south").players.south;
+    engine.asNorth().attachDon(engine.leader("north"), 2);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    engine.asSouth().chooseCounter("OP17-037");
+    engine.asSouth().acceptOptional();
+    const step = engine.pendingDecision("effectCostRestCards", "south").steps[0];
+    if (step?.kind !== "payCost") throw new Error("Expected rest-card payment.");
+    const don = step.candidates.filter((candidate) => candidate.ref.id.startsWith("active-don:"));
+    expect(don).toHaveLength(1);
+    engine.resolveDecision("effectCostRestCards", { selectedIds: [don[0]!.ref.id] }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
     );
+    const after = engine.getView("south").players.south;
+    expect(after.lifeCount).toBe(before.lifeCount);
+    expect(after.activeDon).toBe(0);
+    expect(after.restedDon).toBe(2);
+    expect(after.leader.rested).toBe(false);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("Counter can decline its rest cost and the attack then deals damage", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["OP17-037"], activeDon: 1 },
+      { activeDon: 2 },
+      { activeSeat: "north" },
+    );
+    const before = engine.getView("south").players.south;
+    engine.asNorth().attachDon(engine.leader("north"), 2);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    engine.asSouth().chooseCounter("OP17-037");
+    engine.asSouth().declineOptional();
+    const after = engine.getView("south").players.south;
+    expect(after.lifeCount).toBe(before.lifeCount - 1);
+    expect(after.leader.rested).toBe(false);
+    expect(after.leader.power).toBe(before.leader.power);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

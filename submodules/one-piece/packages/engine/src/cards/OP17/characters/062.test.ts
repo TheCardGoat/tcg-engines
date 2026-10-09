@@ -25,4 +25,17 @@ describe("OP17-062", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Blocker redirects the attack away from Life", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-062"], hand: [] },
+      {},
+      { activeSeat: "north" },
+    );
+    const life = e.getView("south").players.south.lifeCount;
+    const id = e.findCardInZone("south", "character", "OP17-062");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.resolveDecision("battleBlocker", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -28,6 +28,7 @@ export function GameResultOverlay() {
           <motion.div
             key={compiled.step.id}
             data-animation-overlay="game-result"
+            data-animation-label-only
             data-animation-game-result={label.toLocaleLowerCase().replace(" ", "-")}
             initial={{ opacity: 0, transform: "translate3d(-50%, -50%, 0) scale(0.82)" }}
             animate={{

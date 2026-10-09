@@ -23,7 +23,7 @@ export const op07Porchemy012: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Goa Kingdom Bluejam Pirates"],
+  traits: ["Goa Kingdom", "Bluejam Pirates"],
   attribute: "slash",
   effect: "[On Play] Give up to 1 of your opponent's Characters -1000 power during this turn.",
   effects: {

@@ -1,0 +1,6466 @@
+{
+  "version": 1,
+  "seed": "improve/authored-hanako-netdriver-gigs-draw-engine/6/authored-hanako-netdriver-gigs-draw-engine-vs-authored-hanako-netdriver-gigs-draw-engine/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-hanako-netdriver-gigs-draw-engine",
+  "deckBId": "authored-hanako-netdriver-gigs-draw-engine",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 15,
+  "stepCount": 74,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p2",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_366244281"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_853262960"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "dieId": "gd_853262960",
+          "dieType": "d12",
+          "faceValue": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_853262960",
+          "dieType": "d12",
+          "result": 11,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_853262960",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_321412720"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_863162733"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_435189511"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "dieId": "gd_435189511",
+          "dieType": "d12",
+          "faceValue": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_435189511",
+          "dieType": "d12",
+          "result": 11,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_435189511",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_494379088"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_799033691"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_799033691",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_799033691",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_940214932"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_109772051"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "dieId": "gd_109772051",
+          "dieType": "d10",
+          "faceValue": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_109772051",
+          "dieType": "d10",
+          "result": 2,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_109772051",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_84078124"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_84078124",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_84078124",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_795580414"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_968530528"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_30118533"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "dieId": "gd_30118533",
+          "dieType": "d10",
+          "faceValue": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_30118533",
+          "dieType": "d10",
+          "result": 9,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_30118533",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_184328670",
+        "attachToId": "ci_494379088"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Sandevistan",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_184328670",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_184328670",
+          "hostId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_184328670",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Sandevistan",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_795580414",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_244291045"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_788411220"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "dieId": "gd_788411220",
+          "dieType": "d8",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_788411220",
+          "dieType": "d8",
+          "result": 5,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_788411220",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_795580414",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_109772051"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_109772051",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_109772051"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_109772051",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_435189511"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_435189511",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "friendlyDieType": "d10",
+          "friendlyValue": 2,
+          "rivalDieType": "d12",
+          "rivalValue": 11
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_435189511"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_435189511",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_109772051",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_435189511",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_109772051", "gd_435189511"],
+          "dieValues": [2, 11],
+          "dieTypes": ["d10", "d12"],
+          "playerId": "p2",
+          "fromPlayerIds": ["p2", "p1"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_868849963"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "cardId": "ci_868849963",
+          "cardName": "Trust No One"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_868849963",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Trust No One"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_114925831"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_651718544"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "dieId": "gd_651718544",
+          "dieType": "d8",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_651718544",
+          "dieType": "d8",
+          "result": 6,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_651718544",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_333057402",
+        "attachToId": "ci_494379088"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Sandevistan",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_333057402",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_333057402",
+          "hostId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_333057402",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Sandevistan",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-4", "trigger-5"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_333057402",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-4", "trigger-5"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-4"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-4",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-5"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_24733308"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Corpo Security",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-4",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-5"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_333057402"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_795580414",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_24733308"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_24733308"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Corpo Security",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_391706852"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_899048907"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "dieId": "gd_899048907",
+          "dieType": "d6",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_899048907",
+          "dieType": "d6",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_899048907",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_24733308"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_24733308",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_24733308",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Corpo Security",
+            "cost": 2
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_795580414",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_788411220"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D8",
+            "targetId": "gd_788411220",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_788411220"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D8",
+            "targetId": "gd_788411220",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_30118533"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_30118533",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "friendlyDieType": "d8",
+          "friendlyValue": 5,
+          "rivalDieType": "d10",
+          "rivalValue": 9
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_30118533"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_30118533",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_788411220",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_30118533",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_788411220", "gd_30118533"],
+          "dieValues": [5, 9],
+          "dieTypes": ["d8", "d10"],
+          "playerId": "p2",
+          "fromPlayerIds": ["p2", "p1"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_244291045"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "cardId": "ci_244291045",
+          "cardName": "Reboot Optics"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_244291045",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Reboot Optics"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_357835746"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_357835746",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_12369597"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_135734898"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "dieId": "gd_135734898",
+          "dieType": "d6",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_135734898",
+          "dieType": "d6",
+          "result": 4,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_135734898",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_968530528",
+        "attachToId": "ci_494379088"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_968530528",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_968530528",
+          "hostId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_968530528",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-8", "trigger-9"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_333057402",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-8", "trigger-9"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-8"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "dieId": "gd_525705056",
+          "dieType": "d4",
+          "faceValue": 3
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-8",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-9"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_633249271"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Trust No One",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-8",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-9"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_333057402"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_795580414",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_633249271"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_633249271"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Trust No One",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_326757668"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_525705056",
+          "dieType": "d4",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_525705056",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_583685169"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_583685169",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_583685169",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "dieId": "gd_981954791",
+          "dieType": "d4",
+          "faceValue": 1
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_740105340"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_981954791",
+          "dieType": "d4",
+          "result": 1,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_981954791",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_114925831"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "cardId": "ci_114925831",
+          "cardName": "Reboot Optics"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_114925831",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Reboot Optics"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_12369597"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_106758083"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Overwatch: Panam's Gift",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968530528",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_12369597",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_12369597",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_106758083"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_106758083"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Overwatch: Panam's Gift",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968530528"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-12", "trigger-13"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_333057402",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-12", "trigger-13"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-12"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "dieId": "gd_788024838",
+          "dieType": "d20",
+          "faceValue": 10
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-12",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-13"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_337065282"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_835083146"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Chrome Reverie",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-12",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-13"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_333057402"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 11
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_795580414",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_337065282"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_337065282"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_835083146"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_835083146"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Chrome Reverie",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_595626151"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_788024838",
+          "dieType": "d20",
+          "result": 10,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_788024838",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_391706852"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_391706852",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_391706852",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_583685169"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_583685169",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_583685169",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_583685169",
+          "effectType": "attack",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_583685169"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_583685169", "ci_583685169"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_799033691"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "originalAttackKind": "direct"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_799033691",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_583685169",
+          "blockerId": "ci_799033691",
+          "originalTarget": null,
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_206380418"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_760448890"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Jacked-In Voodoo Boy",
+              "visibleTo": ["p1"]
+            }
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "attackerId": "ci_583685169",
+          "attackerName": "Goro Takemura: Losing His Way"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 9,
+            "defenderPower": 2
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 11,
+          "cardId": "ci_799033691",
+          "cardName": "Corpo Security"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968530528",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_760448890"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_760448890"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Jacked-In Voodoo Boy",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_583685169",
+          "defenderId": "ci_799033691",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 9,
+            "defenderPower": 2
+          },
+          "playerId": "p2",
+          "category": "combat",
+          "cardIds": ["ci_583685169", "ci_799033691"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_799033691",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_799033691",
+          "defeatedBy": "ci_583685169",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_633249271"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "cardId": "ci_633249271",
+          "cardName": "Trust No One"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_633249271",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_633249271",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Trust No One"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "dieId": "gd_699159766",
+          "dieType": "d20",
+          "faceValue": 8
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 11
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 12
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_206380418",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_206380418"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_206380418"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_725380910"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_699159766",
+          "dieType": "d20",
+          "result": 8,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_699159766",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_12369597"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_12369597",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_12369597",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_24733308"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 4,
+            "originalAttackKind": "direct"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_24733308",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 4,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_12369597",
+          "blockerId": "ci_24733308",
+          "originalTarget": null,
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_337065282"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Floor It",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Floor It",
+            "abilityText": "Give a rival Unit -1 power this turn. Draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_633249271",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_337065282",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_337065282",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Floor It",
+            "cost": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_337065282",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Floor It",
+            "abilityText": "Give a rival Unit -1 power this turn. Draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_337065282"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_12369597"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "-1"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Floor It",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "targetId": "ci_12369597",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_648545497"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_337065282",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_12369597"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "-1"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_337065282", "ci_12369597"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Floor It",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "targetId": "ci_12369597",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 3
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_337065282", "ci_12369597"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_648545497"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_648545497"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_337065282"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "attackerId": "ci_12369597",
+          "attackerName": "Goro Takemura: Losing His Way"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 3,
+            "defenderPower": 2
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 12,
+          "cardId": "ci_24733308",
+          "cardName": "Corpo Security"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_12369597",
+          "defenderId": "ci_24733308",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 3,
+            "defenderPower": 2
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_12369597", "ci_24733308"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_24733308",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_24733308",
+          "defeatedBy": "ci_12369597",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_106758083",
+        "attachToId": "ci_206380418"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Overwatch: Panam's Gift",
+            "cost": 4,
+            "attachedToName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_524472465"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968530528",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_106758083",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_106758083",
+          "hostId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_106758083",
+          "playerId": "p1",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Overwatch: Panam's Gift",
+            "cost": 4,
+            "attachedToName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_524472465"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_524472465"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968530528"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-20", "trigger-21"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 12
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 12
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 12
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_333057402",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-20", "trigger-21"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-20"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-20",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-21"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "game.overtimeFirstEmptyTurn",
+          "params": {}
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_621728012"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_680770735"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Trust No One",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 13
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-20",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-21"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_333057402"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 13
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "game.overtimeFirstEmptyTurn",
+          "params": {},
+          "playerId": "p2",
+          "category": "system"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_795580414",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_621728012"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_621728012"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_680770735"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_680770735"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Trust No One",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_583685169",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_633249271",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_635085055"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_391706852"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_391706852",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_391706852",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_391706852",
+          "effectType": "attack",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_391706852"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_391706852", "ci_391706852"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_508082154"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_988562264"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p1"]
+            }
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "attackerId": "ci_391706852",
+          "attackerName": "Goro Takemura: Losing His Way"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968530528",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_988562264"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_988562264"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_699159766"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "attackerName": "Goro Takemura: Losing His Way",
+          "attackerPower": 9,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d20",
+              "faceValue": 8
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_699159766",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_391706852"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_699159766",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_391706852",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "count": 1,
+            "stolenGigs": "1 Gig (D20 with value 8)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_583685169"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "attackerId": "ci_583685169",
+          "attackerName": "Goro Takemura: Losing His Way"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_583685169",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_583685169",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_583685169",
+          "effectType": "attack",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_583685169"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_583685169", "ci_583685169"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_651718544"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "attackerName": "Goro Takemura: Losing His Way",
+          "attackerPower": 9,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 6
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_651718544",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_583685169"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_651718544",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_583685169",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 6)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_635085055",
+        "attachToId": "ci_321412720"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Overwatch: Panam's Gift",
+            "cost": 4,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_868849963",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_244291045",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_633249271",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_635085055",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_635085055",
+          "hostId": "ci_321412720",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_635085055",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "Overwatch: Panam's Gift",
+            "cost": 4,
+            "attachedToName": "Goro Takemura: Hands Unclean"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_795580414",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_525705056"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D4",
+            "targetId": "gd_525705056",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_525705056"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D4",
+            "targetId": "gd_525705056",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_135734898"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D6",
+            "targetId": "gd_135734898",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "friendlyDieType": "d4",
+          "friendlyValue": 3,
+          "rivalDieType": "d6",
+          "rivalValue": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_795580414",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_135734898"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D6",
+            "targetId": "gd_135734898",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_795580414"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_795580414",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_525705056",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_135734898",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_525705056", "gd_135734898"],
+          "dieValues": [3, 4],
+          "dieTypes": ["d4", "d6"],
+          "playerId": "p2",
+          "fromPlayerIds": ["p2", "p1"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 14,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "game.overtimeFinalTurn",
+          "params": {}
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 13
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 14
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 13
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 13
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 14
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "game.overtimeFinalTurn",
+          "params": {},
+          "playerId": "p1",
+          "category": "system"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_206380418",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_206380418"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_206380418"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_12369597",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_508082154",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_473901757"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_12369597"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_12369597",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_12369597",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_12369597",
+          "effectType": "attack",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Goro Takemura: Losing His Way",
+            "abilityText": "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_12369597"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Goro Takemura: Losing His Way",
+            "targetNames": "Goro Takemura: Losing His Way",
+            "powerChange": "+5"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_12369597", "ci_12369597"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_84078124"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 14,
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "originalAttackKind": "direct"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 14,
+          "attackerId": "ci_12369597",
+          "attackerName": "Goro Takemura: Losing His Way"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 9,
+            "defenderPower": 2
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 14,
+          "cardId": "ci_84078124",
+          "cardName": "Corpo Security"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_84078124",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.useBlocker",
+          "params": {
+            "blockerName": "Corpo Security",
+            "blockerPower": 2,
+            "attackerName": "Goro Takemura: Losing His Way",
+            "attackerPower": 9,
+            "originalAttackKind": "direct"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "blockerActivated",
+          "attackerId": "ci_12369597",
+          "blockerId": "ci_84078124",
+          "originalTarget": null,
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_12369597",
+          "defenderId": "ci_84078124",
+          "attackKind": "fight",
+          "result": "attackerWins",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.fight.attackerWins",
+          "params": {
+            "attackerName": "Goro Takemura: Losing His Way",
+            "defenderName": "Corpo Security",
+            "attackerPower": 9,
+            "defenderPower": 2
+          },
+          "playerId": "p1",
+          "category": "combat",
+          "cardIds": ["ci_12369597", "ci_84078124"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_84078124",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_84078124",
+          "defeatedBy": "ci_12369597",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "green",
+            "classifications": ["Corpo"],
+            "keywords": ["blocker"],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        }
+      ]
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_524472465",
+        "attachToId": "ci_206380418"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_965204673"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_114925831",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_968530528",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_524472465",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_524472465",
+          "hostId": "ci_206380418",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_524472465",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_968530528"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_965204673"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_965204673"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Sandayu Oda: Hanako's Guardian",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_968530528"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 14,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-30", "trigger-31"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 14
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 14
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 14
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_184328670",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_333057402",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Sandevistan | Sandevistan",
+            "triggerIds": ["trigger-30", "trigger-31"],
+            "sourceCardIds": ["ci_184328670", "ci_333057402"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-30"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 15,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-30",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-31"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 15,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 15,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 15,
+          "messageKey": "game.overtimeStarted",
+          "params": {}
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 15,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 15,
+          "winnerId": "p2",
+          "reason": "overtime_majority"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-30",
+            "selectedSourceCardId": "ci_184328670",
+            "selectedAbilityIndex": 0,
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Sandevistan",
+            "remainingTriggerIds": ["trigger-31"],
+            "remainingSourceCardIds": ["ci_333057402"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670", "ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_184328670"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_494379088",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Sandevistan",
+            "abilityText": "At the end of your turn, ready this Unit or Legend.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_333057402"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "game.overtimeStarted",
+          "params": {},
+          "playerId": "p1",
+          "category": "system"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "overtime_majority"
+        }
+      ]
+    }
+  ]
+}

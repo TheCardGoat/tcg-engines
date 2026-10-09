@@ -39,7 +39,7 @@ export const eb03VinsmokeReiju031: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
   effect:
     "[Your Turn] [On Play] DON!! −1: If your Leader is [Sanji], activate the [Main] effect of up to 1 Event card with a cost of 7 or less in your trash.",

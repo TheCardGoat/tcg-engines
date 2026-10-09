@@ -1,7 +1,17 @@
+import {
+  addDonIdentities,
+  donIdentitiesAt,
+  transferDonIdentities,
+  trackDonFreeze,
+  releaseUnusedDonIdentities,
+} from "./engine/don-state.ts";
+import { currentEffectTriggerEvent } from "./effects/trigger-context.ts";
+import { currentReplacementProcess } from "./effects/replacement-process.ts";
 import { getCard } from "../../cards/src/runtime-catalog.ts";
-import type { DeckBuildingRule, LeaderCard, OPCard } from "@tcg/op-types";
+import type { DeckBuildingRule, OPCard } from "@tcg/op-types";
 import {
   cardName,
+  effectsAreNegated,
   emitEvent,
   emitLog,
   enqueueResolution,
@@ -10,12 +20,16 @@ import {
   getPlayer,
   enqueueInPlayEffectsForTrigger,
   isCardPreventedFromRefreshing,
-  leaderLife,
+  getLeaderLifeValue,
   nextIdentifier,
+  nextPlayCostModifiers,
   otherSeat,
+  recordCapabilityIssue,
   shuffle,
 } from "./shared.ts";
 import type {
+  LifeReplacementMovedCard,
+  LifeReplacementOrderGroup,
   CardInstance,
   CardZone,
   ChoiceKind,
@@ -26,7 +40,7 @@ import type {
   PlayerState,
   PromptState,
 } from "./types.ts";
-import { donGivenFromDonPhase } from "./effects/permanent.ts";
+import { donGivenFromDonPhase, faceUpLifeToHandReplacementSource } from "./effects/permanent.ts";
 
 const DEFAULT_DON_DECK_COUNT = 10;
 
@@ -102,9 +116,8 @@ export function finalizeMatchImmediately(
 }
 
 /**
- * 11-1: the game can end in a draw, with no winner. Infinite-loop detection
- * (11-1-1) is not implemented yet; this helper is the constructible draw
- * outcome future loop detection (or a judge) finalizes through.
+ * 11-1: finalize a draw with no winner. The queue uses this for proven
+ * mandatory cycles; optional-loop declarations require a separate protocol.
  */
 export function finalizeDraw(state: MatchState) {
   if (state.status === "finished") {
@@ -114,20 +127,27 @@ export function finalizeDraw(state: MatchState) {
 }
 
 export function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat, atEndOfTurn = false) {
-  if (state.status !== "active" || getPlayer(state, seat).deck.length > 0) {
+  const deferredTurn = state.deferredEmptyDeckLossTurnBySeat?.[seat];
+  const deferredDefeatDue =
+    atEndOfTurn && deferredTurn !== undefined && deferredTurn <= state.turnNumber;
+  if (state.status !== "active" || (!deferredDefeatDue && getPlayer(state, seat).deck.length > 0)) {
     return;
   }
 
   const leaderId = getPlayer(state, seat).leaderInstanceId;
-  const loseGameReplacement = getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
-    (effect) => effect.replacedEvent === "loseGame",
-  );
+  const loseGameReplacement = effectsAreNegated(state, leaderId)
+    ? undefined
+    : getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
+        (effect) => effect.replacedEvent === "loseGame",
+      );
   const replacementAction = loseGameReplacement?.replacementAction.action;
   // 6-2-3-1 variants: a Leader can replace the deck-empty defeat either with
   // an alternate win or by deferring it to the end of the current turn. The
-  // deferred defeat expires once that turn ends, so the end-of-turn check
-  // ignores the deferral.
+  // deferred defeat remains due even if the deck is refilled (OP15 Q1196).
   if (replacementAction === "deferEmptyDeckLoss" && !atEndOfTurn) {
+    state.deferredEmptyDeckLossTurnBySeat ??= {};
+    if (state.deferredEmptyDeckLossTurnBySeat[seat] !== undefined) return;
+    state.deferredEmptyDeckLossTurnBySeat[seat] = state.turnNumber;
     emitLog(
       state,
       "system",
@@ -164,6 +184,68 @@ export function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat, atEnd
       visibility: "public",
     },
   );
+}
+
+/** Startup rule processing observes both decks together (9-2-1). */
+export function processStartingEmptyDeckDefeat(state: MatchState): boolean {
+  const empty = (["south", "north"] as const).filter(
+    (seat) => getPlayer(state, seat).deck.length === 0,
+  );
+  const replacement = (seat: MatchSeat) => {
+    const leaderId = getPlayer(state, seat).leaderInstanceId;
+    return effectsAreNegated(state, leaderId)
+      ? undefined
+      : getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
+          (effect) => effect.replacedEvent === "loseGame",
+        )?.replacementAction.action;
+  };
+  const wins = empty.filter((seat) => replacement(seat) === "winGame");
+  if (wins.length > 1) {
+    // No established policy resolves competing simultaneous alternate wins.
+    // Stop explicitly rather than award the game according to seat iteration.
+    const issue =
+      state.capabilityHistory.find(
+        (entry) => entry.code === "simultaneous-startup-alternate-wins",
+      ) ??
+      recordCapabilityIssue(state, {
+        kind: "unsupportedTiming",
+        code: "simultaneous-startup-alternate-wins",
+        actor: "system",
+        sourceCardId: null,
+        sourceInstanceId: null,
+        eventId: null,
+        details: "Both Leaders replace simultaneous empty-deck defeat with a win.",
+      });
+    enqueueJudgePrompt(
+      state,
+      null,
+      "Simultaneous alternate wins",
+      "Both Leaders replace simultaneous empty-deck defeat with a win; resolve the outcome before play continues.",
+      { issueId: issue.id },
+    );
+    return true;
+  }
+  if (wins.length === 1) {
+    processEmptyDeckDefeat(state, wins[0]!);
+    return true;
+  }
+  const losers = empty.filter((seat) => replacement(seat) !== "deferEmptyDeckLoss");
+  for (const seat of empty.filter((seat) => replacement(seat) === "deferEmptyDeckLoss"))
+    processEmptyDeckDefeat(state, seat);
+  if (losers.length === 2) {
+    finalizeMatchImmediately(
+      state,
+      null,
+      "emptyDeck",
+      "Both players lose because both decks have 0 cards at rule processing.",
+    );
+    return true;
+  }
+  if (losers.length === 1) {
+    processEmptyDeckDefeat(state, losers[0]!);
+    return true;
+  }
+  return false;
 }
 
 function zoneLabel(zone: CardZone): string {
@@ -326,6 +408,22 @@ export function moveCard(
     deferLifeRemovedTrigger?: boolean;
   } = {},
 ) {
+  const replacementSource =
+    zone === "hand" ? faceUpLifeToHandReplacementSource(state, instanceId) : undefined;
+  if (replacementSource) {
+    zone = "deck";
+    options = {
+      ...options,
+      actor: getInstance(state, replacementSource).controller,
+      sourceInstanceId: replacementSource,
+      deckPosition: "bottom",
+      faceUp: false,
+      publicKnowledge: false,
+      suppressLog: false,
+      visibility: "public",
+      redactIdentity: false,
+    };
+  }
   const current = getInstance(state, instanceId);
   const previous = {
     controller: current.controller,
@@ -385,6 +483,7 @@ export function moveCard(
     const effectController =
       options.actor === "north" || options.actor === "south" ? options.actor : previous.controller;
     enqueueInPlayEffectsForTrigger(state, "whenLifeRemoved", {
+      lifeCountAfterRemoval: getPlayer(state, previous.controller).life.length,
       instanceId,
       effectController,
       targetInstanceId: getPlayer(state, previous.controller).leaderInstanceId,
@@ -450,32 +549,17 @@ export function addModifier(
     ...(sourceInstanceId && { createdBySeat: getInstance(state, sourceInstanceId).controller }),
     ...modifier,
   };
+  if (modifier.type === "flag" && modifier.flag === "freezeDon") trackDonFreeze(state);
 }
 
 function removeModifier(state: MatchState, modifierId: string) {
   delete state.modifiers[modifierId];
+  releaseUnusedDonIdentities(state);
 }
 
 export function consumeNextPlayCostModifiers(state: MatchState, instanceId: string) {
-  const sourceIds = new Set(
-    Object.values(state.modifiers)
-      .filter(
-        (modifier) =>
-          modifier.targetId === instanceId &&
-          modifier.type === "cost" &&
-          modifier.consumeOnPlay &&
-          modifier.sourceInstanceId,
-      )
-      .map((modifier) => modifier.sourceInstanceId!),
-  );
-  for (const modifier of Object.values(state.modifiers)) {
-    if (
-      modifier.consumeOnPlay &&
-      modifier.sourceInstanceId &&
-      sourceIds.has(modifier.sourceInstanceId)
-    ) {
-      removeModifier(state, modifier.id);
-    }
+  for (const modifier of nextPlayCostModifiers(state, instanceId)) {
+    removeModifier(state, modifier.id);
   }
 }
 
@@ -598,6 +682,87 @@ export function enqueueJudgePrompt(
   });
 }
 
+/** Capture before moving: the mandatory replacement is evaluated in the original Life area. */
+export function replacedLifeToHandIds(state: MatchState, ids: string[]): string[] {
+  return ids.filter((id) => faceUpLifeToHandReplacementSource(state, id) !== undefined);
+}
+
+export function completedLifeReplacementMoves(
+  state: MatchState,
+  ids: string[],
+): LifeReplacementMovedCard[] {
+  return ids.flatMap((instanceId) => {
+    const card = getInstance(state, instanceId);
+    return card.zone === "deck"
+      ? [
+          {
+            instanceId,
+            zoneChangeCounter: card.zoneChangeCounter,
+            owner: card.owner,
+            destinationSeat: card.controller,
+          },
+        ]
+      : [];
+  });
+}
+
+/** CR3-1-7/8: each owner orders simultaneous replacements privately before continuation. */
+export function promptForLifeReplacementOrder(
+  state: MatchState,
+  replacedCards: LifeReplacementMovedCard[],
+): void {
+  const groups: LifeReplacementOrderGroup[] = [];
+  for (const moved of replacedCards) {
+    const { instanceId } = moved;
+    const card = getInstance(state, instanceId);
+    if (
+      card.zone !== "deck" ||
+      card.zoneChangeCounter !== moved.zoneChangeCounter ||
+      card.controller !== moved.destinationSeat
+    )
+      continue;
+    let group = groups.find(
+      (group) => group.owner === card.owner && group.destinationSeat === card.controller,
+    );
+    if (!group) {
+      group = { owner: card.owner, destinationSeat: card.controller, cards: [] };
+      groups.push(group);
+    }
+    group.cards.push({ instanceId, zoneChangeCounter: card.zoneChangeCounter });
+  }
+  continueLifeReplacementOrder(
+    state,
+    groups.filter((group) => group.cards.length > 1),
+  );
+}
+
+export function continueLifeReplacementOrder(
+  state: MatchState,
+  groups: LifeReplacementOrderGroup[],
+): void {
+  const group = groups[0];
+  if (!group) return;
+  createChoicePrompt(state, {
+    choiceKind: "orderCards",
+    seat: group.owner,
+    label: "Order the Life cards placed at the bottom of the deck.",
+    details: "Order these cards from first to last. Your opponent cannot see this order.",
+    sourceCardId: null,
+    sourceInstanceId: null,
+    eventId: null,
+    options: group.cards.map(({ instanceId }) => ({
+      id: instanceId,
+      value: instanceId,
+      targetId: instanceId,
+      label: cardName(getCardForInstance(state, instanceId)),
+    })),
+    minSelections: group.cards.length,
+    maxSelections: group.cards.length,
+    context: { action: "lifeReplacementOrder" },
+    resolutionContext: { intent: "effectLifeReplacementOrder", groups },
+  });
+}
+
 export function createChoicePrompt(
   state: MatchState,
   prompt: Omit<PromptState, "id" | "status" | "kind"> & {
@@ -606,6 +771,8 @@ export function createChoicePrompt(
 ): PromptState {
   return createPrompt(state, {
     ...prompt,
+    replacementProcess: prompt.replacementProcess ?? currentReplacementProcess(state),
+    effectTriggerEvent: prompt.effectTriggerEvent ?? currentEffectTriggerEvent(state),
     kind: "choice",
   });
 }
@@ -655,6 +822,7 @@ export function addDonFromDeck(
   const player = getPlayer(state, seat);
   const actual = Math.min(amount, player.donDeckCount);
 
+  addDonIdentities(state, { seat, area: rested ? "rested" : "active" }, actual);
   player.donDeckCount -= actual;
   if (rested) {
     player.restedDon += actual;
@@ -761,27 +929,23 @@ export function buildInitialPlayerState(
 
   state.players[seat] = player;
 
-  for (let index = 0; index < config.openingHandSize; index += 1) {
-    const drawn = drawTopCard(state, seat, { suppressLog: true });
-    if (!drawn) {
-      break;
-    }
-  }
-
   return player;
 }
 
 // 5-2-1-7 / 2-9-2-1: starting Life is placed after the opening-hand redraws
 // (5-2-1-6), taking cards from the top of the deck so that the deck-top card
 // ends up at the bottom of the Life area (life[0] is the top of the stack).
-export function placeStartingLife(state: MatchState, seat: MatchSeat) {
+export function placeStartingLife(state: MatchState, seat: MatchSeat, capturedLifeValue?: number) {
   const player = getPlayer(state, seat);
-  const leader = getCard(player.leaderCardId) as LeaderCard;
-  for (let index = 0; index < leaderLife(leader); index += 1) {
+  // Snapshot before any placement changes conditions on permanent effects.
+  // 1-3-2: carry out only the possible placements if the value exceeds the deck.
+  const startingLife = Math.min(
+    capturedLifeValue ?? getLeaderLifeValue(state, player.leaderInstanceId),
+    player.deck.length,
+  );
+  for (let index = 0; index < startingLife; index += 1) {
     const instanceId = player.deck.shift();
-    if (!instanceId) {
-      throw new Error(`Deck for ${seat} does not have enough cards to build life`);
-    }
+    if (!instanceId) break;
     placeInZone(state, instanceId, seat, "life", {
       lifePosition: "top",
       faceUp: false,
@@ -814,19 +978,41 @@ function resetStartOfTurnState(state: MatchState, seat: MatchSeat) {
       }
       instance.usedEffectKeys = [];
       if (instance.attachedDon > 0) {
+        transferDonIdentities(
+          state,
+          { attachedTo: instance.instanceId },
+          { seat, area: "active" },
+          instance.attachedDon,
+        );
         returningDon += instance.attachedDon;
         instance.attachedDon = 0;
       }
     }
   }
 
-  const frozenDon = Object.values(state.modifiers).filter(
-    (modifier) =>
-      modifier.type === "flag" &&
-      modifier.flag === "freezeDon" &&
-      modifier.targetId.startsWith(`rested-don:${seat}:`),
-  ).length;
-  const remainingRestedDon = Math.min(player.restedDon, frozenDon);
+  const frozenIndices = new Set(
+    Object.values(state.modifiers).flatMap((modifier) => {
+      if (
+        modifier.type !== "flag" ||
+        modifier.flag !== "freezeDon" ||
+        !modifier.targetId.startsWith(`rested-don:${seat}:`)
+      )
+        return [];
+      const index = Number(modifier.targetId.split(":")[2]);
+      return Number.isInteger(index) && index >= 0 && index < player.restedDon ? [index] : [];
+    }),
+  );
+  const remainingRestedDon = frozenIndices.size;
+  const refreshingTokens = donIdentitiesAt(state, { seat, area: "rested" }).filter(
+    (_, index) => !frozenIndices.has(index),
+  );
+  transferDonIdentities(
+    state,
+    { seat, area: "rested" },
+    { seat, area: "active" },
+    refreshingTokens.length,
+    refreshingTokens,
+  );
   player.activeDon += player.restedDon - remainingRestedDon + returningDon;
   player.restedDon = remainingRestedDon;
   cleanupTurnStartModifiers(state, seat);
@@ -901,6 +1087,7 @@ export function finalizeBeginTurnRefresh(state: MatchState, seat: MatchSeat, ski
   addDonFromDeck(state, seat, placedDon - givenDon, false);
   if (givenDon > 0) {
     player.donDeckCount -= givenDon;
+    addDonIdentities(state, { attachedTo: player.leaderInstanceId }, givenDon);
     getInstance(state, player.leaderInstanceId).attachedDon += givenDon;
     emitLog(
       state,

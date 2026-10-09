@@ -179,7 +179,9 @@ describe("@tcg/op-engine", () => {
       expect(getCard(cardId).id).toBe(cardId);
     }
 
-    const state = createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" }));
+    const state = resolveSetupTurnChoice(
+      createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" })),
+    );
     const view = projectStateForSeat(state, "south");
 
     expect(view.status).toBe("setup");
@@ -187,7 +189,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("creates a match with filtered player views and opening logs", () => {
-    const state = createMatch(buildConfig());
+    const state = resolveSetupTurnChoice(createMatch(buildConfig()));
     const southView = projectStateForSeat(state, "south");
     const spectatorView = projectStateForSeat(state, "spectator");
     const judgeView = projectStateForSeat(state, "judge");
@@ -778,8 +780,15 @@ describe("@tcg/op-engine", () => {
     });
 
     expect(afterCounter.accepted).toBe(true);
-    expect(afterCounter.state.players.north.life).toHaveLength(4);
-    expect(afterCounter.logs.some((entry) => entry.message.includes("does not deal damage"))).toBe(
+    const afterPass = applyCommand(afterCounter.state, {
+      type: "resolvePrompt",
+      seat: "north",
+      promptId: findPendingPromptByIntent(afterCounter.state, "battleCounter")!.id,
+      selectedIds: [],
+    });
+    expect(afterPass.accepted).toBe(true);
+    expect(afterPass.state.players.north.life).toHaveLength(4);
+    expect(afterPass.logs.some((entry) => entry.message.includes("does not deal damage"))).toBe(
       true,
     );
   });
@@ -891,7 +900,7 @@ describe("@tcg/op-engine", () => {
       {
         type: "playCard",
         seat: "south",
-        instanceId: createMatch(buildConfig()).players.south.hand[0]!,
+        instanceId: resolveSetupTurnChoice(createMatch(buildConfig())).players.south.hand[0]!,
         slotIndex: 0,
       },
     ];
@@ -904,7 +913,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("rejects transitions that violate state invariants", () => {
-    const created = createMatch(buildConfig());
+    const created = runCommands(createMatch(buildConfig()), startGameCommands().slice(0, -1));
     const broken = structuredClone(created) as MatchState;
     const duplicated = broken.players.south.hand[0]!;
     broken.players.south.hand.push(duplicated);
@@ -920,7 +929,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("reports missing instance references as invariant failures instead of throwing", () => {
-    const created = createMatch(buildConfig());
+    const created = runCommands(createMatch(buildConfig()), startGameCommands().slice(0, -1));
     const broken = structuredClone(created) as MatchState;
     const missing = broken.players.south.hand[0]!;
     delete broken.cards[missing];

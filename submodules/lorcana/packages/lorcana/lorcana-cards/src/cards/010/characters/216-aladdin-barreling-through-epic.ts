@@ -26,7 +26,7 @@ export const aladdinBarrelingThroughEpic: CharacterCard = {
   franchise: "Aladdin",
   set: "010",
   cardNumber: 216,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 4,

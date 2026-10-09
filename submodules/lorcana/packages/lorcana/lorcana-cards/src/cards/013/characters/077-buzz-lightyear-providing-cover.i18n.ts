@@ -21,19 +21,19 @@ export const buzzLightyearProvidingCoverI18n: Record<Languages, I18nProperties> 
   },
   de: {
     name: "Buzz Lightyear",
-    version: "Bietet Schutz",
+    version: "Providing Cover",
     text: [
       {
-        title: "Actionfigur",
+        title: "Action Figure",
         description:
-          "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus:",
+          "When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:",
       },
       {
         title:
-          "• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen.",
+          "• You may return an action card with cost 2 or less from your discard to your hand.",
       },
       {
-        title: "• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen.",
+        title: "• You may play an action with cost 2 or less for free.",
       },
     ],
   },

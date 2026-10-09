@@ -32,7 +32,7 @@ export const op15Wyper114: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[On Play] You may turn 1 card from the top of your Life cards face-up: Give all of your opponent's Characters -2000 power during this turn. Then, K.O. all of your opponent's Characters with 0 power or less.\n[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to 1 of your {Sky Island} type Leader or Character cards.",
@@ -95,7 +95,7 @@ export const op15Wyper114: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Sky Island",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

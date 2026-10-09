@@ -18,7 +18,7 @@ describe("OP07-002 through OP07-068 parser regressions", () => {
     });
   });
 
-  test("keeps Doflamingo's conditional top-card play and bottom-deck fallback", () => {
+  test("keeps Doflamingo's failed reveal on top and eligible unplayed card on bottom", () => {
     const generated = buildCardEffects(
       "[Activate:Main] [Once Per Turn] (2) (You may rest the specified number of DON!! cards in your cost area.): Reveal 1 card from the top of your deck. If that card is a [The Seven Warlords of the Sea] type Character card with a cost of 4 or less, you may play that card rested. Then, place the rest at the bottom of your deck.",
     );
@@ -30,13 +30,14 @@ describe("OP07-002 through OP07-068 parser regressions", () => {
       actions: [
         {
           action: "revealTopDeckCard",
-          finalPosition: "bottom",
+          finalPosition: "top",
           conditional: {
+            finalPosition: "bottom",
             filters: expect.arrayContaining([
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
-                match: "includes",
+                match: "exact",
               },
               { filter: "cardCategory", value: "character" },
               { filter: "cost", comparison: "lte", value: 4 },
@@ -96,8 +97,8 @@ describe("OP07-002 through OP07-068 parser regressions", () => {
           {
             filter: "anyOf",
             filters: [
-              { filter: "trait", value: "Amazon Lily", match: "includes" },
-              { filter: "trait", value: "Kuja Pirates", match: "includes" },
+              { filter: "trait", value: "Amazon Lily", match: "exact" },
+              { filter: "trait", value: "Kuja Pirates", match: "exact" },
             ],
           },
         ],

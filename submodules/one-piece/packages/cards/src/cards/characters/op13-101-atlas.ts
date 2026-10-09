@@ -23,7 +23,7 @@ export const op13Atlas101: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Scientist Egghead"],
+  traits: ["Egghead", "Scientist"],
   attribute: "wisdom",
   i18n: op13Atlas101I18n,
 };

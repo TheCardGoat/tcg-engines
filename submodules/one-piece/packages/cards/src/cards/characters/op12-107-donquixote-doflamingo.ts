@@ -22,7 +22,7 @@ export const op12DonquixoteDoflamingo107: CharacterCard = {
   setId: "OP12",
   cost: 8,
   power: 8000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "If you have 2 or less Life cards, this Character gains [Rush].\n(This card can attack on the turn in which it is played.)\n[Opponent's Turn] [On K.O.] Add up to 1 card from the top of your deck to the top of your Life cards.",

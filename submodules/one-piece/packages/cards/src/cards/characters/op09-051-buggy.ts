@@ -55,7 +55,7 @@ export const op09Buggy051: CharacterCard = {
   setId: "OP09",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Cross Guild"],
+  traits: ["The Four Emperors", "Cross Guild"],
   attribute: "slash",
 
   effect:

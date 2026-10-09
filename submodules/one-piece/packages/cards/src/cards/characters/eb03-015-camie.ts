@@ -23,7 +23,7 @@ export const eb03Camie015: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[Activate: Main] You may rest this Character: Give up to 1 rested DON!! card to 1 of your {Fish-Man} or {Merfolk} type Leader or Character cards. Then, rest up to 1 of your opponent's Characters with a cost of 2 or less.",
@@ -52,12 +52,12 @@ export const eb03Camie015: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

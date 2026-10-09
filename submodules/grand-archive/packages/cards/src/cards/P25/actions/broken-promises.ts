@@ -48,15 +48,33 @@ export const brokenPromises: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                 },
                 bindResultAs: "sacrificed-object",
                 filter: {
-                  kind: "all",
+                  kind: "any",
                   filters: [
                     {
-                      kind: "type",
-                      oneOf: ["ITEM"],
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["ITEM"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["FATESTONE"],
+                        },
+                      ],
                     },
                     {
-                      kind: "subtype",
-                      oneOf: ["FATESTONE"],
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["FATEBOUND"],
+                        },
+                      ],
                     },
                   ],
                 },

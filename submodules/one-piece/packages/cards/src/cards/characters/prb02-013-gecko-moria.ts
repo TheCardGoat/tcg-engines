@@ -30,7 +30,7 @@ export const prb02GeckoMoria013: CharacterCard = {
   setId: "PRB02",
   cost: 6,
   power: 7000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     '[On Play] If your Leader has the "Thriller Bark Pirates" type, play up to 1 Character card with a cost of 4 or less from your trash rested. Then, give up to 1 rested DON!! card to your Leader or 1 of your Characters.',
@@ -42,7 +42,7 @@ export const prb02GeckoMoria013: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

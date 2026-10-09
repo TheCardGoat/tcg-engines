@@ -124,4 +124,38 @@ describe("OP17-065 Queen", () => {
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("draws and stops both chosen cost-five-or-less attackers through the next opposing turn", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-065"], activeDon: 9, deck: ["ST02-002", "ST02-006", "EB01-005", "OP13-013"] },
+      {
+        character: [
+          { cardId: "EB01-005", playedOnTurn: 0 },
+          { cardId: "ST02-006", playedOnTurn: 0 },
+        ],
+      },
+    );
+    const ids = e
+      .getView("north")
+      .players.north.characters.flatMap((c) => (c?.instanceId ? [c.instanceId] : []));
+    e.asSouth().play("OP17-065");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: ids }, "south");
+    expect(e.getView("south").players.south.handCount).toBe(1);
+    e.endTurn("south");
+    for (const id of ids) expect(() => e.asNorth().attack(id, e.leader("south"))).toThrow();
+    e.endTurn("north");
+    e.endTurn("south");
+    e.asNorth().attack(ids[0]!, e.leader("south"));
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(true);
+  });
+  test("Banish trashes the damaged Life without offering its Trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP17-065", playedOnTurn: 0 }] },
+      { life: ["OP17-107", "ST02-002"], hand: [] },
+    );
+    e.asSouth().attack("OP17-065", e.leader("north"));
+    expect(e.getView("south").players.north.trash.some((c) => c.cardId === "OP17-107")).toBe(true);
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

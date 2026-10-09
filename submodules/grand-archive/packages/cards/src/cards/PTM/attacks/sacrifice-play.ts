@@ -49,8 +49,21 @@ export const sacrificePlay: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 },
                 bindResultAs: "sacrificed-objects",
                 filter: {
-                  kind: "object-state",
-                  state: "awake",
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                    {
+                      kind: "object-state",
+                      state: "awake",
+                    },
+                  ],
                 },
               },
               duration: {
@@ -74,32 +87,38 @@ export const sacrificePlay: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           kind: "card-resolution",
           text: "Sacrifice Play enters the intent with +2POWER for each ally sacrificed this way.",
           effect: {
-            kind: "choose",
-            selection: {
-              id: "sacrificed-object",
-              kind: "choice",
-              declared: "resolution",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
+            kind: "replacement",
+            event: {
+              name: "card-moved",
+              subject: {
+                kind: "source",
               },
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+              to: "intent",
+            },
+            operation: {
+              kind: "modify-characteristic",
+              change: {
+                kind: "numeric",
+                property: "power",
+                operation: "add",
+                amount: {
+                  kind: "calculate",
+                  operator: "multiply",
+                  operands: [
+                    2,
+                    {
+                      kind: "binding-count",
+                      binding: "sacrificed-objects",
+                    },
+                  ],
                 },
               },
             },
-            effect: {
-              kind: "sacrifice",
-              subject: {
-                kind: "bound",
-                binding: "sacrificed-object",
+            duration: {
+              kind: "for-next-event",
+              event: "card-moved",
+              expires: {
+                kind: "this-turn",
               },
             },
           },

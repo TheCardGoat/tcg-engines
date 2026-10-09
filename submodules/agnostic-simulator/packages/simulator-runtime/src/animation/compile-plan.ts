@@ -44,7 +44,7 @@ export function compileAnimationPlan(
   reducedMotion = false,
   layoutDurationMs = DEFAULT_REFLOW_DURATION_MS,
 ): CompiledAnimationPlan {
-  const scale = reducedMotion ? 0 : speedScale(speed);
+  const scale = reducedMotion ? 0 : animationSpeedScale(speed);
   const steps = plan.steps.map((step): CompiledAnimationStep => {
     const startAtMs = Math.round((step.startAtMs ?? 0) * scale);
     const durationMs = Math.round(resolveDurationMs(step) * scale);
@@ -96,15 +96,15 @@ function resolveDurationMs(step: AnimationStepV2): number {
   }
 }
 
-function speedScale(speed: AnimationSpeed): number {
+export function animationSpeedScale(speed: AnimationSpeed): number {
   switch (speed) {
     case "off":
       return 0;
     case "fast":
-      return 0.5;
+      return 0.35;
     case "normal":
-      return 1;
+      return 0.7;
     case "slow":
-      return 1.5;
+      return 1.1;
   }
 }

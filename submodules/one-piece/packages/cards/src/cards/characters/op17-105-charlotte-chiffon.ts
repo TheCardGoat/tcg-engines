@@ -23,7 +23,7 @@ export const op17CharlotteChiffon105: CharacterCard = {
   cost: 5,
   power: 0,
   counter: 1000,
-  traits: ["Firetank Pirates Former Big Mom Pirates"],
+  traits: ["Firetank Pirates", "Former Big Mom Pirates"],
   attribute: "wisdom",
   effect:
     "[On Play] You may trash 1 card with a [Trigger] from your hand: Return up to 1 of your opponent's Characters with a [Trigger] to the owner's hand.",

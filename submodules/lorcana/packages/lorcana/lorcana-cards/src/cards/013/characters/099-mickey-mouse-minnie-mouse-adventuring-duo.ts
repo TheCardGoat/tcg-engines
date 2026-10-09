@@ -32,6 +32,7 @@ export const mickeyMouseMinnieMouseAdventuringDuo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a02034ec2089499f81f2038b33ca473a",
+    tcgPlayer: "702689",
   },
   text: [
     {

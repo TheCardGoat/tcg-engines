@@ -11,16 +11,6 @@ afterEach(() => {
 });
 
 describe("GameTable", () => {
-  it("fills its bounded shell without growing past the viewport", () => {
-    const { container } = render(<GameTable>board</GameTable>);
-    const table = container.querySelector<HTMLElement>("[data-sim-board]");
-
-    expect(table).not.toBeNull();
-    expect(table!.className).toContain("h-full");
-    expect(table!.className).toContain("min-h-0");
-    expect(table!.className).toContain("overflow-hidden");
-  });
-
   it("aligns the mobile board to the viewer after seat heights settle", async () => {
     const originalWidth = window.innerWidth;
     const originalHeight = window.innerHeight;

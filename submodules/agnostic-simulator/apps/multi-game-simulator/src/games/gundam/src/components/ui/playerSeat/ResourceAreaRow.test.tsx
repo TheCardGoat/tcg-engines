@@ -238,78 +238,6 @@ describe("ResourceAreaRow target selection", () => {
     );
   });
 
-  it("uses the mirrored compact grid tracks for the top seat", async () => {
-    Object.defineProperty(window, "innerWidth", { configurable: true, value: 390 });
-    const { container, rerender } = render(
-      <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
-        <ResourceAreaRow
-          side="top"
-          player={player}
-          resourceArea={[restedResource]}
-          discard={[]}
-          availableResources={0}
-          utilityColumn={null}
-        />
-      </SimulatorEntityVisualProvider>,
-    );
-    fireEvent(window, new Event("resize"));
-
-    await waitFor(() =>
-      expect(container.querySelector("[data-seat-row='resources']")?.className).toContain(
-        "grid-cols-[minmax(76px,.8fr)_minmax(80px,.9fr)_minmax(148px,1.4fr)]",
-      ),
-    );
-
-    Object.defineProperty(window, "innerWidth", { configurable: true, value: 1036 });
-    Object.defineProperty(window, "innerHeight", { configurable: true, value: 101 });
-    rerender(
-      <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
-        <ResourceAreaRow
-          side="top"
-          player={player}
-          resourceArea={[restedResource]}
-          discard={[]}
-          availableResources={0}
-          utilityColumn={null}
-        />
-      </SimulatorEntityVisualProvider>,
-    );
-    fireEvent(window, new Event("resize"));
-
-    await waitFor(() =>
-      expect(container.querySelector("[data-seat-row='resources']")?.className).toContain(
-        "grid-cols-[220px_minmax(0,1fr)_228px]",
-      ),
-    );
-  });
-
-  it("keeps wide, short viewports on the desktop compact grid", async () => {
-    Object.defineProperty(window, "innerWidth", { configurable: true, value: 1036 });
-    Object.defineProperty(window, "innerHeight", { configurable: true, value: 101 });
-    const { container } = render(
-      <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
-        <ResourceAreaRow
-          side="bottom"
-          player={player}
-          resourceArea={[restedResource]}
-          discard={[]}
-          availableResources={0}
-          utilityColumn={null}
-        />
-      </SimulatorEntityVisualProvider>,
-    );
-    fireEvent(window, new Event("resize"));
-
-    await waitFor(() =>
-      expect(container.querySelector("[data-seat-row='resources']")?.className).toContain(
-        "grid-cols-[228px_minmax(0,1fr)_220px]",
-      ),
-    );
-    expect(container.querySelector("[data-seat-row='resources']")?.className).not.toContain(
-      "grid-cols-[minmax(96px,1fr)_minmax(92px,.9fr)_minmax(108px,1.15fr)]",
-    );
-  });
-
   it("dispatches a highlighted Resource and reflects its selected state", () => {
     const onResourceCardClick = vi.fn();
     const { rerender } = render(
@@ -411,29 +339,6 @@ describe("ResourceAreaRow target selection", () => {
       (card) => card.getAttribute("data-card-id"),
     );
     expect(previewedResourceIds).toEqual(["resource-4", "resource-5", "resource-6"]);
-  });
-
-  it("expands the desktop resource row while Resource targets are visible", () => {
-    const { container } = render(
-      <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
-        <TargetingProvider active candidateIds={[restedResource.id!]} role="effectTarget">
-          <ResourceAreaRow
-            side="bottom"
-            player={player}
-            resourceArea={[restedResource]}
-            discard={[]}
-            availableResources={0}
-            highlightCardIds={[restedResource.id!]}
-            onResourceCardClick={vi.fn()}
-            utilityColumn={null}
-          />
-        </TargetingProvider>
-      </SimulatorEntityVisualProvider>,
-    );
-
-    expect(container.querySelector("[data-seat-row='resources']")?.className).toContain(
-      "min-h-[96px]",
-    );
   });
 
   it("shows the public removal area only after a card is exiled", () => {

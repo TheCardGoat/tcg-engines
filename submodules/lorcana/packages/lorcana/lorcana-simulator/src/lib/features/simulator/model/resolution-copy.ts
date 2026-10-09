@@ -51,7 +51,8 @@ function getPrimaryTextEntry(
   abilityIndex?: number | null,
 ): { title: string; description?: string } | null {
   if (typeof abilityIndex === "number" && abilityIndex >= 0) {
-    const indexedEntry = sourceCard?.textEntries?.[abilityIndex];
+    const indexedEntry =
+      sourceCard?.abilityTextEntries?.[abilityIndex] ?? sourceCard?.textEntries?.[abilityIndex];
     if (
       indexedEntry &&
       (indexedEntry.title.trim().length > 0 || (indexedEntry.description?.trim().length ?? 0) > 0)
@@ -81,7 +82,11 @@ function getIndexedEffectTitle(
     return "";
   }
 
-  return sourceCard?.textEntries?.[abilityIndex]?.title?.trim() ?? "";
+  return (
+    (
+      sourceCard?.abilityTextEntries?.[abilityIndex] ?? sourceCard?.textEntries?.[abilityIndex]
+    )?.title?.trim() ?? ""
+  );
 }
 
 function getDefaultResolutionReferenceLabel(
@@ -242,11 +247,11 @@ function buildPromptContent(
   if (params.kind === "discard-choice") {
     if (!params.targetSelectionContext || params.targetSelectionContext.maxSelections <= 1) {
       return {
-        promptMessage: `Choose 1 card from your hand to discard for ${referenceLabel}.`,
+        promptMessage: `Choose 1 card to discard for ${referenceLabel}.`,
         promptInlineReference: buildInlineReference(
           referenceLabel,
           sourceCard,
-          "Choose 1 card from your hand to discard for ",
+          "Choose 1 card to discard for ",
           ".",
         ),
       };
@@ -256,7 +261,7 @@ function buildPromptContent(
       params.targetSelectionContext.minSelections === params.targetSelectionContext.maxSelections
         ? String(params.targetSelectionContext.maxSelections)
         : `${params.targetSelectionContext.minSelections}-${params.targetSelectionContext.maxSelections}`;
-    const prefix = `Choose ${rangeLabel} cards from your hand to discard for `;
+    const prefix = `Choose ${rangeLabel} cards to discard for `;
     return {
       promptMessage: `${prefix}${referenceLabel}.`,
       promptInlineReference: buildInlineReference(referenceLabel, sourceCard, prefix, "."),
@@ -310,12 +315,12 @@ function buildPromptContent(
           ? "Choose a character to move for "
           : "Choose characters to move, then choose a location for ";
       return {
-        promptMessage: `${prefix}${referenceLabel} (optional).`,
+        promptMessage: `${prefix}${referenceLabel}${isOptional ? " (optional)" : ""}.`,
         promptInlineReference: buildInlineReference(
           referenceLabel,
           sourceCard,
           prefix,
-          " (optional).",
+          isOptional ? " (optional)." : ".",
         ),
       };
     }

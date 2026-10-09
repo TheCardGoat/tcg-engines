@@ -1,6 +1,6 @@
 import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import type { PlayerId } from "../types/branded.ts";
-import { DIE_MAX_VALUES, STANDARD_GIG_DICE, type DieType } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES, STANDARD_GIG_DICE, type DieType } from "@tcg/cyberpunk-types";
 import type { GamePhase, AttackState } from "../types/match-state.ts";
 import type { TimeControlConfig } from "@tcg/engine-core";
 
@@ -77,6 +77,8 @@ export function normalizeGigFixtures(
 }
 
 export interface TestEngineOptions {
+  /** Diagnostic stepping for rules tests. Production runtimes use automatic. */
+  combatProgression?: "automatic" | "manual";
   seed?: string;
   timeControl?: TimeControlConfig;
   skipSetup?: boolean;

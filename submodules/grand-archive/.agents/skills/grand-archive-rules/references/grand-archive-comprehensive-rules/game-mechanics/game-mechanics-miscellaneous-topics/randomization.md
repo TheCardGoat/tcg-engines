@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/randomization"
+  relation: "current_index"
+---
+
 # Randomization
 
 Randomization in this game is used to determine outcomes of random events and the random ordering of decks after shuffling.

@@ -12,6 +12,9 @@ import {
   PLAYER_TWO,
   createMockCharacter,
   createMockSong,
+  createMockAction,
+  createMockItem,
+  createMockLocation,
 } from "../../../testing";
 
 function createMockActionCard(params: {
@@ -23,7 +26,16 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
-    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
     slug: `lorcana-ci_${params.id}`,
     cardType: "action",
@@ -1025,6 +1037,168 @@ describe("getPlayCardDisabledReason", () => {
       });
     });
 
+    it("reports the play restriction instead of a missing singer and clears it after expiry", () => {
+      const blocker = createMockCharacter({
+        id: "song-reason-blocker",
+        name: "Blocker",
+        cost: 1,
+        abilities: [
+          {
+            type: "triggered",
+            trigger: { event: "play", on: "SELF", timing: "when" },
+            effect: {
+              type: "restriction",
+              restriction: "cant-play-actions",
+              target: "OPPONENTS",
+              duration: "until-start-of-next-turn",
+            },
+          },
+        ],
+      });
+      const game = LorcanaMultiplayerTestEngine.createWithFixture(
+        { hand: [blocker], inkwell: 1, deck: 4 },
+        {
+          hand: [songCardForReason],
+          play: [{ card: singerCharacterForReason, isDrying: false }],
+          deck: 4,
+        },
+      );
+      expect(game.asPlayerOne().playCard(blocker)).toBeSuccessfulCommand();
+      expect(game.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(game.asPlayerTwo().getSingPlayDisabledReason(songCardForReason)).toEqual({
+        code: "PLAYER_PLAY_RESTRICTED",
+      });
+      expect(
+        game.asPlayerTwo().singSong(songCardForReason, singerCharacterForReason),
+      ).not.toBeSuccessfulCommand();
+      expect(game.asPlayerTwo().passTurn()).toBeSuccessfulCommand();
+      expect(game.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(game.asPlayerTwo().getSingPlayDisabledReason(songCardForReason)).toBeNull();
+      expect(
+        game.asPlayerTwo().singSong(songCardForReason, singerCharacterForReason),
+      ).toBeSuccessfulCommand();
+    });
+
+    for (const [label, candidate] of [
+      ["drying character", { card: singerCharacterForReason, isDrying: true }],
+      ["exerted character", { card: singerCharacterForReason, exerted: true }],
+      [
+        "low-cost character",
+        createMockCharacter({ id: "low-singer", name: "Low Singer", cost: 1 }),
+      ],
+      ["item", createMockItem({ id: "item-singer", name: "Item", cost: 5 })],
+      ["location", createMockLocation({ id: "location-singer", name: "Location", cost: 5 })],
+    ] as const) {
+      it(`does not report the action restriction as a singing blocker for a ${label}`, () => {
+        const restriction = createMockAction({
+          id: "self-action-restriction",
+          name: "Self Action Restriction",
+          cost: 1,
+          abilities: [
+            {
+              type: "action",
+              effect: {
+                type: "restriction",
+                restriction: "cant-play-actions",
+                target: "CONTROLLER",
+                duration: "this-turn",
+              },
+            },
+          ],
+        });
+        const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+          hand: [restriction, songCardForReason],
+          play: [candidate],
+          inkwell: 1,
+          deck: 6,
+        });
+        const player = engine.asPlayerOne();
+        expect(player.playCard(restriction)).toBeSuccessfulCommand();
+        expect(player.getStandardPlayDisabledReason(songCardForReason)).toEqual({
+          code: "PLAYER_PLAY_RESTRICTED",
+        });
+        expect(player.getSingPlayDisabledReason(songCardForReason)).toEqual({
+          code: "SONG_NO_SINGER",
+          params: { songCost: songCardForReason.cost },
+        });
+      });
+    }
+
+    it("reports a pending bag before song cost and restores singing after resolution", () => {
+      const trigger = createMockCharacter({
+        id: "pending-song-trigger",
+        name: "Pending Song Trigger",
+        cost: 1,
+        abilities: [
+          {
+            type: "triggered",
+            trigger: { event: "play", on: "SELF", timing: "when" },
+            effect: {
+              type: "optional",
+              effect: { type: "gain-lore", amount: 1, target: "CONTROLLER" },
+            },
+          },
+        ],
+      });
+      const game = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [trigger, songCardForReason],
+        play: [singerCharacterForReason],
+        inkwell: 1,
+        deck: 6,
+      });
+      const player = game.asPlayerOne();
+      expect(player.playCard(trigger)).toBeSuccessfulCommand();
+      expect(player.getBagCount()).toBe(1);
+      expect(player.getPlayCardDisabledReason(songCardForReason)).toEqual({ code: "BAG_PENDING" });
+      expect(player.getSingPlayDisabledReason(songCardForReason)).toEqual({ code: "BAG_PENDING" });
+      expect(
+        player.singSong(songCardForReason, singerCharacterForReason),
+      ).not.toBeSuccessfulCommand();
+      expect(player.isExerted(singerCharacterForReason)).toBe(false);
+      expect(
+        player.resolvePendingByCard(trigger, { resolveOptional: false }),
+      ).toBeSuccessfulCommand();
+      expect(player.getSingPlayDisabledReason(songCardForReason)).toBeNull();
+      expect(player.singSong(songCardForReason, singerCharacterForReason)).toBeSuccessfulCommand();
+      expect(game.getLore(PLAYER_ONE)).toBe(1);
+    });
+
+    it("reports a pending action choice before song cost and restores singing after resolution", () => {
+      const action = createMockAction({
+        id: "pending-song-action",
+        name: "Pending Song Action",
+        cost: 1,
+        abilities: [
+          {
+            type: "action",
+            effect: {
+              type: "optional",
+              effect: { type: "gain-lore", amount: 1, target: "CONTROLLER" },
+            },
+          },
+        ],
+      });
+      const game = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [action, songCardForReason],
+        play: [singerCharacterForReason],
+        inkwell: 1,
+        deck: 6,
+      });
+      const player = game.asPlayerOne();
+      expect(player.playCard(action)).toBeSuccessfulCommand();
+      expect(player.getPendingEffects()).toHaveLength(1);
+      expect(player.getPlayCardDisabledReason(songCardForReason)).toEqual({ code: "BAG_PENDING" });
+      expect(player.getSingPlayDisabledReason(songCardForReason)).toEqual({ code: "BAG_PENDING" });
+      expect(
+        player.singSong(songCardForReason, singerCharacterForReason),
+      ).not.toBeSuccessfulCommand();
+      expect(player.isExerted(singerCharacterForReason)).toBe(false);
+      expect(player.resolveNextPending({ resolveOptional: false })).toBeSuccessfulCommand();
+      expect(player.getSingPlayDisabledReason(songCardForReason)).toBeNull();
+      expect(player.singSong(songCardForReason, singerCharacterForReason)).toBeSuccessfulCommand();
+      expect(game.getLore(PLAYER_ONE)).toBe(1);
+    });
+
     it("getSingPlayDisabledReason returns SONG_NO_SINGER when no ready singer is available", () => {
       const engine = LorcanaMultiplayerTestEngine.createWithFixture({
         hand: [songCardForReason],
@@ -1290,4 +1464,41 @@ describe("playCard logging", () => {
       playerId: PLAYER_ONE,
     });
   });
+});
+
+it("selected ink drops participate in Shift reasons, move discovery, and target choices", () => {
+  const base = createMockCharacter({ id: "drop-shift-base", name: "Merlin", cost: 3 });
+  const shifted = createMockCharacter({
+    id: "drop-shift-card",
+    name: "Merlin",
+    cost: 7,
+    abilities: [{ type: "keyword", keyword: "Shift", cost: { ink: 5 }, text: "Shift 5" }],
+  });
+  const engine = LorcanaMultiplayerTestEngine.createWithFixture(
+    { deck: 6 },
+    { play: [base], hand: [shifted], inkwell: 4, inkDrops: 1, deck: 6 },
+  );
+  expect(engine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+  const player = engine.asPlayerTwo(),
+    cardId = engine.findCardInstanceId(shifted, "hand", PLAYER_TWO),
+    targetId = engine.findCardInstanceId(base, "play", PLAYER_TWO);
+  expect(player.getShiftPlayDisabledReason(shifted)).toEqual({
+    code: "SHIFT_INSUFFICIENT_INK",
+    params: { needed: 5, available: 4 },
+  });
+  expect(player.getMoveOptions("shiftCard", cardId)).toEqual([]);
+  expect(player.getShiftPlayDisabledReason(shifted, { inkDrops: 1 })).toBeNull();
+  expect(player.getMoveOptions("shiftCard", cardId, { inkDrops: 1 })).toEqual([
+    { kind: "card", cardId: targetId },
+  ]);
+  expect(
+    player
+      .getAvailableMoves({ inkDrops: 1 })
+      .some((move) => move.moveId === "shiftCard" && move.selectableCardIds.includes(cardId)),
+  ).toBe(true);
+  expect(
+    player.playCard(shifted, { cost: { cost: "shift", shiftTarget: targetId }, inkDrops: 1 }),
+  ).toBeSuccessfulCommand();
+  expect(player.getAvailableInk(PLAYER_TWO)).toBe(0);
+  expect(engine.getInkDrops(PLAYER_TWO)).toBe(0);
 });

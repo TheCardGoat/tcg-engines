@@ -78,7 +78,7 @@ interface CyberpunkDeckImportMessage {
 
 interface CyberpunkDeckPayload {
   game: "cyberpunk";
-  format: "alpha" | "constructed";
+  format: "constructed";
   deckId?: string;
   deckName?: string;
   playerName?: string;
@@ -332,6 +332,5 @@ The existing fixture-only `/practice` flow can remain as a manual launcher. The 
 ## Open Decisions
 
 - Final production allowlist of card database origins.
-- Whether `format: "alpha"` should allow only fixed Alpha Kit decks or all currently legal alpha cards.
 - Whether V2 should persist imported practice sessions as backend replay records.
 - Whether the simulator should expose a "Return to deck" postMessage event or rely on host webview controls.

@@ -16,11 +16,20 @@ export function useFabCardPresentation(
   useEffect(() => {
     void registry.ensure(definitions);
   }, [registry, definitions, requestKey]);
+  const records = registry.getRecords();
   const missingIds = definitions
     .filter(
       (definition) =>
-        !registry.getRecords().records[definition.canonicalId] &&
-        !registry.getRecords().aliases[definition.canonicalId],
+        ![
+          definition.canonicalId,
+          definition.slug,
+          definition.name,
+          ...(definition.base?.names ?? []),
+        ].some(
+          (reference) =>
+            reference &&
+            (records.records[reference] || records.records[records.aliases[reference] ?? ""]),
+        ),
     )
     .map((definition) => definition.canonicalId);
   if (snapshot.status === "error") {

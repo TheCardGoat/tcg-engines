@@ -27,6 +27,7 @@ export const bigBookOfHunny: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_89adca57e54540868bf280ac2deaaa57",
+    tcgPlayer: "704670",
   },
   text: [
     {

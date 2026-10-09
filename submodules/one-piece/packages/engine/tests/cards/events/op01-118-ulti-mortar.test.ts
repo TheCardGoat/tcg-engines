@@ -25,8 +25,9 @@ describe("OP01-118 Ulti-Mortar", () => {
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.asNorth().acceptOptional();
 
-    // Counter Event is already committed; returnDon is mandatory (no effectOptional Skip).
+    // The accepted activation cost now requires its physical DON selection.
     const costDecision = engine.pendingDecision("effectCostReturnDon", "north");
     const costStep = costDecision.steps[0];
     expect(costStep?.kind).toBe("payCost");
@@ -73,6 +74,7 @@ describe("OP01-118 Ulti-Mortar", () => {
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.asNorth().acceptOptional();
     engine.resolveDecision(
       "effectCostReturnDon",
       { selectedIds: ["active-don:0", "rested-don:0"] },
@@ -123,7 +125,7 @@ describe("OP01-118 Ulti-Mortar", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("does not offer a post-commit Skip after the Counter Event is activated", () => {
+  test("accepts the optional Counter activation before requiring DON payment", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: op01Hajrudin018, playedOnTurn: 0 }],
@@ -140,11 +142,33 @@ describe("OP01-118 Ulti-Mortar", () => {
     const eventId = engine.findCardInZone("north", "hand", op01UltiMortar118);
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.asNorth().acceptOptional();
 
     // Next step must be mandatory returnDon — not effectOptional.
     expect(engine.pendingDecision("effectCostReturnDon", "north").steps[0]?.kind).toBe("payCost");
     expect(() => engine.pendingDecision("effectOptional", "north")).toThrow(
       /Could not find a pending effectOptional/,
     );
+  });
+
+  test("declines the Counter DON return after paying the Event play cost", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP01-118"], activeDon: 4, life: 3 },
+      { character: [{ cardId: "ST05-011", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const event = e.findCardInZone("south", "hand", "OP01-118");
+    const before = e.getView("south").players.south;
+    e.asNorth().attack(e.findCardInZone("north", "character", "ST05-011"), e.leader("south"));
+    e.asSouth().chooseCounter("OP01-118");
+    e.asSouth().declineOptional();
+    const after = e.getView("south").players.south;
+    expect(after.activeDon).toBe(3);
+    expect(after.restedDon).toBe(1);
+    expect(after.donDeckCount).toBe(before.donDeckCount);
+    expect(after.deckCount).toBe(before.deckCount);
+    expect(after.lifeCount).toBe(before.lifeCount - 1);
+    expect(after.trash.map((c) => c.instanceId)).toContain(event);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

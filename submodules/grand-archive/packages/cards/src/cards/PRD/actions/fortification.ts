@@ -45,8 +45,26 @@ export const fortification: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["DOMAIN"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["SIEGEABLE"],
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
             },

@@ -365,6 +365,7 @@ function decisionGraphIsValid(record: Record<string, unknown>): boolean {
       return (
         hasStackItem() &&
         objectExists(decision.cardId) &&
+        (decision.mayDecline === undefined || decision.mayDecline === true) &&
         typeof decision.payCosts === "boolean" &&
         typeof decision.ignoreElementRequirements === "boolean" &&
         Array.isArray(decision.costModifiers)
@@ -402,6 +403,9 @@ function objectGraphIsValid(
         program !== undefined &&
         !program.cardsById[value.activeDefinitionId])
     ) {
+      return false;
+    }
+    if (value.baseLineageCardId !== undefined && !isNonEmptyString(value.baseLineageCardId)) {
       return false;
     }
     if (
@@ -578,6 +582,11 @@ function persistedEffectContextsAreValid(record: Record<string, unknown>): boole
         (instance) =>
           isRecord(instance) &&
           isRecord(instance.bindings) &&
+          (instance.consumedBy === undefined ||
+            (isRecord(instance.consumedBy) &&
+              isNonEmptyString(instance.consumedBy.gameEventId) &&
+              (instance.consumedBy.sourceId === undefined ||
+                isNonEmptyString(instance.consumedBy.sourceId)))) &&
           variablesAreValid(instance.variables),
       ),
   );

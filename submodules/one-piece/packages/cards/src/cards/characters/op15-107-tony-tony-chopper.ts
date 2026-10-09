@@ -24,7 +24,7 @@ export const op15TonyTonyChopper107: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew Sky Island"],
+  traits: ["Animal", "Sky Island", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op15TonyTonyChopper107I18n,
 };

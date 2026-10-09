@@ -17,7 +17,9 @@
     "./deck-interchange": "./src/deck-interchange.ts",
     "./interaction-protocol": "./src/interaction-protocol.ts",
     "./practice": "./src/practice.ts",
-    "./animation": "./src/animation.ts"
+    "./animation": "./src/animation.ts",
+    "./priority-owner": "./src/priority-owner.ts",
+    "./deck-share-stats": "./src/deck-share-stats.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

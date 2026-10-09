@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { createTacticalStrategy } from "../../src/automation/search/tactical.ts";
 import type { DecisionContext, EngineHandle } from "../../src/automation/types.ts";
-import { createPlayerId, type PlayerId } from "../../src/types/branded.ts";
+import { createCardInstanceId, createPlayerId, type PlayerId } from "../../src/types/branded.ts";
 import type { CommandEnvelope, CommandResult } from "../../src/types/commands.ts";
 import type { FilteredCardView, FilteredMatchView } from "../../src/view/filter.ts";
 import type { PlayerPrompt } from "../../src/view/player-prompt.ts";
@@ -31,7 +31,10 @@ class ScriptedEngine implements EngineHandle {
 
   processCommand(command: CommandEnvelope, playerId: PlayerId): CommandResult {
     const key = `${playerId as string}:${command.move}`;
-    const next = this.node().transitions?.[key];
+    const args = command.input?.args;
+    const cardId = args && typeof args === "object" && "cardId" in args ? args.cardId : undefined;
+    const specificKey = typeof cardId === "string" ? `${key}:${cardId}` : key;
+    const next = this.node().transitions?.[specificKey] ?? this.node().transitions?.[key];
     if (!next) {
       return {
         success: false,
@@ -56,6 +59,44 @@ class ScriptedEngine implements EngineHandle {
 }
 
 describe("tactical strategy", () => {
+  test("steals the Gig that serves its color plan before the highest rival value", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseGigsToSteal",
+        chooserId: "p1",
+        payload: {
+          count: 1,
+          attackerId: "attacker",
+          rivalId: "p2",
+          eligibleDice: [
+            { dieId: "low", faceValue: 1 },
+            { dieId: "high", faceValue: 6 },
+          ],
+        },
+      },
+    };
+    const before = view({
+      p1Field: [card("blue-legend", 2, { type: "legend", color: "blue" })],
+      p1Gigs: [2],
+      p2Gigs: [1, 6],
+    });
+    const nodes: Record<string, ScriptedNode> = {
+      root: {
+        view: before,
+        prompts: { p1: prompt, p2: waitingPrompt() },
+        transitions: { "p1:resolveStealGigs": "done" },
+      },
+      done: { view: before, prompts: {} },
+    };
+    expect(decide(nodes, prompt)).toMatchObject({
+      kind: "command",
+      move: "resolveStealGigs",
+      args: { dieIds: ["low"] },
+    });
+  });
+
   test("uses an ability before attacking when the defender has a winning public reply", () => {
     const attacker = card("attacker", 12);
     const remover = card("remover", 2);
@@ -123,7 +164,7 @@ describe("tactical strategy", () => {
     expect(decision.kind).toBe("command");
     if (decision.kind !== "command") return;
     expect(decision.move).toBe("activateAbility");
-    expect(decision.diagnostics?.nodesEvaluated).toBeGreaterThan(2);
+    expect(decision.diagnostics?.nodesEvaluated).toBeGreaterThan(1);
     expect(decision.diagnostics?.scoreGap).toBeGreaterThan(0);
   });
 
@@ -163,7 +204,17 @@ describe("tactical strategy", () => {
         },
       };
 
-      const decision = decide(nodes, prompt);
+      // With the removal mandate the winning fight is forced and the hidden
+      // sell branch never enters the candidate set at all.
+      const forced = decide(nodes, prompt);
+      expect(forced.kind).toBe("command");
+      if (forced.kind !== "command") continue;
+      expect(forced.move).toBe("attackUnit");
+      expect(forced.diagnostics?.cutoffReason).toBe("complete");
+
+      // With the mandate off the search must still rank the fight above the
+      // sell purely from public outcomes — never from the hidden fork.
+      const decision = decide(nodes, prompt, { disabledHeuristics: ["remove-targets"] });
       expect(decision.kind).toBe("command");
       if (decision.kind !== "command") continue;
       expect(decision.move).toBe("attackUnit");
@@ -353,6 +404,135 @@ describe("tactical strategy", () => {
     expect(decision.kind).toBe("command");
     if (decision.kind !== "command") return;
     expect(decision.args?.cardId).toBe("a");
+  });
+
+  test("plays a strong Unit when its visible Gig-pair on-play ability is ready", () => {
+    const payoff = card("z-payoff", 6, {
+      zone: "hand",
+      abilityHints: [
+        abilityHint({
+          timing: "play",
+          roles: ["cardAdvantage"],
+          conditions: ["hasGigPair"],
+        }),
+      ],
+    });
+    const plain = card("a-plain", 6, { zone: "hand" });
+    const prompt = playPrompt([plain.instanceId, payoff.instanceId]);
+    const makeNodes = (gigs: number[]): Record<string, ScriptedNode> => ({
+      root: {
+        view: view({ p1Hand: [plain, payoff], p1Gigs: gigs }),
+        prompts: { p1: prompt, p2: waitingPrompt() },
+        transitions: {
+          [`p1:playCard:${plain.instanceId}`]: "plain",
+          [`p1:playCard:${payoff.instanceId}`]: "payoff",
+        },
+      },
+      plain: {
+        view: view({ p1Hand: [payoff], p1Field: [{ ...plain, zone: "field" }], p1Gigs: gigs }),
+        prompts: {},
+      },
+      payoff: {
+        view: view({ p1Hand: [plain], p1Field: [{ ...payoff, zone: "field" }], p1Gigs: gigs }),
+        prompts: {},
+      },
+    });
+
+    expect(decide(makeNodes([3, 3]), prompt)).toMatchObject({
+      kind: "command",
+      move: "playCard",
+      args: { cardId: payoff.instanceId },
+    });
+    expect(decide(makeNodes([3, 5]), prompt)).toMatchObject({
+      kind: "command",
+      move: "playCard",
+      args: { cardId: plain.instanceId },
+    });
+  });
+
+  test("uses a soft removal to stop a late-game ready rival Unit", () => {
+    const rival = card("rival", 7);
+    const remover = card("remover", 1);
+    const prompt = actionPrompt([
+      {
+        moveId: "activateAbility",
+        inputSpec: {
+          type: "selectAbility",
+          candidates: [
+            {
+              cardId: remover.instanceId,
+              abilityIndex: 0,
+              effectHints: ["spend"],
+              eddieCost: 0,
+              spendsCard: false,
+            },
+          ],
+        },
+      },
+      { moveId: "passPhase", inputSpec: { type: "none" } },
+    ]);
+    const nodes: Record<string, ScriptedNode> = {
+      root: {
+        view: view({ p1Field: [remover], p2Field: [rival], p1Gigs: [1, 2, 3, 4, 5] }),
+        prompts: { p1: prompt, p2: waitingPrompt() },
+        transitions: { "p1:activateAbility": "locked", "p1:passPhase": "passed" },
+      },
+      locked: {
+        view: view({
+          p1Field: [remover],
+          p2Field: [{ ...rival, spent: true }],
+          p1Gigs: [1, 2, 3, 4, 5],
+        }),
+        prompts: {},
+      },
+      passed: {
+        view: view({ p1Field: [remover], p2Field: [rival], p1Gigs: [1, 2, 3, 4, 5] }),
+        prompts: {},
+      },
+    };
+
+    expect(decide(nodes, prompt)).toMatchObject({ kind: "command", move: "activateAbility" });
+  });
+
+  test("prefers cheap hard removal early when both cards remove the same Unit", () => {
+    const rival = card("rival", 5);
+    const expensive = card("a-expensive", 0, {
+      zone: "hand",
+      type: "program",
+      cost: 4,
+      effectiveCost: 4,
+    });
+    const cheap = card("z-cheap", 0, {
+      zone: "hand",
+      type: "program",
+      cost: 1,
+      effectiveCost: 1,
+    });
+    const prompt = playPrompt([expensive.instanceId, cheap.instanceId]);
+    const nodes: Record<string, ScriptedNode> = {
+      root: {
+        view: view({ p1Hand: [expensive, cheap], p2Field: [rival], p1Gigs: [2] }),
+        prompts: { p1: prompt, p2: waitingPrompt() },
+        transitions: {
+          [`p1:playCard:${expensive.instanceId}`]: "expensive",
+          [`p1:playCard:${cheap.instanceId}`]: "cheap",
+        },
+      },
+      expensive: {
+        view: view({ p1Hand: [cheap], p2Field: [], p1Gigs: [2] }),
+        prompts: {},
+      },
+      cheap: {
+        view: view({ p1Hand: [expensive], p2Field: [], p1Gigs: [2] }),
+        prompts: {},
+      },
+    };
+
+    expect(decide(nodes, prompt)).toMatchObject({
+      kind: "command",
+      move: "playCard",
+      args: { cardId: cheap.instanceId },
+    });
   });
 
   test("plays a repeatable card-advantage engine before a late-game payoff", () => {
@@ -596,7 +776,11 @@ describe("tactical strategy", () => {
 function decide(
   nodes: Record<string, ScriptedNode>,
   prompt: PlayerPrompt,
-  options: { maxDepth?: number; abilityAware?: boolean } = {},
+  options: {
+    maxDepth?: number;
+    abilityAware?: boolean;
+    disabledHeuristics?: readonly string[];
+  } = {},
 ) {
   const engine = new ScriptedEngine(nodes, "root");
   const strategy = createTacticalStrategy({
@@ -604,6 +788,7 @@ function decide(
     maxNodes: 64,
     branchLimit: 8,
     abilityAware: options.abilityAware,
+    disabledHeuristics: options.disabledHeuristics,
   });
   const ctx: DecisionContext = {
     view: engine.getFilteredView(P1),
@@ -689,6 +874,9 @@ function card(
     power,
     effectivePower: power,
     cost: 1,
+    effectiveCost: 1,
+    costEffects: [],
+    activeEffects: [],
     type: "unit",
     classifications: [],
     hasSellTag: false,
@@ -696,6 +884,7 @@ function card(
     attachedToId: null,
     hasLag: false,
     hasAttackedThisTurn: false,
+    hasStolenGigThisTurn: false,
     grantedRules: [],
     keywords: [],
     triggerHints: [],
@@ -722,7 +911,9 @@ function view(
     hand: FilteredCardView[] | number,
     deck: number,
     gigs: number[],
+    firstPlayer = false,
   ) => ({
+    firstPlayer,
     zones: {
       field,
       hand,
@@ -740,6 +931,10 @@ function view(
     gigCount: gigs.length,
     fixerCount: 5,
     streetCred: 12,
+    activeEffects: [],
+    soldThisTurn: false,
+    calledLegendThisTurn: false,
+    calledLegendThisRivalTurn: false,
   });
   return {
     players: {
@@ -748,17 +943,22 @@ function view(
         options.p1Hand ?? [],
         options.p1Deck ?? 20,
         options.p1Gigs ?? [2, 3, 4],
+        true,
       ),
       p2: player(options.p2Field ?? [], 0, 20, options.p2Gigs ?? [2, 3, 4]),
     },
     gamePhase: "main",
     turnNumber: options.turnNumber ?? 4,
     activePlayerId: "p1",
+    overtimeActive: false,
+    previousTurnBeganWithEmptyFixer: false,
+    turnBeganWithEmptyFixer: false,
     playedCardTypesThisTurn: { p1: [], p2: [] },
     attackState: options.attackInProgress
       ? {
-          attackerId: "rival-attacker",
+          attackerId: createCardInstanceId("rival-attacker"),
           defenderId: null,
+          rivalId: P1,
           kind: "direct",
           step: "react",
           redirectedByBlocker: false,

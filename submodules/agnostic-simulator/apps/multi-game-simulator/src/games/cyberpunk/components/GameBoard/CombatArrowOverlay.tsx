@@ -1,12 +1,18 @@
-import { useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { DataStreams, DATA_STREAM_COLORS } from "../../animation/DataStreamTargeting";
+import { supportsCyberpunkThreeCardTransfers } from "../../animation/CyberpunkThreeCardTransferLayer";
+import { useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { getProjectedDirectAttackGigStealCount } from "@tcg/cyberpunk-engine";
 import { TargetingArrow } from "@tcg/simulator-ui";
 import { useCardView } from "../../engine/zoneViews";
-import { PLAYER_SIDE_TO_ID, useEngine, type RawEngineEventEntry, type Side } from "../../engine";
+import { PLAYER_SIDE_TO_ID, useEngine, type Side } from "../../engine";
 import classes from "./CombatArrowOverlay.module.css";
 
 interface CombatArrowOverlayProps {
   containerRef: RefObject<HTMLElement | null>;
+  directAttackTarget?: "player-info" | "gigs";
+  /** Re-measure after a renderer applies its camera projection to the DOM. */
+  layoutTransform?: string;
+  dataStream?: boolean;
 }
 
 interface Point {
@@ -16,6 +22,12 @@ interface Point {
 
 interface CombatLine {
   segments: CombatSegment[];
+  redirect?: {
+    active: CombatSegment;
+    previous: { targetId: string | null; segment: CombatSegment }[];
+    badge: Point;
+    scale: number;
+  };
 }
 
 interface CombatSegment {
@@ -24,20 +36,19 @@ interface CombatSegment {
   kind: "attack" | "block";
 }
 
-export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
-  const { matchState, rawEngineEvents } = useEngine();
+export function CombatArrowOverlay({
+  containerRef,
+  directAttackTarget = "player-info",
+  layoutTransform,
+  dataStream = false,
+}: CombatArrowOverlayProps) {
+  const { matchState, humanSide } = useEngine();
   const attack = matchState.G.attackState;
   const attacker = useCardView(attack?.attackerId as string | undefined);
-  const blockerRedirect = useMemo(
-    () => findLatestBlockerRedirect(attack, rawEngineEvents),
-    [attack, rawEngineEvents],
-  );
-  const defenderId =
-    attack?.redirectedByBlocker === true
-      ? (blockerRedirect?.blockerId ?? attack.defenderId)
-      : attack?.defenderId;
+  const redirectedTargets = attack?.redirectedTargets;
+  const defenderId = attack?.defenderId;
   const defender = useCardView(defenderId as string | undefined);
-  const originalTarget = useCardView(blockerRedirect?.originalTarget ?? undefined);
+  const originalTarget = useCardView(redirectedTargets?.[0] ?? undefined);
   const [line, setLine] = useState<CombatLine | null>(null);
   const frameRef = useRef<number | null>(null);
 
@@ -66,10 +77,14 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
       }
 
       const attackerElement = findCardElement(attack.attackerId as string);
-      const targetElement = findAttackTargetElement({
+      const targetElement = findAttackTargetElement(
         attack,
-        blockerRedirect,
-      });
+        redirectedTargets?.[0],
+        directAttackTarget,
+      );
+      const priorTargetElements = redirectedTargets?.map((targetId) =>
+        findAttackTargetElement(attack, targetId, directAttackTarget),
+      );
       const blockerElement = isBlocked && defenderId ? findCardElement(defenderId as string) : null;
       if (!attackerElement || !targetElement || (isBlocked && !blockerElement)) {
         setLine(null);
@@ -98,9 +113,39 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
         });
       }
 
-      setLine({
-        segments,
-      });
+      let redirect: CombatLine["redirect"];
+      if (dataStream && isBlocked && blockerElement) {
+        const blockerRect = blockerElement.getBoundingClientRect();
+        const blockerPoint = centerPoint(blockerRect, containerRect);
+        redirect = {
+          active: {
+            from: attackerPoint,
+            to: blockerPoint,
+            kind: "attack",
+          },
+          previous: (priorTargetElements ?? []).flatMap((element, index) => {
+            if (!element) return [];
+            const rect = element.getBoundingClientRect();
+            const point = centerPoint(rect, containerRect);
+            return [
+              {
+                targetId: redirectedTargets?.[index] ? String(redirectedTargets[index]) : null,
+                segment: {
+                  from: edgePoint(attackerRect, point, containerRect),
+                  to: edgePoint(rect, attackerPoint, containerRect),
+                  kind: "attack" as const,
+                },
+              },
+            ];
+          }),
+          badge: {
+            x: (attackerPoint.x + blockerPoint.x) / 2,
+            y: (attackerPoint.y + blockerPoint.y) / 2,
+          },
+          scale: Math.min(1, blockerRect.width / 130),
+        };
+      }
+      setLine({ segments, redirect });
     };
 
     const schedule = () => {
@@ -117,13 +162,18 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
       resizeObserver.observe(containerRef.current);
       const attackerElement = findCardElement(attack.attackerId as string);
       const defenderElement = defenderId ? findCardElement(defenderId as string) : null;
-      const targetElement = findAttackTargetElement({
+      const targetElement = findAttackTargetElement(
         attack,
-        blockerRedirect,
-      });
+        redirectedTargets?.[0],
+        directAttackTarget,
+      );
       if (attackerElement) resizeObserver.observe(attackerElement);
       if (defenderElement) resizeObserver.observe(defenderElement);
       if (targetElement) resizeObserver.observe(targetElement);
+      redirectedTargets?.forEach((targetId) => {
+        const element = findAttackTargetElement(attack, targetId, directAttackTarget);
+        if (element && element !== targetElement) resizeObserver.observe(element);
+      });
     }
     window.addEventListener("resize", schedule);
     window.addEventListener("scroll", schedule, true);
@@ -143,8 +193,11 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
     attack?.kind,
     attack?.redirectedByBlocker,
     attack?.rivalId,
-    blockerRedirect,
+    redirectedTargets,
     containerRef,
+    directAttackTarget,
+    dataStream,
+    layoutTransform,
     defenderId,
     isBlocked,
     shouldShow,
@@ -164,8 +217,15 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
       : null;
   const stealCue =
     stealPoint && directStealCount !== null ? { point: stealPoint, count: directStealCount } : null;
+  const attackerOwner = matchState.G.cardIndex[String(activeAttack.attackerId)]?.ownerId;
+  const attackStreamColor =
+    attackerOwner === undefined
+      ? DATA_STREAM_COLORS.unknown
+      : attackerOwner === PLAYER_SIDE_TO_ID[humanSide]
+        ? DATA_STREAM_COLORS.local
+        : DATA_STREAM_COLORS.rival;
   const label = isBlocked
-    ? `${attacker.name} attacks ${originalTarget?.name ?? "the player"}; ${defender?.name ?? "Blocker"} blocks`
+    ? `${attacker.name} attacks ${originalTarget?.name ?? "the player"}; ${redirectedTargets?.length ?? 0} blocker${redirectedTargets?.length === 1 ? "" : "s"} ${redirectedTargets?.length === 1 ? "redirects" : "redirect"} the attack to ${defender?.name ?? "the current blocker"}`
     : defender
       ? `${attacker.name} attacks ${defender.name}: ${attackerPower} to ${defenderPower}`
       : directStealCount !== null
@@ -184,13 +244,57 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
       data-step={activeAttack.step}
       data-blocked={isBlocked ? "true" : "false"}
       data-redirected-by-blocker={activeAttack.redirectedByBlocker ? "true" : "false"}
+      data-redirected-targets={redirectedTargets ? JSON.stringify(redirectedTargets) : undefined}
       aria-label={label}
     >
-      <svg className={classes.svg} aria-hidden="true">
-        {line.segments.map((segment, index) => (
-          <ArrowSegment key={`${segment.kind}-${index}`} segment={segment} />
-        ))}
-      </svg>
+      {line.redirect ? (
+        <>
+          <DataStreams
+            connections={[
+              {
+                id: `${activeAttack.attackerId}:redirect:${defenderId}`,
+                source: line.redirect.active.from,
+                destination: line.redirect.active.to,
+                startAtMs: 0,
+                durationMs: 1600,
+                sustained: true,
+                color: attackStreamColor,
+              },
+            ]}
+          />
+          <RedirectPreview
+            key={`${activeAttack.attackerId}:${defenderId}`}
+            redirect={line.redirect}
+          />
+        </>
+      ) : dataStream && supportsCyberpunkThreeCardTransfers() ? (
+        <DataStreams
+          connections={line.segments.map((segment, index) => {
+            const sourceId = segment.kind === "block" ? defenderId : activeAttack.attackerId;
+            const owner = sourceId ? matchState.G.cardIndex[String(sourceId)]?.ownerId : undefined;
+            return {
+              id: `${activeAttack.attackerId}:${segment.kind}:${index}`,
+              source: segment.kind === "block" ? segment.to : segment.from,
+              destination: segment.kind === "block" ? segment.from : segment.to,
+              startAtMs: 0,
+              durationMs: 1600,
+              sustained: true,
+              color:
+                owner === undefined
+                  ? DATA_STREAM_COLORS.unknown
+                  : owner === PLAYER_SIDE_TO_ID[humanSide]
+                    ? DATA_STREAM_COLORS.local
+                    : DATA_STREAM_COLORS.rival,
+            };
+          })}
+        />
+      ) : (
+        <svg className={classes.svg} aria-hidden="true">
+          {line.segments.map((segment, index) => (
+            <ArrowSegment key={`${segment.kind}-${index}`} segment={segment} />
+          ))}
+        </svg>
+      )}
       {stealCue ? (
         <div
           className={classes.stealCue}
@@ -204,6 +308,61 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
       ) : null}
     </div>
   );
+}
+
+function RedirectPreview({ redirect }: { redirect: NonNullable<CombatLine["redirect"]> }) {
+  const { previous, badge, scale } = redirect;
+  const path = (segment: CombatSegment) =>
+    `M ${segment.from.x} ${segment.from.y} L ${segment.to.x} ${segment.to.y}`;
+  return (
+    <svg className={classes.svg} aria-hidden="true" data-testid="blocker-redirect-preview">
+      {previous.map(({ targetId, segment }, index) => (
+        <path
+          key={`${targetId ?? "gigs"}:${index}`}
+          d={path(segment)}
+          className={classes.previousPath}
+          data-target-id={targetId ?? "gigs"}
+          opacity={index === previous.length - 1 ? 0.7 : 0.4}
+        />
+      ))}
+      {previous.length > 0 ? (
+        <g
+          transform={`translate(${previous[previous.length - 1]!.segment.to.x} ${previous[previous.length - 1]!.segment.to.y})`}
+        >
+          <path
+            d="M 0 -10 L 9 -6 V 1 Q 9 8 0 12 Q -9 8 -9 1 V -6 Z"
+            className={classes.protectedTarget}
+          />
+        </g>
+      ) : null}
+      <g
+        transform={`translate(${badge.x} ${badge.y}) scale(${scale})`}
+        className={classes.blockingBadge}
+      >
+        <path d="M -49 -11 H 44 L 51 -4 V 11 H -44 L -51 4 V -9 Z" />
+        <path
+          d="M -37 -6 L -30 -3 V 2 Q -30 6 -37 9 Q -44 6 -44 2 V -3 Z"
+          className={classes.shieldIcon}
+        />
+        <text x="8" y="4" textAnchor="middle">
+          BLOCKING
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+// Clip to the visible card bounds so the line cannot cover its face.
+function edgePoint(rect: DOMRect, toward: Point, container: DOMRect): Point {
+  const center = centerPoint(rect, container);
+  const dx = toward.x - center.x;
+  const dy = toward.y - center.y;
+  const ratio = Math.min(
+    dx === 0 ? Infinity : (rect.width / 2 + 5) / Math.abs(dx),
+    dy === 0 ? Infinity : (rect.height / 2 + 5) / Math.abs(dy),
+  );
+  if (!Number.isFinite(ratio)) return center;
+  return { x: center.x + dx * ratio, y: center.y + dy * ratio };
 }
 
 function ArrowSegment({ segment }: { segment: CombatSegment }) {
@@ -220,56 +379,15 @@ function ArrowSegment({ segment }: { segment: CombatSegment }) {
   );
 }
 
-function findLatestBlockerRedirect(
-  attack: { defenderId?: unknown; redirectedByBlocker?: boolean } | null,
-  rawEngineEvents: ReadonlyArray<RawEngineEventEntry>,
-): { blockerId: string; originalTarget: string | null } | null {
-  if (!attack?.redirectedByBlocker || !attack.defenderId) {
-    return null;
-  }
-
-  const defenderId = cardIdString(attack.defenderId);
-  if (!defenderId) {
-    return null;
-  }
-
-  for (let i = rawEngineEvents.length - 1; i >= 0; i -= 1) {
-    const entry = rawEngineEvents[i];
-    if (!entry) continue;
-    for (let j = entry.events.length - 1; j >= 0; j -= 1) {
-      const event = entry.events[j];
-      if (event?.type === "blockerActivated" && String(event.blockerId) === defenderId) {
-        return {
-          blockerId: String(event.blockerId),
-          originalTarget: event.originalTarget ? String(event.originalTarget) : null,
-        };
-      }
-    }
-  }
-
-  return null;
-}
-
-function findAttackTargetElement({
-  attack,
-  blockerRedirect,
-}: {
-  attack: {
-    defenderId?: unknown;
-    kind?: string;
-    rivalId?: unknown;
-  };
-  blockerRedirect: { originalTarget: string | null } | null;
-}): HTMLElement | null {
-  if (blockerRedirect) {
-    if (blockerRedirect.originalTarget) {
-      return findCardElement(blockerRedirect.originalTarget);
-    }
-    return findPlayerTargetElement(sideForPlayerId(attack.rivalId));
-  }
-
-  if (attack.kind === "direct") {
-    return findPlayerTargetElement(sideForPlayerId(attack.rivalId));
+function findAttackTargetElement(
+  attack: { defenderId?: unknown; kind?: string; rivalId?: unknown },
+  targetId: unknown,
+  directAttackTarget: "player-info" | "gigs",
+): HTMLElement | null {
+  const cardTargetId = cardIdString(targetId);
+  if (cardTargetId) return findCardElement(cardTargetId);
+  if (attack.kind === "direct" || targetId === null) {
+    return findPlayerTargetElement(sideForPlayerId(attack.rivalId), directAttackTarget);
   }
 
   const defenderId = cardIdString(attack.defenderId);
@@ -290,9 +408,15 @@ function sideForPlayerId(playerId: unknown): Side | null {
   return null;
 }
 
-function findPlayerTargetElement(side: Side | null): HTMLElement | null {
+function findPlayerTargetElement(
+  side: Side | null,
+  target: "player-info" | "gigs",
+): HTMLElement | null {
   if (!side) {
     return null;
+  }
+  if (target === "gigs") {
+    return document.querySelector<HTMLElement>(`[data-testid="gig-row"][data-side="${side}"]`);
   }
   const dropZone = side === "opponent" ? "opp-pinfo" : "p-pinfo";
   const streetCredAnchor = side === "opponent" ? "opp-street-cred" : "p-street-cred";

@@ -31,7 +31,7 @@ export const op12VinsmokeReiju063: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
   effect:
     "If you have 4 or more Events in your trash, this Character gains +2000 power and +5 cost.\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

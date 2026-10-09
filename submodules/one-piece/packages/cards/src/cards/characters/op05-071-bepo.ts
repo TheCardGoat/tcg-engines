@@ -22,7 +22,7 @@ export const op05Bepo071: CharacterCard = {
   setId: "OP05",
   cost: 3,
   power: 5000,
-  traits: ["Heart Pirates Minks"],
+  traits: ["Minks", "Heart Pirates"],
   attribute: "strike",
   effect:
     "[When Attacking] If your opponent has more DON!! cards on their field than you, give up to 1 of your opponent's Characters -2000 power during this turn.",

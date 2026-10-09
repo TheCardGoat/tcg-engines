@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
@@ -12,6 +12,32 @@ import { nimblismBlue } from "./nimblism.ts";
 import { promiseOfPlentyRed } from "./promise-of-plenty.ts";
 
 describe("Promise of Plenty (CRU183) AAA", () => {
+  it("hit: each hero with an empty arsenal puts their OWN deck top into it", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: dash,
+        hand: [promiseOfPlentyRed],
+        resourcePoints: 0,
+        actionPoints: 1,
+        deckTop: [brutalAssaultBlue],
+        deck: 6,
+      },
+      { hero: bravo, hand: [], life: 20, deckTop: [nimblismBlue], deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Dash = game.as(dash);
+    const Bravo = game.as(bravo);
+
+    Dash.playAttack(promiseOfPlentyRed);
+    game.helpers.resolveUntilIdle({ entityTargets: "minimum" });
+
+    // Each hero arsenalized their own deck top — not the controller's card.
+    expect(Dash.zone("arsenal")).toContain(brutalAssaultBlue.canonicalId);
+    expect(Bravo.zone("arsenal")).toContain(nimblismBlue.canonicalId);
+    expect(Dash.zone("arsenal")).not.toContain(nimblismBlue.canonicalId);
+    expect(Bravo.zone("arsenal")).not.toContain(brutalAssaultBlue.canonicalId);
+  });
+
   it("happy: leftover AP after close at printed 3{p}", () => {
     const game = FabTestEngine.start(
       {

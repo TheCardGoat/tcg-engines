@@ -59,7 +59,11 @@ describe("FAB engine scenario · Sabers Boltyn combo", () => {
     const opponentId = match.player2Id;
     for (const playerId of [match.player1Id, match.player2Id]) {
       const preferences = game.getState().automationPreferences[playerId];
-      if (preferences) preferences.priorityMode = "always-hold";
+      // The engine exposes profiles as readonly state and has no setter move,
+      // so the harness writes the live profile in place.
+      if (preferences) {
+        (preferences as { priorityMode: string }).priorityMode = "always-hold";
+      }
     }
 
     Boltyn.playAttack(engulfingLightRed, { charge: true, chargeCard: boltOfCourageRed });
@@ -73,9 +77,9 @@ describe("FAB engine scenario · Sabers Boltyn combo", () => {
     Boltyn.activate(courageOfBladehold);
     game.untilIdle({ ordering: "listed" });
 
-    Boltyn.play(luminaAscensionYellow, { index: 0 });
+    Boltyn.play(luminaAscensionYellow);
     game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Boltyn.play(luminaAscensionYellow, { index: 0 });
+    Boltyn.play(luminaAscensionYellow);
     game.untilIdle({ optionals: "accept", ordering: "listed" });
     Boltyn.playFromArsenal(luminaAscensionYellow);
     game.untilIdle({ optionals: "accept", ordering: "listed" });

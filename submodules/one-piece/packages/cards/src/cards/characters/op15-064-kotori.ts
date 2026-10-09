@@ -34,24 +34,24 @@ export const op15Kotori064: CharacterCard = {
         optional: true,
         costs: [
           {
-            cost: "restDon",
+            cost: "returnDon",
             amount: 2,
           },
           {
             cost: "restThisCard",
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "hasCard",
             player: "self",
-            zone: "character",
+            zone: "field",
             filters: [{ filter: "name", value: "Satori" }],
           },
           {
             condition: "hasCard",
             player: "self",
-            zone: "character",
+            zone: "field",
             filters: [{ filter: "name", value: "Hotori" }],
           },
         ],

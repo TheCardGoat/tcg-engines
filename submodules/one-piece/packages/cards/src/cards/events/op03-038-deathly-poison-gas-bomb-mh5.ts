@@ -21,7 +21,7 @@ export const op03DeathlyPoisonGasBombMh5038: EventCard = {
   rarity: "R",
   setId: "OP03",
   cost: 1,
-  traits: ["NULL"],
+  traits: ["East Blue", "Krieg Pirates"],
   effect:
     "[Main] Rest up to 2 of your opponent's Characters with a cost of 2 or less. [Trigger] Rest up to 1 of your opponent's Characters with a cost of 5 or less.",
   effects: {

@@ -30,3 +30,12 @@ describe("Grand Archive simulator route registry", () => {
     expect(resolveSimulatorRoute("grand-archive", "live-match")?.Page).toBeDefined();
   });
 });
+
+describe("Cyberpunk simulator route registry", () => {
+  it("resolves the full-game demo separately from named fixtures", () => {
+    expect(resolveSimulatorRoute("cyberpunk", "test-demo")?.Page).toBeDefined();
+    expect(resolveSimulatorRoute("cyberpunk", "test-demo")?.Page).not.toBe(
+      resolveSimulatorRoute("cyberpunk", "test-fixture")?.Page,
+    );
+  });
+});

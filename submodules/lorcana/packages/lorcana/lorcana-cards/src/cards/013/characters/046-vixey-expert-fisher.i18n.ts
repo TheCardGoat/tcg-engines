@@ -35,13 +35,13 @@ export const vixeyExpertFisherI18n: Record<Languages, I18nProperties> = {
     ],
   },
   it: {
-    name: "Vixey",
-    version: "Expert Fisher",
+    name: "Vicky",
+    version: "Pescatrice Esperta",
     text: [
       {
-        title: "Stealing In",
+        title: "Furtarello",
         description:
-          "When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+          "Quando giochi questo personaggio, se hai in gioco un personaggio con <Sfuggente>, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore.",
       },
     ],
   },

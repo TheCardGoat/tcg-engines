@@ -94,6 +94,13 @@ export const voldaSmoldersSpite: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "element",
               oneOf: ["FIRE"],
             },
+            condition: {
+              kind: "player-relation",
+              player: {
+                controllerOf: "eventSource",
+              },
+              relation: "controller",
+            },
             duration: {
               kind: "this-turn",
             },

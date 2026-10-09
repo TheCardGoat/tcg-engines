@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Ravensburger"
+  url: "https://files.disneylorcana.com/Comprehensive-Rules_2.2.0-EN.pdf"
+  relation: "current_index"
+  copy_version: "2.0.1"
+---
+
 # COMPREHENSIVE RULES
 
 Version 2.0.1.

@@ -23,7 +23,7 @@ export const robinHoodCapableFighterEpic: CharacterCard = {
   franchise: "Robin Hood",
   set: "009",
   cardNumber: 220,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 1,

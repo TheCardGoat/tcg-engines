@@ -1,12 +1,13 @@
 import type { LorcanaCardDefinition, ScryDestination, ScryEffect } from "@tcg/lorcana-types";
 import { compareOperator } from "../../../rules/operator-utils";
 import type { CardInstanceId, PlayerId, RuntimeValidationResult } from "#core";
+import { createLorcanaLogProjection } from "../../../types";
 import type { CardPlayedPayload } from "../../../types/index";
 import type { PlayCardExecutionContext } from "./types";
 import { hasTemporaryPlayerRestriction } from "../../effects/temporary-effects";
 import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
 import { recordCardPutIntoInkwellThisTurn } from "../../state/turn-metrics";
-import { hasBodyguard, hasMayEnterPlayExertedOption } from "../../../card-utils";
+import { cardHasName, hasBodyguard, hasMayEnterPlayExertedOption } from "../../../card-utils";
 
 export type ScryDestinationSelection = {
   zone: string;
@@ -15,7 +16,7 @@ export type ScryDestinationSelection = {
 
 type ResolvedScryEffectInput = {
   scryAmount?: number;
-  destinations?: { zone: string; cards: CardInstanceId | CardInstanceId[] }[];
+  destinations?: readonly { zone: string; cards: CardInstanceId | readonly CardInstanceId[] }[];
   selectedPlayerIds?: PlayerId[];
   lookedAtCards?: readonly CardInstanceId[];
   revealWindowIds?: readonly string[];
@@ -29,6 +30,33 @@ type ResolvedScryEffectInput = {
    */
   enterPlayExerted?: boolean;
 };
+
+export function revealScryCards(
+  ctx: PlayCardExecutionContext,
+  cardPlayed: CardPlayedPayload,
+  cards: CardInstanceId[],
+  visibility: "all" | string[],
+  targetPlayerId: PlayerId,
+): string {
+  const revealId = ctx.framework.zones.reveal(cards, visibility);
+  if (visibility === "all") {
+    for (const revealedCardId of cards) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.effect.resolve.revealTopCard",
+          {
+            playerId: cardPlayed.playerId,
+            targetPlayerId,
+            revealedCardId,
+          },
+          { mode: "PUBLIC" },
+          "rules",
+        ),
+      );
+    }
+  }
+  return revealId;
+}
 
 const VALID_SCRY_SELECTION: RuntimeValidationResult = { valid: true };
 
@@ -140,9 +168,7 @@ function normalizeScryFilters(filters: unknown): Record<string, unknown>[] {
 function evaluateSingleFilter(
   ctx: ScryValidationContext,
   cardId: CardInstanceId,
-  cardDefinition:
-    | ({ cardType?: string; actionSubtype?: string } & Record<string, unknown>)
-    | undefined,
+  cardDefinition: LorcanaCardDefinition | undefined,
   filter: Record<string, unknown>,
 ): boolean {
   // Use ctx and cardId to satisfy reactive dependency tracking in callers
@@ -173,6 +199,11 @@ function evaluateSingleFilter(
       }
       return !evaluateSingleFilter(ctx, cardId, cardDefinition, inner);
     }
+    case "has-name":
+      return (
+        typeof filter.name === "string" &&
+        Boolean(cardDefinition && cardHasName(cardDefinition, filter.name))
+      );
     case "card-type":
       return typeof filter.cardType === "string" && cardType === (filter.cardType as string);
     case "cost":
@@ -194,6 +225,21 @@ function evaluateSingleFilter(
         : [];
       return classifications.includes(filter.classification);
     }
+    case "has-keyword":
+      return (
+        typeof filter.keyword === "string" &&
+        Array.isArray(cardDefinition?.abilities) &&
+        cardDefinition.abilities.some(
+          (ability: unknown) =>
+            ability !== null &&
+            typeof ability === "object" &&
+            "type" in ability &&
+            ability.type === "keyword" &&
+            "keyword" in ability &&
+            ability.keyword === filter.keyword,
+        )
+      );
+    case "is-song":
     case "song":
       return cardDefinition?.cardType === "action" && cardDefinition?.actionSubtype === "song";
     default:
@@ -211,14 +257,13 @@ function passesScryFilter(
     return true;
   }
 
-  const cardDefinition = ctx.cards.getDefinition(cardId) as
-    | ({ cardType?: string; actionSubtype?: string } & Record<string, unknown>)
-    | undefined;
+  const cardDefinition = ctx.cards.getDefinition(cardId) as LorcanaCardDefinition | undefined;
 
   return filters.every((filter) => evaluateSingleFilter(ctx, cardId, cardDefinition, filter));
 }
 
-function getScryDestinationMin(destination: ScryDestination): number {
+function getScryDestinationMin(destination: ScryDestination, lookedAtCount: number): number {
+  if (lookedAtCount < (destination.requiresLookedAtLeast ?? 0)) return 0;
   return typeof destination.min === "number" &&
     Number.isFinite(destination.min) &&
     destination.min >= 0
@@ -311,6 +356,11 @@ export function validateScrySelection(
     const requestedSelection = queuedSelections.length > 0 ? queuedSelections.shift()! : [];
 
     for (const cardId of requestedSelection) {
+      if (assignedCards.has(cardId)) {
+        return createInvalidScrySelection(
+          "A card already assigned to a scry destination cannot be selected for another destination.",
+        );
+      }
       if (!passesScryFilter(ctx, cardId, destination)) {
         return createInvalidScrySelection(
           `Selected card cannot be placed into scry destination ${destination.zone}.`,
@@ -344,7 +394,15 @@ export function validateScrySelection(
       }
     }
 
-    if (cardsForDestination.length < getScryDestinationMin(destination)) {
+    if (
+      lookedAtCards.length < (destination.requiresLookedAtLeast ?? 0) &&
+      cardsForDestination.length > 0
+    ) {
+      return createInvalidScrySelection(
+        `Not enough looked-at cards for scry destination ${destination.zone}.`,
+      );
+    }
+    if (cardsForDestination.length < getScryDestinationMin(destination, lookedAtCards.length)) {
       return createInvalidScrySelection(
         `Not enough cards were selected for scry destination ${destination.zone}.`,
       );
@@ -546,7 +604,15 @@ export function resolveScryEffect(
     : [];
   if (lookedAtCards.length > 0) {
     if (initialRevealIds.length === 0) {
-      initialRevealIds.push(ctx.framework.zones.reveal(lookedAtCards, [cardPlayed.playerId]));
+      initialRevealIds.push(
+        revealScryCards(
+          ctx,
+          cardPlayed,
+          lookedAtCards,
+          effect.revealAll ? "all" : [cardPlayed.playerId],
+          deckPlayerId,
+        ),
+      );
     }
   }
 
@@ -614,6 +680,21 @@ export function resolveScryEffect(
       });
       for (const cardId of cardsForDestination) {
         ctx.cards.patchMeta(cardId, { revealed: true });
+        // Keep the hand card public without logging its earlier public reveal twice.
+        if (!effect.revealAll) {
+          ctx.framework.log(
+            createLorcanaLogProjection(
+              "lorcana.effect.resolve.revealTopCard",
+              {
+                playerId: cardPlayed.playerId,
+                targetPlayerId: deckPlayerId,
+                revealedCardId: cardId,
+              },
+              { mode: "PUBLIC" },
+              "rules",
+            ),
+          );
+        }
       }
     }
 

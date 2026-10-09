@@ -27,4 +27,18 @@ describe("OP13-003 Gol.D.Roger", () => {
     expect(capped.getView("south").players.south.leader.power).toBe(7000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("does not attach newly placed DON when the turn began with no field DON", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op13GolDRoger003,
+      activeDon: 0,
+      donDeckCount: 10,
+    });
+    engine.endTurn("south");
+    engine.endTurn("north");
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 2, donDeckCount: 8 });
+    expect(engine.getView("south").players.south.leader).toMatchObject({
+      attachedDon: 0,
+      power: 5000,
+    });
+  });
 });

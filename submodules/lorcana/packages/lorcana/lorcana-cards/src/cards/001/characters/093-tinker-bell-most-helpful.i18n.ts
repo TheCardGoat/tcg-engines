@@ -17,7 +17,16 @@ export const tinkerBellMostHelpfulI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Naseweis",
     version: "Stets hilfsbereit",
-    text: "<Wendig> \\Feenglanz\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
+    text: [
+      {
+        title: "<Wendig>",
+      },
+      {
+        title: "Feenglanz",
+        description:
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
+      },
+    ],
   },
   fr: {
     name: "LA FÉE CLOCHETTE",

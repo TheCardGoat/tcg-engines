@@ -27,7 +27,7 @@ describe("OP13-080 St. Ethanbaron V. Nusjuro", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("at seven trash is excluded from opponent-effect removal, but at six it can be removed", () => {
+  test("at seven trash survives selected opponent-effect removal, but at six it can be removed", () => {
     const protectedEngine = OnePieceTestEngine.create(
       {
         character: [op13StEthanbaronVNusjuro080, eb01Doma005],
@@ -46,18 +46,20 @@ describe("OP13-080 St. Ethanbaron V. Nusjuro", () => {
     protectedEngine.playCard(op04GumGumRedRoc056, "north");
     const target = protectedEngine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Red Roc's removal target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(removableId);
     protectedEngine.resolveDecision(
       "effectTargetSelection",
-      { selectedIds: [removableId] },
+      { selectedIds: [protectedId] },
       "north",
     );
     const protectedView = protectedEngine.getView("south");
     expect(protectedView.players.south.characters.map((card) => card?.instanceId)).toContain(
       protectedId,
     );
-    expect(protectedEngine.findCardInZone("south", "deck", eb01Doma005)).toBe(removableId);
+    expect(protectedView.players.south.characters.map((card) => card?.instanceId)).toContain(
+      removableId,
+    );
     expect(protectedView.prompts).toHaveLength(0);
 
     const vulnerableEngine = OnePieceTestEngine.create(

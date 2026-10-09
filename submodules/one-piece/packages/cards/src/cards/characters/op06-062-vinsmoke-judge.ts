@@ -30,7 +30,7 @@ export const op06VinsmokeJudge062: CharacterCard = {
   setId: "OP06",
   cost: 8,
   power: 8000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "slash",
   effect:
     '[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.) You may trash 2 cards from your hand: Play up to 4 "GERMA 66" type Character cards with different card names and 4000 power or less from your trash.\n[Activate:Main] [Once Per Turn] DON!! -1: Rest up to 1 of your opponent\'s DON!! cards.',
@@ -69,7 +69,7 @@ export const op06VinsmokeJudge062: CharacterCard = {
               {
                 filter: "trait",
                 value: "GERMA 66",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

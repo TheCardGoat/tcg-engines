@@ -52,4 +52,17 @@ describe("OP10-030 Smoker", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(lifeId);
     expect(() => engine.pendingDecision("lifeTrigger", "north")).toThrow();
   });
+  test("FAQ: Character restriction leaves the Leader's DON ready effect available", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP10-001",
+      character: ["OP10-030", "ST02-005"],
+      restedDon: 3,
+    });
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP10-030"));
+    e.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+    e.asSouth().activateMain(e.leader("south"));
+    e.resolveDecision("effectSetActiveDon", { optionId: "2" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(3);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+  });
 });

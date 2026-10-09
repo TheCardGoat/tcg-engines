@@ -44,6 +44,9 @@ export class LorcanaServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    if (moveType === "undoToTurnStart") {
+      return this.undoToTurnStart(actorId, context);
+    }
     const moveHistoryStartIndex = this.engine.getMoveHistory().length;
     const moveLogStartIndex = this.engine.getMoveLogHistory().length;
     const result = this.engine.dispatch(moveType, actorId, payload);
@@ -222,6 +225,21 @@ export class LorcanaServerEngine implements ServerGameEngine {
 
   canUndo(playerId: string): boolean {
     return this.engine.canUndo(playerId);
+  }
+
+  canUndoToTurnStart(playerId: string): boolean {
+    return this.engine.canUndoToTurnStart(playerId);
+  }
+
+  undoToTurnStart(playerId: string, context: DispatchContext, prevStateID?: number): DispatchResult {
+    const moveHistoryStartIndex = this.engine.getMoveHistory().length;
+    const moveLogStartIndex = this.engine.getMoveLogHistory().length;
+    const result = this.engine.undoToTurnStart(playerId, prevStateID);
+    return this.#toDispatchResult(result, context, {
+      actorId: playerId,
+      moveHistoryStartIndex,
+      moveLogStartIndex,
+    });
   }
 
   undo(playerId: string, context: DispatchContext, prevStateID?: number): DispatchResult {

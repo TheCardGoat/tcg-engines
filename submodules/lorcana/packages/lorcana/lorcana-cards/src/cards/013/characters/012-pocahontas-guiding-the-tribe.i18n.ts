@@ -35,11 +35,12 @@ export const pocahontasGuidingTheTribeI18n: Record<Languages, I18nProperties> = 
   },
   it: {
     name: "Pocahontas",
-    version: "Guiding the Tribe",
+    version: "Guida della Tribù",
     text: [
       {
-        title: "Stay Close",
-        description: "When you play this character, you may play a character with cost 1 for free.",
+        title: "Statemi Vicino",
+        description:
+          "Quando giochi questo personaggio, puoi giocare un personaggio con costo 1 gratis.",
       },
     ],
   },

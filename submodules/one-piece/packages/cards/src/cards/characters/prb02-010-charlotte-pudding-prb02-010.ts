@@ -47,28 +47,30 @@ export const prb02CharlottePuddingPrb02010010: CharacterCard = {
             amount: 2,
           },
         ],
+        postCostConditions: [
+          {
+            condition: "compound",
+            operator: "and",
+            conditions: [
+              {
+                condition: "leaderTrait",
+                trait: "Big Mom Pirates",
+                match: "exact",
+              },
+              {
+                condition: "donFieldCount",
+                player: "opponent",
+                comparison: "gte",
+                value: 6,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 2,
-            condition: {
-              condition: "compound",
-              operator: "and",
-              conditions: [
-                {
-                  condition: "leaderTrait",
-                  trait: "Big Mom Pirates",
-                  match: "includes",
-                },
-                {
-                  condition: "donFieldCount",
-                  player: "opponent",
-                  comparison: "gte",
-                  value: 6,
-                },
-              ],
-            },
           },
           {
             action: "play",
@@ -94,7 +96,7 @@ export const prb02CharlottePuddingPrb02010010: CharacterCard = {
               {
                 filter: "trait",
                 value: "Big Mom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

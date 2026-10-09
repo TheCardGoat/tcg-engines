@@ -42,12 +42,12 @@ export const op13Gordon024: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Music",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "FILM",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

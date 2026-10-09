@@ -232,11 +232,39 @@ export function reduceGrandArchiveEvent(
           `Card created in ${event.object.zone} must be controlled by its owner`,
         );
       }
+      const baseHost = event.separatedChampionBaseId
+        ? state.objects[event.separatedChampionBaseId]
+        : undefined;
+      if (
+        event.separatedChampionBaseId &&
+        (!baseHost ||
+          baseHost.baseLineageCardId ||
+          baseHost.zone !== "field" ||
+          !baseHost.activeDefinitionId ||
+          baseHost.activeDefinitionId === baseHost.definitionId ||
+          baseHost.definitionId !== event.object.definitionId ||
+          event.object.zone !== "inner-lineage" ||
+          event.object.hostId !== baseHost.id)
+      ) {
+        throw new GrandArchiveTransactionRefused("Invalid base champion separation");
+      }
       return {
         ...state,
         stateVersion: nextVersion,
         nextObjectOrdinal: state.nextObjectOrdinal + 1,
-        objects: { ...state.objects, [event.object.id]: event.object },
+        objects: {
+          ...state.objects,
+          ...(baseHost
+            ? {
+                [baseHost.id]: {
+                  ...baseHost,
+                  baseLineageCardId: event.object.id,
+                  objectVersion: baseHost.objectVersion + 1,
+                },
+              }
+            : {}),
+          [event.object.id]: event.object,
+        },
         zones: addToZone(
           state.zones,
           event.object.ownerId,
@@ -892,7 +920,9 @@ export function reduceGrandArchiveEvent(
       const previousCardId = lineage.at(-2);
       const previousDefinitionId = previousCardId
         ? state.objects[previousCardId]?.definitionId
-        : champion.definitionId;
+        : champion.baseLineageCardId
+          ? undefined
+          : champion.definitionId;
       if (!previousDefinitionId) {
         throw new GrandArchiveTransactionRefused("Champion lineage has no previous definition");
       }
@@ -1216,6 +1246,26 @@ export function reduceGrandArchiveEvent(
     }
     case "replacement-effect-consumed":
     case "replacement-effect-expired":
+      if (event.type === "replacement-effect-consumed" && event.retainFor) {
+        const instance = state.replacementEffects.find(
+          (effect) => effect.id === event.replacementId,
+        );
+        if (
+          !instance ||
+          instance.effect.consumptionScope !== "source-game-event" ||
+          instance.consumedBy
+        ) {
+          throw new GrandArchiveTransactionRefused("Invalid grouped replacement consumption");
+        }
+        return {
+          ...state,
+          stateVersion: nextVersion,
+          replacementEffects: state.replacementEffects.map((effect) =>
+            effect.id === event.replacementId ? { ...effect, consumedBy: event.retainFor } : effect,
+          ),
+        };
+      }
+      // Ordinary next-event replacements are removed immediately.
       if (!state.replacementEffects.some((effect) => effect.id === event.replacementId)) {
         throw new GrandArchiveTransactionRefused(
           `Replacement effect does not exist: ${event.replacementId}`,
@@ -1908,13 +1958,11 @@ export class GrandArchiveTransactionKernel {
     continuation: GrandArchiveReplacementContinuation,
     answer: GrandArchiveReplacementDecisionAnswer,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map(
-      (entry): GrandArchiveRuntimeQueuedEvent => ({
-        event: entry.event,
-        depth: entry.depth,
-        appliedReplacementIds: new Set(entry.appliedReplacementIds),
-      }),
-    );
+    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
+      event: entry.event,
+      depth: entry.depth,
+      appliedReplacementIds: new Set(entry.appliedReplacementIds),
+    }));
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex, answer);
   }
 
@@ -1922,13 +1970,11 @@ export class GrandArchiveTransactionKernel {
     state: GrandArchiveMatchState,
     continuation: GrandArchiveReplacementContinuation,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map(
-      (entry): GrandArchiveRuntimeQueuedEvent => ({
-        event: entry.event,
-        depth: entry.depth,
-        appliedReplacementIds: new Set(entry.appliedReplacementIds),
-      }),
-    );
+    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
+      event: entry.event,
+      depth: entry.depth,
+      appliedReplacementIds: new Set(entry.appliedReplacementIds),
+    }));
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex);
   }
 
@@ -2224,6 +2270,9 @@ export class GrandArchiveTransactionKernel {
                           : next.event;
       const baseEvent: GrandArchiveCommittedEvent = {
         ...enrichedEvent,
+        ...(enrichedEvent.type === "damage-marked" && enrichedEvent.sourceId
+          ? { sourceSnapshot: draft.objects[enrichedEvent.sourceId] }
+          : {}),
         eventId: grandArchiveEventId(`event-${draft.nextEventOrdinal + committed.length}`),
         stateVersion,
       };

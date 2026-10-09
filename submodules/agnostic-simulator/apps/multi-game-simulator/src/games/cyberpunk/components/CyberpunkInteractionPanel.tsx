@@ -10,6 +10,8 @@ import classes from "./CyberpunkInteractionPanel.module.css";
 interface CyberpunkInteractionPanelProps extends SimulatorRendererProps {
   promptPlacement?: "player" | "rival";
   onTogglePromptPlacement?: () => void;
+  /** Dense phone presentation for the prompt banner and choice sheets. */
+  surface?: "desktop" | "mobile";
 }
 
 export function CyberpunkInteractionPanel({
@@ -17,6 +19,7 @@ export function CyberpunkInteractionPanel({
   onSubmitInteraction,
   promptPlacement = "player",
   onTogglePromptPlacement,
+  surface = "desktop",
 }: CyberpunkInteractionPanelProps) {
   const { humanSide } = useEngine();
   const { paymentSelectionActive } = usePaymentSelection();
@@ -30,17 +33,18 @@ export function CyberpunkInteractionPanel({
           <PromptBanner
             side={humanSide}
             compact
+            surface={surface}
             showActionPrompt
             promptPlacement={promptPlacement}
             onTogglePromptPlacement={onTogglePromptPlacement}
           />
-          <ChoiceModal side="player" />
-          <ChoiceModal side="opponent" />
+          <ChoiceModal side="player" surface={surface} />
+          <ChoiceModal side="opponent" surface={surface} />
         </>
       )}
-      {/* Generic interaction panel is kept in the DOM for tests/debugging but
-          hidden visually; Cyberpunk uses the native PromptBanner/board-driven
-          interaction flow. */}
+      {/* See ./Prompt/index.ts for the full prompt surface map. This generic
+          InteractionPanel is hidden adapter/debug output, not the visible
+          Cyberpunk player prompt above. */}
       <div className={classes.testOnlyInteractionPanel}>
         <InteractionPanel fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
       </div>

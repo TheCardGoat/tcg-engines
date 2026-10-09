@@ -28,29 +28,10 @@ export const collapsingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
       abilities: [
         {
           id: "v2214upufo-a1",
-          kind: "card-resolution",
+          kind: "static",
+          staticKind: "effects",
           text: "[Class Bonus] If it’s not your turn, you may remove a preparation counter from your champion to activate this card from your memory without paying its reserve cost.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["CHAMPION"],
-                },
-              },
-            },
-          ],
+          functionalZones: ["memory"],
           restrictions: [
             {
               kind: "static",
@@ -61,28 +42,56 @@ export const collapsingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               },
             },
           ],
-          effect: {
-            kind: "conditional",
-            condition: {
-              kind: "turn-player",
-              player: "opponent",
+          effects: [
+            {
+              kind: "rule-modification",
+              mode: "allow",
+              action: "activate",
+              subject: {
+                kind: "source",
+              },
+              fromZone: "memory",
+              condition: {
+                kind: "not",
+                condition: {
+                  kind: "turn-player",
+                  player: "controller",
+                },
+              },
+              duration: {
+                kind: "while-source-in-functional-zone",
+              },
             },
-            then: {
-              kind: "optional",
-              player: "controller",
-              allOrNothing: true,
-              effect: {
+            {
+              kind: "rule-modification",
+              mode: "replace-cost",
+              action: "activate",
+              subject: {
+                kind: "source",
+              },
+              fromZone: "memory",
+              costKind: "reserve",
+              cost: {
                 kind: "remove-counter",
                 subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                  kind: "champion",
+                  player: "controller",
                 },
                 counter: "preparation",
                 amount: 1,
-                bindResultAs: "removed-counters",
+              },
+              condition: {
+                kind: "not",
+                condition: {
+                  kind: "turn-player",
+                  player: "controller",
+                },
+              },
+              duration: {
+                kind: "while-source-in-functional-zone",
               },
             },
-          },
+          ],
         },
         {
           id: "v2214upufo-a2",

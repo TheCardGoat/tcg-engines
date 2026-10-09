@@ -60,7 +60,7 @@ export const op11CharlottePudding070: CharacterCard = {
               {
                 filter: "trait",
                 value: "Big Mom Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -31,22 +31,26 @@ export const remnantOfWill: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           kind: "card-resolution",
           text: "Put two haunt counters on your Phantasmagoria and recover 4.",
           effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "each",
-              collection: {
-                zones: ["field"],
-                player: "controller",
-                filter: {
-                  kind: "name",
-                  value: "Phantasmagoria and recover 4",
+            kind: "sequence",
+            effects: [
+              {
+                kind: "add-counter",
+                subject: {
+                  kind: "mastery",
+                  player: "controller",
+                  name: "Phantasmagoria",
                 },
+                counter: {
+                  named: "haunt",
+                },
+                amount: 2,
               },
-            },
-            counter: {
-              named: "haunt",
-            },
-            amount: 2,
+              {
+                kind: "recover",
+                player: "controller",
+                amount: 4,
+              },
+            ],
           },
         },
         {

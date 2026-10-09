@@ -28,4 +28,24 @@ describe("EB01-045 Brook", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: Rush remains after the opponent's only cost-zero Character is K.O.'d", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-046"], hand: ["EB01-045", "EB01-049"], activeDon: 8 },
+      { character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().attack("EB01-046", e.leader("north"));
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    e.playCard("EB01-045");
+    // A separate real On Play removes the qualifying Character after Rush was granted.
+    e.playCard("EB01-049");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(0);
+    e.asSouth().attack("EB01-045", e.leader("north"));
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "EB01-045")?.rested,
+    ).toBe(true);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

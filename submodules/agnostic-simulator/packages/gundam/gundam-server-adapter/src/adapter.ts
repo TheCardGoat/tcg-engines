@@ -18,6 +18,8 @@ import type {
 } from "@tcg/shared/game-adapter";
 import {
   buildColorMetadataFacets,
+  hostedUndoProposalPolicy,
+  materializeDeckInstances,
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
@@ -42,6 +44,7 @@ import { GUNDAM_RUNTIME_FINGERPRINT } from "./runtime-fingerprint.js";
  */
 export const gundamServerAdapter: GameAdapter = {
   slug: "gundam",
+  proposalPolicy: hostedUndoProposalPolicy,
 
   createGameId(): string {
     return `gundam-game-${crypto.randomUUID()}`;
@@ -52,43 +55,8 @@ export const gundamServerAdapter: GameAdapter = {
   },
 
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
-    const cardInstances: Record<string, string> = {};
-    const owners: Record<string, string[]> = {};
-    const instanceSections: Record<string, string> = {};
-    const printingIdByInstanceId: Record<string, string> = {};
-    let hasSections = false;
-    let hasPresentation = false;
-    for (const { owner, deck } of decks) {
-      const ownerInstances: string[] = [];
-      // Per-owner monotonic counter so duplicate cardId rows in the same
-      // DeckBuildInput don't collide on `${owner}-${cardId}-${i}`.
-      let counter = 0;
-      for (const entry of deck) {
-        for (let i = 0; i < entry.qty; i++) {
-          const instanceId = `${owner}-${entry.cardId}-${counter++}`;
-          cardInstances[instanceId] = entry.cardId;
-          ownerInstances.push(instanceId);
-          if (entry.sectionId) {
-            instanceSections[instanceId] = entry.sectionId;
-            hasSections = true;
-          }
-          if (entry.printingId) {
-            printingIdByInstanceId[instanceId] = entry.printingId;
-            hasPresentation = true;
-          }
-        }
-      }
-      owners[owner] = ownerInstances;
-    }
-    const maps: CardsMaps = {
-      cardInstances,
-      owners,
-      ...(hasSections ? { instanceSections } : {}),
-      ...(hasPresentation ? { presentation: { printingIdByInstanceId } } : {}),
-    };
-    if (hasPresentation) {
-      maps.presentation = remintGundamPresentation(maps);
-    }
+    const maps = materializeDeckInstances(decks);
+    if (maps.presentation) maps.presentation = remintGundamPresentation(maps);
     return maps;
   },
 

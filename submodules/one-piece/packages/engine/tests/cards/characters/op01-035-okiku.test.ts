@@ -33,9 +33,9 @@ describe("OP01-035 Okiku", () => {
     engine.declareAttack(kinEmonId, engine.leader("north"), "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [okikuId] }, "south");
     // Complete the battle before declaring the next attack (6-5-6).
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.declareAttack(okikuId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const view = engine.getView("south");
     expect(

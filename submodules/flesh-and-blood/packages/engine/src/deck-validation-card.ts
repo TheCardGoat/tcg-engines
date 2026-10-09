@@ -10,7 +10,10 @@ import {
   type FabCardDefinitionInput,
 } from "./cards.ts";
 import type { FabDeckbuildingRules, FabValidationCard } from "./deck-validation.ts";
-import type { FleshAndBloodCatalogCard } from "@tcg/flesh-and-blood-types/catalog";
+import {
+  isFleshAndBloodFormatPlayable,
+  type FleshAndBloodCatalogCard,
+} from "@tcg/flesh-and-blood-types/catalog";
 
 function heroMetatype(value: FabMetatype): boolean {
   switch (value) {
@@ -110,7 +113,7 @@ export function createFabValidationCard(
     deckbuilding: createFabDeckbuildingRules(registered),
     legalFormats: metadata
       ? Object.entries(metadata.legalities)
-          .filter(([, value]) => value.legal && !value.banned && !value.suspended)
+          .filter(([, value]) => isFleshAndBloodFormatPlayable(value))
           .map(([key]) => key)
       : [],
     restrictedFormats: metadata

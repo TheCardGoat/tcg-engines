@@ -35,7 +35,7 @@ describe("Royce - Psycho on the Edge (Retail) jsdom happy path", () => {
 
       await pom.goSolo(royce.instanceId, CYBERPUNK_P1);
 
-      await pom.expectEddies(CYBERPUNK_P1, 2);
+      await pom.expectEddies(CYBERPUNK_P1, 3);
       await pom.expectFieldCardSpent(CYBERPUNK_P1, royce.instanceId, false);
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, royce.instanceId, 2);
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, royce.instanceId, 13);

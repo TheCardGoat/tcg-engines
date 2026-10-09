@@ -97,6 +97,7 @@ export const mordredFatedLuminary: GrandArchiveCard<GrandArchiveAbilityDefinitio
                   previousObject: {
                     kind: "source",
                   },
+                  sameBaseLevel: true,
                 },
               },
               effect: {

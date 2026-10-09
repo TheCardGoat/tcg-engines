@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07PortgasDAce119 } from "../../../../../cards/src/cards/characters/op07-119-portgas-d-ace.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP07-119 Portgas.D.Ace", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07PortgasDAce119);
-  });
-});

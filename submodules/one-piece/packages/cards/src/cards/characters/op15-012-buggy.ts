@@ -23,7 +23,7 @@ export const op15Buggy012: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Buggy Pirates East Blue"],
+  traits: ["East Blue", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[When Attacking] Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.\n[On K.O.] Draw 1 card.",
@@ -34,9 +34,9 @@ export const op15Buggy012: CharacterCard = {
         actions: [
           {
             action: "giveDon",
-            donorPlayer: "opponent",
+            donorPlayer: "targetOwner",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["leader", "character"],
               count: {
                 amount: 1,

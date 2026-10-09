@@ -46,7 +46,7 @@ export const op03ThunderBolt121: EventCard = {
   rarity: "C",
   setId: "OP03",
   cost: 2,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   effect:
     "[Main] You may trash 1 card from the top of your Life cards: K.O. up to 1 of your opponent's Characters with a cost of 5 or less. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",
   effects: {

@@ -1,4 +1,5 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
+import { useEffect } from "react";
 import type { ClientLoaderFunctionArgs, LoaderFunctionArgs } from "react-router";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
@@ -14,6 +15,7 @@ import { initRootSocket } from "./lib/gateway/root-socket";
 import { logDebugPayload } from "./lib/debug-logging";
 import { apiUrl, runtimeApiEnvForServer } from "./runtime/gameRuntimeApi";
 import { parseSharedSimulatorRoute } from "./simulator/routeData";
+import { getGameMeta, isGameSlug } from "./simulator/games";
 import { isSimulatorDebugExportEnabled } from "./simulator/debug-export/debug-export-feature";
 import {
   normalizeSimulatorSettings,
@@ -46,15 +48,18 @@ export type SimulatorAuthBootstrapResult = {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  const cyberpunkMatch = /^\/cyberpunk\/simulator\/matches\/[^/]+\/games\/[^/]+\/?$/.test(pathname);
+  const matchBackground = cyberpunkMatch ? { backgroundColor: "#08090d" } : undefined;
   return (
-    <html lang="en">
+    <html lang="en" style={matchBackground}>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={matchBackground}>
         <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
         <ScrollRestoration />
         <Scripts />
@@ -148,6 +153,18 @@ export function headers() {
 }
 
 export default function Root() {
+  const { pathname } = useLocation();
+  const game = pathname.split("/")[1];
+  useEffect(() => {
+    // Live boards and indexable deck pages own their more specific titles.
+    if (
+      /\/simulator\/matches\/[^/]+\/games\/[^/]+/.test(pathname) ||
+      pathname.includes("/simulator/decks")
+    )
+      return;
+    const name = game && isGameSlug(game) && game !== "lorcana" ? getGameMeta(game)?.name : null;
+    document.title = name ? `${name} | TCG Online` : "TCG Online";
+  }, [game, pathname]);
   return <Outlet />;
 }
 

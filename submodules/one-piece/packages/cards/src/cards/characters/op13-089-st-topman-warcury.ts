@@ -39,7 +39,7 @@ export const op13StTopmanWarcury089: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   attribute: "special",
   effect:
     "If you have 7 or more cards in your trash, this Character cannot be removed from the field by your opponent's effects and gains [Blocker].\n[On K.O.] Draw 1 card.",

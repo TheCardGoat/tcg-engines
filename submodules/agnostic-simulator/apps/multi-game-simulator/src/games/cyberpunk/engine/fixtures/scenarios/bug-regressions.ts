@@ -1,5 +1,5 @@
 import type { Scenario } from "./types";
-import { c, CyberpunkTestEngine, P1, P2 } from "./shared";
+import { c, CyberpunkTestEngine, P1, P2, scenarioSeed } from "./shared";
 
 /**
  * Screenshot-backed regression for the live match that appeared to freeze on
@@ -8,6 +8,36 @@ import { c, CyberpunkTestEngine, P1, P2 } from "./shared";
  * fixture exposes both the chooser controls and the rival's spectator copy.
  */
 export const bugRegressionScenarios: Scenario[] = [
+  {
+    id: "regressionDetonateDetachesGear",
+    group: "core",
+    label: "Regression · Detonate removes equipped Gear",
+    description:
+      "Defeat Mantis Blades and Kiroshi Optics with successive Detonates while Jackie Welles is active. Each Gear must leave its host without offering Jackie's Unit-only replacement.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailDetonate, c.welcomeToNightCityRetailDetonate],
+          eddies: 2,
+        },
+        {
+          legendArea: [
+            { card: c.welcomeToNightCityRetailJackieWellesMamaSFavorite, faceDown: false },
+          ],
+          eddies: 1,
+          field: [
+            {
+              card: c.welcomeToNightCityRetailCorpoSecurity,
+              attachedGears: [
+                c.welcomeToNightCityRetailMantisBlades,
+                c.welcomeToNightCityRetailKiroshiOptics,
+              ],
+            },
+          ],
+        },
+        { autoGainGig: false, seed: scenarioSeed("regressionDetonateDetachesGear") },
+      ),
+  },
   {
     id: "regressionCardEffectSacrificialGearChoice",
     group: "core",
@@ -96,7 +126,7 @@ export const bugRegressionScenarios: Scenario[] = [
     group: "legend-passive",
     label: "Regression · Jackie defeat replacement",
     description:
-      "V: Streetkid (10 power with Dying Night and Satori) has beaten Corpo Security. P1 owns a payable Jackie Welles: Mama's Favorite and must see Spend 1 Eddie / let the Unit be defeated controls; P2 only observes the replacement decision.",
+      "V: Streetkid (10 power with Dying Night and Satori) has beaten one of two Corpo Security cards. P1 owns two payable Jackie Welles: Mama's Favorite cards; the prompt must identify the exact source and protected Unit while P2 observes the decision.",
     build: () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
@@ -106,8 +136,17 @@ export const bugRegressionScenarios: Scenario[] = [
               spent: true,
               hasLag: false,
             },
+            {
+              card: c.welcomeToNightCityRetailCorpoSecurity,
+              spent: true,
+              hasLag: false,
+            },
           ],
           legendArea: [
+            {
+              card: c.welcomeToNightCityRetailJackieWellesMamaSFavorite,
+              faceDown: false,
+            },
             {
               card: c.welcomeToNightCityRetailJackieWellesMamaSFavorite,
               faceDown: false,
@@ -152,10 +191,58 @@ export const bugRegressionScenarios: Scenario[] = [
       engine.resolveAttack({ as: P2 });
       engine.resolveAttack({ as: P1, pass: true });
       engine.resolveAttack({ as: P2 });
+      engine.resolveAttack({ as: P2 });
 
       const choice = engine.getState().G.turnMetadata.pendingChoice;
       if (!choice || choice.type !== "redirectDefeat" || choice.chooserId !== P1) {
         throw new Error("Regression fixture must stop at P1's redirectDefeat choice.");
+      }
+      return engine;
+    },
+  },
+  {
+    id: "regressionCarnageTargetsFieldedLegend",
+    group: "core",
+    label: "Regression · Carnage targets a Go-Solo Legend on the field",
+    description:
+      "The rival paid a GO SOLO Legend onto the field last turn; CR 4.2.1 makes a Legend on the field a Unit too. Carnage At The Colosseum must offer it as a defeat target (and remove it from the game on defeat). Reported 2026-10-02: the legend could not be targeted.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailCarnageAtTheColosseum],
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          eddies: 6,
+        },
+        {
+          legendArea: [{ card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge, faceDown: false }],
+          eddies: 9,
+        },
+        { seed: scenarioSeed("regressionCarnageTargetsFieldedLegend") },
+      );
+
+      // The rival's previous turn: go solo with Royce, then pass back.
+      engine.completeTurn({ as: P1 });
+      const royce = engine
+        .getState()
+        .G.players[P2].zones.legendArea.map((id) => engine.getState().G.cardIndex[id])
+        .find((card) => card?.definitionId === c.welcomeToNightCityRetailRoycePsychoOnTheEdge.id);
+      if (!royce) throw new Error("Fixture could not find the GO SOLO Legend instance.");
+      const goSolo = engine.executeMove(
+        "goSolo",
+        { args: { cardId: royce.instanceId as string } },
+        P2,
+      );
+      if (!goSolo.success) {
+        throw new Error(
+          `Fixture GO SOLO failed: ${goSolo.errorCode ?? "unknown"} — later steps would misdiagnose as a targeting defect.`,
+        );
+      }
+      engine.completeTurn({ as: P2 });
+
+      engine.playCard(c.welcomeToNightCityRetailCarnageAtTheColosseum, { as: P1 });
+      const choice = engine.getState().G.turnMetadata.pendingChoice;
+      if (!choice || choice.type !== "chooseTarget") {
+        throw new Error("Regression fixture must stop at Carnage's defeat-target choice.");
       }
       return engine;
     },

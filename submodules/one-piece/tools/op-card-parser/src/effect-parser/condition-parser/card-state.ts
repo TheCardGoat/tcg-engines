@@ -5,6 +5,65 @@ export function parseCardStateCondition(text: string): Condition | null {
   const t = text.trim();
   let m: RegExpExecArray | null;
 
+  const namedBasePower =
+    /^you\s+have\s+a\s+\[([^\]]+)\]\s+or\s+\[([^\]]+)\]\s+Character\s+with\s+(\d+)\s+base\s+power\s+or\s+(more|less)$/i.exec(
+      t,
+    );
+  if (namedBasePower)
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "character",
+      filters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: namedBasePower[1]! },
+            { filter: "name", value: namedBasePower[2]! },
+          ],
+        },
+        {
+          filter: "basePower",
+          comparison: parseComparison(namedBasePower[4]),
+          value: Number(namedBasePower[3]),
+        },
+      ],
+    };
+
+  const ownBasePower =
+    /^you\s+have\s+a\s+Character\s+with\s+(\d+)\s+base\s+power(?:\s+or\s+(more|less))?$/i.exec(t);
+  if (ownBasePower)
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "character",
+      filters: [
+        {
+          filter: "basePower",
+          comparison: ownBasePower[2] ? parseComparison(ownBasePower[2]) : "eq",
+          value: Number(ownBasePower[1]),
+        },
+      ],
+    };
+  const bothNamedBasePower =
+    /^you\s+have\s+\[([^\]]+)\]\s+and\s+\[([^\]]+)\]\s+Characters\s+with\s+(\d+)\s+base\s+power$/i.exec(
+      t,
+    );
+  if (bothNamedBasePower)
+    return {
+      condition: "compound",
+      operator: "and",
+      conditions: [1, 2].map((index) => ({
+        condition: "hasCard",
+        player: "self",
+        zone: "character",
+        filters: [
+          { filter: "name", value: bothNamedBasePower[index]! },
+          { filter: "basePower", comparison: "eq", value: Number(bothNamedBasePower[3]) },
+        ],
+      })),
+    };
+
   // Own Leader power is a field-card condition, not the source Character.
   m = /^your Leader has (\d+) power(?:\s+or\s+(more|less))?$/i.exec(t);
   if (m) {
@@ -169,6 +228,42 @@ export function parseCardStateCondition(text: string): Condition | null {
     };
   }
 
+  const basePowerBound =
+    /^your\s+opponent\s+has\s+a\s+Character\s+with\s+(\d+)\s+base\s+power\s+or\s+(less|more)$/i.exec(
+      t,
+    );
+  if (basePowerBound) {
+    return {
+      condition: "hasCard",
+      player: "opponent",
+      zone: "character",
+      filters: [
+        {
+          filter: "basePower",
+          comparison: parseComparison(basePowerBound[2]),
+          value: Number(basePowerBound[1]),
+        },
+      ],
+    };
+  }
+
+  const prefixPowerBound =
+    /^your\s+opponent\s+has\s+a\s+Character\s+with\s+(\d+)\s+or\s+(less|more)\s+power$/i.exec(t);
+  if (prefixPowerBound) {
+    return {
+      condition: "hasCard",
+      player: "opponent",
+      zone: "character",
+      filters: [
+        {
+          filter: "power",
+          comparison: parseComparison(prefixPowerBound[2]),
+          value: Number(prefixPowerBound[1]),
+        },
+      ],
+    };
+  }
+
   // Has card: your opponent has a Character with N effective power or more/less
   m =
     /^your\s+opponent\s+has\s+a\s+Character\s+with\s+(\d+)\s+power(?:\s+or\s+(less|more))?$/i.exec(
@@ -310,7 +405,7 @@ export function parseCardStateCondition(text: string): Condition | null {
       zone: "character",
       filters: [
         ...(m[1] ? [{ filter: "color", value: m[1].toLowerCase() as OPColor } as const] : []),
-        { filter: "trait", value: m[2]!, match: "includes" },
+        { filter: "trait", value: m[2]!, match: "exact" },
         ...(exclusion ? [exclusion] : []),
       ],
     };

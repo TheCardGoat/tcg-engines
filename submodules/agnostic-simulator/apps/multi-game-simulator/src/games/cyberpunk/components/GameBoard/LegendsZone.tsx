@@ -1,5 +1,10 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { AnimatedEntityCollection, AnimatedEntityNode, MaskedCardFrame } from "@tcg/simulator-ui";
+import {
+  AnimatedEntityCollection,
+  AnimatedEntityNode,
+  MaskedCardFrame,
+  useAnimationNode,
+} from "@tcg/simulator-ui";
 import { Card } from "./Card";
 import { ZoneBadge } from "./ZoneBadge";
 import {
@@ -13,6 +18,7 @@ import {
 } from "../../engine";
 import { useMoveSelectionStateForSide } from "./MoveSelectionContext";
 import classes from "./LegendsZone.module.css";
+import { useSetupShuffle } from "./useSetupShuffle";
 
 const LEGEND_LOG_HOVER_EVENT = "cyberpunk:legend-log-hover";
 
@@ -70,6 +76,7 @@ export function LegendsZone({
   side,
   maskBottomPercent,
 }: LegendsZoneProps) {
+  const setupShuffle = useSetupShuffle(false);
   // Card drag/drop speaks in the canonical engine-projection zone ids.  The
   // outer container already uses these ids; keeping the card source/target in
   // the same vocabulary lets a hand Gear land on a face-up friendly Legend.
@@ -77,6 +84,14 @@ export function LegendsZone({
   const faceDownCount = legends.filter((l) => l.faceDown).length;
   const [logHighlight, setLogHighlight] = useState<{ ownerId: string; index: number } | null>(null);
   const ownerId = side ? String(PLAYER_SIDE_TO_ID[side]) : null;
+  const animationRef = useAnimationNode(
+    {
+      kind: "zone",
+      id: zoneName,
+      ...(ownerId ? { ownerId } : {}),
+    },
+    { presence: "present" },
+  );
 
   useEffect(() => {
     const handleLogHover = (event: Event) => {
@@ -94,6 +109,7 @@ export function LegendsZone({
 
   return (
     <div
+      ref={animationRef}
       className={`${classes.zone} ${opponent ? classes.opponent : ""}`}
       data-testid="legends-zone"
       data-zone-id={opponent ? "opp-legendArea" : "p-legendArea"}
@@ -101,6 +117,7 @@ export function LegendsZone({
       data-side={side}
       data-count={legends.length}
       data-face-down-count={faceDownCount}
+      data-setup-shuffle={setupShuffle ? "true" : "false"}
     >
       <div className={classes.slots}>
         <AnimatedEntityCollection>

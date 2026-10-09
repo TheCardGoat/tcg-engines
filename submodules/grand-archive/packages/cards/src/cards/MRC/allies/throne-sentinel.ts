@@ -75,10 +75,6 @@ export const throneSentinel: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                           kind: "token",
                           value: true,
                         },
-                        {
-                          kind: "subtype",
-                          oneOf: ["TOKEN"],
-                        },
                       ],
                     },
                   },

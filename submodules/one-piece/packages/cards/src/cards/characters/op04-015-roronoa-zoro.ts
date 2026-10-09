@@ -23,7 +23,7 @@ export const op04RoronoaZoro015: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "slash",
   effect: "[On Play] Give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {

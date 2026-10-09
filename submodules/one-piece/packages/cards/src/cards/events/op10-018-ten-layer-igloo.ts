@@ -39,7 +39,7 @@ export const op10TenLayerIgloo018: EventCard = {
   setId: "OP10",
   cost: 2,
   trigger: "Up to 1 of your Leader or Character cards gains +1000 power during this turn.",
-  traits: ["Donquixote Pirates Punk Hazard"],
+  traits: ["Punk Hazard", "Donquixote Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, give up to 1 of your opponent's Leader or Character cards −2000 power during this turn.",
   effects: {

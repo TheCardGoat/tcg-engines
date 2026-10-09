@@ -23,7 +23,7 @@ export const op15Chinjao048: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Happosui Army Dressrosa"],
+  traits: ["Dressrosa", "Happosui Army"],
   attribute: "strike",
   effect:
     "[On Play] You may trash 1 Event from your hand: Draw 2 cards.\n[Opponent's Turn] [On K.O.] Your opponent places 1 card from their hand at the bottom of their deck.",

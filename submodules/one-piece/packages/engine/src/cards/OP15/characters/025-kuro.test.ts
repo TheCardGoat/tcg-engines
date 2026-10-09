@@ -5,6 +5,44 @@ import { op15Kuro025 } from "../../../../../cards/src/cards/characters/op15-025-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-025 Kuro", () => {
+  test("Blocker redirects an opposing Leader attack away from Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Kuro025], hand: [], life: 3 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const blockerId = engine.findCardInZone("south", "character", op15Kuro025);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [blockerId] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("may choose an own rested Character but does not freeze that card at its owner's next Refresh", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op15Kuro025],
+        activeDon: 7,
+        character: [{ card: eb01Doma005, rested: true, attachedDon: 3 }],
+      },
+      { character: [eb01Doma005], activeDon: 1 },
+    );
+    const ownId = engine.findCardInZone("south", "character", eb01Doma005);
+    engine.playCard(op15Kuro025, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    engine.endTurn("south");
+    const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected delayed Character selection.");
+    expect(choice.candidates.map((card) => card.ref.id)).toContain(ownId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [ownId] }, "south");
+    engine.endTurn("north");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === ownId)
+        ?.rested,
+    ).toBe(false);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] moves cost-area DON!! and freezes the fed Character at the next refresh", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op15Kuro025], activeDon: 7 },
@@ -27,6 +65,7 @@ describe("OP15-025 Kuro", () => {
     expect(count.options.map((option) => option.id)).toEqual(["0", "1", "2"]);
     engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [domaId] }, "south");
+    engine.resolveDecision("effectGiveDonSource", { optionId: "1" }, "south");
 
     const northBefore = engine.getView("south").players.north;
     expect(northBefore.restedDon).toBe(0);

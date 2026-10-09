@@ -54,6 +54,8 @@ const TRIGGER_EVENTS: readonly string[] = [
   "support",
   "inkwell",
   "boost",
+  "ink-drop-gained",
+  "ink-drop-removed",
   "leave-discard",
 ];
 

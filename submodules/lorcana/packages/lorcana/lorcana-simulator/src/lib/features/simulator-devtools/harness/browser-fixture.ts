@@ -57,6 +57,8 @@ export interface SerializedTestInitialState {
   inkwell?: number | SerializedTestFixtureCardEntry[];
   discard?: number | SerializedTestFixtureCardEntry[];
   lore?: number;
+  /** Hyperia City pre-banked ink-drop counter. */
+  inkDrops?: number;
 }
 
 export interface LorcanaBrowserInlineFixture {
@@ -150,6 +152,7 @@ export function serializeTestInitialState(state: TestInitialState): SerializedTe
     hand: serializeZone(state.hand),
     inkwell: serializeZone(state.inkwell),
     lore: state.lore,
+    inkDrops: state.inkDrops,
     play: serializeZone(state.play),
   };
 }
@@ -219,6 +222,7 @@ export function deserializeTestInitialState(state: SerializedTestInitialState): 
     hand: deserializeZone(state.hand),
     inkwell: deserializeZone(state.inkwell),
     lore: state.lore,
+    inkDrops: state.inkDrops,
     play: deserializeZone(state.play),
   };
 }

@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { m } from "$lib/i18n/messages.js";
   import X from "@lucide/svelte/icons/x";
-  import * as Tooltip from "$lib/design-system/primitives/tooltip/index.js";
+  import * as Popover from "$lib/design-system/primitives/popover/index.js";
   import type { Snippet } from "svelte";
 
   interface SimulatorSupportReminderProps {
@@ -34,19 +35,23 @@
   }
 </script>
 
-<Tooltip.Root bind:open>
-  <Tooltip.Trigger>
+<Popover.Root bind:open>
+  <Popover.Trigger>
     {#snippet child({ props })}
-      {@render trigger({ props })}
+      <!-- This button opens Support, not the reminder. Keep native button keyboard activation. -->
+      {@render trigger({ props: { ...props, onclick: () => { open = false; }, onkeydown: undefined } })}
     {/snippet}
-  </Tooltip.Trigger>
+  </Popover.Trigger>
 
-  <Tooltip.Content
+  <Popover.Content
     {side}
     {align}
     sideOffset={10}
     class="support-reminder-tooltip"
-    arrowClasses="support-reminder-tooltip__arrow"
+    aria-label={text}
+    trapFocus={false}
+    onOpenAutoFocus={(event) => event.preventDefault()}
+    onCloseAutoFocus={(event) => event.preventDefault()}
   >
     <div class="support-reminder-tooltip__body">
       <p class="support-reminder-tooltip__text">{text}</p>
@@ -56,20 +61,20 @@
           class="support-reminder-tooltip__cta"
           onclick={handleOpenClick}
         >
-          Report a bug
+          {m["sim.support.reportBugLabel"]({})}
         </button>
         <button
           type="button"
           class="support-reminder-tooltip__dismiss"
           onclick={handleDismissClick}
-          aria-label="Dismiss feedback reminder for one week"
+          aria-label={m["sim.support.dismissReminderLabel"]({})}
         >
           <X class="size-3.5" />
         </button>
       </div>
     </div>
-  </Tooltip.Content>
-</Tooltip.Root>
+  </Popover.Content>
+</Popover.Root>
 
 <style>
   :global(.support-reminder-tooltip) {
@@ -80,11 +85,6 @@
     color: #eff6ff !important;
     box-shadow: 0 18px 44px rgba(2, 6, 23, 0.46);
     padding: 0.7rem 0.72rem 0.66rem !important;
-  }
-
-  :global(.support-reminder-tooltip__arrow) {
-    background: rgba(12, 24, 42, 0.98) !important;
-    border-color: rgba(125, 211, 252, 0.32);
   }
 
   .support-reminder-tooltip__body {

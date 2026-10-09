@@ -24,6 +24,12 @@ describe("OP11-065 Charlotte Anana", () => {
     const blocker = eligible.pendingDecision("battleBlocker", "south").steps[0];
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Anana's conditional Blocker.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(ananaId);
+    const lifeBefore = eligible.getView("south").players.south.lifeCount;
+    eligible.asSouth().chooseBlocker(ananaId);
+    expect(eligible.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(eligible.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      ananaId,
+    );
 
     const ineligible = OnePieceTestEngine.create(
       { character: [op11CharlotteAnana065] },

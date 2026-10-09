@@ -820,7 +820,11 @@ function resolveBattleCounter(
         policy.style === "aggressive"
           ? Math.min(1, MIN_COUNTER_CARDS_TO_DEFEND)
           : MIN_COUNTER_CARDS_TO_DEFEND;
-      if (!worthDefending || needed > COUNTABLE_DEFICIT || usable.length < minCounters) {
+      if (
+        !worthDefending ||
+        needed > COUNTABLE_DEFICIT ||
+        (battle.counterCardIds.length === 0 && usable.length < minCounters)
+      ) {
         return empty; // take the life card instead of bleeding counters
       }
     } else {
@@ -854,7 +858,9 @@ function resolveBattleCounter(
   }
   if (total >= needed || lethal) {
     // Lethal with an unsurvivable wall: go down fighting (spec).
-    return selectCommand(prompt, chosen);
+    // Plan the full affordable defense, but pay one Counter at a time. The
+    // reopened step re-evaluates current power and the remaining hand.
+    return selectCommand(prompt, chosen.slice(0, prompt.maxSelections));
   }
   return empty;
 }

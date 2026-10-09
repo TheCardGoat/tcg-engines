@@ -23,7 +23,7 @@ export const op12Inuarashi022: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may rest this Character: Up to 1 of your opponent's rested Characters with a cost of 5 or less will not become active in your opponent's next Refresh Phase.",

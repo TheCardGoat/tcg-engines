@@ -25,9 +25,13 @@ export const hanasInkcaster: ItemCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_4084caf25ca745e6a081506ba5afdb63",
+    tcgPlayer: "704667",
+  },
   text: [
     {
-      title: "Rejuvenating Flourish",
+      title: "REJUVENATING FLOURISH",
       description:
         "{E} — Remove up to 2 damage from chosen character. If there's a card under that character, they gain Resist +1 until the start of your next turn.",
     },

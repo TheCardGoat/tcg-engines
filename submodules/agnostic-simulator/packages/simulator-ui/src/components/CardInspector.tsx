@@ -5,6 +5,7 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
 import { CardFace } from "./CardFace";
+import { CARD_PRESENTATION_LAYERS } from "./CardPresentationPlane";
 
 export interface CardInspectorProps {
   entity: SimulatorEntity;
@@ -81,6 +82,7 @@ export function CardInspector({ entity, children }: CardInspectorProps) {
           role="dialog"
           tabIndex={-1}
           data-testid="card-inspector-popover"
+          style={{ zIndex: CARD_PRESENTATION_LAYERS.focus }}
           aria-label={`${entity.title} inspection`}
           onMouseEnter={open}
           onMouseLeave={close}

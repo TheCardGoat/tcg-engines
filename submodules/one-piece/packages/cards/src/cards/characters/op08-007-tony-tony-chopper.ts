@@ -30,7 +30,7 @@ export const op08TonyTonyChopper007: CharacterCard = {
   setId: "OP08",
   cost: 3,
   power: 5000,
-  traits: ["Animal Straw Hat Crew Drum Kingdom"],
+  traits: ["Animal", "Drum Kingdom", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Your Turn] [On Play]/[When Attacking] Look at 5 cards from the top of your deck and play up to 1 [Animal] type Character card with 4000 power or less rested. Then, place the rest at the bottom of your deck in any order.",
@@ -65,7 +65,7 @@ export const op08TonyTonyChopper007: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -107,7 +107,7 @@ export const op08TonyTonyChopper007: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

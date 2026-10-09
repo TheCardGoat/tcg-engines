@@ -23,7 +23,7 @@ export const op14eb04KinEmon024: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[On Play] Set up to 3 of your DON!! cards as active. Then, you cannot play Character cards during this turn.\n[On K.O.] Rest up to 1 of your opponent's cards.",

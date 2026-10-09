@@ -125,4 +125,49 @@ describe("OP17-067 Kurozumi Kanjuro", () => {
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("cost-ten Character enables resting an opposing active Character", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-067"], character: ["OP17-118"], activeDon: 2 },
+      { character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().play("OP17-067");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.characters[0]?.rested).toBe(true);
+  });
+
+  test.each([false, true])(
+    "pays DON but skips the effect when only the opponent can have a cost-ten Character: %s",
+    (opponentQualifies) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "ST04-001",
+          life: ["ST04-009", "ST04-009", "ST04-009", "ST04-009"],
+          hand: ["OP17-067", "ST04-012"],
+          character: ["ST04-009"],
+          activeDon: 2,
+          donDeckCount: 8,
+          deck: ["ST04-007", "ST04-012", "ST04-009"],
+        },
+        {
+          leaderCardId: "ST04-001",
+          hand: [],
+          deck: ["ST04-007", "ST04-009", "ST04-012"],
+          life: ["ST04-009", "ST04-009", "ST04-009", "ST04-009"],
+          character: opponentQualifies ? ["OP01-094", "ST04-009"] : ["ST04-009"],
+        },
+      );
+      e.asSouth().play("OP17-067");
+      e.asSouth().acceptOptional();
+      const view = e.getView("south");
+      expect(view.players.south.activeDon).toBe(0);
+      expect(view.players.south.restedDon).toBe(1);
+      expect(view.players.south.donDeckCount).toBe(9);
+      expect(
+        view.players.north.characters.filter(Boolean).every((card) => card?.rested === false),
+      ).toBe(true);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
 });

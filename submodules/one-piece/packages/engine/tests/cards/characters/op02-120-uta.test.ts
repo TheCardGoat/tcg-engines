@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op02Tashigi105, op02Uta120 } from "@tcg/op-cards";
+import { op02Komille097, op02Tashigi105, op02Uta120 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
@@ -7,7 +7,7 @@ describe("OP02-120 Uta", () => {
   test("may return two DON!! to buff its Leader and all Characters until its next turn", () => {
     const engine = OnePieceTestEngine.create(
       {
-        hand: [op02Uta120],
+        hand: [op02Uta120, op02Komille097],
         character: [op02Tashigi105],
         activeDon: 10,
       },
@@ -24,7 +24,10 @@ describe("OP02-120 Uta", () => {
     const donCost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(donCost?.kind).toBe("payCost");
     if (donCost?.kind !== "payCost") throw new Error("Expected Uta's DON!! -2 cost.");
-    const returnedDonIds = donCost.candidates.slice(0, 2).map((candidate) => candidate.ref.id);
+    const returnedDonIds = donCost.candidates
+      .filter((candidate) => candidate.label.startsWith("Rested DON!!"))
+      .slice(0, 2)
+      .map((candidate) => candidate.ref.id);
     expect(returnedDonIds).toHaveLength(2);
     engine.resolveDecision("effectCostReturnDon", { selectedIds: returnedDonIds }, "south");
 
@@ -38,6 +41,15 @@ describe("OP02-120 Uta", () => {
     expect(view.players.south.characters.find((card) => card?.instanceId === utaId)?.power).toBe(
       9000,
     );
+
+    // Official OP02 FAQ: this resolved bonus does not affect later arrivals.
+    engine.playCard(op02Komille097, "south");
+    const laterCharacterId = engine.findCardInZone("south", "character", op02Komille097);
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.find((card) => card?.instanceId === laterCharacterId)?.power,
+    ).toBe(op02Komille097.power);
 
     engine.endTurn("south");
     view = engine.getView("south");

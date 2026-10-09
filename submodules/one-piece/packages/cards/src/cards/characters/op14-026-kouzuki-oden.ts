@@ -23,7 +23,7 @@ export const op14eb04KouzukiOden026: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect: "[Opponent's Turn] If this Character is rested, this Character gains +2000 power.",
   effects: {

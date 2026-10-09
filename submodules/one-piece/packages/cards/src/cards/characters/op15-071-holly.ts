@@ -23,7 +23,7 @@ export const op15Holly071: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Sky Island"],
+  traits: ["Animal", "Sky Island"],
   attribute: "strike",
   effect:
     "All of your [Ohm] cards and this Character gain [Double Attack].\n(This card deals 2 damage.)\n[Opponent's Turn] All of your [Ohm] cards' base power and this Character's base power become 6000.",
@@ -35,7 +35,7 @@ export const op15Holly071: CharacterCard = {
             action: "grantKeyword",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: "all",
               },
@@ -76,7 +76,7 @@ export const op15Holly071: CharacterCard = {
             action: "setBasePower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: "all",
               },

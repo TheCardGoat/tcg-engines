@@ -95,7 +95,7 @@ export const op05BeloBetty015: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

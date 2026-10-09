@@ -32,7 +32,7 @@ export const op16MonkeyDLuffy022: LeaderCard = {
   setId: "OP16",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Activate:Main] [Once Per Turn] If the only Characters on your field are {Impel Down} type Characters, set up to 2 of your DON!! cards as active.",
@@ -45,13 +45,20 @@ export const op16MonkeyDLuffy022: LeaderCard = {
             condition: "zoneCount",
             player: "self",
             zone: "character",
+            comparison: "gte",
+            value: 1,
+          },
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
             comparison: "eq",
             value: 0,
             filters: [
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
                 negate: true,
               },
             ],

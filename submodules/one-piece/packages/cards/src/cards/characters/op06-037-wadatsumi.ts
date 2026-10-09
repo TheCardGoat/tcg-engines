@@ -23,7 +23,7 @@ export const op06Wadatsumi037: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Fish-Man Flying Pirates"],
+  traits: ["Fish-Man", "Flying Pirates"],
   attribute: "strike",
   i18n: op06Wadatsumi037I18n,
 };

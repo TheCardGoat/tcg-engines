@@ -54,6 +54,13 @@ const testExclude = [
 
 export default defineConfig({
   base: process.env.VITE_BASE_URL || "/",
+  css: {
+    modules: {
+      // Hash the module path and local name, not CSS content or line numbers.
+      // Live style updates then keep matching the mounted DOM while React refreshes.
+      generateScopedName: "[name]__[local]__[hash:base64:6]",
+    },
+  },
   optimizeDeps: {
     // The Docker stack runs one selected game at a time. Scanning every lazy
     // game route eagerly can exhaust Docker Desktop before the first page
@@ -77,6 +84,8 @@ export default defineConfig({
             "socket.io-client",
             "socket.io-msgpack-parser",
             "@react-three/fiber",
+            // Fiber and workspace scenes must share the same camera/texture constructors.
+            "three",
             ...selectedCardPackages,
           ]
         : undefined,
@@ -98,7 +107,7 @@ export default defineConfig({
   },
   plugins: [tailwindcss(), isVitest ? react() : reactRouter()],
   resolve: {
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "three"],
     alias: [
       {
         find: /^@cyberpunk-simulator$/,
@@ -393,6 +402,10 @@ export default defineConfig({
     environment: "jsdom",
     exclude: testExclude,
     setupFiles: "./vitest.setup.mjs",
+    // Game fixtures mount global UI providers and browser state. Keep each
+    // file isolated and run them serially to avoid shared UI leakage.
+    fileParallelism: false,
+    isolate: true,
     // Shard 2 runs heavy board files (fab-board ~165 cases) on a shared 8-vCPU
     // runner. Isolated cases finish in <1s; under that load the 5s default
     // times out healthy tests at exactly 5000ms.

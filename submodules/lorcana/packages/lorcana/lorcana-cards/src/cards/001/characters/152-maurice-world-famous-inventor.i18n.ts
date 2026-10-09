@@ -19,7 +19,17 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Maurice",
     version: "Weltberühmter Erfinder",
-    text: "Versuch's doch mal Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.\\Es funktioniert!\\ Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
+    text: [
+      {
+        title: "Versuch's doch mal",
+        description:
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+      },
+      {
+        title: "Es funktioniert!",
+        description: "Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
+      },
+    ],
   },
   fr: {
     name: "MAURICE",

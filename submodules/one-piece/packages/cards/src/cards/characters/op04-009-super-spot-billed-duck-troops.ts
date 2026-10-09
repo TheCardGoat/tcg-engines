@@ -23,7 +23,7 @@ export const op04SuperSpotBilledDuckTroops009: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 2000,
-  traits: ["Animal Alabasta"],
+  traits: ["Animal", "Alabasta"],
   attribute: "strike",
   effect:
     "[When Attacking] You may give your 1 active Leader -5000 power during this turn: Return this Character to the owner's hand at the end of this turn.",

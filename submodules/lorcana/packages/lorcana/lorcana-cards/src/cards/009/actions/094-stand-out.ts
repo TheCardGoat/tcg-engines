@@ -27,6 +27,7 @@ export const standOut: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d0049d68c901455c94c76afdd99a2745",
+    tcgPlayer: "647675",
   },
   text: "Chosen character gets +3 {S} and gains Evasive until the start of your next turn.",
   actionSubtype: "song",

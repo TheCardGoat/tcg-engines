@@ -42,7 +42,7 @@ describe("OP04-107 through OP04-112 parser regressions", () => {
     });
   });
 
-  test("builds OP04-109 with inclusive Land of Wano matching", () => {
+  test("builds OP04-109 with exact Land of Wano matching", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] You may trash this Character: Up to 1 of your [Land of Wano] type Leader or Character cards gains +3000 power during this turn.",
@@ -59,7 +59,7 @@ describe("OP04-107 through OP04-112 parser regressions", () => {
                 player: "self",
                 zones: ["leader", "character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
+                filters: [{ filter: "trait", value: "Land of Wano", match: "exact" }],
               },
               value: 3000,
               duration: "thisTurn",
@@ -114,7 +114,7 @@ describe("OP04-107 through OP04-112 parser regressions", () => {
               amount: 1,
               filters: [
                 { filter: "excludeSelf" },
-                { filter: "trait", value: "Homies", match: "includes" },
+                { filter: "trait", value: "Homies", match: "exact" },
               ],
             },
             { cost: "restThisCard" },

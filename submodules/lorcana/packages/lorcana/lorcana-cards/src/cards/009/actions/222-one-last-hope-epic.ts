@@ -22,7 +22,7 @@ export const oneLastHopeEpic: ActionCard = {
   franchise: "Hercules",
   set: "009",
   cardNumber: 222,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   inkable: false,

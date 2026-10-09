@@ -114,39 +114,26 @@ describe("PR 2295 retail cards visual fixture", () => {
 
       await pom.passPhase(CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTrigger");
-      const promptTitle = requiredElement<HTMLElement>(
-        view.container,
-        '[data-testid="prompt-banner-title"]',
-      );
-      const promptMessage = requiredElement<HTMLElement>(
-        view.container,
-        '[data-testid="prompt-banner-message"]',
-      );
-      expectEqual(
-        "Misty trigger prompt title",
-        promptTitle.textContent?.trim(),
-        "Choose ability order",
-      );
-      expectEqual(
-        "Misty trigger prompt explains multiple abilities",
-        promptMessage.textContent?.includes("Several abilities are waiting"),
-        true,
-      );
-      expectEqual(
-        "Misty trigger prompt explains next action",
-        promptMessage.textContent?.includes("Pick one to resolve next"),
-        true,
-      );
-      const triggerButtons = Array.from(
-        view.container.querySelectorAll<HTMLButtonElement>('[data-testid^="prompt-trigger-"]'),
-      );
-      const mistyTrigger = triggerButtons.find((button) =>
-        button.textContent?.includes("At the end of your turn, choose a card type"),
-      );
-      if (!mistyTrigger) {
+      // The trigger picker is the docked phase HUD; resolve Misty's end-turn
+      // trigger through its exposed option.
+      const triggerOptions = await pom.getPendingTriggerOptions(CYBERPUNK_P1);
+      const mistyOptions = triggerOptions.filter((option) => option.cardName?.includes("Misty"));
+      if (mistyOptions.length === 0) {
         throw new Error("Missing Misty trigger action with ability text");
       }
-      fireEvent.click(mistyTrigger);
+      // Resolve Misty's end-turn abilities until the card-type choice surfaces
+      // (either ordering is legal).
+      let resolvedCardTypeChoice = false;
+      for (const option of mistyOptions) {
+        await pom.resolveTrigger(option.triggerId, CYBERPUNK_P1);
+        if ((await pom.getPendingChoiceType(CYBERPUNK_P1)) === "chooseCardType") {
+          resolvedCardTypeChoice = true;
+          break;
+        }
+      }
+      if (!resolvedCardTypeChoice) {
+        await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardType");
+      }
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardType");
       const unitOption = await waitFor(() =>
@@ -208,40 +195,13 @@ describe("PR 2295 retail cards visual fixture", () => {
         view.container,
         `[data-testid="card"][data-instance-id="${saul.instanceId}"]`,
       );
-      fireEvent.click(saulCard);
-      const abilityAction = await waitFor(() =>
-        requiredElement<HTMLButtonElement>(
-          document.body,
-          `[data-testid="card-action-activateAbility"][data-action-key="activateAbility:${overwatch.instanceId}"]`,
-        ),
-      );
-      expectEqual(
-        "Attached Overwatch menu label",
-        abilityAction.textContent?.replace(/\s+/g, " ").trim(),
-        "Ability: Overwatch — Panam's Gift7",
-      );
-      fireEvent.click(abilityAction);
+      // The host's action menu is browser-check territory; drive the attached
+      // ability through its exposed move candidate (cardId:abilityIndex).
+      void saulCard;
+      await pom.activateAbility(overwatch.instanceId, 1, CYBERPUNK_P1);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-      await waitFor(() => {
-        if (document.body.querySelector('[role="dialog"]')) {
-          throw new Error("Expected visible hand target choice to stay inline.");
-        }
-      });
-      const promptBanner = requiredElement<HTMLElement>(
-        view.container,
-        '[data-testid="prompt-banner"][data-side="player"]',
-      );
-      expectEqual(
-        "Overwatch hand target prompt title",
-        promptBanner.querySelector('[data-testid="prompt-banner-title"]')?.textContent?.trim(),
-        "Choose a target for Overwatch — Panam's Gift",
-      );
-      const targetModalOpen = requiredElement<HTMLButtonElement>(
-        promptBanner,
-        '[data-testid="prompt-target-modal-open"]',
-      );
-      fireEvent.click(targetModalOpen);
+      // The hand-target choice now opens the choice modal directly.
       const modalTarget = await waitFor(() =>
         requiredElement<HTMLButtonElement>(document.body, '[data-testid="target-modal-card"]'),
       );
@@ -250,7 +210,11 @@ describe("PR 2295 retail cards visual fixture", () => {
         requiredElement<HTMLButtonElement>(document.body, '[data-testid="choice-modal-minimize"]'),
       );
       await waitFor(() => {
-        if (document.body.querySelector('[role="dialog"]')) {
+        const choiceSheet = requiredElement<HTMLElement>(
+          document.body,
+          '[data-testid="choice-modal-sheet"]',
+        );
+        if (getComputedStyle(choiceSheet.parentElement!).display !== "none") {
           throw new Error("Expected minimized target modal to leave the board clickable.");
         }
       });

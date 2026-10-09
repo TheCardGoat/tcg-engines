@@ -74,3 +74,17 @@ describe("EB03-048 Rebecca", () => {
     expect(view.prompts).toHaveLength(0);
   });
 });
+
+test("Rebecca redirects an attack as a Blocker and protects the Leader's Life", () => {
+  const e = OnePieceTestEngine.create(
+    { character: ["EB03-048"] },
+    { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const source = e.findCardInZone("south", "character", "EB03-048");
+  const life = e.getView("south").players.south.lifeCount;
+  e.asNorth().attack(e.findCardInZone("north", "character", "EB01-018"), e.leader("south"));
+  e.resolveDecision("battleBlocker", { selectedIds: [source] }, "south");
+  expect(e.getView("south").players.south.lifeCount).toBe(life);
+  expect(e.getView("south").players.south.trash.some((c) => c.instanceId === source)).toBe(true);
+});

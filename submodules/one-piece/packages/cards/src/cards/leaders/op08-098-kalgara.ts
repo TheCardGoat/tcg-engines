@@ -39,7 +39,7 @@ export const op08Kalgara098: LeaderCard = {
   setId: "OP08",
   power: 5000,
   life: 5,
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   attribute: "slash",
 
   effect:
@@ -74,7 +74,7 @@ export const op08Kalgara098: LeaderCard = {
               {
                 filter: "trait",
                 value: "Shandian Warrior",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -83,11 +83,15 @@ describe("OP04-030 Trebol", () => {
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected Trebol's rest choice.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([lowCostId]);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(attackerId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      attackerId,
+      lowCostId,
+      alreadyRestedId,
+    ]);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(attackerId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(ownId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(tooExpensiveId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(alreadyRestedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(alreadyRestedId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [lowCostId] }, "south");
     expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
     expect(

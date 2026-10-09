@@ -53,4 +53,32 @@ describe("OP09-112 Belo Betty", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(bettyId);
     expect(view.players.north.deckCount).toBe(deckBefore - 1);
   });
+  test("Life Trigger does not apply when its printed Leader or Life gate fails", () => {
+    for (const fixture of [
+      { leader: "ST01-001", life: 5 },
+      { leader: "OP05-002", life: 6 },
+    ]) {
+      const engine = OnePieceTestEngine.create(
+        { life: fixture.life, character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+        {
+          leaderCardId: fixture.leader,
+          life: ["OP09-112"],
+          deck: ["EB01-005", "EB01-005", "EB01-005", "EB01-005"],
+        },
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const trigger = engine.findCardInZone("north", "life", "OP09-112");
+      engine
+        .asSouth()
+        .attack(engine.findCardInZone("south", "character", "EB01-018"), engine.leader("north"));
+      engine.asNorth().activateLifeTrigger();
+      expect(engine.getView("north").players.north.characters.filter(Boolean)).toHaveLength(0);
+      expect(engine.getView("north").players.north.lifeCount).toBe(0);
+      expect(engine.getView("north").players.north.deckCount).toBe(4);
+      expect(engine.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(
+        trigger,
+      );
+      expect(engine.getView("north").prompts).toHaveLength(0);
+    }
+  });
 });

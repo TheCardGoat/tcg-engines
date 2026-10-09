@@ -32,28 +32,28 @@ export const op12ToNeverDoubtThatIsPower016: EventCard = {
           {
             cost: "giveDon",
             amount: 2,
+            recipientFilters: [
+              {
+                filter: "name",
+                value: "Silvers Rayleigh",
+              },
+            ],
           },
         ],
         optional: true,
         actions: [
           {
-            action: "cannotActivate",
+            action: "grantKeyword",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
-                upTo: true,
               },
-              filters: [
-                {
-                  filter: "name",
-                  value: "Silvers Rayleigh",
-                },
-              ],
             },
-            keyword: "blocker",
+            keyword: "unblockable",
             duration: "thisTurn",
+            previousActionTargets: true,
           },
         ],
       },
@@ -64,11 +64,26 @@ export const op12ToNeverDoubtThatIsPower016: EventCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,
               },
+              filters: [
+                {
+                  filter: "anyOf",
+                  filters: [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "name",
+                      value: "Silvers Rayleigh",
+                    },
+                  ],
+                },
+              ],
             },
             value: 2000,
             duration: "thisBattle",

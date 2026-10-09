@@ -55,6 +55,7 @@ describe("OP01-004 Usopp", () => {
       "hand",
       op04WeaknessIsAnUnforgivableSin076,
     );
+    engine.asNorth().chooseCounter();
     engine.declareAttack(secondAttackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [secondEventId] }, "north");
     engine.acceptLeadingOptional("north");

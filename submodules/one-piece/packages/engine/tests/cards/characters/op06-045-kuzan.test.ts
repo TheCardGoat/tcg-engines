@@ -7,7 +7,7 @@ describe("OP06-045 Kuzan", () => {
   test("draws two and places two chosen physical hand cards at deck bottom in order", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op06Kuzan045, eb01Doma005],
-      deck: [eb01Fourtricks025, eb01MountainGod018],
+      deck: [eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
       activeDon: op06Kuzan045.cost,
     });
     const keptId = engine.findCardInZone("south", "hand", eb01Doma005);

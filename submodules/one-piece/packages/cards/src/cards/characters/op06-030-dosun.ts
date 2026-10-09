@@ -35,7 +35,7 @@ export const op06Dosun030: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "New Fish-Man Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

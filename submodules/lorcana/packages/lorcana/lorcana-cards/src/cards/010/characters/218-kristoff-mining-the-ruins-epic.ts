@@ -25,7 +25,7 @@ export const kristoffMiningTheRuinsEpic: CharacterCard = {
   franchise: "Frozen",
   set: "010",
   cardNumber: 218,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 2,

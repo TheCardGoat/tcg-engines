@@ -49,7 +49,7 @@ export const op04NefeltariCobra012: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Alabasta",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "excludeSelf",

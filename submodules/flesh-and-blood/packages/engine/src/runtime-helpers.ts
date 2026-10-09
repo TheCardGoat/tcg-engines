@@ -42,7 +42,10 @@ const CONTROL_ZONE_KINDS = new Set([
  * control zone seats it, falling back to the owner for uncontrolled zones
  * (deck/hand/… always answer their owner). Hosted sub-cards follow their
  * host's seat (CR 3.0.14). */
-export function objectControllerSeat(state: FabMatchState, instanceId: string): string | null {
+export function objectControllerSeat(
+  state: Pick<FabRulesSnapshot, "containers" | "playerIds">,
+  instanceId: string,
+): string | null {
   for (const subcards of Object.values(state.containers.subcardsByHostId)) {
     if (subcards.some((id) => id === instanceId)) {
       const host = Object.entries(state.containers.subcardsByHostId).find(([, ids]) =>

@@ -21,7 +21,7 @@ export const op05HauteCouturePatchWork094: EventCard = {
   rarity: "R",
   setId: "OP05",
   cost: 1,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   effect:
     "[Main] Give up to 1 of your opponent's Characters -3 cost during this turn. Then, up to 1 of your opponent's Characters with a cost of 0 will not become active in the next Refresh Phase. [Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {

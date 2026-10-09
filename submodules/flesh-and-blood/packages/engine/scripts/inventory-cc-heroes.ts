@@ -2,9 +2,9 @@
 /**
  * Inventory adult Classic Constructed–legal hero printings vs catalog fixtures.
  */
-import { getFleshAndBloodCard } from "@tcg/flesh-and-blood-cards/catalog";
 import { getFabCardCategory } from "@tcg/flesh-and-blood-types";
 import { fleshAndBloodDeckCardLibrary } from "../../cards/src/deck-library.ts";
+import { isAdultCcLegalHeroPrinting } from "../src/automation/adult-cc-heroes.ts";
 import { FAB_DECK_TEXT_FIXTURES } from "../src/automation/deck-text-fixtures.ts";
 import { createFabValidationCard } from "../src/deck-validation-card.ts";
 
@@ -16,13 +16,6 @@ export interface AdultCcHero {
   readonly types: readonly string[];
 }
 
-function isAdultCcLegalHero(canonicalId: string, types: readonly string[]): boolean {
-  if (types.includes("Young")) return false;
-  const metadata = getFleshAndBloodCard(canonicalId);
-  const cc = metadata?.legalities.cc;
-  return Boolean(cc?.legal && !cc.banned && !cc.suspended);
-}
-
 export function listAdultCcLegalHeroes(): readonly AdultCcHero[] {
   const seen = new Set<string>();
   const heroes: AdultCcHero[] = [];
@@ -30,7 +23,7 @@ export function listAdultCcLegalHeroes(): readonly AdultCcHero[] {
     const typeBox = card.runtime.base.typeBox;
     if (getFabCardCategory(typeBox) !== "hero") continue;
     const validation = createFabValidationCard(card.runtime);
-    if (!isAdultCcLegalHero(card.canonicalId, validation.types)) continue;
+    if (!isAdultCcLegalHeroPrinting(card.canonicalId, validation.types)) continue;
     if (seen.has(card.canonicalId)) continue;
     seen.add(card.canonicalId);
     heroes.push({

@@ -100,6 +100,26 @@
   gap: 8px;
 }
 
+.playmatPreview,
+.cardBackPreview {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+  background: #07090c;
+  border: 1px solid rgb(245 230 66 / 20%);
+  border-radius: 3px;
+}
+
+.playmatPreview {
+  width: 240px;
+  max-height: 135px;
+}
+
+.cardBackPreview {
+  width: 96px;
+  max-height: 144px;
+}
+
 .legend {
   font-family: Rajdhani, sans-serif;
   font-size: 9px;

@@ -38,17 +38,17 @@ export const changbanHeroicImpasse: GrandArchiveCard<GrandArchiveAbilityDefiniti
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
+          effect: {
+            kind: "choose",
+            selection: {
+              id: "chosen-counter-object",
+              kind: "choice",
+              declared: "resolution",
               chooser: "controller",
               count: {
                 kind: "exactly",
                 amount: 1,
               },
-              unique: true,
               candidates: {
                 kind: "object",
                 zones: ["field"],
@@ -69,15 +69,15 @@ export const changbanHeroicImpasse: GrandArchiveCard<GrandArchiveAbilityDefiniti
                 },
               },
             },
-          ],
-          effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
+            effect: {
+              kind: "add-counter",
+              subject: {
+                kind: "bound",
+                binding: "chosen-counter-object",
+              },
+              counter: "buff",
+              amount: 1,
             },
-            counter: "buff",
-            amount: 1,
           },
         },
         {

@@ -30,7 +30,7 @@ export const op04Crocodile058: LeaderCard = {
   setId: "OP04",
   power: 5000,
   life: 4,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[Opponent's Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck by your effect, add up to 1 DON!! card from your DON!! deck and set it as active.",

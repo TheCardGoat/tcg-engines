@@ -30,7 +30,7 @@ export const op11Hibari010: CharacterCard = {
   setId: "OP11",
   cost: 5,
   power: 6000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "ranged",
   effect:
     '[On Play] Give up to 1 of your opponent\'s Characters −2000 power during this turn.\n[When Attacking] This Character gains +1000 power during this turn. Then, up to 1 of your "Navy" type Leader can also attack active Characters during this turn.',
@@ -83,7 +83,7 @@ export const op11Hibari010: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

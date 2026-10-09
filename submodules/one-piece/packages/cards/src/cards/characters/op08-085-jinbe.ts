@@ -22,7 +22,7 @@ export const op08Jinbe085: CharacterCard = {
   setId: "OP08",
   cost: 5,
   power: 6000,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[DON!! x1] [When Attacking] If you have a Character with a cost of 8 or more, K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",

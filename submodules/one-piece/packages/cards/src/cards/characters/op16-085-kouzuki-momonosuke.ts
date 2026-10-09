@@ -33,7 +33,7 @@ export const op16KouzukiMomonosuke085: CharacterCard = {
   cost: 9,
   power: 6000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "special",
   effect:
     "[Blocker] [On Play] Play up to 1 {Land of Wano} type Character card with a cost of 6 or less other than [Kouzuki Momonosuke] from your trash.",
@@ -66,7 +66,7 @@ export const op16KouzukiMomonosuke085: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

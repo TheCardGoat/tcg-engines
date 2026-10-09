@@ -1,0 +1,19 @@
+{
+  "aOff": [],
+  "bOff": [
+    "gear-power"
+  ],
+  "games": 360,
+  "aWins": 180,
+  "aLosses": 180,
+  "draws": 0,
+  "aWinRate": 0.5,
+  "pairs": 180,
+  "aSweeps": 62,
+  "bSweeps": 62,
+  "splits": 56,
+  "pairedImprovement": 0,
+  "failures": [],
+  "avgSteps": 95.9,
+  "elapsedMs": 360208
+}

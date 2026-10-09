@@ -35,7 +35,7 @@ export const op11Vito042: CharacterCard = {
           {
             cost: "trashFromHand",
             amount: 1,
-            filters: [{ filter: "trait", value: "Firetank Pirates", match: "includes" }],
+            filters: [{ filter: "trait", value: "Firetank Pirates", match: "exact" }],
           },
         ],
         actions: [

@@ -23,7 +23,7 @@ export const op09Izo044: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Land of Wano Whitebeard Pirates"],
+  traits: ["Land of Wano", "Whitebeard Pirates"],
   attribute: "ranged",
   effect:
     '[When Attacking] Look at 5 cards from the top of your deck; reveal up to 1 "Land of Wano" type card or card with a type including "Whitebeard Pirates" and add it to your hand. Then, place the rest at the bottom of your deck in any order and trash 1 card from your hand.',
@@ -50,7 +50,7 @@ export const op09Izo044: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Land of Wano",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",

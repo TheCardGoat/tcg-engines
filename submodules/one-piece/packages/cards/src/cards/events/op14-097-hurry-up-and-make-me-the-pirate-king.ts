@@ -22,7 +22,7 @@ export const op14eb04HurryUpAndMakeMeThePirateKing097: EventCard = {
   setId: "OP14",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   effect:
     "[Main] Look at 3 cards from the top of your deck; reveal up to 1 {Thriller Bark Pirates} type card other than [Hurry Up and Make Me the Pirate King!] and add it to your hand. Then, trash the rest.",
   effects: {
@@ -49,7 +49,7 @@ export const op14eb04HurryUpAndMakeMeThePirateKing097: EventCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

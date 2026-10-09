@@ -37,6 +37,7 @@ describe("OP07-055 Snake Dance", () => {
       "north",
     );
     engine.resolveDecision("effectTargetSelection", { selectedIds: [returnId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(

@@ -23,7 +23,7 @@ export const op10Vergo004: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy", "Donquixote Pirates"],
   attribute: "strike",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 {Punk Hazard} type card other than [Vergo] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -51,7 +51,7 @@ export const op10Vergo004: CharacterCard = {
               {
                 filter: "trait",
                 value: "Punk Hazard",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -39,7 +39,7 @@ export const op10Shiryu086: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "playedThisTurn",

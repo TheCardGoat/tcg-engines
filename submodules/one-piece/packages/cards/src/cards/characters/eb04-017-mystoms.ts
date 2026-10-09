@@ -23,7 +23,7 @@ export const op14eb04Mystoms017: CharacterCard = {
   cost: 6,
   power: 5000,
   counter: 1000,
-  traits: ["Minks Big Mom Pirates"],
+  traits: ["Minks", "Big Mom Pirates"],
   attribute: "strike",
   effect:
     "[Your Turn] If you have 3 or more {Minks} type Characters, give all of your opponent's Characters -1 cost.\n[On Play] If your Leader has the {Minks} type, play up to 1 {Minks} type Character card with a cost of 5 or less from your hand.",
@@ -35,7 +35,7 @@ export const op14eb04Mystoms017: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Minks",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -58,7 +58,7 @@ export const op14eb04Mystoms017: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -86,7 +86,7 @@ export const op14eb04Mystoms017: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

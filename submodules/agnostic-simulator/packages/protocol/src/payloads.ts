@@ -81,6 +81,8 @@ export interface GameJoinedPayload {
   interactionView?: EngineInteractionView;
   /** Whether the seated recipient may undo the latest authoritative move. */
   undoable?: boolean;
+  /** Whether the seated recipient may restore the current turn's clean start. */
+  undoTurnAvailable?: boolean;
   /** Server-projected drop claim for this viewer's opponent. Spectators receive a view-only copy. */
   dropEligibility?: DropEligibility;
   correlationId?: string;
@@ -131,6 +133,7 @@ export interface ClientUpdateBaseProperties {
   interactionView?: EngineInteractionView;
   /** Whether the receiving player may undo their latest authoritative move. */
   undoable?: boolean;
+  undoTurnAvailable?: boolean;
   /** Server-projected drop claim for this viewer's opponent. */
   dropEligibility?: DropEligibility;
 }
@@ -243,7 +246,8 @@ export interface MatchFoundPayload {
   matchId: string;
   gameId: string;
   playerId: string;
-  opponentDisplayName: string;
+  /** Casual matches include the opponent's public name. Other match types omit it. */
+  opponentDisplayName?: string;
   format: string;
   mode: string;
 }
@@ -260,9 +264,10 @@ export interface MatchmakingCancelledPayload {
 
 export interface MatchReadyPayload {
   pendingMatchId: string;
-  opponentDisplayName: string;
   acceptDeadline: number;
   serverNow: number;
+  opponentDisplayName?: string;
+  opponentIsMobile?: boolean;
 }
 
 export interface MatchReadyUpdatePayload {

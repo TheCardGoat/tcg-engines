@@ -825,7 +825,7 @@ export function buildStaticEffectRegistry(
             abilityIndex: abilityIdx,
             abilityName: ability.name,
             kind: "lose-keyword",
-            payload: { keyword },
+            payload: { keyword, cannotGain: effect.cannotGain === true },
           });
         }
         continue;
@@ -1083,44 +1083,63 @@ export function buildStaticEffectRegistry(
       // ----- restriction -----
       // Handle direct restriction effects and conditional wrappers.
       // Only card-targeted and player-targeted restrictions are handled here.
-      const restrictionEffect = extractRestrictionEffect(effect);
-      if (restrictionEffect) {
-        const {
-          restriction,
-          target: restrictionTarget,
-          limit,
-          minCost,
-          costRestriction,
-          challengerFilter,
-          effectCondition,
-        } = restrictionEffect;
+      const restrictionEffects = extractRestrictionEffects(effect);
+      if (restrictionEffects.length > 0) {
+        for (const restrictionEffect of restrictionEffects) {
+          const {
+            restriction,
+            target: restrictionTarget,
+            limit,
+            minCost,
+            costRestriction,
+            challengerFilter,
+            effectCondition,
+          } = restrictionEffect;
 
-        if (isPlayerTarget(restrictionTarget)) {
-          // CONTROLLER — applies to source's controller
-          if (restrictionTarget === "CONTROLLER" || restrictionTarget === "YOU") {
-            if (controllerId) {
-              const entry: MaterializedStaticEffect = {
-                sourceId,
-                sourceControllerId: controllerId,
-                abilityIndex: abilityIdx,
-                abilityName: ability.name,
-                kind: "restriction",
-                payload: {
-                  restriction,
-                  playerTarget: "CONTROLLER",
-                  limit,
-                  minCost,
-                  costRestriction,
-                  challengerFilter,
-                },
-              };
-              addToPlayer(byPlayer, controllerId, entry);
-            }
-          } else if (restrictionTarget === "OPPONENTS") {
-            // Applies to every opponent of the source controller
-            for (const pid of allPlayerIds) {
-              if (pid === controllerId) continue;
-              const entry: MaterializedStaticEffect = {
+          if (isPlayerTarget(restrictionTarget)) {
+            // CONTROLLER — applies to source's controller
+            if (restrictionTarget === "CONTROLLER" || restrictionTarget === "YOU") {
+              if (controllerId) {
+                const entry: MaterializedStaticEffect = {
+                  sourceId,
+                  sourceControllerId: controllerId,
+                  abilityIndex: abilityIdx,
+                  abilityName: ability.name,
+                  kind: "restriction",
+                  payload: {
+                    restriction,
+                    playerTarget: "CONTROLLER",
+                    limit,
+                    minCost,
+                    costRestriction,
+                    challengerFilter,
+                  },
+                };
+                addToPlayer(byPlayer, controllerId, entry);
+              }
+            } else if (restrictionTarget === "OPPONENTS") {
+              // Applies to every opponent of the source controller
+              for (const pid of allPlayerIds) {
+                if (pid === controllerId) continue;
+                const entry: MaterializedStaticEffect = {
+                  sourceId,
+                  sourceControllerId: controllerId!,
+                  abilityIndex: abilityIdx,
+                  abilityName: ability.name,
+                  kind: "restriction",
+                  payload: {
+                    restriction,
+                    playerTarget: "OPPONENTS",
+                    limit,
+                    minCost,
+                    costRestriction,
+                    challengerFilter,
+                  },
+                };
+                addToPlayer(byPlayer, pid, entry);
+              }
+            } else if (restrictionTarget === "ALL_PLAYERS") {
+              global.push({
                 sourceId,
                 sourceControllerId: controllerId!,
                 abilityIndex: abilityIdx,
@@ -1128,83 +1147,68 @@ export function buildStaticEffectRegistry(
                 kind: "restriction",
                 payload: {
                   restriction,
-                  playerTarget: "OPPONENTS",
+                  playerTarget: "ALL_PLAYERS",
                   limit,
                   minCost,
                   costRestriction,
                   challengerFilter,
                 },
-              };
-              addToPlayer(byPlayer, pid, entry);
-            }
-          } else if (restrictionTarget === "ALL_PLAYERS") {
-            global.push({
-              sourceId,
-              sourceControllerId: controllerId!,
-              abilityIndex: abilityIdx,
-              abilityName: ability.name,
-              kind: "restriction",
-              payload: {
-                restriction,
-                playerTarget: "ALL_PLAYERS",
-                limit,
-                minCost,
-                costRestriction,
-                challengerFilter,
-              },
-            });
-          }
-        } else {
-          // Card-targeted restriction
-          for (const targetId of inPlayIds) {
-            if (
-              !matchesStaticAbilityTarget({
-                state: flatState,
-                target: restrictionTarget,
-                sourceId,
-                targetCardId: targetId,
-                controllerId,
-                getDefinitionByInstanceId,
-              }) &&
-              !matchesLegacyStaticTarget({
-                state: flatState,
-                target: restrictionTarget,
-                sourceId,
-                targetCardId: targetId,
-                controllerId: controllerId!,
-                getDefinitionByInstanceId,
-              })
-            )
-              continue;
-
-            // Check suppression — the source ability name being suppressed on the target
-            if (isSuppressed(suppressionIndex, targetId, ability.name)) continue;
-
-            // Evaluate per-target condition on the effect itself (e.g. "NOT being-challenged").
-            // The condition is evaluated with the TARGET card as sourceId, because conditions
-            // like "being-challenged" describe the state of the card receiving the restriction.
-            if (effectCondition !== undefined) {
-              const targetControllerId = cardIndex[targetId]?.controllerID as PlayerId | undefined;
-              const conditionPasses = evaluateStaticCondition({
-                condition: effectCondition as Parameters<
-                  typeof evaluateStaticCondition
-                >[0]["condition"],
-                state: flatState,
-                controllerId: targetControllerId ?? controllerId,
-                sourceId: targetId,
-                getDefinitionByInstanceId,
               });
-              if (!conditionPasses) continue;
             }
+          } else {
+            // Card-targeted restriction
+            for (const targetId of inPlayIds) {
+              if (
+                !matchesStaticAbilityTarget({
+                  state: flatState,
+                  target: restrictionTarget,
+                  sourceId,
+                  targetCardId: targetId,
+                  controllerId,
+                  getDefinitionByInstanceId,
+                }) &&
+                !matchesLegacyStaticTarget({
+                  state: flatState,
+                  target: restrictionTarget,
+                  sourceId,
+                  targetCardId: targetId,
+                  controllerId: controllerId!,
+                  getDefinitionByInstanceId,
+                })
+              )
+                continue;
 
-            addToTarget(byTarget, targetId, {
-              sourceId,
-              sourceControllerId: controllerId!,
-              abilityIndex: abilityIdx,
-              abilityName: ability.name,
-              kind: "restriction",
-              payload: { restriction, limit, challengerFilter },
-            });
+              // Check suppression — the source ability name being suppressed on the target
+              if (isSuppressed(suppressionIndex, targetId, ability.name)) continue;
+
+              // Evaluate per-target condition on the effect itself (e.g. "NOT being-challenged").
+              // The condition is evaluated with the TARGET card as sourceId, because conditions
+              // like "being-challenged" describe the state of the card receiving the restriction.
+              if (effectCondition !== undefined) {
+                const targetControllerId = cardIndex[targetId]?.controllerID as
+                  | PlayerId
+                  | undefined;
+                const conditionPasses = evaluateStaticCondition({
+                  condition: effectCondition as Parameters<
+                    typeof evaluateStaticCondition
+                  >[0]["condition"],
+                  state: flatState,
+                  controllerId: targetControllerId ?? controllerId,
+                  sourceId: targetId,
+                  getDefinitionByInstanceId,
+                });
+                if (!conditionPasses) continue;
+              }
+
+              addToTarget(byTarget, targetId, {
+                sourceId,
+                sourceControllerId: controllerId!,
+                abilityIndex: abilityIdx,
+                abilityName: ability.name,
+                kind: "restriction",
+                payload: { restriction, limit, challengerFilter },
+              });
+            }
           }
         }
         continue;
@@ -1478,6 +1482,18 @@ function extractRestrictionEffect(
   }
 
   return undefined;
+}
+
+function extractRestrictionEffects(effect: Record<string, unknown>): ExtractedRestriction[] {
+  if (effect.type === "sequence" && Array.isArray(effect.steps)) {
+    return effect.steps.flatMap((step: unknown) =>
+      step !== null && typeof step === "object"
+        ? extractRestrictionEffects(step as Record<string, unknown>)
+        : [],
+    );
+  }
+  const restriction = extractRestrictionEffect(effect);
+  return restriction ? [restriction] : [];
 }
 
 const PLAYER_TARGET_STRINGS = new Set([

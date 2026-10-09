@@ -8,21 +8,26 @@ import { blitzMage } from "../cards/DOA/allies/blitz-mage.ts";
 import {
   createClassBonusTestChampion,
   grantTestChampionLevel,
+  enableAllTestElements,
 } from "./class-bonus-test-champion.ts";
 import { advanceToMain, passEffectsStack } from "./decisions.ts";
 export function proveChampionNextPrevention({
   card,
   enlighten,
+  reserveCost,
 }: {
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   enlighten: boolean;
+  reserveCost?: number;
 }): void {
   for (const classBonus of [false, true])
     for (const expired of [false, true])
       for (const firstDamage of [1, 3])
         it(`class=${classBonus}, expired=${expired}, first damage=${firstDamage}`, () => {
-          const champion = createClassBonusTestChampion(card, classBonus, "activation-discount"),
-            cost = enlighten && classBonus ? 2 : 3,
+          const champion = enableAllTestElements(
+              createClassBonusTestChampion(card, classBonus, "activation-discount"),
+            ),
+            cost = reserveCost ?? (enlighten && classBonus ? 2 : 3),
             opponent = grantTestChampionLevel(champion, 2),
             game = GrandArchiveTestEngine.startFixture({
               firstPlayer: expired ? "playerOne" : "playerTwo",

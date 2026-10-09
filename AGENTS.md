@@ -1,56 +1,24 @@
-# Public Project Map
+# Public TCG Repository
 
-This public repository contains the open-source TCG engine and simulator
-workspaces. The private production platform is intentionally absent.
+Contains game engines, simulators, and shared tooling. Production platform
+services and deployment configuration live in the private repository.
 
-Start with `submodules/AGENTS.md` when a task touches a game, shared simulator
-runtime, rules behavior, card text, parser tooling, or tests. Then read the
-specific `submodules/{name}/AGENTS.md` before editing inside that subtree.
+- Start with [submodules/AGENTS.md](submodules/AGENTS.md) and the nearest owner
+  guide when editing product code.
+- Preserve unrelated work; other agents can share the checkout.
+- Keep game rules in game workspaces and shared code game-agnostic.
+- Use the game's rules skill for rules-facing changes.
+- Follow local patterns, keep types accurate, and fix the cause of the problem.
+- Keep private platform code, credentials, and service topology out of this export.
+- Use the smallest validation scope: focused local tests for cards and engines,
+  and only the owning simulator with local practice or fixtures for UI changes.
+  Check affected consumers for shared contract changes. Browser inspection does
+  not require platform services. Documentation changes need only diff and link
+  review; no application runtime or automated tests are required.
+- Stop when focused checks cover the change. Expand only for a specific missing
+  check or relevant failure. Full-platform validation belongs to end-to-end
+  service integration work in the private repository.
+- Make routine decisions without asking; ask when a material scope decision
+  needs the user. Report changes, validation, and remaining limits.
 
-## Public Workspaces
-
-- `submodules/agnostic-simulator` - game-agnostic contracts, shared protocol,
-  simulator UI primitives, adapters, and agent tooling.
-- `submodules/lorcana` - Lorcana cards, engine, simulator, replay tooling, and
-  Lorcana-specific rules/test skills.
-- `submodules/cyberpunk` - Cyberpunk cards, engine, parser/scraper tools,
-  server adapter, and Cyberpunk rules skill.
-- `submodules/gundam` - Gundam cards, engine, server adapter, bot tooling,
-  rules references, and architecture docs. Its browser surface lives in
-  `submodules/agnostic-simulator`.
-- `submodules/one-piece` - One Piece engine, cards, types, utils, parser, and
-  rules. Its browser surface lives in `submodules/agnostic-simulator`.
-- `submodules/star-wars-unlimited` - Star Wars Unlimited engine, cards, types,
-  import tooling, and rules references.
-
-## Private Boundary
-
-The production web app, API, auth, matchmaking services, gateway, reverse proxy,
-content worker, deployment configuration, and infrastructure live in the private
-repository. Do not add production secrets, deployment credentials, private
-service topology, or platform-owned app code to this public repository.
-
-## Engineering Rules
-
-- Preserve game-agnostic boundaries. Shared simulator and protocol code should
-  work across games; specialize through adapters when a game needs unique
-  behavior.
-- Keep game glossary and rules context loaded before changing gameplay logic,
-  card text, simulator prompts, tests, AI, or player-facing rules copy.
-- Type safety is non-negotiable. Do not add loose `any` or `unknown` escape
-  hatches.
-- Run focused checks for the touched workspace before broader public CI.
-
-## Validation
-
-Use the smallest relevant check first:
-
-- `pnpm run ci:cyberpunk:check`
-- `pnpm run ci:gundam:check`
-- `pnpm run ci:lorcana:check`
-- `pnpm run ci:one-piece:check`
-- `pnpm run ci:star-wars-unlimited:check`
-- `pnpm run ci:agnostic:check`
-- `pnpm run ci:public`
-
-For docs-only edits, `git diff --check` is usually sufficient.
+Keep guides short; detailed procedures belong in skills or local documentation.

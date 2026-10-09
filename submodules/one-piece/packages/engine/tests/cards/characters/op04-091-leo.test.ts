@@ -50,7 +50,7 @@ describe("OP04-091 Leo", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("may decline, while a non-Dressrosa Leader still pays to mill without K.O.'ing", () => {
+  test("may decline, while a non-Dressrosa Leader pays but neither K.O.s nor mills", () => {
     const declined = OnePieceTestEngine.create(
       {
         leaderCardId: op04Rebecca039,
@@ -84,8 +84,8 @@ describe("OP04-091 Leo", () => {
     wrongLeader.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     const view = wrongLeader.getView("south");
     expect(view.players.south.leader.rested).toBe(true);
-    expect(view.players.south.deckCount).toBe(0);
-    expect(view.players.south.trash).toHaveLength(2);
+    expect(view.players.south.deckCount).toBe(2);
+    expect(view.players.south.trash).toHaveLength(0);
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(
       wrongLeaderTargetId,
     );

@@ -28,6 +28,7 @@ import type {
   SimulatorZone,
   ZoneRole,
 } from "@tcg/simulator-contract";
+import { hiddenCardEntity } from "@tcg/simulator-ui";
 
 import { buildCyberpunkDeckReveal, cardFrameColor } from "./deckRevealProjection";
 import { PLAYER_SIDE_TO_ID, type Side } from "./sides";
@@ -613,27 +614,37 @@ function projectCardEntity(
         ? undefined
         : {
             rules: [
-              ...(definition.abilities ?? []).map((ability, abilityIndex) => ({
-                id: `ability:${abilityIndex}`,
-                kind:
-                  ability.trigger?.trigger === "activated"
-                    ? ("ability" as const)
-                    : ("text" as const),
-                label:
-                  ability.trigger?.trigger === "activated"
-                    ? `Ability ${abilityIndex + 1}`
-                    : undefined,
-                text: ability.text,
-                actionId:
-                  ability.trigger?.trigger === "activated"
-                    ? `activateAbility:${abilityIndex}`
-                    : undefined,
-              })),
-              ...(definition.keywords ?? []).map((keyword) => ({
+              // Printed rules preserve the card's icon markers. Executable ability
+              // text may use plain trigger names and should not replace that copy.
+              ...(definition.abilities ?? [])
+                .map((ability, abilityIndex) => ({ ability, abilityIndex }))
+                .filter(
+                  ({ ability }) =>
+                    !definition.rulesText || ability.trigger?.trigger === "activated",
+                )
+                .map(({ ability, abilityIndex }) => ({
+                  id: `ability:${abilityIndex}`,
+                  kind:
+                    ability.trigger?.trigger === "activated"
+                      ? ("ability" as const)
+                      : ("text" as const),
+                  label:
+                    ability.trigger?.trigger === "activated"
+                      ? `Ability ${abilityIndex + 1}`
+                      : undefined,
+                  text: ability.text,
+                  actionId:
+                    ability.trigger?.trigger === "activated"
+                      ? `activateAbility:${abilityIndex}`
+                      : undefined,
+                })),
+              ...(definition.keywords ?? []).filter((keyword) =>
+                !Array.from((definition.rulesText ?? "").matchAll(/\{([^}]+)\}/g))
+                  .some((match) => match[1].replace(/[\s_-]/g, "").toLowerCase() === String(keyword).replace(/[\s_-]/g, "").toLowerCase()),
+              ).map((keyword) => ({
                 id: `keyword:${keyword}`,
                 kind: "keyword" as const,
                 label: String(keyword).toUpperCase(),
-                text: `This card has ${String(keyword).replace(/([a-z])([A-Z])/g, "$1 $2")}.`,
               })),
               ...(definition.rulesText
                 ? [
@@ -652,8 +663,7 @@ function projectCardEntity(
                 .map((rule) => ({
                   id: `effective:${rule}`,
                   kind: "ability" as const,
-                  label: "Effective",
-                  text: String(rule).replace(/([a-z])([A-Z])/g, "$1 $2"),
+                  ...effectiveRulePresentation(String(rule)),
                 })),
             ],
             relationships:
@@ -676,6 +686,19 @@ function projectCardEntity(
 
   entities.push(entity);
   return entity;
+}
+
+function effectiveRulePresentation(rule: string): { label?: string; text: string } {
+  switch (rule) {
+    case "blocker":
+      return { text: "{Blocker}" };
+    case "adrenaline":
+      return { text: "{Adrenaline}" };
+    case "goSolo":
+      return { text: "{Go Solo}" };
+    default:
+      return { label: "Effective", text: rule.replace(/([a-z])([A-Z])/g, "$1 $2") };
+  }
 }
 
 function projectCardActiveEffects(
@@ -783,7 +806,7 @@ function isIdentityHiddenFromViewer(
   faceDown: boolean,
 ): boolean {
   if (zone === "deck") return true;
-  if (zone === "eddieArea") return faceDown;
+  if (zone === "eddieArea") return true;
   if (faceDown) return true;
   return !isViewer && isPrivateCardZone(zone);
 }
@@ -802,6 +825,7 @@ export function projectEntityForAnimationEntity(
   entityId: string,
   matchState: MatchState,
   viewerSide: Side,
+  face: "public" | "hidden",
 ): SimulatorEntity | null {
   const cardEntity = projectEntityForCard(entityId, matchState, viewerSide);
   if (cardEntity) {
@@ -810,7 +834,10 @@ export function projectEntityForAnimationEntity(
 
   const die = matchState.G.gigDice[entityId];
   if (!die) {
-    return null;
+    // Viewer projections contain only the count of a concealed deck or rival
+    // hand. The animation plan still needs a visual while that card moves.
+    // Never expose the plan's private instance id in the rendered entity.
+    return face === "hidden" ? hiddenCardEntity(CARD_BACK_URLS.default) : null;
   }
 
   const ownerEntry = Object.entries(matchState.G.players).find(
@@ -956,10 +983,12 @@ function projectInteractionAction(
           max: input.max,
           candidateEntityIds: [],
           targetZoneIds: [],
-          options: input.options.map((opt): InteractionOption => ({
-            id: opt.id,
-            label: localizeText(opt.text),
-          })),
+          options: input.options.map(
+            (opt): InteractionOption => ({
+              id: opt.id,
+              label: localizeText(opt.text),
+            }),
+          ),
         },
         movePreview: movePreviewFor(action),
       };

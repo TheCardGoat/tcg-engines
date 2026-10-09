@@ -49,7 +49,7 @@ export const op03Vergo079: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "strike",
   effect: "[DON!! x1] This Character cannot be K.O.'d in battle.",
   effects: {

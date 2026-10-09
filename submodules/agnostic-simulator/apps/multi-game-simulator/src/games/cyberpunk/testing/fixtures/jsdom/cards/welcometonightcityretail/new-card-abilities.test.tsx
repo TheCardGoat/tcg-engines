@@ -118,7 +118,8 @@ describe("new retail card abilities visual fixture", () => {
       const resolvingCard = view.container.querySelector<HTMLElement>(
         '[data-testid="resolving-program"]',
       );
-      if (!resolvingCard?.textContent?.includes("Legend ability")) {
+      // The resolving stage hides the visible label; it reads via aria-label.
+      if (!resolvingCard?.getAttribute("aria-label")?.includes("Legend ability")) {
         throw new Error("Expected Hanako's activated ability overlay to say Legend ability.");
       }
     } finally {

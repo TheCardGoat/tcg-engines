@@ -31,12 +31,18 @@ function createBoard(
 function createStubEngine(options: {
   moveOptions?: Record<string, MoveOption[]>;
   callLog?: string[];
+  paymentLog?: ({ inkDrops?: number } | undefined)[];
 }): LorcanaEngineBase {
   const moveOptions = options.moveOptions ?? {};
   const callLog = options.callLog;
 
   return {
-    getMoveOptions: (moveId: string, cardId: string | number) => {
+    getMoveOptions: (
+      moveId: string,
+      cardId: string | number,
+      paymentOptions?: { inkDrops?: number },
+    ) => {
+      options.paymentLog?.push(paymentOptions);
       const key = `${moveId}:${String(cardId)}`;
       callLog?.push(key);
       return moveOptions[key] ?? moveOptions[String(cardId)] ?? [];
@@ -745,5 +751,59 @@ describe("buildPendingResolutionMoves", () => {
       "resolveBag:bag-z",
       "resolveEffect:req-m",
     ]);
+  });
+});
+
+describe("drop-funded movement expansion", () => {
+  it("passes selected drops to destination discovery and executable move parameters", () => {
+    const paymentLog: ({ inkDrops?: number } | undefined)[] = [];
+    const engine = createStubEngine({
+      moveOptions: {
+        "moveCharacterToLocation:arthur": [{ kind: "card", cardId: toCardInstanceId("location") }],
+      },
+      paymentLog,
+    });
+    const moves = expandCategoryMoves(
+      engine,
+      cards,
+      [createAvailableMove("moveCharacterToLocation", ["arthur"])],
+      ["moveCharacterToLocation"],
+      "move-to-location",
+      { inkDrops: 1 },
+    );
+    expect(paymentLog).toEqual([{ inkDrops: 1 }]);
+    expect(moves).toHaveLength(1);
+    expect(moves[0]?.params).toEqual({
+      characterId: "arthur",
+      locationId: "location",
+      inkDrops: 1,
+    });
+  });
+});
+
+describe("drop-funded Shift expansion", () => {
+  it("passes selected drops to Shift target discovery", () => {
+    const paymentLog: ({ inkDrops?: number } | undefined)[] = [];
+    const engine = createStubEngine({
+      moveOptions: {
+        "shiftCard:arthur": [{ kind: "card", cardId: toCardInstanceId("merlin-base") }],
+      },
+      paymentLog,
+    });
+    const moves = expandCategoryMoves(
+      engine,
+      cards,
+      [createAvailableMove("shiftCard", ["arthur"])],
+      ["playCard"],
+      "shift-card",
+      { inkDrops: 1 },
+    );
+    expect(paymentLog).toEqual([{ inkDrops: 1 }]);
+    expect(moves).toHaveLength(1);
+    expect(moves[0]?.params).toMatchObject({
+      cardId: "arthur",
+      cost: "shift",
+      shiftTarget: "merlin-base",
+    });
   });
 });

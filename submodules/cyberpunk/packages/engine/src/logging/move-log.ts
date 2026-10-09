@@ -11,9 +11,10 @@
  */
 
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
-import type { CardZone } from "@tcg/cyberpunk-types";
+import type { CardZone, DieType } from "@tcg/cyberpunk-types";
 import type { ActionLogMessageKey } from "../types/game-events.ts";
 import type { PrivateField } from "./private-field.ts";
+import type { StolenGigLogEntry } from "./stolen-gig-summary.ts";
 
 export interface MoveLogBase {
   /** Unix-ms timestamp when the log was emitted. */
@@ -31,6 +32,31 @@ export interface PlayCardLog extends MoveLogBase {
   cardId: CardInstanceId;
   cardName: string;
   cost: number;
+}
+
+/** Actual defeat, including combat and card effects. Never inferred from zone movement. */
+export interface CardDefeatedLog extends MoveLogBase {
+  type: "cardDefeated";
+  wasUnit: boolean;
+  cardId: CardInstanceId;
+  cardName: string;
+}
+
+/** Public Gig face change captured when it happens, including effect-driven changes. */
+export interface GigValueChangedLog extends MoveLogBase {
+  type: "gigValueChanged";
+  dieId: GigDieId;
+  dieType: DieType;
+  previousValue: number;
+  newValue: number;
+}
+
+export interface GigsSwappedLog extends MoveLogBase {
+  type: "gigsSwapped";
+  friendlyDieType: DieType;
+  friendlyValue: number;
+  rivalDieType: DieType;
+  rivalValue: number;
 }
 
 export interface SellCardLog extends MoveLogBase {
@@ -131,6 +157,7 @@ export interface ResolveStealGigsLog extends MoveLogBase {
   attackerName?: string;
   attackerPower?: number;
   stolenCount: number;
+  stolenGigs: StolenGigLogEntry[];
 }
 
 export interface ConcedeLog extends MoveLogBase {
@@ -154,6 +181,8 @@ export interface SearchDeckLog extends MoveLogBase {
   revealedCount: number;
   /** Hidden card identities behind the search — visible only to the searcher. */
   revealed?: PrivateField<CardInstanceId[]>;
+  /** Names captured at reveal time, with the same visibility as the card identities. */
+  revealedCardNames?: PrivateField<string[]>;
 }
 
 export interface LookAtCardsLog extends MoveLogBase {
@@ -218,6 +247,9 @@ export interface GenericActionLog extends MoveLogBase {
 export type MoveLog =
   | PlayCardLog
   | SellCardLog
+  | CardDefeatedLog
+  | GigValueChangedLog
+  | GigsSwappedLog
   | CallLegendLog
   | AttackUnitLog
   | AttackRivalLog

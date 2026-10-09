@@ -22,7 +22,7 @@ export const goofyGhostHunterEpic: CharacterCard = {
   inkType: ["amber"],
   set: "010",
   cardNumber: 205,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 4,

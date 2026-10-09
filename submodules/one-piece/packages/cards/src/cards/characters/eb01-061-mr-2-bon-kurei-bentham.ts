@@ -5,7 +5,7 @@ export const eb01Mr2BonKureiBentham061: CharacterCard = {
   id: "EB01-061",
   canonicalId: "EB01-061",
   slug: "mr-2-bon-kurei-bentham/eb01-061",
-  name: "Mr.2.Bon.Kurei (Bentham)",
+  name: "Mr.2.Bon.Kurei(Bentham)",
   printings: [
     {
       id: "EB01-061",

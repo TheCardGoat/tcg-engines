@@ -23,7 +23,7 @@ export const mushuSneakyDragonEpic: CharacterCard = {
   franchise: "Mulan",
   set: "011",
   cardNumber: 212,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 3,

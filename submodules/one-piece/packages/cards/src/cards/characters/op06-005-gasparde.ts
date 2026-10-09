@@ -23,7 +23,7 @@ export const op06Gasparde005: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["FILM Former Navy Gasparde Pirates"],
+  traits: ["FILM", "Former Navy", "Gasparde Pirates"],
   attribute: "special",
   i18n: op06Gasparde005I18n,
 };

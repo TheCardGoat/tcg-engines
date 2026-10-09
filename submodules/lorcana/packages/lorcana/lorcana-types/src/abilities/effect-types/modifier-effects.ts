@@ -122,6 +122,8 @@ export interface GainKeywordEffect {
 export interface LoseKeywordEffect {
   type: "lose-keyword";
   keyword: string;
+  /** Static loss that also prevents new resolving grants of this keyword. */
+  cannotGain?: boolean;
   target: CharacterTarget;
   duration?: EffectDuration;
 }
@@ -158,6 +160,7 @@ export interface RestrictionEffect {
     | "cant-play" // Generic can't play restriction
     | "cant-sing-without-sing-together" // Character can only sing songs with Sing Together
     | "must-be-chosen-for-effects" // Opponents must choose this character for actions and abilities if able
+    | "would-gain-ink-drop-replacement" // If this player would gain an ink drop, its controller may put the top card of their deck into their inkwell instead (Baymax - Amped Up)
     | "cant-gain-lore" // Player can't gain lore
     // Extended restrictions for card text coverage
     | "doesnt-ready" // Character doesn't ready (alias for cant-ready)
@@ -192,6 +195,8 @@ export interface RestrictionEffect {
    * pay 1 {I}").
    */
   bypass?: { cost: { ink: number } };
+  /** For cant-challenge: restrict only defenders controlled by these players. */
+  defenderPlayers?: PlayerTarget;
   /**
    * For "cant-be-challenged" restrictions: filter describing which attackers
    * are prevented from challenging this character.
@@ -277,6 +282,12 @@ export interface CostReductionEffect {
   playMethod?: "shift" | "standard" | "either";
   /** When set, the reduction only applies to cards with this exact name */
   cardName?: string;
+  /**
+   * Resolve the restricted card name dynamically from the resolution snapshot.
+   * - "chosen-card": the name of the first selected target (e.g. Merlin's Wand
+   *   reveals same-name hand cards and discounts the next play of that name).
+   */
+  cardNameFrom?: "chosen-card";
 }
 
 /**
@@ -376,6 +387,8 @@ export interface PropertyModificationEffect {
 export interface RevealHandEffect {
   type: "reveal-hand";
   target: PlayerTarget;
+  /** A printed look is private to the effect's controller; reveal is public. */
+  visibility?: "controller" | "all";
 }
 
 /**

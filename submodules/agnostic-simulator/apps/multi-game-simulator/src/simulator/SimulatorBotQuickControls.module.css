@@ -37,7 +37,15 @@
 }
 
 .takeover {
+  min-width: 0;
+  flex: 1 1 auto;
   padding: 0.25rem 0.48rem;
+}
+
+.takeoverLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -50,6 +58,30 @@
 .nextButton {
   gap: 0.2rem;
   padding: 0.25rem 0.4rem;
+}
+
+/* This strip shares the sidebar's container query. Keep its frequent actions
+ * visible instead of letting the final action escape the narrow sidebar. */
+@container simulator-sidebar (max-width: 16rem) {
+  .nextButton {
+    width: 2rem;
+    flex: 0 0 2rem;
+    padding: 0;
+  }
+
+  .nextButton span {
+    display: none;
+  }
+}
+
+@container simulator-sidebar (max-width: 13rem) {
+  .root {
+    gap: 0.25rem;
+  }
+
+  .takeover {
+    padding-inline: 0.4rem;
+  }
 }
 
 @media (max-width: 767px) {

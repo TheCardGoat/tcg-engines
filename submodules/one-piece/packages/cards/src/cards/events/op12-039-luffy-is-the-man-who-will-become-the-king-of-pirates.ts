@@ -34,6 +34,7 @@ export const op12LuffyIsTheManWhoWillBecomeTheKingOfPirates039: EventCard = {
             target: {
               player: "self",
               zones: ["leader"],
+              filters: [{ filter: "name", value: "Roronoa Zoro" }],
               count: {
                 amount: 1,
               },

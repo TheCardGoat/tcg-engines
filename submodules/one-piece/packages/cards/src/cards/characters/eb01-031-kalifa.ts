@@ -31,7 +31,7 @@ export const eb01Kalifa031: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "wisdom",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Water Seven] type, add up to 2 Character cards with a cost of 4 or less from your trash to your hand.",
@@ -51,7 +51,7 @@ export const eb01Kalifa031: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
             target: {
               player: "self",

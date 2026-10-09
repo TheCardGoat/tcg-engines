@@ -23,11 +23,13 @@ import {
   IconPlayerSkipForward,
 } from "@tabler/icons-react";
 import type { MatchState, MoveLog } from "@tcg/cyberpunk-engine";
+import type { ChatMessage } from "../engine/chat";
 import type { EngineInteractionView, InteractionSubmissionValue } from "@tcg/protocol";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import { PLAYER_SIDE_TO_ID, type EngineAction, type Side } from "../engine";
 import { BoardSharedPage } from "./BoardShared.page";
 import { loadCyberpunkReplay } from "../replay/loadReplay";
+import { replayChatMessagesForBoard } from "../replay/replayChat";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
@@ -194,6 +196,8 @@ function ReplayBoard({
         remoteDispatch={remoteDispatch}
         remoteSubmitInteraction={remoteSubmitInteraction}
         remoteMoveLogs={snapshot.moveLogs}
+        remoteChatMessages={snapshot.chatMessages}
+        canSendChat={false}
         remoteReturnUrl={cyberpunkSimulatorPath("/matchmaking")}
         postGameContext={postGameContext}
         lockLocalHistoryControls
@@ -447,6 +451,7 @@ interface ReplaySnapshot {
   hasPatchData: boolean;
   state: MatchState;
   moveLogs: MoveLog[];
+  chatMessages: ChatMessage[];
 }
 
 function useReplaySnapshot(orchestrator: CyberpunkReplayOrchestrator): ReplaySnapshot {
@@ -475,6 +480,10 @@ function createReplaySnapshot(orchestrator: CyberpunkReplayOrchestrator): Replay
     hasPatchData: orchestrator.hasPatchData,
     state: orchestrator.currentState,
     moveLogs: orchestrator.currentMoveLogs,
+    chatMessages: replayChatMessagesForBoard(
+      orchestrator.currentChatMessages,
+      orchestrator.playerIds,
+    ),
   };
 }
 

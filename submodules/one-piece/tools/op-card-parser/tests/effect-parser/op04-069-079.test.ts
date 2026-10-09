@@ -146,7 +146,7 @@ describe("OP04-069 through OP04-081 parser regressions", () => {
     expect(buildCardEffects("NULL")).toBeUndefined();
   });
 
-  test("keeps Orlumbus's ordered mandatory actions and inclusive Dressrosa target", () => {
+  test("keeps Orlumbus's ordered mandatory actions and exact Dressrosa target", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] [Once Per Turn] Give up to 1 of your opponent's Characters -4 cost during this turn and trash 2 cards from the top of your deck. Then, K.O. 1 of your [Dressrosa] type Characters.",
@@ -173,7 +173,7 @@ describe("OP04-069 through OP04-081 parser regressions", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1 },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
             },
           ],
@@ -183,7 +183,7 @@ describe("OP04-069 through OP04-081 parser regressions", () => {
     });
   });
 
-  test("keeps Gyats's included-Dressrosa active-attack grant", () => {
+  test("keeps Gyats's exact Dressrosa active-attack grant", () => {
     expect(
       buildCardEffects(
         "[On Play] Up to 1 of your [Dressrosa] type Characters can also attack active Characters during this turn.",
@@ -199,7 +199,7 @@ describe("OP04-069 through OP04-081 parser regressions", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
               duration: "thisTurn",
             },

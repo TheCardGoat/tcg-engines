@@ -22,4 +22,16 @@ describe("OP12-105 Trafalgar Lammy", () => {
       0,
     );
   });
+  test("also buffs the named Leader and expires at the end of the turn", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST10-001",
+      hand: [op12TrafalgarLammy105],
+      activeDon: op12TrafalgarLammy105.cost,
+    });
+    e.asSouth().play(op12TrafalgarLammy105);
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.power).toBe(7000);
+    e.asSouth().endTurn();
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+  });
 });

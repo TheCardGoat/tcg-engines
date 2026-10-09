@@ -38,7 +38,7 @@ export const op07BasilHawkins029: CharacterCard = {
   setId: "OP07",
   cost: 6,
   power: 7000,
-  traits: ["Hawkins Pirates Supernovas"],
+  traits: ["Supernovas", "Hawkins Pirates"],
   attribute: "slash",
 
   effect:
@@ -50,7 +50,7 @@ export const op07BasilHawkins029: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

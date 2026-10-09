@@ -11,6 +11,692 @@ function compile(rulesText: string) {
 }
 
 describe("Grand Archive ability compiler", () => {
+  it("keeps Prima Materia's next-source bonus across all unit recipients of that event", () => {
+    const result = compile(
+      "REST: Draw a card into your memory. If Prima Materia was brewed, the next time an astra element source you control would deal damage to one or more units this turn, it deals that much damage plus 3 to those units instead.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "activated",
+        effect: {
+          kind: "sequence",
+          effects: [
+            { kind: "draw", to: "memory" },
+            {
+              kind: "conditional",
+              then: {
+                kind: "replacement",
+                consumptionScope: "source-game-event",
+                event: { recipient: { filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] } } },
+              },
+            },
+          ],
+        },
+      },
+    ]);
+  });
+  it("selects up to two cards from one player's graveyard", () => {
+    expect(
+      compile("Banish Fixture: Banish up to two cards from a single graveyard.").abilities,
+    ).toMatchObject([
+      {
+        kind: "activated",
+        effect: {
+          kind: "banish",
+          selection: {
+            count: { kind: "up-to", amount: 2 },
+            unique: true,
+            singleZoneOwner: true,
+            candidates: { kind: "card", zones: ["graveyard"], player: "each-player" },
+          },
+        },
+      },
+    ]);
+  });
+
+  it("derives kill damage from the ally's last-known power and life", () => {
+    const result = compile(
+      "On Ally Kill: Deal X unpreventable damage to each other champion where X is the killed ally's power stat plus its life stat.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        variables: [
+          {
+            symbol: "X",
+            kind: "derived",
+            amount: {
+              kind: "calculate",
+              operator: "add",
+              operands: [
+                {
+                  kind: "property",
+                  subject: { kind: "event-recipient" },
+                  property: "power",
+                  basis: "last-known",
+                },
+                {
+                  kind: "property",
+                  subject: { kind: "event-recipient" },
+                  property: "life",
+                  basis: "last-known",
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("removes sheen from all units without inventing a target", () => {
+    const result = compile(
+      "Remove all sheen counters from all units on the field. Then deal X damage to each unit except for your champion, where X is the amount of counters removed this way.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effect: {
+          kind: "sequence",
+          effects: [
+            { kind: "remove-counter", subject: { kind: "each" }, bindResultAs: "removed-sheen" },
+            { kind: "deal-damage", amount: { kind: "binding", binding: "removed-sheen" } },
+          ],
+        },
+      },
+    ]);
+    expect(result.abilities[0]).not.toHaveProperty("targets");
+    expect(result.abilities[0]).not.toHaveProperty("variables");
+  });
+
+  it("retains payment requirements on self-banishment triggers", () => {
+    for (const costKind of ["memory", "reserve"]) {
+      expect(
+        compile(
+          `Whenever this card is banished from your graveyard to pay for a ${costKind} cost, put a charge counter on it.`,
+        ).abilities,
+      ).toMatchObject([{ trigger: { event: { payment: { costKind } } } }]);
+    }
+  });
+
+  it("scopes self-banishment triggers to their printed origin zone", () => {
+    for (const zone of ["memory", "graveyard"]) {
+      expect(
+        compile(`Whenever this card is banished from your ${zone}, put a charge counter on it.`)
+          .abilities,
+      ).toMatchObject([{ kind: "triggered", functionalZones: [zone] }]);
+    }
+  });
+
+  it("draws only for cards actually banished by Auravolt Current", () => {
+    const result = compile(
+      "Any amount of target players banish two cards from their memory. For each card banished this way, its owner draws a card into their memory. Banish Auravolt Current.",
+    );
+    expect(JSON.stringify(result.abilities)).toContain(
+      '"bindResultAs":"actually-banished-memory-cards"',
+    );
+    expect(JSON.stringify(result.abilities)).toContain(
+      '"amount":{"kind":"count","collection":{"binding":"actually-banished-memory-cards"}}',
+    );
+  });
+
+  it("retains the level restriction on opposing recovery prohibition", () => {
+    const result = compile("[Level 2+] Your opponents can't recover.");
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        restrictions: [
+          {
+            kind: "static",
+            name: "level-restriction",
+            condition: {
+              kind: "compare",
+              comparison: {
+                left: { kind: "property", property: "level" },
+                operator: "gte",
+                right: 2,
+              },
+            },
+          },
+        ],
+        effects: [{ kind: "rule-modification", mode: "forbid", action: "recover" }],
+      },
+    ]);
+  });
+  it("grants qualifying allies permission to wield the source weapon", () => {
+    const result = compile(
+      "[Class Bonus] Unique Warrior allies you control can attack using this weapon.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effects: [
+          {
+            kind: "rule-modification",
+            mode: "allow",
+            action: "use-weapon-for-attack",
+            subject: {
+              kind: "each",
+              collection: {
+                zones: ["field"],
+                player: "controller",
+                filter: {
+                  kind: "all",
+                  filters: [
+                    { kind: "type", oneOf: ["ALLY"] },
+                    { kind: "class", oneOf: ["WARRIOR"] },
+                    { kind: "supertype", oneOf: ["UNIQUE"] },
+                  ],
+                },
+              },
+            },
+            using: { kind: "source" },
+          },
+        ],
+      },
+    ]);
+  });
+  it("caps both source stats at the printed token limit", () => {
+    const result = compile(
+      "[Class Bonus] Fixture gets +1POWER and +1LIFE for each of up to three tokens you control.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    const count = {
+      kind: "calculate",
+      operator: "minimum",
+      operands: [
+        {
+          kind: "count",
+          collection: {
+            zones: ["field"],
+            player: "controller",
+            filter: { kind: "token", value: true },
+          },
+        },
+        3,
+      ],
+    };
+    expect(result.abilities).toMatchObject([
+      {
+        effects: [
+          { change: { property: "power", amount: count } },
+          { change: { property: "life", amount: count } },
+        ],
+      },
+    ]);
+  });
+  it("retains the entry turn check for extra damage to a target ally", () => {
+    const result = compile(
+      "Deal 3 damage to target unit. If that unit is an ally that entered the field this turn, deal an additional 3 damage to it.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effect: {
+          kind: "sequence",
+          effects: [
+            { kind: "deal-damage", amount: 3 },
+            {
+              kind: "conditional",
+              condition: {
+                kind: "all",
+                conditions: [
+                  {
+                    kind: "subject-matches",
+                    subject: { kind: "bound", binding: "target-1" },
+                    filter: { kind: "type", oneOf: ["ALLY"] },
+                  },
+                  {
+                    kind: "history",
+                    event: "object-entered-field",
+                    window: "this-turn",
+                    subject: { kind: "bound", binding: "target-1" },
+                    minimum: 1,
+                  },
+                ],
+              },
+              then: { kind: "deal-damage", amount: 3 },
+            },
+          ],
+        },
+      },
+    ]);
+  });
+  it("counts total champion combat damage for a turn-based discount", () => {
+    const result = compile(
+      "[Class Bonus] This card costs 3 less to activate as long as your champion has dealt 3 or more combat damage this turn.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effects: [
+          {
+            condition: {
+              kind: "history",
+              event: "damage-dealt",
+              window: "this-turn",
+              actor: "controller",
+              filter: { kind: "type", oneOf: ["CHAMPION"] },
+              combatDamage: true,
+              totalAmountMinimum: 3,
+            },
+          },
+        ],
+      },
+    ]);
+  });
+  it("retains a combat target's life threshold", () => {
+    const result = compile(
+      "[Class Bonus] As long as the attacker is attacking an ally with 5 LIFE or more, Fixture gets +3 POWER.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effects: [
+          {
+            condition: {
+              kind: "combat-relation",
+              otherFilter: {
+                kind: "all",
+                filters: [
+                  { kind: "type", oneOf: ["ALLY"] },
+                  {
+                    kind: "numeric",
+                    comparison: {
+                      left: {
+                        kind: "property",
+                        subject: { kind: "candidate" },
+                        property: "life",
+                        basis: "current",
+                      },
+                      operator: "gte",
+                      right: 5,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    ]);
+  });
+  it("includes every listed type in a zone power aggregate", () => {
+    const result = compile(
+      "[Lorraine Bonus] Fixture gets +XPOWER, where X is the total power among ally, attack, and weapon cards in your banishment.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        variables: [
+          {
+            amount: {
+              kind: "aggregate-property",
+              operation: "sum",
+              collection: {
+                zones: ["banishment"],
+                player: "controller",
+                filter: {
+                  kind: "any",
+                  filters: [
+                    { kind: "type", oneOf: ["ALLY"] },
+                    { kind: "type", oneOf: ["ATTACK"] },
+                    { kind: "type", oneOf: ["WEAPON"] },
+                  ],
+                },
+              },
+            },
+          },
+        ],
+      },
+    ]);
+  });
+  it("expands inclusive cascade count ranges", () => {
+    const result = compile(
+      "On Enter: Cascade—\n• 1 to 4— Draw a card.\n• 5 to 9— Recover 1.\n• 10— Draw two cards.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "triggered",
+        cascade: {
+          modes: [{ counts: [1, 2, 3, 4] }, { counts: [5, 6, 7, 8, 9] }, { counts: [10] }],
+        },
+      },
+    ]);
+  });
+
+  it("checks each newly drawn advanced card inside the random memory refresh loop", () => {
+    const result = compile(
+      "Banish up to three cards at random from your memory. For each card banished this way, draw a card into your memory. If that card is advanced element, put a durability counter on a Sword weapon you control and it gets +1POWER until end of turn.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effect: {
+          kind: "sequence",
+          effects: [
+            { kind: "choose-value", selection: { candidates: { kind: "number", minimum: 0 } } },
+            {
+              kind: "banish",
+              selection: {
+                method: "random",
+                count: {
+                  kind: "exactly",
+                  amount: { kind: "binding", binding: "memory-refresh-count" },
+                },
+              },
+            },
+            {
+              kind: "for-each",
+              effect: {
+                kind: "sequence",
+                effects: [
+                  { kind: "draw", to: "memory", bindResultAs: "refreshed-drawn-card" },
+                  {
+                    kind: "conditional",
+                    condition: { subject: { kind: "bound", binding: "refreshed-drawn-card" } },
+                    then: { kind: "choose" },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ]);
+  });
+
+  for (const suffix of ["and each object linked to it", "and it gets +1POWER until end of turn"]) {
+    it(`retains a chosen counter recipient's compound clause: ${suffix}`, () => {
+      const result = compile(`Put a static counter on a Sword weapon you control ${suffix}.`);
+      expect(result.unparsedParagraphs).toBe(0);
+      expect(result.abilities).toMatchObject([
+        {
+          effect: {
+            kind: "choose",
+            selection: { candidates: { player: "controller" } },
+            effect: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "add-counter",
+                  subject: { kind: "bound", binding: "chosen-counter-object" },
+                },
+                suffix.includes("linked")
+                  ? {
+                      kind: "add-counter",
+                      subject: {
+                        kind: "each",
+                        collection: {
+                          host: { kind: "bound", binding: "chosen-counter-object" },
+                          relationship: "linked-to",
+                        },
+                      },
+                    }
+                  : {
+                      kind: "continuous",
+                      subjects: { kind: "bound", binding: "chosen-counter-object" },
+                      change: { property: "power", amount: 1 },
+                    },
+              ],
+            },
+          },
+        },
+      ]);
+      expect(result.abilities[0]).not.toHaveProperty("targets");
+    });
+  }
+  it("discovers a phase trigger in its explicit banishment zone", () => {
+    const result = compile(
+      "At the beginning of your end phase, if this card is in your banishment, put a static counter on a Sword weapon you control and each object linked to it.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      { kind: "triggered", functionalZones: ["banishment"] },
+    ]);
+  });
+
+  for (const owned of [false, true]) {
+    it(`chooses a filtered counter recipient on resolution: controlled=${owned}`, () => {
+      const result = compile(
+        `Put a buff counter on a Chessman Knight ally${owned ? " you control" : ""}.`,
+      );
+      expect(result.unparsedParagraphs).toBe(0);
+      expect(result.abilities).toMatchObject([
+        {
+          effect: {
+            kind: "choose",
+            selection: {
+              declared: "resolution",
+              candidates: {
+                player: owned ? "controller" : "each-player",
+                filter: {
+                  kind: "all",
+                  filters: [
+                    { kind: "type", oneOf: ["ALLY"] },
+                    { kind: "subtype", oneOf: ["CHESSMAN"] },
+                    { kind: "subtype", oneOf: ["KNIGHT"] },
+                  ],
+                },
+              },
+            },
+            effect: { kind: "add-counter" },
+          },
+        },
+      ]);
+      expect(result.abilities[0]).not.toHaveProperty("targets");
+    });
+  }
+  it("binds the conditional post-redirect life bonus to the chosen Rook", () => {
+    const result = compile(
+      "Change the target of an attack to a Chessman Rook ally you control. If you do, that ally gets +2 LIFE until end of turn.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        effect: {
+          kind: "choose",
+          selection: { id: "chosen-redirect-ally" },
+          effect: {
+            kind: "sequence",
+            effects: [
+              {
+                kind: "attempt",
+                effect: {
+                  kind: "retarget",
+                  newTarget: { kind: "bound", binding: "chosen-redirect-ally" },
+                },
+              },
+              {
+                kind: "conditional",
+                then: {
+                  kind: "continuous",
+                  subjects: { kind: "bound", binding: "chosen-redirect-ally" },
+                  change: { property: "life", amount: 2 },
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+  });
+
+  for (const targeted of [false, true]) {
+    it(`restores departed buff counters to a ${targeted ? "target" : "chosen"} ally`, () => {
+      const result = compileGrandArchiveAbilities({
+        canonicalId: "fixture",
+        name: "Fixture Ally",
+        types: ["ALLY"],
+        rulesText: `On Leave: Put the buff counters that were on Fixture Ally on ${targeted ? "target ally" : "a Pawn ally"} you control.`,
+      });
+      expect(result.unparsedParagraphs).toBe(0);
+      const effect = {
+        kind: "add-counter",
+        counter: "buff",
+        amount: {
+          kind: "counter-count",
+          subject: { kind: "source" },
+          counter: "buff",
+          basis: "last-known",
+        },
+      };
+      expect(result.abilities).toMatchObject([
+        { kind: "triggered", effect: targeted ? effect : { kind: "choose", effect } },
+      ]);
+    });
+  }
+
+  it("reads a departed source's former counters without moving counters off its new object", () => {
+    const result = compileGrandArchiveAbilities({
+      canonicalId: "fixture",
+      name: "Cardiac Vessel",
+      types: ["PHANTASIA"],
+      rulesText:
+        "On Leave: Put the damage counters that were on Cardiac Vessel onto your champion.",
+    });
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "triggered",
+        effect: {
+          kind: "add-counter",
+          subject: { kind: "champion", player: "controller" },
+          counter: "damage",
+          amount: {
+            kind: "counter-count",
+            subject: { kind: "source" },
+            counter: "damage",
+            basis: "last-known",
+          },
+        },
+      },
+    ]);
+  });
+
+  for (const name of ["Tristan", "Mordred"]) {
+    it(`restricts ${name}'s level-up draw to the same base level`, () => {
+      const result = compileGrandArchiveAbilities({
+        canonicalId: "fixture",
+        name,
+        types: ["CHAMPION"],
+        rulesText: `${name} can level up into champions of the same base level. When ${name === "Tristan" ? "she" : "he"} does, draw two cards.`,
+      });
+      expect(result.unparsedParagraphs).toBe(0);
+      expect(result.abilities).toMatchObject([
+        {
+          kind: "composite",
+          abilities: [
+            { kind: "static", effects: [{ kind: "rule-modification", action: "level-up" }] },
+            {
+              kind: "triggered",
+              trigger: {
+                kind: "event",
+                event: {
+                  name: "champion-leveled-up",
+                  previousObject: { kind: "source" },
+                  sameBaseLevel: true,
+                },
+              },
+              effect: { kind: "draw", amount: 2 },
+            },
+          ],
+        },
+      ]);
+    });
+  }
+
+  it("compiles a source-specific redirect as a counter-cost activated ability", () => {
+    const result = compileGrandArchiveAbilities({
+      canonicalId: "fixture",
+      name: "Tristan, Shadowdancer",
+      types: ["CHAMPION"],
+      rulesText:
+        "Remove two preparation counters from Tristan: Change the target of an attack that targets Tristan to a phantasia ally you control.",
+    });
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "activated",
+        cost: { kind: "remove-counter", subject: { kind: "source" }, amount: 2 },
+        effect: {
+          kind: "conditional",
+          condition: { kind: "current-attack-target-matches" },
+          then: { kind: "choose", effect: { kind: "retarget" } },
+        },
+      },
+    ]);
+    expect(result.abilities[0]).not.toHaveProperty("targets");
+  });
+
+  for (const zone of ["material deck", "graveyard", "memory", "banishment"])
+    it(`checks a conditional negate's ${zone} origin during resolution`, () => {
+      const result = compile(
+        `Negate target card activation if that card was activated from a ${zone}.`,
+      );
+      expect(result.unparsedParagraphs).toBe(0);
+      expect(result.abilities).toMatchObject([
+        {
+          kind: "card-resolution",
+          targets: [{ candidates: { kind: "stack-item", itemTypes: ["card-activation"] } }],
+          effect: {
+            kind: "conditional",
+            condition: {
+              kind: "bound-activation-origin",
+              binding: "target-stack-item",
+              zone: zone.replace(" ", "-"),
+            },
+            then: { kind: "negate" },
+          },
+        },
+      ]);
+      const ability = result.abilities[0];
+      if (ability?.kind !== "card-resolution") throw new Error("Expected resolution");
+      expect(ability.targets?.[0]?.candidates).not.toHaveProperty("activationFrom");
+    });
+
+  it("negates opposing card activations by stack identity rather than card objects", () => {
+    const result = compile("Negate all card activations you don't control.");
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "card-resolution",
+        effect: {
+          kind: "negate-matching-stack-items",
+          candidates: {
+            kind: "stack-item",
+            itemTypes: ["card-activation"],
+            controller: "opponent",
+          },
+        },
+      },
+    ]);
+  });
+
+  it("keeps a self lineage-entry trigger functional at its destination", () => {
+    const result = compile(
+      "Whenever this card is put into a champion's lineage, that champion's controller recovers 4.",
+    );
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "triggered",
+        functionalZones: ["inner-lineage"],
+        trigger: {
+          kind: "event",
+          event: {
+            name: "card-moved",
+            to: "inner-lineage",
+            host: { kind: "event-object", bindAs: "lineage-champion" },
+          },
+        },
+        effect: { kind: "recover", player: { controllerOf: "lineage-champion" }, amount: 4 },
+      },
+    ]);
+  });
+
   it("preserves separate per-unit buffers and the specified damage type", () => {
     for (const damageType of ["combat ", "non-combat ", ""]) {
       const result = compile(
@@ -2900,6 +3586,69 @@ it("links Slime King's return choice to the Slimes used for its activation", () 
           },
         },
       },
+    },
+  ]);
+});
+
+it("restricts Volda's temporary prevention prohibition to controlled damage sources", () => {
+  const result = compile(
+    "[Class Bonus] On Enter: Until end of turn, damage dealt by fire element sources you control can't be prevented.",
+  );
+  expect(result.unparsedParagraphs).toBe(0);
+  expect(result.abilities).toMatchObject([
+    {
+      kind: "triggered",
+      effect: {
+        kind: "rule-modification",
+        action: "prevent-damage",
+        sourceFilter: { kind: "element", oneOf: ["FIRE"] },
+        condition: {
+          kind: "player-relation",
+          player: { controllerOf: "eventSource" },
+          relation: "controller",
+        },
+        duration: { kind: "this-turn" },
+      },
+    },
+  ]);
+});
+
+it("checks Sword Saint's actual entry origin instead of an activation flag", () => {
+  const result = compileGrandArchiveAbilities({
+    canonicalId: "fixture",
+    name: "Sword Saint of Eveswind",
+    types: ["ALLY"],
+    rulesText:
+      "[Class Bonus] On Enter: If Sword Saint of Eveswind entered from a banishment, put two buff counters on it.",
+  });
+  expect(result.unparsedParagraphs).toBe(0);
+  expect(result.abilities).toMatchObject([
+    {
+      kind: "triggered",
+      effect: {
+        kind: "conditional",
+        condition: { kind: "event-origin", zone: "banishment" },
+        then: { kind: "add-counter", counter: { named: "buff" }, amount: 2 },
+      },
+    },
+  ]);
+});
+
+it("groups Hector's single prevention use across one damage event", () => {
+  const result = compile(
+    "[Class Bonus] If damage would be dealt to one or more non-token neos element units you control, prevent X of that damage where X is the amount of tokens you control. Apply this replacement effect only once per turn.",
+  );
+  expect(result.unparsedParagraphs).toBe(0);
+  expect(result.abilities).toMatchObject([
+    {
+      kind: "static",
+      effects: [
+        {
+          kind: "replacement",
+          consumptionScope: "source-game-event",
+          limit: { count: 1, per: "turn" },
+        },
+      ],
     },
   ]);
 });

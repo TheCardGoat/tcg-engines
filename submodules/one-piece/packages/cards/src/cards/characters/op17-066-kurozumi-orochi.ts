@@ -23,7 +23,7 @@ export const op17KurozumiOrochi066: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kurozumi Clan"],
+  traits: ["Land of Wano", "Kurozumi Clan"],
   attribute: "wisdom",
   effect:
     "[On Play] DON!! -1: If you have a Character with a cost of 10 or more, draw 2 cards and trash 1 card from your hand.",

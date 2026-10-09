@@ -38,7 +38,7 @@ describe("OP13-102 Edison", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("with more Life rejects activation before trashing itself or resting a Character", () => {
+  test("with more Life may pay the self-trash cost but neither draws nor rests a Character", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op13Edison102], life: 4, deck: [eb01Fourtricks025] },
       { life: 3, character: [eb01Doma005] },
@@ -46,17 +46,13 @@ describe("OP13-102 Edison", () => {
     const edisonId = engine.findCardInZone("south", "character", op13Edison102);
     const targetId = engine.findCardInZone("north", "character", eb01Doma005);
 
-    expect(
-      engine.expectFailure({
-        type: "activateEffect",
-        seat: "south",
-        sourceInstanceId: edisonId,
-        trigger: "activateMain",
-      }).accepted,
-    ).toBe(false);
+    engine.activateEffect(edisonId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(edisonId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(edisonId);
+    expect(view.players.south.handCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(1);
     expect(
       view.players.north.characters.find((card) => card?.instanceId === targetId)?.rested,
     ).toBe(false);

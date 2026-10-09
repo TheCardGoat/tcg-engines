@@ -21,7 +21,7 @@ export const op05DragonClaw095: EventCard = {
   rarity: "C",
   setId: "OP05",
   cost: 2,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, if you have 15 or more cards in your trash, K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {

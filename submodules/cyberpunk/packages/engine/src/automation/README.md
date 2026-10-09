@@ -4,11 +4,20 @@ Pluggable AI players that drive the engine through the **same public surfaces a 
 
 ## Current capabilities
 
+**Opt-in full-information practice:** `expert-oracle` ("Expert (full information)")
+uses a separate turn planner: beam width 5, up to 12 actions, four candidate
+reply lines, and a 768-command simulation budget. It sees both hands, both
+decks in order, and face-down Legends through `LocalEngine.getOracleView`.
+It still submits normal legal commands. The player/network projection stays
+filtered. This mode is marked `oracle` and `testOnly`, is explicitly included
+in the practice catalog, and does not replace the promoted fair default.
+See [comparison and validation](../../../../docs/expert-bot-comparison.md).
+
 What the AI layer ships today, at a glance:
 
 **Strategies** — built-ins are boundary-clean:
 
-- `tacticalStrategy` — promoted production/practice default. It searches public board outcomes with a 48-node budget, expands pending choices, models the rival's best public reply, and stops at hidden-information boundaries. The tested greedy combat policy remains a hard safety filter for blocker use, losing fights, and direct attacks into stronger ready blockers.
+- `tacticalStrategy` — promoted production/practice default. It searches public board outcomes with a 48-node budget, expands pending choices, models the rival's best public reply, and stops at hidden-information boundaries. The tested greedy combat policy filters blocker use and losing Unit fights. A direct attack into a stronger ready blocker is considered when the attacker has more attack-ready Units than the rival has ready Units, allowing a spare Unit to pressure the blocker.
 - `abilityAwareTacticalStrategy` — explicit evaluation candidate built on the same tactical search. When two actions have the same simulated score, it uses visible ability timing, roles, conditions, and board requirements to prefer the better card-specific fit. It does not replace the promoted default without passing the paired legal-deck gate.
 - `firstLegalStrategy` — picks the first actionable move; smoke-test bot.
 - `randomStrategy` — uniform-random over actionable moves and candidates; deterministic given the seed; the cheapest fuzz opponent.
@@ -23,7 +32,7 @@ What the AI layer ships today, at a glance:
 
 - `searchDeck` filters revealed cards by `cardTypes` / `classifications` / `minCost` / `maxCost` / `minPower` / `maxPower`.
 - `chooseTarget` handles `discardFromHand` (cheapest cards), paid `playCard` bindings (payable cards only), and scores both the target and value of `adjustGig` choices by ownership: rival Gigs are disrupted, while friendly Gigs follow the source color (Red maximizes, Blue minimizes, Green aligns pairs, and Yellow creates distinct values). Unknown sources retain the ownership-based fallback.
-- `chooseGigsToSteal` picks highest-face dice (max Street Cred swing).
+- `chooseGigsToSteal` first enables a visible Gig-condition payoff, then serves the deck's color plan (Red: high values, Blue: ones/low values, Green: pairs, Yellow: distinct values). It uses rival Street Cred loss only to break plan ties. The bot infers color from its known Legends, then visible cards when needed.
 - `chooseCardToPlay` picks highest-impact (`effectivePower → cost → id`).
 - `chooseCardToMove` flips direction by destination — favourable destinations get the strongest card, unfavourable get the weakest sacrifice.
 - `chooseEffect` returns `stuck` (no card emits it today; payload shape is locked as `options: ChooseEffectOption[]` so the first modal-effect card has a clear contract — see [Known limitations](#known-limitations)).
@@ -41,6 +50,8 @@ What the AI layer ships today, at a glance:
 - Bot-lab promotion uses legal real-card deck cells, paired seats/seeds, replay verification, hard-failure rejection, confidence bounds, and an explicit automation revision.
 
 **Promotion evidence** — see `promotions/current.json` for the audited automation revision, paired schedule, sample count, improvement, and confidence interval. Promotion requires zero hard failures and no regressing legal-deck cell. A separate tactical self-play matrix covers all 65 reachable cards. Runtime resolution treats the compatibility id `"default"` as an alias for the current promotion; `"greedy"` remains the explicit baseline id.
+
+**Gig and board planning** — tactical evaluation includes a bounded value for visible cards whose Gig conditions are ready. Steal and adjust-Gig choice resolvers can build those conditions, while retaining their normal Street Cred and color plans when no card payoff is visible. Tactical search gives a small preference to ready on-play Unit abilities and to removal that actually changes the rival's field: cheap hard removal early, and hard or attack-denying soft removal once either player reaches five Gigs. Direct attacks from a weaker Unit can pressure a stronger ready Blocker only when the attacker has more attack-ready Units than the rival has ready Units.
 
 ## Architecture
 
@@ -76,16 +87,16 @@ What the AI layer ships today, at a glance:
 
 ## Files
 
-| Path                   | Role                                                                                                                                           |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `types.ts`             | `AIStrategy`, `DecisionContext`, `MoveDecision`, `StepResult*`, `ChoiceResolverMap`                                                            |
-| `ai-player.ts`         | The single-player driver: `step()`, `takeTurn()`, dispatches to strategy or resolver                                                           |
-| `decision-context.ts`  | Builds the read-only context passed to strategies/resolvers                                                                                    |
-| `run-auto-match.ts`    | Bot-vs-bot harness with per-step timing/logging, cycle detection, and deterministic automation concessions                                     |
+| Path                   | Role                                                                                                                                                                                                             |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `types.ts`             | `AIStrategy`, `DecisionContext`, `MoveDecision`, `StepResult*`, `ChoiceResolverMap`                                                                                                                              |
+| `ai-player.ts`         | The single-player driver: `step()`, `takeTurn()`, dispatches to strategy or resolver                                                                                                                             |
+| `decision-context.ts`  | Builds the read-only context passed to strategies/resolvers                                                                                                                                                      |
+| `run-auto-match.ts`    | Bot-vs-bot harness with per-step timing/logging, cycle detection, and deterministic automation concessions                                                                                                       |
 | `strategies/`          | Pure-view built-ins: `firstLegalStrategy`, `randomStrategy`, `greedyStrategy`, plus `move-args.ts` (the `AvailableMove → MoveDecision` mapper); `../deck-profile.ts` types the per-deck profiles greedy can bind |
-| `search/`              | Engine-aware strategies: promoted tactical minimax, public board evaluation, Monte Carlo/MCTS, choice enumeration, and hardened rollouts       |
-| `resolvers/`           | Default per-variant pending-choice resolvers, exported as `defaultChoiceResolvers`                                                             |
-| `util/assert-never.ts` | Exhaustive-switch helper used at every dispatch site                                                                                           |
+| `search/`              | Engine-aware strategies: promoted tactical minimax, public board evaluation, Monte Carlo/MCTS, choice enumeration, and hardened rollouts                                                                         |
+| `resolvers/`           | Default per-variant pending-choice resolvers, exported as `defaultChoiceResolvers`                                                                                                                               |
+| `util/assert-never.ts` | Exhaustive-switch helper used at every dispatch site                                                                                                                                                             |
 
 ## Hard contracts
 
@@ -200,7 +211,7 @@ Some defaults intentionally return `stuck` because the choice can't be safely re
 | ------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `searchDeck`        | `handleSearchDeck` (effect handler)                              | Filters `revealedCards` by `target` (`cardTypes` / `classifications` / `maxCost`); picks deterministically up to `select.max` (or all matching)                                                                                            |
 | `chooseTarget`      | `handleDiscardFromHand`, `handleAdjustGig`, selectable bindings  | `discardFromHand`: cheapest hand cards. Paid `playCard` bindings: weakest payable target that still resolves. `adjustGig`: disrupt rival Gigs; apply source-color scoring to friendly Gigs; unknown sources maximize Street Cred advantage |
-| `chooseGigsToSteal` | `resolveAttack` (direct attack with > steal-count eligible dice) | Picks highest-face dice (max Street Cred swing); ties by id                                                                                                                                                                                |
+| `chooseGigsToSteal` | `resolveAttack` (direct attack with > steal-count eligible dice) | Enables known card payoffs, then own color Gig shape, then rival Street Cred loss; ties by id                                                                                                                                              |
 | `chooseCardToPlay`  | Triggered "play one of these" effects                            | Picks highest-`effectivePower`, then highest-cost, then id                                                                                                                                                                                 |
 | `chooseCardToMove`  | Triggered "move one of these" effects                            | Favourable destination (field/hand) → highest-impact; unfavourable (trash/deckBottom/unknown) → lowest-impact; pass when no candidates                                                                                                     |
 | `chooseEffect`      | _Not emitted today_ (placeholder for future modal-effect cards)  | Returns `stuck` — see TODO in `resolvers/choose-effect.ts`                                                                                                                                                                                 |

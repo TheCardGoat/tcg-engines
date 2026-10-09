@@ -1,171 +1,88 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Lead Performers (OP17-061) cost=9 power=11000 counter=0
 describe("OP17-061 Lead Performers", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-061"], activeDon: 11 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("Animal Kingdom Leader gains Life, then self-trash plays a named King", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP17-058",
+        hand: ["OP17-061", "OP17-064"],
+        activeDon: 9,
+        deck: ["ST02-002", "ST02-006"],
+      },
+      {},
     );
-
-    engine.playCard("OP17-061");
-    engine.acceptLeadingOptional("south");
-    // Resolve any give-DON or return-DON cost payments.
-    for (let ci = 0; ci < 3; ci++) {
-      const cv = engine.getView("south");
-      const cd = (cv.decisions ?? [])[0];
-      if (!cd) break;
-      const ci2 = (cd as { extensions?: { resolutionIntent?: string } }).extensions
-        ?.resolutionIntent;
-      if (ci2 === "effectCostGiveDon" || ci2 === "effectCostReturnDon") {
-        const cstep = engine.pendingDecision(ci2, "south").steps[0];
-        if (cstep?.kind === "payCost" && cstep.candidates && cstep.candidates.length > 0) {
-          const amt = (cstep as unknown as { min?: number }).min ?? 1;
-          engine.resolveDecision(
-            ci2,
-            {
-              selectedIds: cstep.candidates
-                .slice(0, amt)
-                .map((c: { ref: { id: string } }) => c.ref.id),
-            },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(ci2, { optionId: "1" }, "south");
-        }
-      } else if (ci2 === "effectOptional") {
-        engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-      } else {
-        break;
-      }
-    }
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-061",
+    const king = e.findCardInZone("south", "hand", "OP17-064");
+    e.asSouth().play("OP17-061");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(6);
+    e.asSouth().activateMain("OP17-061");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectPlaySelection", { selectedIds: [king] }, "south");
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "OP17-061")).toBe(true);
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === king)).toBe(
+      true,
     );
   });
-  test("[Activate: Main] resolves its activated ability", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: ["OP17-061", "EB01-005"], activeDon: 13 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const cardId = engine.findCardInZone("south", "character", "OP17-061");
-
-    engine.activateEffect(cardId, "activateMain", "south");
-    engine.acceptLeadingOptional("south");
-
-    for (let i = 0; i < 3; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
+  test.each(["OP17-065", "OP17-069"])(
+    "self-trash plays named %s but excludes an unrelated name",
+    (card) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "OP17-058",
+          character: ["OP17-061"],
+          hand: [card, "OP17-059"],
+          activeDon: 1,
+        },
+        {},
+      );
+      const target = e.findCardInZone("south", "hand", card);
+      const unrelated = e.findCardInZone("south", "hand", "OP17-059");
+      e.asSouth().activateMain("OP17-061");
+      e.asSouth().acceptOptional();
+      const step = e.pendingDecision("effectPlaySelection", "south").steps[0];
+      if (step.kind !== "selectEntity") throw new Error("Expected named Character selection");
+      expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([target]);
+      expect(step.candidates.some((candidate) => candidate.ref.id === unrelated)).toBe(false);
+      e.resolveDecision("effectPlaySelection", { selectedIds: [target] }, "south");
+      e.asSouth().declineOptional();
+      const view = e.getView("south");
+      expect(view.players.south.characters.some((c) => c?.instanceId === target)).toBe(true);
+      expect(view.players.south.trash.some((c) => c.cardId === "OP17-061")).toBe(true);
+      expect(view.players.south.hand.map((c) => c.instanceId)).toEqual([unrelated]);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+  test.each(["decline", "zero", "wrongLeader"])(
+    "On Play %s preserves Life with the printed cost result",
+    (mode) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: mode === "wrongLeader" ? "OP01-001" : "OP17-058",
+          hand: ["OP17-061"],
+          activeDon: 9,
+          donDeckCount: 1,
+          deck: ["ST02-002", "ST02-006"],
+        },
+        {},
+      );
+      const before = e.getView("south").players.south;
+      e.asSouth().play("OP17-061");
+      if (mode === "decline") e.asSouth().declineOptional();
+      else {
+        e.asSouth().acceptOptional();
+        if (mode === "zero")
+          e.resolveDecision("effectAddToLifeFromDeck", { optionId: "0" }, "south");
       }
-    }
-
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-061", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-061",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
-  test("[On Play] decline path (subject-bound)", () => {
-    const performers = "OP17-061";
-    const engine = OnePieceTestEngine.create(
-      { hand: [performers], activeDon: 11 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const before = engine.getView("south").players.south;
-
-    engine.playCard(performers);
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      performers,
-    );
-    expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
+      const after = e.getView("south");
+      expect(after.players.south.restedDon).toBe(mode === "decline" ? 9 : 8);
+      expect(after.players.south.donDeckCount).toBe(
+        before.donDeckCount + (mode === "decline" ? 0 : 1),
+      );
+      expect(after.players.south.lifeCount).toBe(before.lifeCount);
+      expect(after.players.south.deckCount).toBe(before.deckCount);
+      expect(after.prompts).toHaveLength(0);
+    },
+  );
 });

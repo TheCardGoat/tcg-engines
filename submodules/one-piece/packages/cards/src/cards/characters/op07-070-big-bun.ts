@@ -23,7 +23,7 @@ export const op07BigBun070: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Fish-Man Giant Foxy Pirates"],
+  traits: ["Giant", "Fish-Man", "Foxy Pirates"],
   attribute: "strike",
   effect:
     "[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, play up to 1 [Foxy Pirates] type card with a cost of 4 or less from your hand.",
@@ -57,7 +57,7 @@ export const op07BigBun070: CharacterCard = {
               {
                 filter: "trait",
                 value: "Foxy Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

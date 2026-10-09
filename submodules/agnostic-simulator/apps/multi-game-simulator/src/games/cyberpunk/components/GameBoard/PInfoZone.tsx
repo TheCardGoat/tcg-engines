@@ -5,6 +5,8 @@ import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { useEngineInteractionView, useEngineOptional } from "../../engine";
 import { interactionViewCanAttackRival } from "../../engine/interactionViewHelpers";
+import { PLAYER_SIDE_TO_ID } from "../../engine";
+import { useAnimationNode } from "@tcg/simulator-ui";
 import { useGameState } from "./gameStateContext";
 import type { Phase } from "./gameStateTypes";
 import classes from "./PInfoZone.module.css";
@@ -20,6 +22,14 @@ export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps)
   const { activeSource } = useDragDrop();
   const engine = useEngineOptional();
   const humanSide = engine?.humanSide ?? "player";
+  const playerSide = opponent ? (humanSide === "player" ? "opponent" : "player") : humanSide;
+  const playerAnimationRef = useAnimationNode(
+    {
+      kind: "player",
+      id: String(PLAYER_SIDE_TO_ID[playerSide]),
+    },
+    { presence: "present" },
+  );
   const interactionView = useEngineInteractionView(humanSide);
   const attackSelection = useAttackSelection();
   const rivalAttackTarget = useRivalAttackTargetState(opponent);
@@ -41,7 +51,10 @@ export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps)
 
   return (
     <div
-      ref={drop.setNodeRef}
+      ref={(node) => {
+        drop.setNodeRef(node);
+        playerAnimationRef(node);
+      }}
       className={`${classes.zone} ${opponent ? classes.opp : ""} ${children ? classes.withDock : ""} ${
         directStealTarget ? classes.directStealTarget : ""
       } ${drop.isOver ? classes.dropOver : ""}`}

@@ -30,7 +30,7 @@ export const eb03Kujyaku041: CharacterCard = {
   setId: "EB03",
   cost: 4,
   power: 6000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "special",
   effect:
     "[Opponent's Turn] All of your {SWORD} type Characters with a cost of 6 or less gain +2000 power.\n[On Play] You may trash 1 {Navy} type card from your hand: Draw 2 cards.",
@@ -46,7 +46,7 @@ export const eb03Kujyaku041: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -82,7 +82,7 @@ export const eb03Kujyaku041: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

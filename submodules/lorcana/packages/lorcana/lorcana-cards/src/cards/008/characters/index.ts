@@ -4,6 +4,7 @@ export { hueyReliableLeader } from "./003-huey-reliable-leader";
 export { mulanChargingAheadC2Challenge as mulanChargingAheadC2ChallengeC2003MulanChargingAheadChallenge } from "./c2-003-mulan-charging-ahead-challenge";
 export { goofyGroundbreakingChef } from "./004-goofy-groundbreaking-chef";
 export { antonioMadrigalFriendToAll } from "./005-antonio-madrigal-friend-to-all";
+export { annaTrustingSisterCC1Promo } from "./cc1-005-anna-trusting-sister-promo";
 export { minnieMouseDaringDefender } from "./006-minnie-mouse-daring-defender";
 export { ludwigVonDrakeAllaroundExpert } from "./007-ludwig-von-drake-all-around-expert";
 export { mulanChargingAheadC2Challenge as mulanChargingAheadC2ChallengeC2007MulanChargingAheadChallenge } from "./c2-007-mulan-charging-ahead-challenge";

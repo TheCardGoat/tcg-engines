@@ -21,7 +21,7 @@ export const eb01SorryIMAGoner029: EventCard = {
   rarity: "C",
   setId: "EB01",
   cost: 1,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   effect:
     "[Counter] Reveal 1 card from the top of your deck. If the revealed card has a cost of 4 or more, return up to 1 of your Characters to the owner's hand. Then, place the revealed card at the bottom of your deck.[Trigger] Return up to 1 Character with a cost of 8 or less to the owner's hand.",
   effects: {
@@ -33,6 +33,7 @@ export const eb01SorryIMAGoner029: EventCard = {
             action: "revealTopDeckCard",
             player: "self",
             conditional: {
+              finalPosition: "bottom",
               filters: [
                 {
                   filter: "cost",
@@ -54,7 +55,7 @@ export const eb01SorryIMAGoner029: EventCard = {
                 },
               ],
             },
-            finalPosition: "bottom",
+            finalPosition: "top",
           },
         ],
       },

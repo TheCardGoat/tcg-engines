@@ -29,9 +29,13 @@ export const dugGoodBoy: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8d3202ee129b448cb4680a652f1eed81",
+    tcgPlayer: "704643",
+  },
   text: [
     {
-      title: "Fetch!",
+      title: "FETCH!",
       description: "When you play this character, if you have an item in play, draw a card.",
     },
   ],

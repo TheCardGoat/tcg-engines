@@ -31,11 +31,12 @@ export const omnidroidScanningForThreats: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c320d3dd28714ed285931cb1a13605d5",
+    tcgPlayer: "704683",
   },
   text: [
     {
       title: "FACTORY SETTINGS",
-      description: "While this character has no damage, it gets +2 strength.",
+      description: "While this character has no damage, it gets +2 {S}.",
     },
   ],
   classifications: ["Storyborn", "Robot"],

@@ -3,6 +3,8 @@ import {
   blockerAbility,
   goSoloAbility,
   quickAbility,
+  legendsInPlay,
+  unitsAndLegendsInPlay,
 } from "@tcg/cyberpunk-types";
 import type {
   Ability,
@@ -20,7 +22,6 @@ import type {
   GigTargetDSL,
   PerCountValue,
   PromoCardDefinition,
-  StructuredCardDefinitionBySetCode,
   StructuredSetCode,
   StructuredCardDefinition,
   TargetDSL,
@@ -30,6 +31,20 @@ import type {
 } from "@tcg/cyberpunk-types";
 
 const SELF_TARGET: TargetDSL = { selector: "self" };
+
+export interface UnparsedSegment {
+  cardSlug: string;
+  text: string;
+  reason: string;
+  sourceRange?: { start: number; end: number };
+}
+
+export interface ParseResult<T> {
+  definition: T;
+  unparsedSegments: UnparsedSegment[];
+}
+
+class UnsupportedRuleText extends Error {}
 const HOST_TARGET: TargetDSL = { selector: "host" };
 const FRIENDLY_GIG_TARGET: GigTargetDSL = {
   selector: "gig",
@@ -241,6 +256,14 @@ function anyGigTarget(): GigTargetDSL {
   };
 }
 
+function allFriendlyGigs(): GigTargetDSL {
+  return {
+    selector: "gig",
+    controller: "friendly",
+    amount: "all",
+  };
+}
+
 function chooseOneOrDraw(option: { id: string; label: string; effects: Effect[] }): Effect {
   return {
     effect: "chooseEffect",
@@ -336,12 +359,7 @@ function gearHostOrSelf(card: CardDefinition): TargetDSL {
 function gearAttachment(): AttachmentDefinition {
   return {
     text: "Equip to a unit or face-up legend.",
-    target: cardTarget({
-      controller: "friendly",
-      zones: ["field", "legendArea"],
-      cardTypes: ["unit", "legend"],
-      face: "faceUp",
-    }),
+    target: unitsAndLegendsInPlay("friendly", "faceUp"),
   };
 }
 
@@ -905,12 +923,7 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
           { cost: "payCardCost" },
           {
             cost: "spend",
-            target: cardTarget({
-              controller: "friendly",
-              zones: ["field", "legendArea"],
-              cardTypes: ["unit", "legend"],
-              face: "faceUp",
-            }),
+            target: unitsAndLegendsInPlay("friendly", "faceUp"),
           },
         ],
         bindings: [
@@ -1549,11 +1562,13 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
             effects: [
               {
                 effect: "spend",
+                // No state filter: the official FAQ lets "Spend a rival Unit"
+                // target already-spent (horizontal) Units — the spend simply
+                // no-ops. Must match the authored card definition.
                 target: cardTarget({
                   controller: "rival",
                   zones: ["field"],
                   cardTypes: ["unit"],
-                  state: "ready",
                   selection: {
                     mode: "choose",
                     min: 1,
@@ -2324,15 +2339,7 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
               {
                 effect: "draw",
                 player: "friendly",
-                amount: perCount(
-                  1,
-                  cardTarget({
-                    controller: "friendly",
-                    zones: ["legendArea"],
-                    cardTypes: ["legend"],
-                    face: "faceUp",
-                  }),
-                ),
+                amount: perCount(1, legendsInPlay("friendly", "faceUp")),
               },
             ],
           },
@@ -2848,7 +2855,9 @@ function parseTriggeredByPrefix(
     }
   }
 
-  throw new Error(`Unsupported ${trigger.toUpperCase()} ability for ${card.slug}: ${body}`);
+  throw new UnsupportedRuleText(
+    `Unsupported ${trigger.toUpperCase()} ability for ${card.slug}: ${body}`,
+  );
 }
 
 function parseEventAbility(card: CardDefinition, text: string): Ability {
@@ -3065,7 +3074,7 @@ function parseEventAbility(card: CardDefinition, text: string): Ability {
     });
   }
 
-  throw new Error(`Unsupported event ability for ${card.slug}: ${text}`);
+  throw new UnsupportedRuleText(`Unsupported event ability for ${card.slug}: ${text}`);
 }
 
 function parseStaticAbility(card: CardDefinition, text: string): Ability {
@@ -3132,7 +3141,7 @@ function parseStaticAbility(card: CardDefinition, text: string): Ability {
         {
           effect: "modifyPower",
           target: SELF_TARGET,
-          value: perCount(Number.parseInt(powerPerGig[1]!, 10), FRIENDLY_GIG_TARGET),
+          value: perCount(Number.parseInt(powerPerGig[1]!, 10), allFriendlyGigs()),
           duration: "continuous",
         },
       ],
@@ -3178,7 +3187,7 @@ function parseStaticAbility(card: CardDefinition, text: string): Ability {
     });
   }
 
-  throw new Error(`Unsupported static ability for ${card.slug}: ${text}`);
+  throw new UnsupportedRuleText(`Unsupported static ability for ${card.slug}: ${text}`);
 }
 
 function parseDirectEffectAbility(card: CardDefinition, text: string): Ability {
@@ -3492,33 +3501,23 @@ function parseDirectEffectAbility(card: CardDefinition, text: string): Ability {
   return parseStaticAbility(card, text);
 }
 
-function parseMainAbility(card: CardDefinition, text: string): Ability[] {
+function parseMainAbility(
+  card: CardDefinition,
+  text: string,
+  unparsedSegments: UnparsedSegment[],
+): Ability[] {
   if (!text) {
     return [];
   }
 
   try {
-    if (/^\[(?:Flavor|Flavour)(?: Text)?\]/i.test(text)) {
+    if (/^\[(?:Flavor|Flavour)(?: Text)?\]/i.test(text) || /^[“"].+[”"]$/.test(text)) {
       return [];
     }
     const cantAttackPrefix = /^(This Unit can't attack\.)\s+([\s\S]+)$/i.exec(text);
     if (cantAttackPrefix) {
       const cantAttackAbility = parseStaticAbility(card, cantAttackPrefix[1]!);
-      try {
-        return [cantAttackAbility, ...parseMainAbility(card, cantAttackPrefix[2]!)];
-      } catch (error) {
-        if (isLegacySetCode(card.set.code)) {
-          throw error;
-        }
-
-        return [
-          cantAttackAbility,
-          staticAbility({
-            text: cantAttackPrefix[2]!,
-            effects: [],
-          }),
-        ];
-      }
+      return [cantAttackAbility, ...parseMainAbility(card, cantAttackPrefix[2]!, unparsedSegments)];
     }
 
     const specialAbilities = parseSpecialAbilities(card, text);
@@ -3591,25 +3590,14 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
 
     return [parseDirectEffectAbility(card, text)];
   } catch (error) {
-    if (isLegacySetCode(card.set.code)) {
-      throw error;
-    }
-
-    return [
-      staticAbility({
-        text,
-        effects: [],
-      }),
-    ];
+    if (!(error instanceof UnsupportedRuleText)) throw error;
+    unparsedSegments.push({
+      cardSlug: card.slug,
+      text,
+      reason: error.message,
+    });
+    return [];
   }
-}
-
-const LEGACY_SET_CODES = ["promo"] as const satisfies readonly StructuredSetCode[];
-
-const LEGACY_SET_CODE_SET: ReadonlySet<string> = new Set(LEGACY_SET_CODES);
-
-function isLegacySetCode(setCode: string): boolean {
-  return LEGACY_SET_CODE_SET.has(setCode);
 }
 
 const STRUCTURED_SET_CODES = [
@@ -3627,7 +3615,9 @@ function isStructuredSetCode(setCode: string): setCode is StructuredSetCode {
   return STRUCTURED_SET_CODE_SET.has(setCode);
 }
 
-export function parseStructuredCard(card: CardDefinition): StructuredCardDefinition {
+export function parseStructuredCard<TSet extends CardDefinition["set"]>(
+  card: CardDefinition & { set: TSet },
+): ParseResult<CardDefinition & { set: TSet }> {
   let workingText = card.rulesText ? normalizeText(card.rulesText) : "";
   const reminderText: string[] = [];
   let attachment: AttachmentDefinition | null | undefined;
@@ -3647,7 +3637,11 @@ export function parseStructuredCard(card: CardDefinition): StructuredCardDefinit
   const parsedKeywords = parseKeywordAbilities(card, workingText);
   workingText = parsedKeywords.text;
 
-  const abilities = [...parsedKeywords.abilities, ...parseMainAbility(card, workingText)];
+  const unparsedSegments: UnparsedSegment[] = [];
+  const abilities = [
+    ...parsedKeywords.abilities,
+    ...parseMainAbility(card, workingText, unparsedSegments),
+  ];
   const keywords = deriveKeywords(abilities);
   const timingTriggers = deriveTimingTriggers(abilities);
 
@@ -3656,13 +3650,16 @@ export function parseStructuredCard(card: CardDefinition): StructuredCardDefinit
   }
 
   return {
-    ...card,
-    timingTriggers,
-    keywords,
-    abilities,
-    reminderText,
-    ...(attachment ? { attachment } : {}),
-    ...(costModifier ? { costModifier } : {}),
+    definition: {
+      ...card,
+      timingTriggers,
+      keywords,
+      abilities,
+      reminderText,
+      ...(attachment ? { attachment } : {}),
+      ...(costModifier ? { costModifier } : {}),
+    },
+    unparsedSegments,
   };
 }
 
@@ -3712,12 +3709,7 @@ function parseCostModifier(text: string): { text: string; modifier?: CostModifie
     const modifier: CostModifier = {
       reducer: "perTargetCount",
       reductionPerCount: Number.parseInt(gearLegendMatch[1]!, 10),
-      target: cardTarget({
-        controller: "friendly",
-        zones: ["legendArea"],
-        cardTypes: ["legend"],
-        face: "faceUp",
-      }),
+      target: legendsInPlay("friendly", "faceUp"),
       min: Number.parseInt(gearLegendMatch[2]!, 10),
     };
     return { text: normalizeText(text.slice(gearLegendMatch[0].length)), modifier };
@@ -3768,62 +3760,72 @@ function parseCostModifier(text: string): { text: string; modifier?: CostModifie
   return { text };
 }
 
-export function parsePromoCard(card: CardDefinition): PromoCardDefinition {
-  if (card.set.code !== "promo") {
+type CardInSet<TSetCode extends StructuredSetCode> = CardDefinition & {
+  set: CardDefinition["set"] & { code: TSetCode };
+};
+
+function isCardInSet<TSetCode extends StructuredSetCode>(
+  card: CardDefinition,
+  setCode: TSetCode,
+): card is CardInSet<TSetCode> {
+  return card.set.code === setCode;
+}
+
+export function parsePromoCard(card: CardDefinition): ParseResult<PromoCardDefinition> {
+  if (!isCardInSet(card, "promo")) {
     throw new Error(`Expected a promo card, received ${card.slug} from ${card.set.code}`);
   }
-
-  return parseStructuredCard(card) as PromoCardDefinition;
+  return parseStructuredCard(card);
 }
 
 export function parseTheHeistRetailStarterDeckCard(
   card: CardDefinition,
-): TheHeistRetailStarterDeckCardDefinition {
-  if (card.set.code !== "theheistretailstarterdeck") {
+): ParseResult<TheHeistRetailStarterDeckCardDefinition> {
+  if (!isCardInSet(card, "theheistretailstarterdeck")) {
     throw new Error(
       `Expected a The Heist retail starter deck card, received ${card.slug} from ${card.set.code}`,
     );
   }
-
-  return parseStructuredCard(card) as TheHeistRetailStarterDeckCardDefinition;
+  return parseStructuredCard(card);
 }
 
 export function parseWelcomeToNightCityRetailCard(
   card: CardDefinition,
-): WelcomeToNightCityRetailCardDefinition {
-  if (card.set.code !== "welcometonightcityretail") {
+): ParseResult<WelcomeToNightCityRetailCardDefinition> {
+  if (!isCardInSet(card, "welcometonightcityretail")) {
     throw new Error(
       `Expected a Welcome to Night City retail card, received ${card.slug} from ${card.set.code}`,
     );
   }
-
-  return parseStructuredCard(card) as WelcomeToNightCityRetailCardDefinition;
+  return parseStructuredCard(card);
 }
 
-export function parseStructuredCards(cards: CardDefinition[]): StructuredCardDefinition[] {
-  return cards
-    .filter((card) => isStructuredSetCode(card.set.code))
-    .map((card) => parseStructuredCard(card));
+function collectParsedCards<TSet extends CardDefinition["set"]>(
+  cards: (CardDefinition & { set: TSet })[],
+): ParseResult<(CardDefinition & { set: TSet })[]> {
+  const parsed = cards.map((card) => parseStructuredCard(card));
+  return {
+    definition: parsed.map((result) => result.definition),
+    unparsedSegments: parsed.flatMap((result) => result.unparsedSegments),
+  };
+}
+
+export function parseStructuredCards(
+  cards: CardDefinition[],
+): ParseResult<StructuredCardDefinition[]> {
+  return collectParsedCards(cards.filter((card) => isStructuredSetCode(card.set.code)));
 }
 
 export function parseStructuredSetCards<TSetCode extends StructuredSetCode>(
   cards: CardDefinition[],
   setCode: TSetCode,
-): StructuredCardDefinitionBySetCode[TSetCode][] {
-  return cards
-    .filter(
-      (
-        card,
-      ): card is CardDefinition & {
-        set: { code: TSetCode; name: string };
-      } => {
-        return card.set.code === setCode;
-      },
-    )
-    .map((card) => parseStructuredCard(card) as StructuredCardDefinitionBySetCode[TSetCode]);
+): ParseResult<CardInSet<TSetCode>[]> {
+  return collectParsedCards(
+    cards.filter((card): card is CardInSet<TSetCode> => isCardInSet(card, setCode)),
+  );
 }
 
-export function parsePromoCards(cards: CardDefinition[]): PromoCardDefinition[] {
+export function parsePromoCards(cards: CardDefinition[]): ParseResult<PromoCardDefinition[]> {
   return parseStructuredSetCards(cards, "promo");
 }
 
@@ -3837,7 +3839,7 @@ export function parseBoxToppersRetailCards(cards: CardDefinition[]) {
 
 export function parseTheHeistRetailStarterDeckCards(
   cards: CardDefinition[],
-): TheHeistRetailStarterDeckCardDefinition[] {
+): ParseResult<TheHeistRetailStarterDeckCardDefinition[]> {
   return parseStructuredSetCards(cards, "theheistretailstarterdeck");
 }
 
@@ -3847,6 +3849,6 @@ export function parseEmbracingPowerRetailStarterDeckCards(cards: CardDefinition[
 
 export function parseWelcomeToNightCityRetailCards(
   cards: CardDefinition[],
-): WelcomeToNightCityRetailCardDefinition[] {
+): ParseResult<WelcomeToNightCityRetailCardDefinition[]> {
   return parseStructuredSetCards(cards, "welcometonightcityretail");
 }

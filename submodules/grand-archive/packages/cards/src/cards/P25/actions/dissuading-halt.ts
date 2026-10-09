@@ -52,40 +52,28 @@ export const dissuadingHalt: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             },
           ],
           effect: {
-            kind: "create-delayed-trigger",
-            trigger: {
-              kind: "event",
-              event: {
-                name: "attack-declared",
-                subject: {
-                  kind: "bound-object",
-                  binding: "target-1",
-                },
+            kind: "continuous",
+            subjects: {
+              kind: "attacks-by",
+              attacker: {
+                kind: "bound",
+                binding: "target-1",
               },
             },
-            expires: {
+            affectedSet: "dynamic",
+            duration: {
               kind: "this-turn",
             },
-            effect: {
-              kind: "continuous",
-              subjects: {
-                kind: "current-attack",
-              },
-              affectedSet: "locked",
-              duration: {
-                kind: "this-attack",
-              },
-              layer: {
-                layer: "E",
-                modifies: "stat",
-                sublayer: "modifier",
-              },
-              change: {
-                kind: "numeric",
-                property: "power",
-                operation: "subtract",
-                amount: 3,
-              },
+            layer: {
+              layer: "E",
+              modifies: "stat",
+              sublayer: "modifier",
+            },
+            change: {
+              kind: "numeric",
+              property: "power",
+              operation: "subtract",
+              amount: 3,
             },
           },
         },

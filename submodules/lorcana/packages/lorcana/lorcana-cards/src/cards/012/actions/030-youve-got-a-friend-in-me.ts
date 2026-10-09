@@ -11,7 +11,7 @@ export const youveGotAFriendInMe: ActionCard = {
       artId: "set12-030",
       setCode: "set12",
       collectorNumber: "30",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const youveGotAFriendInMe: ActionCard = {
   franchise: "Toy Story",
   set: "012",
   cardNumber: 30,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 3,
   inkable: true,
   externalIds: {

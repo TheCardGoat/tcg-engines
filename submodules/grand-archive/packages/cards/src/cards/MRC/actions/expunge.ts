@@ -48,6 +48,7 @@ export const expunge: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> = 
                   kind: "exactly",
                   amount: 1,
                 },
+                bindResultAs: "discarded-card",
                 filter: {
                   kind: "subtype",
                   oneOf: ["CURSE"],

@@ -53,7 +53,7 @@ export const op02ImpelDown092: StageCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

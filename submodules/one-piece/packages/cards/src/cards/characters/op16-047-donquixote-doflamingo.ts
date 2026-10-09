@@ -24,7 +24,7 @@ export const op16DonquixoteDoflamingo047: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["Donquixote Pirates Impel Down"],
+  traits: ["Impel Down", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Activate:Main] You may rest this Character: If your opponent has 8 or more cards in their hand, they place 2 cards from their hand at the bottom of their deck in any order.",
@@ -38,7 +38,7 @@ export const op16DonquixoteDoflamingo047: CharacterCard = {
             cost: "restThisCard",
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "zoneCount",
             player: "opponent",

@@ -34,6 +34,7 @@ export const rapunzelFlynnRiderUnlikelyPairEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96c13d549e86443982376fd82092e179",
+    tcgPlayer: "702656",
   },
   text: [
     {

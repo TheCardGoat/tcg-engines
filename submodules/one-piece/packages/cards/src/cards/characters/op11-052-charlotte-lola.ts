@@ -23,7 +23,7 @@ export const op11CharlotteLola052: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Firetank Pirates Former Rolling Pirates"],
+  traits: ["Firetank Pirates", "Former Rolling Pirates"],
   attribute: "slash",
   i18n: op11CharlotteLola052I18n,
 };

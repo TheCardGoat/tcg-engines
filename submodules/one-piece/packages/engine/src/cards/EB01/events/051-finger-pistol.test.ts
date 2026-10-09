@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { eb01FingerPistol051 } from "../../../../../cards/src/cards/events/eb01-051-finger-pistol.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("EB01-051 Finger Pistol", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(eb01FingerPistol051);
-  });
-});

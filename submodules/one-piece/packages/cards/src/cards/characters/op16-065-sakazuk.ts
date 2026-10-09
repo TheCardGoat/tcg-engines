@@ -5,7 +5,7 @@ export const op16Sakazuk065: CharacterCard = {
   id: "OP16-065",
   canonicalId: "OP16-065",
   slug: "sakazuk/op16-065",
-  name: "Sakazuk",
+  name: "Sakazuki",
   printings: [
     {
       id: "OP16-065",
@@ -40,7 +40,7 @@ export const op16Sakazuk065: CharacterCard = {
   setId: "OP16",
   cost: 7,
   power: 8000,
-  traits: ["Navy Admiral"],
+  traits: ["Admiral", "Navy"],
   attribute: "special",
   effect:
     "[On Play] DON!! -1: Give up to 1 of your opponent's Characters -6000 power until the end of your opponent's next End Phase. [Activate:Main] [Once Per Turn] You may rest 1 of your DON!! cards: If your Leader has the {Navy} type, add up to 2 DON!! cards from your DON!! deck and set them as active.",
@@ -48,6 +48,7 @@ export const op16Sakazuk065: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        optional: true,
         costs: [
           {
             cost: "returnDon",
@@ -89,7 +90,7 @@ export const op16Sakazuk065: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Navy",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

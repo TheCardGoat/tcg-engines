@@ -31,7 +31,7 @@ describe("OP11-046 Vinsmoke Yonji", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("with only included GERMA Characters, is not a legal opponent-effect rest target", () => {
+  test("with only included GERMA Characters, can be selected but is not rested", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op11VinsmokeYonji046] },
       { hand: [op11FisherTiger035], activeDon: op11FisherTiger035.cost },
@@ -44,7 +44,13 @@ describe("OP11-046 Vinsmoke Yonji", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected Fisher Tiger's rest target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(yonjiId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(yonjiId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [yonjiId] }, "north");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === yonjiId)
+        ?.rested,
+    ).toBe(false);
+    expect(engine.getView("north").prompts).toHaveLength(0);
   });
 
   test("opponent-effect K.O. protection applies only while every Character includes GERMA", () => {
@@ -70,10 +76,12 @@ describe("OP11-046 Vinsmoke Yonji", () => {
     if (protectedTarget?.kind !== "selectEntity") {
       throw new Error("Expected Rayleigh's optional K.O. target.");
     }
-    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      protectedId,
+    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    protectedEngine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [protectedId] },
+      "north",
     );
-    protectedEngine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
 
     expect(
       protectedEngine.getView("south").players.south.characters.map((card) => card?.instanceId),

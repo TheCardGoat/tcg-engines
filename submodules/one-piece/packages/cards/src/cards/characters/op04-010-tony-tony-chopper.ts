@@ -23,7 +23,7 @@ export const op04TonyTonyChopper010: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Alabasta Straw Hat Crew"],
+  traits: ["Animal", "Alabasta", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Play up to 1 [Animal] type Character card with 3000 power or less from your hand.",
@@ -51,7 +51,7 @@ export const op04TonyTonyChopper010: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

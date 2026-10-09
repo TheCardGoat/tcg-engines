@@ -24,7 +24,7 @@ export const op15BartholomewKuma029: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Revolutionary Army The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[On Play] Up to 1 of your opponent's Characters with a cost of 5 or less cannot be rested until the end of your opponent's next End Phase.",

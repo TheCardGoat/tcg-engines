@@ -23,7 +23,7 @@ export const op10KouzukiMomonosuke083: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 2000,
-  traits: ["Land of Wano Kouzuki Clan Dressrosa"],
+  traits: ["Dressrosa", "Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     '[Activate: Main] You may rest this Character and 1 of your "Dressrosa" type Leader or Stage cards: Give up to 1 of your opponent\'s Characters -2 cost during this turn.',
@@ -42,7 +42,7 @@ export const op10KouzukiMomonosuke083: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

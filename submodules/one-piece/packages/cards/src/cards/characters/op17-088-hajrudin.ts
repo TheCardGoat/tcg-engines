@@ -32,7 +32,7 @@ export const op17Hajrudin088: CharacterCard = {
   cost: 7,
   power: 8000,
   counter: 2000,
-  traits: ["Giant Elbaph New Giant Pirates"],
+  traits: ["Giant", "Elbaph", "New Giant Pirates"],
   attribute: "strike",
   i18n: op17Hajrudin088I18n,
 };

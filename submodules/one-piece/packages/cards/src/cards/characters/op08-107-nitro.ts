@@ -23,7 +23,7 @@ export const op08Nitro107: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "special",
   effect:
     "[Activate: Main] You may rest this Character: Up to 1 of your [Charlotte Pudding] cards gains +2000 power during this turn.",

@@ -36,6 +36,35 @@ export function enumerateCandidateActions(
   return out;
 }
 
+/**
+ * Commit only an action that the live engine accepts. Every probe starts from
+ * an independent live fork: a rejected probe cannot alter another candidate
+ * or the real game. Costs, targets, and timing stay owned by the engine.
+ */
+export function chooseExecutableAction(
+  engine: EngineHandle,
+  playerId: PlayerId,
+  actions: readonly (MoveDecision & { kind: "command" })[],
+): MoveDecision {
+  const tried = new Set<string>();
+  for (const action of actions) {
+    const key = stableBotHash({ move: action.move, args: action.args ?? {} });
+    if (tried.has(key)) continue;
+    tried.add(key);
+    const probe = engine.fork();
+    const result = probe.processCommand(
+      {
+        commandID: `search-validate-${tried.size}`,
+        move: action.move,
+        input: action.args ? { args: action.args } : undefined,
+      },
+      playerId,
+    );
+    if (result.success) return action;
+  }
+  return { kind: "stuck", reason: "no executable candidate actions" };
+}
+
 export function enumerateChoiceActions(
   choice: ChoicePrompt,
 ): (MoveDecision & { kind: "command" })[] {
@@ -233,6 +262,18 @@ function expandMove(move: AvailableMove): (MoveDecision & { kind: "command" })[]
       return out;
     }
   }
+}
+
+/**
+ * The prompt's passPhase command, or null when the move is not available.
+ * Policies that eliminate every candidate use this as the safe terminal
+ * action instead of re-rolling through a fallback strategy.
+ */
+export function passPhaseAction(prompt: PlayerPrompt): (MoveDecision & { kind: "command" }) | null {
+  const move = prompt.availableMoves.find((candidate) => candidate.moveId === "passPhase");
+  if (!move) return null;
+  const decision = decisionFromMove(move, defaultPicker());
+  return decision.kind === "command" ? decision : null;
 }
 
 function defaultPicker() {

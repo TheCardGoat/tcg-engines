@@ -47,7 +47,7 @@ export const op01KouzukiMomonosuke041: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     '[Activate:Main] (1) (You may rest the specified number of DON!! cards in your cost area) You may rest this Character: Look at 5 cards from the top of your deck; reveal up to 1 "Land of Wano" type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.  This card has been officially errata\'d.',
@@ -80,7 +80,7 @@ export const op01KouzukiMomonosuke041: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

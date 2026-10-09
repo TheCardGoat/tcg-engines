@@ -22,7 +22,7 @@ export const op09GumGumCuatroJetCrossShockBazooka039: EventCard = {
   setId: "OP09",
   cost: 1,
   trigger: "K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.",
-  traits: ["Straw Hat Crew Supernovas ODYSSEY"],
+  traits: ["ODYSSEY", "Supernovas", "Straw Hat Crew"],
   effect:
     '[Counter] If your Leader has the "ODYSSEY" type and you have 2 or more rested Characters, up to 1 of your Leader or Character cards gains +2000 power during this turn.',
   effects: {
@@ -37,7 +37,7 @@ export const op09GumGumCuatroJetCrossShockBazooka039: EventCard = {
               {
                 condition: "leaderTrait",
                 trait: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "zoneCount",

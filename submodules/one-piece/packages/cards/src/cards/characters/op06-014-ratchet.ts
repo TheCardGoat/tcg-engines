@@ -41,7 +41,7 @@ export const op06Ratchet014: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

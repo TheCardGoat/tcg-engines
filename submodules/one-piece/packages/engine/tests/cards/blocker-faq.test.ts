@@ -94,7 +94,7 @@ describe("Official Blocker FAQ", () => {
     expect(counter.candidates.map((candidate) => candidate.ref.id)).toEqual(
       expect.arrayContaining(counterIds),
     );
-    engine.resolveDecision("battleCounter", { selectedIds: counterIds }, "north");
+    for (const id of counterIds) engine.asNorth().chooseCounter(id);
 
     expect(
       engine

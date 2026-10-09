@@ -31,7 +31,7 @@ export const op10DonquixoteRosinante072: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[On Play] You may trash 1 Event from your hand: Draw 2 cards.\n[End of Your Turn] If you have 7 or more DON!! cards on your field, set up to 2 of your DON!! cards as active.",

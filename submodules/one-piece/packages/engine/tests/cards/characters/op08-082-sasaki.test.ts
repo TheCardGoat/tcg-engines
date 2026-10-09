@@ -58,4 +58,16 @@ describe("OP08-082 Sasaki", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+  test("printed2000 Counter defeats a6000 Leader attack", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP08-082", "P-012"] },
+      { activeDon: 1 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.attachDon(e.leader("north"), 1, "north");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP08-082");
+    expect(e.getView("south").players.south.lifeCount).toBe(4);
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "OP08-082")).toBe(true);
+  });
 });

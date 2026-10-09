@@ -6,6 +6,7 @@ import {
   CANONICAL_PLAYER_TWO,
   LorcanaMultiplayerTestEngine,
   createMockCharacter,
+  createMockAction,
 } from "../../../testing";
 
 const PLAYER_ONE = CANONICAL_PLAYER_ONE as PlayerId;
@@ -174,7 +175,7 @@ describe("passTurn", () => {
     expect(result.success).toBe(true);
     expect(engine.asServer().isGameOver()).toBe(true);
     expect(engine.asServer().getWinner()).toBe(PLAYER_TWO);
-    expect(engine.asServer().getCurrentPhase()).toBe("main");
+    expect(engine.asServer().getCurrentPhase()).toBe("end");
     expect(engine.asServer().getTurnNumber()).toBe(1);
   });
 
@@ -212,7 +213,7 @@ describe("passTurn", () => {
     expectFailureCode(result, "PASS_TURN_RECKLESS_CHALLENGE_REQUIRED");
   });
 
-  it("keeps passTurn available during enumeration when Reckless is the only blocker", () => {
+  it("does not offer passTurn when a Reckless character must challenge", () => {
     const recklessAttacker = createMockCharacter({
       id: "reckless-attacker-available",
       name: "Reckless Attacker",
@@ -235,7 +236,7 @@ describe("passTurn", () => {
     expect(exertResult.success).toBe(true);
 
     const availableMoves = engine.asLorcanaPlayerOne().getAvailableMoves();
-    expect(availableMoves.some((move) => move.moveId === "passTurn")).toBe(true);
+    expect(availableMoves.some((move) => move.moveId === "passTurn")).toBe(false);
 
     const result = executeMoveAsPlayer(engine, "passTurn", {});
     expectFailureCode(result, "PASS_TURN_RECKLESS_CHALLENGE_REQUIRED");
@@ -318,5 +319,47 @@ describe("passTurn", () => {
     expectFailureCode(result, "PASS_TURN_NOT_ACTIVE_PLAYER");
     expect(engine.getTurnNumber()).toBe(1);
     expect(engine.asServer().getBoard().turnPlayer).toBe(PLAYER_ONE);
+  });
+});
+
+// CR 3.2.1.1 and 1.2.1: the printed next-start restriction changes the Ready step only.
+describe("temporary next-start ready restriction", () => {
+  it("prevents next-start readying without preventing ready effects", () => {
+    const target = createMockCharacter({ id: "next-start-target", name: "Target", cost: 1 });
+    const restriction = createMockAction({
+      id: "next-start-restriction",
+      name: "Freeze",
+      cost: 0,
+      text: "Chosen opposing character cannot ready at the start of their next turn.",
+      abilities: [
+        {
+          type: "action",
+          effect: {
+            type: "restriction",
+            restriction: "cant-ready-at-start-of-turn",
+            duration: "their-next-turn",
+            target: "CHOSEN_CHARACTER",
+          },
+        },
+      ],
+    });
+    const ready = createMockAction({
+      id: "next-start-ready",
+      name: "Ready",
+      cost: 0,
+      text: "Ready chosen character.",
+      abilities: [{ type: "action", effect: { type: "ready", target: "CHOSEN_CHARACTER" } }],
+    });
+    const engine = LorcanaMultiplayerTestEngine.createWithFixture(
+      { hand: [restriction], deck: 2 },
+      { play: [{ card: target, exerted: true }], hand: [ready], deck: 2 },
+    );
+    expect(
+      engine.asPlayerOne().playCard(restriction, { targets: [target] }),
+    ).toBeSuccessfulCommand();
+    expect(engine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    expect(engine.isExerted(target)).toBe(true);
+    expect(engine.asPlayerTwo().playCard(ready, { targets: [target] })).toBeSuccessfulCommand();
+    expect(engine.isExerted(target)).toBe(false);
   });
 });

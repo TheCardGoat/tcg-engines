@@ -33,6 +33,7 @@ export const kangaHunnyBard: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f3f6ae965e3644cd98b6f957b3dad229",
+    tcgPlayer: "704556",
   },
   text: "Singer 5",
   classifications: ["Dreamborn", "Ally", "Hunny"],

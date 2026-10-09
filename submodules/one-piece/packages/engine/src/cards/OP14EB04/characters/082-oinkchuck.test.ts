@@ -46,17 +46,8 @@ describe("OP14-082 Oinkchuck", () => {
     ).toBe(eb01Doma005.cost);
     expect(view.prompts).toHaveLength(0);
 
-    engine.endTurn("north");
-    view = engine.getView("south");
-    expect(
-      view.players.south.characters.find((card) => card?.instanceId === includedTraitId)?.cost,
-    ).toBe(op12Perona034.cost + 4);
-    engine.endTurn("south");
-    expect(
-      engine
-        .getView("south")
-        .players.south.characters.find((card) => card?.instanceId === exactTraitId)?.cost,
-    ).toBe(op06Inuppe082.cost + 4);
+    // Activated during the opponent's turn: that turn's End Phase is the
+    // expiry boundary (the same duration ruling as OP01-085 Mr.3/Galdino).
     engine.endTurn("north");
     view = engine.getView("south");
     expect(
@@ -65,6 +56,9 @@ describe("OP14-082 Oinkchuck", () => {
     expect(
       view.players.south.characters.find((card) => card?.instanceId === exactTraitId)?.cost,
     ).toBe(op06Inuppe082.cost);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === wrongTraitId)?.cost,
+    ).toBe(eb01Doma005.cost);
   });
 
   test("Life Trigger offers its controller only cost-2-or-less Thriller Bark Pirates Characters from their trash and plays the selected identity rested", () => {
@@ -132,5 +126,32 @@ describe("OP14-082 Oinkchuck", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(candidateId);
     expect(view.players.north.characters.filter(Boolean)).toHaveLength(0);
     expect(view.prompts).toHaveLength(0);
+  });
+  test("the resolved cost increase excludes Thriller Bark Characters played later", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: "OP14-080",
+      character: [op14eb04Oinkchuck082, op06Inuppe082],
+      hand: [op06Inuppe082],
+      activeDon: op06Inuppe082.cost,
+    });
+    const payment = engine.findCardInZone("south", "character", op14eb04Oinkchuck082);
+    const existing = engine.findCardInZone("south", "character", op06Inuppe082);
+    const later = engine.findCardInZone("south", "hand", op06Inuppe082);
+    engine.activateEffect(engine.leader("south"), "activateMain");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectCostKoCharacter", { selectedIds: [payment] }, "south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === existing)
+        ?.cost,
+    ).toBe(op06Inuppe082.cost + 4);
+    engine.playCard(op06Inuppe082);
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === later)
+        ?.cost,
+    ).toBe(op06Inuppe082.cost);
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === existing)
+        ?.cost,
+    ).toBe(op06Inuppe082.cost + 4);
   });
 });

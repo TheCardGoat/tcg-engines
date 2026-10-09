@@ -36,36 +36,6 @@ export const CC_COVERAGE_ARAKNI_MARIONETTE = createFabTournamentTextFixture({
     "3x Art of Desire: Body (red)\n3x Art of Desire: Mind (blue)\n3x Art of Desire: Soul (yellow)\n3x Back Stab (red)\n3x Back Stab (yellow)\n3x Back Stab (blue)\n3x Bite (red)\n3x Bite (yellow)\n3x Bite (blue)\n3x Bonds of Attraction (red)\n3x Bonds of Attraction (yellow)\n3x Bonds of Attraction (blue)\n3x Bonds of Memory (red)\n3x Bonds of Memory (yellow)\n3x Bonds of Memory (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Cut Through (yellow)",
 });
 
-export const CC_COVERAGE_AURORA_SHOOTING_STAR = createFabTournamentTextFixture({
-  id: "cc-coverage-aurora-shooting-star",
-  name: "CC coverage — Aurora, Shooting Star",
-  description: "Validator-built Classic Constructed list for Aurora, Shooting Star.",
-  format: "classic-constructed",
-  hero: "Aurora, Shooting Star",
-  heroClass: "runeblade",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crown of Dichotomy\n1x Fyendal's Spring Tunic\n1x Grasp of the Arknight\n1x Ironrot Legs\n1x Nebula Blade",
-  mainDeck:
-    "3x Arcanic Crackle (red)\n3x Arcanic Crackle (yellow)\n3x Arcanic Crackle (blue)\n3x Arcanic Cunning (red)\n3x Arcanic Cunning (yellow)\n3x Arcanic Cunning (blue)\n3x Arcanic Shockwave (red)\n3x Arcanic Shockwave (yellow)\n3x Arcanic Shockwave (blue)\n3x Astravolt Elemental (red)\n3x Beckoning Brilliance (red)\n3x Blast to Oblivion (red)\n3x Blast to Oblivion (yellow)\n3x Blast to Oblivion (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Crackling (yellow)\n3x Destructive Fleetfoot (yellow)",
-});
-
-export const CC_COVERAGE_AZALEA_ACE_IN_THE_HOLE = createFabTournamentTextFixture({
-  id: "cc-coverage-azalea-ace-in-the-hole",
-  name: "CC coverage — Azalea, Ace in the Hole",
-  description: "Validator-built Classic Constructed list for Azalea, Ace in the Hole.",
-  format: "classic-constructed",
-  hero: "Azalea, Ace in the Hole",
-  heroClass: "ranger",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Bull's Eye Bracers\n1x Crow's Nest\n1x Death Dealer\n1x Fyendal's Spring Tunic\n1x Perch Grapplers\n1x Skullbone Crosswrap",
-  mainDeck:
-    "3x Amplifying Arrow (yellow)\n3x Bolt'n' Shot (red)\n3x Bolt'n' Shot (yellow)\n3x Bolt'n' Shot (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Drill Shot (red)\n3x Drill Shot (yellow)\n3x Drill Shot (blue)\n3x Dry Powder Shot (red)\n3x Emissary of Moon (red)\n3x Falcon Wing (yellow)\n3x Falcon Wing (blue)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)",
-});
-
 export const CC_COVERAGE_BETSY_SKIN_IN_THE_GAME = createFabTournamentTextFixture({
   id: "cc-coverage-betsy-skin-in-the-game",
   name: "CC coverage — Betsy, Skin in the Game",
@@ -94,35 +64,6 @@ export const CC_COVERAGE_BRAVO_SHOWSTOPPER = createFabTournamentTextFixture({
     "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (blue)",
 });
 
-export const CC_COVERAGE_BRAVO_STAR_OF_THE_SHOW = createFabTournamentTextFixture({
-  id: "cc-coverage-bravo-star-of-the-show",
-  name: "CC coverage — Bravo, Star of the Show",
-  description: "Validator-built Classic Constructed list for Bravo, Star of the Show.",
-  format: "classic-constructed",
-  hero: "Bravo, Star of the Show",
-  heroClass: "guardian",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena: "1x Anothos\n1x Crater Fist\n1x Helm of Isen's Peak\n1x Ironrot Legs\n1x Tectonic Plating",
-  mainDeck:
-    "3x Astravolt Elemental (red)\n3x Beckoning Brilliance (red)\n3x Blast to Oblivion (red)\n3x Blast to Oblivion (yellow)\n3x Blast to Oblivion (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Current Funnel (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Elemental Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)",
-});
-
-export const CC_COVERAGE_BRIAR_WARDEN_OF_THORNS = createFabTournamentTextFixture({
-  id: "cc-coverage-briar-warden-of-thorns",
-  name: "CC coverage — Briar, Warden of Thorns",
-  description: "Validator-built Classic Constructed list for Briar, Warden of Thorns.",
-  format: "classic-constructed",
-  hero: "Briar, Warden of Thorns",
-  heroClass: "runeblade",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crown of Dichotomy\n1x Fyendal's Spring Tunic\n1x Grasp of the Arknight\n1x Ironrot Legs\n1x Nebula Blade",
-  mainDeck:
-    "3x Arcanic Crackle (red)\n3x Arcanic Crackle (yellow)\n3x Arcanic Crackle (blue)\n3x Arcanic Cunning (red)\n3x Arcanic Cunning (yellow)\n3x Arcanic Cunning (blue)\n3x Arcanic Shockwave (red)\n3x Arcanic Shockwave (yellow)\n3x Arcanic Shockwave (blue)\n3x Astravolt Elemental (red)\n3x Beckoning Brilliance (red)\n3x Blast to Oblivion (red)\n3x Blast to Oblivion (yellow)\n3x Blast to Oblivion (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Crackling (yellow)\n3x Destructive Fleetfoot (yellow)",
-});
-
 export const CC_COVERAGE_BRUTUS_SUMMA_RUDIS = createFabTournamentTextFixture({
   id: "cc-coverage-brutus-summa-rudis",
   name: "CC coverage — Brutus, Summa Rudis",
@@ -136,21 +77,6 @@ export const CC_COVERAGE_BRUTUS_SUMMA_RUDIS = createFabTournamentTextFixture({
     "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
   mainDeck:
     "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Frontline Scout (blue)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
-});
-
-export const CC_COVERAGE_CHANE_BOUND_BY_SHADOW = createFabTournamentTextFixture({
-  id: "cc-coverage-chane-bound-by-shadow",
-  name: "CC coverage — Chane, Bound by Shadow",
-  description: "Validator-built Classic Constructed list for Chane, Bound by Shadow.",
-  format: "classic-constructed",
-  hero: "Chane, Bound by Shadow",
-  heroClass: "runeblade",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crown of Dichotomy\n1x Fyendal's Spring Tunic\n1x Grasp of the Arknight\n1x Ironrot Legs\n1x Nebula Blade",
-  mainDeck:
-    "3x Arcanic Crackle (red)\n3x Arcanic Crackle (yellow)\n3x Arcanic Crackle (blue)\n3x Arcanic Cunning (red)\n3x Arcanic Cunning (yellow)\n3x Arcanic Cunning (blue)\n3x Bloodsong Gloomblade (red)\n3x Bounding Demigon (red)\n3x Bounding Demigon (yellow)\n3x Bounding Demigon (blue)\n3x Breach Flesh (red)\n3x Breach Flesh (yellow)\n3x Breach Flesh (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Demonbound Gloomblade (yellow)\n3x Feisty Locals (yellow)",
 });
 
 export const CC_COVERAGE_CINDRA_DRACAI_OF_RETRIBUTION = createFabTournamentTextFixture({
@@ -168,21 +94,6 @@ export const CC_COVERAGE_CINDRA_DRACAI_OF_RETRIBUTION = createFabTournamentTextF
     "3x Art of the Dragon: Blood (red)\n3x Aspect of Tiger: Body (red)\n3x Aspect of Tiger: Mind (blue)\n3x Aspect of Tiger: Soul (yellow)\n3x Back Heel Kick (red)\n3x Back Heel Kick (yellow)\n3x Back Heel Kick (blue)\n3x Be Like Water (red)\n3x Be Like Water (yellow)\n3x Be Like Water (blue)\n3x Become the Bottle (red)\n3x Become the Bottle (yellow)\n3x Become the Bottle (blue)\n3x Become the Cup (red)\n3x Become the Cup (yellow)\n3x Become the Cup (blue)\n3x Biting Breeze (red)\n3x Biting Breeze (yellow)\n3x Biting Breeze (blue)\n3x Brand with Cinderclaw (yellow)",
 });
 
-export const CC_COVERAGE_DASH_INVENTOR_EXTRAORDINAIRE = createFabTournamentTextFixture({
-  id: "cc-coverage-dash-inventor-extraordinaire",
-  name: "CC coverage — Dash, Inventor Extraordinaire",
-  description: "Validator-built Classic Constructed list for Dash, Inventor Extraordinaire.",
-  format: "classic-constructed",
-  hero: "Dash, Inventor Extraordinaire",
-  heroClass: "mechanologist",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Achilles Accelerator\n1x Ironrot Gauntlet\n1x Plasma Barrel Shot\n1x Teklo Foundry Heart\n1x Viziertronic Model i",
-  mainDeck:
-    "3x Backspin Thrust (red)\n3x Blast Rig (red)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Data Link (red)\n3x Data Link (yellow)\n3x Data Link (blue)\n3x Emissary of Moon (red)\n3x Expedite (yellow)\n3x Expedite (blue)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Frontline Scout (yellow)",
-});
-
 export const CC_COVERAGE_DR_MORTIMER_BLIGHT_OF_THE_PITS = createFabTournamentTextFixture({
   id: "cc-coverage-dr-mortimer-blight-of-the-pits",
   name: "CC coverage — Dr. Mortimer, Blight of the Pits",
@@ -198,36 +109,6 @@ export const CC_COVERAGE_DR_MORTIMER_BLIGHT_OF_THE_PITS = createFabTournamentTex
     "3x Art of Desire: Body (red)\n3x Art of Desire: Mind (blue)\n3x Art of Desire: Soul (yellow)\n3x Back Stab (red)\n3x Back Stab (yellow)\n3x Back Stab (blue)\n3x Bite (red)\n3x Bite (yellow)\n3x Bite (blue)\n3x Bonds of Attraction (red)\n3x Bonds of Attraction (yellow)\n3x Bonds of Attraction (blue)\n3x Bonds of Memory (red)\n3x Bonds of Memory (yellow)\n3x Bonds of Memory (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Cut Through (yellow)",
 });
 
-export const CC_COVERAGE_DROMAI_ASH_ARTIST = createFabTournamentTextFixture({
-  id: "cc-coverage-dromai-ash-artist",
-  name: "CC coverage — Dromai, Ash Artist",
-  description: "Validator-built Classic Constructed list for Dromai, Ash Artist.",
-  format: "classic-constructed",
-  hero: "Dromai, Ash Artist",
-  heroClass: "illusionist",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
-  mainDeck:
-    "3x Blaze Headlong (red)\n3x Browbeat (blue)\n3x Burn Away (red)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Dustup (red)\n3x Dustup (yellow)\n3x Dustup (blue)\n3x Emissary of Moon (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Infectious Host (yellow)",
-});
-
-export const CC_COVERAGE_ENIGMA_LEDGER_OF_ANCESTRY = createFabTournamentTextFixture({
-  id: "cc-coverage-enigma-ledger-of-ancestry",
-  name: "CC coverage — Enigma, Ledger of Ancestry",
-  description: "Validator-built Classic Constructed list for Enigma, Ledger of Ancestry.",
-  format: "classic-constructed",
-  hero: "Enigma, Ledger of Ancestry",
-  heroClass: "illusionist",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
-  mainDeck:
-    "3x Attune with Cosmic Vibrations (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Droplet (blue)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Frontline Scout (yellow)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
-});
-
 export const CC_COVERAGE_FAI_RISING_REBELLION = createFabTournamentTextFixture({
   id: "cc-coverage-fai-rising-rebellion",
   name: "CC coverage — Fai, Rising Rebellion",
@@ -241,21 +122,6 @@ export const CC_COVERAGE_FAI_RISING_REBELLION = createFabTournamentTextFixture({
     "1x Breaking Scales\n1x Breeze Rider Boots\n1x Edge of Autumn\n1x Fyendal's Spring Tunic\n1x Mask of Momentum",
   mainDeck:
     "3x Art of the Dragon: Blood (red)\n3x Aspect of Tiger: Body (red)\n3x Aspect of Tiger: Mind (blue)\n3x Aspect of Tiger: Soul (yellow)\n3x Back Heel Kick (red)\n3x Back Heel Kick (yellow)\n3x Back Heel Kick (blue)\n3x Be Like Water (red)\n3x Be Like Water (yellow)\n3x Be Like Water (blue)\n3x Become the Bottle (red)\n3x Become the Bottle (yellow)\n3x Become the Bottle (blue)\n3x Become the Cup (red)\n3x Become the Cup (yellow)\n3x Become the Cup (blue)\n3x Biting Breeze (red)\n3x Biting Breeze (yellow)\n3x Biting Breeze (blue)\n3x Brand with Cinderclaw (yellow)",
-});
-
-export const CC_COVERAGE_FLORIAN_ROTWOOD_HARBINGER = createFabTournamentTextFixture({
-  id: "cc-coverage-florian-rotwood-harbinger",
-  name: "CC coverage — Florian, Rotwood Harbinger",
-  description: "Validator-built Classic Constructed list for Florian, Rotwood Harbinger.",
-  format: "classic-constructed",
-  hero: "Florian, Rotwood Harbinger",
-  heroClass: "runeblade",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crown of Dichotomy\n1x Fyendal's Spring Tunic\n1x Grasp of the Arknight\n1x Ironrot Legs\n1x Nebula Blade",
-  mainDeck:
-    "3x Arcanic Crackle (red)\n3x Arcanic Crackle (yellow)\n3x Arcanic Crackle (blue)\n3x Arcanic Cunning (red)\n3x Arcanic Cunning (yellow)\n3x Arcanic Cunning (blue)\n3x Arcanic Shockwave (red)\n3x Arcanic Shockwave (yellow)\n3x Arcanic Shockwave (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Crackling (red)\n3x Crackling (yellow)\n3x Cutting Retort (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)",
 });
 
 export const CC_COVERAGE_HALA_BLADESAINT_OF_THE_VOW = createFabTournamentTextFixture({
@@ -288,36 +154,6 @@ export const CC_COVERAGE_IRA_SCARLET_REVENGER = createFabTournamentTextFixture({
     "3x Art of the Dragon: Blood (red)\n3x Aspect of Tiger: Body (red)\n3x Aspect of Tiger: Mind (blue)\n3x Aspect of Tiger: Soul (yellow)\n3x Back Heel Kick (red)\n3x Back Heel Kick (yellow)\n3x Back Heel Kick (blue)\n3x Be Like Water (red)\n3x Be Like Water (yellow)\n3x Be Like Water (blue)\n3x Become the Bottle (red)\n3x Become the Bottle (yellow)\n3x Become the Bottle (blue)\n3x Become the Cup (red)\n3x Become the Cup (yellow)\n3x Become the Cup (blue)\n3x Biting Breeze (red)\n3x Biting Breeze (yellow)\n3x Biting Breeze (blue)\n3x Break Tide (yellow)",
 });
 
-export const CC_COVERAGE_IYSLANDER_STORMBIND = createFabTournamentTextFixture({
-  id: "cc-coverage-iyslander-stormbind",
-  name: "CC coverage — Iyslander, Stormbind",
-  description: "Validator-built Classic Constructed list for Iyslander, Stormbind.",
-  format: "classic-constructed",
-  hero: "Iyslander, Stormbind",
-  heroClass: "wizard",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crucible of Aetherweave\n1x Ironrot Helm\n1x Metacarpus Node\n1x Robe of Rapture\n1x Storm Striders",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Elemental Strike (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Frontline Scout (blue)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
-});
-
-export const CC_COVERAGE_KANO_DRACAI_OF_AETHER = createFabTournamentTextFixture({
-  id: "cc-coverage-kano-dracai-of-aether",
-  name: "CC coverage — Kano, Dracai of Aether",
-  description: "Validator-built Classic Constructed list for Kano, Dracai of Aether.",
-  format: "classic-constructed",
-  hero: "Kano, Dracai of Aether",
-  heroClass: "wizard",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crucible of Aetherweave\n1x Ironrot Helm\n1x Metacarpus Node\n1x Robe of Rapture\n1x Storm Striders",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Frontline Scout (blue)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
-});
-
 export const CC_COVERAGE_KATSU_THE_WANDERER = createFabTournamentTextFixture({
   id: "cc-coverage-katsu-the-wanderer",
   name: "CC coverage — Katsu, the Wanderer",
@@ -331,21 +167,6 @@ export const CC_COVERAGE_KATSU_THE_WANDERER = createFabTournamentTextFixture({
     "1x Breaking Scales\n1x Breeze Rider Boots\n1x Edge of Autumn\n1x Fyendal's Spring Tunic\n1x Mask of Momentum",
   mainDeck:
     "3x Art of the Dragon: Blood (red)\n3x Aspect of Tiger: Body (red)\n3x Aspect of Tiger: Mind (blue)\n3x Aspect of Tiger: Soul (yellow)\n3x Back Heel Kick (red)\n3x Back Heel Kick (yellow)\n3x Back Heel Kick (blue)\n3x Be Like Water (red)\n3x Be Like Water (yellow)\n3x Be Like Water (blue)\n3x Become the Bottle (red)\n3x Become the Bottle (yellow)\n3x Become the Bottle (blue)\n3x Become the Cup (red)\n3x Become the Cup (yellow)\n3x Become the Cup (blue)\n3x Biting Breeze (red)\n3x Biting Breeze (yellow)\n3x Biting Breeze (blue)\n3x Break Tide (yellow)",
-});
-
-export const CC_COVERAGE_KAYO_ARMED_AND_DANGEROUS = createFabTournamentTextFixture({
-  id: "cc-coverage-kayo-armed-and-dangerous",
-  name: "CC coverage — Kayo, Armed and Dangerous",
-  description: "Validator-built Classic Constructed list for Kayo, Armed and Dangerous.",
-  format: "classic-constructed",
-  hero: "Kayo, Armed and Dangerous",
-  heroClass: "brute",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Barkbone Strapping\n1x Ironrot Gauntlet\n1x Romping Club\n1x Scabskin Leathers\n1x Skullhorn",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Frontline Scout (blue)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
 });
 
 export const CC_COVERAGE_KAYO_UNDERHANDED_CHEAT = createFabTournamentTextFixture({
@@ -378,21 +199,6 @@ export const CC_COVERAGE_LEVIA_SHADOWBORN_ABOMINATION = createFabTournamentTextF
     "3x Breach Flesh (red)\n3x Breach Flesh (yellow)\n3x Breach Flesh (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Dabble in Darkness (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Infectious Host (yellow)",
 });
 
-export const CC_COVERAGE_LEXI_LIVEWIRE = createFabTournamentTextFixture({
-  id: "cc-coverage-lexi-livewire",
-  name: "CC coverage — Lexi, Livewire",
-  description: "Validator-built Classic Constructed list for Lexi, Livewire.",
-  format: "classic-constructed",
-  hero: "Lexi, Livewire",
-  heroClass: "ranger",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Bull's Eye Bracers\n1x Death Dealer\n1x Fyendal's Spring Tunic\n1x Perch Grapplers\n1x Quiver of Abyssal Depths\n1x Skullbone Crosswrap",
-  mainDeck:
-    "3x Amplifying Arrow (yellow)\n3x Astravolt Elemental (red)\n3x Beckoning Brilliance (red)\n3x Blast to Oblivion (red)\n3x Blast to Oblivion (yellow)\n3x Blast to Oblivion (blue)\n3x Bolt'n' Shot (red)\n3x Bolt'n' Shot (yellow)\n3x Bolt'n' Shot (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Current Funnel (blue)\n3x Cutting Retort (red)\n3x Dazzling Crescendo (yellow)\n3x Dazzling Crescendo (blue)\n3x Drill Shot (yellow)\n3x Falcon Wing (yellow)",
-});
-
 export const CC_COVERAGE_LYATH_GOLDMANE_VILE_SAVANT = createFabTournamentTextFixture({
   id: "cc-coverage-lyath-goldmane-vile-savant",
   name: "CC coverage — Lyath Goldmane, Vile Savant",
@@ -422,35 +228,6 @@ export const CC_COVERAGE_MAXX_THE_HYPE_NITRO = createFabTournamentTextFixture({
     "3x Backspin Thrust (red)\n3x Blast Rig (red)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Data Link (red)\n3x Data Link (yellow)\n3x Data Link (blue)\n3x Emissary of Moon (red)\n3x Expedite (yellow)\n3x Expedite (blue)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Frontline Scout (yellow)",
 });
 
-export const CC_COVERAGE_NUU_ALLURING_DESIRE = createFabTournamentTextFixture({
-  id: "cc-coverage-nuu-alluring-desire",
-  name: "CC coverage — Nuu, Alluring Desire",
-  description: "Validator-built Classic Constructed list for Nuu, Alluring Desire.",
-  format: "classic-constructed",
-  hero: "Nuu, Alluring Desire",
-  heroClass: "assassin",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
-  mainDeck:
-    "3x Art of Desire: Body (red)\n3x Art of Desire: Mind (blue)\n3x Art of Desire: Soul (yellow)\n3x Attune with Cosmic Vibrations (blue)\n3x Back Stab (red)\n3x Back Stab (yellow)\n3x Back Stab (blue)\n3x Bite (red)\n3x Bite (yellow)\n3x Bite (blue)\n3x Bonds of Attraction (red)\n3x Bonds of Attraction (yellow)\n3x Bonds of Attraction (blue)\n3x Bonds of Memory (red)\n3x Bonds of Memory (yellow)\n3x Bonds of Memory (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Cut Through (yellow)",
-});
-
-export const CC_COVERAGE_OLDHIM_GRANDFATHER_OF_ETERNITY = createFabTournamentTextFixture({
-  id: "cc-coverage-oldhim-grandfather-of-eternity",
-  name: "CC coverage — Oldhim, Grandfather of Eternity",
-  description: "Validator-built Classic Constructed list for Oldhim, Grandfather of Eternity.",
-  format: "classic-constructed",
-  hero: "Oldhim, Grandfather of Eternity",
-  heroClass: "guardian",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena: "1x Anothos\n1x Crater Fist\n1x Helm of Isen's Peak\n1x Ironrot Legs\n1x Tectonic Plating",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Elemental Strike (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (blue)",
-});
-
 export const CC_COVERAGE_OLYMPIA_PRIZED_FIGHTER = createFabTournamentTextFixture({
   id: "cc-coverage-olympia-prized-fighter",
   name: "CC coverage — Olympia, Prized Fighter",
@@ -476,7 +253,7 @@ export const CC_COVERAGE_OSCILIO_FORKED_CONTINUUM = createFabTournamentTextFixtu
   author: "cc-coverage-generator",
   tags: ["cc-coverage"],
   arena:
-    "1x Crucible of Aetherweave\n1x Ironrot Helm\n1x Metacarpus Node\n1x Robe of Rapture\n1x Storm Striders",
+    "1x Aether Conduit\n1x Ironrot Helm\n1x Metacarpus Node\n1x Robe of Rapture\n1x Storm Striders",
   mainDeck:
     "3x Astravolt Elemental (red)\n3x Beckoning Brilliance (red)\n3x Blast to Oblivion (red)\n3x Blast to Oblivion (yellow)\n3x Blast to Oblivion (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Current Funnel (blue)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flittering Charge (yellow)\n3x Frontline Scout (yellow)",
 });
@@ -493,36 +270,6 @@ export const CC_COVERAGE_PLEIADES_SUPERSTAR = createFabTournamentTextFixture({
   arena: "1x Anothos\n1x Crater Fist\n1x Helm of Isen's Peak\n1x Ironrot Legs\n1x Tectonic Plating",
   mainDeck:
     "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (blue)",
-});
-
-export const CC_COVERAGE_PRISM_AWAKENER_OF_SOL = createFabTournamentTextFixture({
-  id: "cc-coverage-prism-awakener-of-sol",
-  name: "CC coverage — Prism, Awakener of Sol",
-  description: "Validator-built Classic Constructed list for Prism, Awakener of Sol.",
-  format: "classic-constructed",
-  hero: "Prism, Awakener of Sol",
-  heroClass: "illusionist",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Celestial Cataclysm (yellow)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Defender of Daybreak (red)\n3x Defender of Daybreak (yellow)\n3x Defender of Daybreak (blue)\n3x Duty Bound Blitz (red)\n3x Duty Bound Blitz (yellow)\n3x Duty Bound Blitz (blue)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)",
-});
-
-export const CC_COVERAGE_PRISM_SCULPTOR_OF_ARC_LIGHT = createFabTournamentTextFixture({
-  id: "cc-coverage-prism-sculptor-of-arc-light",
-  name: "CC coverage — Prism, Sculptor of Arc Light",
-  description: "Validator-built Classic Constructed list for Prism, Sculptor of Arc Light.",
-  format: "classic-constructed",
-  hero: "Prism, Sculptor of Arc Light",
-  heroClass: "illusionist",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Fyendal's Spring Tunic\n1x Ironrot Gauntlet\n1x Ironrot Helm\n1x Ironrot Legs\n1x Talishar, the Lost Prince",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Celestial Cataclysm (yellow)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Defender of Daybreak (red)\n3x Defender of Daybreak (yellow)\n3x Defender of Daybreak (blue)\n3x Duty Bound Blitz (red)\n3x Duty Bound Blitz (yellow)\n3x Duty Bound Blitz (blue)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)",
 });
 
 export const CC_COVERAGE_PUFFIN_HIGHTAIL = createFabTournamentTextFixture({
@@ -550,7 +297,7 @@ export const CC_COVERAGE_RIPTIDE_LURKER_OF_THE_DEEP = createFabTournamentTextFix
   author: "cc-coverage-generator",
   tags: ["cc-coverage"],
   arena:
-    "1x Bull's Eye Bracers\n1x Death Dealer\n1x Fyendal's Spring Tunic\n1x Perch Grapplers\n1x Quiver of Abyssal Depths\n1x Skullbone Crosswrap",
+    "1x Bull's Eye Bracers\n1x Fyendal's Spring Tunic\n1x Perch Grapplers\n1x Quiver of Abyssal Depths\n1x Red Liner\n1x Skullbone Crosswrap",
   mainDeck:
     "3x Amplifying Arrow (yellow)\n3x Bolt'n' Shot (red)\n3x Bolt'n' Shot (yellow)\n3x Bolt'n' Shot (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Drill Shot (red)\n3x Drill Shot (yellow)\n3x Drill Shot (blue)\n3x Dry Powder Shot (red)\n3x Emissary of Moon (red)\n3x Falcon Wing (yellow)\n3x Falcon Wing (blue)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)",
 });
@@ -659,101 +406,25 @@ export const CC_COVERAGE_VALDA_SEISMIC_IMPACT = createFabTournamentTextFixture({
     "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (blue)",
 });
 
-export const CC_COVERAGE_VERDANCE_THORN_OF_THE_ROSE = createFabTournamentTextFixture({
-  id: "cc-coverage-verdance-thorn-of-the-rose",
-  name: "CC coverage — Verdance, Thorn of the Rose",
-  description: "Validator-built Classic Constructed list for Verdance, Thorn of the Rose.",
-  format: "classic-constructed",
-  hero: "Verdance, Thorn of the Rose",
-  heroClass: "wizard",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crucible of Aetherweave\n1x Ironrot Helm\n1x Metacarpus Node\n1x Robe of Rapture\n1x Storm Striders",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Elemental Strike (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (yellow)\n3x Frontline Scout (blue)\n3x Infectious Host (yellow)\n3x Nimby (yellow)",
-});
-
-export const CC_COVERAGE_VICTOR_GOLDMANE_HIGH_AND_MIGHTY = createFabTournamentTextFixture({
-  id: "cc-coverage-victor-goldmane-high-and-mighty",
-  name: "CC coverage — Victor Goldmane, High and Mighty",
-  description: "Validator-built Classic Constructed list for Victor Goldmane, High and Mighty.",
-  format: "classic-constructed",
-  hero: "Victor Goldmane, High and Mighty",
-  heroClass: "guardian",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena: "1x Anothos\n1x Crater Fist\n1x Helm of Isen's Peak\n1x Ironrot Legs\n1x Tectonic Plating",
-  mainDeck:
-    "3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cut a Long Story Short (yellow)\n3x Cut Off at the Knees (yellow)\n3x Cut the Small Talk (yellow)\n3x Cutting Retort (red)\n3x Emissary of Moon (red)\n3x Emissary of Tides (red)\n3x Emissary of Wind (red)\n3x Enlightened Strike (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Flex (blue)\n3x Frontline Scout (blue)",
-});
-
-export const CC_COVERAGE_VISERAI_RUNE_BLOOD = createFabTournamentTextFixture({
-  id: "cc-coverage-viserai-rune-blood",
-  name: "CC coverage — Viserai, Rune Blood",
-  description: "Validator-built Classic Constructed list for Viserai, Rune Blood.",
-  format: "classic-constructed",
-  hero: "Viserai, Rune Blood",
-  heroClass: "runeblade",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Crown of Dichotomy\n1x Fyendal's Spring Tunic\n1x Grasp of the Arknight\n1x Ironrot Legs\n1x Nebula Blade",
-  mainDeck:
-    "3x Arcanic Crackle (red)\n3x Arcanic Crackle (yellow)\n3x Arcanic Crackle (blue)\n3x Arcanic Cunning (red)\n3x Arcanic Cunning (yellow)\n3x Arcanic Cunning (blue)\n3x Browbeat (blue)\n3x Coax a Commotion (red)\n3x Conflicting Thoughts (red)\n3x Conflicting Thoughts (yellow)\n3x Conflicting Thoughts (blue)\n3x Cutting Retort (red)\n3x Deny Redemption (red)\n3x Emissary of Moon (red)\n3x Feisty Locals (yellow)\n3x Feisty Locals (blue)\n3x Fervent Forerunner (yellow)\n3x Fervent Forerunner (blue)\n3x Flex (yellow)\n3x Frontline Scout (yellow)",
-});
-
-export const CC_COVERAGE_ZEN_TAMER_OF_PURPOSE = createFabTournamentTextFixture({
-  id: "cc-coverage-zen-tamer-of-purpose",
-  name: "CC coverage — Zen, Tamer of Purpose",
-  description: "Validator-built Classic Constructed list for Zen, Tamer of Purpose.",
-  format: "classic-constructed",
-  hero: "Zen, Tamer of Purpose",
-  heroClass: "ninja",
-  author: "cc-coverage-generator",
-  tags: ["cc-coverage"],
-  arena:
-    "1x Breaking Scales\n1x Breeze Rider Boots\n1x Edge of Autumn\n1x Fyendal's Spring Tunic\n1x Mask of Momentum",
-  mainDeck:
-    "3x Art of the Dragon: Blood (red)\n3x Aspect of Tiger: Body (red)\n3x Aspect of Tiger: Mind (blue)\n3x Aspect of Tiger: Soul (yellow)\n3x Attune with Cosmic Vibrations (blue)\n3x Back Heel Kick (red)\n3x Back Heel Kick (yellow)\n3x Back Heel Kick (blue)\n3x Be Like Water (red)\n3x Be Like Water (yellow)\n3x Be Like Water (blue)\n3x Become the Bottle (red)\n3x Become the Bottle (yellow)\n3x Become the Bottle (blue)\n3x Become the Cup (red)\n3x Become the Cup (yellow)\n3x Become the Cup (blue)\n3x Biting Breeze (red)\n3x Biting Breeze (yellow)\n3x Break Tide (yellow)",
-});
-
 export const FAB_CC_COVERAGE_DECK_FIXTURES = [
   CC_COVERAGE_ARAKNI_5L_P3D_7HRU_7H3_CR4X,
   CC_COVERAGE_ARAKNI_MARIONETTE,
-  CC_COVERAGE_AURORA_SHOOTING_STAR,
-  CC_COVERAGE_AZALEA_ACE_IN_THE_HOLE,
   CC_COVERAGE_BETSY_SKIN_IN_THE_GAME,
   CC_COVERAGE_BRAVO_SHOWSTOPPER,
-  CC_COVERAGE_BRAVO_STAR_OF_THE_SHOW,
-  CC_COVERAGE_BRIAR_WARDEN_OF_THORNS,
   CC_COVERAGE_BRUTUS_SUMMA_RUDIS,
-  CC_COVERAGE_CHANE_BOUND_BY_SHADOW,
   CC_COVERAGE_CINDRA_DRACAI_OF_RETRIBUTION,
-  CC_COVERAGE_DASH_INVENTOR_EXTRAORDINAIRE,
   CC_COVERAGE_DR_MORTIMER_BLIGHT_OF_THE_PITS,
-  CC_COVERAGE_DROMAI_ASH_ARTIST,
-  CC_COVERAGE_ENIGMA_LEDGER_OF_ANCESTRY,
   CC_COVERAGE_FAI_RISING_REBELLION,
-  CC_COVERAGE_FLORIAN_ROTWOOD_HARBINGER,
   CC_COVERAGE_HALA_BLADESAINT_OF_THE_VOW,
   CC_COVERAGE_IRA_SCARLET_REVENGER,
-  CC_COVERAGE_IYSLANDER_STORMBIND,
-  CC_COVERAGE_KANO_DRACAI_OF_AETHER,
   CC_COVERAGE_KATSU_THE_WANDERER,
-  CC_COVERAGE_KAYO_ARMED_AND_DANGEROUS,
   CC_COVERAGE_KAYO_UNDERHANDED_CHEAT,
   CC_COVERAGE_LEVIA_SHADOWBORN_ABOMINATION,
-  CC_COVERAGE_LEXI_LIVEWIRE,
   CC_COVERAGE_LYATH_GOLDMANE_VILE_SAVANT,
   CC_COVERAGE_MAXX_THE_HYPE_NITRO,
-  CC_COVERAGE_NUU_ALLURING_DESIRE,
-  CC_COVERAGE_OLDHIM_GRANDFATHER_OF_ETERNITY,
   CC_COVERAGE_OLYMPIA_PRIZED_FIGHTER,
   CC_COVERAGE_OSCILIO_FORKED_CONTINUUM,
   CC_COVERAGE_PLEIADES_SUPERSTAR,
-  CC_COVERAGE_PRISM_AWAKENER_OF_SOL,
-  CC_COVERAGE_PRISM_SCULPTOR_OF_ARC_LIGHT,
   CC_COVERAGE_PUFFIN_HIGHTAIL,
   CC_COVERAGE_RIPTIDE_LURKER_OF_THE_DEEP,
   CC_COVERAGE_RUU_DI_GEM_KEEPER,
@@ -763,8 +434,4 @@ export const FAB_CC_COVERAGE_DECK_FIXTURES = [
   CC_COVERAGE_THERYON_MAGISTER_OF_JUSTICE,
   CC_COVERAGE_UZURI_SWITCHBLADE,
   CC_COVERAGE_VALDA_SEISMIC_IMPACT,
-  CC_COVERAGE_VERDANCE_THORN_OF_THE_ROSE,
-  CC_COVERAGE_VICTOR_GOLDMANE_HIGH_AND_MIGHTY,
-  CC_COVERAGE_VISERAI_RUNE_BLOOD,
-  CC_COVERAGE_ZEN_TAMER_OF_PURPOSE,
 ] as const;

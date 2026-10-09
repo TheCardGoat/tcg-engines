@@ -31,6 +31,7 @@ export const belleAlwaysReading: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8f0fc8f569f84d628af731a571bc62b1",
+    tcgPlayer: "702694",
   },
   text: [
     {

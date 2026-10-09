@@ -58,7 +58,7 @@ export const op14eb04Hannyabal052: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

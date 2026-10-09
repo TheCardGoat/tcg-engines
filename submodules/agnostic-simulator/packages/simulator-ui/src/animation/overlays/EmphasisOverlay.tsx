@@ -35,7 +35,6 @@ export function emphasisVisualStyle(tone: EmphasisTone | undefined) {
         tone: "positive" as const,
         color: "#ffd66b",
         surface: "rgba(45, 28, 10, 0.94)",
-        borderStyle: "solid" as const,
         travel: -20,
       };
     case "negative":
@@ -43,7 +42,6 @@ export function emphasisVisualStyle(tone: EmphasisTone | undefined) {
         tone: "negative" as const,
         color: "#ef7783",
         surface: "rgba(48, 18, 23, 0.94)",
-        borderStyle: "dashed" as const,
         travel: 20,
       };
     case "neutral":
@@ -51,7 +49,6 @@ export function emphasisVisualStyle(tone: EmphasisTone | undefined) {
         tone: "neutral" as const,
         color: "var(--game-accent, #5eead4)",
         surface: "rgba(16, 27, 29, 0.94)",
-        borderStyle: "solid" as const,
         travel: 0,
       };
   }
@@ -98,69 +95,9 @@ export function EmphasisOverlay() {
               placeItems: "center",
             }}
           >
-            <motion.div
-              initial={{
-                opacity: 0,
-                transform: emphasisTransform(0, reduceMotion ? 1 : 0.68),
-              }}
-              animate={{
-                opacity: reduceMotion ? 0.38 : [0, 0.58, 0.2, 0],
-                transform: reduceMotion
-                  ? emphasisTransform(0, 1)
-                  : [
-                      emphasisTransform(0, 0.68),
-                      emphasisTransform(0, 1.02),
-                      emphasisTransform(visual.travel * 0.2, 1.42),
-                      emphasisTransform(visual.travel * 0.6, 1.58),
-                    ],
-              }}
-              transition={{
-                delay: delay + duration * 0.06,
-                duration: duration * 0.78,
-                times: [0, 0.24, 0.72, 1],
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{
-                position: "absolute",
-                width: 142,
-                height: 142,
-                borderRadius: "50%",
-                border: `2px ${visual.borderStyle} ${visual.color}`,
-              }}
-            />
-            <motion.div
-              initial={{
-                opacity: 0.28,
-                transform: emphasisTransform(0, reduceMotion ? 1 : 0.7),
-              }}
-              animate={{
-                opacity: [0.28, 1, 0.12, 0],
-                transform: reduceMotion
-                  ? emphasisTransform(0, 1)
-                  : [
-                      emphasisTransform(0, 0.7),
-                      emphasisTransform(0, 1.06),
-                      emphasisTransform(visual.travel * 0.35, 1.26),
-                      emphasisTransform(visual.travel, 1.34),
-                    ],
-              }}
-              transition={{
-                delay,
-                duration: duration * 0.9,
-                times: [0, 0.24, 0.78, 1],
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{
-                position: "absolute",
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                border: `4px ${visual.borderStyle} ${visual.color}`,
-                boxShadow: `0 16px 38px color-mix(in srgb, ${visual.color} 58%, transparent)`,
-              }}
-            />
             {step.label ? (
               <motion.div
+                data-animation-label
                 initial={{
                   opacity: 0,
                   transform: emphasisTransform(8, reduceMotion ? 1 : 0.92),
@@ -201,7 +138,23 @@ export function EmphasisOverlay() {
               >
                 {step.label}
               </motion.div>
-            ) : null}
+            ) : (
+              <motion.div
+                aria-hidden="true"
+                data-animation-emphasis-visual="pulse"
+                initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.7 }}
+                animate={{ opacity: [0, 0.9, 0.9, 0], scale: reduceMotion ? 1 : [0.7, 1, 1.2] }}
+                transition={{ delay, duration, times: [0, 0.2, 0.7, 1] }}
+                style={{
+                  width: step.style === "spotlight" ? 140 : 104,
+                  height: step.style === "spotlight" ? 140 : 104,
+                  border: `3px solid ${visual.color}`,
+                  borderRadius: "50%",
+                  boxShadow: `0 0 28px ${visual.color}, inset 0 0 24px ${visual.color}`,
+                  background: `color-mix(in srgb, ${visual.color} 12%, transparent)`,
+                }}
+              />
+            )}
           </motion.div>
         );
       }),

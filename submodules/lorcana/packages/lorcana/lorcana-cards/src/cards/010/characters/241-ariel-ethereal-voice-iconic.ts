@@ -25,7 +25,7 @@ export const arielEtherealVoiceIconic: CharacterCard = {
   franchise: "Little Mermaid",
   set: "010",
   cardNumber: 241,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 4,
   strength: 3,

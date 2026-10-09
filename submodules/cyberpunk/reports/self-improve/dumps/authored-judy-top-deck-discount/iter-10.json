@@ -1,0 +1,5836 @@
+{
+  "version": 1,
+  "seed": "improve/authored-judy-top-deck-discount/10/authored-judy-top-deck-discount-vs-authored-judy-top-deck-discount/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-judy-top-deck-discount",
+  "deckBId": "authored-judy-top-deck-discount",
+  "winnerId": "p1",
+  "reason": "winCondition",
+  "turnCount": 13,
+  "stepCount": 81,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_182361064"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_884482979"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "dieId": "gd_884482979",
+          "dieType": "d12",
+          "faceValue": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_884482979",
+          "dieType": "d12",
+          "result": 10,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_884482979",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_223320227"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Judy Álvarez: Braindance Maestro"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_871626615"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_56649614"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "dieId": "gd_56649614",
+          "dieType": "d12",
+          "faceValue": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_56649614",
+          "dieType": "d12",
+          "result": 12,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_56649614",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_133083039"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_133083039",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_133083039",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Pyramid Song",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_190260754"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_190260754",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Pyramid Song",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_190260754"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_651856452"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_622203219"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "dieId": "gd_622203219",
+          "dieType": "d10",
+          "faceValue": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_622203219",
+          "dieType": "d10",
+          "result": 7,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_622203219",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_353549766"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_353549766",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_353549766",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_74393679"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "cardId": "ci_74393679",
+          "cardName": "Trust No One"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_74393679",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Trust No One"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_434343677"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_955091725"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "dieId": "gd_955091725",
+          "dieType": "d10",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_955091725",
+          "dieType": "d10",
+          "result": 5,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_955091725",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_266276166"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_266276166",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_266276166",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "cost": 2
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_549994874"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Judy Álvarez: Braindance Maestro"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Jacked-In Voodoo Boy",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_190930137"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_190930137",
+          "fromZone": "deck",
+          "toZone": "hand",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Jacked-In Voodoo Boy",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_190930137"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_188706652"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_840356950"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "dieId": "gd_840356950",
+          "dieType": "d8",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_840356950",
+          "dieType": "d8",
+          "result": 4,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_840356950",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_762485898"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_762485898",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_762485898",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_223320227",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_991280441"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_991280441",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_991280441"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_223320227", "ci_991280441"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardToMove",
+      "args": {
+        "cardId": "ci_991280441"
+      },
+      "moveLogs": [
+        {
+          "type": "resolveCardToMove",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "cardId": "ci_991280441",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_991280441",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_762485898",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "NetWatch Netdriver",
+            "revealedType": "gear",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_658817452"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_658817452",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "NetWatch Netdriver",
+            "revealedType": "gear",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_658817452"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_873267348"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_27632107"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "dieId": "gd_27632107",
+          "dieType": "d8",
+          "faceValue": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_27632107",
+          "dieType": "d8",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_27632107",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_190930137"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_190930137",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_190930137",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_434343677"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "cardId": "ci_434343677",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_434343677",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Floor It"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_871626615"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Trust No One | Judy Álvarez: Braindance Maestro",
+            "triggerIds": ["trigger-5", "trigger-6"],
+            "sourceCardIds": ["ci_871626615", "ci_549994874"],
+            "abilityIndexes": ["0", "0"]
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_871626615",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_871626615",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_871626615",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_549994874",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Trust No One | Judy Álvarez: Braindance Maestro",
+            "triggerIds": ["trigger-5", "trigger-6"],
+            "sourceCardIds": ["ci_871626615", "ci_549994874"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_871626615", "ci_549994874"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-5"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-5",
+            "selectedSourceCardId": "ci_871626615",
+            "selectedAbilityIndex": 0,
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Judy Álvarez: Braindance Maestro",
+            "remainingTriggerIds": ["trigger-6"],
+            "remainingSourceCardIds": ["ci_549994874"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-5",
+            "selectedSourceCardId": "ci_871626615",
+            "selectedAbilityIndex": 0,
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Judy Álvarez: Braindance Maestro",
+            "remainingTriggerIds": ["trigger-6"],
+            "remainingSourceCardIds": ["ci_549994874"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_871626615", "ci_549994874"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_871626615"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_622203219",
+        "value": 4
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D10",
+            "targetId": "gd_622203219",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 7,
+            "dieId": "gd_622203219",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "reason": "friendly does not control a min Gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro",
+            "abilityText": "When you play a BRAINDANCE Program, give a friendly Unit +1 power this turn.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_871626615",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_622203219"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D10",
+            "targetId": "gd_622203219",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_871626615"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_622203219",
+          "previousValue": 7,
+          "newValue": 4,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 4,
+            "previousValue": 7,
+            "dieId": "gd_622203219",
+            "dieLabel": "D10"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "reason": "friendly does not control a min Gig"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_871626615"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro",
+            "abilityText": "When you play a BRAINDANCE Program, give a friendly Unit +1 power this turn.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_549994874"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_266276166"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "targetNames": "Evelyn Parker: Scheming Siren",
+            "powerChange": "+1"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "targetNames": "Evelyn Parker: Scheming Siren",
+            "targetId": "ci_266276166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_549994874",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_266276166"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "targetNames": "Evelyn Parker: Scheming Siren",
+            "powerChange": "+1"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_549994874", "ci_266276166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "targetNames": "Evelyn Parker: Scheming Siren",
+            "targetId": "ci_266276166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_549994874", "ci_266276166"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_266276166"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Evelyn Parker: Scheming Siren"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "abilityText": "ATTACK Draw 1. Then, if you have more ☆ (Street Cred) than a Rival, discard 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Evelyn Parker: Scheming Siren",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_787043334"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_266276166",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_266276166",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Evelyn Parker: Scheming Siren"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_266276166",
+          "effectType": "attack",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "abilityText": "ATTACK Draw 1. Then, if you have more ☆ (Street Cred) than a Rival, discard 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_266276166"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Evelyn Parker: Scheming Siren",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_787043334"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_266276166"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveDiscardFromHand",
+      "args": {
+        "cardIds": ["ci_273373010"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveDiscardFromHand",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "discardedCount": 1,
+          "discardedCards": [
+            {
+              "cardId": "ci_273373010",
+              "cardName": "Towerfall"
+            }
+          ]
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "attackerId": "ci_266276166",
+          "attackerName": "Evelyn Parker: Scheming Siren"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_273373010",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_884482979"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "attackerName": "Evelyn Parker: Scheming Siren",
+          "attackerPower": 1,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 10
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_884482979",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_266276166"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_884482979",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_266276166",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Evelyn Parker: Scheming Siren",
+            "attackerPower": 1,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 10)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_549994874",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_662906973"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_662906973",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_662906973"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_549994874", "ci_662906973"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardToMove",
+      "args": {
+        "cardId": "ci_662906973"
+      },
+      "moveLogs": [
+        {
+          "type": "resolveCardToMove",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "cardId": "ci_662906973",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_662906973",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Placide: Voodoo Sentinel",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_663234265"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_663234265",
+          "fromZone": "deck",
+          "toZone": "hand",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Placide: Voodoo Sentinel",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_663234265"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_319766296"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_979867448"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "dieId": "gd_979867448",
+          "dieType": "d6",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_979867448",
+          "dieType": "d6",
+          "result": 6,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_979867448",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_122306669"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "cardId": "ci_122306669",
+          "cardName": "Pyramid Song"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_122306669",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Pyramid Song"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_188706652"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MT0D12 Flathead",
+            "cost": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_188706652",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_188706652",
+          "playerId": "p1",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MT0D12 Flathead",
+            "cost": 5
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_762485898",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Misty Olszewski: Mender of Broken Spirits",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_805701384"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_805701384",
+          "fromZone": "deck",
+          "toZone": "hand",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Misty Olszewski: Mender of Broken Spirits",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_805701384"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_266276166",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_932762433"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_892461411"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "dieId": "gd_892461411",
+          "dieType": "d6",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_892461411",
+          "dieType": "d6",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_892461411",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_787043334",
+        "attachToId": "ci_549994874"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Judy Álvarez: Braindance Maestro"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_787043334",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_787043334",
+          "hostId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_787043334",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "cost": 3,
+            "attachedToName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_160947745"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_262521513"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Evelyn Parker: Scheming Siren",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_787043334",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_262521513"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_262521513"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Evelyn Parker: Scheming Siren",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "dieId": "gd_564905329",
+          "dieType": "d4",
+          "faceValue": 4
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Trust No One",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_148171589"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_148171589",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Trust No One",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_148171589"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_63106837"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_564905329",
+          "dieType": "d4",
+          "result": 4,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_564905329",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_188706652"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MT0D12 Flathead"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerId": "ci_188706652",
+          "attackerName": "MT0D12 Flathead"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_188706652",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_188706652",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MT0D12 Flathead"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_56649614"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerName": "MT0D12 Flathead",
+          "attackerPower": 7,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 12
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_56649614",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_188706652"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_56649614",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_188706652",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MT0D12 Flathead",
+            "attackerPower": 7,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 12)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_805701384"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_805701384",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_805701384",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "cost": 3
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_223320227",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_194042830"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Judy Álvarez: Braindance Maestro"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_194042830",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "Judy Álvarez: Braindance Maestro",
+            "trashedCount": 1,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_194042830"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_223320227", "ci_194042830"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardToMove",
+      "args": {
+        "cardId": "ci_194042830"
+      },
+      "moveLogs": [
+        {
+          "type": "resolveCardToMove",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "cardId": "ci_194042830",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_194042830",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_194042830"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "cardId": "ci_194042830",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_194042830",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_194042830",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Floor It"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_63106837"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Reboot Optics",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Reboot Optics",
+            "abilityText": "The next time a rival Unit fights this turn, it doesn't defeat the opposing friendly Unit.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_194042830",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_63106837",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_63106837",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Reboot Optics",
+            "cost": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_63106837",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Reboot Optics",
+            "abilityText": "The next time a rival Unit fights this turn, it doesn't defeat the opposing friendly Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_63106837"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_353549766"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Jacked-In Voodoo Boy"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerId": "ci_353549766",
+          "attackerName": "Jacked-In Voodoo Boy"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_353549766",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_353549766",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Jacked-In Voodoo Boy"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_884482979"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerName": "Jacked-In Voodoo Boy",
+          "attackerPower": 2,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 10
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_884482979",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_353549766"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_884482979",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_353549766",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Jacked-In Voodoo Boy",
+            "attackerPower": 2,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 10)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Misty Olszewski: Mender of Broken Spirits | Misty Olszewski: Mender of Broken Spirits",
+            "triggerIds": ["trigger-15", "trigger-16"],
+            "sourceCardIds": ["ci_762485898", "ci_805701384"],
+            "abilityIndexes": ["1", "1"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_762485898",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_805701384",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Misty Olszewski: Mender of Broken Spirits | Misty Olszewski: Mender of Broken Spirits",
+            "triggerIds": ["trigger-15", "trigger-16"],
+            "sourceCardIds": ["ci_762485898", "ci_805701384"],
+            "abilityIndexes": ["1", "1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_805701384"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-15"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-15",
+            "selectedSourceCardId": "ci_762485898",
+            "selectedAbilityIndex": 1,
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Misty Olszewski: Mender of Broken Spirits",
+            "remainingTriggerIds": ["trigger-16"],
+            "remainingSourceCardIds": ["ci_805701384"],
+            "remainingAbilityIndexes": ["1"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-15",
+            "selectedSourceCardId": "ci_762485898",
+            "selectedAbilityIndex": 1,
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Misty Olszewski: Mender of Broken Spirits",
+            "remainingTriggerIds": ["trigger-16"],
+            "remainingSourceCardIds": ["ci_805701384"],
+            "remainingAbilityIndexes": ["1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_805701384"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Trust No One",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_59115171"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_59115171",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Trust No One",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_59115171"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_805701384"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "dieId": "gd_860746230",
+          "dieType": "d4",
+          "faceValue": 1
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Evelyn Parker: Scheming Siren",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_74013908"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_74013908",
+          "fromZone": "deck",
+          "toZone": "hand",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.hit",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Evelyn Parker: Scheming Siren",
+            "revealedType": "unit",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_805701384", "ci_74013908"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_395622184"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_860746230",
+          "dieType": "d4",
+          "result": 1,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_860746230",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_262521513"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_262521513",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_262521513",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Evelyn Parker: Scheming Siren",
+            "cost": 2
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_987552741"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Jackie Welles: Pour One Out For Me"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_475533959"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Jackie Welles: Pour One Out For Me"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_787043334",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_475533959"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_475533959"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 10
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "dieId": "gd_653656394",
+          "dieType": "d20",
+          "faceValue": 7
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "NetWatch Netdriver",
+            "revealedType": "gear",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_731977920"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_731977920",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "NetWatch Netdriver",
+            "revealedType": "gear",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_731977920"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_353549766",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_188706652",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_194042830",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_104344638"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_653656394",
+          "dieType": "d20",
+          "result": 7,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_653656394",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_188706652"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MT0D12 Flathead"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_188706652",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_188706652",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "MT0D12 Flathead"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_662906973"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Floor It",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Floor It",
+            "abilityText": "Give a rival Unit -1 power this turn. Draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_662906973",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_662906973",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Floor It",
+            "cost": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_662906973",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Floor It",
+            "abilityText": "Give a rival Unit -1 power this turn. Draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_662906973"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_188706652"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "targetNames": "MT0D12 Flathead",
+            "powerChange": "-1"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Floor It",
+            "targetNames": "MT0D12 Flathead",
+            "targetId": "ci_188706652",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_516383633"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "attackerId": "ci_188706652",
+          "attackerName": "MT0D12 Flathead"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_662906973",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_188706652"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "targetNames": "MT0D12 Flathead",
+            "powerChange": "-1"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_662906973", "ci_188706652"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Floor It",
+            "targetNames": "MT0D12 Flathead",
+            "targetId": "ci_188706652",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 2
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_662906973", "ci_188706652"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_516383633"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Floor It",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_516383633"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_662906973"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_860746230"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "attackerName": "MT0D12 Flathead",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d4",
+              "faceValue": 1
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_860746230",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_188706652"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_860746230",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_188706652",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "MT0D12 Flathead",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D4 with value 1)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_250450172"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Judy Álvarez: Nothing to Doubt",
+            "cost": 6
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_74393679",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_122306669",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_194042830",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_743727197",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_176580643",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_223320227",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 6,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_250450172",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_250450172",
+          "playerId": "p1",
+          "cost": 6
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Judy Álvarez: Nothing to Doubt",
+            "cost": 6
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Misty Olszewski: Mender of Broken Spirits | Misty Olszewski: Mender of Broken Spirits",
+            "triggerIds": ["trigger-20", "trigger-21"],
+            "sourceCardIds": ["ci_762485898", "ci_805701384"],
+            "abilityIndexes": ["1", "1"]
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 11
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 11
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_762485898",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_805701384",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "Misty Olszewski: Mender of Broken Spirits | Misty Olszewski: Mender of Broken Spirits",
+            "triggerIds": ["trigger-20", "trigger-21"],
+            "sourceCardIds": ["ci_762485898", "ci_805701384"],
+            "abilityIndexes": ["1", "1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_805701384"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-20"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-20",
+            "selectedSourceCardId": "ci_762485898",
+            "selectedAbilityIndex": 1,
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Misty Olszewski: Mender of Broken Spirits",
+            "remainingTriggerIds": ["trigger-21"],
+            "remainingSourceCardIds": ["ci_805701384"],
+            "remainingAbilityIndexes": ["1"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-20",
+            "selectedSourceCardId": "ci_762485898",
+            "selectedAbilityIndex": 1,
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Misty Olszewski: Mender of Broken Spirits",
+            "remainingTriggerIds": ["trigger-21"],
+            "remainingSourceCardIds": ["ci_805701384"],
+            "remainingAbilityIndexes": ["1"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_805701384"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Towerfall",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_843042894"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_843042894",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Towerfall",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_762485898", "ci_843042894"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_805701384"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 74,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "dieId": "gd_585798374",
+          "dieType": "d20",
+          "faceValue": 8
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Les Élémens",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_968358816"],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_968358816",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Les Élémens",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_805701384", "ci_968358816"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 12
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_621249189"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_585798374",
+          "dieType": "d20",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_585798374",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 75,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_395622184"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "cardId": "ci_395622184",
+          "cardName": "Trust No One"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_395622184",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_395622184",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Trust No One"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 76,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_85451019"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MT0D12 Flathead",
+            "cost": 5
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "NetWatch Netdriver | Jackie Welles: Pour One Out For Me",
+            "triggerIds": ["trigger-22", "trigger-23"],
+            "sourceCardIds": ["ci_787043334", "ci_987552741"],
+            "abilityIndexes": ["0", "0"]
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_434343677",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_395622184",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_987552741",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_549994874",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_160947745",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_787043334",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_85451019",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_85451019",
+          "playerId": "p2",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MT0D12 Flathead",
+            "cost": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_987552741",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "NetWatch Netdriver | Jackie Welles: Pour One Out For Me",
+            "triggerIds": ["trigger-22", "trigger-23"],
+            "sourceCardIds": ["ci_787043334", "ci_987552741"],
+            "abilityIndexes": ["0", "0"]
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_787043334", "ci_987552741"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 77,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-22"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-22",
+            "selectedSourceCardId": "ci_787043334",
+            "selectedAbilityIndex": 0,
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Jackie Welles: Pour One Out For Me",
+            "remainingTriggerIds": ["trigger-23"],
+            "remainingSourceCardIds": ["ci_987552741"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_770612413"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Jackie Welles: Pour One Out For Me",
+            "abilityText": "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-22",
+            "selectedSourceCardId": "ci_787043334",
+            "selectedAbilityIndex": 0,
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "Jackie Welles: Pour One Out For Me",
+            "remainingTriggerIds": ["trigger-23"],
+            "remainingSourceCardIds": ["ci_987552741"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_787043334", "ci_987552741"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "NetWatch Netdriver",
+            "abilityText": "When this Unit or Legend is spent, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_770612413"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "NetWatch Netdriver",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_770612413"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_787043334"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Jackie Welles: Pour One Out For Me",
+            "abilityText": "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_987552741"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 78,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "noAdjustment"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Jackie Welles: Pour One Out For Me",
+            "reason": "the target did not change to the required value"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Jackie Welles: Pour One Out For Me",
+            "reason": "the target did not change to the required value"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_987552741"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 79,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 12
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 12
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 12
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_133083039",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Misty Olszewski: Mender of Broken Spirits",
+            "abilityText": "At the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it. (Card types include Unit, Gear, and Program.)",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 80,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 13,
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Chrome Reverie",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          }
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p1",
+          "turnNumber": 13,
+          "winnerId": "p1",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardsRevealed",
+          "cardIds": ["ci_169355394"],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_169355394",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.revealTopCardType.miss",
+          "params": {
+            "chosenType": "unit",
+            "revealedCardName": "Chrome Reverie",
+            "revealedType": "program",
+            "sourceCardName": "Misty Olszewski: Mender of Broken Spirits"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_133083039", "ci_169355394"]
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p1",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

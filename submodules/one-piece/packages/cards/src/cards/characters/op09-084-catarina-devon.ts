@@ -43,7 +43,7 @@ export const op09CatarinaDevon084: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

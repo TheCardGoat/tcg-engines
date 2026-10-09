@@ -23,7 +23,7 @@ export const op14eb04Urouge002: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 1000,
-  traits: ["Fallen Monk Pirates Supernovas"],
+  traits: ["Supernovas", "Fallen Monk Pirates"],
   attribute: "strike",
   effect:
     "[When Attacking] If this Character has 5000 power or more, draw 1 card and K.O. up to 1 of your opponent's Characters with 3000 base power or less.",

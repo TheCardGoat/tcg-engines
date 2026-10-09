@@ -13,19 +13,20 @@ import {
   clampSoundVolume,
   normalizeAnimationSpeed,
   normalizeCardInteractionMode,
-  normalizePaymentSelectionMode,
   normalizeSimulatorSettings,
+  normalizeSoundPack,
   readLocalSimulatorSettings,
   writeLocalSimulatorSettings,
   type SimulatorSettings,
+  type SimulatorSoundPackId,
 } from "./simulator-settings";
 
 export interface SimulatorSettingsContextValue {
   readonly settings: SimulatorSettings;
   readonly setSoundVolume: (volume: number) => void;
+  readonly setSoundPack: (pack: SimulatorSoundPackId) => void;
   readonly setCardInteractionMode: (mode: SimulatorSettings["cardInteractionMode"]) => void;
   readonly setAnimationSpeed: (speed: SimulatorSettings["animationSpeed"]) => void;
-  readonly setPaymentSelectionMode: (mode: SimulatorSettings["paymentSelectionMode"]) => void;
 }
 
 interface UserSettingsResponse {
@@ -33,22 +34,20 @@ interface UserSettingsResponse {
     soundVolume?: number;
     cardInteractionMode?: SimulatorSettings["cardInteractionMode"];
     animationSpeed?: SimulatorSettings["animationSpeed"];
-    paymentSelectionMode?: SimulatorSettings["paymentSelectionMode"];
   };
   gameplaySettings?: {
     soundVolume?: number;
     cardInteractionMode?: SimulatorSettings["cardInteractionMode"];
     animationSpeed?: SimulatorSettings["animationSpeed"];
-    paymentSelectionMode?: SimulatorSettings["paymentSelectionMode"];
   };
 }
 
 const FALLBACK_SIMULATOR_SETTINGS_CONTEXT: SimulatorSettingsContextValue = {
   settings: normalizeSimulatorSettings(null),
   setSoundVolume: () => undefined,
+  setSoundPack: () => undefined,
   setCardInteractionMode: () => undefined,
   setAnimationSpeed: () => undefined,
-  setPaymentSelectionMode: () => undefined,
 };
 
 const SimulatorSettingsContext = createContext<SimulatorSettingsContextValue>(
@@ -71,13 +70,16 @@ export function SimulatorSettingsProvider({
         ? normalizeSimulatorSettings(null)
         : readLocalSimulatorSettings(window.localStorage),
   );
+  // Latest-settings mirror for async hydration, which must not clobber the
+  // locally stored sound pack that the server payload does not carry.
+  const settingsRef = useRef(settings);
+  settingsRef.current = settings;
   const normalizedInitialSettings = initialSettings
     ? normalizeSimulatorSettings(initialSettings)
     : null;
   const initialSoundVolume = normalizedInitialSettings?.soundVolume ?? null;
   const initialCardInteractionMode = normalizedInitialSettings?.cardInteractionMode ?? null;
   const initialAnimationSpeed = normalizedInitialSettings?.animationSpeed ?? null;
-  const initialPaymentSelectionMode = normalizedInitialSettings?.paymentSelectionMode ?? null;
   const hydratedForUserRef = useRef<string | null>(null);
   const hydratingForUserRef = useRef<string | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -110,25 +112,34 @@ export function SimulatorSettingsProvider({
       soundVolume: initialSoundVolume,
       cardInteractionMode: initialCardInteractionMode,
       animationSpeed: initialAnimationSpeed,
-      paymentSelectionMode: initialPaymentSelectionMode,
     });
+    // The server settings payload carries no sound pack; keep whatever the
+    // player chose locally (including a game-seeded default applied in the
+    // same commit by a game provider).
+    const storedPack =
+      typeof window === "undefined"
+        ? next.soundPack
+        : readLocalSimulatorSettings(window.localStorage).soundPack;
     skipNextSaveRef.current = true;
-    setSettings((current) =>
-      current.soundVolume === next.soundVolume &&
-      current.cardInteractionMode === next.cardInteractionMode &&
-      current.animationSpeed === next.animationSpeed &&
-      current.paymentSelectionMode === next.paymentSelectionMode
-        ? current
-        : next,
-    );
-    persistLocal(next);
+    setSettings((current) => {
+      const merged = { ...next, soundPack: current.soundPack ?? storedPack };
+      const unchanged =
+        current.soundVolume === merged.soundVolume &&
+        current.soundPack === merged.soundPack &&
+        current.cardInteractionMode === merged.cardInteractionMode &&
+        current.animationSpeed === merged.animationSpeed;
+      if (unchanged) {
+        return current;
+      }
+      persistLocal(merged);
+      return merged;
+    });
     if (auth.userId) {
       hydratedForUserRef.current = auth.userId;
     }
   }, [
     auth.userId,
     initialAnimationSpeed,
-    initialPaymentSelectionMode,
     initialCardInteractionMode,
     initialSoundVolume,
     persistLocal,
@@ -173,13 +184,11 @@ export function SimulatorSettingsProvider({
             body.playerSettings?.cardInteractionMode ?? body.gameplaySettings?.cardInteractionMode,
           animationSpeed:
             body.playerSettings?.animationSpeed ?? body.gameplaySettings?.animationSpeed,
-          paymentSelectionMode:
-            body.playerSettings?.paymentSelectionMode ??
-            body.gameplaySettings?.paymentSelectionMode,
         });
+        const merged = { ...next, soundPack: settingsRef.current.soundPack };
         skipNextSaveRef.current = true;
-        setSettings(next);
-        persistLocal(next);
+        setSettings(merged);
+        persistLocal(merged);
       })
       .catch((error: unknown) => {
         if (!controller.signal.aborted) {
@@ -220,7 +229,6 @@ export function SimulatorSettingsProvider({
             soundVolume: settings.soundVolume,
             cardInteractionMode: settings.cardInteractionMode,
             animationSpeed: settings.animationSpeed,
-            paymentSelectionMode: settings.paymentSelectionMode,
           },
         }),
       }).catch((error: unknown) => {
@@ -262,6 +270,17 @@ export function SimulatorSettingsProvider({
     });
   }, []);
 
+  const setSoundPack = useCallback((pack: SimulatorSoundPackId) => {
+    setSettings((current) => {
+      const soundPack = normalizeSoundPack(pack, current.soundPack);
+      if (current.soundPack === soundPack) {
+        return current;
+      }
+      userEditVersionRef.current += 1;
+      return { ...current, soundPack };
+    });
+  }, []);
+
   const setCardInteractionMode = useCallback((mode: SimulatorSettings["cardInteractionMode"]) => {
     setSettings((current) => {
       const cardInteractionMode = normalizeCardInteractionMode(mode, current.cardInteractionMode);
@@ -284,27 +303,15 @@ export function SimulatorSettingsProvider({
     });
   }, []);
 
-  const setPaymentSelectionMode = useCallback((mode: SimulatorSettings["paymentSelectionMode"]) => {
-    setSettings((current) => {
-      const paymentSelectionMode = normalizePaymentSelectionMode(
-        mode,
-        current.paymentSelectionMode,
-      );
-      if (current.paymentSelectionMode === paymentSelectionMode) return current;
-      userEditVersionRef.current += 1;
-      return { ...current, paymentSelectionMode };
-    });
-  }, []);
-
   const value = useMemo<SimulatorSettingsContextValue>(
     () => ({
       settings,
       setSoundVolume,
+      setSoundPack,
       setCardInteractionMode,
       setAnimationSpeed,
-      setPaymentSelectionMode,
     }),
-    [settings, setAnimationSpeed, setCardInteractionMode, setPaymentSelectionMode, setSoundVolume],
+    [settings, setAnimationSpeed, setCardInteractionMode, setSoundPack, setSoundVolume],
   );
 
   return (

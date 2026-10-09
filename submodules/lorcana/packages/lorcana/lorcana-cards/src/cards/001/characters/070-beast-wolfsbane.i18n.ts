@@ -17,7 +17,16 @@ export const beastWolfsbaneI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Biest",
     version: "Schrecken der Wölfe",
-    text: "<Rasant> \\Brüllen\\ Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere.",
+    text: [
+      {
+        title: "<Rasant>",
+      },
+      {
+        title: "Brüllen",
+        description:
+          "Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere.",
+      },
+    ],
   },
   fr: {
     name: "LA BÊTE",

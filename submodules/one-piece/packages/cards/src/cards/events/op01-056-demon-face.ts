@@ -21,7 +21,7 @@ export const op01DemonFace056: EventCard = {
   rarity: "UC",
   setId: "OP01",
   cost: 6,
-  traits: ["Hawkins Pirates Supernovas"],
+  traits: ["Supernovas", "Hawkins Pirates"],
   effect:
     "[Main] K.O. up to 2 of your opponent's rested Characters with a cost of 5 or less.  This card has been officially errata'd.",
   effects: {

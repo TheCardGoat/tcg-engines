@@ -1,0 +1,570 @@
+/* Placement comes exclusively from the R3F composition, including responsive variants. */
+.ga-themed-board .ga-theme-readouts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ga-theme-memory,
+.ga-theme-deck {
+  position: absolute;
+  color: var(--ga-theme-text);
+  font-family: var(--ga-theme-font);
+  text-shadow: 0 2px 3px #000;
+}
+.ga-theme-memory {
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+}
+.ga-theme-memory > span {
+  width: 22%;
+  display: grid;
+  place-items: center;
+}
+.ga-theme-memory strong {
+  font-size: clamp(14px, 1.5vw, 22px);
+  line-height: 1;
+}
+.ga-theme-memory small {
+  font-size: 8px;
+  letter-spacing: 0.02em;
+}
+.ga-theme-deck {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 3px;
+}
+.ga-theme-deck > span {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 15px;
+}
+.ga-theme-deck small {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.ga-three-board.ga-themed-board .ga-board-controls button.ga-table-control--turn,
+.ga-three-board.ga-themed-board
+  .ga-board-controls
+  button.ga-table-control--turn:not(:disabled):hover {
+  left: var(--ga-action-left);
+  top: var(--ga-action-top);
+  width: var(--ga-action-width);
+  height: var(--ga-action-height);
+  right: auto;
+  bottom: auto;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ga-theme-text);
+  font: bold clamp(10px, 1vw, 15px)/1.2 var(--ga-theme-font);
+  text-shadow: 0 2px 2px #201206;
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn::before {
+  content: "";
+  position: absolute;
+  inset: 16% 9%;
+  background: linear-gradient(
+    170deg,
+    color-mix(in srgb, var(--ga-theme-accent), white 12%),
+    var(--ga-theme-accent) 45%,
+    color-mix(in srgb, var(--ga-theme-accent), black 55%)
+  );
+  border: 1px solid #d0aa67;
+  box-shadow:
+    inset 0 1px 3px #edcf8c77,
+    inset 0 -2px 3px #150d07;
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn:not(:disabled):hover::before {
+  filter: brightness(1.18);
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn:not(:disabled):active::before {
+  filter: brightness(0.8);
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn:disabled::before {
+  background: #3d3635;
+  border-color: #665948;
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn .mantine-Button-inner {
+  position: relative;
+  z-index: 1;
+}
+.ga-three-board.ga-themed-board .ga-board-controls .ga-undo-slot {
+  left: calc(var(--ga-undo-left) + var(--ga-undo-width) / 2);
+  top: calc(var(--ga-undo-top) + var(--ga-undo-height) / 2);
+  width: max(44px, var(--ga-undo-width));
+  height: max(44px, var(--ga-undo-height));
+  transform: translate(-50%, -50%);
+  bottom: auto;
+  right: auto;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #dec496;
+}
+.ga-three-board.ga-themed-board .ga-board-controls__status {
+  left: var(--ga-status-left);
+  top: var(--ga-status-top);
+  width: var(--ga-status-width);
+  height: var(--ga-status-height);
+  right: auto;
+  bottom: auto;
+  padding: 0;
+  transform: none;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #cdbb9b;
+}
+.ga-three-board.ga-themed-board .ga-portrait-caption {
+  border-color: #998268;
+  background: linear-gradient(#352c29, #211b1c);
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-memory small {
+  font-size: 7px;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-deck > span {
+  font-size: 11px;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-deck small {
+  display: none;
+}
+.ga-three-board.ga-themed-board[data-composition="compact"] .ga-board-controls__status {
+  font-size: 10px;
+}
+
+.ga-three-board.ga-themed-board .ga-table-control--turn::before {
+  opacity: 1;
+  transform: none;
+}
+.ga-three-board.ga-themed-board[data-composition="compact"]
+  .ga-board-controls
+  button.ga-table-control--turn {
+  padding: 3px 5px;
+  font-size: 10px;
+}
+
+.ga-themed-board[data-composition="compact"] .ga-theme-memory small {
+  position: absolute;
+  top: 100%;
+  left: 2%;
+  font-size: 10px;
+}
+
+/* Theme choice is local presentation; the game state and action handlers are shared. */
+.ga-theme-picker {
+  position: absolute;
+  z-index: 8;
+  left: 12px;
+  bottom: 12px;
+  width: 104px;
+}
+.ga-theme-picker select {
+  min-height: 36px;
+  height: 36px;
+  background: #111b20ed;
+  border: 1px solid #827359;
+  color: #eee3ce;
+  font-size: 12px;
+}
+.ga-themed-board[data-theme="avalon"] .ga-portrait-caption {
+  background: #142d34ed;
+  border-color: #86a2a3;
+}
+.ga-themed-board[data-theme="camelot"] .ga-portrait-caption {
+  background: #25362aed;
+  border-color: #a49c72;
+}
+.ga-themed-board[data-theme="varuck"] .ga-portrait-caption {
+  background: #30201ded;
+  border-color: #b37650;
+}
+.ga-three-board.ga-themed-board .ga-table-control--turn::before {
+  inset: 2%;
+  border-radius: 30% / 22%;
+}
+.ga-three-board.ga-themed-board .ga-board-controls .ga-undo-slot {
+  border-radius: 50%;
+  border: 0;
+  box-shadow: inset 0 0 0 1px #a08c63;
+  background: #201d19dc;
+}
+.ga-three-board.ga-themed-board .ga-board-controls__status {
+  text-shadow: 0 1px 3px #000;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-picker {
+  left: 5px;
+  bottom: 5px;
+  width: 83px;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-picker select {
+  font-size: 10px;
+  min-height: 44px;
+  height: 44px;
+}
+.ga-three-board.ga-themed-board .ga-board-controls__status {
+  white-space: normal;
+  text-align: center;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-memory small {
+  font-size: 8px;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-picker {
+  top: 11.5%;
+  bottom: auto;
+}
+.ga-themed-board[data-composition="compact"] .ga-theme-picker {
+  width: 98px;
+}
+
+.ga-scene-card-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.ga-scene-card-control {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.ga-scene-card-control[data-unpositioned] {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.ga-scene-card-control__pick {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.ga-scene-card-control__pick:focus-visible {
+  opacity: 1;
+  background: transparent;
+  border: none;
+  outline: 2px solid #d6c28e;
+  outline-offset: 4px;
+  border-radius: 5px;
+}
+.ga-three-board.ga-themed-board .ga-scene-card-control .ga-counter-dock {
+  pointer-events: auto;
+  min-height: 44px;
+  min-width: 44px;
+  right: -10px;
+  bottom: 18px;
+  top: auto;
+  align-items: flex-end;
+  justify-content: center;
+  transform: none;
+  padding: 0;
+}
+.ga-three-board.ga-themed-board .ga-counter-dock__seals {
+  flex-direction: column-reverse;
+  gap: 3px;
+  align-items: center;
+}
+.ga-three-board.ga-themed-board .ga-counter-seal,
+.ga-three-board.ga-themed-board .ga-counter-overflow {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  min-width: 29px;
+  height: 24px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  border: 1px solid #b29562;
+  background: linear-gradient(#344346, #172b30);
+  box-shadow: 0 2px 4px #0006;
+  font-size: 11px;
+}
+.ga-three-board.ga-themed-board .ga-counter-seal strong {
+  font-size: 12px;
+}
+.ga-three-board.ga-themed-board .ga-counter-seal[data-counter-kind="damage"] {
+  color: #ffc4b6;
+  background: linear-gradient(#844347, #442125);
+  border-color: #b3757966;
+}
+.ga-three-board.ga-themed-board .ga-counter-seal[data-counter-kind="enlighten"] {
+  color: #f2dda3;
+  background: linear-gradient(#65532b, #30291d);
+}
+.ga-three-board.ga-themed-board .ga-counter-overflow {
+  color: #aabbb8;
+  background: #223333;
+}
+.ga-scene-inventory {
+  position: absolute;
+  z-index: 9;
+  top: 8px;
+  left: 12px;
+  width: 122px;
+  color: #b6c6be;
+  font-size: 11px;
+  pointer-events: auto;
+}
+.ga-scene-inventory[data-side="bottom"] {
+  top: auto;
+  bottom: 8px;
+}
+.ga-scene-inventory summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 8px;
+  border: 1px solid #8ea18c33;
+  border-radius: 6px;
+  background: #112126a8;
+  text-align: center;
+  list-style: none;
+}
+.ga-scene-inventory summary::after {
+  content: " ⌄";
+  color: #aa9770;
+}
+.ga-scene-inventory[open] {
+  width: 230px;
+  border: 1px solid #83918155;
+  border-radius: 8px;
+  background: #14252af5;
+}
+.ga-scene-inventory__body {
+  max-height: 48vh;
+  overflow: auto;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.ga-zone-inspector {
+  min-height: 44px;
+  padding: 7px;
+  border: 1px solid #82998b30;
+  border-radius: 5px;
+  color: #c8d2c8;
+  background: #213438;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  cursor: pointer;
+}
+.ga-zone-inspector b {
+  color: #d7c899;
+  font-size: 14px;
+}
+.ga-zone-inspector-cards,
+.ga-sandbox-pile-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ga-zone-inspector-cards > .ga-role-card {
+  width: 130px;
+}
+.ga-scene-lineage {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  font-size: 10px;
+  color: #d7c899;
+  background: #142c2c;
+  border: 1px solid #a7966a55;
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* Labels and interactive overlays follow the same scene positions. */
+.ga-three-board.ga-themed-board {
+  font-family: var(--ga-theme-font);
+}
+.ga-three-board.ga-themed-board .ga-portrait-caption {
+  transform: translate(-50%, -50%);
+  padding: 3px 7px;
+  min-height: 22px;
+  border: 1px solid #ac9969;
+  border-radius: 5px 5px 9px 9px;
+  background: linear-gradient(#263b3f, #12262d);
+  box-shadow:
+    inset 0 1px 0 #e9d7a52b,
+    0 3px 5px #0008;
+  color: #f2e7d0;
+  text-align: center;
+}
+.ga-three-board.ga-themed-board .ga-portrait-caption strong {
+  display: block;
+  font:
+    600 11px/1.2 ui-sans-serif,
+    system-ui,
+    sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ga-three-board.ga-themed-board .ga-portrait-stats {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 3px;
+}
+.ga-portrait-stats small {
+  font:
+    9px/1.2 ui-sans-serif,
+    system-ui,
+    sans-serif;
+}
+.ga-three-board.ga-themed-board .ga-theme-picker {
+  left: 145px;
+  bottom: 8px;
+  top: auto;
+  width: 96px;
+}
+.ga-three-board.ga-themed-board .ga-board-controls__status {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+}
+.ga-three-board.ga-themed-board .ga-portrait-prompt-host {
+  left: 13%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  width: min(290px, 32%);
+  transform: translateY(-50%);
+  z-index: 12;
+  pointer-events: auto;
+}
+.ga-three-board.ga-themed-board .ga-combat-flow {
+  position: absolute;
+  left: 15%;
+  top: 50%;
+  width: 220px;
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  border: 1px solid #a58b5655;
+  border-radius: 8px;
+  background: #10232bf0;
+  color: #decea9;
+  font:
+    11px/1.4 ui-sans-serif,
+    system-ui,
+    sans-serif;
+}
+.ga-combat-flow ol {
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 5px;
+  list-style: none;
+  font-size: 10px;
+}
+.ga-combat-flow li {
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+}
+.ga-combat-flow li[aria-current] {
+  color: #f2d287;
+  border-color: #c8b27c;
+}
+.ga-combat-flow [role="status"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.ga-three-board.ga-themed-board:has(.ga-portrait-prompt-host > *) .ga-combat-flow {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.ga-scene-seat-choices {
+  position: absolute;
+  left: 13%;
+  top: 61%;
+  display: flex;
+  gap: 5px;
+  pointer-events: auto;
+}
+.ga-three-board.ga-themed-board .ga-portrait-assets {
+  left: 50%;
+  top: 12px;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%);
+  width: auto;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 11px;
+  background: #15272bf0;
+}
+@media (max-width: 699px) {
+  .ga-scene-inventory {
+    left: 6px;
+    width: 106px;
+    font-size: 10px;
+  }
+  .ga-scene-inventory summary {
+    padding: 8px 5px;
+  }
+  .ga-scene-inventory[open] {
+    width: min(260px, 80vw);
+  }
+  .ga-three-board.ga-themed-board .ga-theme-picker {
+    left: auto;
+    right: 7px;
+    bottom: 8px;
+    top: auto;
+    width: 88px;
+  }
+  .ga-three-board.ga-themed-board .ga-portrait-caption {
+    min-width: 83px;
+    padding: 3px;
+  }
+  .ga-three-board.ga-themed-board .ga-portrait-caption strong {
+    font-size: 10px;
+  }
+  .ga-three-board.ga-themed-board .ga-counter-seal,
+  .ga-three-board.ga-themed-board .ga-counter-overflow {
+    min-width: 26px;
+    height: 22px;
+    padding: 2px 4px;
+    gap: 2px;
+  }
+  .ga-three-board.ga-themed-board .ga-scene-card-control .ga-counter-dock {
+    right: 50%;
+    top: calc(100% + 12px);
+    bottom: auto;
+    transform: translateX(50%);
+    align-items: flex-start;
+  }
+  .ga-three-board.ga-themed-board .ga-counter-dock__seals {
+    flex-direction: row-reverse;
+  }
+  .ga-three-board.ga-themed-board .ga-portrait-prompt-host {
+    left: 9%;
+    width: 62%;
+  }
+  .ga-three-board.ga-themed-board .ga-combat-flow {
+    left: 9%;
+    width: 62%;
+    font-size: 10px;
+  }
+}

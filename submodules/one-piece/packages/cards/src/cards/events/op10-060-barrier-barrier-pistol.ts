@@ -22,7 +22,7 @@ export const op10BarrierBarrierPistol060: EventCard = {
   setId: "OP10",
   cost: 5,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   effect:
     "[Main] Place up to 1 of your opponent's Characters with 6000 power or less at the bottom of the owner's deck.",
   effects: {

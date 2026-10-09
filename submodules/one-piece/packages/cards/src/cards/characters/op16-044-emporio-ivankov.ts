@@ -24,7 +24,7 @@ export const op16EmporioIvankov044: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -31,6 +31,7 @@ export const mickeyMouseInquisitiveExplorer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3ced0ce0141942339483629a699b4276",
+    tcgPlayer: "704652",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: mickeyMouseInquisitiveExplorerI18n,

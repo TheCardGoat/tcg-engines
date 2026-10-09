@@ -36,15 +36,15 @@ export const op13IfIBowedDownToPowerWhatSThePointInLiving057: EventCard = {
         ],
         actions: [
           {
-            action: "cannotActivate",
+            action: "grantKeyword",
             target: {
-              player: "opponent",
-              zones: ["character"],
+              player: "self",
+              zones: ["leader"],
               count: {
                 amount: "all",
               },
             },
-            keyword: "blocker",
+            keyword: "unblockable",
             duration: "thisTurn",
             condition: {
               condition: "lifeCount",

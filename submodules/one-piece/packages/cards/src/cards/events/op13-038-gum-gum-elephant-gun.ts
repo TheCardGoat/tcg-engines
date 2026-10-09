@@ -22,7 +22,7 @@ export const op13GumGumElephantGun038: EventCard = {
   setId: "OP13",
   cost: 2,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 5 or less.",
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   effect:
     "[Main] Rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, set up to 2 of your DON!! cards as active at the end of this turn.",
   effects: {

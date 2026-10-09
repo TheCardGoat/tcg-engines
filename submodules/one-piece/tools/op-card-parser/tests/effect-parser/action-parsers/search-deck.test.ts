@@ -34,7 +34,7 @@ describe("parseActions — SearchAction", () => {
               filter: "allOf",
               filters: [
                 { filter: "excludeName", value: "Koala" },
-                { filter: "trait", value: "Revolutionary Army", match: "includes" },
+                { filter: "trait", value: "Revolutionary Army", match: "exact" },
               ],
             },
             { filter: "name", value: "Nico Robin" },
@@ -110,7 +110,7 @@ describe("parseActions — SearchAction", () => {
       source: { player: "self", zone: "deck" },
       revealCount: { amount: 1, upTo: true },
       revealFilters: [
-        { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+        { filter: "trait", value: "Donquixote Pirates", match: "exact" },
         { filter: "cardCategory", value: "character" },
       ],
       revealDestination: "hand",
@@ -136,7 +136,7 @@ describe("parseActions — SearchAction", () => {
             filter: "anyOf",
             filters: [
               { filter: "name", value: "Sanji" },
-              { filter: "trait", value: "Big Mom Pirates", match: "includes" },
+              { filter: "trait", value: "Big Mom Pirates", match: "exact" },
             ],
           },
         ],
@@ -161,7 +161,7 @@ describe("parseActions — SearchAction", () => {
           {
             filter: "trait",
             value: "The Seven Warlords of the Sea",
-            match: "includes",
+            match: "exact",
           },
         ],
         revealDestination: "hand",
@@ -308,7 +308,7 @@ describe("parseActions — SearchAction", () => {
     expect(result.parsed).toHaveLength(1);
     expect(result.parsed[0]).toMatchObject({
       action: "search",
-      revealFilters: [{ filter: "trait", value: "Cross Guild", match: "includes" }],
+      revealFilters: [{ filter: "trait", value: "Cross Guild", match: "exact" }],
     });
   });
 
@@ -344,9 +344,9 @@ describe("parseActions — SearchAction", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Straw Hat Crew", match: "includes" },
-            { filter: "trait", value: "Kid Pirates", match: "includes" },
-            { filter: "trait", value: "Heart Pirates", match: "includes" },
+            { filter: "trait", value: "Straw Hat Crew", match: "exact" },
+            { filter: "trait", value: "Kid Pirates", match: "exact" },
+            { filter: "trait", value: "Heart Pirates", match: "exact" },
           ],
         },
       ],
@@ -362,7 +362,7 @@ describe("parseActions — SearchAction", () => {
       action: "search",
       revealFilters: [
         { filter: "color", value: "purple" },
-        { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+        { filter: "trait", value: "Straw Hat Crew", match: "exact" },
       ],
     });
   });
@@ -404,7 +404,7 @@ describe("parseActions — SearchAction", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Land of Wano", match: "includes" },
+            { filter: "trait", value: "Land of Wano", match: "exact" },
             { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
           ],
         },
@@ -553,7 +553,7 @@ describe("parseActions — search play variants", () => {
       revealDestination: "character",
       remainderPosition: "bottom",
       revealFilters: expect.arrayContaining([
-        { filter: "trait", value: "Revolutionary Army", match: "includes" },
+        { filter: "trait", value: "Revolutionary Army", match: "exact" },
         { filter: "power", comparison: "lte", value: 5000 },
       ]),
     });
@@ -573,7 +573,7 @@ describe("parseActions — search play variants", () => {
         revealCount: { amount: 1, upTo: true },
         revealFilters: [
           { filter: "power", comparison: "lte", value: 4000 },
-          { filter: "trait", value: "Animal", match: "includes" },
+          { filter: "trait", value: "Animal", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
         revealDestination: "character",

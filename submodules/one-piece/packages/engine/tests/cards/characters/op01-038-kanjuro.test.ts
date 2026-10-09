@@ -4,6 +4,52 @@ import { eb01Doma005, eb01MountainGod018, eb01Fourtricks025, op01Kanjuro038 } fr
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP01-038 Kanjuro", () => {
+  test("with DON!! attached, K.O.s only a rested opposing Character costing 2 or less when attacking", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op01Kanjuro038, attachedDon: 1 }] },
+      {
+        character: [
+          { cardId: "ST01-002", rested: true },
+          eb01Doma005,
+          { card: eb01Fourtricks025, rested: true },
+        ],
+      },
+    );
+    const kanjuro = engine.findCardInZone("south", "character", op01Kanjuro038);
+    const legal = engine.findCardInZone("north", "character", "ST01-002");
+    const active = engine.findCardInZone("north", "character", eb01Doma005);
+    const tooExpensive = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    engine.declareAttack(kanjuro, engine.leader("north"), "south");
+    const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected Kanjuro's K.O. choice.");
+    expect(choice.candidates.map((candidate) => candidate.ref.id)).toEqual([legal]);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [legal] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(legal);
+    expect(view.players.north.characters.filter(Boolean).map((card) => card?.instanceId)).toEqual([
+      active,
+      tooExpensive,
+    ]);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("without attached DON!! an attack does not offer the rested-Character K.O.", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op01Kanjuro038] },
+      { character: [{ card: eb01Doma005, rested: true }] },
+    );
+    const target = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.declareAttack(
+      engine.findCardInZone("south", "character", op01Kanjuro038),
+      engine.leader("north"),
+      "south",
+    );
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === target),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("when K.O.'d, lets the opponent choose one card from its controller's hand to trash", () => {
     const engine = OnePieceTestEngine.create(
       {

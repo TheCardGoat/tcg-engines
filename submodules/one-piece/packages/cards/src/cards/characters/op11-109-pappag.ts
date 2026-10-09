@@ -23,7 +23,7 @@ export const op11Pappag109: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Animal Fish-Man Island"],
+  traits: ["Animal", "Fish-Man Island"],
   attribute: "wisdom",
   effect: "[On Play] If you have [Camie], draw 2 cards and trash 2 cards from your hand.",
   effects: {

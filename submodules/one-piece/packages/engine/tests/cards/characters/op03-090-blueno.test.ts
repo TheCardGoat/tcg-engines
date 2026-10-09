@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
   eb01MountainGod018,
+  op01Kaido094,
+  op01King091,
   op03Blueno090,
   op03Camie101,
   op03Jabra085,
@@ -10,6 +12,32 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP03-090 Blueno", () => {
+  test("can replay a CP Character K.O.'d at the same time as Blueno", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op01King091, hand: [op01Kaido094], activeDon: 10 },
+      { character: [op03Blueno090, op03Kumadori082] },
+    );
+    const bluenoId = engine.findCardInZone("north", "character", op03Blueno090);
+    const companionId = engine.findCardInZone("north", "character", op03Kumadori082);
+    engine.playCard(op01Kaido094, "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const step = engine.pendingDecision("effectPlaySelection", "north").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Blueno trash play.");
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toContain(companionId);
+    expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([bluenoId, companionId]),
+    );
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [companionId] }, "north");
+    expect(
+      engine
+        .getView("north")
+        .players.north.characters.find((card) => card?.instanceId === companionId)?.rested,
+    ).toBe(true);
+    expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
+      bluenoId,
+    );
+  });
+
   test("gains Blocker with DON!! x1 during the opponent's attack", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op03Blueno090], activeDon: 1 },

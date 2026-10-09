@@ -29,9 +29,13 @@ export const robinHoodCreatedByTheVine: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_2c81dbe9fe014db3bd92cbd991c468e0",
+    tcgPlayer: "704658",
+  },
   text: [
     {
-      title: "Keen-Eyed",
+      title: "KEEN-EYED",
       description:
         "Your Floodborn characters gain Alert. (They can challenge as if they had Evasive.)",
     },

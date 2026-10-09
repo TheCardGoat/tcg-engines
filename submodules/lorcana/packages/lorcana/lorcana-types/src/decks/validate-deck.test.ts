@@ -580,6 +580,52 @@ describe("validateDeckForFormat", () => {
   });
 
   describe("format definitions", () => {
+    // https://www.disneylorcana.com/en-GB/news/2026/08/rotation
+    it.each<LorcanaSetCode>(["SSK", "AZS", "ARC", "ROJ"])(
+      "rejects rotated %s cards in Core but keeps them in Infinity",
+      (setCode: LorcanaSetCode) => {
+        const deckCards = Array.from({ length: 15 }, (_, index) => ({
+          cardId: `rotated-${index}`,
+          quantity: 4,
+        }));
+        const lookup = buildLookup(
+          Object.fromEntries(
+            deckCards.map(({ cardId }) => [
+              cardId,
+              card(cardId, { sets: [setCode], rotationStates: ["CoreConstructed"] }),
+            ]),
+          ),
+        );
+
+        expect(
+          validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]).valid,
+        ).toBe(false);
+        expect(validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS.infinity).valid).toBe(true);
+      },
+    );
+
+    it.each<LorcanaSetCode>(["SSK", "AZS", "ARC", "ROJ"])(
+      "keeps older %s copies legal when reprinted in Fabled",
+      (setCode: LorcanaSetCode) => {
+        const deckCards = Array.from({ length: 15 }, (_, index) => ({
+          cardId: `reprinted-${index}`,
+          quantity: 4,
+        }));
+        const lookup = buildLookup(
+          Object.fromEntries(
+            deckCards.map(({ cardId }) => [cardId, card(cardId, { sets: [setCode, "FAB"] })]),
+          ),
+        );
+
+        expect(
+          getDeckFormats(deckCards, lookup, [
+            LORCANA_FORMATS["core-constructed"],
+            LORCANA_FORMATS.infinity,
+          ]),
+        ).toEqual(["core-constructed", "infinity"]);
+      },
+    );
+
     it("core-constructed has requiredRotationState", () => {
       expect(LORCANA_FORMATS["core-constructed"].requiredRotationState).toBe("CoreConstructed");
     });
@@ -656,10 +702,12 @@ describe("validateDeckForFormat", () => {
         ),
       );
 
-      expect(getDeckFormats(set13DeckCards, set13Lookup, [
-        LORCANA_FORMATS["core-constructed"],
-        LORCANA_FORMATS.infinity,
-      ])).toEqual(["core-constructed", "infinity"]);
+      expect(
+        getDeckFormats(set13DeckCards, set13Lookup, [
+          LORCANA_FORMATS["core-constructed"],
+          LORCANA_FORMATS.infinity,
+        ]),
+      ).toEqual(["core-constructed", "infinity"]);
     });
 
     it("core-constructed rejects cards that only belong to the previous rotation window", () => {

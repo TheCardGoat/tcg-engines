@@ -30,6 +30,10 @@ export const tinkerBellFindingAWay: CharacterCard = {
   lore: 2,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_4c9e820a4ede4c6a89d09ab41558812d",
+    tcgPlayer: "704577",
+  },
   classifications: ["Storyborn", "Ally", "Fairy"],
   i18n: tinkerBellFindingAWayI18n,
 };

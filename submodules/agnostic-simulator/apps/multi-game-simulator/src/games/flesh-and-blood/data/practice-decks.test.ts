@@ -131,12 +131,16 @@ describe("FAB deck text resolution", () => {
 
       for (const [canonicalId, definition] of Object.entries(seat.cardDefinitions)) {
         const structured = fleshAndBloodStructuredCardsByCanonicalId.get(canonicalId);
-        expect(structured, `${fixture.id}: ${definition.name ?? canonicalId}`).toBeDefined();
+        expect(
+          structured,
+          `${fixture.id}: ${definition.base.names.join(" / ") || canonicalId}`,
+        ).toBeDefined();
         // The resolver may take presentation fields from the catalog, but it
         // must preserve the executable abilities from the same canonical card.
-        expect(definition.abilities, `${fixture.id}: ${definition.name ?? canonicalId}`).toEqual(
-          structured?.abilities,
-        );
+        expect(
+          definition.base.abilities,
+          `${fixture.id}: ${definition.base.names.join(" / ") || canonicalId}`,
+        ).toEqual(structured?.base.abilities);
       }
     }
     expect(resolutionFailures).toEqual([]);

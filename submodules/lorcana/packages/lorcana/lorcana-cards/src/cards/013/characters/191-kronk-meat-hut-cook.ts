@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { resist } from "../../../helpers/abilities/resist";
 import { kronkMeatHutCookI18n } from "./191-kronk-meat-hut-cook.i18n";
+
+import { resist } from "../../../helpers/abilities/resist";
 
 export const kronkMeatHutCook: CharacterCard = {
   id: "Ocg",
@@ -30,12 +31,16 @@ export const kronkMeatHutCook: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8cdf79cd59a244c6b5b6c657d10d3142",
+    tcgPlayer: "704686",
+  },
   text: [
     {
       title: "Resist +1",
     },
     {
-      title: "Pickup!",
+      title: "PICKUP!",
       description:
         "Once during your turn, you may pay 1 {I} to draw a card, then choose and discard a card.",
     },

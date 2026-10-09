@@ -47,4 +47,38 @@ describe("OP11-024 Aladine", () => {
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 1 });
     expect(view.prompts).toHaveLength(0);
   });
+  test("may decline the compound recovery cost without trashing hand or resting DON", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP11-024"], hand: ["EB01-057", "ST02-012"], activeDon: 1 },
+      { hand: ["OP04-094"], activeDon: 4 },
+      { activeSeat: "north" },
+    );
+    e.asNorth().play("OP04-094");
+    e.asNorth().chooseTargets(e.findCardInZone("south", "character", "OP11-024"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "EB01-057",
+      "ST02-012",
+    ]);
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: no active DON prevents partial hand payment and all recovery", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP11-024"], hand: ["EB01-057", "ST02-012"], restedDon: 1 },
+      { hand: ["OP04-094"], activeDon: 4 },
+      { activeSeat: "north" },
+    );
+    e.asNorth().play("OP04-094");
+    e.asNorth().chooseTargets(e.findCardInZone("south", "character", "OP11-024"));
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "EB01-057",
+      "ST02-012",
+    ]);
+    expect(e.getView("south").players.south.restedDon).toBe(1);
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

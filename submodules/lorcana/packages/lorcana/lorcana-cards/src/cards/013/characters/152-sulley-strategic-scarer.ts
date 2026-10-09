@@ -29,9 +29,13 @@ export const sulleyStrategicScarer: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_dab28a8863ba4e9fad8d11ba3a341409",
+    tcgPlayer: "704650",
+  },
   text: [
     {
-      title: "Jump Scare",
+      title: "JUMP SCARE",
       description: "While you have 5 or more cards in your inkwell, this character gets +2 {S}.",
     },
   ],

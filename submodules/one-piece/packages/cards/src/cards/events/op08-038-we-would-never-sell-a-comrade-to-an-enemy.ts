@@ -21,7 +21,7 @@ export const op08WeWouldNeverSellAComradeToAnEnemy038: EventCard = {
   rarity: "C",
   setId: "OP08",
   cost: 1,
-  traits: ["Minks The Akazaya Nine"],
+  traits: ["Minks", "The Akazaya Nine"],
   effect:
     "[Main] You may rest 2 of your Characters: None of your Characters can be K.O.'d by your opponent's effects until the end of your opponent's next turn. [Trigger] Rest up to 1 of your opponent's Characters with a cost of 3 or less.",
   effects: {
@@ -52,6 +52,7 @@ export const op08WeWouldNeverSellAComradeToAnEnemy038: EventCard = {
             },
             duration: "untilEndOfOpponentNextTurn",
             restriction: "byEffect",
+            byPlayer: "opponent",
           },
         ],
         optional: true,

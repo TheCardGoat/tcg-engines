@@ -77,7 +77,7 @@ export const op05TrafalgarLaw069: CharacterCard = {
               {
                 filter: "trait",
                 value: "Heart Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

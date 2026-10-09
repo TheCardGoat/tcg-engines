@@ -66,4 +66,22 @@ describe("OP17-086 Nami", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("pays an Elbaph hand card and draws two without accepting an unrelated card as payment", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        hand: ["OP17-086", "OP17-089", "EB01-005"],
+        activeDon: 10,
+        deck: ["ST02-002", "ST02-006", "OP13-013"],
+      },
+      {},
+    );
+    e.asSouth().play("OP17-086");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-089");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "EB01-005",
+      "ST02-002",
+      "ST02-006",
+    ]);
+  });
 });

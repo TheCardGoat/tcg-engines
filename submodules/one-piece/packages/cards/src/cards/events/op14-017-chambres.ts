@@ -21,7 +21,7 @@ export const op14eb04Chambres017: EventCard = {
   rarity: "C",
   setId: "OP14",
   cost: 3,
-  traits: ["Heart Pirates Supernovas The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Supernovas", "Heart Pirates"],
   effect:
     "[Main] Select 2 of your opponent's Characters with 9000 base power or less. Swap the base power of the selected Characters with each other during this turn.",
   effects: {

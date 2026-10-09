@@ -38,6 +38,8 @@ export interface GrandArchiveTestPlayerFixture {
   readonly lineage?: readonly GrandArchiveTestCardDefinition[];
   /** Defaults to true so ordinary card tests are not constrained by the first-turn attack rule. */
   readonly hasTakenFirstTurn?: boolean;
+  /** Keep the supplied main-deck list in top-to-bottom order after arranging other zones. */
+  readonly preserveMainDeckOrder?: boolean;
   readonly zones?: Readonly<
     Partial<Record<GrandArchiveTestFixtureZone, readonly GrandArchiveTestCardDefinition[]>>
   >;
@@ -179,6 +181,26 @@ function arrangePlayerZones(
         ]).state;
       }
     }
+  }
+  if (player.preserveMainDeckOrder) {
+    const available = [...arranged.zones[playerId]["main-deck"]];
+    const ordered = (player.zones?.["main-deck"] ?? []).map((card) => {
+      const index = available.findIndex(
+        (id) => arranged.objects[id]?.definitionId === card.canonicalId,
+      );
+      if (index < 0) throw new Error(`Could not order ${card.canonicalId} in ${playerId}'s deck.`);
+      return available.splice(index, 1)[0]!;
+    });
+    if (available.length) throw new Error("Ordered fixture deck contains unspecified cards");
+    arranged = new GrandArchiveTransactionKernel().transact(arranged, [
+      {
+        type: "zone-reordered",
+        playerId,
+        zone: "main-deck",
+        objectIds: ordered,
+        cause: { kind: "rule", rule: "test-fixture-deck-order" },
+      },
+    ]).state;
   }
   return arranged;
 }

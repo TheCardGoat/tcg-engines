@@ -21,7 +21,7 @@ export const op12ILoveYou115: EventCard = {
   rarity: "UC",
   setId: "OP12",
   cost: 1,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if you have 2 or less Life cards, add up to 1 [Trafalgar Law] from your trash to your hand.",
   effects: {

@@ -24,6 +24,78 @@ function createMove(move: ExecutableMoveEntry): ExecutableMoveEntry {
 }
 
 describe("buildCardActionViews", () => {
+  it("shows static challenge restriction rather than no-target fallback", () => {
+    const actions = buildCardActionViews({
+      card: createCard({ readyState: "ready", hasChallengeRestriction: true }),
+      executableMoves: [],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: [],
+      movableToLocationCardIds: [],
+    });
+    const action = actions.find((a) => a.categoryId === "challenge");
+    expect(action?.enabled).toBe(false);
+    expect(action?.reason).toBe("This character cannot challenge right now.");
+  });
+  it("shows an active challenge restriction before the no-target fallback", () => {
+    const restricted = buildCardActionViews({
+      card: createCard({ readyState: "ready", temporaryRestrictions: { "cant-challenge": 3 } }),
+      executableMoves: [],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: [],
+      movableToLocationCardIds: [],
+    }).find((action) => action.categoryId === "challenge");
+    expect(restricted?.enabled).toBe(false);
+    expect(restricted?.reason).toBe("This character cannot challenge right now.");
+
+    const expired = buildCardActionViews({
+      card: createCard({ readyState: "ready", temporaryRestrictions: {} }),
+      executableMoves: [],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: ["card-1"],
+      movableToLocationCardIds: [],
+    }).find((action) => action.categoryId === "challenge");
+    expect(expired?.enabled).toBe(true);
+    expect(expired?.reason).toBeUndefined();
+  });
+
+  it.each([
+    { readyState: "exerted" as const, keywords: ["Rush"], reason: "This character is exerted" },
+    {
+      readyState: "ready" as const,
+      keywords: ["Rush"],
+      reason: "No legal challenge targets right now.",
+    },
+    {
+      readyState: "ready" as const,
+      keywords: [],
+      reason: "Fresh Ink: This character was just played and cannot act until next turn.",
+    },
+  ])(
+    "uses the applicable blocked challenge reason while drying: $reason",
+    ({
+      readyState,
+      keywords,
+      reason,
+    }: {
+      readyState: LorcanaCardSnapshot["readyState"];
+      keywords: readonly string[];
+      reason: string;
+    }) => {
+      const actions = buildCardActionViews({
+        card: createCard({ isDrying: true, readyState, keywords: [...keywords] }),
+        executableMoves: [],
+        ownerSide: "playerOne",
+        challengeReadyCardIds: [],
+        movableToLocationCardIds: [],
+      });
+      const challenge = actions.find((action) => action.categoryId === "challenge");
+      expect(challenge?.enabled).toBe(false);
+      expect(challenge?.reason).toBe(reason);
+      expect(actions.find((action) => action.categoryId === "quest")?.reason).toBe(
+        "Fresh Ink: This character was just played and cannot act until next turn.",
+      );
+    },
+  );
   it("preserves quest lore detail without surfacing eager target counts", () => {
     const card = createCard();
     const questMove = createMove({
@@ -517,6 +589,7 @@ describe("buildCardActionViews", () => {
 
       const sing = actions.find((a) => a.categoryId === "sing-card");
       expect(sing?.enabled).toBe(false);
+      expect(sing?.label).toBe("Sing");
       expect(sing?.reason).toContain("4");
     });
 
@@ -784,3 +857,30 @@ describe("buildCardActionViews", () => {
     });
   });
 });
+
+for (const enabled of [true, false]) {
+  it(`shows zero quest gain for negative lore when the action is ${enabled ? "enabled" : "blocked"}`, () => {
+    const card = createCard({ loreValue: -1, readyState: enabled ? "ready" : "exerted" });
+    const questMove = createMove({
+      id: "quest:card-1",
+      label: "Quest",
+      moveId: "quest",
+      params: { cardId: card.cardId },
+      presentation: {
+        kind: "targeted",
+        categoryId: "quest",
+        categoryLabel: "Quest",
+        optionLabel: card.label,
+      },
+    });
+    const actions = buildCardActionViews({
+      card,
+      executableMoves: enabled ? [questMove] : [],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: [],
+      movableToLocationCardIds: [],
+    });
+    expect(actions.find((action) => action.categoryId === "quest")?.label).toBe("Quest for 0 lore");
+    expect(card.loreValue).toBe(-1);
+  });
+}

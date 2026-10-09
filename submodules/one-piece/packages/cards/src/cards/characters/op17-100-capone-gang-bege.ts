@@ -23,7 +23,7 @@ export const op17CaponeGangBege100: CharacterCard = {
   cost: 7,
   power: 8000,
   counter: 2000,
-  traits: ["Supernovas Firetank Pirates"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "ranged",
   i18n: op17CaponeGangBege100I18n,
 };

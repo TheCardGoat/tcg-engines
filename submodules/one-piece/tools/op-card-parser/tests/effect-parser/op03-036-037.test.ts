@@ -15,7 +15,7 @@ describe("OP03-036/037 East Blue Event parser regressions", () => {
           cost: "restCards",
           amount: 1,
           filters: [
-            { filter: "trait", value: "East Blue", match: "includes" },
+            { filter: "trait", value: "East Blue", match: "exact" },
             { filter: "cardCategory", value: "character" },
           ],
         },
@@ -36,7 +36,7 @@ describe("OP03-036/037 East Blue Event parser regressions", () => {
     expect(result?.effects?.[1]).toMatchObject({ trigger: "trigger", actions: [{ action: "ko" }] });
   });
 
-  test("preserves Tooth Attack's inclusive East Blue Character rest cost", () => {
+  test("preserves Tooth Attack's exact East Blue Character rest cost", () => {
     const result = buildCardEffects(
       "[Main] You may rest 1 of your [East Blue] type Characters: K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less. [Trigger] Play up to 1 Character card with a cost of 4 or less and a [Trigger] from your hand.",
     );
@@ -48,7 +48,7 @@ describe("OP03-036/037 East Blue Event parser regressions", () => {
           cost: "restCards",
           amount: 1,
           filters: [
-            { filter: "trait", value: "East Blue", match: "includes" },
+            { filter: "trait", value: "East Blue", match: "exact" },
             { filter: "cardCategory", value: "character" },
           ],
         },

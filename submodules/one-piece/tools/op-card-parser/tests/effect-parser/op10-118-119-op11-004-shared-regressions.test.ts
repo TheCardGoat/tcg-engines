@@ -35,7 +35,7 @@ describe("OP10-118, OP10-119, and OP11-004 shared parser regressions", () => {
         amount: 1,
         upTo: true,
         filters: [
-          { filter: "trait", value: "Supernovas", match: "includes" },
+          { filter: "trait", value: "Supernovas", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
         thenActions: [
@@ -59,7 +59,7 @@ describe("OP10-118, OP10-119, and OP11-004 shared parser regressions", () => {
       action: "search",
       revealFilters: [
         { filter: "excludeName", value: "Kujyaku" },
-        { filter: "trait", value: "Navy", match: "includes" },
+        { filter: "trait", value: "Navy", match: "exact" },
       ],
     });
   });

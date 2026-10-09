@@ -21,7 +21,7 @@ export const op14eb04CoffinBoat039: StageCard = {
   rarity: "UC",
   setId: "OP14",
   cost: 1,
-  traits: ["The Seven Warlords of the Sea East Blue"],
+  traits: ["East Blue", "The Seven Warlords of the Sea"],
   effect:
     "[On Play] If your Leader is [Dracule Mihawk], draw 1 card.\n[End of Your Turn] If your Leader is [Dracule Mihawk], set up to 1 of your DON!! cards as active.",
   effects: {

@@ -59,8 +59,17 @@ export const slySongstress: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               subject: {
                 kind: "event-object",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["MELODY"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["HARMONY"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["MELODY"],
+                    },
+                  ],
                 },
               },
             },

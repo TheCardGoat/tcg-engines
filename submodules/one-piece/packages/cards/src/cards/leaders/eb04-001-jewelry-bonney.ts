@@ -32,7 +32,7 @@ export const eb04JewelryBonney001: LeaderCard = {
   setId: "EB04",
   power: 5000,
   life: 4,
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[Opponent's Turn] If you have 1 or less Life cards, this Leader gains +2000 power. [Activate: Main] [Once Per Turn] Give up to 1 of your opponent's Characters -1000 power during this turn. Then, if you have 2 or more Life cards, you may add 1 card from the top of your Life cards to your hand.",
@@ -59,6 +59,7 @@ export const eb04JewelryBonney001: LeaderCard = {
             player: "self",
             count: {
               amount: 1,
+              upTo: true,
             },
             destination: "hand",
             position: "top",

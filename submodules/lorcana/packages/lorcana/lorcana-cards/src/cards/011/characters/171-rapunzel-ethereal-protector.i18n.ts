@@ -47,16 +47,16 @@ export const rapunzelEtherealProtectorI18n: Record<Languages, I18nProperties> = 
   },
   it: {
     name: "Rapunzel",
-    version: "Ethereal Protector",
+    version: "Protettrice Eterea",
     text: [
       {
         title:
-          "<Boost> 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)",
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "Clonk!",
+        title: "Clang!",
         description:
-          "Whenever this character quests, if there's a card under her, chosen opposing character can't challenge until the start of your next turn.",
+          "Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

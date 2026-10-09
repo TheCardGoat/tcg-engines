@@ -64,7 +64,6 @@ describe("OP02-024 Moby Dick", () => {
     engine.endTurn("north");
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({

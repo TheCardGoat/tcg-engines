@@ -23,7 +23,7 @@ export const op15Raki112: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] Play up to 1 {Shandian Warrior} type Character card with a cost of 3 or less from your hand.",
@@ -52,7 +52,7 @@ export const op15Raki112: CharacterCard = {
               {
                 filter: "trait",
                 value: "Shandian Warrior",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -62,17 +62,17 @@ export const mickeyMouseMinnieMouseAdventuringDuoEnchantedI18n: Record<Languages
       ],
     },
     es: {
-      name: "Mickey Mouse y Minnie Mouse",
-      version: "Dúo aventurero",
+      name: "Mickey Mouse & Minnie Mouse",
+      version: "Adventuring Duo",
       text: [
         {
           title:
-            "<Duo Shift> 0 {I} (Puedes pagar 0 {I} para jugar esto encima de dos de tus personajes, uno llamado Mickey Mouse y otro llamado Minnie Mouse).",
+            "<Duo Shift> 0 {I} (You may pay 0 {I} to play this on top of two of your characters, one named Mickey Mouse and one named Minnie Mouse.)",
         },
         {
-          title: "Pensando en ti",
+          title: "Thinking of You",
           description:
-            "Si este personaje fuera a ser desterrado, colócalo en tu tintero boca abajo y ejercítalo en su lugar.",
+            "If this character would be banished, put them into your inkwell facedown and exerted instead.",
         },
       ],
     },

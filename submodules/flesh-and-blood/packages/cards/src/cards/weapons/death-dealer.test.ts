@@ -4,6 +4,7 @@ import {
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { azalea } from "../heroes/azalea.ts";
 import { dash } from "../heroes/dash.ts";
@@ -29,10 +30,41 @@ describe("Death Dealer (ARC040) AAA", () => {
     const Azalea = game.as(azalea);
 
     Azalea.activate(deathDealer);
-    game.untilIdle({ optionals: "accept", entityTargets: "minimum" });
+    game.untilIdle({ entityTargets: "pause" });
+    expectWait(game).toHaveDecision("entity-target");
+    Azalea.targetRequired(searingShotRed);
+    game.untilIdle();
 
     expectFabCard(Azalea, searingShotRed).toBeIn("arsenal");
     expectFabCard(Azalea, nimblismBlue).toBeIn("hand");
+    expectFabPlayer(Azalea).toHaveAP(1);
+  });
+
+  it("declining the arrow move keeps the arrow in hand and draws no card", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: azalea,
+        weapon1: [deathDealer],
+        hand: [searingShotRed],
+        actionPoints: 1,
+        resourcePoints: 1,
+        deckTop: [nimblismBlue],
+        deck: 6,
+      },
+      { hero: dash, hand: [], deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Azalea = game.as(azalea);
+
+    Azalea.activate(deathDealer);
+    game.untilIdle({ entityTargets: "pause" });
+    expectWait(game).toHaveDecision("entity-target");
+    Azalea.target();
+    game.untilIdle();
+
+    expectFabCard(Azalea, searingShotRed).toBeIn("hand");
+    expectFabPlayer(Azalea).toHaveHandCount(1);
+    expect(Azalea.zone("arsenal")).toHaveLength(0);
     expectFabPlayer(Azalea).toHaveAP(1);
   });
 

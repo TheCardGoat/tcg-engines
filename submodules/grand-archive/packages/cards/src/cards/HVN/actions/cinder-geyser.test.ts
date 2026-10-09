@@ -12,3 +12,8 @@ describe("Cinder Geyser — fixed damage", () => {
     targetKind: "unit",
   });
 });
+
+import { proveOpponentMemoryDiscount } from "../../../testing/opponent-memory-discount.ts";
+/** @covers stiyh3pmk3-a1 */
+describe("Opponent memory discount", () =>
+  proveOpponentMemoryDiscount(cinderGeyser, 4, 4, 2, false));

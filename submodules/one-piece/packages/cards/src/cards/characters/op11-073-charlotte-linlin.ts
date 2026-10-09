@@ -30,7 +30,7 @@ export const op11CharlotteLinlin073: CharacterCard = {
   setId: "OP11",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "If your Leader has the \"Big Mom Pirates\" type, this Character gains [Rush].\n[On Your Opponent's Attack] [Once Per Turn] DON!! −5: Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, up to 1 of your Leader gains +2000 power during this turn.",
@@ -75,7 +75,7 @@ export const op11CharlotteLinlin073: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Big Mom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

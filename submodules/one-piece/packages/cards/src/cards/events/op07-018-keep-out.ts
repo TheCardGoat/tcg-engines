@@ -21,7 +21,7 @@ export const op07KeepOut018: EventCard = {
   rarity: "C",
   setId: "OP07",
   cost: 1,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   effect:
     "[Counter] Up to 1 of your [Revolutionary Army] type Characters gains +2000 power until the end of your next turn. [Trigger] Activate this card's [Counter] effect.",
   effects: {
@@ -42,7 +42,7 @@ export const op07KeepOut018: EventCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

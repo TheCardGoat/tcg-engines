@@ -23,7 +23,7 @@ export const op10LetSMeetAgainInTheNewWorld115: EventCard = {
   cost: 2,
   trigger:
     "K.O. up to 1 of your opponent's Characters with a cost equal to or less than the number of your opponent's Life cards.",
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, if you have 0 Life cards, draw 1 card.",
   effects: {

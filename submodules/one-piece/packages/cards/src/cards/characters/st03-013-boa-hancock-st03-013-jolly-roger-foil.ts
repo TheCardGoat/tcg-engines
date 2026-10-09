@@ -50,7 +50,7 @@ export const prb01BoaHancockSt03013JollyRogerFoil013: CharacterCard = {
   cost: 3,
   power: 1000,
   counter: 1000,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[Trigger] Play this card.",

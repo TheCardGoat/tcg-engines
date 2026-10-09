@@ -94,7 +94,7 @@ export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
       operations.game.setPendingChoice(prevention);
       return;
     }
-    performGigSteal({
+    const stolenGigs = performGigSteal({
       state,
       operations,
       attack,
@@ -112,6 +112,7 @@ export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
       attackerName,
       attackerPower,
       stolenCount: resolvedGigIds.length,
+      stolenGigs,
     });
   },
 };

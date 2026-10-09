@@ -23,7 +23,7 @@ export const op11MermanCombatUltramarine116: EventCard = {
   cost: 6,
   trigger:
     "Add up to 1 of your opponent's Characters with a cost of 4 or less to the top or bottom of the owner's Life cards face-up.",
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   effect:
     "[Main] Add up to 1 Character with a cost of 6 or less to the top or bottom of the owner's Life cards face-up.",
   effects: {

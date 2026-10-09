@@ -12,12 +12,14 @@ export function proveAreaDamageAction({
   damage,
   bonusDamage,
   hitsOpposingChampion = false,
+  hitsOwnChampion = false,
 }: {
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   cost: number;
   damage: number;
   bonusDamage: number;
   hitsOpposingChampion?: boolean;
+  hitsOwnChampion?: boolean;
 }): void {
   for (const matching of [true, false])
     for (const empty of [true, false])
@@ -48,7 +50,9 @@ export function proveAreaDamageAction({
         p.activate(card, { reservePayment: payment });
         expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(0);
+        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(
+          hitsOwnChampion ? expected : 0,
+        );
         expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
           hitsOpposingChampion ? expected : 0,
         );

@@ -1,6 +1,7 @@
 import type { ActionCard } from "@tcg/lorcana-types";
-import { singTogether } from "../../../helpers/abilities/singTogether";
 import { redMoonRitualI18n } from "./134-red-moon-ritual.i18n";
+
+import { singTogether } from "../../../helpers/abilities/singTogether";
 
 export const redMoonRitual: ActionCard = {
   id: "9IV",
@@ -28,6 +29,7 @@ export const redMoonRitual: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6013913b9e9844dc99676cc81c05ca10",
+    tcgPlayer: "704635",
   },
   text: [
     {

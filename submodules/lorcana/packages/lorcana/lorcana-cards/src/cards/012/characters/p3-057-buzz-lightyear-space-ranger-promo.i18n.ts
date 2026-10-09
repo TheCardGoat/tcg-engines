@@ -1,0 +1,24 @@
+import type { I18nProperties, Languages } from "@tcg/lorcana-types";
+
+export const buzzLightyearSpaceRangerP3PromoI18n: Record<Languages, I18nProperties> = {
+  en: {
+    name: "Buzz Lightyear",
+    version: "Space Ranger",
+  },
+  de: {
+    name: "Buzz Lightyear",
+    version: "Space Ranger",
+  },
+  fr: {
+    name: "Buzz l'Éclair",
+    version: "Ranger de l’espace",
+  },
+  it: {
+    name: "Buzz Lightyear",
+    version: "Space Ranger",
+  },
+  es: {
+    name: "Buzz Lightyear",
+    version: "Space Ranger",
+  },
+};

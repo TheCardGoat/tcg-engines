@@ -30,7 +30,7 @@ export const op12TrafalgarLaw073: CharacterCard = {
   setId: "OP12",
   cost: 7,
   power: 8000,
-  traits: ["Heart Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 DON!! card from your DON!! deck and set it as active. Then, all of your [Donquixote Rosinante] and \"Heart Pirates\" type Characters gain +1000 power until the end of your opponent's next End Phase.",
@@ -83,7 +83,7 @@ export const op12TrafalgarLaw073: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Heart Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "excludeName",

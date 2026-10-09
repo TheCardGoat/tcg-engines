@@ -5,6 +5,7 @@ import {
   drawTransferRect,
   fitRectToAspectRatio,
   transferNodeRect,
+  transferNodePose,
   entityTransferSuppressesEndpoint,
   mergePortalTransferCaptures,
   portalTransferEndpointsReady,
@@ -12,6 +13,30 @@ import {
   transferTransform,
   uniformTransferScale,
 } from "./EntityTransferLayer.tsx";
+
+describe("transferNodePose", () => {
+  it("recovers the actual card size and angle from an opt-in rotated hand", () => {
+    const node = document.createElement("div");
+    node.setAttribute("data-sim-animation-rotation-deg", "-5.5");
+    const angle = (5.5 * Math.PI) / 180;
+    const width = 100 * Math.cos(angle) + 140 * Math.sin(angle);
+    const height = 100 * Math.sin(angle) + 140 * Math.cos(angle);
+    node.getBoundingClientRect = () => new DOMRect(20, 30, width, height);
+    const record = {
+      key: "hand",
+      ref: { kind: "entity" as const, id: "card" },
+      node,
+      presence: "present" as const,
+    };
+    const pose = transferNodePose(record, 5 / 7);
+    expect(pose?.rotationDeg).toBe(-5.5);
+    expect(pose?.rect.width).toBeCloseTo(100);
+    expect(pose?.rect.height).toBeCloseTo(140);
+    expect(pose?.rect.left).toBeCloseTo(20 + (width - 100) / 2);
+    node.removeAttribute("data-sim-animation-rotation-deg");
+    expect(transferNodePose(record, 5 / 7)).toBeUndefined();
+  });
+});
 
 describe("uniformTransferScale", () => {
   it("keeps a card's aspect ratio when source and destination slots differ", () => {

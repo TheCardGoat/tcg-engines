@@ -16,7 +16,19 @@ const logger = getLogger("domain-events");
 // =============================================================================
 
 export interface DynamicAmountEventSnapshot {
+  /** The exact opponent for the current for-each-opponent iteration, including suspended choices. */
+  iteratedOpponentId?: PlayerId;
+  /** Restore global opponent order after an iteration scope ends. */
+  opponentIterationPlayerIds?: ReadonlyArray<PlayerId>;
   lastEffectPerformed?: boolean;
+  /** Current instruction reported its outcome; commit only after its resolver finishes. */
+  effectOutcomeReported?: boolean;
+  /** At least one instruction in the current ability produced an effect. Used for resolution logs. */
+  anyEffectPerformed?: boolean;
+  /** CR 6.1.1: false once a resolving effect has not been performed. */
+  abilityFullyResolved?: boolean;
+  /** Last-known Strength of this retained trigger’s source object after it left play. */
+  sourceStrengthWhenLeftPlay?: number;
   triggerBatchKey?: string;
   triggerAmount?: number;
   playedCardSingerCount?: number;
@@ -107,6 +119,11 @@ export type DamageDealtPayload =
       isManual: true;
     };
 
+export interface DamageRemovedPayload {
+  targetId: CardInstanceId;
+  amount: number;
+}
+
 export interface DamageMovedPayload {
   sourceCharacterId: CardInstanceId;
   targetId: CardInstanceId;
@@ -159,6 +176,15 @@ export type LoreChangedPayload =
       isManual: true;
     };
 
+export type InkDropChangedPayload = {
+  playerId: PlayerId;
+  operation: "add" | "remove";
+  source: string;
+  amount: number;
+  previousInkDrops: number;
+  newInkDrops: number;
+};
+
 export interface QuestCompletedPayload {
   cardId: CardInstanceId;
   playerId: PlayerId;
@@ -201,6 +227,8 @@ export interface CardPlayedPayload {
   singerIds?: readonly CardInstanceId[];
   inkPaid?: number;
   usedShift?: boolean;
+  /** Ink drops removed to pay this card's ink cost (Hyperia City). */
+  paidWithInkDrops?: number;
 }
 
 export interface QuestedPayload {
@@ -242,6 +270,8 @@ export interface CardInkedPayload {
    * matches the game-server reveal at ink time.
    */
   private?: boolean;
+  /** Override identity visibility for private ink; empty means even the owner did not see it. */
+  identityVisibleTo?: PlayerId[];
 }
 
 export interface DeckShuffledPayload {
@@ -282,6 +312,13 @@ export interface CardLeftDiscardPayload {
   toZone: string;
 }
 
+export interface TriggeredAbilitySkippedPayload {
+  playerId: PlayerId;
+  sourceCardId: CardInstanceId;
+  abilityName: string;
+  reason: "no-valid-targets";
+}
+
 // =============================================================================
 // Event Map
 // =============================================================================
@@ -301,6 +338,7 @@ export interface LorcanaDomainEventMap {
   cardBanished: CardBanishedPayload;
   inkChanged: InkChangedPayload;
   loreChanged: LoreChangedPayload;
+  inkDropChanged: InkDropChangedPayload;
   questCompleted: QuestCompletedPayload;
   cardsDrawn: CardsDrawnPayload;
   cardsDiscarded: CardsDiscardedPayload;
@@ -318,7 +356,9 @@ export interface LorcanaDomainEventMap {
   cardReturnedToHand: CardReturnedToHandPayload;
   putCardUnder: PutCardUnderPayload;
   cardLeftDiscard: CardLeftDiscardPayload;
+  triggeredAbilitySkipped: TriggeredAbilitySkippedPayload;
   damageMoved: DamageMovedPayload;
+  damageRemoved: DamageRemovedPayload;
 }
 
 /**

@@ -3,6 +3,7 @@ import type { GigDieId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
 import { SeededRNG } from "../state/rng.ts";
+import { defOf } from "../state/lookups.ts";
 import { processEventTriggers } from "../ability-executor.ts";
 import { getEffectiveRules } from "../active-effects/index.ts";
 
@@ -134,7 +135,30 @@ export function readySpentCards(
     if (!card?.meta.spent) continue;
     // cantReady rule locks a spent card through its ready step (e.g. Pacifica).
     const rules = getEffectiveRules(state, cardId as string);
-    if (rules.includes("cantReady")) continue;
+    if (rules.includes("cantReady")) {
+      const sourceEffect = state.G.activeEffects.find(
+        (effect) =>
+          effect.kind === "grantRule" &&
+          effect.rule === "cantReady" &&
+          (effect.targetCardId as string) === (cardId as string),
+      );
+      const sourceCard = sourceEffect
+        ? state.G.cardIndex[sourceEffect.sourceCardId as string]
+        : undefined;
+      const sourceCardName = sourceCard ? defOf(sourceCard).displayName : undefined;
+      operations.event.emit({
+        type: "actionLog",
+        messageKey: "move.readyStep.cantReady",
+        params: {
+          cardName: defOf(card).displayName,
+          sourceDescription: sourceCardName ? `${sourceCardName}'s effect` : "an effect",
+        },
+        playerId,
+        category: "system",
+        cardIds: [cardId as string, ...(sourceEffect ? [sourceEffect.sourceCardId as string] : [])],
+      });
+      continue;
+    }
     operations.card.ready(cardId);
     readiedCount++;
   }

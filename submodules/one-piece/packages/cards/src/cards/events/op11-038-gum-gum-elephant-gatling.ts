@@ -21,7 +21,7 @@ export const op11GumGumElephantGatling038: EventCard = {
   rarity: "R",
   setId: "OP11",
   cost: 1,
-  traits: ["Straw Hat Crew Supernovas Fish-Man Island"],
+  traits: ["Fish-Man Island", "Supernovas", "Straw Hat Crew"],
   effect:
     "[Main] You may rest 1 of your DON!! cards: Rest up to 1 of your opponent's Characters with a cost of 5 or less.\n[Counter] Up to 1 of your Leader gains +3000 power during this battle.",
   effects: {

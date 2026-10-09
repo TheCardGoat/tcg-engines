@@ -23,7 +23,7 @@ export const op13Napoleon070: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Homies", "Big Mom Pirates"],
   attribute: "slash",
   i18n: op13Napoleon070I18n,
 };

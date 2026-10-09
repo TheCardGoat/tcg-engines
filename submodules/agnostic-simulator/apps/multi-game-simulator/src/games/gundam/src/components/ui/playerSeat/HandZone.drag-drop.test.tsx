@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 import type { GameCardData } from "../types.ts";
@@ -115,25 +115,6 @@ describe("HandZone drag affordance", () => {
     expect(onSelect).toHaveBeenCalledWith(0);
   });
 
-  it("lifts a focused card without reflowing the hand", () => {
-    const hand = [playableCard, disabledCard, { ...playableCard, id: "third-unit" }];
-    const { container } = render(
-      <HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />,
-    );
-
-    const cards = screen.getAllByRole("button");
-    const slots = Array.from(container.querySelectorAll<HTMLElement>(".hand-card"));
-    const marginsBeforeFocus = slots.map((slot) => slot.style.marginLeft);
-
-    fireEvent.focus(cards[1]!);
-
-    expect(screen.getByTestId("hand-zone-self").className).toContain("z-[30]");
-    expect(screen.getByTestId("hand-zone-self").className).toContain("overflow-visible");
-    expect(container.querySelector(".hand-container")?.className).toContain("overflow-visible");
-    expect(cards[1]!.style.transform).toContain("translateY(-10px)");
-    expect(slots.map((slot) => slot.style.marginLeft)).toEqual(marginsBeforeFocus);
-  });
-
   it("clears stale hover state when the hand becomes non-interactive", () => {
     const hand = [playableCard, disabledCard];
     const { rerender } = render(
@@ -171,32 +152,6 @@ describe("HandZone drag affordance", () => {
 
     expect(cards[0]!.style.transform).toBe("");
     expect(cards[1]!.style.opacity).toBe("1");
-  });
-
-  it("uses the available desktop width before overlapping cards", () => {
-    const hand = Array.from({ length: 6 }, (_, index) => ({
-      ...playableCard,
-      id: `card-${index}`,
-      name: `Card ${index}`,
-    }));
-    const { container } = render(<HandZone hand={hand} isOpponent={false} canPlay={() => true} />);
-
-    act(() => {
-      resizeObserverCallback?.(
-        [
-          {
-            target: resizeObserverTarget!,
-            contentRect: { width: 700 },
-          } as ResizeObserverEntry,
-        ],
-        {} as ResizeObserver,
-      );
-    });
-
-    const margins = Array.from(container.querySelectorAll<HTMLElement>(".hand-card")).map(
-      (slot) => slot.style.marginLeft,
-    );
-    expect(margins).toEqual(["0px", "8px", "8px", "8px", "8px", "8px"]);
   });
 
   it("renders a localized empty-hand count instead of a missing-message token", () => {

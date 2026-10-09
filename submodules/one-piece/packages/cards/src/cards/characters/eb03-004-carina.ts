@@ -23,7 +23,7 @@ export const eb03Carina004: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "wisdom",
   effect:
     "[Blocker]\n[Opponent's Turn] If your Leader is multicolored and you have no Characters with 6000 base power or more, this Character gains +4000 power.",

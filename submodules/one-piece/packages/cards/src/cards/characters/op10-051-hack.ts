@@ -23,7 +23,7 @@ export const op10Hack051: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Revolutionary Army Dressrosa"],
+  traits: ["Fish-Man", "Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     '[DON!! x1] [When Attacking] Look at 3 cards from the top of your deck; reveal up to 1 "Revolutionary Army" type Character card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -53,7 +53,7 @@ export const op10Hack051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

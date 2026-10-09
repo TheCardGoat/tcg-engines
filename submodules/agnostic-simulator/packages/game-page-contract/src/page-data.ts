@@ -69,6 +69,7 @@ export interface ViewerProjectedGameState {
   interactionView?: unknown;
   /** Server-authoritative availability for the seated player's undo control. */
   undoable?: boolean;
+  undoTurnAvailable?: boolean;
 }
 
 export interface LiveMatchCapabilities {

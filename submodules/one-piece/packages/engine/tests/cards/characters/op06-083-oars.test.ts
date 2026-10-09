@@ -46,6 +46,18 @@ describe("OP06-083 Oars", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
+  test("can K.O. itself as its printed cost without a stale-source continuation", () => {
+    const engine = OnePieceTestEngine.create({ character: [op06Oars083] });
+    const oarsId = engine.findCardInZone("south", "character", op06Oars083);
+    engine.activateEffect(oarsId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(oarsId);
+    expect(view.players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
   test("may decline optional Activate: Main so K.O. cost and attack unlock do not apply", () => {
     const engine = OnePieceTestEngine.create(
       {

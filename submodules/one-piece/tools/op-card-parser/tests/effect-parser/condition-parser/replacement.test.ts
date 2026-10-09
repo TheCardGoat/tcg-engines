@@ -211,7 +211,7 @@ describe("parseInlineCondition — replacement conditions", () => {
         player: "self",
         zones: ["character"],
         count: { amount: 1 },
-        filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+        filters: [{ filter: "trait", value: "Supernovas", match: "exact" }],
       },
     });
   });

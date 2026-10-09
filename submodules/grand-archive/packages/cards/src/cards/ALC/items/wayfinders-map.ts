@@ -35,6 +35,10 @@ export const wayfindersMap: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "rule-modification",
               mode: "modify-cost",
               action: "activate",
+              subject: {
+                kind: "player",
+                player: "controller",
+              },
               filter: {
                 kind: "type",
                 oneOf: ["DOMAIN"],

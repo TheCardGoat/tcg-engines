@@ -23,7 +23,7 @@ export const op12Morgan035: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   attribute: "slash",
   i18n: op12Morgan035I18n,
 };

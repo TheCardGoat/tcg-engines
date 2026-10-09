@@ -21,8 +21,10 @@ describe("OP12-050 Jaguar.D.Saul", () => {
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Saul's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(saulId);
 
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-    expect(engine.getView("south").players.south.leader).toBeTruthy();
-    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine.asSouth().chooseBlocker(saulId);
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(saulId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -80,6 +80,7 @@ export function grandArchiveFilterDependencyLayers(
     case "activation-state":
     case "token":
     case "entered-field-this-turn":
+    case "leveled-up-this-turn":
     case "linked":
       return [];
     default:
@@ -297,6 +298,9 @@ export function grandArchiveConditionDependencyLayers(
         condition.eventAmountMinimum
           ? grandArchiveAmountDependencyLayers(condition.eventAmountMinimum)
           : [],
+        condition.totalAmountMinimum
+          ? grandArchiveAmountDependencyLayers(condition.totalAmountMinimum)
+          : [],
         condition.minimum ? grandArchiveAmountDependencyLayers(condition.minimum) : [],
       );
     case "mastery-has-counter":
@@ -307,6 +311,8 @@ export function grandArchiveConditionDependencyLayers(
     case "player-state":
     case "player-property-extreme":
     case "activation-state":
+    case "event-origin":
+    case "bound-activation-origin":
     case "source-activation-context":
     case "source-zone":
     case "source-activation-zone":

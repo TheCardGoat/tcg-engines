@@ -45,7 +45,7 @@ export const op10EmporioIvankov102: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

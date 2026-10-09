@@ -60,6 +60,8 @@ type NormalizedPlayCardOptions = {
   choiceIndex?: number;
   destinations?: PlayCardMoveParams["destinations"];
   preventAutoResolveTriggeredEffects?: boolean;
+  /** Pay part of the ink cost with ink drops (Hyperia City). */
+  inkDrops?: number;
 };
 
 type NormalizedPlayCardFields = Pick<
@@ -73,6 +75,7 @@ type NormalizedPlayCardFields = Pick<
   | "choiceIndex"
   | "destinations"
   | "preventAutoResolveTriggeredEffects"
+  | "inkDrops"
 >;
 
 export function normalizeMoveRequestId(moveId: string): keyof LorcanaRuntimeMoveInputs & string {
@@ -123,6 +126,9 @@ export function normalizePlayCardCost(
   if (typeof options?.preventAutoResolveTriggeredEffects === "boolean") {
     actionResolutionFields.preventAutoResolveTriggeredEffects =
       options.preventAutoResolveTriggeredEffects;
+  }
+  if (typeof options?.inkDrops === "number") {
+    actionResolutionFields.inkDrops = options.inkDrops;
   }
 
   if (cost === "standard") {

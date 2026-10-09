@@ -108,6 +108,10 @@ export function isVanilla(card: OPCard): boolean {
 
 export function extractCardIds(text: string): Set<string> {
   const ids = new Set<string>();
+  // Unnumbered event cards have explicit internal IDs, not invented collector numbers.
+  for (const match of text.matchAll(/\b(EVENT-[A-Z0-9]+(?:-[A-Z0-9]+)*)\b/gi)) {
+    ids.add(match[1]!.toUpperCase());
+  }
   for (const match of text.matchAll(/\b([A-Z]{1,4}\d{0,2}-\d{3})(?:_[a-zA-Z0-9]+)?\b/g)) {
     ids.add(match[1]!.toUpperCase());
   }
@@ -145,6 +149,13 @@ function countActiveTests(source: string): number {
   // Active test( calls not preceded by .skip
   const all = [...source.matchAll(/(?<![\w.])test(?:\.(?:only))?\s*\(\s*(['"`])/g)];
   const skips = [...source.matchAll(/test\.skip\s*\(\s*(['"`])/g)];
+  // Literal parameter tables execute one active test per entry. Do not count
+  // skipped tables or infer rows from arbitrary expressions/comments.
+  const parameterized = [
+    ...source.matchAll(
+      /(?<![\w.])test\.each\(\s*\[((?:\s*(?:"[^"\n]*"|'[^'\n]*'|\d+)\s*,?)+)\]\s*(?:as const\s*)?\)\s*\(/g,
+    ),
+  ].reduce((total, match) => total + (match[1]!.match(/"[^"\n]*"|'[^'\n]*'|\d+/g)?.length ?? 0), 0);
   // Also count defineXTests factories as multi-test when shared defines multiple
   if (/define\w+Tests?\s*\(/.test(source) && /from\s+["']\.\/.+\.shared/.test(source)) {
     return Math.max(2, all.length); // factories typically export multi-test suites
@@ -153,13 +164,13 @@ function countActiveTests(source: string): number {
     const inner = [...source.matchAll(/(?<![\w.])test(?:\.(?:only))?\s*\(\s*(['"`])/g)];
     return Math.max(inner.length, 1);
   }
-  return Math.max(0, all.length - skips.length);
+  return Math.max(0, all.length - skips.length) + parameterized;
 }
 
 function hasDecline(source: string): boolean {
   return (
     DECLINE_HELPER_CALL.test(source) ||
-    /\bdecline\s*\(/.test(source) ||
+    /\b(?:decline|declineOptional)\s*\(/.test(source) ||
     /optionId:\s*["']no["']/.test(source) ||
     /optionId:\s*["']decline["']/.test(source) ||
     // Optional "up to N" / addDon windows: amount 0 is an explicit decline of the grant.
@@ -193,6 +204,7 @@ const DECLINE_HELPER_CALL =
 export type OptionalOpener =
   | "play"
   | "attack"
+  | "battleEnd"
   | "endTurn"
   | "activate"
   | "attachDon"
@@ -215,7 +227,9 @@ export const OPTIONAL_TRIGGER_OPENERS: Record<string, OptionalOpener[]> = {
   activatemain: ["activate"],
   "activate:main": ["activate"],
   whenattacking: ["attack"],
+  endofbattle: ["battleEnd"],
   onopponentattack: ["attack"],
+  onyourattack: ["attack"],
   onyouropponentsattack: ["attack"],
   whenattacked: ["attack"],
   onblock: ["attack"],
@@ -246,7 +260,7 @@ export const OPTIONAL_TRIGGER_OPENERS: Record<string, OptionalOpener[]> = {
 function blockHasDecline(block: string): boolean {
   return (
     DECLINE_HELPER_CALL.test(block) ||
-    /\bdecline\s*\(/.test(block) ||
+    /\b(?:decline|declineOptional)\s*\(/.test(block) ||
     /optionId:\s*["']no["']/.test(block) ||
     /optionId:\s*["']decline["']/.test(block) ||
     /resolveDecision\(\s*["']effectAddDon["']\s*,\s*\{\s*optionId:\s*["']0["']/.test(block) ||
@@ -412,9 +426,42 @@ function blockPlaysSubject(block: string, subjectTokens: string[]): boolean {
   for (const t of subjectTokens) {
     const esc = t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     if (new RegExp(`\\b(?:playCard|play)\\s*\\(\\s*${esc}\\b`).test(block)) return true;
+    if (
+      /^[A-Z]{1,4}\d{0,2}-\d{3}(?:_\w+)?$/.test(t) &&
+      new RegExp(`\\b(?:playCard|play)\\s*\\(\\s*(["'])${esc}\\1(?=\\s*[,\\)])`).test(block)
+    )
+      return true;
     // helper: declineOptionalAfterPlay(engine, subject
     if (new RegExp(`declineOptionalAfterPlay\\s*\\(\\s*\\w+\\s*,\\s*${esc}\\b`).test(block)) {
       return true;
+    }
+  }
+  return false;
+}
+
+// Battle-end declines require the actual subject instance as a combatant.
+// A subject fixture beside an unrelated battle is not evidence for this timing.
+function blockBattlesSubject(block: string, subjectTokens: string[]): boolean {
+  for (const token of subjectTokens) {
+    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const subject = `(?:["']${escaped}["']|${escaped}\\b)`;
+    if (
+      !new RegExp(`character\\s*:\\s*\\[[^\\]]*\\b(?:cardId|card)\\s*:\\s*${subject}`).test(block)
+    )
+      continue;
+    const binding = new RegExp(
+      `\\b(?:const|let)\\s+(\\w+)\\s*=\\s*(\\w+)\\.findCardInZone\\s*\\(\\s*["'](?:north|south)["']\\s*,\\s*["']character["']\\s*,\\s*${subject}\\s*\\)`,
+      "g",
+    );
+    for (const match of block.matchAll(binding)) {
+      const [, instance, engine] = match;
+      if (
+        new RegExp(`\\b${engine}\\.declareAttack\\s*\\(\\s*${instance}\\s*,`).test(block) ||
+        new RegExp(`\\b${engine}\\.declareAttack\\s*\\(\\s*[^,;\\n]+,\\s*${instance}\\s*,`).test(
+          block,
+        )
+      )
+        return true;
     }
   }
   return false;
@@ -455,6 +502,8 @@ function blockHasOpenerKind(block: string, kind: OptionalOpener, subjectTokens: 
     case "play":
       // Subject-bound: must play the card under test, not an unrelated fixture.
       return blockPlaysSubject(block, subjectTokens);
+    case "battleEnd":
+      return blockBattlesSubject(block, subjectTokens);
     case "attack":
       return (
         (/\bdeclareAttack\s*\(|\battack\s*\(/.test(block) &&
@@ -478,9 +527,10 @@ function blockHasOpenerKind(block: string, kind: OptionalOpener, subjectTokens: 
     case "characterKod":
       return (
         /declineOptionalOnRemoval\s*\(/.test(block) ||
-        (/\bdeclareAttack\s*\(/.test(block) && blockMentionsSubject(block, subjectTokens)) ||
+        (/\b(?:declareAttack|attack)\s*\(/.test(block) &&
+          blockMentionsSubject(block, subjectTokens)) ||
         // Own effect removal: play Event/Character while subject (leader/character) is in fixture.
-        (/\bplayCard\s*\(/.test(block) &&
+        (/\b(?:playCard|play)\s*\(/.test(block) &&
           blockMentionsSubject(block, subjectTokens) &&
           (/\bleaderCardId\s*:/.test(block) ||
             /character:\s*\[/.test(block) ||
@@ -490,7 +540,7 @@ function blockHasOpenerKind(block: string, kind: OptionalOpener, subjectTokens: 
       return (
         /declineOptionalOnOpponentPlay\s*\(/.test(block) ||
         // Opponent plays a *different* card while subject (leader/character) is already in fixture
-        (/\bplayCard\s*\(/.test(block) &&
+        (/\b(?:playCard|play)\s*\(/.test(block) &&
           blockMentionsSubject(block, subjectTokens) &&
           !blockPlaysSubject(block, subjectTokens) &&
           (/\bleaderCardId\s*:/.test(block) ||
@@ -499,12 +549,12 @@ function blockHasOpenerKind(block: string, kind: OptionalOpener, subjectTokens: 
       );
     case "opponentEvent":
       return (
-        /\bplayCard\s*\(/.test(block) &&
+        /\b(?:playCard|play)\s*\(/.test(block) &&
         blockMentionsSubject(block, subjectTokens) &&
         !blockPlaysSubject(block, subjectTokens)
       );
     case "youActivateEvent":
-      return /\bplayCard\s*\(/.test(block) && blockMentionsSubject(block, subjectTokens);
+      return /\b(?:playCard|play)\s*\(/.test(block) && blockMentionsSubject(block, subjectTokens);
     case "dealsDamage":
       return /\bdeclareAttack\s*\(|\battack\s*\(/.test(block);
     case "becomesRested":
@@ -513,16 +563,16 @@ function blockHasOpenerKind(block: string, kind: OptionalOpener, subjectTokens: 
         blockMentionsSubject(block, subjectTokens)
       );
     case "lifeRemoved":
-      return /\bdeclareAttack\s*\(/.test(block);
+      return /\b(?:declareAttack|attack)\s*\(/.test(block);
     case "triggerCharacterPlayed":
     case "triggerActivates":
       return (
-        /\bdeclareAttack\s*\(/.test(block) ||
+        /\b(?:declareAttack|attack)\s*\(/.test(block) ||
         /lifeTrigger/.test(block) ||
         /declineOptionalOnLifeTrigger\s*\(/.test(block)
       );
     case "blockerActivated":
-      return /\bdeclareAttack\s*\(/.test(block) && /battleBlocker|Blocker/i.test(block);
+      return /\b(?:declareAttack|attack)\s*\(/.test(block) && /battleBlocker|Blocker/i.test(block);
     default:
       return false;
   }
@@ -582,14 +632,14 @@ function isTheatricalDeclineBlock(
     /selectedIds:\s*\[\s*\]/.test(block) ||
     DECLINE_HELPER_CALL.test(block);
   const onlyConditionalDecline =
-    /if\s*\(\s*\w+\.hasPendingChoice[\s\S]{0,200}?\bdecline\s*\(/.test(block) &&
+    /if\s*\(\s*\w+\.hasPendingChoice[\s\S]{0,200}?\b(?:decline|declineOptional)\s*\(/.test(block) &&
     !hasUnconditionalNo &&
     !OPENS_OPTIONAL_WINDOW.test(block);
   if (onlyConditionalDecline) return true;
   // Counter Event "decline cost" titles that never enter battle Counter.
   if (
     /may decline the optional cost when the Event/i.test(block) &&
-    !/\bdeclareAttack\s*\(/.test(block) &&
+    !/\b(?:declareAttack|attack)\s*\(/.test(block) &&
     !/\bbattleCounter\b/.test(block) &&
     !/declineOptionalOnLifeTrigger\s*\(/.test(block)
   ) {
@@ -602,8 +652,8 @@ function isTheatricalDeclineBlock(
   // playCard-only bulk template for non-onPlay optional cards
   const openers = optionalOpenersForCard(card);
   const onlyPlay =
-    /\bplayCard\s*\(/.test(block) &&
-    !/\bdeclareAttack\s*\(/.test(block) &&
+    /\b(?:playCard|play)\s*\(/.test(block) &&
+    !/\b(?:declareAttack|attack)\s*\(/.test(block) &&
     !/\bendTurn\s*\(/.test(block) &&
     !/\bactivateEffect\s*\(/.test(block) &&
     !/\bactivateMain\s*\(/.test(block) &&
@@ -656,7 +706,10 @@ export function hasMeaningfulDecline(source: string, card?: OPCard | null): bool
     const blocks = source.split(/(?<![\w.])test(?:\.only)?\s*\(/);
     let anyGood = false;
     for (const block of blocks.slice(1)) {
-      if (!/optionId:\s*["']no["']|\bdecline\s*\(/.test(block) && !/declineOptional/.test(block))
+      if (
+        !/optionId:\s*["']no["']|\b(?:decline|declineOptional)\s*\(/.test(block) &&
+        !/declineOptional/.test(block)
+      )
         continue;
       if (
         /may decline the optional/i.test(block) &&
@@ -705,7 +758,7 @@ export function hasMeaningfulDecline(source: string, card?: OPCard | null): bool
 
     if (
       (DECLINE_HELPER_CALL.test(block) ||
-        /\bdecline\s*\(/.test(block) ||
+        /\b(?:decline|declineOptional)\s*\(/.test(block) ||
         /optionId:\s*["']no["']/.test(block) ||
         /selectedIds:\s*\[\s*\]/.test(block)) &&
       (STRICT_DECLINE_OUTCOME.test(block) || helperWithAssert)
@@ -769,7 +822,7 @@ function hasPromptResolution(source: string): boolean {
     /\bpendingDecision\s*\(/.test(source) ||
     /\bchoose\s*\(/.test(source) ||
     /\baccept\s*\(/.test(source) ||
-    /\bdecline\s*\(/.test(source) ||
+    /\b(?:decline|declineOptional)\s*\(/.test(source) ||
     /\bchooseAmount\s*\(/.test(source) ||
     /\bresolvePrompt\b/.test(source) ||
     /type:\s*["']resolvePrompt["']/.test(source) ||
@@ -780,6 +833,7 @@ function hasPromptResolution(source: string): boolean {
 function hasViewAssert(source: string): boolean {
   return (
     /\bgetView\s*\(/.test(source) ||
+    /\.view\s*\(/.test(source) ||
     /\bpendingDecision\s*\(/.test(source) ||
     // Older proofs use getState / findCardInZone for outcomes; still command-driven.
     /\bgetState\s*\(/.test(source) ||
@@ -946,7 +1000,7 @@ export function pathLooksLikeSubject(path: string, cardId: string): boolean {
 
   const [setPart, numPart] = base.split("-");
   if (!setPart || !numPart) return false;
-  if (!baseName.startsWith(`${numPart}-`) && !baseName.toLowerCase().startsWith(`${numPart}-`)) {
+  if (!new RegExp(`^${numPart}(?:-|\\.test\\.)`, "i").test(baseName)) {
     // also allow op14-040- style already handled by extractCardIds
     if (!new RegExp(`(?:^|[^a-z0-9])${numPart}-`, "i").test(baseName)) return false;
   }
@@ -995,10 +1049,8 @@ export function buildProofIndex(testFiles: string[]): Map<string, string[]> {
     const ids = extractCardIds(`${baseName}\n${source}`);
     for (const id of ids) {
       const base = id.split("_")[0]!.toUpperCase();
-      if (!/^(?:OP|EB|ST|PRB)\d*-\d{3}$/.test(base) && !/^(?:OP|EB|ST|PRB)\d+-\d{3}$/.test(base)) {
-        // keep OP01-004 style
-      }
-      if (!/^[A-Z]{1,4}\d{0,2}-\d{3}$/.test(base)) continue;
+      if (!/^[A-Z]{1,4}\d{0,2}-\d{3}$/.test(base) && !/^EVENT-[A-Z0-9]+(?:-[A-Z0-9]+)*$/.test(base))
+        continue;
       const list = index.get(base) ?? [];
       if (!list.includes(file)) list.push(file);
       index.set(base, list);

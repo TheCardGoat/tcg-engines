@@ -23,7 +23,7 @@ export const mrIncredibleBobParrEpic: CharacterCard = {
   franchise: "Incredibles",
   set: "012",
   cardNumber: 215,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 2,

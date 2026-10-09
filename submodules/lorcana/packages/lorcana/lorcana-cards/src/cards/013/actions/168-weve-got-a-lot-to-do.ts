@@ -25,6 +25,10 @@ export const weveGotALotToDo: ActionCard = {
   rarity: "common",
   cost: 3,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_ddba7bf9f3a5461f8202ffc82283f65a",
+    tcgPlayer: "704664",
+  },
   text: "Put chosen item or location into its player's inkwell facedown and exerted.",
   actionSubtype: "song",
   abilities: [

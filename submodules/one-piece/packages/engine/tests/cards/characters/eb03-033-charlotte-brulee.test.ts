@@ -58,6 +58,7 @@ describe("EB03-033 Charlotte Brulee", () => {
       donDeckCount: donDeckBefore,
     });
 
+    engine.asNorth().chooseCounter();
     engine.declareAttack(attackerIds[1]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventIds[1]!] }, "north");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "north");

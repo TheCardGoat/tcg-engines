@@ -61,7 +61,7 @@ export const fatestoneOfRevelations: GrandArchiveCard<GrandArchiveAbilityDefinit
                       },
                       candidates: {
                         kind: "card",
-                        zones: ["hand"],
+                        zones: ["hand", "memory"],
                         relationship: "zone-of",
                         player: "controller",
                         filter: {

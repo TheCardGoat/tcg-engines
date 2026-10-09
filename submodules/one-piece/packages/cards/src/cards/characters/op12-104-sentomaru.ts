@@ -24,7 +24,7 @@ export const op12Sentomaru104: CharacterCard = {
   power: 5000,
   counter: 1000,
   trigger: "K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Navy Egghead"],
+  traits: ["Egghead", "Navy"],
   attribute: "slash",
   effect: "[Trigger] K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {

@@ -1,13 +1,19 @@
 // @vitest-environment jsdom
 import { act, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import type { DragEndEvent, DragStartEvent, DropAnimation } from "@dnd-kit/core";
+import {
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragStartEvent,
+  type DropAnimation,
+} from "@dnd-kit/core";
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
 
 interface CapturedDndContextProps {
   readonly id: string;
   readonly children: ReactNode;
   readonly sensors: readonly { sensor: unknown; options?: unknown }[];
+  readonly onDragMove: (event: DragMoveEvent) => void;
   readonly onDragStart: (event: DragStartEvent) => void;
   readonly onDragCancel: () => void;
   readonly onDragEnd: (event: DragEndEvent) => void;
@@ -34,13 +40,17 @@ vi.mock("@dnd-kit/core", () => ({
     return children;
   },
   KeyboardSensor: function KeyboardSensor() {},
+  MouseSensor: function MouseSensor() {},
   PointerSensor: function PointerSensor() {},
+  TouchSensor: function TouchSensor() {},
   defaultDropAnimationSideEffects: () => () => undefined,
   useDndMonitor: () => undefined,
+  useDndContext: () => ({ activeNodeRect: { left: 20, top: 30, width: 60, height: 84 } }),
   useSensor: (sensor: unknown, options?: unknown) => ({ sensor, options }),
   useSensors: (...sensors: unknown[]) => sensors,
 }));
 
+import { createDragMotion } from "./drag-motion";
 import { PointerDragDropSurface, type DropDisposition } from "./PointerDragDropSurface";
 
 let activeRoot: Root | null = null;
@@ -58,6 +68,54 @@ afterEach(() => {
 });
 
 describe("PointerDragDropSurface", () => {
+  test("external presentation measures its source after activation and draws no overlay", () => {
+    const motion = createDragMotion<string>();
+    const overlay = vi.fn(() => <span>Duplicate</span>);
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <PointerDragDropSurface
+          id="external"
+          motion={motion}
+          presentation="external"
+          decodeSource={(id) => id}
+          renderOverlay={overlay}
+          onDragEnd={() => ({ kind: "accepted" })}
+        >
+          Board
+        </PointerDragDropSurface>,
+      ),
+    );
+    const start: DragStartEvent = {
+      active: {
+        id: "card",
+        data: { current: {} },
+        rect: { current: { initial: null, translated: null } },
+      },
+      activatorEvent: new Event("pointerdown"),
+    };
+    act(() => dndHarness.contextProps?.onDragStart(start));
+    expect(motion.getSnapshot()).toMatchObject({
+      source: "card",
+      rect: { left: 20, top: 30, width: 60, height: 84 },
+    });
+    const move: DragMoveEvent = {
+      ...start,
+      delta: { x: 90, y: -30 },
+      over: null,
+      collisions: null,
+    };
+    act(() => dndHarness.contextProps?.onDragMove(move));
+    expect(motion.getSnapshot()?.offset).toEqual(move.delta);
+    act(() => dndHarness.contextProps?.onDragEnd(move));
+    expect(motion.getSnapshot()?.phase).toBe("pending");
+    expect(overlay).not.toHaveBeenCalled();
+    expect(activeContainer.textContent).toBe("Board");
+    motion.finish();
+  });
+
   test("keeps source decoding generic while owning the drag lifecycle and overlay", () => {
     const onDragStart = vi.fn();
     const onDragCancel = vi.fn();
@@ -82,7 +140,7 @@ describe("PointerDragDropSurface", () => {
     );
 
     expect(dndHarness.contextProps?.id).toBe("test-board-dnd");
-    expect(dndHarness.contextProps?.sensors).toHaveLength(2);
+    expect(dndHarness.contextProps?.sensors).toHaveLength(3);
     expect(dndHarness.contextProps?.sensors[0]?.options).toEqual({
       activationConstraint: { distance: 4 },
     });

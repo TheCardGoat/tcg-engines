@@ -23,7 +23,7 @@ export const op11CharlottePraline029: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["The Sun Pirates Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island", "The Sun Pirates"],
   attribute: "wisdom",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] Rest up to 1 of your opponent's Characters with a cost of 1 or less.",

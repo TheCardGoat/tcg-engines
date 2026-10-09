@@ -21,7 +21,7 @@ export const op07MorePizza037: EventCard = {
   rarity: "UC",
   setId: "OP07",
   cost: 1,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   effect:
     "[Main] Look at 5 cards from the top of your deck; reveal up to 1 [Supernovas] type card other than [More Pizza!!] and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Draw 1 card.",
   effects: {
@@ -48,7 +48,7 @@ export const op07MorePizza037: EventCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

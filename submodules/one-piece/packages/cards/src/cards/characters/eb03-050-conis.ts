@@ -45,7 +45,7 @@ export const eb03Conis050: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Sky Island",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

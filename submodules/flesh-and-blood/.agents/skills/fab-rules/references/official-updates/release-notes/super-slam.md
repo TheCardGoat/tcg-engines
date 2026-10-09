@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/super-slam/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Super Slam"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/super-slam/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: a549eccadb6698fe13c8d96d116cabd13848cab71551c67f40ecd115aed5a4d2
 ---

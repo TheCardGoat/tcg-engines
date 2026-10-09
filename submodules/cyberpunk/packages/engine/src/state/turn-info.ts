@@ -1,6 +1,21 @@
 import type { MatchState } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 
+/** The state fields needed to identify the player who can make the next choice. */
+export interface PriorityView<P extends string = string> {
+  G: {
+    gameEnded: boolean;
+    gamePhase: string;
+    turnMetadata: {
+      activePlayerId: P;
+      pendingChoice?: { chooserId: P };
+    };
+    attackState?: { step: string; rivalId: P } | null;
+    players: Record<string, { mulliganDone: boolean }>;
+  };
+  ctx: { playerIds: readonly P[] };
+}
+
 /**
  * CR 7.9.2 — the player going first must finish their one keep-or-mulligan
  * decision before the second player may declare. Shared by `mulligan` and
@@ -43,7 +58,12 @@ export function isOpeningHandDecisionWindow(state: MatchState, playerId: PlayerI
  *   - setup phase, both decided (transient state right before
  *     `advanceIfBothDecided` flips to play) → return canonical active
  */
-export function getEffectiveActivePlayerId(state: MatchState): PlayerId | undefined {
+export function getEffectiveActivePlayerId<P extends string>(
+  state: PriorityView<P>,
+): P | undefined {
+  if (state.G.gameEnded) return undefined;
+  if (state.G.turnMetadata.pendingChoice) return state.G.turnMetadata.pendingChoice.chooserId;
+  if (state.G.attackState?.step === "react") return state.G.attackState.rivalId;
   const canonical = state.G.turnMetadata.activePlayerId;
   if (state.G.gamePhase !== "setup") return canonical;
 
@@ -53,5 +73,5 @@ export function getEffectiveActivePlayerId(state: MatchState): PlayerId | undefi
   const undecided = state.ctx.playerIds.find(
     (pid) => !state.G.players[pid as string]?.mulliganDone,
   );
-  return (undecided as PlayerId | undefined) ?? canonical;
+  return undecided ?? canonical;
 }

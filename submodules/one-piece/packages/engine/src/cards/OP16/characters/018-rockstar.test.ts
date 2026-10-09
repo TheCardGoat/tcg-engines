@@ -93,9 +93,10 @@ describe("OP15-031 Purinpurin", () => {
     const ko = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (ko?.kind !== "selectEntity") throw new Error("Expected the K.O. target.");
     const candidates = ko.candidates.map((candidate) => candidate.ref.id);
+    // All rested Characters can be chosen; cost equality is checked after selection.
     expect(candidates).toContain(luffyId);
-    expect(candidates).not.toContain(engine.findCardInZone("north", "character", "OP13-013"));
-    expect(candidates).not.toContain(engine.findCardInZone("north", "character", "OP16-096"));
+    expect(candidates).toContain(engine.findCardInZone("north", "character", "OP13-013"));
+    expect(candidates).toContain(engine.findCardInZone("north", "character", "OP16-096"));
     engine.resolveDecision("effectTargetSelection", { selectedIds: [luffyId] }, "south");
 
     const view = engine.getView("south");

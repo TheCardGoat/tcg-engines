@@ -30,7 +30,7 @@ export const op13JewelryBonney100: LeaderCard = {
   setId: "OP13",
   power: 5000,
   life: 5,
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] [Once Per Turn] This effect can be activated when you play a Character with a [Trigger]. Give up to 2 rested DON!! cards to 1 of your Leader or Character cards.",

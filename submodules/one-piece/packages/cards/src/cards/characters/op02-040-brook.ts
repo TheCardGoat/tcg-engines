@@ -23,7 +23,7 @@ export const op02Brook040: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[On Play] Play up to 1 [FILM] or [Straw Hat Crew] type Character card with a cost of 3 or less from your hand.",
@@ -54,12 +54,12 @@ export const op02Brook040: CharacterCard = {
                   {
                     filter: "trait",
                     value: "FILM",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

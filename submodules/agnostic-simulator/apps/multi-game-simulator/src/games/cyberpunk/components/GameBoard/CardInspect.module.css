@@ -100,13 +100,11 @@
 .thumbnail {
   appearance: none;
   display: grid;
-  grid-template-columns: 28px auto;
-  align-items: center;
-  gap: 6px;
-  flex: 0 0 auto;
-  min-height: 38px;
-  max-width: 136px;
-  padding: 4px 7px 4px 4px;
+  justify-items: center;
+  gap: 4px;
+  flex: 0 0 100px;
+  min-height: 58px;
+  padding: 4px;
   border: 1px solid rgb(74 217 255 / 35%);
   border-radius: 4px;
   background: rgb(7 9 12 / 82%);
@@ -132,8 +130,11 @@
 
 .thumbnail span {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  text-align: center;
 }
 
 /* Floating close button at the top-right corner of the card. Big enough for

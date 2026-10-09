@@ -1,0 +1,5561 @@
+{
+  "version": 1,
+  "seed": "improve/authored-bbg-towerfall-control/7/authored-bbg-towerfall-control-vs-authored-bbg-towerfall-control/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-bbg-towerfall-control",
+  "deckBId": "authored-bbg-towerfall-control",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 11,
+  "stepCount": 77,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "mulligan",
+      "moveLogs": [
+        {
+          "type": "mulligan",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "drawnCount": 6,
+          "drawn": {
+            "__private": true,
+            "value": [
+              "ci_999657300",
+              "ci_253232094",
+              "ci_487473588",
+              "ci_663478255",
+              "ci_651661595",
+              "ci_875057135"
+            ],
+            "visibleTo": ["p2"]
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "deckShuffled",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 6,
+          "cardIds": [
+            "ci_999657300",
+            "ci_253232094",
+            "ci_487473588",
+            "ci_663478255",
+            "ci_651661595",
+            "ci_875057135"
+          ]
+        }
+      ]
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_624097879"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_302934626"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "dieId": "gd_302934626",
+          "dieType": "d12",
+          "faceValue": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_302934626",
+          "dieType": "d12",
+          "result": 2,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_302934626",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_487473588"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "cardId": "ci_487473588",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_487473588",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Floor It"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_875057135"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_875057135",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_875057135",
+          "playerId": "p2",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_875057135",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_875057135"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_302934626",
+        "value": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D12",
+            "targetId": "gd_302934626",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 1,
+            "previousValue": 2,
+            "dieId": "gd_302934626",
+            "dieLabel": "D12"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 1,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_875406055"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_875057135",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_302934626"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D12",
+            "targetId": "gd_302934626",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_875057135"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_302934626",
+          "previousValue": 2,
+          "newValue": 1,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 1,
+            "previousValue": 2,
+            "dieId": "gd_302934626",
+            "dieLabel": "D12"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_875406055"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_875406055"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Les Élémens",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_875057135"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_465893225"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_224210931"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "dieId": "gd_224210931",
+          "dieType": "d12",
+          "faceValue": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_224210931",
+          "dieType": "d12",
+          "result": 12,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_224210931",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_697510856"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "cardId": "ci_697510856",
+          "cardName": "Les Élémens"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_697510856",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Les Élémens"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_274981458"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_198538355"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_198538355",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_198538355",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Jacked-In Voodoo Boy",
+            "cost": 2
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_831700312"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_117017372"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "dieId": "gd_117017372",
+          "dieType": "d10",
+          "faceValue": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_117017372",
+          "dieType": "d10",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_117017372",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_651661595"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "cardId": "ci_651661595",
+          "cardName": "Towerfall"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_651661595",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Towerfall"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_999657300"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "cost": 5
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "abilityText": "PLAY You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_357064160",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_999657300",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_999657300",
+          "playerId": "p2",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "cost": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_999657300",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "abilityText": "PLAY You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_999657300"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_875057135"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Lizzy Wizzy: Delicate Weapon",
+            "targetNames": "Trust No One",
+            "targetId": "ci_875057135",
+            "targetKind": "program",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_999657300",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_875057135"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Lizzy Wizzy: Delicate Weapon",
+            "targetNames": "Trust No One",
+            "targetId": "ci_875057135",
+            "targetKind": "program",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_999657300", "ci_875057135"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_875057135",
+          "fromZone": "trash",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_875057135",
+          "playerId": "p2",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 0
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_875057135",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_875057135"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_224210931",
+        "value": 9
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D12",
+            "targetId": "gd_224210931",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 9,
+            "previousValue": 12,
+            "dieId": "gd_224210931",
+            "dieLabel": "D12"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_411724166"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Pepe Najarro: Working Doubles",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_875057135",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_224210931"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D12",
+            "targetId": "gd_224210931",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_875057135"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_224210931",
+          "previousValue": 12,
+          "newValue": 9,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 9,
+            "previousValue": 12,
+            "dieId": "gd_224210931",
+            "dieLabel": "D12"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_411724166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_411724166"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Pepe Najarro: Working Doubles",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_875057135"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_875057135",
+          "fromZone": "trash",
+          "toZone": "deck",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_274981458",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_987714172"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_321957086"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "dieId": "gd_321957086",
+          "dieType": "d10",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_321957086",
+          "dieType": "d10",
+          "result": 3,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_321957086",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_977990553"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "cardId": "ci_977990553",
+          "cardName": "Nocturne OP55 N1"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_977990553",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Nocturne OP55 N1"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_600565246"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "cost": 5
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "abilityText": "PLAY You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_600565246",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_600565246",
+          "playerId": "p1",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "cost": 5
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_600565246",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Lizzy Wizzy: Delicate Weapon",
+            "abilityText": "PLAY You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_600565246"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_195613940"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Lizzy Wizzy: Delicate Weapon",
+            "targetNames": "Chrome Reverie",
+            "targetId": "ci_195613940",
+            "targetKind": "program",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "cost": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "abilityText": "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_600565246",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_195613940"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Lizzy Wizzy: Delicate Weapon",
+            "targetNames": "Chrome Reverie",
+            "targetId": "ci_195613940",
+            "targetKind": "program",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_600565246", "ci_195613940"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_195613940",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_195613940",
+          "playerId": "p1",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "cost": 0
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_195613940",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "abilityText": "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_195613940"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_999657300"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Lizzy Wizzy: Delicate Weapon"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Lizzy Wizzy: Delicate Weapon",
+            "targetId": "ci_999657300",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "effectName": "call legend",
+            "reason": "friendly does not control a min Gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_195613940",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_999657300"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Lizzy Wizzy: Delicate Weapon"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_195613940", "ci_999657300"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Lizzy Wizzy: Delicate Weapon",
+            "targetId": "ci_999657300",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_195613940", "ci_999657300"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "effectName": "call legend",
+            "reason": "friendly does not control a min Gig"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_195613940"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_195613940",
+          "fromZone": "trash",
+          "toZone": "deck",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_357064160",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_949114853"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_75394724"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "dieId": "gd_75394724",
+          "dieType": "d8",
+          "faceValue": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_75394724",
+          "dieType": "d8",
+          "result": 8,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_75394724",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_831700312"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "cardId": "ci_831700312",
+          "cardName": "Floor It"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_831700312",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Floor It"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_411724166"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "cost": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 4,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_411724166",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_411724166",
+          "playerId": "p2",
+          "cost": 4
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "cost": 4
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_949114853"
+      },
+      "moveLogs": [
+        {
+          "type": "searchDeck",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "revealedCount": 3,
+          "revealed": {
+            "__private": true,
+            "value": ["ci_825590619", "ci_681023254", "ci_969565276"],
+            "visibleTo": ["p2"]
+          },
+          "revealedCardNames": {
+            "__private": true,
+            "value": [
+              "Peace Offering",
+              "Three Mouths, One Desire",
+              "Maman Brigitte: Spirit of Death"
+            ],
+            "visibleTo": ["p2"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Three Mouths, One Desire",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Three Mouths, One Desire",
+            "abilityText": "Search the top 3 cards of your deck. Add 1 to your hand. You may add 1 more for each friendly min Gig. Bottom-deck the rest.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_357064160",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_949114853",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_949114853",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Three Mouths, One Desire",
+            "cost": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_949114853",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Three Mouths, One Desire",
+            "abilityText": "Search the top 3 cards of your deck. Add 1 to your hand. You may add 1 more for each friendly min Gig. Bottom-deck the rest.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_949114853"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 3
+          },
+          "playerId": "p2",
+          "category": "search",
+          "cardIds": ["ci_825590619", "ci_681023254", "ci_969565276"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "hand",
+            "cardIds": ["ci_681023254", "ci_825590619"]
+          }
+        ]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 2,
+            "looked": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "searchPerformed",
+          "playerId": "p2",
+          "zone": "deck",
+          "found": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 2,
+            "looked": 3
+          },
+          "playerId": "p2",
+          "category": "search",
+          "cardIds": ["ci_681023254", "ci_825590619"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_274981458",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_349656638"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_201525474"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "dieId": "gd_201525474",
+          "dieType": "d8",
+          "faceValue": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_201525474",
+          "dieType": "d8",
+          "result": 1,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_201525474",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_349656638"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "cardId": "ci_349656638",
+          "cardName": "Towerfall"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_349656638",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_349656638",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Towerfall"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_758354804"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_758354804",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_758354804",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_758354804",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_758354804"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "effectName": "copy gig value"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "effectName": "copy gig value"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_758354804"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_758354804"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_274981458",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_321957086"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_321957086",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_321957086"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_321957086",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_117017372"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "friendlyDieType": "d10",
+          "friendlyValue": 3,
+          "rivalDieType": "d10",
+          "rivalValue": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_117017372"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_321957086",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_117017372",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_321957086", "gd_117017372"],
+          "dieValues": [3, 8],
+          "dieTypes": ["d10", "d10"],
+          "playerId": "p1",
+          "fromPlayerIds": ["p1", "p2"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_987714172"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Nocturne OP55 N1",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Nocturne OP55 N1",
+            "abilityText": "Choose one effect. Draw 2. // A Unit can't attack until your next turn. // A friendly Legend may use Go Solo for -2 €$ this turn, to a minimum of 1 €$.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_349656638",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_987714172",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_987714172",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Nocturne OP55 N1",
+            "cost": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_987714172",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Nocturne OP55 N1",
+            "abilityText": "Choose one effect. Draw 2. // A Unit can't attack until your next turn. // A friendly Legend may use Go Solo for -2 €$ this turn, to a minimum of 1 €$.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_987714172"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "cant-attack"
+      },
+      "moveLogs": [],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_411724166"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Nocturne OP55 N1",
+            "targetNames": "Pepe Najarro: Working Doubles"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Nocturne OP55 N1",
+            "targetNames": "Pepe Najarro: Working Doubles",
+            "targetId": "ci_411724166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_987714172",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_411724166"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Nocturne OP55 N1",
+            "targetNames": "Pepe Najarro: Working Doubles"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_987714172", "ci_411724166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Nocturne OP55 N1",
+            "targetNames": "Pepe Najarro: Working Doubles",
+            "targetId": "ci_411724166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_987714172", "ci_411724166"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_357064160",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_845189029"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_954288685"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "dieId": "gd_954288685",
+          "dieType": "d6",
+          "faceValue": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_954288685",
+          "dieType": "d6",
+          "result": 3,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_954288685",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_681023254"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "cardId": "ci_681023254",
+          "cardName": "Three Mouths, One Desire"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_681023254",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_681023254",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Three Mouths, One Desire"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_663478255"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Towerfall",
+            "cost": 6
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Towerfall",
+            "abilityText": "Choose one effect. If you have less ☆ (Street Cred) than a Rival, choose both instead. Give all rival Units -5 power this turn. // Bottom-deck all rival Units with power 0.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Towerfall",
+            "targetNames": "Jacked-In Voodoo Boy, Lizzy Wizzy: Delicate Weapon",
+            "powerChange": "-5"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_681023254",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 6,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_663478255",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_663478255",
+          "playerId": "p2",
+          "cost": 6
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Towerfall",
+            "cost": 6
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_663478255",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Towerfall",
+            "abilityText": "Choose one effect. If you have less ☆ (Street Cred) than a Rival, choose both instead. Give all rival Units -5 power this turn. // Bottom-deck all rival Units with power 0.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_663478255"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.modifyPower.resolved",
+          "params": {
+            "sourceCardName": "Towerfall",
+            "targetNames": "Jacked-In Voodoo Boy, Lizzy Wizzy: Delicate Weapon",
+            "powerChange": "-5"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_663478255", "ci_198538355", "ci_600565246"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_198538355",
+          "fromZone": "field",
+          "toZone": "deck",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_600565246",
+          "fromZone": "field",
+          "toZone": "deck",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_999657300"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_999657300",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_999657300",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerId": "ci_999657300",
+          "attackerName": "Lizzy Wizzy: Delicate Weapon"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_117017372"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "attackerName": "Lizzy Wizzy: Delicate Weapon",
+          "attackerPower": 2,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 8
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_117017372",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_999657300"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_117017372",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_999657300",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon",
+            "attackerPower": 2,
+            "count": 1,
+            "stolenGigs": "1 Gig (D10 with value 8)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_274981458",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_349656638",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_686127543"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_410970586"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "dieId": "gd_410970586",
+          "dieType": "d6",
+          "faceValue": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_410970586",
+          "dieType": "d6",
+          "result": 1,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_410970586",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_274981458",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_201525474"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D8",
+            "targetId": "gd_201525474",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_201525474"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D8",
+            "targetId": "gd_201525474",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_117017372"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "friendlyDieType": "d8",
+          "friendlyValue": 1,
+          "rivalDieType": "d10",
+          "rivalValue": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_117017372"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_201525474",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_117017372",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_201525474", "gd_117017372"],
+          "dieValues": [1, 8],
+          "dieTypes": ["d8", "d10"],
+          "playerId": "p1",
+          "fromPlayerIds": ["p1", "p2"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_68943046"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Alt Cunningham: Soulkiller Architect"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "dieId": "gd_910123871",
+          "dieType": "d4",
+          "faceValue": 4
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_999657300",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_681023254",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 4
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_802785048"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_910123871",
+          "dieType": "d4",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_910123871",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_875406055"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "cardId": "ci_875406055",
+          "cardName": "Les Élémens"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_875406055",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_875406055",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Les Élémens"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_411724166"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Pepe Najarro: Working Doubles"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "abilityText": "ATTACK If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.noValidTargets",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "reason": "no legal legend meets the effect's target requirements"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_411724166",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_411724166",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Pepe Najarro: Working Doubles"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_411724166",
+          "effectType": "attack",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "abilityText": "ATTACK If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_411724166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.noValidTargets",
+          "params": {
+            "cardName": "Pepe Najarro: Working Doubles",
+            "reason": "no legal legend meets the effect's target requirements"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_411724166"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerId": "ci_411724166",
+          "attackerName": "Pepe Najarro: Working Doubles"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_117017372"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerName": "Pepe Najarro: Working Doubles",
+          "attackerPower": 6,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d10",
+              "faceValue": 8
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_117017372",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_411724166"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_117017372",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_411724166",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Pepe Najarro: Working Doubles",
+            "attackerPower": 6,
+            "count": 1,
+            "stolenGigs": "1 Gig (D10 with value 8)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_999657300"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_999657300",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_999657300",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "attackerId": "ci_999657300",
+          "attackerName": "Lizzy Wizzy: Delicate Weapon"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_224210931"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "attackerName": "Lizzy Wizzy: Delicate Weapon",
+          "attackerPower": 2,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 9
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_224210931",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_999657300"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_224210931",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_999657300",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Lizzy Wizzy: Delicate Weapon",
+            "attackerPower": 2,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 9)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_624097879"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Placide: Voodoo Sentinel",
+            "cost": 8
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Placide: Voodoo Sentinel",
+            "abilityText": "PLAY ATTACK You may discard 1 Program. If you do, bottom-deck a rival Unit.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_487473588",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_651661595",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_831700312",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_681023254",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_875406055",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_941141098",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_597459784",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_357064160",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 8,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_624097879",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_624097879",
+          "playerId": "p2",
+          "cost": 8
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Placide: Voodoo Sentinel",
+            "cost": 8
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_624097879",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Placide: Voodoo Sentinel",
+            "abilityText": "PLAY ATTACK You may discard 1 Program. If you do, bottom-deck a rival Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_624097879"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveDiscardFromHand",
+      "args": {
+        "cardIds": ["ci_253232094"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveDiscardFromHand",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "discardedCount": 1,
+          "discardedCards": [
+            {
+              "cardId": "ci_253232094",
+              "cardName": "Peace Offering"
+            }
+          ]
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Placide: Voodoo Sentinel",
+            "effectName": "move card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_253232094",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Placide: Voodoo Sentinel",
+            "effectName": "move card"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_624097879"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "dieId": "gd_698831743",
+          "dieType": "d4",
+          "faceValue": 2
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          }
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_274981458",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor",
+            "abilityText": "At the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noAction",
+          "params": {
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "effectName": "for each friendly gig pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_108932134"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_698831743",
+          "dieType": "d4",
+          "result": 2,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_698831743",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_108932134"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "cardId": "ci_108932134",
+          "cardName": "Pyramid Song"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_108932134",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_108932134",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Pyramid Song"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_274981458",
+        "abilityIndex": 0
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "Hanako Arasaka: Daughter of the Emperor"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_698831743"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D4",
+            "targetId": "gd_698831743",
+            "targetKind": "gig"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_698831743"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D4",
+            "targetId": "gd_698831743",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_224210931"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_224210931",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "gigsSwapped",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "friendlyDieType": "d4",
+          "friendlyValue": 2,
+          "rivalDieType": "d12",
+          "rivalValue": 9
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_274981458",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_224210931"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Hanako Arasaka: Daughter of the Emperor",
+            "targetNames": "D12",
+            "targetId": "gd_224210931",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_274981458"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_274981458",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_698831743",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_224210931",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "gigsSwapped",
+          "dieIds": ["gd_698831743", "gd_224210931"],
+          "dieValues": [2, 9],
+          "dieTypes": ["d4", "d12"],
+          "playerId": "p1",
+          "fromPlayerIds": ["p1", "p2"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_602893981"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Jackie Welles: Pour One Out For Me"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_697510856",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Jackie Welles: Pour One Out For Me"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_686127543"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_977990553",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_686127543",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_686127543",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Trust No One",
+            "cost": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_686127543",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Trust No One",
+            "abilityText": "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_686127543"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_117017372",
+        "value": 5
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 5,
+            "previousValue": 8,
+            "dieId": "gd_117017372",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_312088668"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Peace Offering",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_686127543",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_117017372"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Trust No One",
+            "targetNames": "D10",
+            "targetId": "gd_117017372",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_686127543"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_117017372",
+          "previousValue": 8,
+          "newValue": 5,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 5,
+            "previousValue": 8,
+            "dieId": "gd_117017372",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_312088668"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Trust No One",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_312088668"],
+              "visibleTo": ["p1"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Peace Offering",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_686127543"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_312088668"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_349656638",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_312088668",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_312088668",
+          "playerId": "p1",
+          "cost": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Peace Offering",
+            "cost": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_312088668",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Peace Offering",
+            "abilityText": "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_312088668"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_224210931", "gd_117017372"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.copyGigValue",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "dieId": "gd_117017372",
+            "sourceDieType": "D12",
+            "sourceValue": 9,
+            "targetDieType": "D10",
+            "previousValue": 5,
+            "targetMax": 10,
+            "newValue": 9
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_312088668",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_224210931"
+            },
+            {
+              "kind": "gig",
+              "dieId": "gd_117017372"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_117017372",
+          "previousValue": 5,
+          "newValue": 9,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.copyGigValue",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "dieId": "gd_117017372",
+            "sourceDieType": "D12",
+            "sourceValue": 9,
+            "targetDieType": "D10",
+            "previousValue": 5,
+            "targetMax": 10,
+            "newValue": 9
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_312088668"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Peace Offering",
+            "reason": "friendly does not control a value-pair"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_312088668"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 74,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_465893225"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "abilityText": "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_108932134",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_602893981",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_68943046",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_465893225",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_465893225",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "cost": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_465893225",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Chrome Reverie",
+            "abilityText": "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_465893225"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 75,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_411724166"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Pepe Najarro: Working Doubles"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Pepe Najarro: Working Doubles",
+            "targetId": "ci_411724166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "effectName": "call legend"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_465893225",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_411724166"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.grantRule.cantAttack",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Pepe Najarro: Working Doubles"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_465893225", "ci_411724166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Chrome Reverie",
+            "targetNames": "Pepe Najarro: Working Doubles",
+            "targetId": "ci_411724166",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_465893225", "ci_411724166"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Chrome Reverie",
+            "effectName": "call legend"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_465893225"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 76,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "end"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

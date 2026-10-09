@@ -57,7 +57,7 @@ export const op12Sengoku047: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

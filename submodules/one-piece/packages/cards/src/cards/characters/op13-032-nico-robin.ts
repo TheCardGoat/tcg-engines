@@ -23,7 +23,7 @@ export const op13NicoRobin032: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Up to 1 of your opponent's Characters with a cost of 8 or less cannot be rested until the end of your opponent's next End Phase.",

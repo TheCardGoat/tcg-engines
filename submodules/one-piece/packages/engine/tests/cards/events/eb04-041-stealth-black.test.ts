@@ -14,6 +14,27 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("EB04-041 Stealth Black", () => {
+  test.each([
+    { leader: "OP02-026", don: 3 },
+    { leader: "OP13-001", don: 4 },
+  ])("Main requires both Sanji and four DON: %j", ({ leader, don }) => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: leader,
+      hand: ["EB04-041", "OP04-104"],
+      trash: ["EB02-054"],
+      activeDon: don,
+    });
+    e.playCard("EB04-041");
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP04-104"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual([
+      "EB02-054",
+      "EB04-041",
+    ]);
+    expect(e.getView("south").players.south).toMatchObject({ activeDon: don - 3, restedDon: 3 });
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("at the four-DON!! boundary, maps eligible Sanji plays from hand or trash", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op02Sanji026,

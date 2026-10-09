@@ -3,7 +3,6 @@ import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-105", () => {
   test("[On Play] adds the top Life card to hand, then may give a rested DON!!", () => {
-    // subject token bound in the decline test below
     const engine = OnePieceTestEngine.create(
       { hand: ["P-105"], activeDon: 6, life: ["OP12-013", "OP12-017"] },
       { character: ["OP13-013"], activeDon: 5 },
@@ -44,48 +43,37 @@ describe("P-105", () => {
     expect(engine.getView("south").players.south.lifeCount).toBe(2);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
-  test("[On Play] may be declined", () => {
-    // subject token bound in the decline test below
-    const engine = OnePieceTestEngine.create(
-      { hand: ["P-105"], activeDon: 6 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-
-    engine.playCard("P-105");
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "P-105",
-    );
-    expect(engine.getView("south").players.south.handCount).toBe(0);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("On Play can pay the physical bottom Life card after a saved choice and give zero DON", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["P-105"],
+      activeDon: 4,
+      life: ["ST01-002", "ST01-003"],
+    });
+    e.playCard("P-105");
+    e.asSouth().acceptOptional();
+    const restored = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+    restored.resolveDecision("effectCostAddLifeToHand", { optionId: "bottom" }, "south");
+    restored.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    expect(restored.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST01-003"]);
+    expect(restored.getView("south").players.south).toMatchObject({
+      lifeCount: 1,
+      activeDon: 0,
+      restedDon: 4,
+    });
+    expect(restored.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(restored.getView("south").prompts).toHaveLength(0);
   });
-  test("[On Play] decline path (subject-bound)", () => {
-    const sabo = "P-105";
-    const engine = OnePieceTestEngine.create(
-      { hand: [sabo], activeDon: 6 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const before = engine.getView("south").players.south;
 
-    engine.playCard(sabo);
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(sabo);
-    expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("with zero Life the optional payment cannot grant a rested DON", () => {
+    const e = OnePieceTestEngine.create({ hand: ["P-105"], activeDon: 4, life: 0 });
+    e.playCard("P-105");
+    expect(e.getView("south").players.south).toMatchObject({
+      lifeCount: 0,
+      activeDon: 0,
+      restedDon: 4,
+    });
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

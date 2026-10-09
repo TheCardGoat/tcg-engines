@@ -64,7 +64,7 @@ export const op09Uta002: CharacterCard = {
               {
                 filter: "trait",
                 value: "Red-Haired Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

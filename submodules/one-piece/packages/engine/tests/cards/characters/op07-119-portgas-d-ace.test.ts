@@ -57,4 +57,27 @@ describe("OP07-119 Portgas.D.Ace", () => {
       }).accepted,
     ).toBe(false);
   });
+  test("may decline the Life addition and still gain Rush at two Life", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op07PortgasDAce119],
+        life: [eb01Doma005, eb01Doma005],
+        deck: [eb01Fourtricks025, eb01Doma005],
+        activeDon: 10,
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.playCard(op07PortgasDAce119, "south");
+    engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "0" }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(2);
+    expect(engine.getView("south").players.south.deckCount).toBe(deckBefore);
+    const aceId = engine.findCardInZone("south", "character", op07PortgasDAce119);
+    engine.declareAttack(aceId, engine.leader("north"), "south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === aceId)
+        ?.rested,
+    ).toBe(true);
+  });
 });

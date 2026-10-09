@@ -30,7 +30,7 @@ export const op09Buggy042: LeaderCard = {
   setId: "OP09",
   power: 5000,
   life: 5,
-  traits: ["The Four Emperors Cross Guild"],
+  traits: ["The Four Emperors", "Cross Guild"],
   attribute: "slash",
   effect:
     '[Activate: Main] You may rest 5 of your DON!! cards and trash 1 card from your hand: Play up to 1 "Cross Guild" type Character card from your hand.',
@@ -63,7 +63,7 @@ export const op09Buggy042: LeaderCard = {
               {
                 filter: "trait",
                 value: "Cross Guild",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

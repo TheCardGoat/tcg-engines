@@ -22,7 +22,7 @@ export const op10FoLlowMeAndIWillGuiDeYou059: EventCard = {
   setId: "OP10",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 "Dressrosa" type Character card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -45,7 +45,7 @@ export const op10FoLlowMeAndIWillGuiDeYou059: EventCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

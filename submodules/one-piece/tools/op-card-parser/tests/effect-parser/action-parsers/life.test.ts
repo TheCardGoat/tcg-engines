@@ -2,7 +2,7 @@ import { expect, test, describe } from "vite-plus/test";
 import { buildCardEffects, parseActions } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions — addToLife from hand", () => {
-  test("included trait with an exact cost", () => {
+  test("exact trait with an exact cost", () => {
     const result = parseActions(
       'Add up to 1 "Supernovas" type Character card with a cost of 5 from your hand to the top of your Life cards face-up.',
     );
@@ -16,7 +16,7 @@ describe("parseActions — addToLife from hand", () => {
           zones: ["hand"],
           count: { amount: 1, upTo: true },
           filters: [
-            { filter: "trait", value: "Supernovas", match: "includes" },
+            { filter: "trait", value: "Supernovas", match: "exact" },
             { filter: "cardCategory", value: "character" },
             { filter: "cost", comparison: "eq", value: 5 },
           ],
@@ -85,7 +85,7 @@ describe("parseActions — setActive", () => {
     ]);
   });
 
-  test("set an included-type Leader as active", () => {
+  test("set an named-type Leader as active", () => {
     const result = parseActions("set your {Land of Wano} type Leader as active");
     expect(result.unparsed).toBe("");
     expect(result.parsed).toEqual([
@@ -95,7 +95,7 @@ describe("parseActions — setActive", () => {
           player: "self",
           zones: ["leader"],
           count: { amount: 1 },
-          filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
+          filters: [{ filter: "trait", value: "Land of Wano", match: "exact" }],
         },
       },
     ]);
@@ -328,7 +328,7 @@ describe("parseActions — Life ownership and placement", () => {
     ]);
   });
 
-  test("adds an opposing Character matching either inclusive trait to Life", () => {
+  test("adds an opposing Character matching either exact trait to Life", () => {
     const result = parseActions(
       "Add up to 1 of your opponent's [Animal] or [SMILE] type Characters with a cost of 3 or less to the top of your opponent's Life cards face-up.",
     );
@@ -345,8 +345,8 @@ describe("parseActions — Life ownership and placement", () => {
             {
               filter: "anyOf",
               filters: [
-                { filter: "trait", value: "Animal", match: "includes" },
-                { filter: "trait", value: "SMILE", match: "includes" },
+                { filter: "trait", value: "Animal", match: "exact" },
+                { filter: "trait", value: "SMILE", match: "exact" },
               ],
             },
           ],

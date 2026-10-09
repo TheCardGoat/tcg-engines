@@ -30,7 +30,7 @@ export const op11Jinbe021: LeaderCard = {
   setId: "OP11",
   power: 5000,
   life: 5,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[End of Your Turn] If you have 6 or less cards in your hand, set up to 1 of your "Fish-Man" or "Merfolk" type Characters and up to 1 of your DON!! cards as active.',
@@ -63,12 +63,12 @@ export const op11Jinbe021: LeaderCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

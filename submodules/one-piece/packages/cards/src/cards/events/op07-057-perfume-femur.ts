@@ -21,7 +21,7 @@ export const op07PerfumeFemur057: EventCard = {
   rarity: "R",
   setId: "OP07",
   cost: 2,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   effect:
     "[Main] Select up to 1 of your [The Seven Warlords of the Sea] type Leader or Character cards and that card gains +2000 power during this turn. Then, if the selected card attacks during this turn, your opponent cannot activate [Blocker]. [Trigger] Draw 1 card.",
   effects: {
@@ -42,7 +42,7 @@ export const op07PerfumeFemur057: EventCard = {
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

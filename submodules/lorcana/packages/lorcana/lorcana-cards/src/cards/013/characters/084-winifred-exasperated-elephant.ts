@@ -33,6 +33,7 @@ export const winifredExasperatedElephant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_62bf50e929b74dd99fef99aa21e946bf",
+    tcgPlayer: "704598",
   },
   text: "Ward",
   classifications: ["Storyborn", "Ally"],

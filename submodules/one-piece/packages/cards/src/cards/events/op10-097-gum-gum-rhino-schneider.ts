@@ -22,7 +22,7 @@ export const op10GumGumRhinoSchneider097: EventCard = {
   setId: "OP10",
   cost: 1,
   trigger: "Draw 2 cards and trash 1 card from your hand.",
-  traits: ["Straw Hat Crew Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Straw Hat Crew"],
   effect:
     '[Main] Up to 1 of your "Dressrosa" type Characters gains +2000 power during this turn. Then, if you have 10 or more cards in your trash, that card gains [Banish] during this turn.',
   effects: {
@@ -43,7 +43,7 @@ export const op10GumGumRhinoSchneider097: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -63,7 +63,7 @@ export const op10GumGumRhinoSchneider097: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

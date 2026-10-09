@@ -16,6 +16,8 @@ export type LiveMatchSidebarParticipant = PlayerIdentityBySide["player"] & {
 export interface LiveMatchSidebarConfig {
   matchId: string;
   gameId: string;
+  format: "best_of_1" | "best_of_3" | "best_of_5";
+  gameNumber: number;
   localPlayerId?: string;
   participants: ReadonlyArray<LiveMatchSidebarParticipant>;
   player1Score?: number;
@@ -24,8 +26,7 @@ export interface LiveMatchSidebarConfig {
 }
 
 export interface CyberpunkBoardRuntimeContextValue {
-  /** Whether this viewer owns a seat and may inspect the bottom hand. */
-  viewerCanSeePrivateHand?: boolean;
+  practiceMode?: "bot" | "self";
   playerIdentities?: PlayerIdentityBySide;
   playerConnections?: PlayerConnectionBySide;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;

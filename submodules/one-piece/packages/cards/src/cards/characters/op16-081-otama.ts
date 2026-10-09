@@ -26,7 +26,7 @@ export const op16Otama081: CharacterCard = {
   traits: ["Land of Wano"],
   attribute: "special",
   effect:
-    "[Activate: Main] You may rest this Character: If you have a Character with a cost of 8 or more, give up to 1 of your opponent's Characters -2000 power during this turn.",
+    "[Activate: Main] You may rest this Character: If there is a Character with a cost of 8 or more, give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {
     effects: [
       {
@@ -49,15 +49,22 @@ export const op16Otama081: CharacterCard = {
             },
             value: -2000,
             duration: "thisTurn",
+            // Official Q1326 includes a qualifying opponent Character.
             condition: {
-              condition: "hasCard",
-              player: "self",
-              zone: "character",
-              filters: [
+              condition: "compound",
+              operator: "or",
+              conditions: [
                 {
-                  filter: "cost",
-                  comparison: "gte",
-                  value: 8,
+                  condition: "hasCard",
+                  player: "self",
+                  zone: "character",
+                  filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+                },
+                {
+                  condition: "hasCard",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [{ filter: "cost", comparison: "gte", value: 8 }],
                 },
               ],
             },

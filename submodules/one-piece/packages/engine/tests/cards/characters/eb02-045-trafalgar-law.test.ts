@@ -141,4 +141,24 @@ describe("EB02-045 Trafalgar Law", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("the draw option draws after paying the ordered two-card cost", () => {
+    const e = OnePieceTestEngine.create({
+      hand: [eb02TrafalgarLaw045],
+      activeDon: 5,
+      trash: [eb01Doma005, eb01Fourtricks025],
+      deck: [eb01MountainGod018, eb01Doma005],
+    });
+    const drawn = e.findCardInZone("south", "deck", eb01MountainGod018);
+    const ids = e
+      .getView("south")
+      .players.south.trash.flatMap((c) => (c.instanceId ? [c.instanceId] : []))
+      .reverse();
+    e.playCard(eb02TrafalgarLaw045);
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostReturnTrashToDeck", { selectedIds: ids }, "south");
+    e.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([drawn]);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
+    expect(e.getView("south").players.south.deckCount).toBe(3);
+  });
 });

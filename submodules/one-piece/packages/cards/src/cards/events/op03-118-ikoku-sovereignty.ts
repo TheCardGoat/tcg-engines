@@ -21,7 +21,7 @@ export const op03IkokuSovereignty118: EventCard = {
   rarity: "UC",
   setId: "OP03",
   cost: 2,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +5000 power during this battle. [Trigger] You may trash 2 cards from your hand: Add up to 1 card from the top of your deck to the top of your Life cards.",
   effects: {

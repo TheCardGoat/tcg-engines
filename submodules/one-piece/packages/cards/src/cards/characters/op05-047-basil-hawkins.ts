@@ -23,7 +23,7 @@ export const op05BasilHawkins047: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Hawkins Pirates"],
+  traits: ["Animal Kingdom Pirates", "Hawkins Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Block] Draw 1 card if you have 3 or less cards in your hand. Then, this Character gains +1000 power during this battle.",
@@ -32,17 +32,12 @@ export const op05BasilHawkins047: CharacterCard = {
     effects: [
       {
         trigger: "onBlock",
+        conditions: [{ condition: "handCount", player: "self", comparison: "lte", value: 3 }],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "handCount",
-              player: "self",
-              comparison: "lte",
-              value: 3,
-            },
           },
           {
             action: "modifyPower",

@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://www.gundam-gcg.com/en/pdf/comprehensiverules_en.pdf?260917="
+  relation: "current_index"
+  copy_version: "1.7.0"
+---
+
 # Gundam Glossary
 
 Load this file before rules-facing Gundam work. Use these terms in player-facing copy, tests, and implementation notes unless the codebase has an established narrower type name.

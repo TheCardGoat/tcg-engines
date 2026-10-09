@@ -42,6 +42,7 @@ describe("EB02-030 And That's When Somebody Makes Fun of Their Friend's Dream!!!
     engine.declareAttack(attackerId, targetId, "south");
     const donBeforeCounter = engine.getView("north").players.north;
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const replacementDecision = engine.pendingDecision("battleKoReplacement", "north");
     const replacementStep = replacementDecision.steps[0];
@@ -144,6 +145,7 @@ describe("EB02-030 And That's When Somebody Makes Fun of Their Friend's Dream!!!
 
     engine.declareAttack(attackerIds[0]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [protectionEventId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     engine.declareAttack(attackerIds[1]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [playEventId] }, "north");
@@ -161,7 +163,6 @@ describe("EB02-030 And That's When Somebody Makes Fun of Their Friend's Dream!!!
 
     engine.declareAttack(attackerIds[2]!, engine.leader("north"), "south");
     engine.resolveDecision("battleBlocker", { selectedIds: [laterCharacterId] }, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.prompts).toHaveLength(0);
@@ -170,5 +171,64 @@ describe("EB02-030 And That's When Somebody Makes Fun of Their Friend's Dream!!!
     ).toBe(false);
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(laterCharacterId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("declining one replacement preserves hand and another existing Character remains protected", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-018", "EB01-018"] },
+      {
+        character: [
+          { cardId: "EB01-005", rested: true },
+          { cardId: "EB01-005", rested: true },
+        ],
+        hand: ["EB02-030", "EB01-025"],
+        activeDon: 2,
+      },
+    );
+    const attackers = e
+        .getView("south")
+        .players.south.characters.flatMap((c) => (c ? [c.instanceId] : [])),
+      targets = e
+        .getView("south")
+        .players.north.characters.flatMap((c) => (c ? [c.instanceId] : [])),
+      payment = e.findCardInZone("north", "hand", "EB01-025");
+    e.declareAttack(attackers[0]!, targets[0]!, "south");
+    e.asNorth().chooseCounter("EB02-030");
+    e.asNorth().chooseCounter();
+    e.resolveDecision("battleKoReplacement", { selectedIds: [] }, "north");
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toContain(payment);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(targets[0]);
+    e.declareAttack(attackers[1]!, targets[1]!, "south");
+    e.asNorth().chooseCounter();
+    e.resolveDecision("battleKoReplacement", { selectedIds: [payment] }, "north");
+    expect(
+      e.getView("north").players.north.characters.some((c) => c?.instanceId === targets[1]),
+    ).toBe(true);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(payment);
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
+  test("battle protection expires before the next opponent turn", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-018"] },
+      {
+        character: [{ cardId: "EB01-005", rested: true }],
+        hand: ["EB02-030", "EB01-025", "EB01-025"],
+        activeDon: 2,
+      },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005"),
+      payment = e.findCardInZone("north", "hand", "EB01-025");
+    e.asSouth().attack("EB01-018", target);
+    e.asNorth().chooseCounter("EB02-030");
+    e.asNorth().chooseCounter();
+    e.resolveDecision("battleKoReplacement", { selectedIds: [payment] }, "north");
+    expect(e.getView("north").players.north.characters[0]?.instanceId).toBe(target);
+    e.endTurn("south");
+    e.declareAttack(target, e.leader("south"), "north");
+    e.endTurn("north");
+    e.asSouth().attack("EB01-018", target);
+    e.asNorth().chooseCounter();
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("north").players.north.handCount).toBeGreaterThan(0);
+    expect(e.getView("north").prompts).toHaveLength(0);
   });
 });

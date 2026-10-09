@@ -14,17 +14,30 @@ describe("OP11-046 and OP11-050 shared grammar", () => {
         {
           conditions: [
             {
-              condition: "zoneCount",
-              player: "self",
-              zone: "character",
-              comparison: "eq",
-              value: 0,
-              filters: [
+              condition: "compound",
+              operator: "and",
+              conditions: [
                 {
-                  filter: "trait",
-                  value: "GERMA",
-                  match: "includes",
-                  negate: true,
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "gte",
+                  value: 1,
+                },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "eq",
+                  value: 0,
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "GERMA",
+                      match: "includes",
+                      negate: true,
+                    },
+                  ],
                 },
               ],
             },
@@ -71,7 +84,7 @@ describe("OP11-046 and OP11-050 shared grammar", () => {
         {
           cost: "trashFromHand",
           amount: 1,
-          filters: [{ filter: "trait", value: "Firetank Pirates", match: "includes" }],
+          filters: [{ filter: "trait", value: "Firetank Pirates", match: "exact" }],
         },
       ],
       actions: [

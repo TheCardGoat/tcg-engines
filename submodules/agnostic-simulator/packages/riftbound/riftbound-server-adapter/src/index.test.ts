@@ -18,13 +18,14 @@ const catalog = {
 } as RiftboundCatalog;
 
 describe("createRiftboundGameAdapter", () => {
-  it("builds stable owner maps without exposing server-engine methods", () => {
+  it("builds opaque owner maps and exposes hosted engine methods", () => {
     const riftboundServerAdapter = createRiftboundGameAdapter(catalog);
     const maps = riftboundServerAdapter.buildCardInstances([
       { owner: "p1", deck: [{ cardId: "card-1", qty: 2 }] },
     ]);
     expect(maps.owners.p1).toHaveLength(2);
     expect(Object.values(maps.cardInstances)).toEqual(["card-1", "card-1"]);
-    expect(riftboundServerAdapter.createServerEngine).toBeUndefined();
+    expect(maps.owners.p1?.every((id) => !id.includes("card-1"))).toBe(true);
+    expect(riftboundServerAdapter.createServerEngine).toBeTypeOf("function");
   });
 });

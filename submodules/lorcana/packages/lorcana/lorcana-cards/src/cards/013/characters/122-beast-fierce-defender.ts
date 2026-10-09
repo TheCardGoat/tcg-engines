@@ -29,9 +29,13 @@ export const beastFierceDefender: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_0ebba179fc9d43e38d623b12420f70e0",
+    tcgPlayer: "704630",
+  },
   text: [
     {
-      title: "Formidable Love",
+      title: "FORMIDABLE LOVE",
       description: "While you have a character named Belle in play, this character gets +2 {S}.",
     },
   ],

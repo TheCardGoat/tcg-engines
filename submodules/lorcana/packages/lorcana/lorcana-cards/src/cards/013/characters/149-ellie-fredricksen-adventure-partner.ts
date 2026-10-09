@@ -29,9 +29,13 @@ export const ellieFredricksenAdventurePartner: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_6ed47202161b48a48cc7f7717391baae",
+    tcgPlayer: "704647",
+  },
   text: [
     {
-      title: "Always with You",
+      title: "ALWAYS WITH YOU",
       description:
         "When this character is banished, you may put this card into your inkwell facedown and exerted.",
     },

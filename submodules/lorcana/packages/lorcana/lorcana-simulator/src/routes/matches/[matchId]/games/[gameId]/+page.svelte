@@ -10,6 +10,10 @@
   import { Button } from '$lib/design-system/primitives/button';
   import { onMount, onDestroy } from 'svelte';
   import { immersiveExperience } from '$lib/features/immersive/immersive-state.svelte.js';
+  import {
+    matchViewportFrameStyle,
+    shouldBlockMatchPageScroll,
+  } from '$lib/features/immersive/match-viewport.js';
   import LocalMatchMode from './modes/LocalMatchMode.svelte';
   import SpectatorMatchMode from './modes/SpectatorMatchMode.svelte';
   import BotMatchMode from './modes/BotMatchMode.svelte';
@@ -28,6 +32,34 @@
   let { data }: { data: GamePageData } = $props();
   let activePresenceKey: string | null = null;
   let startedAtMs = Date.now();
+  let matchShell = $state<HTMLElement | null>(null);
+
+  function syncMatchViewport(): void {
+    const shell = matchShell;
+    const viewport = window.visualViewport;
+    if (!shell || !viewport) {
+      return;
+    }
+
+    const frame = matchViewportFrameStyle({
+      innerHeight: window.innerHeight,
+      visualHeight: viewport.height,
+      offsetTop: viewport.offsetTop,
+    });
+    shell.style.height = frame.height;
+    shell.style.transform = frame.transform;
+
+    const scrollingElement = document.scrollingElement;
+    if (scrollingElement && (scrollingElement.scrollTop !== 0 || scrollingElement.scrollLeft !== 0)) {
+      scrollingElement.scrollTo(0, 0);
+    }
+  }
+
+  function preventMatchPageScroll(event: KeyboardEvent): void {
+    if (shouldBlockMatchPageScroll(event)) {
+      event.preventDefault();
+    }
+  }
 
   function shouldLogSsrPayload(): boolean {
     if (import.meta.env.DEV) {
@@ -137,7 +169,15 @@
     logSsrPayloadForDebugging();
     const detachImmersive = immersiveExperience.attach();
     immersiveExperience.activateRouteChrome();
+    const viewport = window.visualViewport;
+    viewport?.addEventListener("resize", syncMatchViewport);
+    viewport?.addEventListener("scroll", syncMatchViewport);
+    window.addEventListener("scroll", syncMatchViewport, { passive: true });
+    syncMatchViewport();
     return () => {
+      viewport?.removeEventListener("resize", syncMatchViewport);
+      viewport?.removeEventListener("scroll", syncMatchViewport);
+      window.removeEventListener("scroll", syncMatchViewport);
       detachImmersive();
       immersiveExperience.deactivateRouteChrome();
     };
@@ -148,8 +188,13 @@
   });
 </script>
 
+<svelte:window onkeydown={preventMatchPageScroll} />
+
 <AntiRamp />
-<main class="immersive-app-shell relative h-screen min-h-0 text-slate-100">
+<main
+  bind:this={matchShell}
+  class="immersive-app-shell relative min-h-0 text-slate-100"
+>
   {#if data.mode === 'error'}
     <div class="mx-auto flex h-full max-w-3xl items-center justify-center px-4 py-8">
       <Card class="w-full border-rose-400/20 bg-slate-950/88 text-slate-100">

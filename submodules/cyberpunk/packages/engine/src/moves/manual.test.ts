@@ -18,6 +18,7 @@ function expectSuccess(result: { success: boolean }) {
 function queuedTrigger(id: string, sourceCardId: string, order: number): QueuedTrigger {
   const brandedCardId = sourceCardId as QueuedTrigger["sourceCardId"];
   return {
+    kind: "authored",
     id,
     sourceCardId: brandedCardId,
     sourcePlayerId: P1,
@@ -63,6 +64,29 @@ describe("manual board-correction moves", () => {
     expect(result.gameEvents.some((event) => event.type === "gigDieRolled")).toBe(false);
     expect(result.gameEvents).toContainEqual(
       expect.objectContaining({ type: "gigValueChanged", newValue: 1 }),
+    );
+    expect(result.moveLogs).toContainEqual(
+      expect.objectContaining({
+        type: "action",
+        messageKey: "move.manualSetGigValue",
+        params: expect.objectContaining({ previousValue: 4, value: 1 }),
+      }),
+    );
+    expect(result.moveLogs.some((log) => log.type === "gigValueChanged")).toBe(false);
+  });
+
+  it("records a face change even when no action message supplies it", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({ gigArea: [4] }, {});
+    const die = engine.getGigDice(P1)[0]!;
+    const result = engine.judgeSetGigValue(die, 2);
+
+    expect(result.moveLogs).toContainEqual(
+      expect.objectContaining({
+        type: "gigValueChanged",
+        dieId: die.id,
+        previousValue: 4,
+        newValue: 2,
+      }),
     );
   });
 
@@ -357,8 +381,10 @@ describe("manual board-correction moves", () => {
     const afterMove = engine.getEddies(P1);
     expectSuccess(engine.executeMove("manualExertCard", { args: { cardId: card.instanceId } }, P1));
     expect(engine.getEddies(P1)).toBe(afterMove - 1);
+    expect(engine.getState().G.players[P1]?.spentEddies).toBe(1);
     expectSuccess(engine.executeMove("manualReadyCard", { args: { cardId: card.instanceId } }, P1));
     expect(engine.getEddies(P1)).toBe(afterMove);
+    expect(engine.getState().G.players[P1]?.spentEddies).toBe(0);
   });
 
   it("runs while a pending choice is open", () => {
@@ -601,6 +627,7 @@ describe("manualForcePassTurn", () => {
     });
     engine.judgeSetTurnMetadata({
       currentTrigger: {
+        kind: "authored",
         id: "fp-1",
         sourceCardId: card.instanceId,
         sourcePlayerId: P1,
@@ -619,6 +646,7 @@ describe("manualForcePassTurn", () => {
       },
       triggerQueue: [
         {
+          kind: "authored",
           id: "fp-q1",
           sourceCardId: card.instanceId,
           sourcePlayerId: P1,
@@ -703,6 +731,7 @@ describe("manualSetEddies", () => {
     expectSuccess(result);
     expect(engine.getEddies(P1)).toBe(1);
     expect(engine.getState().G.players[P1]!.spentEddies).toBe(0);
+    expect(engine.getCardsInZone("eddieArea", P1)[0]?.meta.spent).toBe(false);
   });
 
   it("rejects negative amounts", () => {
@@ -824,6 +853,7 @@ describe("manualReadyAll", () => {
     expect(engine.getState().G.cardIndex[unitCard.instanceId as string]!.meta.spent).toBe(false);
     expect(engine.getState().G.cardIndex[eddie.instanceId as string]!.meta.spent).toBe(false);
     expect(engine.getEddies(P1)).toBe(1);
+    expect(engine.getState().G.players[P1]?.spentEddies).toBe(0);
     if (!result.success) return;
     expect(result.gameEvents).toContainEqual(
       expect.objectContaining({

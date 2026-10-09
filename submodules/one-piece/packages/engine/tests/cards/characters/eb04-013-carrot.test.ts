@@ -48,3 +48,44 @@ describe("EB04-013 Carrot", () => {
     expect(view.prompts).toHaveLength(0);
   });
 });
+
+test("choosing zero Characters still sets Carrot's Minks Leader active", () => {
+  const e = OnePieceTestEngine.create(
+    {
+      leaderCardId: "OP08-021",
+      hand: ["EB04-013"],
+      character: [{ cardId: "OP08-034", rested: true }],
+      activeDon: op14eb04Carrot013.cost,
+    },
+    {},
+    { firstPlayer: "north", activeSeat: "south" },
+  );
+  e.asSouth().attack(e.leader("south"), e.leader("north"));
+  e.asSouth().play("EB04-013");
+  e.asSouth().chooseTargets();
+  expect(e.getView("south").players.south.leader.rested).toBe(false);
+  expect(
+    e.getView("south").players.south.characters.find((c) => c?.cardId === "OP08-034")?.rested,
+  ).toBe(true);
+  expect(e.getView("south").prompts).toHaveLength(0);
+});
+
+test("a non-Minks Leader leaves both Leader and Minks Characters rested", () => {
+  const e = OnePieceTestEngine.create(
+    {
+      leaderCardId: "ST01-001",
+      hand: ["EB04-013"],
+      character: [{ cardId: "OP08-034", rested: true }],
+      activeDon: op14eb04Carrot013.cost,
+    },
+    {},
+    { firstPlayer: "north", activeSeat: "south" },
+  );
+  e.asSouth().attack(e.leader("south"), e.leader("north"));
+  e.asSouth().play("EB04-013");
+  expect(e.getView("south").players.south.leader.rested).toBe(true);
+  expect(
+    e.getView("south").players.south.characters.find((c) => c?.cardId === "OP08-034")?.rested,
+  ).toBe(true);
+  expect(e.getView("south").prompts).toHaveLength(0);
+});

@@ -57,7 +57,7 @@ export const op08Carrot021: LeaderCard = {
               {
                 filter: "trait",
                 value: "Minks",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

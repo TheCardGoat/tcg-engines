@@ -22,7 +22,7 @@ export const op10SpecialLongRangeAttackBagworm061: EventCard = {
   setId: "OP10",
   cost: 3,
   trigger: "Return up to 1 Character with a cost of 2 or less to the owner's hand.",
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   effect:
     "[Main] Draw 1 card. Then, return up to 1 of your opponent's Characters with a cost of 2 or less to the owner's hand.",
   effects: {

@@ -94,4 +94,20 @@ describe("OP10-091 Brook", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("after paying may skip the K.O. and still trash two deck cards", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP10-042",
+        character: ["OP10-091"],
+        deck: ["EB01-005", "EB01-025", "EB01-018"],
+      },
+      { character: ["EB01-005"] },
+    );
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP10-091"));
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseNoTargets();
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").players.south.trash).toHaveLength(2);
+    expect(e.getView("north").players.north.characters.filter(Boolean)).toHaveLength(1);
+  });
 });

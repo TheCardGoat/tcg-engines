@@ -23,7 +23,7 @@ export const eb02Sabo002: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     '[Activate: Main] You may rest this Character: Up to 1 of your "Revolutionary Army" type Characters other than [Sabo] gains +2000 power during this turn.',
@@ -50,7 +50,7 @@ export const eb02Sabo002: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "excludeName",

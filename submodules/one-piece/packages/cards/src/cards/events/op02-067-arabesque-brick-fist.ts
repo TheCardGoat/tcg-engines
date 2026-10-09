@@ -21,7 +21,7 @@ export const op02ArabesqueBrickFist067: EventCard = {
   rarity: "UC",
   setId: "OP02",
   cost: 2,
-  traits: ["Fish-Man Impel Down"],
+  traits: ["Fish-Man", "Impel Down"],
   effect:
     "[Main] Return up to 1 Character with a cost of 4 or less to the owner's hand. [Trigger] Activate this card's [Main] effect.",
   effects: {

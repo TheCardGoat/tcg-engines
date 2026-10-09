@@ -31,6 +31,7 @@ export const mirabelMadrigalFamilyGuardian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a213dcefc804ee98d09be0f1aad7328",
+    tcgPlayer: "704557",
   },
   text: [
     {

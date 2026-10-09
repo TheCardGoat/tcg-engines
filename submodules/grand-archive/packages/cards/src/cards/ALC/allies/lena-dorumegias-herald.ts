@@ -141,31 +141,17 @@ export const lenaDorumegiasHerald: GrandArchiveCard<GrandArchiveAbilityDefinitio
                       kind: "reveal",
                       player: "controller",
                       selection: {
-                        id: "ranger-ally",
+                        id: "revealed-ranger-ally",
                         kind: "choice",
                         declared: "resolution",
                         chooser: "controller",
                         count: {
-                          kind: "up-to",
-                          amount: 1,
+                          kind: "all",
                         },
                         unique: true,
                         candidates: {
                           kind: "card",
-                          binding: "looked-cards",
-                          filter: {
-                            kind: "all",
-                            filters: [
-                              {
-                                kind: "type",
-                                oneOf: ["ALLY"],
-                              },
-                              {
-                                kind: "subtype",
-                                oneOf: ["RANGER"],
-                              },
-                            ],
-                          },
+                          binding: "ranger-ally",
                         },
                       },
                     },

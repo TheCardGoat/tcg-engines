@@ -24,7 +24,7 @@ export const op14eb04BoaHancockEb04027027: CharacterCard = {
   cost: 5,
   power: 7000,
   trigger: "Play up to 1 Character card with 5000 power or less and a [Trigger] from your hand.",
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect: "[On Play] Draw 2 cards and trash 1 card from your hand.",
   effects: {

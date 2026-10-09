@@ -11,7 +11,7 @@ export const showMeMore: ActionCard = {
       artId: "set7-082",
       setCode: "set7",
       collectorNumber: "82",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const showMeMore: ActionCard = {
   franchise: "Snow White",
   set: "007",
   cardNumber: 82,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 2,
   inkable: false,
   externalIds: {

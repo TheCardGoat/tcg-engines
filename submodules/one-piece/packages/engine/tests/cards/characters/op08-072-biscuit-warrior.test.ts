@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01MountainGod018, op08BiscuitWarrior072 } from "@tcg/op-cards";
+import { eb01MountainGod018, op08BiscuitWarrior072, validateDeckForFormat } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
@@ -25,5 +25,18 @@ describe("OP08-072 Biscuit Warrior", () => {
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(blockerId);
     expect(view.prompts).toHaveLength(0);
+  });
+  test("printed unlimited-copy rule permits fifty Biscuit Warriors but not fifty ordinary cards", () => {
+    expect(
+      validateDeckForFormat("standard", [
+        { cardId: "OP08-057", quantity: 1 },
+        { cardId: "OP08-072", quantity: 50 },
+      ]).valid,
+    ).toBe(true);
+    const ordinary = validateDeckForFormat("standard", [
+      { cardId: "OP08-057", quantity: 1 },
+      { cardId: "OP08-065", quantity: 50 },
+    ]);
+    expect(ordinary.rules.find((r) => r.kind === "copy-limit")?.passed).toBe(false);
   });
 });

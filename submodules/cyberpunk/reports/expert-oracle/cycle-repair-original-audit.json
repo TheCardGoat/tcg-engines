@@ -1,0 +1,1729 @@
+[
+  {
+    "index": 56,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-judy-top-deck-discount-mirror/authored-judy-top-deck-discount-mirror/block-0/a-seat-1",
+    "finalStateHash": "fnv1a32:2067de22",
+    "actionCount": 56,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_843968736",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_843968736",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_843968736",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_843968736",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 57,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-judy-top-deck-discount-mirror/authored-judy-top-deck-discount-mirror/block-0/a-seat-2",
+    "finalStateHash": "fnv1a32:4a100fa2",
+    "actionCount": 76,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "passPhase"
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_245906055",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_245906055",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_245906055",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_245906055",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 60,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-judy-top-deck-discount-mirror/authored-judy-top-deck-discount-mirror/block-2/a-seat-1",
+    "finalStateHash": "fnv1a32:c94f3e79",
+    "actionCount": 95,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_860343953",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_860343953",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_860343953",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_860343953",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 62,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-judy-top-deck-discount-mirror/authored-judy-top-deck-discount-mirror/block-3/a-seat-1",
+    "finalStateHash": "fnv1a32:a0f5f4fd",
+    "actionCount": 54,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_959472644",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_959472644",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_959472644",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_959472644",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 68,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-relic-placide-surgical-reanimation-mirror/authored-relic-placide-surgical-reanimation-mirror/block-2/a-seat-1",
+    "finalStateHash": "fnv1a32:5313f3f6",
+    "actionCount": 121,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_304023468",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_304023468",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_304023468",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_304023468",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 71,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-relic-placide-surgical-reanimation-mirror/authored-relic-placide-surgical-reanimation-mirror/block-3/a-seat-2",
+    "finalStateHash": "fnv1a32:69e0dbe8",
+    "actionCount": 54,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "callLegend",
+        "args": {
+          "legendId": "ci_307778488"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_307778488",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_307778488",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_307778488",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_307778488",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 88,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryb-low-cost-tempo-mirror/authored-ryb-low-cost-tempo-mirror/block-0/a-seat-1",
+    "finalStateHash": "fnv1a32:ee81a3a8",
+    "actionCount": 47,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_998700387",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_998700387",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_998700387",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_998700387",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 89,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryb-low-cost-tempo-mirror/authored-ryb-low-cost-tempo-mirror/block-0/a-seat-2",
+    "finalStateHash": "fnv1a32:e149f70d",
+    "actionCount": 57,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "playCard",
+        "args": {
+          "cardId": "ci_476717986",
+          "attachToId": "ci_773888516"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_686754650",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_686754650",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_686754650",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_686754650",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 91,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryb-low-cost-tempo-mirror/authored-ryb-low-cost-tempo-mirror/block-1/a-seat-2",
+    "finalStateHash": "fnv1a32:0180a431",
+    "actionCount": 57,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "playCard",
+        "args": {
+          "cardId": "ci_191481596",
+          "attachToId": "ci_408655963"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_600421929",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_600421929",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_600421929",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_600421929",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 94,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryb-low-cost-tempo-mirror/authored-ryb-low-cost-tempo-mirror/block-3/a-seat-1",
+    "finalStateHash": "fnv1a32:d5ab5d2f",
+    "actionCount": 99,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_87657525",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_87657525",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_87657525",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_87657525",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 105,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-bbg-towerfall-control-mirror/authored-bbg-towerfall-control-mirror/block-0/a-seat-2",
+    "finalStateHash": "fnv1a32:de9fa238",
+    "actionCount": 60,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "callLegend",
+        "args": {
+          "legendId": "ci_436415899"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_436415899",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_436415899",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_436415899",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_436415899",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 106,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-bbg-towerfall-control-mirror/authored-bbg-towerfall-control-mirror/block-1/a-seat-1",
+    "finalStateHash": "fnv1a32:78983dc1",
+    "actionCount": 69,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_874924141",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_874924141",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_874924141",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_874924141",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 158,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-johnny-fight-ready-steal-vs-authored-hanako-netdriver-gigs-draw-engine/authored-johnny-fight-ready-steal-vs-authored-hanako-netdriver-gigs-draw-engine/block-1/b-seat-1",
+    "finalStateHash": "fnv1a32:bcd9a9cc",
+    "actionCount": 108,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_432145737",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_432145737",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_432145737",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_432145737",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 162,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-johnny-fight-ready-steal-vs-authored-hanako-netdriver-gigs-draw-engine/authored-johnny-fight-ready-steal-vs-authored-hanako-netdriver-gigs-draw-engine/block-2/b-seat-1",
+    "finalStateHash": "fnv1a32:a85eb94b",
+    "actionCount": 80,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_834469575",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_834469575",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_834469575",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_834469575",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 170,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-oda-industrial-assembly-pairs-plateaus-vs-authored-judy-top-deck-discount/authored-oda-industrial-assembly-pairs-plateaus-vs-authored-judy-top-deck-discount/block-0/b-seat-1",
+    "finalStateHash": "fnv1a32:cea867bd",
+    "actionCount": 56,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_906347086",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_906347086",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_906347086",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_906347086",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 182,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-oda-industrial-assembly-pairs-plateaus-vs-authored-judy-top-deck-discount/authored-oda-industrial-assembly-pairs-plateaus-vs-authored-judy-top-deck-discount/block-3/b-seat-1",
+    "finalStateHash": "fnv1a32:f1e1ff4b",
+    "actionCount": 53,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_354879051",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_354879051",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_354879051",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_354879051",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 187,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-relic-placide-surgical-reanimation-vs-authored-relic-smasher-total-sweep/authored-relic-placide-surgical-reanimation-vs-authored-relic-smasher-total-sweep/block-0/b-seat-2",
+    "finalStateHash": "fnv1a32:b1ecf79e",
+    "actionCount": 42,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "sellCard",
+        "args": {
+          "cardId": "ci_374588458"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_457110252",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_457110252",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_457110252",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_457110252",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 199,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-relic-placide-surgical-reanimation-vs-authored-relic-smasher-total-sweep/authored-relic-placide-surgical-reanimation-vs-authored-relic-smasher-total-sweep/block-3/b-seat-2",
+    "finalStateHash": "fnv1a32:197a7a08",
+    "actionCount": 44,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "callLegend",
+        "args": {
+          "legendId": "ci_990219479"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_990219479",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_990219479",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_990219479",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_990219479",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 202,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/block-0/b-seat-1",
+    "finalStateHash": "fnv1a32:ae889832",
+    "actionCount": 48,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_426503334",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_426503334",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_426503334",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_426503334",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 210,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/block-2/b-seat-1",
+    "finalStateHash": "fnv1a32:601dfae4",
+    "actionCount": 33,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_270225977",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_270225977",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_270225977",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_270225977",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 213,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/authored-ryg-low-cost-value-vs-authored-ryb-low-cost-tempo/block-3/a-seat-2",
+    "finalStateHash": "fnv1a32:364da1b3",
+    "actionCount": 77,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "resolveStealGigs",
+        "args": {
+          "dieIds": ["gd_208145968"]
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_201921869",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_201921869",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_201921869",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_201921869",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 217,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/block-0/a-seat-2",
+    "finalStateHash": "fnv1a32:4e475ba7",
+    "actionCount": 79,
+    "tail": [
+      {
+        "playerId": "p2",
+        "move": "callLegend",
+        "args": {
+          "legendId": "ci_691224755"
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_983455205",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_983455205",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_983455205",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p2",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p2",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_983455205",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      }
+    ]
+  },
+  {
+    "index": 226,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/block-2/b-seat-1",
+    "finalStateHash": "fnv1a32:97086edb",
+    "actionCount": 90,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_852027489",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_852027489",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_852027489",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_852027489",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  },
+  {
+    "index": 230,
+    "seed": "expert-botlab-holdout-2026-10-03-v1/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/authored-rry-llorona-steel-dragon-vs-authored-bbg-towerfall-control/block-3/b-seat-1",
+    "finalStateHash": "fnv1a32:3b1ff479",
+    "actionCount": 141,
+    "tail": [
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_728424916",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_728424916",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_728424916",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      },
+      {
+        "playerId": "p1",
+        "move": "activateAbility",
+        "args": {
+          "cardId": "ci_728424916",
+          "abilityIndex": 1
+        },
+        "card": "Alt Cunningham: Soulkiller Architect"
+      },
+      {
+        "playerId": "p1",
+        "move": "resolveEffectTarget",
+        "args": {
+          "pass": true
+        }
+      }
+    ]
+  }
+]

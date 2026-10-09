@@ -21,7 +21,7 @@ export const op04TheWeakDoNotHaveTheRightToChooseHowTheyDie038: EventCard = {
   rarity: "C",
   setId: "OP04",
   cost: 5,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Main] / [Counter] Rest up to 1 of your opponent's Leader or Character cards. Then, K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less. [Trigger] Set up to 5 of your DON!! cards as active.",
   effects: {

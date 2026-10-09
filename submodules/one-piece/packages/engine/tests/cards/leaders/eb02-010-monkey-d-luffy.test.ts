@@ -23,6 +23,14 @@ describe("EB02-010 Monkey.D.Luffy", () => {
     let view = engine.getView("south").players.south;
     expect(view).toMatchObject({ activeDon: 2, restedDon: 0 });
     expect(view.leader.power).toBe(6000);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: leaderId,
+        trigger: "activateMain",
+      }).reason,
+    ).toBe("This effect has already been used this turn.");
     engine.endTurn("south");
     expect(engine.getView("south").players.south.leader.power).toBe(6000);
     engine.endTurn("north");
@@ -30,6 +38,33 @@ describe("EB02-010 Monkey.D.Luffy", () => {
     expect(view.leader.power).toBe(5000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test.each(["empty", "other trait"])(
+    "pays DON!! but does nothing with %s Characters (FAQ Q860)",
+    (field) => {
+      const engine = OnePieceTestEngine.create({
+        leaderCardId: eb02MonkeyDLuffy010,
+        character: field === "empty" ? [] : ["EB01-005"],
+        activeDon: 1,
+        restedDon: 3,
+      });
+      const before = engine.getView("south").players.south;
+      engine.activateEffect(engine.leader("south"), "activateMain", "south");
+      engine.resolveDecision(
+        "effectCostReturnDon",
+        { selectedIds: ["active-don:0", "rested-don:0"] },
+        "south",
+      );
+      const after = engine.getView("south").players.south;
+      expect(after).toMatchObject({
+        activeDon: 0,
+        restedDon: 2,
+        donDeckCount: before.donDeckCount + 2,
+      });
+      expect(after.leader.power).toBe(5000);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
 
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create({
@@ -56,6 +91,23 @@ describe("EB02-010 Monkey.D.Luffy", () => {
     expect(after.lifeCount).toBe(lifeBefore);
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("choosing zero DON reactivation still grants the following Leader bonus", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: eb02MonkeyDLuffy010,
+      character: [eb01Sanji014],
+      restedDon: 4,
+    });
+    engine.asSouth().activateMain(engine.leader("south"));
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectSetActiveDon", { optionId: "0" }, "south");
+    expect(engine.getView("south").players.south).toMatchObject({
+      activeDon: 0,
+      restedDon: 2,
+      leader: { power: 6000 },
+    });
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -99,5 +99,35 @@ describe('OP11-101 Capone"Gang"Bege', () => {
     const blocker = engine.pendingDecision("battleBlocker", "south").steps[0];
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Bege's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(begeId);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine.asSouth().chooseBlocker(begeId);
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      begeId,
+    );
+  });
+  test("may decline replacement and retain its use for a later opposing removal", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op11CaponeGangBege101, op01Killer039, op01Bartolomeo019] },
+      { hand: [op02ArabesqueBrickFist067, op02ArabesqueBrickFist067], activeDon: 4 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const first = engine.findCardInZone("south", "character", op01Killer039);
+    const second = engine.findCardInZone("south", "character", op01Bartolomeo019);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine.asNorth().play(op02ArabesqueBrickFist067);
+    engine.asNorth().chooseTargets(first);
+    engine.asSouth().chooseOption("effectRemovalReplacement", "no");
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      first,
+    );
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    engine.asNorth().play(op02ArabesqueBrickFist067);
+    engine.asNorth().chooseTargets(second);
+    engine.asSouth().chooseOption("effectRemovalReplacement", "yes");
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore + 1);
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).not.toContain(
+      second,
+    );
   });
 });

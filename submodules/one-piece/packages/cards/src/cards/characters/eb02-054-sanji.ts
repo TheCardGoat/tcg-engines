@@ -32,7 +32,7 @@ export const eb02Sanji054: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] If you have 2 or less Life cards, draw 2 cards and trash 1 card from your hand.",

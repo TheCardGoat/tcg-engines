@@ -75,6 +75,7 @@ export function normalizeLorcanaTarget(
     ];
     return {
       selector: target.selector as PlayerTargetDSL["selector"],
+      excludeSelf: target.excludeSelf === true ? true : undefined,
       count: typeof target.count === "number" ? target.count : undefined,
       filters: filters.length > 0 ? filters : undefined,
     };

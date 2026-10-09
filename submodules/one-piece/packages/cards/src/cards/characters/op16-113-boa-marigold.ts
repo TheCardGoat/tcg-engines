@@ -35,7 +35,7 @@ export const op16BoaMarigold113: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

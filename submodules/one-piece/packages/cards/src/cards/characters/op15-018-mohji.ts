@@ -23,7 +23,7 @@ export const op15Mohji018: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Buggy Pirates East Blue"],
+  traits: ["East Blue", "Buggy Pirates"],
   attribute: "wisdom",
   effect:
     "[When Attacking] K.O. up to 1 of your opponent's Characters with 3000 power or less with a DON!! card given.",

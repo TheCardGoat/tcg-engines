@@ -1,69 +1,46 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Charlotte Chiffon (OP17-105) cost=5 power=0 counter=1000
-describe("OP17-105 Charlotte Chiffon", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-105"], activeDon: 7 },
-      { character: ["OP13-013"], activeDon: 5 },
+describe("OP17-105", () => {
+  test("pays a Trigger card then bounces only an opposing Trigger Character", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-105", "OP17-107"], activeDon: 5 },
+      { character: ["OP17-107", "EB01-005"] },
     );
-
-    engine.playCard("OP17-105");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-105",
-    );
+    const payment = e.findCardInZone("south", "hand", "OP17-107");
+    const target = e.findCardInZone("north", "character", "OP17-107");
+    e.asSouth().play("OP17-105");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toEqual([payment]);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected bounce");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([target]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toContain(target);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-105", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("declines optional Trigger-card payment with an eligible opposing target", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-105", "OP17-107"], activeDon: 5 },
+      { character: ["OP17-107"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-105",
+    const hand = e.findCardInZone("south", "hand", "OP17-107"),
+      target = e.findCardInZone("north", "character", "OP17-107");
+    e.playCard("OP17-105");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([hand]);
+    expect(e.getView("south").players.north.characters[0]?.instanceId).toBe(target);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
+  });
+  test("cannot pay with a hand card without Trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-105", "EB01-005"], activeDon: 5 },
+      { character: ["OP17-107"] },
     );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    e.playCard("OP17-105");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["EB01-005"]);
+    expect(e.getView("south").players.north.characters[0]?.cardId).toBe("OP17-107");
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

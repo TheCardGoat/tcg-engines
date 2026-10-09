@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/index.ts";
 
 describe("OP06-025/028/029/031 fast-lane parser regressions", () => {
-  test("OP06-025 searches Fish-Man or Merfolk included traits other than Camie", () => {
+  test("OP06-025 searches Fish-Man or Merfolk exact traits other than Camie", () => {
     expect(
       buildCardEffects(
         '[On Play] Look at 4 cards from the top of your deck; reveal up to 1 "Fish-Man" or "Merfolk" type card other than [Camie] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -23,8 +23,8 @@ describe("OP06-025/028/029/031 fast-lane parser regressions", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Fish-Man", match: "includes" },
-                    { filter: "trait", value: "Merfolk", match: "includes" },
+                    { filter: "trait", value: "Fish-Man", match: "exact" },
+                    { filter: "trait", value: "Merfolk", match: "exact" },
                   ],
                 },
               ],
@@ -55,7 +55,7 @@ describe("OP06-025/028/029/031 fast-lane parser regressions", () => {
           trigger: "whenAttacking",
           conditions: [
             { condition: "donAttached", amount: 1 },
-            { condition: "leaderTrait", trait: "New Fish-Man Pirates", match: "includes" },
+            { condition: "leaderTrait", trait: "New Fish-Man Pirates", match: "exact" },
           ],
           actions: expect.arrayContaining([
             {

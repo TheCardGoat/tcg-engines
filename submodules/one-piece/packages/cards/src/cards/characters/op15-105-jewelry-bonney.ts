@@ -24,7 +24,7 @@ export const op15JewelryBonney105: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "If your Character with 7000 base power or less would be removed from the field by your opponent's effect, you may add 1 card from the top of your Life cards to your hand instead.",

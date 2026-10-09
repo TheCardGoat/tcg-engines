@@ -23,7 +23,7 @@ export const tinkerBellFancyFootworkEpic: CharacterCard = {
   franchise: "Peter Pan",
   set: "010",
   cardNumber: 214,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 3,

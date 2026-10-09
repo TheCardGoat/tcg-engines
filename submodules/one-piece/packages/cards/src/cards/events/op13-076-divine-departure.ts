@@ -29,7 +29,7 @@ export const op13DivineDeparture076: EventCard = {
   rarity: "R",
   setId: "OP13",
   cost: 0,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   effect:
     "[Main] You may rest 5 of your DON!! cards: If you have any DON!! cards given, give up to 1 of your opponent's Characters −8000 power during this turn.\n[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle.",
   effects: {

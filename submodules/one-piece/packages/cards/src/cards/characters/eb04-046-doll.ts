@@ -23,7 +23,7 @@ export const eb04Doll046: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Navy Egghead"],
+  traits: ["Egghead", "Navy"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[Opponent's Turn] All of your {Navy} type Characters gain +2 cost.",
@@ -50,7 +50,7 @@ export const eb04Doll046: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

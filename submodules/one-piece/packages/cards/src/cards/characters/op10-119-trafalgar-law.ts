@@ -46,7 +46,7 @@ export const op10TrafalgarLaw119: CharacterCard = {
   setId: "OP10",
   cost: 7,
   power: 9000,
-  traits: ["Heart Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Heart Pirates"],
   attribute: "slash",
 
   effect:
@@ -65,7 +65,7 @@ export const op10TrafalgarLaw119: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -86,7 +86,7 @@ export const op10TrafalgarLaw119: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Supernovas",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cardCategory",
@@ -111,7 +111,7 @@ export const op10TrafalgarLaw119: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Supernovas",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -23,7 +23,7 @@ export const op16Namule010: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Fish-Man Whitebeard Pirates"],
+  traits: ["Fish-Man", "Whitebeard Pirates"],
   attribute: "strike",
   effect:
     "[On Play] You may reveal 1 Character card with 8000 power from your hand: K.O. up to 1 of your opponent's Characters with 2000 base power or less.",

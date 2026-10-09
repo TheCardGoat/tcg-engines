@@ -96,14 +96,6 @@ export const hanielArchangelOfSpectra: GrandArchiveCard<GrandArchiveAbilityDefin
                   amount: 1,
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "source",
-                  },
-                  counter: "buff",
-                  amount: 1,
-                },
-                {
                   kind: "recover",
                   player: "controller",
                   amount: 1,

@@ -83,4 +83,29 @@ describe("EB03-006 Nami", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: an active Leader already at zero can pay another minus5000 to draw", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB03-006", "EB03-006"],
+      activeDon: 10,
+      deck: ["EB01-005", "EB01-025", "EB01-018"],
+    });
+    e.asSouth().play("EB03-006");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.leader.power).toBe(0);
+    e.asSouth().play("EB03-006");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south).toMatchObject({ handCount: 2, deckCount: 1 });
+    expect(e.getView("south").players.south.leader.power).toBe(-5000);
+    e.asSouth().endTurn();
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+  });
+  test("a rested Leader cannot pay the On Play power cost", () => {
+    const e = OnePieceTestEngine.create({ hand: ["EB03-006"], activeDon: 5 });
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    const deck = e.getView("south").players.south.deckCount;
+    e.asSouth().play("EB03-006");
+    expect(e.getView("south").players.south.deckCount).toBe(deck);
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

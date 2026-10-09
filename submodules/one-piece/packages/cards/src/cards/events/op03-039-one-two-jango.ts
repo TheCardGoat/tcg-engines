@@ -21,7 +21,7 @@ export const op03OneTwoJango039: EventCard = {
   rarity: "UC",
   setId: "OP03",
   cost: 1,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   effect:
     "[Main] Rest up to 1 of your opponent's Characters with a cost of 1 or less. Then, up to 1 of your Characters gains +1000 power during this turn.",
   effects: {

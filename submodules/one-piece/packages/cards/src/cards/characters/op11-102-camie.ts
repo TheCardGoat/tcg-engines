@@ -23,7 +23,7 @@ export const op11Camie102: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 2000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[Your Turn] [Once Per Turn] This effect can be activated when your opponent activates an Event or [Trigger]. If your opponent has 2 or more Life cards, trash 1 card from the top of each of your and your opponent's Life cards.",
@@ -36,16 +36,11 @@ export const op11Camie102: CharacterCard = {
             condition: "turn",
             value: "your",
           },
-          {
-            condition: "lifeCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 2,
-          },
         ],
         actions: [
           {
             action: "sequence",
+            condition: { condition: "lifeCount", player: "opponent", comparison: "gte", value: 2 },
             actions: [
               {
                 action: "removeFromLife",
@@ -79,16 +74,11 @@ export const op11Camie102: CharacterCard = {
             condition: "turn",
             value: "your",
           },
-          {
-            condition: "lifeCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 2,
-          },
         ],
         actions: [
           {
             action: "sequence",
+            condition: { condition: "lifeCount", player: "opponent", comparison: "gte", value: 2 },
             actions: [
               {
                 action: "removeFromLife",

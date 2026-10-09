@@ -21,60 +21,58 @@ export const donaldDuckPieSlingerI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Donald Duck",
-    version: "Kuchenschleuderer",
+    version: "Pie Slinger",
     text: [
       {
         title:
-          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Donald-Duck-Charaktere auszuspielen.)",
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)",
       },
       {
-        title: "Pustekuchen",
+        title: "Humble Pie",
         description:
-          "Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, verlieren alle gegnerischen Mitspielenden je 2 Legenden.",
+          "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.",
       },
       {
-        title: "Wütende Ente",
-        description:
-          "Solange mindestens eine gegnerische Person 10 oder mehr Legenden hat, erhält dieser Charakter +6 {S}.",
+        title: "Raging Duck",
+        description: "While an opponent has 10 or more lore, this character gets +6 {S}.",
       },
     ],
   },
   fr: {
-    name: "Donald",
-    version: "Lanceur de tartes",
+    name: "Donald Duck",
+    version: "Pie Slinger",
     text: [
       {
         title:
-          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Donald.)",
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)",
       },
       {
-        title: "Une simple tarte",
+        title: "Humble Pie",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, chaque adversaire perd 2 éclats de Lore.",
+          "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.",
       },
       {
-        title: "Canard enragé",
-        description:
-          "Tant qu'un adversaire a 10 éclats de Lore ou plus, ce personnage gagne +6 {S}.",
+        title: "Raging Duck",
+        description: "While an opponent has 10 or more lore, this character gets +6 {S}.",
       },
     ],
   },
   it: {
-    name: "Paperino",
-    version: "Lanciatore di Torte",
+    name: "Donald Duck",
+    version: "Pie Slinger",
     text: [
       {
         title:
-          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperino.)",
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)",
       },
       {
-        title: "Torta di Umiltà",
+        title: "Humble Pie",
         description:
-          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, ogni avversario perde 2 leggenda.",
+          "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.",
       },
       {
-        title: "Papero Iracondo",
-        description: "Mentre un avversario ha 10 o più leggenda, questo personaggio riceve +6 {S}.",
+        title: "Raging Duck",
+        description: "While an opponent has 10 or more lore, this character gets +6 {S}.",
       },
     ],
   },

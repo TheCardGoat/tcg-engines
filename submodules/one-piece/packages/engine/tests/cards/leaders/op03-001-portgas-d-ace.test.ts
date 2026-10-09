@@ -61,4 +61,37 @@ describe("OP03-001 Portgas.D.Ace", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("does not offer Ace's discard when a friendly Character is attacked", () => {
+    const engine = OnePieceTestEngine.create(
+      {},
+      {
+        leaderCardId: op03PortgasDAce001,
+        character: [{ card: eb01Doma005, rested: true }],
+        hand: [op02Hydra090, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.declareAttack(
+      engine.leader("south"),
+      engine.findCardInZone("north", "character", eb01Doma005),
+      "south",
+    );
+    expect(engine.pendingDecision("battleCounter", "north")).toBeDefined();
+    expect(engine.getView("north").players.north.hand).toHaveLength(2);
+    expect(engine.getView("north").players.north.leader.power).toBe(5000);
+  });
+
+  test("the power from trashed cards expires at the end of the battle", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op03PortgasDAce001, hand: [op02Hydra090] },
+      { hand: [eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const event = engine.findCardInZone("south", "hand", op02Hydra090);
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [event] }, "south");
+    expect(engine.getView("south").players.south.leader.power).toBe(6000);
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+  });
 });

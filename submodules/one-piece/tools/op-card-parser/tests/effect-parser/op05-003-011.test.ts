@@ -40,7 +40,7 @@ describe("OP05-003 through OP05-011 Character parser regressions", () => {
     });
   });
 
-  test("OP05-004 uses inclusive Revolutionary Army matching for the hand play", () => {
+  test("OP05-004 uses exact Revolutionary Army matching for the hand play", () => {
     expect(
       buildCardEffects(
         "[Activate:Main][Once Per Turn] If this Character has 7000 power or more, play up to 1 [Revolutionary Army] type Character card with 5000 power or less other than [Emporio.Ivankov] from your hand.",
@@ -66,7 +66,7 @@ describe("OP05-003 through OP05-011 Character parser regressions", () => {
               filters: [
                 { filter: "excludeName", value: "Emporio.Ivankov" },
                 { filter: "power", comparison: "lte", value: 5000 },
-                { filter: "trait", value: "Revolutionary Army", match: "includes" },
+                { filter: "trait", value: "Revolutionary Army", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -86,9 +86,7 @@ describe("OP05-003 through OP05-011 Character parser regressions", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [
-            { condition: "leaderTrait", trait: "Revolutionary Army", match: "includes" },
-          ],
+          conditions: [{ condition: "leaderTrait", trait: "Revolutionary Army", match: "exact" }],
           actions: [
             {
               action: "modifyPower",
@@ -130,7 +128,7 @@ describe("OP05-003 through OP05-011 Character parser regressions", () => {
     });
   });
 
-  test("OP05-006 uses an inclusive Revolutionary Army Leader gate", () => {
+  test("OP05-006 uses an exact Revolutionary Army Leader gate", () => {
     expect(
       buildCardEffects(
         "[On Play] If your Leader has the [Revolutionary Army] type, give up to 1 of your opponent's Characters -3000 power during this turn.",
@@ -139,9 +137,7 @@ describe("OP05-003 through OP05-011 Character parser regressions", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [
-            { condition: "leaderTrait", trait: "Revolutionary Army", match: "includes" },
-          ],
+          conditions: [{ condition: "leaderTrait", trait: "Revolutionary Army", match: "exact" }],
           actions: [
             {
               action: "modifyPower",

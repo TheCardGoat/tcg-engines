@@ -72,6 +72,16 @@ describe("authored deck strategy profiles", () => {
         assertInDeck(profile.deckId, gear);
       }
       for (const name of profile.preferSpendOverAttack ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.preferredFreeCards ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.commitSources ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.minGigSources ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.priorityPlays ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.curveSellCards ?? []) assertInDeck(profile.deckId, name);
+      for (const name of profile.curveUnits ?? []) assertInDeck(profile.deckId, name);
+      for (const [carrier, payloads] of Object.entries(profile.playThrough ?? {})) {
+        assertInDeck(profile.deckId, carrier);
+        for (const payload of payloads) assertInDeck(profile.deckId, payload);
+      }
     }
   });
 
@@ -84,6 +94,17 @@ describe("authored deck strategy profiles", () => {
         expect(name.includes(":"), name).toBe(false);
       for (const name of profile.preferSpendOverAttack ?? [])
         expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.preferredFreeCards ?? [])
+        expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.commitSources ?? []) expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.minGigSources ?? []) expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.priorityPlays ?? []) expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.curveSellCards ?? []) expect(name.includes(":"), name).toBe(false);
+      for (const name of profile.curveUnits ?? []) expect(name.includes(":"), name).toBe(false);
+      for (const [carrier, payloads] of Object.entries(profile.playThrough ?? {})) {
+        expect(carrier.includes(":"), carrier).toBe(false);
+        for (const payload of payloads) expect(payload.includes(":"), payload).toBe(false);
+      }
     }
   });
 

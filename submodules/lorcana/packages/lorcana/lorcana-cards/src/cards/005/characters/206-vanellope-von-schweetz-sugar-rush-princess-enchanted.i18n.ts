@@ -63,15 +63,15 @@ export const vanellopeVonSchweetzSugarRushPrincessEnchantedI18n: Record<Language
     },
     es: {
       name: "Vanellope von Schweetz",
-      version: "Princesa de la fiebre del azúcar",
+      version: "Sugar Rush Princess",
       text: [
         {
           title: "Shift 2",
         },
         {
-          title: "POR EL PRESENTE DECRETO",
+          title: "I HEREBY DECREE",
           description:
-            "Cada vez que juegas con otro personaje de Princesa, todos los personajes opuestos obtienen -1 {S} hasta el comienzo de tu siguiente turno.",
+            "Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
         },
       ],
     },

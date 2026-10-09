@@ -48,7 +48,7 @@ export const op06VinsmokeReiju069: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
 
   effect:

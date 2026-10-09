@@ -94,7 +94,7 @@ describe("OP04-047 Ice Oni", () => {
       .filter((instanceId): instanceId is string => instanceId !== null);
 
     engine.declareAttack(attackerId, iceOniId, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: counterIds }, "south");
+    for (const id of counterIds) engine.asSouth().chooseCounter(id);
 
     const view = engine.getView("south");
     expect(view.players.north.characters.some((card) => card?.instanceId === attackerId)).toBe(
@@ -102,6 +102,34 @@ describe("OP04-047 Ice Oni", () => {
     );
     expect(engine.getState().players.north.deck).not.toContain(attackerId);
     expect(view.players.south.characters.some((card) => card?.instanceId === iceOniId)).toBe(true);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("does not bottom-deck the new Marco object after its battle KO and replay", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op04IceOni047, attachedDon: 7, playedOnTurn: 0 }] },
+      {
+        character: [{ cardId: "ST30-008", rested: true }],
+        hand: ["ST30-005"],
+        deck: [eb01Doma005, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const iceOniId = engine.findCardInZone("south", "character", op04IceOni047);
+    const marcoId = engine.findCardInZone("north", "character", "ST30-008");
+    const paymentId = engine.findCardInZone("north", "hand", "ST30-005");
+
+    engine.asSouth().attack(iceOniId, marcoId);
+    engine.asNorth().chooseCounter();
+    const restored = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    restored.asNorth().acceptOptional();
+
+    const view = restored.getView("north");
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.north.characters.find((card) => card?.instanceId === marcoId)?.rested).toBe(
+      true,
+    );
+    expect(view.players.north.deckCount).toBe(2);
     expect(view.prompts).toHaveLength(0);
   });
 

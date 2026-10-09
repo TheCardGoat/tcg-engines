@@ -66,4 +66,38 @@ describe("EB01-040 Kyros", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("a face-up top Life cannot pay again after the once-per-turn limit resets", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "EB01-040",
+        hand: ["OP02-117", "OP02-117"],
+        activeDon: 1,
+        life: ["ST02-002"],
+      },
+      { character: ["EB01-025", "EB01-018"] },
+    );
+    e.playCard("OP02-117");
+    e.asSouth().chooseTargets(e.findCardInZone("north", "character", "EB01-025"));
+    e.activateEffect(e.leader("south"), "activateMain", "south");
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseTargets(e.findCardInZone("north", "character", "EB01-025"));
+    e.endTurn("south");
+    e.endTurn("north");
+    e.playCard("OP02-117");
+    const target = e.findCardInZone("north", "character", "EB01-018");
+    e.asSouth().chooseTargets(target);
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.instanceId === target)?.cost,
+    ).toBe(0);
+    e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(e.getView("south").players.north.characters.some((c) => c?.instanceId === target)).toBe(
+      true,
+    );
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

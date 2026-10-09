@@ -33,7 +33,7 @@ export const op14eb04MonkeyDLuffyOp14013013: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 {Supernovas} type card other than [Monkey.D.Luffy] and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n[When Attacking] Give up to 1 of your opponent's Characters -1000 power during this turn.",
@@ -61,7 +61,7 @@ export const op14eb04MonkeyDLuffyOp14013013: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -125,4 +125,55 @@ describe("OP17-066 Kurozumi Orochi", () => {
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("a real cost-ten Character enables draw two then selected discard", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        hand: ["OP17-066"],
+        character: ["OP17-118"],
+        activeDon: 1,
+        deck: ["ST02-002", "ST02-006", "EB01-005"],
+      },
+      {},
+    );
+    e.asSouth().play("OP17-066");
+    e.asSouth().acceptOptional();
+    const card = e.findCardInZone("south", "hand", "ST02-006");
+    e.resolveDecision("effectTrashFromHandSelection", { selectedIds: [card] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST02-002"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(card);
+  });
+
+  test.each([false, true])(
+    "pays DON but skips the effect when only the opponent can have a cost-ten Character: %s",
+    (opponentQualifies) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "ST04-001",
+          life: ["ST04-009", "ST04-009", "ST04-009", "ST04-009"],
+          hand: ["OP17-066", "ST04-012"],
+          character: ["ST04-009"],
+          activeDon: 1,
+          donDeckCount: 9,
+          deck: ["ST04-007", "ST04-012", "ST04-009"],
+        },
+        {
+          leaderCardId: "ST04-001",
+          hand: [],
+          deck: ["ST04-007", "ST04-009", "ST04-012"],
+          life: ["ST04-009", "ST04-009", "ST04-009", "ST04-009"],
+          character: opponentQualifies ? ["OP01-094", "ST04-009"] : ["ST04-009"],
+        },
+      );
+      e.asSouth().play("OP17-066");
+      e.asSouth().acceptOptional();
+      const view = e.getView("south");
+      expect(view.players.south.activeDon).toBe(0);
+      expect(view.players.south.restedDon).toBe(0);
+      expect(view.players.south.donDeckCount).toBe(10);
+      expect(view.players.south.deckCount).toBe(3);
+      expect(view.players.south.hand.map((card) => card.cardId)).toEqual(["ST04-012"]);
+      expect(view.players.south.trash).toHaveLength(0);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
 });

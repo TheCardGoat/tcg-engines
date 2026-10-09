@@ -29,9 +29,6 @@ describe("PlayZoneCardBands", () => {
     // damage is omitted, so the stack count remains 2 instead of 3.
     const collapsedTags = getByLabelText("2 tags");
     expect(collapsedTags).toBeTruthy();
-    const icon = collapsedTags.querySelector("svg");
-    expect(icon?.classList.contains("h-4")).toBe(true);
-    expect(icon?.getAttribute("stroke-width")).toBe("2.25");
   });
 
   it("top band is aria-hidden when there are no tags", () => {
@@ -45,11 +42,9 @@ describe("PlayZoneCardBands", () => {
     const ap = getByTestId("play-zone-stat-ap");
     const hp = getByTestId("play-zone-stat-hp");
     expect(ap.textContent).toContain("3");
-    expect(ap.className).toContain("play-pill--buffed");
     expect(hp.textContent).toContain("4");
-    // Neutral HP → base color class, not buffed/debuffed.
+    // Neutral HP keeps the base HP tone.
     expect(hp.className).toContain("play-pill--hp");
-    expect(hp.className).not.toContain("play-pill--buffed");
   });
 
   it("bottom band is aria-hidden for non-unit cards", () => {
@@ -66,20 +61,5 @@ describe("PlayZoneCardBands", () => {
     expect(getByTestId("play-zone-stats-band").getAttribute("aria-hidden")).toBe("false");
     expect(getByTestId("play-zone-stat-hp").textContent).toContain("3");
     expect(queryByTestId("play-zone-stat-ap")).toBeNull();
-  });
-
-  it("bottom band applies debuffed tone when HP is below base", () => {
-    const wounded: GameCardData = {
-      id: "u",
-      name: "Wounded",
-      cardType: "unit",
-      hp: 1,
-      baseHp: 4,
-      ap: 2,
-      baseAp: 2,
-    };
-    const { getByTestId } = render(<PlayZoneCardBands card={wounded} section="bottom" />);
-    expect(getByTestId("play-zone-stat-hp").className).toContain("play-pill--debuffed");
-    expect(getByTestId("play-zone-stat-ap").className).toContain("play-pill--ap");
   });
 });

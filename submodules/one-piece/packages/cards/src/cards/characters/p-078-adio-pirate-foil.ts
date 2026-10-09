@@ -54,7 +54,7 @@ export const prb02AdioPirateFoil078: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

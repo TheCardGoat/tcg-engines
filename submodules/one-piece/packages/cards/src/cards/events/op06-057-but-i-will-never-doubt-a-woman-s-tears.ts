@@ -22,7 +22,7 @@ export const op06ButIWillNeverDoubtAWomanSTears057: EventCard = {
   setId: "OP06",
   cost: 1,
   trigger: "Play up to 1 Character card with a cost of 2 from your hand.",
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   effect:
     "[Main] Up to 1 of your Leader or Character cards gains +1000 power during this turn. Then, reveal 1 card from the top of your deck, play up to 1 Character card with a cost of 2, and place the rest at the top or bottom of your deck.",
   effects: {

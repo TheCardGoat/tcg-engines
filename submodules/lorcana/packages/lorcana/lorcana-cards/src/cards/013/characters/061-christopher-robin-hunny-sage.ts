@@ -31,6 +31,7 @@ export const christopherRobinHunnySage: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_61b7042adadb4518b842173c39ffe07b",
+    tcgPlayer: "702652",
   },
   text: [
     {
@@ -44,13 +45,6 @@ export const christopherRobinHunnySage: CharacterCard = {
     },
   ],
   classifications: ["Dreamborn", "Hero", "Hunny"],
-  deckConstructionRules: [
-    {
-      type: "ignore-ink-types",
-      filter: { cardType: "character", classification: "Hunny" },
-      excludeSourceCard: true,
-    },
-  ],
   abilities: [
     {
       type: "triggered",

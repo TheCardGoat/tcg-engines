@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
+  eb01MountainGod018,
   op09SpecialMuggyBall058,
   op13Buggy072,
   op13Higuma013,
@@ -63,5 +64,46 @@ describe("OP13-078 Oro Jackson", () => {
     expect(view.players.south).toMatchObject({ restedDon: 1, donDeckCount: 1 });
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("does not add DON!! when a Roger Pirates Character is K.O.'d in battle", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        stage: op13OroJackson078,
+        character: [{ card: op13Buggy072, rested: true }],
+        donDeckCount: 5,
+      },
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { activeSeat: "north" },
+    );
+    const target = engine.findCardInZone("south", "character", op13Buggy072);
+    engine.asNorth().attack(engine.findCardInZone("north", "character", "EB01-018"), target);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(target);
+    expect(engine.getView("south").players.south.donDeckCount).toBe(5);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("does not add DON!! when its controller's own Event returns a Roger Pirates Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        stage: op13OroJackson078,
+        character: [op13Buggy072],
+        hand: ["OP01-086"],
+        activeDon: 2,
+        donDeckCount: 5,
+      },
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { activeSeat: "north" },
+    );
+    const target = engine.findCardInZone("south", "character", op13Buggy072);
+    engine
+      .asNorth()
+      .attack(engine.findCardInZone("north", "character", "EB01-018"), engine.leader("south"));
+    engine.asSouth().chooseCounter("OP01-086");
+    engine.asSouth().chooseTargets(engine.leader("south"));
+    engine.asSouth().chooseTargets(target);
+    engine.asSouth().chooseCounter();
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(target);
+    expect(engine.getView("south").players.south.donDeckCount).toBe(5);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

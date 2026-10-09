@@ -80,8 +80,16 @@ export const primaMateria: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 },
                 then: {
                   kind: "replacement",
+                  consumptionScope: "source-game-event",
                   event: {
                     name: "damage-dealt",
+                    recipient: {
+                      kind: "event-object",
+                      filter: {
+                        kind: "type",
+                        oneOf: ["ALLY", "CHAMPION"],
+                      },
+                    },
                     subject: {
                       kind: "event-object",
                       controller: "controller",

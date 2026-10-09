@@ -23,7 +23,7 @@ export const op11PrinceGrus013: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "special",
   effect:
     "[When Attacking] All of your opponent's Characters with 2000 power or less cannot activate [Blocker] during this turn.",

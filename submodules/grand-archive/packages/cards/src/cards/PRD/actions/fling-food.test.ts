@@ -13,3 +13,10 @@ describe("Fling Food — fixed damage", () => {
     sacrifice: "food",
   });
 });
+
+import { keySlimePudding } from "../../P24/items/key-slime-pudding.ts";
+import { proveAdditionalSacrifice } from "../../../testing/additional-sacrifice.ts";
+/** @covers pVHGi99Svy-a1 */
+describe("Fling Food additional sacrifice", () => {
+  proveAdditionalSacrifice(flingFood, 1, [keySlimePudding]);
+});

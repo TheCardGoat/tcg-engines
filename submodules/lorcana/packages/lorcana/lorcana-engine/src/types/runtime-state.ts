@@ -141,6 +141,10 @@ export interface TurnMetadata {
   pendingCostReductionsByPlayer: Record<PlayerId, PendingCostReduction[]>;
   /** Cards drawn this turn, counted per player (for Ink Amplifier and similar) */
   cardsDrawnThisTurnByPlayer: Record<PlayerId, number>;
+  /** Ink drops gained this turn, counted per player ("unless you got an ink drop this turn") */
+  inkDropsGainedThisTurn: Record<PlayerId, number>;
+  /** Ink drops removed this turn, counted per player ("whenever you remove an ink drop" metrics) */
+  inkDropsRemovedThisTurn: Record<PlayerId, number>;
   /** Cards put under a character this turn, keyed by the character's instance ID */
   cardsUnderThisTurn?: Record<CardInstanceId, CardInstanceId[]>;
 }
@@ -195,6 +199,16 @@ export interface PlayFromDiscardPermission {
   expiresAtTurn: number;
   cardType?: string;
   controllerId: PlayerId;
+  /** Cards played via this permission enter play exerted (Remember Me). */
+  entersExerted?: boolean;
+  /** When true, the permission covers every card matching cardType (player-wide). */
+  allCards?: boolean;
+  /**
+   * Unique-by-name mode (Remember Me): each card played via this permission
+   * records its name here, and further plays of a recorded name are refused.
+   */
+  uniqueByName?: boolean;
+  playedNames?: readonly string[];
 }
 
 export interface PlayFromDiscardPermissionsState {
@@ -261,6 +275,8 @@ export type BufferedTriggeredEvent =
   | "exert"
   | "gain-lore"
   | "lose-lore"
+  | "ink-drop-gained"
+  | "ink-drop-removed"
   | "leave-discard";
 
 export interface PendingTriggeredEvent {
@@ -311,6 +327,10 @@ export interface BagEffectEntry {
   chooserId: PlayerId;
   sourceId: CardInstanceId;
   cardPlayed: CardPlayedPayload;
+  /** The play-event payload that fired this trigger (the played card, e.g. the
+   * song for "whenever you play a song" abilities). Condition evaluation at
+   * resolution uses this so "that card"-scoped conditions see the subject. */
+  eventCardPlayed?: CardPlayedPayload;
   trigger?: Trigger;
   condition?: Condition;
   effect: Effect;
@@ -377,6 +397,8 @@ export interface TriggerRegistration {
 export interface TriggeredAbilitiesUsageLedger {
   occurrences: Record<string, number>;
   resolutions: Record<string, number>;
+  /** Distinguishes repeated plays of one physical card for limited-use triggers. */
+  sourceLifetimes?: Record<string, number>;
 }
 
 export interface TriggeredAbilitiesState {
@@ -434,6 +456,8 @@ export interface PendingTurnTransitionState {
   nextPlayer?: PlayerId;
   turnNumber?: number;
   triggerWindowQueued?: boolean;
+  /** Turn-end stat expiry and its resulting banishments have already been processed. */
+  statModifiersExpired?: boolean;
   drawStepStarted?: boolean;
 }
 
@@ -493,6 +517,8 @@ export interface PendingActionResolutionInput {
 }
 
 export interface PendingActionEffect {
+  /** Retains the exact limited-use trigger through suspended choices. */
+  bagUsage?: Pick<BagEffectEntry, "id" | "abilityKey" | "trigger">;
   id: string;
   type: "action-effect";
   kind: PendingActionEffectKind;
@@ -517,6 +543,8 @@ export interface PendingActionEffect {
  * Values are optional to optimize memory usage, defaults must be the undefined type.
  */
 export interface LorcanaCardMeta extends Record<string, unknown> {
+  /** CR 6.7.6: Strength immediately before this instance last left play. */
+  lastKnownStrength?: number;
   /** Ready or exerted */
   state?: CardReadyState;
   /** Damage counters */
@@ -587,6 +615,13 @@ export interface LorcanaG {
   lore: Record<PlayerId, number>;
 
   /**
+   * Ink drop counters for each player (Hyperia City).
+   * A player may remove an ink drop to pay 1 {I} of any ink cost.
+   * Drops persist across turns; they are not ink cards and never enter the inkwell.
+   */
+  inkDrops: Record<PlayerId, number>;
+
+  /**
    * Override lore required to win for specific players.
    * When a player appears in this map, they need that much lore to win
    * instead of the default 20. Populated by win-condition-modification
@@ -650,12 +685,15 @@ export type LorcanaMatchState = MatchState;
 /**
  * Create initial Lorcana G state
  */
-export function createInitialLorcanaG(player1Id: PlayerId, player2Id: PlayerId): LorcanaG {
+export function createInitialLorcanaG(
+  player1Id: PlayerId,
+  player2Id: PlayerId,
+  ...additionalPlayerIds: PlayerId[]
+): LorcanaG {
+  const playerIds = [player1Id, player2Id, ...additionalPlayerIds];
   return {
-    lore: {
-      [player1Id]: 0,
-      [player2Id]: 0,
-    },
+    lore: Object.fromEntries(playerIds.map((id) => [id, 0])),
+    inkDrops: Object.fromEntries(playerIds.map((id) => [id, 0])),
     turnMetadata: {
       cardsPlayedThisTurn: [],
       charactersQuesting: [],
@@ -673,6 +711,8 @@ export function createInitialLorcanaG(player1Id: PlayerId, player2Id: PlayerId):
       cardsPutIntoDiscardThisTurnByOwner: {},
       pendingCostReductionsByPlayer: {},
       cardsDrawnThisTurnByPlayer: {} as Record<PlayerId, number>,
+      inkDropsGainedThisTurn: {} as Record<PlayerId, number>,
+      inkDropsRemovedThisTurn: {} as Record<PlayerId, number>,
     },
     triggeredAbilities: {
       pendingEvents: [],
@@ -687,10 +727,7 @@ export function createInitialLorcanaG(player1Id: PlayerId, player2Id: PlayerId):
       },
     },
     pendingEffects: [],
-    turnsCompletedByPlayer: {
-      [player1Id]: 0,
-      [player2Id]: 0,
-    },
+    turnsCompletedByPlayer: Object.fromEntries(playerIds.map((id) => [id, 0])),
     continuousEffects: {
       nextSeq: 1,
       instances: [],

@@ -26,9 +26,11 @@
   "scripts": {
     "dev": "vp pack --watch",
     "scrape": "node --experimental-strip-types src/cli.ts",
+    "scrape:faqs": "node --experimental-strip-types src/cli.ts --faqs-only",
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/cyberpunk-cards": "workspace:*",
     "@tcg/cyberpunk-types": "workspace:*",
     "cheerio": "catalog:"
   },

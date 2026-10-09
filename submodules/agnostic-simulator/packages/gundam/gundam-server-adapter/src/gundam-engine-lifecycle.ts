@@ -336,6 +336,7 @@ export function gundamSerializeEngine(
       commandHistory: runtime.getCommandHistory(),
       undoStack: runtime.undoStack,
       undoBarriers: runtime.undoBarriers,
+      turnStartStateID: runtime.turnStartStateID,
       moveHistory: runtime.getMoveHistory(),
       moveLogHistory: runtime.getMoveLogHistory(),
       gameLogHistory: runtime.getGameLogHistory(),
@@ -382,6 +383,7 @@ function parseUndoMetadata(metadata: unknown): {
   commandHistory?: MatchRuntime["commandHistory"];
   undoStack?: MatchRuntime["undoStack"];
   undoBarriers?: readonly string[];
+  turnStartStateID?: number | null;
   moveHistory?: MatchRuntime["moveHistory"];
   moveLogHistory?: MatchRuntime["moveLogHistory"];
   gameLogHistory?: MatchRuntime["gameLogHistory"];
@@ -401,6 +403,10 @@ function parseUndoMetadata(metadata: unknown): {
       : {}),
     ...(Array.isArray(value.undoBarriers) && value.undoBarriers.every((x) => typeof x === "string")
       ? { undoBarriers: value.undoBarriers }
+      : {}),
+    ...(value.turnStartStateID === null ||
+    (typeof value.turnStartStateID === "number" && Number.isInteger(value.turnStartStateID))
+      ? { turnStartStateID: value.turnStartStateID }
       : {}),
     ...(Array.isArray(value.moveHistory)
       ? { moveHistory: value.moveHistory as MatchRuntime["moveHistory"] }

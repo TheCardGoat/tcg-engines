@@ -49,7 +49,7 @@ export const op10XDrake114: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 2000,
-  traits: ["Drake Pirates Navy Supernovas"],
+  traits: ["Supernovas", "Navy", "Drake Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may rest this Character: If the number of your Life cards is equal to or less than the number of your opponent's Life cards, rest up to 1 of your opponent's Characters with a cost of 4 or less.",

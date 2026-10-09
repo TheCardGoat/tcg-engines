@@ -100,6 +100,7 @@ describe("SimulatorProviders", () => {
           name: "Account",
           displayUsername: "Player",
           emailVerified: true,
+          isAnonymous: false,
           role: "user",
           subscriptionTier: "tier2",
           createdAt: new Date(0),

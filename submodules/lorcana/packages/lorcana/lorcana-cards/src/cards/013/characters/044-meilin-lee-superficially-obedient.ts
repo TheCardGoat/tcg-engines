@@ -31,6 +31,7 @@ export const meilinLeeSuperficiallyObedient: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b66349b8c7a045db98572d2efedc603b",
+    tcgPlayer: "702679",
   },
   text: [
     {

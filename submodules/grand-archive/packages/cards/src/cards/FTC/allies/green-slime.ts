@@ -107,17 +107,20 @@ export const greenSlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
             },
           ],
           effect: {
-            kind: "move-counter",
-            from: {
-              kind: "event-source",
-            },
-            to: {
+            kind: "add-counter",
+            subject: {
               kind: "bound",
               binding: "target-1",
             },
             counter: "buff",
             amount: {
-              kind: "all",
+              kind: "counter-count",
+              subject: {
+                kind: "source",
+              },
+              counter: "buff",
+              basis: "last-known",
+              missing: "zero",
             },
           },
         },

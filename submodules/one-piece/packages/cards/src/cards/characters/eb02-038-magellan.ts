@@ -51,7 +51,7 @@ export const eb02Magellan038: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

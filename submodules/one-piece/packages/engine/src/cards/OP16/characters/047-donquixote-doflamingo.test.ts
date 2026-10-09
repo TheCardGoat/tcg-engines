@@ -48,11 +48,12 @@ describe("OP16-047 Donquixote Doflamingo", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("has no window against a 7-card hand", () => {
+  test("can decline its cost against a 7-card hand", () => {
     const engine = createEngine(7);
     const doflamingoId = engine.findCardInZone("south", "character", op16DonquixoteDoflamingo047);
 
-    expect(() => engine.activateEffect(doflamingoId, "activateMain", "south")).toThrow();
+    engine.activateEffect(doflamingoId, "activateMain", "south");
+    engine.asSouth().declineOptional();
     expect(engine.getView("south").players.north.hand).toHaveLength(7);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });

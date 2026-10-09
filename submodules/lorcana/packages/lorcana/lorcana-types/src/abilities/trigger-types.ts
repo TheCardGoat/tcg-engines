@@ -104,6 +104,9 @@ export type TriggerEvent =
   | "support" // Support ability triggers
   | "inkwell" // Card put into inkwell
   | "boost" // Boost ability activated on a character
+  // Ink drop events (Hyperia City)
+  | "ink-drop-gained" // A player gains one or more ink drops
+  | "ink-drop-removed" // A player removes one or more ink drops (payment or effect)
   // Zone-exit events
   | "leave-discard"; // A card leaves the discard zone (for any reason)
 
@@ -391,6 +394,8 @@ export type TriggerRestriction =
   // Zone of origin
   // True only when the subject card moved from the discard zone.
   | { type: "from-discard" }
+  // True only when the subject card moved from the deck zone (e.g. milled).
+  | { type: "from-deck" }
 
   // Destination zone
   // True only when the subject card moved to the hand zone.

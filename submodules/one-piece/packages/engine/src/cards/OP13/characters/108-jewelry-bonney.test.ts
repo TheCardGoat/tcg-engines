@@ -25,6 +25,12 @@ describe("OP13-108 Jewelry Bonney", () => {
     const targetId = engine.findCardInZone("north", "character", eb01Doma005);
 
     engine.playCard(op13JewelryBonney108, "south");
+    // Resolve the Leader reaction before the Character On Play.
+    const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected ready-effect order");
+    const selected = order.options.find((option) => option.targetId === engine.leader("south"));
+    if (!selected) throw new Error("Expected the intended ready effect");
+    engine.resolveDecision("readyEffectOrder", { optionId: selected.id }, "south");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const bonneyId = engine.findCardInZone("south", "character", op13JewelryBonney108);
     engine.declareAttack(bonneyId, targetId, "south");

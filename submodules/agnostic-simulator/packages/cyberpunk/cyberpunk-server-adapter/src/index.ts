@@ -4,6 +4,7 @@ import { cyberpunkServerAdapter } from "./adapter";
 export { cyberpunkServerAdapter } from "./adapter";
 export { cyberpunkAnimationPlan, projectCyberpunkAuthoritativeAnimationPlan } from "./animation";
 export { CyberpunkServerEngine } from "./cyberpunk-server-engine";
+export { getCyberpunkPriorityOwner } from "./priority-owner";
 export { listCyberpunkDeckPresets } from "./deck-presets";
 export type { CyberpunkDeckPreset, CyberpunkDeckPresetEntry } from "./deck-presets";
 

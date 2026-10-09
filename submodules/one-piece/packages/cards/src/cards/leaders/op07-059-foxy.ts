@@ -62,7 +62,6 @@ export const op07Foxy059: LeaderCard = {
               zones: ["leader"],
               count: {
                 amount: 1,
-                upTo: true,
               },
               filters: [
                 {
@@ -81,7 +80,7 @@ export const op07Foxy059: LeaderCard = {
                 {
                   filter: "trait",
                   value: "Foxy Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -112,7 +111,7 @@ export const op07Foxy059: LeaderCard = {
                 {
                   filter: "trait",
                   value: "Foxy Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

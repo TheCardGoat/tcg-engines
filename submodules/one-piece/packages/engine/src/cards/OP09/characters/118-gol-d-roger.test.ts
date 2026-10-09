@@ -61,4 +61,31 @@ describe("OP09-118 Gol.D.Roger", () => {
 
     expect(() => engine.declareAttack(rogerId, engine.leader("north"), "south")).not.toThrow();
   });
+  test("does not win when Shinobu takes the last Life only after activating Blocker", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op09GolDRoger118, playedOnTurn: 0 }], life: [eb01Doma005] },
+      { character: ["ST09-007"], life: [eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const roger = engine.findCardInZone("south", "character", op09GolDRoger118);
+    const shinobu = engine.findCardInZone("north", "character", "ST09-007");
+    engine.asSouth().attack(roger, engine.leader("north"));
+    engine.asNorth().chooseBlocker(shinobu);
+    engine.asNorth().acceptOptional();
+    expect(engine.getView("north").players.north.lifeCount).toBe(0);
+    expect(engine.getState()).toMatchObject({ status: "active", winner: null });
+  });
+
+  test("wins when a different friendly attacker is blocked while a player already has no Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op09GolDRoger118, { card: eb01Doma005, playedOnTurn: 0 }], life: [] },
+      { character: [op10Scotch008] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine
+      .asSouth()
+      .attack(engine.findCardInZone("south", "character", eb01Doma005), engine.leader("north"));
+    engine.asNorth().chooseBlocker(engine.findCardInZone("north", "character", op10Scotch008));
+    expect(engine.getState()).toMatchObject({ status: "finished", winner: "south" });
+  });
 });

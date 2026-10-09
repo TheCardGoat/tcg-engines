@@ -31,6 +31,7 @@ export const maidMarianCreatedByTheVine: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e98b0e36a62142ce9181966e14a1c930",
+    tcgPlayer: "704656",
   },
   text: [
     {

@@ -2,6 +2,28 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-055", () => {
+  test.each([
+    { leader: "OP05-001", opponentLife: 4, played: true },
+    { leader: "OP05-001", opponentLife: 5, played: false },
+    { leader: "ST01-001", opponentLife: 4, played: false },
+  ])(
+    "Life Trigger with $leader and opposing Life $opponentLife obeys both gates",
+    ({ leader, opponentLife, played }) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [{ cardId: "EB01-018", playedOnTurn: 0 }], life: opponentLife },
+        { leaderCardId: leader, life: ["EB04-055", "EB01-005"] },
+      );
+      const physical = engine.findCardInZone("north", "life", "EB04-055");
+      engine.asSouth().attack("EB01-018", engine.leader("north"));
+      engine.asNorth().activateLifeTrigger();
+      const view = engine.getView("north");
+      expect(view.players.north.characters.some((c) => c?.instanceId === physical)).toBe(played);
+      expect(view.players.north.trash.some((c) => c.instanceId === physical)).toBe(!played);
+      expect(view.players.north.lifeCount).toBe(1);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
   test("[On K.O.] plays a Revolutionary Army Character with cost 4 or less from hand", () => {
     const engine = OnePieceTestEngine.create(
       {

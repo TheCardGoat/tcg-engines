@@ -1,88 +1,54 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-describe("OP08-119", () => {
-  test("[When Attacking] DON!! 10 K.O.s every other Character and moves Life cards", () => {
-    const engine = OnePieceTestEngine.create(
+describe("OP08-119 Kaido & Linlin", () => {
+  test("pays exactly ten field DON, KOs both sides except itself, gains Life and trashes opposing Life", () => {
+    const e = OnePieceTestEngine.create(
       {
-        character: [{ cardId: "OP08-119", attachedDon: 10 }],
-        life: ["OP12-013"],
-        deck: ["OP12-017", "OP13-013"],
-        activeDon: 10,
+        character: [{ cardId: "OP08-119", attachedDon: 2, playedOnTurn: 0 }, "P-012"],
+        activeDon: 8,
+        life: ["P-012"],
+        deck: ["P-015", "P-016"],
       },
-      {
-        character: ["OP16-003", "OP13-013"],
-        life: ["OP12-018", "OP12-019"],
-        activeDon: 5,
-      },
+      { character: ["P-015"], life: ["P-012", "P-015", "P-016"] },
+      { firstPlayer: "north", activeSeat: "south" },
     );
-    const selfId = engine.findCardInZone("south", "character", "OP08-119");
-    const newgateId = engine.findCardInZone("north", "character", "OP16-003");
-    const higumaId = engine.findCardInZone("north", "character", "OP13-013");
-
-    engine.asSouth().attack("OP08-119", engine.asNorth().leader());
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-    // DON!! 10 cost: return the 10 attached DON!! cards.
-    const pay = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
-    if (pay?.kind !== "payCost") throw new Error("Expected the DON!! payment.");
-    engine.resolveDecision(
-      "effectCostReturnDon",
-      { selectedIds: pay.candidates.map((c) => c.ref.id).slice(0, 10) },
-      "south",
-    );
-    // Add the deck top to Life.
-    const life = engine.pendingDecision("effectAddToLifeFromDeck", "south").steps[0];
-    if (life?.kind === "chooseOption") {
-      engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "south");
-    }
-    // Trash up to 1 card from the opponent's Life.
-    const remove = engine.pendingDecision("effectRemoveFromLifeCount", "south").steps[0];
-    if (remove?.kind === "chooseOption") {
-      engine.resolveDecision("effectRemoveFromLifeCount", { optionId: "1" }, "south");
-    }
-
-    const northCharacters = engine
-      .getView("south")
-      .players.north.characters.filter((c) => c !== null)
-      .map((c) => c.instanceId);
-    expect(northCharacters).not.toContain(newgateId);
-    expect(northCharacters).not.toContain(higumaId);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(
-      selfId,
-    );
-    expect(engine.getView("south").players.south.lifeCount).toBe(2);
-    // 1 damage from the Leader battle + 1 Life trashed by the effect.
-    expect(engine.getView("south").players.north.lifeCount).toBe(0);
-  });
-  test("[When Attacking] may be declined", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP08-119", attachedDon: 2 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const donBefore =
-      engine.getView("south").players.south.activeDon +
-      engine.getView("south").players.south.restedDon;
-
-    engine.asSouth().attack("OP08-119", engine.asNorth().leader());
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
+    e.asSouth().attack("OP08-119", e.leader("north"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "south");
+    e.resolveDecision("effectRemoveFromLifeCount", { optionId: "1" }, "south");
     expect(
-      engine.getView("south").players.south.activeDon +
-        engine.getView("south").players.south.restedDon,
-    ).toBe(donBefore);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+      e
+        .getView("south")
+        .players.south.characters.filter(Boolean)
+        .map((c) => c?.cardId),
+    ).toEqual(["OP08-119"]);
+    expect(e.getView("south").players.south.characters[0]?.attachedDon).toBe(0);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "P-012")).toBe(true);
+    expect(e.getView("north").players.north.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").players.south.lifeCount).toBe(2);
+    expect(e.getView("north").players.north.lifeCount).toBe(1);
+    expect(e.getView("north").players.north.trash.some((c) => c.cardId === "P-012")).toBe(true);
+  });
+  test("declines optional ten-DON payment while all costs and targets are available", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [{ cardId: "OP08-119", attachedDon: 2, playedOnTurn: 0 }, "P-012"],
+        activeDon: 8,
+        life: 1,
+      },
+      { character: ["P-015"], life: 3 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    e.asSouth().attack("OP08-119", e.leader("north"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.activeDon).toBe(8);
+    expect(e.getView("south").players.south.characters[0]?.attachedDon).toBe(2);
+    expect(e.getView("south").players.south.characters[1]?.cardId).toBe("P-012");
+    expect(e.getView("north").players.north.characters[0]?.cardId).toBe("P-015");
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("north").players.north.lifeCount).toBe(2);
   });
 });

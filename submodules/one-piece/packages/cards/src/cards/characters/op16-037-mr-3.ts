@@ -24,7 +24,7 @@ export const op16Mr3037: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "special",
   effect:
     "[On Play] If your Leader has the {Impel Down} type, rest up to 1 of your opponent's Characters with a cost of 5 or less.",
@@ -36,7 +36,7 @@ export const op16Mr3037: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

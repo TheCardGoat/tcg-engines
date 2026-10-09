@@ -4,6 +4,32 @@ import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, eb03Alvida021 } fro
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB03-021 Alvida", () => {
+  test("selects both groups before either moves and lets their owner order the deck bottom", () => {
+    let engine = OnePieceTestEngine.create(
+      { hand: [eb03Alvida021, eb01Doma005], activeDon: 4 },
+      { character: [eb01Doma005, eb01Fourtricks025] },
+    );
+    const firstId = engine.findCardInZone("north", "character", eb01Doma005);
+    const secondId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    engine.playCard(eb03Alvida021);
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [firstId] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === firstId),
+    ).toBe(true);
+    engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected second target group.");
+    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(firstId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [secondId] }, "south");
+    engine.resolveDecision(
+      "effectReturnToDeckOwnerOrder",
+      { selectedIds: [secondId, firstId] },
+      "north",
+    );
+    expect(engine.getState().players.north.deck.slice(-2)).toEqual([secondId, firstId]);
+  });
+
   test("pays the hand cost, bottoms a low-power opponent, then an own low-cost Character", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -74,5 +100,26 @@ describe("EB03-021 Alvida", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: current cost reduced to three does not satisfy base-cost-three group", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP02-117", "EB03-021", "EB01-005"], activeDon: 10 },
+      { character: ["P-040", "EB01-025"] },
+    );
+    const big = e.findCardInZone("north", "character", "P-040"),
+      small = e.findCardInZone("north", "character", "EB01-025");
+    e.asSouth().play("OP02-117");
+    e.asSouth().chooseTargets(big);
+    expect(
+      e.getView("north").players.north.characters.find((c) => c?.instanceId === big)?.cost,
+    ).toBe(3);
+    e.asSouth().play("EB03-021");
+    e.asSouth().acceptOptional();
+    const p = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw Error("second group");
+    expect(p.candidates.map((c) => c.ref.id)).toEqual([small]);
+    e.asSouth().chooseTargets(small);
+    expect(e.findCardInZone("north", "deck", "EB01-025")).toBe(small);
+    expect(e.findCardInZone("north", "character", "P-040")).toBe(big);
   });
 });

@@ -5,13 +5,11 @@ import {
   createCardCatalog,
   getStructuredCardBySlug,
   getCardBySlug,
-  getStructuredPromoCardBySlug,
-  getStructuredPrm01CardBySlug,
+  getMergedCyberpunkCards,
   getRawCardBySlug,
   pickCanonicalAndMergePrintings,
-  promoCards,
   rawCards,
-  SET_PRIORITY,
+  RUNTIME_SET_CODES,
   structuredCards,
 } from "../src/index.ts";
 
@@ -46,8 +44,7 @@ test("July retail cards retain their beta printings", () => {
   }
 });
 
-test("structured set exports expose parsed abilities", () => {
-  expect(promoCards).toHaveLength(1);
+test("starter-deck and promo cards expose parsed abilities through the canonical pool", () => {
   expect(structuredCards.length).toBeGreaterThan(0);
 
   const corpoSecurity = getStructuredCardBySlug("corpo-security");
@@ -55,8 +52,8 @@ test("structured set exports expose parsed abilities", () => {
   const currentGoro = getStructuredCardBySlug("goro-takemura-vengeful-bodyguard");
   const chromeReverie = getStructuredCardBySlug("chrome-reverie");
   const mamanBrigitte = getStructuredCardBySlug("maman-brigitte-spirit-of-death");
-  const lucyna = getStructuredPromoCardBySlug("lucyna-kushinada");
-  const rebecca = getStructuredPrm01CardBySlug("rebecca-having-a-moment");
+  const lucyna = getStructuredCardBySlug("lucyna-kushinada");
+  const rebecca = getStructuredCardBySlug("rebecca-having-a-moment");
   const afterparty = getStructuredCardBySlug("afterparty-at-lizzie-s");
   const augmentedNegotiators = getStructuredCardBySlug("augmented-negotiators");
   const jackedInVoodooBoy = getStructuredCardBySlug("jacked-in-voodoo-boy");
@@ -87,7 +84,9 @@ test("structured set exports expose parsed abilities", () => {
     ),
   ).toBe(true);
   expect(lucyna?.abilities).toEqual([]);
+  expect(lucyna?.set.code).toBe("promo");
   expect(rebecca?.ram).toBeNull();
+  expect(rebecca?.set.code).toBe("PRM01");
   expect(afterparty?.set.code).toBe("welcometonightcityretail");
   expect(chromeReverie?.abilities[0]?.effects.map((effect) => effect.effect)).toEqual([
     "grantRule",
@@ -109,24 +108,32 @@ test("structured set exports expose parsed abilities", () => {
   });
 });
 
-test("every generated runtime-set card is available as a structured card", () => {
-  const runtimeSetCodes = new Set(Object.keys(SET_PRIORITY));
+test("every runtime-set generated card is consolidated into the canonical structured pool", () => {
+  const runtimeSetCodes = new Set<string>(RUNTIME_SET_CODES);
+  const mergedBySlug = new Map(getMergedCyberpunkCards().map((card) => [card.slug, card]));
   const catalog = createCardCatalog();
-  const catalogKeys = new Set(
-    Array.from(catalog.entries()).map(([, card]) => `${card.set.code}:${card.slug}`),
-  );
-  const structuredKeys = new Set(structuredCards.map((card) => `${card.set.code}:${card.slug}`));
-  const missing = cards
-    .filter((card) => runtimeSetCodes.has(card.set.code))
-    .filter((card) => !structuredKeys.has(`${card.set.code}:${card.slug}`))
-    .map((card) => `${card.set.code}:${card.slug}`);
-  const missingFromCatalog = cards
-    .filter((card) => runtimeSetCodes.has(card.set.code))
-    .filter((card) => !catalogKeys.has(`${card.set.code}:${card.slug}`))
-    .map((card) => `${card.set.code}:${card.slug}`);
+  const problems: string[] = [];
 
-  expect(missing).toEqual([]);
-  expect(missingFromCatalog).toEqual([]);
+  for (const card of cards.filter((card) => runtimeSetCodes.has(card.set.code))) {
+    const canonical = mergedBySlug.get(card.slug);
+    if (!canonical) {
+      problems.push(`${card.set.code}:${card.slug} has no canonical structured card`);
+      continue;
+    }
+    // The card file may be authored under a different (higher-priority) set,
+    // but every printing of every runtime-set version must ride on the
+    // canonical definition.
+    for (const printing of card.printings) {
+      if (!canonical.printings.some((candidate) => candidate.id === printing.id)) {
+        problems.push(`${card.slug} is missing printing ${printing.id} (${printing.setCode})`);
+      }
+    }
+  }
+
+  for (const canonical of mergedBySlug.values()) {
+    expect(catalog.get(canonical.id), canonical.slug).toBeDefined();
+  }
+  expect(problems).toEqual([]);
 });
 
 test("retail starter deck printings win over lower-priority previews when merging canonical cards", () => {

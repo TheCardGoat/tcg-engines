@@ -34,7 +34,7 @@ export const op16MarshallDTeach119: CharacterCard = {
   power: 10000,
   trigger:
     "Negate the effect of up to 1 of your opponent's Characters during this turn. Then, K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",
-  traits: ["Blackbeard Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "[On Play] Look at 3 cards from the top of your deck; add up to 1 card to the top of your Life cards. Then, place the rest at the bottom of your deck in any order.",
@@ -56,6 +56,41 @@ export const op16MarshallDTeach119: CharacterCard = {
             },
             revealDestination: "life",
             remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "negateEffects",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            duration: "thisTurn",
+          },
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
           },
         ],
       },

@@ -120,7 +120,7 @@ function localeText<
   };
 }
 
-function normalizeAbilityOverrides<Contract extends SemanticLocalizationContractShape>(
+export function normalizeAbilityOverrides<Contract extends SemanticLocalizationContractShape>(
   overrides: AbilityLocaleOverrides<Contract>,
 ): Readonly<Record<string, FleshAndBloodAbilityLocaleText>> {
   const entries = Object.entries(overrides).filter(

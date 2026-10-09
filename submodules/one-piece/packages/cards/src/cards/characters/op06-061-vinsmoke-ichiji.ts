@@ -30,7 +30,7 @@ export const op06VinsmokeIchiji061: CharacterCard = {
   setId: "OP06",
   cost: 7,
   power: 7000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "strike",
   effect:
     "[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, give up to 1 of your opponent's Characters -2000 power during this turn and this Character gains [Rush]. (This card can attack on the turn in which it is played.)",

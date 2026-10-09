@@ -21,7 +21,7 @@ export const op17DrunkenDragonBagua078: EventCard = {
   rarity: "C",
   setId: "OP17",
   cost: 2,
-  traits: ["The Four Emperors Animal Kingdom Pirates"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   effect:
     "[Main] You may rest 2 of your DON!! cards and trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 3 DON!! cards as rested from your DON!! deck.\n[Counter] Up to 1 of your Leader or Characters gains +4000 power during this battle.",
   effects: {
@@ -38,11 +38,11 @@ export const op17DrunkenDragonBagua078: EventCard = {
             amount: 2,
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "leaderTrait",
             trait: "Animal Kingdom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         optional: true,

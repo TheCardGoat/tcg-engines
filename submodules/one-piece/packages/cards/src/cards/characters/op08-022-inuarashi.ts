@@ -23,7 +23,7 @@ export const op08Inuarashi022: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Minks The Akazaya Nine"],
+  traits: ["Minks", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[On Play] If your Leader has the {Minks} type, up to 2 of your opponent's rested Characters with a cost of 5 or less will not become active in your opponent's next Refresh Phase.",
@@ -35,7 +35,7 @@ export const op08Inuarashi022: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Minks",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

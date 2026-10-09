@@ -23,7 +23,7 @@ export const op16Sanji086: CharacterCard = {
   cost: 8,
   power: 9000,
   counter: 2000,
-  traits: ["Land of Wano Straw Hat Crew"],
+  traits: ["Land of Wano", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op16Sanji086I18n,
 };

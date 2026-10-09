@@ -28,8 +28,8 @@ import type {
   RiftboundClientMatchActionV1,
   RiftboundClientMatchStateV1,
   RiftboundZone,
-} from "./state";
-import { reduceRiftboundClientMatchStateV1 } from "./state";
+} from "@tcg/riftbound-tabletop";
+import { reduceRiftboundClientMatchStateV1 } from "@tcg/riftbound-tabletop";
 import "./riftbound.css";
 
 export interface RiftboundTabletopProps {
@@ -468,7 +468,7 @@ function cardsIn(
   );
 }
 
-function entityFor(
+export function entityFor(
   card: RiftboundClientCardV1,
   state: RiftboundClientMatchStateV1,
   reveal = true,
@@ -489,7 +489,7 @@ function entityFor(
   };
 }
 
-function zoneModel(
+export function zoneModel(
   ownerId: string,
   zone: RiftboundZone,
   cards: RiftboundClientCardV1[],

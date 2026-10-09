@@ -23,7 +23,7 @@ export const op14eb04CaponeGangBege003: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Firetank Pirates Supernovas"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "ranged",
   effect:
     "This Character cannot be K.O.'d by effects of your opponent's Characters with 5000 base power or less.",

@@ -83,6 +83,8 @@ describe("EB02-025 Donquixote Rosinante", () => {
     const trashBefore = before.trash.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const after = engine.getView("south").players.south;
+    expect(after).toMatchObject({ activeDon: 1, restedDon: 0 });
+    expect(after.characters.find((c) => c?.instanceId === rosinanteId)?.rested).toBe(false);
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(after.hand.length).toBe(handBefore);
@@ -90,5 +92,23 @@ describe("EB02-025 Donquixote Rosinante", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("wrong Leader still pays both activation costs but never looks at the deck", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST02-001",
+      character: ["EB02-025"],
+      activeDon: 1,
+      deck: ["EB01-005", "EB01-005", "EB01-005", "EB01-005", "EB01-005", "EB01-005"],
+    });
+    const id = e.findCardInZone("south", "character", "EB02-025");
+    e.asSouth().activateMain(id);
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south).toMatchObject({
+      activeDon: 0,
+      restedDon: 1,
+      deckCount: 6,
+    });
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07TrafalgarLawTr010 } from "../../../../../cards/src/cards/characters/st10-010-trafalgar-law-tr.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("ST10-010 Trafalgar Law (TR)", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07TrafalgarLawTr010);
-  });
-});

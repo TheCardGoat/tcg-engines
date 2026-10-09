@@ -31,7 +31,7 @@ export const eb02SanjiPudding035: CharacterCard = {
   setId: "EB02",
   cost: 5,
   power: 7000,
-  traits: ["Straw Hat Crew Big Mom Pirates"],
+  traits: ["Big Mom Pirates", "Straw Hat Crew"],
   attribute: ["strike", "wisdom"],
   effect:
     "[Your Turn] [Once Per Turn] When 2 or more DON!! cards on your field are returned to your DON!! deck, add up to 1 DON!! card from your DON!! deck and set it as active.\n[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, draw 1 card.",
@@ -39,6 +39,7 @@ export const eb02SanjiPudding035: CharacterCard = {
     effects: [
       {
         trigger: "whenDonReturned",
+        eventFilter: { minimumAmount: 2 },
         conditions: [
           {
             condition: "turn",

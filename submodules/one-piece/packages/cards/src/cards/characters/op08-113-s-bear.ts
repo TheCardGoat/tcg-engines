@@ -25,7 +25,7 @@ export const op08SBear113: CharacterCard = {
   counter: 1000,
   trigger:
     "You may trash 1 card from your hand: If you have 2 or less Life cards, play this card and K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
-  traits: ["Egghead Seraphim"],
+  traits: ["Egghead", "Seraphim"],
   attribute: "special",
   effect:
     "[Trigger] You may trash 1 card from your hand: If you have 2 or less Life cards, play this card and K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",

@@ -9,7 +9,7 @@ describe("OP05-012 Hack", () => {
       cost: 3,
       power: 5000,
       counter: 1000,
-      traits: ["Fish-Man Revolutionary Army"],
+      traits: ["Fish-Man", "Revolutionary Army"],
     });
     expect(op05Hack012.effect).toBeUndefined();
     expect(op05Hack012.i18n.en.effect).toBeUndefined();

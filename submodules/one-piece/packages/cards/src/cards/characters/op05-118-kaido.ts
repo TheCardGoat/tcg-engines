@@ -47,7 +47,7 @@ export const op05Kaido118: CharacterCard = {
   setId: "OP05",
   cost: 10,
   power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "special",
 
   effect: "[On Play] Draw 4 cards if your opponent has 3 or less Life cards.",

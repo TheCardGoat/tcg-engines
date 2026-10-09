@@ -58,4 +58,21 @@ describe("OP13-117 Gum-Gum Dawn Stamp", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("cannot pay with an already face-up top Life even when a face-down Life is below it", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op13GumGumDawnStamp117],
+        activeDon: 5,
+        life: [{ card: eb01Doma005, faceUp: true }, eb01MountainGod018],
+      },
+      { character: [eb01MountainGod018] },
+    );
+    const event = engine.findCardInZone("south", "hand", op13GumGumDawnStamp117);
+    engine.asSouth().play(op13GumGumDawnStamp117);
+    const after = engine.getView("south");
+    expect(after.players.south.activeDon).toBe(0);
+    expect(after.players.south.trash.map((c) => c.instanceId)).toContain(event);
+    expect(after.players.north.characters.filter(Boolean)).toHaveLength(1);
+    expect(after.prompts).toHaveLength(0);
+  });
 });

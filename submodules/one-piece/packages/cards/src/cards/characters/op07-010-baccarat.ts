@@ -23,7 +23,7 @@ export const op07Baccarat010: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Your Opponent's Attack][Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +2000 power during this battle.",

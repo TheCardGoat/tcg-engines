@@ -46,7 +46,7 @@ describe("OP04-011 Nami", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("still reveals and bottom-decks a Character below 6000 power without gaining power", () => {
+  test("keeps a revealed Character below 6000 power on top without gaining power", () => {
     const engine = OnePieceTestEngine.create(
       {
         deck: [eb01Fourtricks025, eb01Doma005, op01ScratchmenApoo103],
@@ -65,7 +65,7 @@ describe("OP04-011 Nami", () => {
       3000,
     );
     // Exact physical identity is intentionally asserted at the raw hidden-zone boundary.
-    expect(engine.getState().players.south.deck.at(-1)).toBe(revealedId);
+    expect(engine.getState().players.south.deck[0]).toBe(revealedId);
     expect(view.prompts).toHaveLength(0);
   });
 });

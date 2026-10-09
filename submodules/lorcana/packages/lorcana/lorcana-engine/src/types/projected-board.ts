@@ -22,6 +22,7 @@ export type LorcanaCardDerived = {
   hasRush: boolean;
   hasEvasive: boolean;
   hasQuestRestriction: boolean;
+  hasChallengeRestriction?: boolean;
   classifications: string[];
   fullName: string;
   keywords: string[];
@@ -81,6 +82,8 @@ export type LorcanaProjectedCardId = CardInstanceId | string;
 
 export type LorcanaProjectedPlayerBoard = {
   lore: number;
+  /** Hyperia City ink drops held by this player (public counter). */
+  inkDrops: number;
   canAddCardToInkwell: boolean;
   handCount: number;
   deckCount: number;

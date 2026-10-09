@@ -1,7 +1,15 @@
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828="
+  relation: "current_index"
+  copy_version: "1.2.1"
+---
+
 # ONE PIECE CARD GAME Comprehensive Rules
 
-**Version 1.2.0**
-**Last updated: 1/16/2026**
+**Version 1.2.1**
+**Last updated: 8/28/2026**
 
 ---
 
@@ -178,7 +186,7 @@
 
 **2-7-2.** When playing a Character card from your hand, you should first reveal the card you wish to play, select a number of active DON!! cards in your cost area equal to the card's cost, rest those DON!! cards, and then play the revealed card.
 
-**2-7-3.** When activating an Event card from your hand, you should first reveal the card you wish to activate, select a number of active DON!! cards in your cost area equal to the card's cost, rest those DON!! cards, and then trash the revealed card to activate it.
+**2-7-3.** When activating an Event card from your hand, you should first reveal the card you wish to activate, select a number of active DON!! cards in your cost area equal to the card's cost, rest those DON!! cards, trash the revealed card, then activate and resolve the effect.
 
 **2-7-4.** When playing a Stage card from your hand, you should first reveal the card you wish to play, select a number of active DON!! cards in your cost area equal to the card's cost, rest those DON!! cards, and then play the revealed card.
 
@@ -218,6 +226,10 @@
 **2-10-1.** This specifies the power increase to a Character card's power that can be activated during the Counter Step.
 
 **2-10-2.** Only Character cards have (Symbol) Counter.
+
+**2-10-3.** Depending on the effect, the value of the (Symbol) Counter may differ from the value indicated on the card.
+
+**2-10-4.** If a card has multiple (Symbol) Counters, only the Counter with the highest value is applied.
 
 ### 2-11. [Trigger]
 
@@ -262,6 +274,8 @@
 **3-1-1.** The areas are the deck, DON!! deck, hand, trash, Leader area, Character area, Stage area, cost area, and Life area.
 
 **3-1-2.** The Leader area, Character area, Stage area, and cost area are sometimes collectively referred to as "the field".
+
+**3-1-2-1.** When referring to specific conditions with such phrasing as "If you have", "if your opponent has", "If you have no", "if you do not have", etc., the area being referred to is "the field" unless otherwise specified.
 
 **3-1-3.** Unless otherwise specified, each player possesses one of every area.
 
@@ -451,7 +465,7 @@
 
 **4-10-1.** If a preceding "if" clause in the text cannot be resolved, the following clause in that text also cannot be resolved.
 
-**4-10-2.** If a preceding "then" clause in the text cannot be resolved, the following clause in that text can still be resolved.
+**4-10-2.** If a preceding "then" clause in the text cannot be resolved, the following clause in that text can still be resolved. However, if a preceding "if" clause has not been resolved as outlined in 4-10-1., the following clause in that text cannot be resolved.
 
 ### 4-11. "Remove"
 
@@ -604,14 +618,12 @@
 
 ### 7-1-3. Counter Step
 
-**7-1-3-1.** Effects of the player being attacked that read "when attacked" activate.
+**7-1-3-1.** The player being attacked may perform the following actions in any order and as many times as they wish:
 
-**7-1-3-2.** The player being attacked may perform the following actions in any order and as many times as they wish:
+- **7-1-3-1-1.** Activate [(Symbol) Counter]: The player being attacked may trash a Character card with [(Symbol) Counter] from their hand to activate an effect that increases the power of their Leader or 1 Character card by the value of the [(Symbol) Counter] during that battle.
+- **7-1-3-1-2.** Activate an Event card: The player being attacked may pay the cost of an Event card with [Counter] in their hand, and then trash it to activate the [Counter] effect.
 
-- **7-1-3-2-1.** Activate [(Symbol) Counter]: The player being attacked may trash a Character card with [(Symbol) Counter] from their hand to activate an effect that increases the power of their Leader or 1 Character card by the value of the [(Symbol) Counter] during that battle.
-- **7-1-3-2-2.** Activate an Event card: The player being attacked may pay the cost of an Event card with [Counter] in their hand, and then trash it to activate the [Counter] effect.
-
-**7-1-3-3.** If, at the end of the Counter Step, the attacking card or the target card for the attack has moved areas due to some method, proceed not to the Damage Step (see 7-1-4.), but to the End of the Battle (see 7-1-5.).
+**7-1-3-1-3.** If, at the end of the Counter Step, the attacking card or the target card for the attack has moved areas due to some method, proceed not to the Damage Step (see 7-1-4.), but to the End of the Battle (see 7-1-5.).
 
 ### 7-1-4. Damage Step
 
@@ -701,7 +713,7 @@
 - **8-3-1-2.** Then, if activation costs are added by other effects, these are to be carried out in the order for resolving those effects.
 - **8-3-1-3.** If it is not possible to pay some or all of the activation cost, the activation cost to activate the effect cannot be paid at all.
   - **8-3-1-3-1.** If you have fulfilled the conditions to pay the activation cost, activated the effect, and become unable to pay the activation cost while in the process of paying the activation cost, pay as much of the activation cost as possible. You cannot resolve the effect as written after the : colon. In addition, see 10-2-13-5. regarding the processing of [Once Per Turn] effects in this situation.
-- **8-3-1-4.** Activation costs may be specified using "can" or "may". The player can choose not to pay the activation cost; however, this will mean the effect cannot be activated.
+- **8-3-1-4.** Activation costs may be specified using "can" or "may". The player can choose not to pay the activation cost; however, this will mean the effect as written after the : colon mark cannot be activated.
 - **8-3-1-5.** Activation costs may be specified using a symbol such as ①. That symbol means that the player must select a number of active DON!! cards equal to the number in the symbol from their cost area and rest them.
 - **8-3-1-6.** Activation costs may be specified using a symbol such as "DON!! −X". This means that the player must select a total number of DON!! cards equal to the value of X from their Leader area, Character area, and cost area, and return them to their DON!! deck.
 - **8-3-1-7.** Where an activation cost is replaced according to an effect, it is possible to carry out the replacement processing instead of paying the activation cost. If the activation cost is not paid as described in the text, the effect following the : colon will not be processed.

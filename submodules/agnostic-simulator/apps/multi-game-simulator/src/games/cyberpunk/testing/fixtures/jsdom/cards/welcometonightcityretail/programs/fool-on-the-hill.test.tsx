@@ -36,6 +36,14 @@ describe("Fool on the Hill jsdom happy path", () => {
         const options = document.body.querySelectorAll('[data-testid="reveal-destination-option"]');
         expect(options).toHaveLength(2);
       });
+      const modalSheet = document.body.querySelector<HTMLElement>(
+        '[data-testid="choice-modal-sheet"]',
+      );
+      expect(modalSheet?.getAttribute("data-decision-type")).toBe("resolveRevealDestination");
+      expect(document.body.textContent).toContain("Choose where the revealed cards go");
+      expect(document.body.textContent).toContain("Add 2 cards to hand");
+      expect(document.body.textContent).toContain("Trash 2 cards");
+      expect(document.body.textContent).toContain("Then draw 2.");
       const deckReveal = view.container.querySelector<HTMLElement>(
         '[data-testid="deck-zone"][data-side="player"] [data-testid="deck-reveal-shelf"]',
       );

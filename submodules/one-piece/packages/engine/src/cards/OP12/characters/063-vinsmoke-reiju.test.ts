@@ -22,4 +22,23 @@ describe("OP12-063 Vinsmoke Reiju", () => {
       0,
     );
   });
+  test("Blocker works below the Event threshold and protects Life", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [op12VinsmokeReiju063],
+        trash: [eb01OffWhite019, eb01OffWhite019, eb01OffWhite019],
+      },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const id = e.findCardInZone("south", "character", op12VinsmokeReiju063);
+    const life = e.getView("south").players.south.lifeCount;
+    e.asNorth().attack(e.findCardInZone("north", "character", "EB01-018"), e.leader("south"));
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === id),
+    ).toMatchObject({ power: 5000, cost: 4 });
+    e.asSouth().chooseBlocker(id);
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(id);
+  });
 });

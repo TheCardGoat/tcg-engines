@@ -23,7 +23,7 @@ export const op16Inazuma024: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "slash",
   effect:
     "When this Character is K.O.'d by your opponent's effect, rest up to 1 of your opponent's Characters.\n\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

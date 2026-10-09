@@ -46,7 +46,7 @@ export const op09Sabo104: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

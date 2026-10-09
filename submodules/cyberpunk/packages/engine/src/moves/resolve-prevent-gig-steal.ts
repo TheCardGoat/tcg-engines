@@ -4,6 +4,7 @@ import type { PreventGigStealPendingChoice } from "../types/match-state.ts";
 import { performGigSteal } from "./resolve-attack.ts";
 import { enqueueEventTriggers, resumeCurrentTrigger } from "../ability-executor.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
+import { formatStolenGigSummary } from "../logging/stolen-gig-summary.ts";
 
 export interface ResolvePreventGigStealInput extends MoveInput {
   args: {
@@ -127,6 +128,10 @@ export const resolvePreventGigStealMove: MoveDefinition<ResolvePreventGigStealIn
       .map((entry) => entry.dieId);
 
     if (choice.payload.effectSteal) {
+      const stolenGigs = remainingGigIds.flatMap((gigId) => {
+        const die = state.G.gigDice[gigId as string];
+        return die ? [{ dieType: die.dieType, faceValue: die.faceValue }] : [];
+      });
       for (const gigId of remainingGigIds) {
         operations.gig.moveGig(gigId, attackerControllerId, choice.payload.attackerId);
         const die = state.G.gigDice[gigId as string];
@@ -143,6 +148,20 @@ export const resolvePreventGigStealMove: MoveDefinition<ResolvePreventGigStealIn
             operations,
           );
         }
+      }
+      if (stolenGigs.length > 0) {
+        operations.event.emit({
+          type: "actionLog",
+          messageKey: "trigger.stealGig",
+          params: {
+            cardName: choice.payload.effectSteal.sourceCardName,
+            count: stolenGigs.length,
+            stolenGigs: formatStolenGigSummary(stolenGigs),
+          },
+          playerId: attackerControllerId,
+          category: "trigger",
+          cardIds: [choice.payload.effectSteal.sourceCardId as string],
+        });
       }
       resumeCurrentTrigger(state, operations);
       resumeSuspendedEndTurn(state, operations);

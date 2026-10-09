@@ -22,7 +22,7 @@ export const op01Denjiro046: CharacterCard = {
   setId: "OP01",
   cost: 5,
   power: 7000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[DON!! x1] [When Attacking] If your Leader is [Kouzuki Oden], set up to 2 of your DON!! cards as active.",

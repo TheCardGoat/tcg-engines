@@ -34,6 +34,14 @@ describe("OP14-080 Gecko Moria", () => {
     ).toBe(7000);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(paymentId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: engine.leader("south"),
+        trigger: "activateMain",
+      }).accepted,
+    ).toBe(false);
   });
 
   test("trashes three cards from hand while attacking and adds the top deck card to Life", () => {
@@ -83,5 +91,31 @@ describe("OP14-080 Gecko Moria", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("grants power before the payment's On K.O., and excludes Characters played later", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04GeckoMoriaOp14080080,
+        character: [op14eb04SpiderMice081],
+        hand: ["ST02-012"],
+        activeDon: 1,
+      },
+      { character: ["ST02-012"] },
+    );
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    expect(engine.getView("south").players.south.leader.power).toBe(6000);
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.findCardInZone("north", "character", "ST02-012")] },
+      "south",
+    );
+    engine.playCard("ST02-012", "south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.cardId === "ST02-012")
+        ?.power,
+    ).toBe(3000);
+    engine.endTurn("south");
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
   });
 });

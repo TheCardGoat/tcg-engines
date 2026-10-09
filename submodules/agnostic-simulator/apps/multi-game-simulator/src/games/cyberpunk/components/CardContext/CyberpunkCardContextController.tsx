@@ -5,11 +5,10 @@ import type {
 } from "@tcg/simulator-contract";
 import type { EngineInteractionView } from "@tcg/protocol";
 import { CardContextMenuController } from "@tcg/simulator-ui";
-import { useCallback, useMemo, type ReactNode } from "react";
+import { useCallback, useMemo, useRef, type ReactNode } from "react";
 
 import {
   getGearAttachTargets,
-  getProgramSpatialTargets,
   interactionViewAbilityIndexForCard,
   PLAYER_SIDE_TO_ID,
   useEngine,
@@ -64,6 +63,12 @@ export function CyberpunkCardContextController({
     () => new Map(fixture.entities.map((entity) => [entity.id, entity])),
     [fixture.entities],
   );
+  // Late-bound self reference so a host's menu can reuse the gear's own
+  // computed action rows (identical availability and ability expansion)
+  // without threading the callback through its own definition.
+  const actionsForEntityRef = useRef<(entityId: string) => readonly SimulatorCardAction[]>(
+    () => [],
+  );
 
   const actionsForEntity = useCallback(
     (entityId: string): readonly SimulatorCardAction[] => {
@@ -117,6 +122,24 @@ export function CyberpunkCardContextController({
           } satisfies SimulatorCardAction,
         ];
       });
+      const enabledAbilityIndex = interactionViewAbilityIndexForCard(view, entityId);
+      if (
+        enabledAbilityIndex !== null &&
+        !structuralActions.some((action) => baseCommandRef(action.commandRef) === "activateAbility")
+      ) {
+        const presentation = abilityActionPresentation(entity, enabledAbilityIndex);
+        structuralActions.push({
+          id: `activateAbility:${enabledAbilityIndex}:${entityId}`,
+          sourceEntityId: entityId,
+          label: presentation.label,
+          detail: presentation.detail,
+          order: actionOrder("activateAbility") + enabledAbilityIndex / 100,
+          shortcut: getCardActionHotkey("activateAbility"),
+          activation: "begin-selection",
+          commandRef: `activateAbility:${enabledAbilityIndex}`,
+          availability: { kind: "enabled" },
+        });
+      }
       const representedActionRefs = new Set(
         structuralActions.flatMap((action) => (action.commandRef ? [action.commandRef] : [])),
       );
@@ -154,16 +177,31 @@ export function CyberpunkCardContextController({
         return structuralActions.filter((action) => action.availability.kind === "enabled");
       }
       if (entity.ownerId !== humanPlayerId) return [];
-      return structuralActions;
+      return withAttachedGearAbilities(entity, structuralActions, {
+        actionsForEntity: (id) => actionsForEntityRef.current(id),
+        entityById,
+        engine,
+        humanPlayerId,
+      });
     },
     [engine, entityById, fixture.entities, humanPlayerId, view, zoneByEntityId],
   );
+  actionsForEntityRef.current = actionsForEntity;
   const autoActivationActionsForEntity = useCallback(
-    (entityId: string): readonly SimulatorCardAction[] =>
-      actionsForEntity(entityId).filter((action) => {
+    (entityId: string): readonly SimulatorCardAction[] => {
+      // Only the card's own actions may auto-run — a Gear ability aggregated
+      // into its host's menu must not fire from a host click.
+      const enabledActions = actionsForEntity(entityId).filter(
+        (action) => action.availability.kind === "enabled" && action.sourceEntityId === entityId,
+      );
+      // Quick actions are only unambiguous when there is no other legal move.
+      // In particular, an ability must not hide the choice to attack the rival.
+      if (enabledActions.length !== 1) return [];
+      return enabledActions.filter((action) => {
         const commandRef = baseCommandRef(action.commandRef);
         return commandRef === "useBlocker" || commandRef === "activateAbility";
-      }),
+      });
+    },
     [actionsForEntity],
   );
 
@@ -274,11 +312,7 @@ export function CyberpunkCardContextController({
       if (rawMoveId === "playCard") {
         const cardType = cardTypeFor(entity);
         const attachTargets = getGearAttachTargets({ interactionView: view }, cardId, cardType);
-        const programTargets = getProgramSpatialTargets(
-          { matchState: engine.matchState, side, interactionView: view },
-          cardId,
-        );
-        if (attachTargets.length > 0 || programTargets.length > 0) {
+        if (attachTargets.length > 0) {
           moveSelection.setSelection({
             side,
             moveId: rawMoveId,
@@ -320,7 +354,7 @@ export function CyberpunkCardContextController({
           ? parsedAbilityIndex
           : interactionViewAbilityIndexForCard(view, cardId);
         if (abilityIndex === null) return;
-        engine.dispatch({ type: rawMoveId, cardId, abilityIndex, as });
+        dispatchCostedAction({ type: rawMoveId, cardId, abilityIndex, as });
       }
     },
     [attackSelection, dispatchCostedAction, engine, entityById, moveSelection, view],
@@ -328,7 +362,7 @@ export function CyberpunkCardContextController({
 
   const promptActive =
     !engine.boardCorrectionEnabled &&
-    (Boolean(engine.matchState.G.turnMetadata.pendingChoice) ||
+    (Boolean(engine.prompts[engine.humanSide].choice) ||
       moveSelection.selection !== null ||
       attackSelection.selection !== null ||
       Boolean(engine.effectCardTargetSelection));
@@ -340,6 +374,14 @@ export function CyberpunkCardContextController({
         imageUrl: entity.imageUrl,
         face: "public",
         alt: entity.title,
+        attachments: entity.details?.relationships?.flatMap((relationship) =>
+          relationship.entityIds.flatMap((id) => {
+            const attached = entityById.get(id);
+            return attached?.face === "public" && attached.imageUrl
+              ? [{ imageUrl: attached.imageUrl, name: attached.title, face: "public" as const }]
+              : [];
+          }),
+        ),
         details: {
           name: entity.title,
           cardType: entity.subtitle,
@@ -348,7 +390,10 @@ export function CyberpunkCardContextController({
           power: statValue(entity, "Power"),
           effectivePower: statValue(entity, "Power"),
           classifications: entity.traits,
-          rules: entity.details?.rules.map((rule) => rule.text),
+          rules: entity.details?.rules.flatMap((rule) => {
+            const text = rule.kind === "keyword" ? (rule.text ?? rule.label) : rule.text;
+            return text === undefined ? [] : [text];
+          }),
           activeEffects: entity.activeEffects?.map((effect) => ({
             label: effect.label,
             detail: effect.detail,
@@ -356,7 +401,7 @@ export function CyberpunkCardContextController({
         },
       });
     },
-    [showCardPreview],
+    [entityById, showCardPreview],
   );
 
   return (
@@ -560,6 +605,48 @@ function normalizeTrait(value: string): string {
 
 function baseCommandRef(value: string | undefined): string | undefined {
   return value?.split(":")[0];
+}
+
+/**
+ * Surfaces each attached Gear's activated abilities inside the host's menu.
+ * The gear slivers on the board are a small target and the gear menu is only
+ * reachable through them, so a host with a full fan effectively hid its
+ * Gear abilities. Rows reuse the Gear's own computed actions (identical
+ * availability and ability expansion) and its entity id, so execution is
+ * identical to activating from the Gear itself.
+ */
+function withAttachedGearAbilities(
+  host: SimulatorEntity,
+  actions: readonly SimulatorCardAction[],
+  deps: {
+    actionsForEntity: (entityId: string) => readonly SimulatorCardAction[];
+    entityById: Map<string, SimulatorEntity>;
+    engine: ReturnType<typeof useEngine>;
+    humanPlayerId: string;
+  },
+): readonly SimulatorCardAction[] {
+  if (host.kind !== "unit" && host.kind !== "leader") return actions;
+  const gearRows: SimulatorCardAction[] = [];
+  let gearIndex = 0;
+  for (const [instanceId, instance] of Object.entries(deps.engine.matchState.G.cardIndex)) {
+    if (instance.meta.attachedToId !== host.id) continue;
+    const gear = deps.entityById.get(instanceId);
+    if (!gear || gear.ownerId !== deps.humanPlayerId || gear.face !== "public") continue;
+    for (const action of deps.actionsForEntity(gear.id)) {
+      if (baseCommandRef(action.commandRef) !== "activateAbility") continue;
+      const abilityText = action.detail === undefined ? action.label : undefined;
+      gearRows.push({
+        ...action,
+        id: `gear:${action.id}`,
+        label: gear.title,
+        detail: abilityText ?? action.detail,
+        order: actionOrder("activateAbility") + 0.5 + gearIndex / 100,
+        shortcut: undefined,
+      });
+    }
+    gearIndex += 1;
+  }
+  return gearRows.length > 0 ? [...actions, ...gearRows] : actions;
 }
 
 function cardTypeFor(entity: SimulatorEntity): EngineCardType | undefined {

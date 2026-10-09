@@ -65,7 +65,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
 
   // Pattern 2: "add up to N [filters] card(s) [with a cost of N] from your hand to the (top|bottom) of your Life cards [face-up]"
   const handMatch =
-    /^add\s+up\s+to\s+(\d+)\s+(.+?)\s+cards?(?:\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?)?\s+(?:with\s+a\s+\[Trigger\]\s+)?from\s+your\s+hand\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?(?:\s+face-up)?$/i.exec(
+    /^add\s+up\s+to\s+(\d+)\s+(.+?)\s+cards?(?:\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?)?\s+(?:with\s+a\s+\[Trigger\]\s+)?from\s+your\s+hand(?:\s+or\s+trash)?\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards?(?:\s+face-up)?$/i.exec(
       trimmed,
     );
   if (handMatch) {
@@ -78,7 +78,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
     const traitMatch =
       /(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type(?:\s+Character)?/i.exec(filterText);
     if (traitMatch) {
-      filters.push({ filter: "trait", value: traitMatch[1]!, match: "includes" });
+      filters.push({ filter: "trait", value: traitMatch[1]!, match: "exact" });
     }
     const catMatch = /\bCharacter\b/i.exec(filterText);
     if (catMatch) {
@@ -104,7 +104,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
       action: "addToLife",
       target: {
         player: "self",
-        zones: ["hand"],
+        zones: /from\s+your\s+hand\s+or\s+trash/i.test(trimmed) ? ["hand", "trash"] : ["hand"],
         count: { amount: parseInt(handMatch[1]!, 10), upTo: true },
         ...(filters.length > 0 && { filters }),
       },
@@ -181,7 +181,7 @@ export function parseAddToLifeAction(text: string): AddToLifeAction | null {
           traits.push(tMatch[1]!);
         }
       }
-      const traitFilter = traitAlternativesFilter(traits, "includes");
+      const traitFilter = traitAlternativesFilter(traits, "ordinary");
       if (traitFilter) filters.push(traitFilter);
       finalZonesText = traitZoneMatch[1]!;
     }
@@ -294,7 +294,7 @@ export function parseRemoveFromLifeAction(
 
   // "your opponent adds N card(s) from the top of their Life cards to their hand"
   const oppAddMatch =
-    /^your\s+opponent\s+adds\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+their\s+Life\s+cards?\s+to\s+their\s+hand$/i.exec(
+    /^your\s+opponent\s+adds\s+(\d+)\s+cards?\s+from\s+(?:the\s+top\s+of\s+)?their\s+Life\s+(?:cards?|area)\s+to\s+their\s+hand$/i.exec(
       trimmed,
     );
   if (oppAddMatch) {
@@ -322,16 +322,17 @@ export function parseRemoveFromLifeAction(
 
   // "trash up to N card(s) from the top of your/your opponent's Life cards"
   const trashMatch =
-    /^trash\s+(?:up\s+to\s+)?(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+(your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.exec(
+    /^trash\s+(?:up\s+to\s+)?(\d+)\s+cards?\s+from\s+the\s+(top(?:\s+or\s+bottom)?)\s+of\s+(your\s+opponent[''\u2019]s|your)\s+Life\s+cards?$/i.exec(
       trimmed,
     );
   if (trashMatch) {
     const upTo = /up\s+to/i.test(trimmed);
     return {
       action: "removeFromLife",
-      player: /opponent/i.test(trashMatch[2]!) ? "opponent" : "self",
+      player: /opponent/i.test(trashMatch[3]!) ? "opponent" : "self",
       count: { amount: parseInt(trashMatch[1]!, 10), ...(upTo && { upTo: true }) },
       destination: "trash",
+      ...(/bottom/i.test(trashMatch[2]!) && { position: "choice" as const }),
     };
   }
 
@@ -385,7 +386,7 @@ export function parseLifeCardLookAction(
   const trimmed = text.trim().replace(/\.+$/, "");
 
   const moveOneToDeckMatch =
-    /^look\s+at\s+all\s+(?:of\s+)?your\s+Life\s+cards?;?\s*place\s+1\s+card\s+at\s+the\s+top\s+of\s+your\s+deck\s+and\s+place\s+the\s+rest\s+back\s+in\s+your\s+Life\s+area\s+in\s+any\s+order$/i.exec(
+    /^look\s+at\s+all\s+(?:of\s+)?your\s+Life\s+cards?;?\s*place\s+1\s+(?:card\s+)?at\s+the\s+top\s+of\s+your\s+deck\s+and\s+place\s+the\s+rest\s+back\s+in\s+your\s+Life\s+area\s+in\s+any\s+order$/i.exec(
       trimmed,
     );
   if (moveOneToDeckMatch) {

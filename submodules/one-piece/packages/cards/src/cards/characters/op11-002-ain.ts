@@ -23,7 +23,7 @@ export const op11Ain002: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Neo Navy"],
+  traits: ["FILM", "Neo Navy"],
   attribute: "special",
   effect:
     "[On Play] Give up to 1 of your opponent's Characters −1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 0 power or less.",

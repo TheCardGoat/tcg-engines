@@ -42,32 +42,46 @@ describe("OP17-119 Loki", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("never exceeds the total cost of 4", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: [op17Loki119], activeDon: op17Loki119.cost },
-      {
-        character: [
-          { cardId: "OP16-095" }, // cost 2
-          { cardId: "OP16-096" }, // cost 8 — over the cap alone
-        ],
-        activeDon: 3,
-      },
+  test("rejects a combined cost of five unchanged, then K.O.s an exact total of four", () => {
+    let engine = OnePieceTestEngine.create(
+      { leaderCardId: "ST06-001", hand: [op17Loki119], activeDon: op17Loki119.cost },
+      { leaderCardId: "ST01-001", character: ["ST01-004", "ST01-005", "ST01-003"] },
     );
-    const luffyId = engine.findCardInZone("north", "character", "OP16-095");
-    const yamatoId = engine.findCardInZone("north", "character", "OP16-096");
-
-    engine.playCard(op17Loki119, "south");
-    const ko = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    if (ko?.kind !== "selectEntity") throw new Error("Expected the K.O. choice.");
-    const candidates = ko.candidates.map((candidate) => candidate.ref.id);
-    expect(candidates).toContain(luffyId);
-    expect(candidates).toContain(yamatoId);
-    // Only the cost-2 Luffy fits under the total of 4.
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [luffyId] }, "south");
-
+    const sanji = engine.findCardInZone("north", "character", "ST01-004"),
+      jinbe = engine.findCardInZone("north", "character", "ST01-005"),
+      karoo = engine.findCardInZone("north", "character", "ST01-003");
+    engine.asSouth().play(op17Loki119);
+    const prompt = engine.pendingDecision("effectTargetSelection", "south");
+    const step = prompt.steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected aggregate K.O. choice");
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([sanji, jinbe, karoo]);
+    const before = engine.getView("south");
+    const failed = engine.expectFailure({
+      type: "resolvePrompt",
+      seat: "south",
+      promptId: prompt.id,
+      selectedIds: [sanji, jinbe],
+    });
+    engine = OnePieceTestEngine.fromState(failed.state);
+    const rejected = engine.getView("south");
+    expect(rejected.logs).toHaveLength(before.logs.length + 1);
+    expect(rejected.logs.at(-1)?.message).toBe("Prompt resolution could not be applied.");
+    // Rejection adds only its diagnostic; every gameplay/view field is unchanged.
+    expect({ ...rejected, logs: rejected.logs.slice(0, -1) }).toEqual(before);
+    expect(engine.pendingDecision("effectTargetSelection", "south")).toEqual(prompt);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [jinbe, karoo] }, "south");
     const view = engine.getView("south");
-    expect(view.players.north.characters.map((card) => card?.cardId)).toContain("OP16-096");
-    expect(view.players.north.trash.map((card) => card.cardId)).toContain("OP16-095");
+    expect(view.players.north.characters.filter(Boolean).map((card) => card?.instanceId)).toEqual([
+      sanji,
+    ]);
+    expect(
+      view.players.north.trash
+        .map((card) => card.instanceId)
+        .sort((a, b) => String(a).localeCompare(String(b))),
+    ).toEqual([jinbe, karoo].sort((a, b) => a.localeCompare(b)));
+    expect(view.players.south.characters.find((card) => card?.cardId === "OP17-119")?.cost).toBe(
+      18,
+    );
     expect(view.prompts).toHaveLength(0);
   });
 
@@ -90,5 +104,6 @@ describe("OP17-119 Loki", () => {
 
     engine.endTurn("north");
     expect(lokiPower()).toBe(8000);
+    expect(lokiCost()).toBe(18);
   });
 });

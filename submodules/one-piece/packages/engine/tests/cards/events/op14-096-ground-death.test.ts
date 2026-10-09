@@ -9,6 +9,25 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP14-096 Ground Death", () => {
+  test.each([8, 9])(
+    "the paid Counter Event counts toward the trash threshold from %s cards",
+    (trash) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+        { hand: [op14eb04GroundDeath096], trash, activeDon: 1 },
+        SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+      );
+      const north = engine.asNorth();
+      const lifeBefore = north.view().players.north.lifeCount;
+      engine.asSouth().attack(eb01MountainGod018, engine.leader("north"));
+      north.chooseCounter(op14eb04GroundDeath096);
+      if (trash === 9) north.chooseTargets(engine.leader("north"));
+      expect(north.view().players.north.lifeCount).toBe(lifeBefore - (trash === 9 ? 0 : 1));
+      expect(north.view().players.north.trash).toHaveLength(trash + 1);
+      expect(north.view().prompts).toHaveLength(0);
+    },
+  );
+
   test("Main rests two DON!! and negates an opposing cost-5-or-less Character for the turn", () => {
     const engine = OnePieceTestEngine.create(
       {

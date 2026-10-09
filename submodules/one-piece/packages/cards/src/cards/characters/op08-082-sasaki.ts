@@ -22,7 +22,7 @@ export const op08Sasaki082: CharacterCard = {
   setId: "OP08",
   cost: 1,
   power: 1000,
-  counter: 1000,
+  counter: 2000,
   traits: ["Animal Kingdom Pirates"],
   attribute: "slash",
   effect:

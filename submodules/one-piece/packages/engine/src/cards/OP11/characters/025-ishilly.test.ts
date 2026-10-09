@@ -42,4 +42,17 @@ describe("OP11-025 Ishilly", () => {
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 1 });
     expect(engine.pendingDecision("battleCounter", "south").actorId).toBe("south");
   });
+  test("may decline the compound rest cost without battle power or DON payment", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP11-025"], activeDon: 1 },
+      {},
+      { activeSeat: "north" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(false);
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").players.south.lifeCount).toBe(3);
+  });
 });

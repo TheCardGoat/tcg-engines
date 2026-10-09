@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { DieType } from "@tcg/cyberpunk-types";
 import {
   defOf,
   computeEffectiveCostDetails,
@@ -6,7 +7,9 @@ import {
   getEffectiveRules,
   type ActiveEffect,
   type CardInstance,
-  type DieType,
+  type FilteredMatchView,
+  type FilteredCardView,
+  type FilteredEffectView,
   type GigDie,
   type MatchState,
 } from "@tcg/cyberpunk-engine";
@@ -21,6 +24,7 @@ export type EffectiveRule =
   | "cantBeBlocked"
   | "canAttackOnPlayedTurnAgainstUnits";
 import { useEngine } from "./engineContext";
+import { isViewerHiddenIdentityDefinitionId } from "./live/viewerPlaceholders";
 import { PLAYER_SIDE_TO_ID, type Side } from "./sides";
 
 /** Win condition: holding 7 Gigs at the start of your turn (cyberpunk-tcg-rules). */
@@ -48,6 +52,7 @@ export interface CardActiveEffectView {
   /** True only for an effect that is expected to expire rather than a printed static rule. */
   isTemporary?: boolean;
   defeatsAtEndOfTurn: boolean;
+  defeatIfAttacksAtEndOfTurn?: boolean;
 }
 
 export interface ZoneCardView {
@@ -81,10 +86,12 @@ export interface ZoneCardView {
   effectivePower: number | null;
   /** Active effects currently changing this card or scheduled from the same source. */
   activeEffects: CardActiveEffectView[];
-  /** Visual state derived from engine. */
+  /** Spent orientation is shown only in the field, Legends, and Eddies areas. */
   spent: boolean;
   /** True while this unit is still under the has-lag attack restriction. */
   hasLag: boolean;
+  /** The server intentionally omitted this card's identity for this viewer. */
+  identityHidden: boolean;
   faceDown: boolean;
   /** Online UX: show the face this turn (last sold Eddie, looked-at Legend). */
   revealed?: boolean;
@@ -135,45 +142,82 @@ export interface SideZoneViews {
 }
 
 /**
- * True when a projected hand contains identities hidden from this viewer.
- * Presentation position is deliberately irrelevant: spectators can have a
- * bottom-seat hand while still being unauthorized to see either player's cards.
+ * True only when the server projection replaced a hand identity with a
+ * viewer-only placeholder. Physical face-down state is not an authorization
+ * signal: players may inspect their own opening hands and local practice
+ * controllers may inspect either seat.
  */
-export function handContainsPrivateCards(
-  cards: ReadonlyArray<Pick<ZoneCardView, "faceDown" | "revealed">>,
+export function handContainsHiddenIdentities(
+  cards: ReadonlyArray<Pick<ZoneCardView, "identityHidden" | "revealed">>,
 ): boolean {
-  return cards.some((card) => card.faceDown && card.revealed !== true);
+  return cards.some((card) => card.identityHidden && card.revealed !== true);
 }
 
 function gearViews(
   meta: CardInstance["meta"],
   cardIndex: Record<string, CardInstance>,
   state: MatchState,
+  projectedCards: ReadonlyMap<string, FilteredCardView>,
 ): ZoneCardView[] {
   return meta.attachedGearIds
     .map((id) => cardIndex[id as unknown as string])
     .filter((g): g is CardInstance => Boolean(g))
-    .map((g) => toView(g, cardIndex, state));
+    .map((g) => toView(g, cardIndex, state, projectedCards));
+}
+
+export function projectedCardViews(
+  projection: FilteredMatchView | undefined,
+): ReadonlyMap<string, FilteredCardView> {
+  const cards = new Map<string, FilteredCardView>();
+  if (!projection) return cards;
+  for (const player of Object.values(projection.players)) {
+    for (const zone of Object.values(player.zones)) {
+      if (!Array.isArray(zone)) continue;
+      for (const card of zone) {
+        if (card.definitionId) {
+          cards.set(card.instanceId, card);
+        }
+      }
+    }
+  }
+  return cards;
+}
+
+function projectedEffects(
+  effects: readonly FilteredEffectView[],
+  targetKind: "card" | "player",
+  targetId: string,
+  state: MatchState,
+  targetName?: string,
+): CardActiveEffectView[] {
+  return effects.map((effect) => ({
+    ...effect,
+    targetKind,
+    targetId,
+    targetName,
+    sourceImageUrl: effect.sourceCardId
+      ? sourceCardImageUrl(effect.sourceCardId, state)
+      : undefined,
+  }));
 }
 
 function toView(
   instance: CardInstance,
   cardIndex: Record<string, CardInstance>,
   state: MatchState,
+  projectedCards: ReadonlyMap<string, FilteredCardView>,
 ): ZoneCardView {
   const def = defOf(instance);
+  const projected = projectedCards.get(String(instance.instanceId));
   const printedPower = "power" in def && typeof def.power === "number" ? def.power : null;
   const printedCost = "cost" in def && typeof def.cost === "number" ? def.cost : null;
   const effectiveCostDetails =
     printedCost !== null
       ? computeEffectiveCostDetails(state, instance.instanceId, instance.controllerId)
       : null;
-  const effectiveRules = [
-    ...new Set([
-      ...(getEffectiveRules(state, instance.instanceId as unknown as string) as EffectiveRule[]),
-      ...collectSelfStaticRules(instance),
-    ]),
-  ];
+  const effectiveRules = effectiveRulesForCard(instance, state, projectedCards);
+  const spentOrientationApplies =
+    instance.zone === "field" || instance.zone === "legendArea" || instance.zone === "eddieArea";
   return {
     cardId: instance.instanceId as unknown as string,
     definitionId: instance.definitionId,
@@ -186,21 +230,51 @@ function toView(
     classifications: def.classifications ?? [],
     keywords: def.keywords ?? [],
     cost: printedCost,
-    effectiveCost: effectiveCostDetails?.effectiveCost ?? null,
-    costEffects: costEffectViews(effectiveCostDetails, instance.instanceId as unknown as string),
+    effectiveCost: projected
+      ? projected.effectiveCost
+      : (effectiveCostDetails?.effectiveCost ?? null),
+    costEffects: projected
+      ? projectedEffects(
+          projected.costEffects,
+          "card",
+          String(instance.instanceId),
+          state,
+          def.displayName ?? def.name,
+        )
+      : costEffectViews(effectiveCostDetails, instance.instanceId as unknown as string),
     power: printedPower,
     effectivePower:
       printedPower !== null
         ? getEffectivePower(state, instance.instanceId as unknown as string)
         : null,
-    activeEffects: activeEffectViews(instance, state),
-    spent: instance.meta.spent ?? false,
+    activeEffects: projected
+      ? projectedEffects(
+          projected.activeEffects,
+          "card",
+          String(instance.instanceId),
+          state,
+          def.displayName ?? def.name,
+        )
+      : activeEffectViews(instance, state),
+    spent: spentOrientationApplies && (instance.meta.spent ?? false),
     hasLag: instance.meta.hasLag ?? false,
+    identityHidden: isViewerHiddenIdentityDefinitionId(instance.definitionId),
     faceDown: instance.meta.faceDown ?? false,
     revealed: instance.meta.revealed === true,
     effectiveRules,
-    attachedGear: gearViews(instance.meta, cardIndex, state),
+    attachedGear: gearViews(instance.meta, cardIndex, state, projectedCards),
   };
+}
+
+export function effectiveRulesForCard(
+  instance: CardInstance,
+  state: MatchState,
+  projectedCards: ReadonlyMap<string, FilteredCardView>,
+): EffectiveRule[] {
+  return (
+    projectedCards.get(String(instance.instanceId))?.grantedRules ??
+    getEffectiveRules(state, String(instance.instanceId))
+  ).filter(isEffectiveRule);
 }
 
 function costEffectViews(
@@ -231,11 +305,9 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
     .map((effect) => {
       const sourceName = sourceCardName(effect.sourceCardId as unknown as string, state);
       const sourceImageUrl = sourceCardImageUrl(effect.sourceCardId as unknown as string, state);
-      const defeatsAtEndOfTurn = hasEndOfTurnDefeatFromSource(
-        state,
-        effect.sourceCardId as unknown as string,
-        targetId,
-      );
+      const defeatsAtEndOfTurn =
+        (effect.kind === "defeatAtEndOfTurnIfAttacked" && effect.triggered === true) ||
+        hasEndOfTurnDefeatFromSource(state, effect.sourceCardId as unknown as string, targetId);
       const durationLabel = durationLabelForEffect(effect);
       const base = {
         id: effect.id,
@@ -249,6 +321,8 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
         durationLabel,
         isTemporary: effect.origin !== "static" && effect.duration !== "continuous",
         defeatsAtEndOfTurn,
+        defeatIfAttacksAtEndOfTurn:
+          effect.kind === "defeatAtEndOfTurnIfAttacked" && effect.triggered !== true,
       };
 
       if (effect.kind === "powerModifier") {
@@ -271,6 +345,17 @@ function activeEffectViews(instance: CardInstance, state: MatchState): CardActiv
           detail: `${sourceName}: power x${multiplier} ${durationLabel}${defeatsAtEndOfTurn ? "; defeated at end of turn" : ""}.`,
           modifierLabel: `x${multiplier}`,
           tone: multiplier >= 1 ? ("buff" as const) : ("debuff" as const),
+        };
+      }
+
+      if (effect.kind === "defeatAtEndOfTurnIfAttacked") {
+        return {
+          ...base,
+          label: effect.triggered ? "End defeat" : "Attack risk",
+          detail: effect.triggered
+            ? `${sourceName}: defeated at end of turn.`
+            : `${sourceName}: if this Unit steals or fights, defeat it at end of turn.`,
+          tone: "debuff" as const,
         };
       }
 
@@ -415,26 +500,6 @@ function activeEffectTone(effect: ActiveEffect): CardActiveEffectView["tone"] {
   return "neutral";
 }
 
-function collectSelfStaticRules(instance: CardInstance): EffectiveRule[] {
-  const def = defOf(instance) as {
-    abilities?: Array<{
-      kind?: string;
-      effects?: Array<{
-        effect?: string;
-        rule?: string;
-        target?: { selector?: string };
-      }>;
-    }>;
-  };
-
-  return (def.abilities ?? [])
-    .filter((ability) => ability.kind === "static")
-    .flatMap((ability) => ability.effects ?? [])
-    .filter((effect) => effect.effect === "grantRule" && effect.target?.selector === "self")
-    .map((effect) => effect.rule)
-    .filter((rule): rule is EffectiveRule => isEffectiveRule(rule));
-}
-
 function isEffectiveRule(rule: string | undefined): rule is EffectiveRule {
   return (
     rule === "blocker" ||
@@ -481,7 +546,8 @@ const EMPTY_VIEW: SideZoneViews = {
  * regardless of which zone the card lives in, or `null` if unknown.
  */
 export function useCardView(cardId: string | null | undefined): ZoneCardView | null {
-  const { matchState } = useEngine();
+  const { matchState, remoteProjection } = useEngine();
+  const projectedCards = useMemo(() => projectedCardViews(remoteProjection), [remoteProjection]);
   return useMemo(() => {
     if (!cardId) {
       return null;
@@ -490,8 +556,8 @@ export function useCardView(cardId: string | null | undefined): ZoneCardView | n
     if (!inst) {
       return null;
     }
-    return toView(inst, matchState.G.cardIndex, matchState);
-  }, [cardId, matchState]);
+    return toView(inst, matchState.G.cardIndex, matchState, projectedCards);
+  }, [cardId, matchState, projectedCards]);
 }
 
 /**
@@ -499,7 +565,8 @@ export function useCardView(cardId: string | null | undefined): ZoneCardView | n
  * localized action params rather than stable instance ids.
  */
 export function useCardViewByName(cardName: string | null | undefined): ZoneCardView | null {
-  const { matchState } = useEngine();
+  const { matchState, remoteProjection } = useEngine();
+  const projectedCards = useMemo(() => projectedCardViews(remoteProjection), [remoteProjection]);
   return useMemo(() => {
     if (!cardName) {
       return null;
@@ -508,8 +575,8 @@ export function useCardViewByName(cardName: string | null | undefined): ZoneCard
       const def = defOf(card);
       return (def.displayName ?? def.name) === cardName;
     });
-    return inst ? toView(inst, matchState.G.cardIndex, matchState) : null;
-  }, [cardName, matchState]);
+    return inst ? toView(inst, matchState.G.cardIndex, matchState, projectedCards) : null;
+  }, [cardName, matchState, projectedCards]);
 }
 
 /**
@@ -517,8 +584,14 @@ export function useCardViewByName(cardName: string | null | undefined): ZoneCard
  * Returns plain view-models so the existing zone components don't need to know
  * about engine internals.
  */
+/** Hidden decks arrive as a count. A local deck list is only used when the projection sent the cards. */
+export function visibleDeckCount(deckZoneLength: number, projectedDeck: unknown): number {
+  return typeof projectedDeck === "number" ? projectedDeck : deckZoneLength;
+}
+
 export function useSideZones(side: Side): SideZoneViews {
-  const { matchState } = useEngine();
+  const { matchState, remoteProjection } = useEngine();
+  const projectedCards = useMemo(() => projectedCardViews(remoteProjection), [remoteProjection]);
   return useMemo(() => {
     const playerId = PLAYER_SIDE_TO_ID[side] as unknown as string;
     const player = matchState.G.players[playerId];
@@ -536,7 +609,7 @@ export function useSideZones(side: Side): SideZoneViews {
         .map((id) => lookup(String(id)))
         .filter((c): c is CardInstance => Boolean(c))
         .filter((c) => opts?.includeAttached !== false || !c.meta.attachedToId)
-        .map((c) => toView(c, cardIndex, matchState));
+        .map((c) => toView(c, cardIndex, matchState, projectedCards));
 
     const trashCards = mapZone(player.zones.trash as unknown as string[]);
 
@@ -564,7 +637,10 @@ export function useSideZones(side: Side): SideZoneViews {
       trashTop: trashCards.length > 0 ? trashCards[trashCards.length - 1]! : null,
       fixerArea: mapDice(player.fixerArea as unknown as string[]),
       gigArea,
-      deckCount: player.zones.deck.length,
+      deckCount: visibleDeckCount(
+        player.zones.deck.length,
+        remoteProjection?.players[playerId]?.zones.deck,
+      ),
       trashCount: trashCards.length,
       eddies: player.eddies,
       spentEddies: player.spentEddies ?? 0,
@@ -572,7 +648,14 @@ export function useSideZones(side: Side): SideZoneViews {
       soldThisTurn: player.soldThisTurn,
       streetCred,
       gigCount: player.gigArea.length,
-      activeEffects: playerActiveEffectViews(playerId, matchState),
+      activeEffects: remoteProjection
+        ? projectedEffects(
+            remoteProjection.players[playerId]?.activeEffects ?? [],
+            "player",
+            playerId,
+            matchState,
+          )
+        : playerActiveEffectViews(playerId, matchState),
     };
-  }, [matchState.ctx.stateID, side]);
+  }, [matchState, side, projectedCards, remoteProjection]);
 }

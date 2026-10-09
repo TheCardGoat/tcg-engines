@@ -42,8 +42,14 @@ interface PermissionMaps {
 
 type EntitySelectionInput = Extract<InteractionInput, { kind: "entity-selection" }>;
 
-function isEntitySelectionInput(input: InteractionInput): input is EntitySelectionInput {
-  return input.kind === "entity-selection";
+/**
+ * Cost inputs (payment sources) are collected by the payment-selection flow
+ * and the interaction panel, never by board card clicks: a card bound only to
+ * a cost input could never complete its action, so presenting it as a choice
+ * target would build a doomed submission and crash on the missing cardId.
+ */
+function isCardChoiceInput(input: InteractionInput): input is EntitySelectionInput {
+  return input.kind === "entity-selection" && input.role !== "cost";
 }
 
 /** Build per-card permission maps from the shared protocol view. */
@@ -54,13 +60,13 @@ export function computePermissions(view: EngineInteractionView): PermissionMaps 
   if (view.status === "ready" || view.status === "choosing") {
     for (const action of view.actions) {
       if (!action.enabled) continue;
-      const readyInput = action.inputs.find(isEntitySelectionInput);
+      const readyInput = action.inputs.find(isCardChoiceInput);
       const candidateInputs =
         view.status === "ready"
           ? readyInput
             ? [readyInput]
             : []
-          : action.inputs.filter(isEntitySelectionInput);
+          : action.inputs.filter(isCardChoiceInput);
       const candidates = candidateInputs.flatMap((input) =>
         input.candidates
           .filter((candidate) => candidate.enabled)
@@ -77,7 +83,7 @@ export function computePermissions(view: EngineInteractionView): PermissionMaps 
         } else {
           const input = action.inputs.find(
             (candidateInput) =>
-              candidateInput.kind === "entity-selection" &&
+              isCardChoiceInput(candidateInput) &&
               candidateInput.candidates.some(
                 (candidate) => candidate.enabled && candidate.entity.instanceId === id,
               ),

@@ -32,6 +32,7 @@ export const stitchProtectorOfFrogs: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8563c315711c4f45828a59cfdde2a31f",
+    tcgPlayer: "704675",
   },
   classifications: ["Storyborn", "Hero", "Alien"],
   i18n: stitchProtectorOfFrogsI18n,

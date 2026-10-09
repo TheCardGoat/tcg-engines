@@ -38,7 +38,7 @@ export const op10Smoker030: CharacterCard = {
   setId: "OP10",
   cost: 5,
   power: 7000,
-  traits: ["Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy"],
   attribute: "slash",
 
   effect:

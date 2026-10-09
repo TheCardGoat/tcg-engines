@@ -23,22 +23,28 @@ describe("OP05 Event and Stage regressions", () => {
               value: 4000,
               duration: "thisBattle",
             },
-          ],
-        },
-        {
-          trigger: "counter",
-          costs: [{ cost: "trashFromHand", amount: 1 }],
-          actions: [
             {
-              action: "setActive",
-              target: {
-                player: "self",
-                zones: ["costArea"],
-                count: { amount: 3, upTo: true },
-              },
+              action: "optional",
+              actions: [
+                {
+                  action: "trashFromHand",
+                  player: "self",
+                  amount: 1,
+                  thenRequiresFullAmount: true,
+                  thenActions: [
+                    {
+                      action: "setActive",
+                      target: {
+                        player: "self",
+                        zones: ["costArea"],
+                        count: { amount: 3, upTo: true },
+                      },
+                    },
+                  ],
+                },
+              ],
             },
           ],
-          optional: true,
         },
         {
           trigger: "trigger",
@@ -246,7 +252,7 @@ describe("OP05 Event and Stage regressions", () => {
     });
   });
 
-  test("OP05-059 scopes the multicolored condition to the draw before Then", () => {
+  test("OP05-059 gates both Main actions on the multicolored Leader", () => {
     expect(
       buildCardEffects(
         "[Main] If your Leader is multicolored, draw 1 card. Then, return up to 1 Character with a cost of 5 or less to the owner's hand. [Trigger] If your Leader is multicolored, draw 2 cards.",
@@ -255,12 +261,12 @@ describe("OP05 Event and Stage regressions", () => {
       effects: [
         {
           trigger: "main",
+          conditions: [{ condition: "leaderMulticolored" }],
           actions: [
             {
               action: "draw",
               player: "self",
               amount: 1,
-              condition: { condition: "leaderMulticolored" },
             },
             {
               action: "returnToHand",
@@ -282,7 +288,7 @@ describe("OP05 Event and Stage regressions", () => {
     });
   });
 
-  test("OP05-076 preserves all three inclusive search traits", () => {
+  test("OP05-076 preserves all three exact search traits", () => {
     expect(
       buildCardEffects(
         "[Main] Look at 3 cards from the top of your deck; reveal up to 1 [Straw Hat Crew], [Kid Pirates], or [Heart Pirates] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Activate this card's [Main] effect.",
@@ -301,9 +307,9 @@ describe("OP05 Event and Stage regressions", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Straw Hat Crew", match: "includes" },
-                    { filter: "trait", value: "Kid Pirates", match: "includes" },
-                    { filter: "trait", value: "Heart Pirates", match: "includes" },
+                    { filter: "trait", value: "Straw Hat Crew", match: "exact" },
+                    { filter: "trait", value: "Kid Pirates", match: "exact" },
+                    { filter: "trait", value: "Heart Pirates", match: "exact" },
                   ],
                 },
               ],
@@ -332,7 +338,7 @@ describe("OP05 Event and Stage regressions", () => {
       "OP05-078",
       "[Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Up to 1 of your [Kid Pirates] type Leader or Character cards gains +5000 power during this turn. [Trigger] Add up to 1 DON!! card from your DON!! deck and set it as active.",
       "self",
-      [{ filter: "trait", value: "Kid Pirates", match: "includes" }],
+      [{ filter: "trait", value: "Kid Pirates", match: "exact" }],
       5000,
     ],
   ] as const)("%s keeps DON!! -1 as a direct Main cost", (_id, text, player, filters, value) => {
@@ -340,6 +346,7 @@ describe("OP05 Event and Stage regressions", () => {
       effects: [
         {
           trigger: "main",
+          optional: true,
           costs: [{ cost: "returnDon", amount: 1 }],
           actions: [
             {
@@ -369,7 +376,7 @@ describe("OP05 Event and Stage regressions", () => {
     });
   });
 
-  test("OP05-097 uses inclusive Celestial Dragons matching with its printed boundaries", () => {
+  test("OP05-097 uses exact Celestial Dragons matching with its printed boundaries", () => {
     expect(
       buildCardEffects(
         "[Your Turn] The cost of playing [Celestial Dragons] type Character cards with a cost of 2 or more from your hand will be reduced by 1.",
@@ -381,12 +388,13 @@ describe("OP05 Event and Stage regressions", () => {
           actions: [
             {
               action: "modifyCost",
+              paymentOnly: true,
               target: {
                 player: "self",
                 zones: ["hand"],
                 count: { amount: "all" },
                 filters: [
-                  { filter: "trait", value: "Celestial Dragons", match: "includes" },
+                  { filter: "trait", value: "Celestial Dragons", match: "exact" },
                   { filter: "cardCategory", value: "character" },
                   { filter: "cost", comparison: "gte", value: 2 },
                 ],
@@ -457,7 +465,7 @@ describe("OP05 Event and Stage regressions", () => {
                 condition: "hasCard",
                 player: "self",
                 zone: "character",
-                filters: [{ filter: "trait", value: "Celestial Dragons", match: "includes" }],
+                filters: [{ filter: "trait", value: "Celestial Dragons", match: "exact" }],
               },
             },
           ],

@@ -41,8 +41,9 @@ export const theDuchesssThornes: GrandArchiveCard<GrandArchiveAbilityDefinition,
           trigger: {
             kind: "event",
             event: {
-              name: "card-activated",
+              name: "ability-activated",
               actor: "controller",
+              abilityLabel: "Cardistry",
               subject: {
                 kind: "event-object",
                 filter: {
@@ -128,7 +129,7 @@ export const theDuchesssThornes: GrandArchiveCard<GrandArchiveAbilityDefinition,
             },
             activationKind: "ability",
             abilityFilter: {
-              keyword: "cardistry",
+              label: "Cardistry",
             },
             costKind: "reserve",
             costOperation: "subtract",

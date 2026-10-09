@@ -83,7 +83,7 @@ describe("OP13-083 St. Jaygarcia Saturn", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("at seven trash cards cannot be selected by an opponent effect for removal", () => {
+  test("at seven trash cards survives being selected by an opponent effect for removal", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op13StJaygarciaSaturn083, eb01Doma005],
@@ -99,13 +99,14 @@ describe("OP13-083 St. Jaygarcia Saturn", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the opposing removal choice.");
     const candidates = target.candidates.map((candidate) => candidate.ref.id);
-    expect(candidates).not.toContain(saturnId);
+    expect(candidates).toContain(saturnId);
     expect(candidates).toContain(unprotectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [unprotectedId] }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [saturnId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(saturnId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(unprotectedId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(unprotectedId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(saturnId);
     expect(view.prompts).toHaveLength(0);
   });
 });

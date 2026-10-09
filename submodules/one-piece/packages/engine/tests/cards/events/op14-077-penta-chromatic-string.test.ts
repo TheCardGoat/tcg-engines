@@ -4,6 +4,25 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP14-077 Penta-Chromatic String", () => {
+  test("the power bonus still applies without an opposing 6000-power Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {},
+      { hand: [op14eb04PentaChromaticString077], activeDon: 2, donDeckCount: 5 },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const north = engine.asNorth();
+    const lifeBefore = north.view().players.north.lifeCount;
+    engine.asSouth().attack(engine.leader("south"), engine.leader("north"));
+    north.chooseCounter(op14eb04PentaChromaticString077);
+    north.chooseTargets(engine.leader("north"));
+    expect(north.view().players.north).toMatchObject({
+      lifeCount: lifeBefore,
+      restedDon: 2,
+      donDeckCount: 5,
+    });
+    expect(north.view().prompts).toHaveLength(0);
+  });
+
   test("Counter grants +4000, then adds rested DON!! when the opponent has a 6000-power Character", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: op14eb04ScaledNeptunian011, playedOnTurn: 0 }] },

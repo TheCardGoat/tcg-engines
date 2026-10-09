@@ -1,5 +1,5 @@
 import { emitEvent, emitLog, getPlayer, normalizeConfig } from "../shared.ts";
-import { buildInitialPlayerState, formatCardList } from "../state.ts";
+import { buildInitialPlayerState } from "../state.ts";
 import type { MatchConfig, MatchState } from "../types.ts";
 
 export function createMatch(config: MatchConfig): MatchState {
@@ -19,6 +19,8 @@ export function createMatch(config: MatchConfig): MatchState {
     winner: null,
     finishReason: null,
     setup: {
+      openingHandsDrawn: false,
+      pendingStartOfGameSeats: [],
       started: false,
       joKenPo: {
         round: 1,
@@ -75,21 +77,6 @@ export function createMatch(config: MatchConfig): MatchState {
       visibility: "public",
     },
   );
-
-  for (const seat of ["north", "south"] as const) {
-    emitLog(
-      state,
-      "system",
-      `${getPlayer(state, seat).playerName} draws ${normalizedConfig.openingHandSize} opening cards.`,
-      {
-        visibility: "private",
-        privateMessages: {
-          [seat]: `Cards drawn: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
-        },
-        judgeMessage: `${getPlayer(state, seat).playerName} opening hand: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
-      },
-    );
-  }
 
   return state;
 }

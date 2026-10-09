@@ -32,7 +32,7 @@ export const op17Usopp080: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Straw Hat Crew Elbaph"],
+  traits: ["Elbaph", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains +3000 power.\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Elbaph} type card and add it to your hand. Then, trash the rest.",
@@ -56,7 +56,7 @@ export const op17Usopp080: CharacterCard = {
               {
                 filter: "trait",
                 value: "Elbaph",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

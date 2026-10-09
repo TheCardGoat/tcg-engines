@@ -42,6 +42,39 @@
   z-index: 1;
 }
 
+.zone[data-setup-shuffle="true"] .slot {
+  animation: setup-legends-shuffle 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.zone[data-setup-shuffle="true"] .slot:nth-child(2) {
+  animation-delay: 80ms;
+}
+.zone[data-setup-shuffle="true"] .slot:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+@keyframes setup-legends-shuffle {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  28% {
+    transform: translateX(18%) rotate(7deg);
+  }
+  58% {
+    transform: translateX(-16%) rotate(-6deg);
+  }
+  80% {
+    transform: translateX(7%) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone[data-setup-shuffle="true"] .slot {
+    animation: none;
+  }
+}
+
 .slot[data-attached-gear-count]:not([data-attached-gear-count="0"]) {
   z-index: 12;
 }
@@ -110,56 +143,8 @@
     0 0 32px rgb(245 230 66 / 22%);
 }
 
-/* Hatch + SPENT badge apply to face-up spent Legends only. On face-down
-   spent Legends the slot-sized hatch reads as a second, unrotated card back
-   behind the rotated one; the 90° rotation alone marks them spent. */
-.slot[data-spent="true"]:not([data-face-down="true"])::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 310;
-  background:
-    linear-gradient(180deg, rgb(7 9 12 / 42%) 0 28%, transparent 28%),
-    repeating-linear-gradient(135deg, rgb(7 9 12 / 34%) 0 7px, transparent 7px 16px);
-  box-shadow: inset 0 0 0 1px rgb(7 9 12 / 48%);
-  pointer-events: none;
-}
-
-.slot[data-spent="true"][data-call-legend-actionable="true"]::before {
-  z-index: 45;
-  background:
-    linear-gradient(180deg, rgb(7 9 12 / 18%) 0 28%, transparent 28%),
-    repeating-linear-gradient(135deg, rgb(7 9 12 / 18%) 0 7px, transparent 7px 16px);
-}
-
-.slot[data-spent="true"]:not([data-face-down="true"])::after {
-  position: absolute;
-  right: 4px;
-  bottom: 4px;
-  left: 4px;
-  z-index: 320;
-  border: 1px solid rgb(245 230 66 / 24%);
-  background: rgb(7 9 12 / 74%);
-  color: rgb(245 230 66 / 58%);
-  font-family: Rajdhani, "Arial Narrow", sans-serif;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  padding: 2px 3px;
-  pointer-events: none;
-  text-align: center;
-  text-transform: uppercase;
-  content: "SPENT";
-}
-
 .slot[data-selection-candidate="true"]::after {
   border-color: rgb(245 230 66 / 82%);
   color: #f5e642;
   box-shadow: 0 0 14px rgb(245 230 66 / 54%);
-}
-
-.slot[data-spent="true"][data-log-highlight="true"]::after {
-  border-color: rgb(245 230 66 / 34%);
-  color: rgb(245 230 66 / 74%);
 }

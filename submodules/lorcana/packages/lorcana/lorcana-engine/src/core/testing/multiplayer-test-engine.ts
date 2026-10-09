@@ -294,7 +294,7 @@ export class MultiplayerTestEngine extends CoreTestEngine<
     const timeoutMs = options.timeoutMs ?? 1000;
     const pollIntervalMs = options.pollIntervalMs ?? 10;
     const deadline = Date.now() + timeoutMs;
-    for (; Date.now() < deadline; ) {
+    for (; Date.now() < deadline;) {
       const allSynced = Array.from(this.playerEngines.values()).every(
         (e) => e.getStateID() >= targetStateID,
       );

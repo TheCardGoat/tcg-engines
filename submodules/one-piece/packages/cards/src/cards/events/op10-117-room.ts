@@ -22,7 +22,7 @@ export const op10Room117: EventCard = {
   setId: "OP10",
   cost: 1,
   trigger: "Draw 1 card.",
-  traits: ["Heart Pirates Supernovas"],
+  traits: ["Supernovas", "Heart Pirates"],
   effect:
     "[Counter] If you have 1 or less Life cards, up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, set up to 1 of your Characters with a cost of 5 or less as active.",
   effects: {

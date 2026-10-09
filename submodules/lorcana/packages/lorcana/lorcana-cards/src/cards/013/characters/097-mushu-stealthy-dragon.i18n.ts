@@ -17,43 +17,43 @@ export const mushuStealthyDragonI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Mushu",
-    version: "Verstohlener Drache",
+    version: "Stealthy Dragon",
     text: [
       {
-        title: "<Wendig>",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Ausschlaggebend",
+        title: "Tip the Scales",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
+          "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
       },
     ],
   },
   fr: {
     name: "Mushu",
-    version: "Dragon furtif",
+    version: "Stealthy Dragon",
     text: [
       {
-        title: "<Insaisissable>",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Faire pencher la balance",
+        title: "Tip the Scales",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte.",
+          "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
       },
     ],
   },
   it: {
     name: "Mushu",
-    version: "Drago Silenzioso",
+    version: "Stealthy Dragon",
     text: [
       {
-        title: "<Sfuggente>",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Spostare l'Ago della Bilancia",
+        title: "Tip the Scales",
         description:
-          "Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta.",
+          "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
       },
     ],
   },

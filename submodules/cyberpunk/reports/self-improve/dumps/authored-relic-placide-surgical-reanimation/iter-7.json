@@ -1,0 +1,6370 @@
+{
+  "version": 1,
+  "seed": "improve/authored-relic-placide-surgical-reanimation/7/authored-relic-placide-surgical-reanimation-vs-authored-relic-placide-surgical-reanimation/match-0",
+  "strategyA": "tactical",
+  "strategyB": "tactical",
+  "deckAId": "authored-relic-placide-surgical-reanimation",
+  "deckBId": "authored-relic-placide-surgical-reanimation",
+  "winnerId": "p2",
+  "reason": "winCondition",
+  "turnCount": 12,
+  "stepCount": 80,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": false
+      },
+      "moveLogs": [],
+      "gameEvents": [
+        {
+          "type": "legendsShuffled",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendsShuffled",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p1",
+          "turnNumber": 1
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "keepHand",
+      "moveLogs": [
+        {
+          "type": "keepHand",
+          "playerId": "p2",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "setup",
+          "toPhase": "start"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "phaseChanged",
+          "from": "setup",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_344534912"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_427712936"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "dieId": "gd_427712936",
+          "dieType": "d12",
+          "faceValue": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_427712936",
+          "dieType": "d12",
+          "result": 12,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_427712936",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_521757645"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "River Ward: Detective on the Hunt"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "River Ward: Detective on the Hunt"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_344534912"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 1,
+          "cardId": "ci_344534912",
+          "cardName": "Trust No One"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_344534912",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Trust No One"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 1
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 1
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_600612111"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_445326737"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "dieId": "gd_445326737",
+          "dieType": "d12",
+          "faceValue": 12
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_445326737",
+          "dieType": "d12",
+          "result": 12,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_445326737",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly Unit"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_600612111",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_600612111",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_600612111",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_600612111"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_600612111"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly Unit"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_600612111"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_600612111"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_385086888"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "cardId": "ci_385086888",
+          "cardName": "Kiroshi Optics"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_385086888",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Kiroshi Optics"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_305390993"
+      },
+      "moveLogs": [
+        {
+          "type": "searchDeck",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "revealedCount": 5,
+          "revealed": {
+            "__private": true,
+            "value": [
+              "ci_831991089",
+              "ci_950029076",
+              "ci_464417556",
+              "ci_28889499",
+              "ci_875239727"
+            ],
+            "visibleTo": ["p2"]
+          },
+          "revealedCardNames": {
+            "__private": true,
+            "value": [
+              "Hanako Arasaka: In a Gilded Cage",
+              "Trust No One",
+              "The Relic: Experimental Biochip",
+              "Floor It",
+              "The Heist"
+            ],
+            "visibleTo": ["p2"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Viktor Vektor: Sit Down and Relax"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: Sit Down and Relax",
+            "abilityText": "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Viktor Vektor: Sit Down and Relax"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_305390993",
+          "effectType": "call",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: Sit Down and Relax",
+            "abilityText": "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_305390993"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 5
+          },
+          "playerId": "p2",
+          "category": "search",
+          "cardIds": ["ci_831991089", "ci_950029076", "ci_464417556", "ci_28889499", "ci_875239727"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "hand",
+            "cardIds": []
+          }
+        ]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 2,
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 0,
+            "looked": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "searchPerformed",
+          "playerId": "p2",
+          "zone": "deck",
+          "found": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 0,
+            "looked": 5
+          },
+          "playerId": "p2",
+          "category": "search",
+          "cardIds": []
+        }
+      ]
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 2
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_709295857"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_671013679"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "dieId": "gd_671013679",
+          "dieType": "d10",
+          "faceValue": 2
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_671013679",
+          "dieType": "d10",
+          "result": 2,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_671013679",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_840958221"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly Unit"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_840958221",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_840958221",
+          "playerId": "p1",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_840958221",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_840958221"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_840958221"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly Unit"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_840958221"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_840958221"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_521757645",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_349427354"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_349427354",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_521757645",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_349427354"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_349427354",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_349427354"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_840958221"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_840958221",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 3,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_521757645",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_840958221"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_840958221",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_840958221"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_349427354",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_349427354",
+          "hostId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_349427354",
+          "playerId": "p1",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 0
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 3
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 3
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_919543567"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_145050169"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "dieId": "gd_145050169",
+          "dieType": "d10",
+          "faceValue": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_145050169",
+          "dieType": "d10",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_145050169",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 4,
+          "attackerId": "ci_600612111",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_427712936"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 3,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 12
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_427712936",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_600612111"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_427712936",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 3,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 12)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_334495079"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "River Ward: Detective on the Hunt"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "River Ward: Detective on the Hunt"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_919543567"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_240643227", "ci_16432324", "ci_167756250", "ci_620075373"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It, NetWatch Netdriver, Zetatech Faceplate, Live with the Aftermath",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_919543567",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_919543567",
+          "playerId": "p2",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_919543567",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_919543567"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_240643227",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_16432324",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_167756250",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_620075373",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_240643227", "ci_16432324", "ci_167756250", "ci_620075373"],
+              "visibleTo": ["p2"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Floor It, NetWatch Netdriver, Zetatech Faceplate, Live with the Aftermath",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_919543567", "ci_240643227", "ci_16432324", "ci_167756250", "ci_620075373"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_167756250"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "The Heist",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_167756250",
+            "targetKind": "gear",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_919543567",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_167756250"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_167756250",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "The Heist",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_167756250",
+            "targetKind": "gear",
+            "targetOwnerId": "p2",
+            "targetZone": "trash",
+            "targetIndex": 3
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_919543567", "ci_167756250"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_919543567"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_334495079",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_167756250"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_167756250",
+            "targetKind": "gear",
+            "targetOwnerId": "p2",
+            "targetZone": "hand",
+            "targetIndex": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_334495079",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_167756250"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Zetatech Faceplate",
+            "targetId": "ci_167756250",
+            "targetKind": "gear",
+            "targetOwnerId": "p2",
+            "targetZone": "hand",
+            "targetIndex": 5
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_334495079", "ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_600612111"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_600612111",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 4,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_334495079",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_600612111"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_600612111",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_334495079", "ci_600612111"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_167756250",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_167756250",
+          "hostId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_167756250",
+          "playerId": "p2",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "cost": 0
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 4
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 4
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_401244216"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_36459974"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "dieId": "gd_36459974",
+          "dieType": "d8",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_36459974",
+          "dieType": "d8",
+          "result": 6,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_36459974",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_840958221"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_840958221",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_349427354",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_349427354"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_145050169",
+        "value": 3
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 4,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 5,
+          "attackerId": "ci_840958221",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_349427354",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_145050169"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_349427354"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_145050169",
+          "previousValue": 4,
+          "newValue": 3,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 3,
+            "previousValue": 4,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_349427354"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_427712936"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 5,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 12
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_427712936",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_840958221"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_427712936",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_840958221",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 5,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 12)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_401244216"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_223471449", "ci_507520043", "ci_21454794", "ci_643694486"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Hanako Arasaka: In a Gilded Cage, Live with the Aftermath, Floor It, Secondhand Bombus",
+              "visibleTo": ["p1"]
+            }
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "move card"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_401244216",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_401244216",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_401244216",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_401244216"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_223471449",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_507520043",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_21454794",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_643694486",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_223471449", "ci_507520043", "ci_21454794", "ci_643694486"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "Hanako Arasaka: In a Gilded Cage, Live with the Aftermath, Floor It, Secondhand Bombus",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_401244216", "ci_223471449", "ci_507520043", "ci_21454794", "ci_643694486"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "move card"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_401244216"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_401244216"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_870199369"
+      },
+      "moveLogs": [
+        {
+          "type": "searchDeck",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "revealedCount": 5,
+          "revealed": {
+            "__private": true,
+            "value": [
+              "ci_494972602",
+              "ci_513230302",
+              "ci_992548775",
+              "ci_168271333",
+              "ci_302092898"
+            ],
+            "visibleTo": ["p1"]
+          },
+          "revealedCardNames": {
+            "__private": true,
+            "value": [
+              "Live with the Aftermath",
+              "NetWatch Netdriver",
+              "Floor It",
+              "Alt Cunningham: Mother of Daemons",
+              "Viktor Vektor: You Might Feel a Little Pinch"
+            ],
+            "visibleTo": ["p1"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Viktor Vektor: Sit Down and Relax"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: Sit Down and Relax",
+            "abilityText": "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 1,
+          "forWhat": "callLegend"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.callLegend",
+          "params": {
+            "legendName": "Viktor Vektor: Sit Down and Relax"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "legendFlipped",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "legendCalled",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_870199369",
+          "effectType": "call",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: Sit Down and Relax",
+            "abilityText": "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_870199369"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 5
+          },
+          "playerId": "p1",
+          "category": "search",
+          "cardIds": [
+            "ci_494972602",
+            "ci_513230302",
+            "ci_992548775",
+            "ci_168271333",
+            "ci_302092898"
+          ]
+        }
+      ]
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "hand",
+            "cardIds": []
+          }
+        ]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 5,
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 0,
+            "looked": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "searchPerformed",
+          "playerId": "p1",
+          "zone": "deck",
+          "found": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 0,
+            "looked": 5
+          },
+          "playerId": "p1",
+          "category": "search",
+          "cardIds": []
+        }
+      ]
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 5
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 5
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_292694881"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_66555717"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "dieId": "gd_66555717",
+          "dieType": "d8",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_66555717",
+          "dieType": "d8",
+          "result": 5,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_66555717",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_167756250",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_145050169",
+        "value": 2
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 3,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_910267924"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_167756250",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_145050169"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_145050169",
+          "previousValue": 3,
+          "newValue": 2,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 3,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_910267924"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_910267924"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "NetWatch Netdriver",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 6,
+          "attackerId": "ci_600612111",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_427712936"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 5,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d12",
+              "faceValue": 12
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_427712936",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_600612111"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_427712936",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 5,
+            "count": 1,
+            "stolenGigs": "1 Gig (D12 with value 12)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_910267924"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "cardId": "ci_910267924",
+          "cardName": "NetWatch Netdriver"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_910267924",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "NetWatch Netdriver"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_757148243",
+        "attachToId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 6,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_757148243",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_757148243",
+          "hostId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_757148243",
+          "playerId": "p2",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 6
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 6
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_1879953"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_383968944"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "dieId": "gd_383968944",
+          "dieType": "d6",
+          "faceValue": 5
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_383968944",
+          "dieType": "d6",
+          "result": 5,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_383968944",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_840958221"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_840958221",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_349427354",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_349427354"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_383968944",
+        "value": 6
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D6",
+            "targetId": "gd_383968944",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 5,
+            "dieId": "gd_383968944",
+            "dieLabel": "D6"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p2",
+          "turnNumber": 7,
+          "attackerId": "ci_840958221",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_349427354",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_383968944"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D6",
+            "targetId": "gd_383968944",
+            "targetKind": "gig"
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_349427354"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p1",
+          "dieId": "gd_383968944",
+          "previousValue": 5,
+          "newValue": 6,
+          "adjustedByPlayerId": "p1",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 6,
+            "previousValue": 5,
+            "dieId": "gd_383968944",
+            "dieLabel": "D6"
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.skipped",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "reason": "friendly does not control 3 different Gig values"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_349427354"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_66555717"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 5,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 5
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_66555717",
+          "fromPlayerId": "p2",
+          "toPlayerId": "p1",
+          "sourceCardId": "ci_840958221"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_66555717",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_840958221",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 5,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 5)"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_707146291"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "cardId": "ci_707146291",
+          "cardName": "Afterparty at Lizzie's"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_707146291",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Afterparty at Lizzie's"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_348714782",
+        "attachToId": "ci_840958221"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 7,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_348714782",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_348714782",
+          "hostId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_348714782",
+          "playerId": "p1",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 7
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 7
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_996725755"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_193236594"
+      },
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "dieId": "gd_193236594",
+          "dieType": "d6",
+          "faceValue": 6
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_193236594",
+          "dieType": "d6",
+          "result": 6,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_193236594",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_167756250",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_145050169",
+        "value": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 1,
+            "previousValue": 2,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_398408025"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Afterparty at Lizzie's",
+              "visibleTo": ["p2"]
+            }
+          }
+        },
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "attackerId": "ci_600612111",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_167756250",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_145050169"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_145050169",
+          "previousValue": 2,
+          "newValue": 1,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 1,
+            "previousValue": 2,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_398408025"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_398408025"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "Afterparty at Lizzie's",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_66555717"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 8,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 5
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_66555717",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_600612111"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_66555717",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 8,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 5)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_649170321"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_649170321",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_649170321",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "cost": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_649170321",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "abilityText": "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_649170321"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.requiredTargetUnavailable",
+          "params": {
+            "cardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetDescription": "friendly gear"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_649170321"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_600612111"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_600612111",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_649170321",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_600612111"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_600612111",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_649170321", "ci_600612111"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "effectName": "attach card"
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_649170321"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_398408025"
+      },
+      "moveLogs": [
+        {
+          "type": "sellCard",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "cardId": "ci_398408025",
+          "cardName": "Afterparty at Lizzie's"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardMoved",
+          "cardId": "ci_398408025",
+          "fromZone": "hand",
+          "toZone": "eddieArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 1
+        },
+        {
+          "type": "cardSold",
+          "cardId": "ci_398408025",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.sellCard",
+          "params": {
+            "cardName": "Afterparty at Lizzie's"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_996725755"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Live with the Aftermath",
+            "cost": 3
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Live with the Aftermath",
+            "abilityText": "Each player defeats one of their Units.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_398408025",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 3,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_996725755",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_996725755",
+          "playerId": "p2",
+          "cost": 3
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Live with the Aftermath",
+            "cost": 3
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_996725755",
+          "effectType": "play",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Live with the Aftermath",
+            "abilityText": "Each player defeats one of their Units.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_996725755"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_649170321"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Live with the Aftermath",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_649170321",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_996725755",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_649170321"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Live with the Aftermath",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_649170321",
+            "targetKind": "unit",
+            "targetOwnerId": "p2",
+            "targetZone": "field",
+            "targetIndex": 3
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_996725755", "ci_649170321"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_840958221"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Live with the Aftermath",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_840958221",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "River Ward: Detective on the Hunt | The Relic: Experimental Biochip",
+            "triggerIds": ["trigger-15", "trigger-16"],
+            "sourceCardIds": ["ci_521757645", "ci_348714782"],
+            "abilityIndexes": ["2", "0"]
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p2",
+          "turnNumber": 8,
+          "cardId": "ci_649170321",
+          "cardName": "Viktor Vektor: You Might Feel a Little Pinch"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": true,
+          "playerId": "p1",
+          "turnNumber": 8,
+          "cardId": "ci_840958221",
+          "cardName": "Viktor Vektor: You Might Feel a Little Pinch"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p1",
+          "turnNumber": 8,
+          "cardId": "ci_349427354",
+          "cardName": "Zetatech Faceplate"
+        },
+        {
+          "type": "cardDefeated",
+          "wasUnit": false,
+          "playerId": "p1",
+          "turnNumber": 8,
+          "cardId": "ci_348714782",
+          "cardName": "The Relic: Experimental Biochip"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_996725755",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_840958221"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Live with the Aftermath",
+            "targetNames": "Viktor Vektor: You Might Feel a Little Pinch",
+            "targetId": "ci_840958221",
+            "targetKind": "unit",
+            "targetOwnerId": "p1",
+            "targetZone": "field",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_996725755", "ci_840958221"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_649170321",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_649170321",
+          "defeatedBy": "ci_996725755",
+          "playerId": "p2",
+          "snapshot": {
+            "controllerId": "p2",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "yellow",
+            "classifications": ["Ripperdoc"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": true,
+            "cost": 3,
+            "effectivePower": 3,
+            "attachedGearIds": [],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_349427354",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_349427354",
+          "hostId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_348714782",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDetached",
+          "gearId": "ci_348714782",
+          "hostId": "ci_840958221",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_840958221",
+          "fromZone": "field",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_840958221",
+          "defeatedBy": "ci_996725755",
+          "playerId": "p1",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["unit"],
+            "color": "yellow",
+            "classifications": ["Ripperdoc"],
+            "keywords": [],
+            "spent": true,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 3,
+            "effectivePower": 8,
+            "attachedGearIds": ["ci_349427354", "ci_348714782"],
+            "attachedToId": null
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_349427354",
+          "defeatedBy": "ci_996725755",
+          "playerId": "p1",
+          "hostId": "ci_840958221",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "yellow",
+            "classifications": ["Cyberware", "Zetatech"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 2,
+            "effectivePower": 2,
+            "attachedGearIds": [],
+            "attachedToId": "ci_840958221"
+          }
+        },
+        {
+          "type": "cardDefeated",
+          "cardId": "ci_348714782",
+          "defeatedBy": "ci_996725755",
+          "playerId": "p1",
+          "hostId": "ci_840958221",
+          "snapshot": {
+            "controllerId": "p1",
+            "zone": "field",
+            "cardTypes": ["gear"],
+            "color": "yellow",
+            "classifications": ["Arasaka", "Cyberware"],
+            "keywords": [],
+            "spent": false,
+            "faceDown": false,
+            "hasLag": false,
+            "cost": 5,
+            "effectivePower": 3,
+            "attachedGearIds": [],
+            "attachedToId": "ci_840958221"
+          }
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_521757645",
+          "effectType": "event",
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_348714782",
+          "effectType": "defeated",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderPending",
+          "params": {
+            "triggerCount": 2,
+            "triggerNames": "River Ward: Detective on the Hunt | The Relic: Experimental Biochip",
+            "triggerIds": ["trigger-15", "trigger-16"],
+            "sourceCardIds": ["ci_521757645", "ci_348714782"],
+            "abilityIndexes": ["2", "0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_348714782"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-15"
+      },
+      "moveLogs": [
+        {
+          "type": "searchDeck",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "revealedCount": 2,
+          "revealed": {
+            "__private": true,
+            "value": ["ci_991998585", "ci_600199191"],
+            "visibleTo": ["p1"]
+          },
+          "revealedCardNames": {
+            "__private": true,
+            "value": ["The Heist", "Placide: Voodoo Sentinel"],
+            "visibleTo": ["p1"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-15",
+            "selectedSourceCardId": "ci_521757645",
+            "selectedAbilityIndex": 2,
+            "cardName": "River Ward: Detective on the Hunt",
+            "abilityText": "When a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "The Relic: Experimental Biochip",
+            "remainingTriggerIds": ["trigger-16"],
+            "remainingSourceCardIds": ["ci_348714782"],
+            "remainingAbilityIndexes": ["0"]
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt",
+            "abilityText": "When a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 2
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.orderSelected",
+          "params": {
+            "selectedTriggerId": "trigger-15",
+            "selectedSourceCardId": "ci_521757645",
+            "selectedAbilityIndex": 2,
+            "cardName": "River Ward: Detective on the Hunt",
+            "abilityText": "When a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+            "remainingCount": 1,
+            "remainingTriggerNames": "The Relic: Experimental Biochip",
+            "remainingTriggerIds": ["trigger-16"],
+            "remainingSourceCardIds": ["ci_348714782"],
+            "remainingAbilityIndexes": ["0"]
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_348714782"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.resolved",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt",
+            "abilityText": "When a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.searchDeck.reveal",
+          "params": {
+            "count": 2
+          },
+          "playerId": "p1",
+          "category": "search",
+          "cardIds": ["ci_991998585", "ci_600199191"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "trash",
+            "cardIds": ["ci_600199191"]
+          }
+        ]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 1,
+            "looked": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "abilityText": "Defeated Play another Unit with cost 9 or less from your trash for free. Then, bottom-deck this Unit.",
+            "hasDrawEffect": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "searchPerformed",
+          "playerId": "p1",
+          "zone": "deck",
+          "found": 1
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveSearchDeck",
+          "params": {
+            "count": 1,
+            "looked": 2
+          },
+          "playerId": "p1",
+          "category": "search",
+          "cardIds": ["ci_600199191"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "abilityText": "Defeated Play another Unit with cost 9 or less from your trash for free. Then, bottom-deck this Unit.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_348714782"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 8,
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "The Relic: Experimental Biochip",
+            "effectName": "play card"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "effect.noValidTargets",
+          "params": {
+            "sourceCardName": "The Relic: Experimental Biochip",
+            "effectName": "play card"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_348714782"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_840958221",
+          "fromZone": "trash",
+          "toZone": "deck",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "dieId": "gd_998499946",
+          "dieType": "d4",
+          "faceValue": 3
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 8
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 8
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_991998585"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_998499946",
+          "dieType": "d4",
+          "result": 3,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_998499946",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_991998585"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_121977401", "ci_200816603", "ci_401204529", "ci_750883235"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "The Heist, Secondhand Bombus, The Relic: Experimental Biochip, Kiroshi Optics",
+              "visibleTo": ["p1"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 2,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_991998585",
+          "fromZone": "hand",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_991998585",
+          "playerId": "p1",
+          "cost": 2
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "The Heist",
+            "cost": 2
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_991998585",
+          "effectType": "play",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "The Heist",
+            "abilityText": "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+            "hasDrawEffect": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_991998585"]
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_121977401",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_200816603",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_401204529",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_750883235",
+          "fromZone": "deck",
+          "toZone": "trash",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.trashFromDeck.resolved",
+          "params": {
+            "sourceCardName": "The Heist",
+            "trashedCount": 4,
+            "trashedCardIds": {
+              "__private": true,
+              "value": ["ci_121977401", "ci_200816603", "ci_401204529", "ci_750883235"],
+              "visibleTo": ["p1"]
+            },
+            "trashedCardNames": {
+              "__private": true,
+              "value": "The Heist, Secondhand Bombus, The Relic: Experimental Biochip, Kiroshi Optics",
+              "visibleTo": ["p1"]
+            }
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": [
+            "ci_991998585",
+            "ci_121977401",
+            "ci_200816603",
+            "ci_401204529",
+            "ci_750883235"
+          ]
+        }
+      ]
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_750883235"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "The Heist",
+            "targetNames": "Kiroshi Optics",
+            "targetId": "ci_750883235",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "trash",
+            "targetIndex": 12
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_991998585",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_750883235"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_750883235",
+          "fromZone": "trash",
+          "toZone": "hand",
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "The Heist",
+            "targetNames": "Kiroshi Optics",
+            "targetId": "ci_750883235",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "trash",
+            "targetIndex": 12
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_991998585", "ci_750883235"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.skipped",
+          "params": {
+            "sourceCardName": "The Heist",
+            "effectName": "play card",
+            "reason": "no friendly Gig matches the card cost"
+          },
+          "playerId": "p1",
+          "category": "effect",
+          "cardIds": ["ci_991998585"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_521757645",
+        "abilityIndex": 1
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.activateAbility",
+          "params": {
+            "cardName": "River Ward: Detective on the Hunt"
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_750883235"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Kiroshi Optics",
+            "targetId": "ci_750883235",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 4
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_521757645",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_750883235"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "Kiroshi Optics",
+            "targetId": "ci_750883235",
+            "targetKind": "gear",
+            "targetOwnerId": "p1",
+            "targetZone": "hand",
+            "targetIndex": 4
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_750883235"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_521757645"]
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "River Ward: Detective on the Hunt",
+            "targetId": "ci_521757645",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 9,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kiroshi Optics",
+            "cost": 0
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_521757645",
+          "targets": [
+            {
+              "kind": "card",
+              "cardId": "ci_521757645"
+            }
+          ],
+          "playerId": "p1"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "River Ward: Detective on the Hunt",
+            "targetNames": "River Ward: Detective on the Hunt",
+            "targetId": "ci_521757645",
+            "targetKind": "legend",
+            "targetOwnerId": "p1",
+            "targetZone": "legendArea",
+            "targetIndex": 0
+          },
+          "playerId": "p1",
+          "category": "trigger",
+          "cardIds": ["ci_521757645", "ci_521757645"]
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_750883235",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_750883235",
+          "hostId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_750883235",
+          "playerId": "p1",
+          "cost": 0
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "Kiroshi Optics",
+            "cost": 0
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "dieId": "gd_274185238",
+          "dieType": "d4",
+          "faceValue": 4
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 9
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 9
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_334495079",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_398408025",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p2",
+          "amount": 3
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_137496877"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_274185238",
+          "dieType": "d4",
+          "result": 4,
+          "playerId": "p2",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_274185238",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackDeclared",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.attackRival",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "effectTriggered",
+          "sourceCardId": "ci_167756250",
+          "effectType": "event",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.autoResolved",
+          "params": {
+            "cardName": "Zetatech Faceplate",
+            "abilityText": "When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+            "hasDrawEffect": 1
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_145050169",
+        "value": 2
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 1,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          }
+        },
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_373647720"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "The Relic: Experimental Biochip",
+              "visibleTo": ["p2"]
+            }
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "effectTargeted",
+          "sourceCardId": "ci_167756250",
+          "targets": [
+            {
+              "kind": "gig",
+              "dieId": "gd_145050169"
+            }
+          ],
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "trigger.targetResolved",
+          "params": {
+            "count": 1,
+            "sourceCardName": "Zetatech Faceplate",
+            "targetNames": "D10",
+            "targetId": "gd_145050169",
+            "targetKind": "gig"
+          },
+          "playerId": "p2",
+          "category": "trigger",
+          "cardIds": ["ci_167756250"]
+        },
+        {
+          "type": "gigValueChanged",
+          "sourcePlayerId": "p2",
+          "dieId": "gd_145050169",
+          "previousValue": 1,
+          "newValue": 2,
+          "adjustedByPlayerId": "p2",
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAdjustGig",
+          "params": {
+            "value": 2,
+            "previousValue": 1,
+            "dieId": "gd_145050169",
+            "dieLabel": "D10"
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p2",
+          "count": 1,
+          "cardIds": ["ci_373647720"]
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "effect.draw.resolved",
+          "params": {
+            "sourceCardName": "Zetatech Faceplate",
+            "drawnCount": 1,
+            "drawnCardIds": {
+              "__private": true,
+              "value": ["ci_373647720"],
+              "visibleTo": ["p2"]
+            },
+            "drawnCardNames": {
+              "__private": true,
+              "value": "The Relic: Experimental Biochip",
+              "visibleTo": ["p2"]
+            }
+          },
+          "playerId": "p2",
+          "category": "effect",
+          "cardIds": ["ci_167756250"]
+        }
+      ]
+    },
+    {
+      "stepIndex": 74,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "moveLogs": [
+        {
+          "type": "reactPass",
+          "playerId": "p1",
+          "turnNumber": 10,
+          "attackerId": "ci_600612111",
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "gameEvents": []
+    },
+    {
+      "stepIndex": 75,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_36459974"]
+      },
+      "moveLogs": [
+        {
+          "type": "resolveStealGigs",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+          "attackerPower": 8,
+          "stolenCount": 1,
+          "stolenGigs": [
+            {
+              "dieType": "d8",
+              "faceValue": 6
+            }
+          ]
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "gigStolen",
+          "dieId": "gd_36459974",
+          "fromPlayerId": "p1",
+          "toPlayerId": "p2",
+          "sourceCardId": "ci_600612111"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_36459974",
+          "from": "gigArea",
+          "to": "gigArea",
+          "playerId": "p2"
+        },
+        {
+          "type": "attackResolved",
+          "attackerId": "ci_600612111",
+          "defenderId": null,
+          "attackKind": "direct",
+          "result": "gigsStolen",
+          "gigsStolen": 1,
+          "playerId": "p2"
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.resolveAttack.direct",
+          "params": {
+            "attackerName": "Viktor Vektor: You Might Feel a Little Pinch",
+            "attackerPower": 8,
+            "count": 1,
+            "stolenGigs": "1 Gig (D8 with value 6)"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 76,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_373647720",
+        "attachToId": "ci_600612111"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p2",
+          "turnNumber": 10,
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_385086888",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_910267924",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_398408025",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_305390993",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_371467112",
+          "playerId": "p2"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p2",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_373647720",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardAttached",
+          "gearId": "ci_373647720",
+          "hostId": "ci_600612111",
+          "playerId": "p2"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_373647720",
+          "playerId": "p2",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard.gear",
+          "params": {
+            "cardName": "The Relic: Experimental Biochip",
+            "cost": 5,
+            "attachedToName": "Viktor Vektor: You Might Feel a Little Pinch"
+          },
+          "playerId": "p2"
+        }
+      ]
+    },
+    {
+      "stepIndex": 77,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "gainGig",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "dieId": "gd_716897358",
+          "dieType": "d20",
+          "faceValue": 8
+        },
+        {
+          "type": "passPhase",
+          "playerId": "p2",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "main"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "fromPhase": "start",
+          "toPhase": "main"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 10
+          },
+          "playerId": "p2"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p2",
+          "turnNumber": 10
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p1"
+        },
+        {
+          "type": "turnStarted",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardReadied",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesGained",
+          "playerId": "p1",
+          "amount": 2
+        },
+        {
+          "type": "cardsDrawn",
+          "playerId": "p1",
+          "count": 1,
+          "cardIds": ["ci_950950976"]
+        },
+        {
+          "type": "gigDieRolled",
+          "dieId": "gd_716897358",
+          "dieType": "d20",
+          "result": 8,
+          "playerId": "p1",
+          "origin": "gainGig"
+        },
+        {
+          "type": "gigDieMoved",
+          "dieId": "gd_716897358",
+          "from": "fixerArea",
+          "to": "gigArea",
+          "playerId": "p1"
+        },
+        {
+          "type": "phaseChanged",
+          "from": "start",
+          "to": "main",
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 78,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_670088519"
+      },
+      "moveLogs": [
+        {
+          "type": "action",
+          "playerId": "p1",
+          "turnNumber": 11,
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Suppression Team",
+            "cost": 5
+          }
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "cardSpent",
+          "cardId": "ci_344534912",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_707146291",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_870199369",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_994684838",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardSpent",
+          "cardId": "ci_521757645",
+          "playerId": "p1"
+        },
+        {
+          "type": "eddiesSpent",
+          "playerId": "p1",
+          "amount": 5,
+          "forWhat": "playCard"
+        },
+        {
+          "type": "cardMoved",
+          "cardId": "ci_670088519",
+          "fromZone": "hand",
+          "toZone": "field",
+          "playerId": "p1"
+        },
+        {
+          "type": "cardPlayed",
+          "cardId": "ci_670088519",
+          "playerId": "p1",
+          "cost": 5
+        },
+        {
+          "type": "actionLog",
+          "messageKey": "move.playCard",
+          "params": {
+            "cardName": "MaxTac Suppression Team",
+            "cost": 5
+          },
+          "playerId": "p1"
+        }
+      ]
+    },
+    {
+      "stepIndex": 79,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "moveLogs": [
+        {
+          "type": "passPhase",
+          "playerId": "p1",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "end"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "fromPhase": "main",
+          "toPhase": "start"
+        },
+        {
+          "type": "gameEnded",
+          "playerId": "p2",
+          "turnNumber": 12,
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ],
+      "gameEvents": [
+        {
+          "type": "actionLog",
+          "messageKey": "move.turnEnded",
+          "params": {
+            "turnNumber": 11
+          },
+          "playerId": "p1"
+        },
+        {
+          "type": "turnEnded",
+          "playerId": "p1",
+          "turnNumber": 11
+        },
+        {
+          "type": "phaseChanged",
+          "from": "main",
+          "to": "start",
+          "playerId": "p2"
+        },
+        {
+          "type": "gameEnded",
+          "winnerId": "p2",
+          "reason": "gig_victory"
+        }
+      ]
+    }
+  ]
+}

@@ -33,13 +33,15 @@ describe("OP02-102 Smoker", () => {
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected Koby's K.O. target.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(smokerId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "north");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(smokerId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [smokerId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === smokerId)).toBe(true);
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(smokerId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.south.characters.some((card) => card?.instanceId === eligibleId)).toBe(
+      true,
+    );
     expect(view.prompts).toHaveLength(0);
   });
 

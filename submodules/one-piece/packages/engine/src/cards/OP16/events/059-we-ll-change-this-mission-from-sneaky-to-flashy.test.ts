@@ -39,30 +39,6 @@ describe("OP16-059 We'll Change This Mission From Sneaky to Flashy", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Optional] declined leaves the board unchanged", () => {
-    const engine = OnePieceTestEngine.create({ hand: ["OP16-059"], activeDon: 3 }, {});
-
-    engine.playCard("OP16-059");
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-059");
-    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
-
   test("[Main] decline path (subject-bound)", () => {
     const flashy = "OP16-059";
     const engine = OnePieceTestEngine.create({ hand: [flashy], activeDon: 9 }, {});
@@ -75,5 +51,19 @@ describe("OP16-059 We'll Change This Mission From Sneaky to Flashy", () => {
     expect(south.trash.map((c) => c.cardId)).toContain(flashy);
     expect(south.deckCount).toBe(deckBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("Counter gives the Leader battle power without the Main rest cost", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP16-059", "ST02-002"], activeDon: 1 },
+      { activeDon: 2 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attachDon(e.leader("north"), 2);
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP16-059");
+    expect(e.getView("south").players.south.leader.power).toBe(8000);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
   });
 });

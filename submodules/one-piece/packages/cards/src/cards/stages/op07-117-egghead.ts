@@ -40,7 +40,7 @@ export const op07Egghead117: StageCard = {
           {
             action: "setActive",
             target: {
-              player: "self",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,
@@ -50,7 +50,7 @@ export const op07Egghead117: StageCard = {
                 {
                   filter: "trait",
                   value: "Egghead",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

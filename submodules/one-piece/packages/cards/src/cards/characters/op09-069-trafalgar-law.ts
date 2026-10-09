@@ -72,12 +72,12 @@ export const op09TrafalgarLaw069: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Heart Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

@@ -45,7 +45,7 @@ export const op14eb04Ran114: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Kuja Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -64,7 +64,7 @@ export const op14eb04Ran114: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [{ action: "playThisCard" }],

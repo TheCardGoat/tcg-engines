@@ -33,6 +33,7 @@ export const tinkerBellInsistentFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f49776538d7247e998024421be5f5a18",
+    tcgPlayer: "631842",
   },
   text: [
     {

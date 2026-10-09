@@ -32,10 +32,10 @@ export const prb02SaboP073PirateFoil073: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
-    "[Activate:Main][Once Per Turn] You may add 1 card from the top or bottom of your Life cards to your hand: This character gains +1000 power during this turn.Disclaimer: This card was reprinted from the original set with a different border (Note: the original print had a full art border).",
+    "[Activate: Main] [Once Per Turn] You may add 1 card from the top or bottom of your Life cards to your hand: This Character gains +1000 power during this turn.",
   effects: {
     effects: [
       {

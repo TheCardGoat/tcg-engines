@@ -31,6 +31,10 @@ export const kingLouieKingOfSwing: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_b48379130996477dacd4309a4dcd1efd",
+    tcgPlayer: "704629",
+  },
   text: "Singer 6",
   classifications: ["Storyborn", "King"],
   abilities: [singer(6)],

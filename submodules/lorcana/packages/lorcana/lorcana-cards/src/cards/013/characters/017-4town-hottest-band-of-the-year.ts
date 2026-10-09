@@ -33,6 +33,7 @@ export const _4townHottestBandOfTheYear: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_646dc0c6b56d4d72abe97f1d4e813df4",
+    tcgPlayer: "702671",
   },
   text: [
     {

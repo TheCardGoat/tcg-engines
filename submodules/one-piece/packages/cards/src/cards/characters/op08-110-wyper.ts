@@ -31,7 +31,7 @@ export const op08Wyper110: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Upper Yard] and add it to your hand. Then, place the rest at the bottom of your deck in any order and play up to 1 [Upper Yard] from your hand.",

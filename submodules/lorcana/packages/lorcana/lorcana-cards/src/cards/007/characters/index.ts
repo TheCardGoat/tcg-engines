@@ -1,5 +1,6 @@
 export { rhinoMotivationalSpeaker } from "./001-rhino-motivational-speaker";
 export { perditaPlayfulMother } from "./002-perdita-playful-mother";
+export { elsaTrustedSisterCC1Promo } from "./cc1-002-elsa-trusted-sister-promo";
 export { elsaIceMakerC2Challenge as elsaIceMakerC2ChallengeC2002ElsaIceMakerChallenge } from "./c2-002-elsa-ice-maker-challenge";
 export { kingStefanNewFather } from "./003-king-stefan-new-father";
 export { boltSuperdog } from "./004-bolt-superdog";
@@ -56,11 +57,11 @@ export { chernabogCreatureOfTheNight } from "./050-chernabog-creature-of-the-nig
 export { jafarNewlyCrowned } from "./051-jafar-newly-crowned";
 export { hadesFastTalker } from "./052-hades-fast-talker";
 export { madameMedusaDiamondLover } from "./053-madame-medusa-diamond-lover";
-export { teKElementalTerror } from "./054-te-k-elemental-terror";
+export { teKElementalTerror } from "./054-te-ka-elemental-terror";
 export { elsaTrustedSister } from "./055-elsa-trusted-sister";
 export { madamMimCheatingSpellcaster } from "./056-madam-mim-cheating-spellcaster";
 export { giantCobraGhostlySerpent } from "./057-giant-cobra-ghostly-serpent";
-export { teKLavaMonster } from "./058-te-k-lava-monster";
+export { teKLavaMonster } from "./058-te-ka-lava-monster";
 export { yzmaTransformedKitten } from "./059-yzma-transformed-kitten";
 export { buckyNuttyRascal } from "./060-bucky-nutty-rascal";
 export { painImpudentImp } from "./061-pain-impudent-imp";

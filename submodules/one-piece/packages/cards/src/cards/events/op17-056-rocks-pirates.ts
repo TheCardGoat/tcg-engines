@@ -27,6 +27,22 @@ export const op17RocksPirates056: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "counter",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "trait", value: "Rocks Pirates", match: "includes" }],
+            },
+            value: 2000,
+            duration: "thisBattle",
+          },
+        ],
+      },
+      {
         trigger: "main",
         costs: [
           {

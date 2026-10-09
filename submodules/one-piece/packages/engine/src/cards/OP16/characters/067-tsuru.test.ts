@@ -58,4 +58,28 @@ describe("OP16-067 Tsuru", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: declining the revealed Navy card still trashes a card from hand", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        hand: ["OP16-067", "EB01-005"],
+        deck: ["OP16-063", "OP13-013", "OP13-013", "OP13-013", "OP13-013", "OP13-013"],
+        activeDon: 1,
+      },
+      {},
+    );
+    const discard = e.findCardInZone("south", "hand", "EB01-005");
+    e.playCard("OP16-067");
+    e.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const order = e.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected deck order");
+    e.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((c) => c.ref.id) },
+      "south",
+    );
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(discard);
+    expect(e.getView("south").players.south.deckCount).toBe(6);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

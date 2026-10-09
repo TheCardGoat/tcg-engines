@@ -65,6 +65,7 @@ export const op05Ulti043: CharacterCard = {
         actions: [
           {
             action: "search",
+            reveal: false,
             lookCount: 3,
             source: {
               player: "self",

@@ -51,22 +51,16 @@ export const besiegedSlash: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 kind: "source",
               },
               condition: {
-                kind: "compare",
-                comparison: {
-                  left: {
-                    kind: "count",
-                    collection: {
-                      zones: ["field"],
-                      player: "each-opponent",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["ALLY", "CHAMPION"],
-                      },
-                    },
-                  },
-                  operator: "gte",
-                  right: 3,
+                kind: "player-zone-count",
+                players: "each-opponent",
+                quantifier: "any",
+                zone: "field",
+                filter: {
+                  kind: "type",
+                  oneOf: ["ALLY", "CHAMPION"],
                 },
+                operator: "gte",
+                value: 3,
               },
               costKind: "reserve",
               costOperation: "subtract",

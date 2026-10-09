@@ -181,9 +181,9 @@ describe("azalea (ARC039)", () => {
 
     const handBefore = Azalea.handCount();
 
-    // Act — activate Death Dealer, answer the optional arrow→arsenal boolean.
+    // Act — activate Death Dealer and choose the arrow to put into arsenal.
     Azalea.activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
 
     // Assert — Arrow moved to arsenal (face-up), one card drawn, go again refunds AP.
     expect(Azalea.zone("arsenal")).toEqual([drillShotRed.canonicalId]);

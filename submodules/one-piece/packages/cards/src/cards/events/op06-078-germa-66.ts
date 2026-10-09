@@ -39,7 +39,7 @@ export const op06Germa66078: EventCard = {
   setId: "OP06",
   cost: 1,
   trigger: "Draw 1 card.",
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including "GERMA" other than [GERMA 66] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {

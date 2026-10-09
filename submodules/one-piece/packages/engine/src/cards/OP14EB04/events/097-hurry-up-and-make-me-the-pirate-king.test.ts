@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op14eb04HurryUpAndMakeMeThePirateKing097 } from "../../../../../cards/src/cards/events/op14-097-hurry-up-and-make-me-the-pirate-king.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP14-097 Hurry Up and Make Me the Pirate King!", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op14eb04HurryUpAndMakeMeThePirateKing097);
-  });
-});

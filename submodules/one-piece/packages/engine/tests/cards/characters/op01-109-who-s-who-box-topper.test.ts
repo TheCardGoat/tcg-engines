@@ -11,7 +11,26 @@ function whoPower(engine: OnePieceTestEngine): number | undefined {
   );
 }
 
-describe("OP01-109 Who's.Who (Box Topper)", () => {
+describe("OP01-109 Who's.Who", () => {
+  test("printed Who's.Who name is excluded by OP04-051's search", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["OP04-051"],
+      deck: ["OP01-109", "ST04-002", "EB01-005"],
+      activeDon: 1,
+    });
+    const who = e.findCardInZone("south", "deck", "OP01-109"),
+      ulti = e.findCardInZone("south", "deck", "ST04-002"),
+      doma = e.findCardInZone("south", "deck", "EB01-005");
+    e.playCard("OP04-051");
+    const step = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected search selection");
+    expect(step.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual([ulti]);
+    e.resolveDecision("effectSearchSelection", { selectedIds: [ulti] }, "south");
+    e.resolveDecision("effectSearchRemainderOrder", { selectedIds: [doma, who] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([ulti]);
+    expect(e.getState().players.south.deck).toEqual([doma, who]);
+  });
+
   test("gains +1000 only with attached DON!!, on its turn, at eight field DON!!", () => {
     const basePower = op01WhoSWhoBoxTopper109.power;
     if (basePower === undefined) throw new Error("Expected Who's.Who's printed power.");

@@ -5,15 +5,27 @@ import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP17-004 Inuarashi & Nekomamushi", () => {
   test("grants [Rush] to a {Land of Wano} or {Whitebeard Pirates} Character on play", () => {
-    const engine = OnePieceTestEngine.create(
+    let engine = OnePieceTestEngine.create(
       {
-        hand: [op17InuarashiNekomamushi004],
-        character: [{ card: op01Inuarashi034 }],
-        activeDon: op17InuarashiNekomamushi004.cost,
+        leaderCardId: "OP01-002",
+        hand: [op01Inuarashi034, op17InuarashiNekomamushi004],
+        activeDon: op01Inuarashi034.cost + op17InuarashiNekomamushi004.cost,
       },
       {},
     );
+    engine.asSouth().play(op01Inuarashi034);
     const targetId = engine.findCardInZone("south", "character", op01Inuarashi034);
+    const failed = engine.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: targetId,
+      targetId: engine.asNorth().leader(),
+    });
+    engine = OnePieceTestEngine.fromState(failed.state);
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === targetId)
+        ?.rested,
+    ).toBe(false);
 
     engine.playCard(op17InuarashiNekomamushi004, "south");
     const grant = engine.pendingDecision("effectTargetSelection", "south").steps[0];
@@ -26,11 +38,15 @@ describe("OP17-004 Inuarashi & Nekomamushi", () => {
 
     // [Rush]: the granted Character may attack the same turn — the accepted
     // declare is the proof (4000 power deals no damage to the Leader).
-    expect(() => engine.asSouth().attack(targetId, engine.asNorth().leader())).not.toThrow();
+    engine.asSouth().attack(targetId, engine.asNorth().leader());
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === targetId)
+        ?.rested,
+    ).toBe(true);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("offers no targets when only non-matching Characters are on the field", () => {
+  test("offers Whitebeard Pirates Allies and itself, excludes Higuma, and allows declining", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op17InuarashiNekomamushi004],
@@ -42,8 +58,7 @@ describe("OP17-004 Inuarashi & Nekomamushi", () => {
 
     engine.playCard(op17InuarashiNekomamushi004, "south");
 
-    // Only the played card itself (Land of Wano) qualifies — the non-matching
-    // Characters must not be selectable.
+    // The printed includes clause accepts Whitebeard Pirates Allies.
     const grant = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (grant?.kind !== "selectEntity") throw new Error("Expected the grant window.");
     const selfId = engine.findCardInZone("south", "character", op17InuarashiNekomamushi004);
@@ -53,7 +68,6 @@ describe("OP17-004 Inuarashi & Nekomamushi", () => {
     engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
 
     const south = engine.getView("south").players.south;
-    expect(south.characters.find((c) => c?.cardId === "OP13-013")?.rested ?? false).toBe(false);
     expect(south.characters.find((c) => c?.cardId === "OP13-013")?.rested ?? false).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });

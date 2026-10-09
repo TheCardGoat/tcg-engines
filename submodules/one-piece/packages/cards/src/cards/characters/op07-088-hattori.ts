@@ -23,7 +23,7 @@ export const op07Hattori088: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["Animal CP0"],
+  traits: ["Animal", "CP0"],
   attribute: "strike",
   effect:
     "[Your Turn] [On Play] Up to 1 of your [Rob Lucci] cards gains +2000 power during this turn.",

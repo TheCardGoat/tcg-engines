@@ -68,16 +68,26 @@ export const chargedHunter: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               collection: {
                 zones: ["field"],
                 player: "controller",
+                excludingSource: true,
                 filter: {
-                  kind: "all",
+                  kind: "any",
                   filters: [
                     {
-                      kind: "type",
-                      oneOf: ["ALLY"],
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["AUTOMATON"],
+                        },
+                      ],
                     },
                     {
                       kind: "subtype",
-                      oneOf: ["AUTOMATON"],
+                      oneOf: ["POWERCELL"],
                     },
                   ],
                 },

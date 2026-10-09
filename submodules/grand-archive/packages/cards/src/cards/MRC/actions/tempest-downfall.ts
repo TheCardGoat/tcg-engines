@@ -111,15 +111,30 @@ export const tempestDownfall: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               {
                 kind: "conditional",
                 condition: {
-                  kind: "subject-matches",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
-                  },
-                  filter: {
-                    kind: "type",
-                    oneOf: ["ALLY"],
-                  },
+                  kind: "all",
+                  conditions: [
+                    {
+                      kind: "subject-matches",
+                      subject: {
+                        kind: "bound",
+                        binding: "target-1",
+                      },
+                      filter: {
+                        kind: "type",
+                        oneOf: ["ALLY"],
+                      },
+                    },
+                    {
+                      kind: "history",
+                      event: "object-entered-field",
+                      window: "this-turn",
+                      subject: {
+                        kind: "bound",
+                        binding: "target-1",
+                      },
+                      minimum: 1,
+                    },
+                  ],
                 },
                 then: {
                   kind: "deal-damage",

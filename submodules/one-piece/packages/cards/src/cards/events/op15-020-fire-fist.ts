@@ -21,7 +21,7 @@ export const op15FireFist020: EventCard = {
   rarity: "R",
   setId: "OP15",
   cost: 7,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   effect:
     "[Main] Your Leader gains +3000 power during this turn and give up to 1 of your opponent's Characters -8000 power until the end of your opponent's next End Phase. Then, you may trash 2 cards from your hand. If you do, K.O. up to 1 of your opponent's Characters with 0 power or less.",
   effects: {
@@ -54,37 +54,38 @@ export const op15FireFist020: EventCard = {
             value: -8000,
             duration: "untilEndOfOpponentNextEndPhase",
           },
-        ],
-      },
-      {
-        trigger: "main",
-        costs: [
           {
-            cost: "trashFromHand",
-            amount: 2,
-          },
-        ],
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromHand",
+                player: "self",
+                amount: 2,
+                thenRequiresFullAmount: true,
+                thenActions: [
+                  {
+                    action: "ko",
+                    target: {
+                      player: "opponent",
+                      zones: ["character"],
+                      count: {
+                        amount: 1,
+                        upTo: true,
+                      },
+                      filters: [
+                        {
+                          filter: "power",
+                          comparison: "lte",
+                          value: 0,
+                        },
+                      ],
+                    },
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 0,
-                },
-              ],
-            },
+            ],
           },
         ],
-        optional: true,
       },
     ],
   },

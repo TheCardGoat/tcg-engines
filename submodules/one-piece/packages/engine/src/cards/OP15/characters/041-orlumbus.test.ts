@@ -5,6 +5,37 @@ import { op15Orlumbus041 } from "../../../../../cards/src/cards/characters/op15-
 import { getLegalCommands, OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-041 Orlumbus", () => {
+  test("may bottom-deck itself as the cost without granting Rush to another Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Orlumbus041, { card: eb01Doma005, playedOnTurn: 3 }] },
+      {},
+      { turnNumber: 3 },
+    );
+    const sourceId = engine.findCardInZone("south", "character", op15Orlumbus041);
+    const domaId = engine.findCardInZone("south", "character", eb01Doma005);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectCostReturnCharacterToDeck", { selectedIds: [sourceId] }, "south");
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).not.toContain(sourceId);
+    expect(engine.getView("south").players.south.deckCount).toBe(deckBefore + 1);
+    const failed = engine.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: domaId,
+      targetId: engine.leader("north"),
+    });
+    expect(failed.accepted).toBe(false);
+    expect(
+      OnePieceTestEngine.fromState(failed.state)
+        .getView("south")
+        .players.south.characters.find((card) => card?.instanceId === domaId)?.rested,
+    ).toBe(false);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On K.O.] draws 1 card", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op15Orlumbus041], activeDon: 2, deck: [eb01Doma005, eb01Doma005, eb01Doma005] },

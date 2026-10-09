@@ -43,11 +43,16 @@ interface GrandArchiveEventPatternBase<Name extends GrandArchiveObservableEventN
     readonly count: number;
     readonly window: "this-turn" | "game";
     readonly actorScope?: "same-player";
+    /** Count events for the same subject since its latest zone change. */
+    readonly subjectScope?: "same-object";
   };
   readonly condition?: GrandArchiveCondition;
 }
 
 export type GrandArchiveEventPattern =
+  | (GrandArchiveEventPatternBase<"ability-activated"> & {
+      readonly abilityLabel?: string;
+    })
   | (GrandArchiveEventPatternBase<"phase-begins"> & { readonly phase: GrandArchivePhase })
   | GrandArchiveEventPatternBase<"turn-begins">
   | (GrandArchiveEventPatternBase<"damage-dealt" | "damage-prevented"> & {
@@ -125,6 +130,8 @@ export type GrandArchiveEventPattern =
   | (GrandArchiveEventPatternBase<"champion-leveled-up"> & {
       /** Champion object that performed the level-up before the transition. */
       readonly previousObject?: GrandArchiveEventSubject;
+      /** Compare the printed levels before and after the committed champion transition. */
+      readonly sameBaseLevel?: boolean;
     })
   | (GrandArchiveEventPatternBase<"stack-item-negated"> & {
       readonly itemTypes?: readonly ("ability" | "card-activation" | "materialization")[];
@@ -172,6 +179,7 @@ export type GrandArchiveEventPattern =
         | "counter-removed"
         | "cards-recollected"
         | "card-activated"
+        | "ability-activated"
         | "card-banished"
         | "card-discarded"
         | "card-drawn"

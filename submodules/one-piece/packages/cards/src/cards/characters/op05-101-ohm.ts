@@ -23,7 +23,7 @@ export const op05Ohm101: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "slash",
   effect:
     "If you have 2 or less Life cards, this Character gains +1000 power. [On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Holly] and add it to your hand. Then, place the rest at the bottom of your deck in any order and play up to 1 [Holly] from your hand.",

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07Gina065 } from "../../../../../cards/src/cards/characters/op07-065-gina.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP07-065 Gina", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07Gina065);
-  });
-});

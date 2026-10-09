@@ -44,4 +44,20 @@ describe("OP15-073 Yama", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("plays a cost-1 Vassals Character as the alternative", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["OP15-073", "OP15-067", "OP05-105", "EB01-005"], activeDon: 4 },
+      {},
+    );
+    const shura = engine.findCardInZone("south", "hand", "OP15-067");
+    engine.playCard("OP15-073");
+    const step = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected play targets");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([shura]);
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [shura] }, "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(
+      engine.getView("south").players.south.characters.some((c) => c?.instanceId === shura),
+    ).toBe(true);
+  });
 });

@@ -194,17 +194,17 @@ describe("compileAnimationPlan", () => {
       "fast",
     );
 
-    expect(compiled.steps[0]).toMatchObject({ startAtMs: 50, durationMs: 300, endAtMs: 350 });
+    expect(compiled.steps[0]).toMatchObject({ startAtMs: 35, durationMs: 210, endAtMs: 245 });
     expect(compiled.audioCues).toEqual([
-      { planId: "move", stepId: "move:a", cue: "card.move", startAtMs: 50 },
+      { planId: "move", stepId: "move:a", cue: "card.move", startAtMs: 35 },
     ]);
-    expect(compiled.reflowDurationMs).toBe(120);
+    expect(compiled.reflowDurationMs).toBe(84);
   });
 
   test.each([
     ["off", 0],
-    ["normal", 600],
-    ["slow", 900],
+    ["normal", 420],
+    ["slow", 660],
   ] as const)("applies the %s speed scale", (speed, expectedDuration) => {
     const compiled = compileAnimationPlan(
       { ...plan, steps: [{ ...plan.steps[0], durationMs: 600 }] },

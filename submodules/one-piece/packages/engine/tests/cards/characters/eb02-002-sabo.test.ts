@@ -29,6 +29,11 @@ describe("EB02-002 Sabo", () => {
     expect(
       view.players.south.characters.find((card) => card?.instanceId === inazumaId)?.power,
     ).toBe(9000);
+    engine.asSouth().endTurn();
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === inazumaId)
+        ?.power,
+    ).toBe(7000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
@@ -47,6 +52,8 @@ describe("EB02-002 Sabo", () => {
     const trashBefore = before.trash.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const after = engine.getView("south").players.south;
+    expect(after.characters.find((c) => c?.instanceId === saboId)?.rested).toBe(false);
+    expect(after.characters.find((c) => c?.cardId === "EB01-022")?.power).toBe(7000);
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(after.hand.length).toBe(handBefore);

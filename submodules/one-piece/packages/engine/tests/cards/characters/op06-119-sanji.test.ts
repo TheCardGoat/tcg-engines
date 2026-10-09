@@ -13,11 +13,14 @@ describe("OP06-119 Sanji", () => {
     const zoroId = engine.findCardInZone("south", "deck", op06RoronoaZoro118);
 
     engine.playCard(op06Sanji119, "south");
-    const play = engine.pendingDecision("effectSearchSelection", "south").steps[0];
+    expect(engine.getView("north").logs.some((entry) => entry.message.includes("reveals "))).toBe(
+      true,
+    );
+    const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];
     expect(play).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
     if (play?.kind !== "selectEntity") throw new Error("Expected Sanji's top-deck play choice.");
-    expect(play.candidates.find((candidate) => candidate.ref.id === zoroId)?.legal).toBe(true);
-    engine.resolveDecision("effectSearchSelection", { selectedIds: [zoroId] }, "south");
+    expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([zoroId]);
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [zoroId] }, "south");
 
     expect(
       engine.getView("south").players.south.characters.some((card) => card?.instanceId === zoroId),
@@ -33,13 +36,28 @@ describe("OP06-119 Sanji", () => {
     const topSanjiId = engine.findCardInZone("south", "deck", op06Sanji119);
 
     engine.playCard(op06Sanji119, "south");
-    const play = engine.pendingDecision("effectSearchSelection", "south").steps[0];
-    expect(play?.kind).toBe("selectEntity");
-    if (play?.kind !== "selectEntity") throw new Error("Expected Sanji's top-deck choice.");
-    expect(play.candidates.find((candidate) => candidate.ref.id === topSanjiId)?.legal).toBe(false);
-    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    expect(engine.getView("north").logs.some((entry) => entry.message.includes("reveals "))).toBe(
+      true,
+    );
 
     expect(engine.getState().players.south.deck.at(-1)).toBe(topSanjiId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("reveals an eligible top card to both players even when declining its play", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op06Sanji119],
+      deck: [op06RoronoaZoro118, eb01Doma005],
+      activeDon: 9,
+    });
+    const topId = engine.findCardInZone("south", "deck", op06RoronoaZoro118);
+    engine.asSouth().play(op06Sanji119);
+    expect(
+      engine.getView("north").logs.some((entry) => entry.message.includes("reveals Roronoa Zoro")),
+    ).toBe(true);
+    engine.asSouth().chooseNoPlay();
+    // Hidden-zone identity is needed to prove the printed bottom-deck instruction.
+    expect(engine.getState().players.south.deck.at(-1)).toBe(topId);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

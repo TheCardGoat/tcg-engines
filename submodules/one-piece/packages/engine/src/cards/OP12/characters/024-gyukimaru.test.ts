@@ -22,8 +22,18 @@ describe("OP12-024 Gyukimaru", () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Burn Blade's K.O. target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(legalId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.some((card) => card?.instanceId === protectedId),
+    ).toBe(true);
+    expect(
+      engine.getView("south").players.south.trash.map((card) => card.instanceId),
+    ).not.toContain(protectedId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
   test("while rested can be K.O.'d by an opponent's effect", () => {

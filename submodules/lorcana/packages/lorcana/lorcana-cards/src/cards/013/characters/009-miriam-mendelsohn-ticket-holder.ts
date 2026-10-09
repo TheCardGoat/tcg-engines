@@ -31,6 +31,7 @@ export const miriamMendelsohnTicketHolder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e0e489d501db4eebb61074a644dcb32c",
+    tcgPlayer: "704545",
   },
   text: [
     {

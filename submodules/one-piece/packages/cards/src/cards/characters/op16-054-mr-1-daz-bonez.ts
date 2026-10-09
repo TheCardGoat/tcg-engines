@@ -23,7 +23,7 @@ export const op16Mr1DazBonez054: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "slash",
   effect:
     "[DON!! X1] [Your Turn] If you have 5 or more cards in your hand, this Character gains +3000 power.\n\n[On Play] Draw 1 card.",

@@ -1,16 +1,6 @@
-import type { CardColor } from "@tcg/cyberpunk-types";
+import { DIE_MAX_VALUES, isDieType, type CardColor } from "@tcg/cyberpunk-types";
 import type { FilteredMatchView } from "../../view/filter.ts";
-
-// Public-view mirror of types/gig-die.ts. Automation cannot import engine-internal
-// state types; the exhaustive definition-id tests guard this map against drift.
-const DIE_MAX_VALUES_BY_DEFINITION_ID: Record<string, number> = {
-  d4: 4,
-  d6: 6,
-  d8: 8,
-  d10: 10,
-  d12: 12,
-  d20: 20,
-};
+import { gigPlanValue } from "../util/gig-plan.ts";
 
 interface GigCandidate {
   dieId: string;
@@ -31,6 +21,7 @@ interface PlanAdjustGigOptions {
   eligibleIds: readonly string[];
   direction?: string;
   maxAmount?: number;
+  allowUnchanged?: boolean;
   sourceColor?: CardColor;
   focusedDie?: GigCandidate;
 }
@@ -62,7 +53,12 @@ export function planAdjustGig(options: PlanAdjustGigOptions): AdjustGigPlan | nu
   let best: ScoredPlan | null = null;
 
   for (const candidate of candidates) {
-    for (const value of legalValues(candidate, options.direction, maxAmount)) {
+    for (const value of legalValues(
+      candidate,
+      options.direction,
+      maxAmount,
+      options.allowUnchanged === true,
+    )) {
       const score = scoreResult(
         options.view,
         options.playerId,
@@ -91,8 +87,8 @@ function collectGigCandidates(view: FilteredMatchView, eligibleIds: ReadonlySet<
     if (!Array.isArray(gigArea)) continue;
     for (const gig of gigArea) {
       if (!eligibleIds.has(gig.instanceId)) continue;
-      const maxFaceValue = DIE_MAX_VALUES_BY_DEFINITION_ID[gig.definitionId];
-      if (maxFaceValue === undefined) continue;
+      if (!isDieType(gig.definitionId)) continue;
+      const maxFaceValue = DIE_MAX_VALUES[gig.definitionId];
       candidates.push({
         dieId: gig.instanceId,
         ownerId,
@@ -104,7 +100,12 @@ function collectGigCandidates(view: FilteredMatchView, eligibleIds: ReadonlySet<
   return candidates;
 }
 
-function legalValues(candidate: GigCandidate, direction: string | undefined, maxAmount: number) {
+function legalValues(
+  candidate: GigCandidate,
+  direction: string | undefined,
+  maxAmount: number,
+  allowUnchanged: boolean,
+) {
   const min =
     direction === "increase"
       ? candidate.currentValue
@@ -114,7 +115,9 @@ function legalValues(candidate: GigCandidate, direction: string | undefined, max
       ? candidate.currentValue
       : Math.min(candidate.maxFaceValue, candidate.currentValue + maxAmount);
   const values: number[] = [];
-  for (let value = min; value <= max; value++) values.push(value);
+  for (let value = min; value <= max; value++) {
+    if (value !== candidate.currentValue || allowUnchanged) values.push(value);
+  }
   return values;
 }
 
@@ -161,29 +164,36 @@ function scoreResult(
     ];
   }
 
+  // A known card payoff takes precedence over a color's generic value shape.
+  // With no visible payoff this prefix is equal for every candidate.
+  const readyCardPlan = gigPlanValue(view, playerId, ownValues);
+
   switch (sourceColor) {
     case "red":
-      return [ownStreetCred, streetCredAdvantage];
+      return [readyCardPlan, ownStreetCred, streetCredAdvantage];
     case "blue":
       return [
+        readyCardPlan,
         ownValues.filter((gigValue) => gigValue === 1).length,
         -ownStreetCred,
         streetCredAdvantage,
       ];
     case "green":
       return [
+        readyCardPlan,
         pairCount(ownValues),
         -rivalValues.reduce((total, values) => total + pairCount(values), 0),
         streetCredAdvantage,
       ];
     case "yellow":
       return [
+        readyCardPlan,
         new Set(ownValues).size,
         Math.max(0, ...rivalStreetCreds.map((cred) => Math.abs(ownStreetCred - cred))),
         streetCredAdvantage,
       ];
     default:
-      return [streetCredAdvantage];
+      return [readyCardPlan, streetCredAdvantage];
   }
 }
 

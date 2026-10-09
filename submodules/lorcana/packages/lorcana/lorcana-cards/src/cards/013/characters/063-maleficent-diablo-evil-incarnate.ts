@@ -31,17 +31,21 @@ export const maleficentDiabloEvilIncarnate: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_400806d3d6cc450f910c31710064bbc7",
+    tcgPlayer: "704581",
+  },
   text: [
     {
       title: "Shift 5 {I}",
     },
     {
-      title: "Fools!",
+      title: "FOOLS!",
       description:
         "You may put 5 character cards from your discard on the bottom of your deck in any order to shift this character for free.",
     },
     {
-      title: "Raven's Call",
+      title: "RAVEN'S CALL",
       description: "During your turn, whenever this character exerts, draw a card.",
     },
   ],

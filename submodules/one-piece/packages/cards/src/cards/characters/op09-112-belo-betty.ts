@@ -58,7 +58,7 @@ export const op09BeloBetty112: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "totalLifeCount",

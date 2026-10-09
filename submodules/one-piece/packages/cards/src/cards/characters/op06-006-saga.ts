@@ -23,7 +23,7 @@ export const op06Saga006: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["FILM Asuka Island"],
+  traits: ["FILM", "Asuka Island"],
   attribute: "slash",
   effect:
     "[DON!! x1][When Attacking] This Character gains +1000 power until the start of your next turn. Then, trash 1 of your [FILM] type Characters at the end of this turn.",
@@ -67,7 +67,7 @@ export const op06Saga006: CharacterCard = {
                     {
                       filter: "trait",
                       value: "FILM",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

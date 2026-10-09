@@ -47,6 +47,20 @@ describe("OP03-119 Buzz Cut Mochi", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test.each([2, 3])("with %i Life against 2, pays the Event cost without a K.O. choice", (life) => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op03BuzzCutMochi119], activeDon: 2, life },
+      { character: [op01Hajrudin018], life: 2 },
+    );
+    const targetId = engine.findCardInZone("north", "character", op01Hajrudin018);
+    engine.playCard(op03BuzzCutMochi119);
+    const view = engine.getView("south");
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
+    expect(view.players.north.characters.some((card) => card?.instanceId === targetId)).toBe(true);
+    expect(view.players.south.trash.map((card) => card.cardId)).toContain(op03BuzzCutMochi119.id);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("Life Trigger offers only a cost-4-or-less Character that has a Trigger", () => {
     const engine = OnePieceTestEngine.create(
       {

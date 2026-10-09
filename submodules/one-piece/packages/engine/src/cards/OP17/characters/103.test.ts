@@ -1,69 +1,65 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Charlotte Katakuri (OP17-103) cost=6 power=4000 counter=1000
 describe("OP17-103 Charlotte Katakuri", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-103"], activeDon: 8 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("FAQ: opponent-turn Life Trigger plays this card without its Your Turn On Play", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST07-001", life: ["OP17-103", "EB01-025"], deck: 5, activeDon: 2 },
+      { hand: ["EB01-005"] },
+      { activeSeat: "north" },
     );
-
-    engine.playCard("OP17-103");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-103",
-    );
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.characters.map((c) => c?.cardId)).toContain("OP17-103");
+    expect(view.players.south.deckCount).toBe(5);
+    expect(view.players.south.lifeCount).toBe(1);
+    expect(view.players.south.activeDon).toBe(2);
+    expect(view.players.north.handCount).toBe(1);
+    expect(view.prompts).toHaveLength(0);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-103", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test.each([0, 1])(
+    "on its controller's turn, adding %i Life still gives the selected Character minus3000",
+    (amount) => {
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "ST07-001",
+          hand: ["OP17-103"],
+          activeDon: 6,
+          deck: ["ST02-002", "ST02-006", "OP13-013"],
+        },
+        { character: ["EB01-018"] },
+      );
+      const life = e.getView("south").players.south.lifeCount,
+        target = e.findCardInZone("north", "character", "EB01-018");
+      e.asSouth().play("OP17-103");
+      e.resolveDecision("effectAddToLifeFromDeck", { optionId: String(amount) }, "south");
+      e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+      expect(e.getView("south").players.south.lifeCount).toBe(life + amount);
+      expect(e.getView("south").players.south.deckCount).toBe(3 - amount);
+      expect(e.getView("south").players.north.characters[0]?.power).toBe(4000);
+      e.endTurn("south");
+      expect(e.getView("south").players.north.characters[0]?.power).toBe(7000);
+    },
+  );
+  test("a non-Big-Mom Leader suppresses both Life addition and the following power reduction", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST13-003",
+        hand: ["OP17-103"],
+        activeDon: 6,
+        deck: ["ST13-012", "ST13-013"],
+      },
+      { leaderCardId: "ST02-001", character: ["EB01-018"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-103",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const before = e.getView("south").players.south;
+    e.asSouth().play("OP17-103");
+    const view = e.getView("south");
+    expect(view.players.south.lifeCount).toBe(before.lifeCount);
+    expect(view.players.south.deckCount).toBe(before.deckCount);
+    expect(view.players.north.characters[0]?.power).toBe(7000);
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.restedDon).toBe(6);
+    expect(view.prompts).toHaveLength(0);
   });
 });

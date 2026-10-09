@@ -1,7 +1,13 @@
+---
+official_source:
+  publisher: "Weird Co."
+  url: "https://cyberpunktcg.com/comprehensive-rules"
+  relation: "current_index"
+  retrieved_at: "2026-09-01"
+---
+
 # Cyberpunk TCG Comprehensive Rules
 
-> Official source: [Cyberpunk TCG Comprehensive Rules](https://cyberpunktcg.com/comprehensive-rules)
-> Downloaded from the official rules reader API on 2026-09-01T19:28:10.028Z.
 
 This local mirror preserves the official rule numbers and Markdown content. Refresh it with `scripts/sync-comprehensive-rules.mjs`; use the index to load only the sections relevant to a question.
 

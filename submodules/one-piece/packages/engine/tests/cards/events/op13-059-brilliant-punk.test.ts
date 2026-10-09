@@ -42,6 +42,18 @@ describe("OP13-059 Brilliant Punk", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("Life Trigger draws a card without paying the Main's Character return", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP13-059", "ST02-002"], deck: ["EB01-005", "ST02-002"] },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["EB01-005"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP13-059");
+  });
+
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create(
       {

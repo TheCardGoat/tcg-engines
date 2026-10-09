@@ -53,6 +53,12 @@ describe("OP04-044 Kaido", () => {
       "south",
     );
 
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === opposingCostEightId),
+    ).toBe(true);
+
     const second = engine.pendingDecision("effectTargetSelection", "south");
     expect(second.actorId).toBe("south");
     const secondStep = second.steps[0];

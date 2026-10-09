@@ -12,7 +12,7 @@ describe("GundamFixtureIndexPage", () => {
   });
 
   it("renders the fixture catalog on its dedicated route", () => {
-    const { container } = render(
+    render(
       <MemoryRouter initialEntries={["/gundam/simulator/tests"]}>
         <Routes>
           <Route path="/:gameSlug/simulator/tests" element={<GundamFixtureIndexPage />} />
@@ -21,8 +21,6 @@ describe("GundamFixtureIndexPage", () => {
     );
 
     expect(screen.getByRole("heading", { name: "Deterministic fixture catalog" })).toBeDefined();
-    expect(container.firstElementChild?.className).toContain("overflow-y-auto");
-    expect(container.firstElementChild?.className).toContain("h-dvh");
   });
 
   it("keeps the hidden fixture route available outside development", () => {

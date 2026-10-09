@@ -30,3 +30,8 @@
   border-radius: 0;
   background: var(--board-layout-bg, #020408);
 }
+
+.pageShell:has([data-testid="cyberpunk-human-match-sidebar"])
+  button[aria-label="Collapse sidebar"][aria-expanded="true"] {
+  top: var(--simulator-sidebar-control-inset, 0.75rem);
+}

@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/monarch/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Monarch"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/monarch/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 25a451ffb5b88fa957f92dd63c0c2ac49d183c22efe2e38b36ff7bc00679ebc2
 ---

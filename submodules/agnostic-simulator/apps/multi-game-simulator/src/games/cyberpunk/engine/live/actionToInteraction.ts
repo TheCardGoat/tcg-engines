@@ -52,6 +52,8 @@ function valuesForAction(
   action: Exclude<EngineAction, { type: "undo" | "undoToTurnStart" }>,
 ): Record<string, InteractionSubmissionValue> {
   switch (action.type) {
+    case "setCombatPriority":
+      return { hold: action.mode === "hold" };
     case "playCard":
       return withOptional(
         withOptional({ cardId: action.cardId }, "attachToId", action.attachToId),
@@ -66,7 +68,15 @@ function valuesForAction(
     case "resolveCardToPlay":
       return action.pass
         ? { pass: true }
-        : withOptional(withOptional({}, "cardId", action.cardId), "attachToId", action.attachToId);
+        : withOptional(
+            withOptional(
+              withOptional({}, "cardId", action.cardId),
+              "attachToId",
+              action.attachToId,
+            ),
+            "paymentSourceIds",
+            action.paymentSourceIds,
+          );
     case "resolveChooseEffect":
       return { optionId: action.optionId };
     case "attackUnit":
@@ -78,7 +88,11 @@ function valuesForAction(
     case "activateAbility":
       // abilityIndex is an option-selection input whose option ids are
       // String(index); the protocol rejects numeric selection values.
-      return { cardId: action.cardId, abilityIndex: String(action.abilityIndex) };
+      return withOptional(
+        { cardId: action.cardId, abilityIndex: String(action.abilityIndex) },
+        "paymentSourceIds",
+        action.paymentSourceIds,
+      );
     case "resolveAttack":
       return withOptional({}, "pass", action.pass);
     case "resolveStealGigs":
@@ -90,9 +104,9 @@ function valuesForAction(
         ? { pass: true }
         : { dieId: action.choice.dieId, value: action.choice.value };
     case "resolveEffectTarget":
-      return action.pass ? { pass: true } : { targetIds: action.targetIds ?? [] };
+      return action.pass ? { pass: true, targetIds: [] } : { targetIds: action.targetIds ?? [] };
     case "resolveDiscardFromHand":
-      return action.pass ? { pass: true } : { cardIds: action.cardIds ?? [] };
+      return action.pass ? { pass: true, cardIds: [] } : { cardIds: action.cardIds ?? [] };
     case "resolvePreventGigSteal":
       return action.pass
         ? { pass: true, dieIds: [], cardIds: [] }
@@ -120,7 +134,11 @@ function valuesForAction(
     case "resolveCardToMove":
       return withOptional(withOptional({}, "cardId", action.cardId), "pass", action.pass);
     case "resolveRedirectDefeat":
-      return withOptional({}, "pass", action.pass);
+      return withOptional(
+        withOptional({}, "pass", action.pass),
+        "paymentSourceIds",
+        action.paymentSourceIds,
+      );
     case "resolveSacrificialGear":
       return { cardId: action.cardId };
     case "resolveFirstPlayer":

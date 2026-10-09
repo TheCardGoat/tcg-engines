@@ -130,4 +130,33 @@ describe("player-safe ability hints", () => {
       expect.objectContaining({ faceDown: true, abilityHints: [] }),
     ]);
   });
+
+  test("preserves a friendly face-down Legend target requirement", () => {
+    const program = createMockProgram({
+      abilities: [
+        {
+          kind: "triggered",
+          text: "Call a Legend for free.",
+          trigger: { trigger: "play" },
+          effects: [
+            {
+              effect: "callLegend",
+              player: "friendly",
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["legendArea"],
+                cardTypes: ["legend"],
+                face: "faceDown",
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+              free: true,
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(getAbilityHints(program)[0]?.requirements).toEqual(["friendlyFaceDownLegend"]);
+  });
 });

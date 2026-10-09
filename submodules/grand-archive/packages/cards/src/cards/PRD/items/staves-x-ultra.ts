@@ -113,29 +113,6 @@ export const stavesXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               actor: "controller",
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["WEAPON"],
-                },
-              },
-            },
-          ],
           restrictions: [
             {
               kind: "static",
@@ -154,6 +131,7 @@ export const stavesXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               },
             },
           ],
+          functionalZones: ["banishment"],
           effect: {
             kind: "conditional",
             condition: {
@@ -161,13 +139,66 @@ export const stavesXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               zone: "banishment",
             },
             then: {
-              kind: "add-counter",
-              subject: {
-                kind: "bound",
-                binding: "target-1",
+              kind: "choose",
+              selection: {
+                id: "chosen-counter-object",
+                kind: "choice",
+                declared: "resolution",
+                chooser: "controller",
+                count: {
+                  kind: "exactly",
+                  amount: 1,
+                },
+                candidates: {
+                  kind: "object",
+                  zones: ["field"],
+                  relationship: "controlled-by",
+                  player: "controller",
+                  filter: {
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "type",
+                        oneOf: ["WEAPON"],
+                      },
+                      {
+                        kind: "subtype",
+                        oneOf: ["SWORD"],
+                      },
+                    ],
+                  },
+                },
               },
-              counter: "static",
-              amount: 1,
+              effect: {
+                kind: "sequence",
+                effects: [
+                  {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "chosen-counter-object",
+                    },
+                    counter: "static",
+                    amount: 1,
+                  },
+                  {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "each",
+                      collection: {
+                        zones: ["field"],
+                        host: {
+                          kind: "bound",
+                          binding: "chosen-counter-object",
+                        },
+                        relationship: "linked-to",
+                      },
+                    },
+                    counter: "static",
+                    amount: 1,
+                  },
+                ],
+              },
             },
           },
         },

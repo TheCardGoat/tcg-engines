@@ -229,6 +229,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   min-width: 0;
@@ -237,22 +239,147 @@
   overflow: hidden;
 }
 
-/* Match FAB's outer board surface; game zones will compose inside this wrapper. */
+/* One portrait composition, centered independently of optional match history. */
 .ga-board {
-  box-sizing: border-box;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
+  flex: none;
+  width: min(100%, calc((100svh - 28px) * 0.825));
+  aspect-ratio: 13.2 / 16;
+  overflow: visible;
+  border-radius: 12px;
+  background: #14101a;
+  box-shadow: 0 20px 90px #0009;
+}
+.ga-viewport-shell[data-layout="desktop"] {
+  display: grid;
+  grid-template-columns: clamp(240px, 20vw, 280px) minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+.ga-viewport-shell[data-layout="desktop"] > [data-simulator-tabletop="true"] {
+  position: relative;
+  inset: auto;
+}
+.ga-viewport-shell[data-layout="desktop"] > aside {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #8e754344;
+  border-radius: 8px;
+}
+.ga-viewport-shell[data-layout="desktop"] > aside > button[aria-label="Collapse sidebar"],
+.ga-viewport-shell[data-layout="desktop"] > button[aria-label="Expand sidebar"] {
+  display: none;
+}
+.ga-three-board {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #17111c;
+}
+.ga-three-board__canvas {
   width: 100%;
   height: 100%;
-  max-height: 100%;
-  min-width: 0;
-  min-height: 0;
+}
+.ga-three-board__actions {
+  position: absolute;
+  z-index: 6;
+  bottom: 15%;
+  left: 12%;
+  right: 12%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.ga-portrait-hud {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 43.5%;
+  min-height: 13%;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  z-index: 4;
+  padding: 5px;
+  border-block: 1px solid #8c76985c;
+  background: #14101beb;
+  border-radius: 8px;
+}
+.ga-portrait-feedback {
+  display: grid;
+  gap: 2px;
+  max-height: 35px;
+  overflow: auto;
+  color: #e8d79b;
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+}
+.ga-portrait-identity {
+  position: absolute;
+  left: 19%;
+  right: 19%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px #000;
+  pointer-events: none;
+}
+.ga-portrait-identity strong {
+  color: #edcd8b;
+}
+.ga-portrait-identity span {
   overflow: hidden;
-  border-radius: 0.85rem;
-  padding: clamp(0.25rem, 0.7vw, 0.65rem);
-  background: rgb(8 6 7 / 28%);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ga-portrait-identity small {
+  color: #ccbacf;
+}
+.ga-portrait-identity[data-side="top"] {
+  top: 0.5%;
+}
+.ga-portrait-identity[data-side="bottom"] {
+  bottom: 2%;
+}
+.ga-portrait-assets {
+  position: absolute;
+  z-index: 7;
+  top: 9%;
+  left: 8%;
+  right: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #211628ed;
+  font-size: 11px;
+  padding: 5px;
+}
+@media (max-width: 47.99rem) {
+  .ga-board {
+    width: 100%;
+    min-height: 624px;
+  }
+  .ga-tabletop {
+    overflow: auto;
+    justify-content: start;
+  }
+  .ga-board-sidebar-reopen {
+    display: none;
+  }
+  .ga-portrait-hud {
+    left: 12%;
+    right: 12%;
+  }
+  .ga-portrait-identity {
+    font-size: 10px;
+  }
 }
 
 .ga-board-status {
@@ -2837,22 +2964,6 @@
   width: 100% !important;
 }
 
-.ga-simulator-root
-  [data-testid="interaction-resolution-prompt"][data-placement="bottom"][data-layout="compact"] {
-  bottom: clamp(9rem, calc(11.9vw + 3rem), 12.5rem);
-  max-height: calc(100% - clamp(9rem, calc(11.9vw + 3rem), 12.5rem) - 1rem);
-  overflow-y: auto;
-  --prompt-accent: var(--ga-signal);
-}
-
-@media (max-width: 767px) {
-  .ga-simulator-root
-    [data-testid="interaction-resolution-prompt"][data-placement="bottom"][data-layout="compact"] {
-    bottom: 11rem;
-    max-height: calc(100% - 12rem);
-  }
-}
-
 .ga-seat-field-area {
   /* The field supplies the height budget for one complete row of card art. */
   container-type: size;
@@ -2884,12 +2995,11 @@
   color: var(--board-muted);
 }
 .ga-interaction-error {
-  position: fixed;
-  z-index: 400;
-  bottom: 5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: min(90vw, 40rem);
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
   padding: 0.5rem 0.75rem;
   background: var(--board-surface);
   color: var(--board-text);
@@ -3657,4 +3767,663 @@
 }
 .ga-role-card__art-caption small {
   font-size: 0.5625rem;
+}
+
+.ga-portrait-captions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ga-portrait-caption {
+  position: absolute;
+  transform: translate(-50%, calc(-10% - 5px));
+  display: grid;
+  gap: 1px;
+  padding: 2px;
+  border-radius: 3px;
+  background: #100c16ee;
+  color: #e8deee;
+  font-size: 9px;
+  line-height: 1.15;
+  text-align: center;
+}
+.ga-portrait-caption strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ga-portrait-caption span {
+  color: #eed998;
+}
+.ga-portrait-caption[data-target="true"] {
+  outline: 1px dashed #efda98;
+}
+.ga-portrait-caption[data-selected="true"] {
+  outline: 2px solid #f7e5ae;
+}
+
+.ga-feedback-history {
+  font-size: 10px;
+  color: #d6c8e0;
+  text-align: center;
+}
+.ga-feedback-history summary {
+  cursor: pointer;
+}
+.ga-feedback-history[open] {
+  position: absolute;
+  z-index: 8;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #191321;
+  padding: 8px;
+  border: 1px solid #796585;
+}
+.ga-feedback-history ol {
+  max-height: 180px;
+  overflow: auto;
+  text-align: left;
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+.ga-simulator-root .ga-portrait-prompt-host > [data-testid="interaction-resolution-prompt"] {
+  position: relative;
+  inset: auto;
+  transform: none;
+  translate: none;
+  width: 100%;
+  max-height: 32svh;
+  margin: 0;
+  overflow: auto;
+}
+/* The shared rail assumes a wide table. This portrait host gives actions their
+   own row so payment buttons cannot cover the prompt utility control. */
+.ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-rail"] {
+  grid-template-areas: "signal identity controls" ". actions actions";
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding-inline-end: var(--simulator-panel-header-padding, 0.875rem);
+}
+.ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-actions"] {
+  flex-wrap: wrap;
+}
+.ga-portrait-hud:has(.ga-portrait-prompt-host > *) {
+  top: 50%;
+  transform: translateY(-50%);
+  min-height: 0;
+  left: 9%;
+  right: 9%;
+}
+.ga-portrait-hud:has(.ga-portrait-prompt-host > *) .ga-board-controls__status {
+  display: none;
+}
+
+.ga-portrait-identity {
+  flex-wrap: nowrap;
+  align-items: center;
+  left: 8%;
+  right: 8%;
+}
+.ga-portrait-identity[data-side="bottom"] {
+  bottom: 0.3%;
+}
+.ga-portrait-player-values {
+  color: #d7c7df;
+  font-size: 10px;
+}
+.ga-portrait-identity:has([data-has-player-state="true"]) {
+  flex-wrap: wrap;
+}
+.ga-portrait-identity .ga-portrait-player-values[data-has-player-state="true"] {
+  flex-basis: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+.ga-portrait-overflow {
+  font-size: 10px;
+  text-align: center;
+}
+@media (max-width: 47.99rem) {
+  .ga-portrait-prompt-host [data-slot="interaction-rail"] {
+    min-height: 58px;
+    padding: 4px 9px;
+    gap: 0 7px;
+  }
+  .ga-portrait-prompt-host [data-slot="interaction-instruction"] {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  .ga-portrait-prompt-host [data-slot="interaction-source"] {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .ga-portrait-hud:has(.ga-portrait-prompt-host > *) {
+    padding: 3px;
+  }
+  .ga-portrait-prompt-host [data-slot="interaction-identity"] {
+    gap: 1px;
+  }
+  .ga-portrait-prompt-host [data-slot="interaction-status"] {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+  }
+}
+
+/* Complex partitions use one scrolling surface. Nested shrinking grid rows can
+   otherwise let destination summaries cover the card assignment buttons. */
+.ga-simulator-root
+  .ga-portrait-prompt-host
+  > [data-testid="interaction-resolution-prompt"][data-input-kind="entity-partition"] {
+  display: block;
+  max-height: min(62svh, 38rem);
+}
+.ga-portrait-prompt-host [data-slot="interaction-partition"] {
+  display: block;
+  overflow: visible;
+}
+.ga-portrait-prompt-host [data-slot="partition-candidates"],
+.ga-portrait-prompt-host [data-slot="partition-destinations"] {
+  overflow: visible;
+  max-height: none;
+}
+
+/* The resting HUD occupies the measured gap between field silhouettes and
+   captions. Controls and feedback share that strip instead of stacking into
+   the opponent's stats. Active decision workspaces retain their own layout. */
+.ga-portrait-feedback-panel {
+  display: contents;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) {
+  top: 46%;
+  min-height: 0;
+  padding: 2px 4px;
+  gap: 2px 6px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-portrait-prompt-host:empty {
+  display: none;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-board-controls {
+  display: contents;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-board-controls__status {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-board-controls > .mantine-Group-root {
+  grid-column: 1;
+  grid-row: 2;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-portrait-feedback-panel {
+  display: block;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  min-width: 0;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-portrait-feedback {
+  max-height: 26px;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)):has(
+    .ga-board-controls > .mantine-Group-root > button:nth-child(2)
+  )
+  .ga-board-controls
+  > .mantine-Group-root {
+  grid-column: 1 / -1;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)):has(
+    .ga-board-controls > .mantine-Group-root > button:nth-child(2)
+  )
+  .ga-portrait-feedback-panel {
+  grid-row: 1;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)):has(
+    .ga-board-controls > .mantine-Group-root > button:nth-child(2)
+  )
+  .ga-portrait-feedback {
+  max-height: 13px;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-portrait-overflow {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+.ga-portrait-caption {
+  container-type: inline-size;
+}
+@container (min-width: 60px) {
+  .ga-portrait-caption span {
+    white-space: nowrap;
+  }
+}
+
+/* Archive table: a single portrait composition with quiet brass and velvet chrome. */
+.ga-tabletop {
+  background: radial-gradient(ellipse at 50% 48%, #27232b 0%, #10151a 48%, #080c10 82%);
+}
+.ga-board {
+  border: 1px solid #8e754344;
+  box-shadow: 0 0 0 5px #0b0c10, 0 0 0 6px #86704433, 0 28px 100px #000c;
+}
+.ga-three-board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 45px 10px #0008;
+  pointer-events: none;
+}
+.ga-portrait-identity {
+  z-index: 2;
+  left: 16%;
+  right: 16%;
+  gap: 8px;
+  padding: 5px 12px;
+  color: #f3e7cd;
+  background: linear-gradient(90deg, transparent, #10151bea 20%, #10151bea 80%, transparent);
+  font-size: 13px;
+}
+.ga-portrait-identity strong {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: #f0d6a5;
+}
+.ga-portrait-identity small { font-size: 10px; color: #b7aa94; }
+.ga-portrait-player-values { color: #d7d4cd; font-size: 11px; }
+.ga-portrait-identity[data-side="top"] { top: 0.5%; }
+.ga-portrait-identity[data-side="bottom"] { bottom: 0.4%; }
+.ga-portrait-caption {
+  padding: 3px 5px;
+  border: 1px solid #b69a6244;
+  background: linear-gradient(#172328f5, #0b1015f5);
+  box-shadow: 0 3px 8px #0009;
+  font-size: 11px;
+  line-height: 1.25;
+  transform: translate(-50%, -15%);
+}
+.ga-portrait-caption span { color: #e6cc95; font-size: 11px; }
+.ga-portrait-hud,
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)),
+.ga-portrait-hud:has(.ga-portrait-prompt-host > *) {
+  left: 13%;
+  right: 13%;
+  top: 50%;
+  transform: translateY(-50%);
+  min-height: 0;
+  border: 1px solid #b49a6155;
+  border-radius: 5px;
+  background: linear-gradient(110deg, #15191ef5, #23232af5, #15191ef5);
+  box-shadow: 0 5px 15px #0008, inset 0 1px #e7d3a51c;
+  padding: 6px 10px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-board-controls {
+  display: block;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-board-controls__status {
+  margin-bottom: 5px;
+  color: #d9c69f;
+  font-size: 12px;
+  letter-spacing: 0.035em;
+}
+.ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)) .ga-portrait-feedback-panel {
+  grid-column: 1;
+  grid-row: auto;
+}
+.ga-board-controls > .mantine-Group-root { gap: 6px; }
+.ga-board-controls > .mantine-Group-root > button {
+  border-radius: 3px;
+  border: 1px solid #a28b5b77;
+  background: linear-gradient(#514635, #302b25);
+  color: #f8e8c8;
+  box-shadow: inset 0 1px #ead5a42a, 0 2px 5px #0005;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ga-board-controls > .mantine-Group-root > button[data-variant="default"],
+.ga-board-controls > .mantine-Group-root > button[data-variant="subtle"] {
+  background: #11171ca0;
+  border-color: #bda47833;
+  color: #d0c7b7;
+}
+.ga-board-controls > .mantine-Group-root > button:disabled { opacity: 0.45; }
+.ga-simulator-root .ga-portrait-prompt-host > [data-testid="interaction-resolution-prompt"] {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.ga-portrait-prompt-host [data-slot="interaction-instruction"] { white-space: normal; }
+.ga-board-sidebar-reopen {
+  background: #15191de8;
+  border-color: #9c825344;
+  color: #bca579;
+}
+@media (max-width: 47.99rem) {
+  .ga-board { min-height: 0; aspect-ratio: 13.2 / 16; width: 100%; }
+  .ga-tabletop { justify-content: center; }
+  .ga-portrait-identity { left: 8%; right: 8%; gap: 5px; padding: 3px 5px; }
+  .ga-portrait-identity strong { font-size: 13px; }
+  .ga-portrait-player-values { font-size: 10px; }
+  .ga-portrait-caption { font-size: 9px; padding: 2px; }
+  .ga-portrait-caption span { font-size: 9px; }
+  .ga-portrait-hud,
+  .ga-portrait-hud:not(:has(.ga-portrait-prompt-host > *)),
+  .ga-portrait-hud:has(.ga-portrait-prompt-host > *) { left: 8%; right: 8%; padding: 3px 5px; }
+  .ga-board-controls > .mantine-Group-root > button { font-size: 11px; padding-inline: 8px; }
+}
+
+.ga-simulator-root .ga-portrait-prompt-host > [data-testid="interaction-resolution-prompt"] {
+  --interaction-accent: #c9ad74;
+  border-radius: 3px;
+}
+.ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-rail"] {
+  min-height: 48px;
+  padding: 4px 8px;
+  gap: 0 8px;
+}
+.ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-instruction"] {
+  font-size: 14px;
+  line-height: 1.25;
+}
+.ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-source"] { font-size: 9px; }
+.ga-portrait-caption strong { white-space: normal; }
+@media (max-width: 47.99rem) {
+  .ga-board { height: calc(100svh - 100px); aspect-ratio: auto; }
+  .ga-portrait-caption span { white-space: normal; }
+  .ga-simulator-root .ga-portrait-prompt-host [data-slot="interaction-instruction"] { font-size: 12px; }
+}
+
+.ga-portrait-caption strong { white-space: nowrap; }
+.ga-portrait-caption .ga-portrait-stats { display: flex; justify-content: center; gap: 6px; }
+.ga-portrait-stats > span { display: inline-flex; align-items: baseline; gap: 3px; }
+.ga-portrait-stats small { font-size: 8px; color: #c7bead; }
+.ga-portrait-stats b { font: bold 14px Georgia, serif; color: #f7dfa1; }
+@media (max-width: 47.99rem) {
+  .ga-portrait-caption .ga-portrait-stats { gap: 4px; }
+  .ga-portrait-stats > span { display: grid; gap: 0; }
+  .ga-portrait-stats small { font-size: 7px; }
+  .ga-portrait-stats b { font-size: 12px; }
+}
+/* Captions sit on the card footer so neither field intrudes into the action lane. */
+.ga-portrait-caption {
+  transform: translate(-50%, -100%);
+  background: linear-gradient(#152027f5, #080e13fa);
+}
+
+/* Perimeter controls leave the shared play surface open. */
+.ga-board {
+  width: min(1180px, calc(100vw - 32px));
+  height: calc(100svh - 28px);
+  aspect-ratio: auto;
+}
+.ga-three-board .ga-portrait-hud {
+  inset: 0;
+  transform: none;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+.ga-three-board .ga-board-controls,
+.ga-three-board .ga-board-controls > .mantine-Group-root { display: contents; }
+.ga-three-board .ga-board-controls__status {
+  position: absolute;
+  top: 40%;
+  right: 1.2%;
+  width: 13%;
+  margin: 0;
+  color: #e0c999;
+  font: 12px/1.5 Georgia, serif;
+  text-align: center;
+  text-shadow: 0 2px 4px #000;
+}
+.ga-three-board .ga-board-controls button.ga-table-control {
+  position: absolute;
+  pointer-events: auto;
+  margin: 0;
+}
+.ga-three-board .ga-board-controls button.ga-table-control--turn {
+  top: 46%;
+  right: 0.9%;
+  width: 13.5%;
+  height: 70px;
+  padding: 7px 12px;
+  border: 5px double #c7a265;
+  border-radius: 18px 8px 8px 18px;
+  background: linear-gradient(#8d7345, #4d3926 45%, #2c261f);
+  box-shadow: 0 7px 0 #181511, 0 10px 16px #0008, inset 0 2px 2px #ffe1a366;
+  color: #fff0c5;
+  font: bold 15px/1.2 Georgia, serif;
+  text-shadow: 0 2px 2px #251808;
+}
+.ga-table-control--turn .mantine-Button-label { white-space: normal; }
+.ga-three-board .ga-board-controls button.ga-table-control--turn:not(:disabled):hover {
+  background: linear-gradient(#b09559, #6b5130 45%, #403024);
+  box-shadow: 0 7px 0 #181511, 0 0 18px #dca75b55, inset 0 2px 2px #ffe1a366;
+}
+.ga-three-board .ga-board-controls .ga-undo-slot {
+  bottom: 2%;
+  left: 2%;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 3px double #a58d68;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #423d38, #18191d);
+  box-shadow: 0 4px 0 #0c0c10, inset 0 1px #d3bd8855;
+  color: #e7c995;
+}
+.ga-three-board .ga-board-controls .ga-undo-slot { left: auto; right: 2%; }
+.ga-control-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.ga-three-board .ga-portrait-prompt-host {
+  position: absolute;
+  top: 50%;
+  left: 16%;
+  right: 17%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+.ga-three-board .ga-portrait-prompt-host:has(> *) {
+  background: #171b20f2;
+  border: 1px solid #b3986266;
+  border-radius: 5px;
+  box-shadow: 0 5px 18px #0008;
+}
+.ga-three-board .ga-board-controls__buttons > button:not(.ga-table-control) {
+  position: relative;
+  top: 55%;
+  left: 35%;
+  pointer-events: auto;
+}
+.ga-three-board .ga-portrait-feedback-panel {
+  position: absolute;
+  display: block;
+  bottom: 1.2%;
+  left: 10%;
+  width: 25%;
+  pointer-events: auto;
+}
+.ga-three-board .ga-portrait-feedback { max-height: 28px; font-size: 10px; }
+.ga-three-board .ga-feedback-history { font-size: 9px; }
+.ga-three-board .ga-feedback-history[open] { top: auto; bottom: 100%; }
+.ga-three-board .ga-portrait-overflow {
+  position: absolute;
+  bottom: 9%;
+  left: 12%;
+  width: 30%;
+  color: #dfc79c;
+}
+.ga-portrait-identity { background: none; }
+.ga-portrait-identity strong { font-size: 17px; }
+.ga-portrait-caption {
+  border: 2px solid #9b8052;
+  border-radius: 3px 3px 10px 10px;
+  background: linear-gradient(#34312b, #171a1c);
+  box-shadow: 0 3px 5px #0009;
+}
+.ga-portrait-stats b { color: #fff2d0; font-size: 17px; }
+@media (max-width: 47.99rem) {
+  .ga-board { width: 100%; height: calc(100svh - 100px); }
+  .ga-three-board .ga-board-controls__status { top: 41%; right: 1%; width: 20%; font-size: 9px; }
+  .ga-three-board .ga-board-controls button.ga-table-control--turn {
+    top: 47%; right: 1%; width: 20%; height: 56px;
+    padding: 3px; font-size: 11px; border-width: 3px;
+  }
+  .ga-three-board .ga-portrait-prompt-host { left: 3%; right: 23%; }
+  .ga-three-board .ga-portrait-feedback-panel { bottom: 8%; left: 3%; width: 32%; }
+  .ga-three-board .ga-portrait-feedback { font-size: 8px; }
+  .ga-three-board .ga-feedback-history { font-size: 8px; }
+  .ga-portrait-identity strong { font-size: 13px; }
+  .ga-portrait-caption { border-width: 1px; }
+  .ga-portrait-stats b { font-size: 13px; }
+}
+.ga-three-board .ga-board-controls__status { top: 45%; transform: translateY(-100%); padding-bottom: 12px; }
+.ga-portrait-identity[data-side="bottom"] { bottom: 19%; }
+@media (max-width: 47.99rem) {
+  .ga-three-board .ga-board-controls__status { top: 46%; padding-bottom: 5px; }
+  .ga-portrait-identity[data-side="bottom"] { bottom: 16%; }
+}
+.ga-three-board .ga-board-controls__status {
+  top: 56%;
+  transform: none;
+  padding: 0;
+  font-size: 11px;
+}
+.ga-portrait-identity[data-side="bottom"] {
+  bottom: 24%;
+  left: 59%;
+  right: 18%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ga-table-control--turn .mantine-Button-inner { width: 100%; }
+.ga-table-control--turn .mantine-Button-label { white-space: normal; overflow: visible; }
+@media (max-width: 47.99rem) {
+  .ga-three-board .ga-board-controls button.ga-table-control--turn { width: 22%; font-size: 10px; }
+  .ga-three-board .ga-board-controls__status { top: 56%; width: 22%; font-size: 9px; }
+  .ga-portrait-identity[data-side="bottom"] { bottom: 24%; left: 61%; right: 15%; gap: 2px; }
+  .ga-portrait-identity[data-side="bottom"] .ga-portrait-player-values { white-space: normal; font-size: 9px; text-align: center; }
+}
+/* Decisions occupy a side inset, never a bar across the combat lanes. */
+.ga-three-board .ga-portrait-prompt-host { left: 1.5%; right: auto; width: 24%; }
+.ga-three-board .ga-portrait-prompt-host [data-slot="interaction-rail"] {
+  grid-template-areas: "signal identity controls" ". actions actions";
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.ga-three-board .ga-portrait-prompt-host [data-slot="interaction-instruction"] { font-size: 14px; line-height: 1.35; }
+@media (max-width: 47.99rem) {
+  .ga-three-board .ga-portrait-prompt-host { left: 1%; width: 34%; }
+  .ga-three-board .ga-portrait-prompt-host [data-slot="interaction-rail"] { gap: 2px; padding: 3px; }
+  .ga-three-board .ga-portrait-prompt-host [data-slot="interaction-instruction"] { font-size: 12px; }
+  .ga-three-board .ga-portrait-prompt-host [data-slot="interaction-source"] { font-size: 10px; letter-spacing: 0.04em; }
+}
+.ga-three-board .ga-portrait-prompt-host [data-slot="interaction-instruction"],
+.ga-three-board .ga-portrait-prompt-host [data-slot="interaction-source"] {
+  display: block;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+@media (max-width: 47.99rem) {
+  .ga-three-board .ga-portrait-prompt-host { width: 31%; }
+  .ga-three-board .ga-portrait-prompt-host [data-slot="interaction-rail"] {
+    grid-template-areas: "identity identity" "actions controls";
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 3px;
+  }
+  .ga-three-board .ga-portrait-prompt-host [data-slot="interaction-signal"] { display: none; }
+}
+
+/* The desktop table takes exactly the grid space left by the persistent sidebar. */
+.ga-viewport-shell[data-layout="desktop"] .ga-board {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+.ga-portrait-identity[data-side="top"] {
+  top: 24%;
+  left: 59%;
+  right: 18%;
+  flex-wrap: wrap;
+}
+@media (max-width: 47.99rem) {
+  .ga-portrait-identity[data-side="top"] { left: 61%; right: 15%; gap: 2px; }
+  .ga-portrait-identity[data-side="top"] .ga-portrait-player-values {
+    white-space: normal;
+    font-size: 9px;
+    text-align: center;
+  }
+}
+
+/* The lifted hand owns the foreground; its face must not sit behind champion captions. */
+.ga-three-board[data-hand-hovered="true"] .ga-portrait-caption[data-self-champion="true"] {
+  visibility: hidden;
+}
+
+/* Undo shares the board's turn-control position instead of a separate corner. */
+.ga-three-board .ga-board-controls .ga-undo-slot {
+  top: calc(46% + 12px);
+  bottom: auto;
+  left: auto;
+  right: calc(14.4% + 8px);
+}
+@media (max-width: 47.99rem) {
+  .ga-three-board .ga-board-controls .ga-undo-slot {
+    top: calc(47% + 5px);
+    right: calc(23% + 6px);
+  }
+}
+
+/* Keep passive readouts available to assistive technology without adding chrome. */
+.ga-three-board .ga-portrait-identity,
+.ga-three-board .ga-portrait-feedback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.ga-three-board .ga-feedback-history { display: none; }
+.ga-board .ga-read-only { position: absolute; z-index: 7; inset: 0 0 auto; }
+.ga-three-board .ga-undo-slot { position: absolute; padding: 0; }
+.ga-undo-slot .ga-undo-button { position: static; width: 100%; height: 100%; min-height: 44px; padding: 0; border: 0; background: transparent; color: inherit; }
+.ga-undo-slot:focus-visible { outline: 2px solid #e9d78e; outline-offset: 3px; }
+
+/* Full rules are a deliberate inspection surface, not a narrow board hint. */
+.ga-three-board .ga-portrait-prompt-host:has(> [data-details-expanded="true"]) {
+  left: 0.5rem;
+  width: min(28rem, calc(100% - 1rem));
+  z-index: 20;
+  background: #171b20;
+}
+.ga-three-board .ga-portrait-prompt-host > [data-details-expanded="true"] {
+  max-height: 60svh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }

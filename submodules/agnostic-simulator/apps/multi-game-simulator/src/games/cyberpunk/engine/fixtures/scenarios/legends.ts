@@ -377,7 +377,8 @@ export const legendScenarios: Scenario[] = [
             },
           ],
           eddies: 4,
-          gigArea: [{ dieType: "d4", faceValue: 4 }],
+          fixerDice: ["d4"],
+          gigArea: [{ dieType: "d20", faceValue: 20 }],
         },
         {
           field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
@@ -832,7 +833,6 @@ export const legendScenarios: Scenario[] = [
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
             { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: false },
-            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           trash: [
             c.welcomeToNightCityRetailFloorIt,
@@ -842,7 +842,7 @@ export const legendScenarios: Scenario[] = [
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
-          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
@@ -1543,8 +1543,7 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
           ],
           eddies: 4,
-          fixerDice: ["d4"],
-          gigArea: [{ dieType: "d20", faceValue: 20 }],
+          gigArea: [{ dieType: "d4", faceValue: 4 }],
         },
         {
           field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
@@ -1559,12 +1558,17 @@ export const legendScenarios: Scenario[] = [
         },
       );
       engine.completeTurn({ as: P2 });
-      const choice = engine.getState().G.turnMetadata.pendingChoice;
-      if (!choice || choice.type !== "gainGig") {
-        throw new Error("Expected Kerry fixture to reach P1's gain-Gig choice.");
+      const gainChoice = engine.getState().G.turnMetadata.pendingChoice;
+      if (gainChoice?.type === "gainGig") {
+        const dieId = gainChoice.payload.allowedDieIds[0];
+        if (!dieId) throw new Error("Expected a Gig in Kerry's fixer area.");
+        engine.gainGig(dieId, { as: P1 });
       }
-      engine.getState().ctx.rngState = { state: 1 };
-      engine.gainGig(choice.payload.allowedDieIds[0]!, { as: P1 });
+      if (engine.getState().G.turnMetadata.pendingChoice?.type !== "chooseTarget") {
+        throw new Error(
+          `Expected Kerry's single Gig reroll decision in the visual fixture; got ${engine.getState().G.turnMetadata.pendingChoice?.type ?? "none"}.`,
+        );
+      }
       return engine;
     },
   },

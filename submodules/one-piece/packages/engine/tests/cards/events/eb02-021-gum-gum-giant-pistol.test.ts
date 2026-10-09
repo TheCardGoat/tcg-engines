@@ -72,7 +72,6 @@ describe("EB02-021 Gum-Gum Giant Pistol", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const targetDecision = engine.pendingDecision("effectTargetSelection", "north");
@@ -95,5 +94,19 @@ describe("EB02-021 Gum-Gum Giant Pistol", () => {
     );
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("skipping the power target does not freeze another Character", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB02-021"],
+      character: [{ cardId: "EB01-006", rested: true }],
+      activeDon: 3,
+    });
+    e.playCard("EB02-021");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").prompts).toHaveLength(0);
+    e.endTurn("south");
+    e.endTurn("north");
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(false);
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(4000);
   });
 });

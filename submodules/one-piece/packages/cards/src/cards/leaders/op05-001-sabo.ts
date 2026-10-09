@@ -64,6 +64,7 @@ export const op05Sabo001: LeaderCard = {
         },
         replacementAction: {
           action: "modifyPower",
+          previousActionTargets: true,
           target: {
             player: "self",
             zones: ["character"],

@@ -93,7 +93,11 @@ export const veiledGambit: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                       oneOf: ["ALLY", "CHAMPION"],
                     },
                     {
-                      kind: "not-source",
+                      kind: "not-subject",
+                      subject: {
+                        kind: "champion",
+                        player: "controller",
+                      },
                     },
                   ],
                 },
@@ -127,7 +131,7 @@ export const veiledGambit: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
             },
             capacity: {
               amount: 4,
-              scope: "replacement-instance",
+              scope: "per-object",
             },
             duration: {
               kind: "this-turn",

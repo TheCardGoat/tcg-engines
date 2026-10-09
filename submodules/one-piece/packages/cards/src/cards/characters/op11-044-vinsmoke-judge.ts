@@ -22,7 +22,7 @@ export const op11VinsmokeJudge044: CharacterCard = {
   setId: "OP11",
   cost: 6,
   power: 8000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "slash",
   effect:
     '[Activate: Main] [Once Per Turn] You may trash 1 card from your hand: All of your "GERMA 66" type Characters gain +1000 power during this turn.',
@@ -49,7 +49,7 @@ export const op11VinsmokeJudge044: CharacterCard = {
                 {
                   filter: "trait",
                   value: "GERMA 66",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

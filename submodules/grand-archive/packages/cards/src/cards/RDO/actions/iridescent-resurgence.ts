@@ -54,8 +54,11 @@ export const iridescentResurgence: GrandArchiveCard<GrandArchiveAbilityDefinitio
                       oneOf: ["CRUX"],
                     },
                     {
-                      kind: "supertype",
-                      oneOf: ["REGALIA"],
+                      kind: "not",
+                      filter: {
+                        kind: "supertype",
+                        oneOf: ["REGALIA"],
+                      },
                     },
                     {
                       kind: "not",

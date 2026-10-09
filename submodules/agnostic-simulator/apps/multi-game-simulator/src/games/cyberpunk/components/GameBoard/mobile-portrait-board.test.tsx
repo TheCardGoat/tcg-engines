@@ -2,6 +2,7 @@
 
 import { fireEvent, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
+import { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "@tcg/cyberpunk-cards";
 import {
   composeDropEligibility,
   DISCONNECT_DROP_THRESHOLD_MS,
@@ -9,7 +10,11 @@ import {
 } from "@tcg/protocol";
 
 import { ensureJsdomAnimationSupport } from "../../testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
-import { renderCyberpunkSimulatorScenario } from "../../testing/render-cyberpunk-simulator";
+import { CYBERPUNK_P1 } from "../../testing/cyberpunk-simulator-pom";
+import {
+  createTestingLibraryCyberpunkSimulatorPom,
+  renderCyberpunkSimulatorScenario,
+} from "../../testing/render-cyberpunk-simulator";
 
 describe("Cyberpunk mobile portrait board", () => {
   afterEach(() => {
@@ -33,7 +38,15 @@ describe("Cyberpunk mobile portrait board", () => {
         board,
         '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
       );
-      expect(ledger.dataset.hasCenter).toBe("false");
+      const phaseHud = requiredElement<HTMLElement>(view.container, '[data-testid="phase-hud"]');
+      const actionButtons = Array.from(
+        phaseHud.parentElement?.querySelectorAll<HTMLButtonElement>("button") ?? [],
+      );
+      expect(actionButtons).toHaveLength(3);
+      expect(actionButtons[0]?.textContent).toContain("Concede");
+      expect(actionButtons[1]?.getAttribute("aria-label")).toBe("Undo last move");
+      expect(actionButtons[1]?.disabled).toBe(true);
+      expect(actionButtons[2]?.dataset.testid).toBe("phase-advance");
       expect(ledger.textContent).not.toContain("Priority");
 
       const fieldCardRows = board.querySelectorAll<HTMLElement>('[data-testid="field-cards"]');
@@ -109,7 +122,7 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
-  test("uses the readable stacked ledger for active Legends", async () => {
+  test("keeps both Legend regions beside the Gig rails", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
@@ -125,13 +138,15 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
-      const sides = ledger.querySelectorAll<HTMLElement>('[data-side-layout="stacked"]');
-      expect(sides).toHaveLength(2);
+      const legendRegions = ledger.querySelectorAll<HTMLElement>(
+        '[data-testid="mobile-ledger-legends"]',
+      );
+      expect(legendRegions).toHaveLength(2);
 
-      for (const side of sides) {
-        expect(side.querySelector('[data-sim-anchor-id$="street-cred"]')).toBeTruthy();
-        expect(side.querySelector('[data-testid="gig-row"]')).toBeTruthy();
+      for (const region of legendRegions) {
+        expect(region.querySelector('[data-testid="legend-slot"]')).toBeTruthy();
       }
+      expect(ledger.querySelectorAll('[data-testid="gig-row"]')).toHaveLength(2);
 
       expect(ledger.querySelector('[data-testid="resolving-program"]')).toBeNull();
       expect(ledger.parentElement?.getAttribute("data-has-resolving")).not.toBe("true");
@@ -140,7 +155,96 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
-  test("omits the empty Legend region for a side without an active Legend", async () => {
+  test("focuses one Legend side with its vertical Gig miniatures and shows attached Gear", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "legendCallEquippedSelfPay",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+      const rows = ledger;
+      expect(rows.dataset.legendFocus).toBe("none");
+      const attachedGear = rows.querySelectorAll(
+        '[data-testid="attached-gear"][class*="legendGearCard"]',
+      );
+      expect(attachedGear).toHaveLength(2);
+      expect(
+        Array.from(attachedGear, (card) => card.querySelector("img")?.getAttribute("alt")),
+      ).toEqual(["Mantis Blades", "Kiroshi Optics"]);
+
+      fireEvent.click(within(rows).getByRole("button", { name: "Focus Legends" }));
+      expect(rows.dataset.legendFocus).toBe("friendly");
+      expect(within(rows).getByRole("button", { name: /Show your Gigs: 1 dice/ })).toBeTruthy();
+      expect(rows.querySelectorAll('[class*="mobileLedgerGigMiniDie"]')).toHaveLength(1);
+      expect(
+        rows.querySelectorAll('[data-testid="attached-gear"][class*="legendGearCard"]'),
+      ).toHaveLength(2);
+
+      fireEvent.click(within(rows).getByRole("button", { name: "Rival Legends" }));
+      expect(rows.dataset.legendFocus).toBe("rival");
+      expect(
+        within(rows).getByRole("button", { name: "Rival Legends" }).getAttribute("aria-pressed"),
+      ).toBe("true");
+      expect(within(rows).getByRole("button", { name: /Show rival Gigs: 1 dice/ })).toBeTruthy();
+
+      fireEvent.click(within(rows).getByRole("button", { name: "Close Legend focus" }));
+      expect(rows.dataset.legendFocus).toBe("none");
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("selects a visible attached Legend Gear", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "legendQaGearTempo",
+    });
+
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const panam = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailPanamPalmerNomadCavalry.id,
+      );
+      await pom.activateAbility(panam.instanceId, 0, CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+
+      const slot = requiredElement<HTMLElement>(
+        view.container,
+        `[data-testid="legend-slot"][data-card-id="${panam.instanceId}"]`,
+      );
+      const gearTarget = await waitFor(() =>
+        requiredElement<HTMLButtonElement>(
+          slot,
+          '[data-testid="attached-gear"] button[data-choice-eligible="true"]',
+        ),
+      );
+      expect(gearTarget.getAttribute("aria-label")).toContain("Overwatch");
+      fireEvent.click(gearTarget);
+      await waitFor(() =>
+        expect(
+          slot.querySelector('[data-testid="attached-gear"] button[data-choice-eligible="true"]'),
+        ).toBeNull(),
+      );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("keeps positional empty Legend slots without exposing a Legend card", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
@@ -156,18 +260,17 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
-      const emptySide = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="rival"][data-side-layout="scoreOnly"]',
-      );
-      const activeSide = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="friendly"][data-side-layout="stacked"]',
-      );
+      const emptySide = mobileLegendRegion(ledger, "rival");
+      const activeSide = mobileLegendRegion(ledger, "friendly");
 
-      expect(emptySide.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
-      expect(emptySide.querySelector('[data-testid="gig-row"]')).toBeTruthy();
-      expect(activeSide.querySelector('[data-testid="mobile-ledger-legends"]')).toBeTruthy();
+      expect(emptySide.dataset.legendCount).toBe("0");
+      expect(
+        Array.from(emptySide.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]')).every(
+          (slot) => slot.dataset.occupied === "false",
+        ),
+      ).toBe(true);
+      expect(activeSide.dataset.legendCount).not.toBe("0");
+      expect(activeSide.querySelector('[data-testid="legend-slot"]')).toBeTruthy();
     } finally {
       view.unmount();
     }
@@ -189,10 +292,7 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
-      const friendly = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="friendly"][data-side-layout="compact"]',
-      );
+      const friendly = mobileLegendRegion(ledger, "friendly");
       const friendlySlots = Array.from(
         friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
       );
@@ -224,15 +324,12 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
-      const friendly = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="friendly"][data-side-layout="stacked"]',
-      );
+      const friendly = mobileLegendRegion(ledger, "friendly");
       const slots = Array.from(
         friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
       );
 
-      expect(ledger.querySelectorAll('[data-side-layout="stacked"]')).toHaveLength(2);
+      expect(ledger.querySelectorAll('[data-testid="mobile-ledger-legends"]')).toHaveLength(2);
       expect(slots.map((slot) => slot.dataset.legendIndex)).toEqual(["0", "1", "2"]);
       expect(slots.map((slot) => slot.dataset.occupied)).toEqual(["true", "true", "false"]);
       expect(slots.map((slot) => slot.dataset.faceDown)).toEqual(["false", "true", undefined]);
@@ -241,7 +338,7 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
-  test("omits rival face-down-only Legends from the Bonnie and Clyde ledger", async () => {
+  test("keeps rival face-down Legends in the Bonnie and Clyde ledger", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
@@ -257,19 +354,18 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
-      const friendly = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="friendly"][data-side-layout="compact"]',
-      );
-      const rival = requiredElement<HTMLElement>(
-        ledger,
-        '[data-tone="rival"][data-side-layout="scoreOnly"]',
-      );
+      const friendly = mobileLegendRegion(ledger, "friendly");
+      const rival = mobileLegendRegion(ledger, "rival");
       const friendlySlots = Array.from(
         friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
       );
 
-      expect(rival.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
+      const rivalSlots = Array.from(
+        rival.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
+      );
+      expect(rival.dataset.legendCount).toBe("1");
+      expect(rivalSlots[0]?.dataset.occupied).toBe("true");
+      expect(rivalSlots[0]?.dataset.faceDown).toBe("true");
       expect(friendlySlots.map((slot) => slot.dataset.legendIndex)).toEqual(["0", "1", "2"]);
       expect(friendlySlots[0]?.dataset.occupied).toBe("true");
       expect(friendlySlots[0]?.dataset.faceDown).toBe("true");
@@ -346,6 +442,8 @@ describe("Cyberpunk mobile portrait board", () => {
         liveMatchSidebar: {
           matchId: "match_1",
           gameId: "game_1",
+          format: "best_of_1",
+          gameNumber: 1,
           localPlayerId: "gp_self",
           returnUrl: "/cyberpunk/matchmaking",
           participants: [
@@ -453,6 +551,8 @@ describe("Cyberpunk mobile portrait board", () => {
         liveMatchSidebar: {
           matchId: "match-123",
           gameId: "game-123",
+          format: "best_of_1",
+          gameNumber: 1,
           localPlayerId: "profile-self",
           participants: [
             {
@@ -483,9 +583,26 @@ describe("Cyberpunk mobile portrait board", () => {
       const selfDialog = await view.findByRole("dialog", { name: "Your actions" });
       expect(selfDialog).toBeTruthy();
       expect(within(selfDialog).getByRole("menuitem", { name: /Concede game/i })).toBeTruthy();
+      expect(
+        within(selfDialog).getByRole("menuitem", { name: "Enable Board State Correction" }),
+      ).toBeTruthy();
+      expect(within(selfDialog).getByRole("menuitem", { name: "Undo to turn start" })).toBeTruthy();
       expect(within(selfDialog).getByLabelText("Open simulator settings")).toBeTruthy();
 
       fireEvent.click(requiredElement<HTMLButtonElement>(selfDialog, ".mantine-Drawer-close"));
+      await waitFor(() => {
+        expect(view.queryByRole("dialog", { name: "Your actions" })).toBeNull();
+      });
+
+      fireEvent.click(await view.findByRole("button", { name: "Open more match options" }));
+      const moreDialog = await view.findByRole("dialog", { name: "Your actions" });
+      expect(
+        within(moreDialog).getByRole("menuitem", { name: "Enable Board State Correction" }),
+      ).toBeTruthy();
+      expect(within(moreDialog).getByRole("menuitem", { name: "Undo to turn start" })).toBeTruthy();
+      expect(within(moreDialog).getByLabelText("Open simulator settings")).toBeTruthy();
+
+      fireEvent.click(requiredElement<HTMLButtonElement>(moreDialog, ".mantine-Drawer-close"));
       await waitFor(() => {
         expect(view.queryByRole("dialog", { name: "Your actions" })).toBeNull();
       });
@@ -515,6 +632,13 @@ function requiredElement<T extends Element>(container: ParentNode, selector: str
     throw new Error(`Expected element matching ${selector}.`);
   }
   return element;
+}
+
+function mobileLegendRegion(ledger: HTMLElement, tone: "friendly" | "rival"): HTMLElement {
+  return requiredElement<HTMLElement>(
+    ledger,
+    `[data-tone="${tone}"] [data-testid="mobile-ledger-legends"]`,
+  );
 }
 
 function fetchUrl(call: { input: RequestInfo | URL } | undefined): string {

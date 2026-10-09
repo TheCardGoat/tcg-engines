@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/omens-of-the-third-age/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Omens of the Third Age"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/omens-of-the-third-age/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: d1a8295c2a9d3dbbce9febf03990eb94edef9101fc917d1ae551b7be406f333e
 ---

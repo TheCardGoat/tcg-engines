@@ -4,6 +4,7 @@ import type { CardPlayedPayload } from "../../../types";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { resolveTargetPlayerIds } from "./player-target-resolver";
 import { getEffectTargetSelectionInput } from "./selection-state";
+import { markLastEffectPerformed } from "./event-snapshot-utils";
 
 export function isRevealHandEffect(effect: unknown): effect is RevealHandEffect {
   return (
@@ -26,9 +27,8 @@ export function resolveRevealHandEffect(
     effect.target,
     getEffectTargetSelectionInput(effect.target, resolutionInput),
   );
-  if (targetPlayers.length === 0) {
-    return;
-  }
+  resolutionInput.eventSnapshot ??= {};
+  let revealedAnyCards = false;
 
   for (const playerId of targetPlayers) {
     const handCards = ctx.framework.zones.getCards({
@@ -40,9 +40,15 @@ export function resolveRevealHandEffect(
       continue;
     }
 
-    ctx.framework.zones.reveal(handCards, "all");
-    for (const cardId of handCards) {
-      ctx.cards.patchMeta(cardId, { revealed: true });
+    const isPrivateLook = effect.visibility === "controller";
+    ctx.framework.zones.reveal(handCards, isPrivateLook ? [cardPlayed.playerId] : "all");
+    revealedAnyCards = true;
+    if (!isPrivateLook) {
+      for (const cardId of handCards) {
+        ctx.cards.patchMeta(cardId, { revealed: true });
+      }
     }
   }
+  // A later sequence step may have no targets even though this reveal happened.
+  markLastEffectPerformed(resolutionInput.eventSnapshot, revealedAnyCards);
 }

@@ -41,7 +41,7 @@ export const op17Shanks022: CharacterCard = {
   setId: "OP17",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[Rush] (This card can attack on the turn in which it is played.)\n[On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters.",

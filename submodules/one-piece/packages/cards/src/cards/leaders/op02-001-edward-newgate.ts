@@ -30,7 +30,7 @@ export const op02EdwardNewgate001: LeaderCard = {
   setId: "OP02",
   power: 6000,
   life: 6,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect: "[End of Your Turn] Add 1 card from the top of your Life cards to your hand.",
   effects: {

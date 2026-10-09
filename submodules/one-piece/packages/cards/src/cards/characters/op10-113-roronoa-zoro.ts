@@ -24,7 +24,7 @@ export const op10RoronoaZoro113: CharacterCard = {
   power: 5000,
   trigger:
     'You may trash 1 card from your hand: If your Leader has the "Supernovas" type, play this card.',
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect: "If you have less Life cards than your opponent, this Character gains [Rush].",
   effects: {
@@ -43,7 +43,7 @@ export const op10RoronoaZoro113: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Supernovas",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

@@ -23,7 +23,7 @@ export const op03Momoo035: CharacterCard = {
   cost: 2,
   power: 4000,
   counter: 1000,
-  traits: ["Animal East Blue"],
+  traits: ["Animal", "East Blue"],
   attribute: "strike",
   i18n: op03Momoo035I18n,
 };

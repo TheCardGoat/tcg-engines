@@ -36,7 +36,7 @@ test("Fool on the Hill - rival chooses revealed cards destination", async ({ pag
   const choiceDialog = page
     .getByRole("dialog")
     .filter({ has: page.getByTestId("reveal-destination-option") });
-  await expect(choiceDialog).toContainText("2 cards revealed from the top of the deck.");
+  await expect(choiceDialog).toContainText(/Revealed\s*2\s*cards/);
   const sketchyRipper = choiceDialog.getByRole("img", { name: "Sketchy Ripper" });
   await expect(sketchyRipper).toBeVisible();
   await expect(choiceDialog.getByRole("img", { name: "Industrial Assembly" })).toBeVisible();

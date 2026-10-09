@@ -31,7 +31,7 @@ export const op13FiveElders082: CharacterCard = {
   setId: "OP13",
   cost: 10,
   power: 12000,
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   attribute: ["slash", "special"],
   effect:
     '[Activate: Main] If your Leader is [Imu], you may rest 1 of your DON!! cards and trash 1 card from your hand: Trash all of your Characters and play up to 5 "Five Elders" type Character cards with 5000 power and different card names from your trash.',
@@ -87,7 +87,7 @@ export const op13FiveElders082: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Five Elders",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "cardCategory",

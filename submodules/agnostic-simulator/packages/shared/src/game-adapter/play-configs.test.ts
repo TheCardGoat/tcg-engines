@@ -4,11 +4,11 @@ import { describe, expect, test } from "vitest";
 import { deriveMatchAccessPolicy, getPlayGameConfig } from "./play-configs";
 
 describe("play game configuration", () => {
-  test("enables Riftbound only for private client-authoritative play", () => {
+  test("enables Riftbound only for private hosted play", () => {
     expect(getPlayGameConfig("riftbound")).toEqual({
       slug: "riftbound",
       isActive: true,
-      runtimeAuthority: "client",
+      runtimeAuthority: "server",
       capabilities: {
         matchmaking: false,
         lobby: true,

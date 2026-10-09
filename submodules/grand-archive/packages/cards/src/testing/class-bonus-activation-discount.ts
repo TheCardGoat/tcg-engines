@@ -9,6 +9,7 @@ import { expect, it } from "vitest";
 import { galesMare } from "../cards/RDO/allies/gales-mare.ts";
 import { potionOfHealing } from "../cards/ALC/items/potion-of-healing.ts";
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
+import { fireball } from "../cards/DOA/actions/fireball.ts";
 import { blissfulCalling } from "../cards/DOA/actions/blissful-calling.ts";
 import { lumberingSteed } from "../cards/AMB/allies/lumbering-steed.ts";
 import {
@@ -17,6 +18,7 @@ import {
   grandArchiveTestFace,
   grantTestChampionLevel,
 } from "./class-bonus-test-champion.ts";
+import { createLineageTestChampion } from "./champion-lineage.ts";
 import { announcementTargets, modeSelection } from "./activation-announcement.ts";
 
 type Preparation =
@@ -26,6 +28,7 @@ type Preparation =
   | "attacking-enemy-ally"
   /** An opposing ACTION card activation sits on the Effects Stack. */
   | "stack-action"
+  | "stack-spell"
   /** An opposing activated ability sits on the Effects Stack. */
   | "stack-ability";
 
@@ -96,8 +99,9 @@ function expectExactReserveCost(
   preparation: Preparation,
   reserveCost: number,
   championLevel: number,
+  championOverride?: ReturnType<typeof exampleChampion>,
 ): void {
-  const champion = exampleChampion(card, classBonusEnabled, championLevel);
+  const champion = championOverride ?? exampleChampion(card, classBonusEnabled, championLevel);
   const successful = setup(card, champion, preparation);
   successful
     .player("player-one")
@@ -114,8 +118,10 @@ function expectExactReserveCost(
       ),
     );
 
+  expect(successful.player("player-one").zone("memory")).toHaveLength(reserveCost);
   if (reserveCost === 0) return;
   const underpaid = setup(card, champion, preparation);
+  const before = underpaid.state;
   expect(() =>
     underpaid
       .player("player-one")
@@ -132,6 +138,7 @@ function expectExactReserveCost(
         ),
       ),
   ).toThrow();
+  expect(underpaid.state).toEqual(before);
 }
 
 function setup(
@@ -145,6 +152,7 @@ function setup(
       preparation === "stack-target" ||
       preparation === "attacking-enemy-ally" ||
       preparation === "stack-action" ||
+      preparation === "stack-spell" ||
       preparation === "stack-ability"
         ? "playerTwo"
         : "playerOne",
@@ -156,9 +164,12 @@ function setup(
       },
     },
     playerTwo: {
-      champion,
+      champion: preparation === "stack-spell" ? enableAllTestElements(champion) : champion,
       zones: {
         ...(preparation === "stack-target" ? { hand: [woodlandSquirrels] } : {}),
+        ...(preparation === "stack-spell"
+          ? { hand: [fireball, ...Array.from({ length: 4 }, () => woodlandSquirrels)] }
+          : {}),
         ...(preparation === "attacking-enemy-ally" ? { field: [galesMare] } : {}),
         ...(preparation === "stack-action" ? { hand: [blissfulCalling, woodlandSquirrels] } : {}),
         ...(preparation === "stack-ability"
@@ -186,6 +197,16 @@ function setup(
     if (!payment) throw new Error("stack-action preparation lacks its reserve payment.");
     opponent.activate(blissfulCalling, {
       reservePayment: [{ kind: "card", cardId: payment.objectId }],
+    });
+    opponent.pass();
+  }
+  if (preparation === "stack-spell") {
+    const opponent = game.player("player-two");
+    opponent.activate(fireball, {
+      reservePayment: opponent
+        .cards(woodlandSquirrels, { zone: "hand" })
+        .map((ref) => ({ kind: "card", cardId: ref.objectId })),
+      targets: { "target-1": [game.player("player-one").card(champion).objectId] },
     });
     opponent.pass();
   }
@@ -239,4 +260,61 @@ export function proveClassBonusActivationDiscount({
   it("uses its full printed activation payment while Class Bonus is disabled", () => {
     expectExactReserveCost(card, false, preparation, printedCost, championLevel);
   });
+}
+
+/** Check the level boundary independently of an optional Class Bonus restriction. */
+export function proveLevelActivationDiscount({
+  card,
+  discount,
+  threshold,
+  classBonus = false,
+  preparation = "ordinary",
+}: {
+  readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
+  readonly discount: number;
+  readonly threshold: number;
+  readonly classBonus?: boolean;
+  readonly preparation?: Preparation;
+}): void {
+  const printedCost = fixedReserveCost(card);
+  for (const level of [threshold - 1, threshold, threshold + 1]) {
+    for (const matching of [false, true]) {
+      it(`pays the exact reserve cost at level ${level}, matching class=${matching}`, () => {
+        const active = level >= threshold && (!classBonus || matching);
+        expectExactReserveCost(
+          card,
+          matching,
+          preparation,
+          active ? Math.max(0, printedCost - discount) : printedCost,
+          level,
+        );
+      });
+    }
+  }
+}
+
+/** Isolate the name restriction while preserving the source card's class. */
+export function proveChampionActivationDiscount({
+  card,
+  discount,
+  lineageName,
+}: {
+  readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
+  readonly discount: number;
+  readonly lineageName: string;
+}): void {
+  for (const matching of [false, true])
+    it(`requires the named ${lineageName} champion, matching=${matching}`, () => {
+      const champion = enableAllTestElements(
+        createLineageTestChampion(card, matching ? lineageName : "Other"),
+      );
+      expectExactReserveCost(
+        card,
+        true,
+        "ordinary",
+        Math.max(0, fixedReserveCost(card) - (matching ? discount : 0)),
+        0,
+        champion,
+      );
+    });
 }

@@ -40,7 +40,7 @@ export const op06HitokiriKamazo076: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Kid Pirates Supernovas SMILE"],
+  traits: ["Supernovas", "Kid Pirates", "SMILE"],
   attribute: "slash",
   effect:
     "[Your Turn][Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, K.O. up to 1 of your opponent's Characters with a cost of 2 or less.",

@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/dusk-till-dawn/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Dusk till Dawn"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/dusk-till-dawn/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 236de82a0f644174b919235addbe10c1cc073f2b02b9b02750be9be87a085910
 ---

@@ -22,7 +22,7 @@ export const eb02ClovenRoseBlizzard007: EventCard = {
   setId: "EB02",
   cost: 3,
   trigger: "K.O. up to 1 of your opponent's Characters with 4000 power or less.",
-  traits: ["Animal Straw Hat Crew Water Seven"],
+  traits: ["Animal", "Water Seven", "Straw Hat Crew"],
   effect:
     "[Main] Up to a total of 3 of your Leader and Character cards gain +1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.",
   effects: {

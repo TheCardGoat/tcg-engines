@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { madamMimHummingbirdI18n } from "./086-madam-mim-hummingbird.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const madamMimHummingbird: CharacterCard = {
   id: "j84",
@@ -30,13 +31,17 @@ export const madamMimHummingbird: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_2cc6572c2d0b46c68b10de5d90170819",
+    tcgPlayer: "704600",
+  },
   text: [
     {
       title: "Evasive",
     },
     {
-      title: "Just How I Like It",
-      description: "All cards in your hand count as having {C}.",
+      title: "JUST HOW",
+      description: "I LIKE IT All cards in your hand count as having {IW}.",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

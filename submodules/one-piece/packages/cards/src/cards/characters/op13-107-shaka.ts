@@ -23,7 +23,7 @@ export const op13Shaka107: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Egghead", "Scientist"],
   attribute: "wisdom",
   i18n: op13Shaka107I18n,
 };

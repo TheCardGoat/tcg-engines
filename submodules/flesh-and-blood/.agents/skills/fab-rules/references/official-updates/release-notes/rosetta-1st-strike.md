@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/rosetta-1st-strike/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Rosetta + 1st Strike"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/rosetta-1st-strike/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: d1ccb1d3707f0cf3403e6576dff0ea259d15e63bbcbefaf5b71ff65be77b03bc
 ---

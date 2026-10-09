@@ -1,10 +1,13 @@
 import type { PlayerId } from "#core";
 import type { GainKeywordEffect } from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
+import { createLorcanaLogProjection } from "../../../types";
 import type { LorcanaCardMeta } from "../../../types";
 import { addTemporaryKeyword, resolveTemporaryEffectWindow } from "../../effects/temporary-effects";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { resolveEffectTargets } from "../../../targeting/runtime";
+import { getEffectsForCard } from "../../../rules/static-effect-registry";
+import { defaultRegistryProvider } from "../../rules/registry-provider";
 import { getEffectTargetSelectionInput } from "./selection-state";
 
 export function isGainKeywordEffect(effect: unknown): effect is GainKeywordEffect {
@@ -51,13 +54,22 @@ export function resolveGainKeywordEffect(
 
   const isWhileInPlay = effect.duration === "while-in-play";
 
+  const registry = defaultRegistryProvider.buildFresh(ctx);
   for (const targetId of resolvedTargets) {
+    if (
+      getEffectsForCard(registry, targetId, "lose-keyword").some(
+        (entry) => entry.payload.keyword === keyword && entry.payload.cannotGain === true,
+      )
+    ) {
+      continue;
+    }
     const targetOwnerId = ctx.framework.zones.getCardOwner(targetId) as PlayerId | undefined;
     const { startsAtTurn, expiresAtTurn } = resolveTemporaryEffectWindow(
       currentTurn,
       effect.duration,
       {
         currentPlayerId,
+        playerIds: ctx.framework.state.playerIds,
         targetOwnerId,
       },
     );
@@ -71,6 +83,18 @@ export function resolveGainKeywordEffect(
     ctx.cards.patchMeta(
       targetId,
       addTemporaryKeyword(currentMeta, keyword, expiresAtTurn, keywordValue, startsAtTurn, payload),
+    );
+    ctx.framework.log(
+      createLorcanaLogProjection(
+        "lorcana.outcome.keywordGranted",
+        {
+          sourceId: cardPlayed.cardId,
+          targetId,
+          keyword: keywordValue === undefined ? keyword : `${keyword} ${keywordValue}`,
+        },
+        { mode: "PUBLIC" },
+        "action",
+      ),
     );
   }
 }

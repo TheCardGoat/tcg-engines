@@ -74,6 +74,26 @@ export function parseDealDamageAction(text: string): DealDamageAction | null {
 export function parseSelectAction(text: string): Action[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
+  const namedRedirect =
+    /^Change the target of the attack to your \[([^\]]+)\] with (\d+) base power or more$/i.exec(
+      trimmed,
+    );
+  if (namedRedirect)
+    return [
+      {
+        action: "changeBattleTarget",
+        target: {
+          player: "self",
+          zones: ["leader", "character"],
+          count: { amount: 1 },
+          filters: [
+            { filter: "name", value: namedRedirect[1]! },
+            { filter: "basePower", comparison: "gte", value: Number(namedRedirect[2]) },
+          ],
+        },
+      },
+    ];
+
   const changeBattleTargetMatch =
     /^select\s+(\d+)\s+(?:of\s+)?your\s+Characters?\.\s*Change\s+the\s+attack\s+target\s+to\s+the\s+selected\s+Character$/i.exec(
       trimmed,
@@ -167,7 +187,29 @@ export function parseSelectAction(text: string): Action[] | null {
     );
   if (selectFreezeMatch) {
     const hasLeader = /rested\s+Leader\s+and/i.test(trimmed);
-    const zones: Zone[] = hasLeader ? ["leader", "character"] : ["character"];
+    if (hasLeader) {
+      return [
+        {
+          action: "freeze",
+          target: {
+            player: "opponent",
+            zones: ["leader"],
+            count: { amount: 1 },
+            filters: [{ filter: "state", value: "rested" }],
+          },
+        },
+        {
+          action: "freeze",
+          target: {
+            player: "opponent",
+            zones: ["character"],
+            count: { amount: parseInt(selectFreezeMatch[1]!, 10), upTo: true },
+            filters: [{ filter: "state", value: "rested" }],
+          },
+        },
+      ];
+    }
+    const zones: Zone[] = ["character"];
     return [
       {
         action: "freeze",
@@ -175,9 +217,7 @@ export function parseSelectAction(text: string): Action[] | null {
           player: "opponent",
           zones,
           count: {
-            amount: hasLeader
-              ? parseInt(selectFreezeMatch[1]!, 10) + 1
-              : parseInt(selectFreezeMatch[1]!, 10),
+            amount: parseInt(selectFreezeMatch[1]!, 10),
             upTo: true,
           },
           filters: [{ filter: "state", value: "rested" as const }],
@@ -358,7 +398,10 @@ export function parseSelectAction(text: string): Action[] | null {
     const zones: Zone[] = ["character"];
     const player = selectSwapMatch[2] && /opponent/i.test(selectSwapMatch[2]) ? "opponent" : "self";
     const filterText = selectSwapMatch[3]!;
-    const { filters } = extractTargetFilters(filterText);
+    const parsedTarget = parseTarget(
+      `${selectSwapMatch[1]} of ${selectSwapMatch[2] ?? "your "}${filterText}`,
+    );
+    const filters = parsedTarget?.filters ?? extractTargetFilters(filterText).filters;
     return [
       {
         action: "swapBasePower",

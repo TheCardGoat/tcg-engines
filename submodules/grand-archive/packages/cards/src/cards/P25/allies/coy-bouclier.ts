@@ -99,6 +99,7 @@ export const coyBouclier: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                 collection: {
                   zones: ["field"],
                   player: "controller",
+                  excludingSource: true,
                   filter: {
                     kind: "type",
                     oneOf: ["ALLY"],

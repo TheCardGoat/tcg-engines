@@ -54,4 +54,14 @@ describe("OP11-083 Caribou", () => {
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(caribouId);
   });
+  test("FAQ: playing with only one remaining hand card trashes that card", () => {
+    const engine = OnePieceTestEngine.create({ hand: [op11Caribou083, eb01Doma005], activeDon: 4 });
+    const discarded = engine.findCardInZone("south", "hand", eb01Doma005);
+    engine.asSouth().play(op11Caribou083);
+    expect(engine.getView("south").players.south.hand).toHaveLength(0);
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toEqual([
+      discarded,
+    ]);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
+  });
 });

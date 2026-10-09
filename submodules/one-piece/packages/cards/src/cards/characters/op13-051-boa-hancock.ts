@@ -30,7 +30,7 @@ export const op13BoaHancock051: CharacterCard = {
   setId: "OP13",
   cost: 3,
   power: 5000,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect: "[On K.O.] If your Leader is [Boa Hancock] or multicolored, draw 2 cards.",
   effects: {

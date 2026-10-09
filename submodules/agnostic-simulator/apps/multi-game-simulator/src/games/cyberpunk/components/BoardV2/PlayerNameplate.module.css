@@ -1,0 +1,19 @@
+.nameplate { width: 100%; min-width: 0; display: grid; gap: .18cqw; line-height: 1.15; }
+.heading { display: flex; align-items: baseline; gap: .55cqw; min-width: 0; }
+.name { font-family: "Cyberpunk Refinery 25", sans-serif; font-size: 1.4cqw; letter-spacing: .06em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tier { flex-shrink: 0; font-size: .8cqw; letter-spacing: .02em; }
+.meta { display: flex; align-items: center; gap: .85cqw; color: #c3d0d4; font-size: .85cqw; letter-spacing: .025em; font-weight: 500; }
+.connection { display: inline-flex; align-items: center; gap: .35cqw; }
+.dot { width: .38cqw; height: .38cqw; border-radius: 50%; background: #a3b1b7; }
+.connection[data-status="connected"] .dot { background: #7fcda7; }
+.connection[data-status="reconnecting"] { color: #edca79; }
+.connection[data-status="reconnecting"] .dot { background: #edca79; }
+.connection[data-status="disconnected"] { color: #f08e96; }
+.connection[data-status="disconnected"] .dot { background: #f08e96; }
+.phase { color: #a7bdc5; font-size: .72cqw; letter-spacing: .12em; }
+
+/* Name and metadata follow the seat edge, including the fixture labels. */
+.local { text-align: right; }
+.local .heading, .local .meta { justify-content: flex-end; }
+.rival { text-align: left; }
+.rival .heading, .rival .meta { justify-content: flex-start; }

@@ -33,8 +33,6 @@ describe("DiscardSlot", () => {
 
     const emptyPile = screen.getByLabelText("TRASH, 0 cards");
     expect(emptyPile.dataset.zoneLayout).toBe("discard-pile");
-    expect(emptyPile.className).toContain("min-h-[118px]");
-    expect(emptyPile.className).toContain("w-[78px]");
     // No count badge when count is 0.
     expect(screen.queryByText("00")).toBeNull();
   });

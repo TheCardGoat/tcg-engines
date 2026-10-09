@@ -26,7 +26,7 @@ export const op17Kaido042: CharacterCard = {
   traits: ["Rocks Pirates"],
   attribute: "strike",
   effect:
-    '[Blocker]\n\n[On Play] You may reveal 3 cards with a type including "Rocks Pirates" from your hand: Give up to 1 of your opponent\'s Characters 3000 power during this turn.',
+    '[Blocker]\n\n[On Play] You may reveal 3 cards with a type including "Rocks Pirates" from your hand: Give up to 1 of your opponent\'s Characters -3000 power during this turn.',
   effects: {
     keywords: ["blocker"],
     effects: [
@@ -56,7 +56,7 @@ export const op17Kaido042: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

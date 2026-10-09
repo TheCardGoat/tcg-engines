@@ -1,5 +1,16 @@
+import { revealCardPlay } from "./engine/play.ts";
+import { requestCommandDonPayment } from "./engine/command-don-payment.ts";
+import { transferDonIdentities } from "./engine/don-state.ts";
+import { faceUpLifeToHandReplacement } from "./effects/permanent.ts";
 import {
-  baseCost,
+  extendReplacementProcess,
+  declineReplacementProcess,
+  replacementProcessKey,
+  withReplacementProcess,
+} from "./effects/replacement-process.ts";
+import {
+  getPaidPlayCost,
+  getBaseCost,
   effectBlocksFor,
   cardName,
   enqueueResolution,
@@ -27,17 +38,27 @@ import {
   isAttackTargetAllowedByPermanentEffects,
   isKoPreventedByModifier,
 } from "./effects/permanent.ts";
-import { findKoReplacement } from "./effects/replacements.ts";
+import {
+  findKoReplacements,
+  replacementOptionId,
+  replacementChoiceLabel,
+} from "./effects/replacements.ts";
 import { matchesTargetFilter } from "./effects/targeting.ts";
-import { cleanupBattleModifiers, createChoicePrompt, formatCardList, moveCard } from "./state.ts";
+import {
+  cleanupBattleModifiers,
+  consumeNextPlayCostModifiers,
+  createChoicePrompt,
+  formatCardList,
+  moveCard,
+} from "./state.ts";
 import type { CardZone, GameCommand, MatchSeat, MatchState, PromptOption } from "./types.ts";
 
 function battleKoReplacementSource(state: MatchState, targetId: string) {
   const battle = state.battle;
   if (!battle) {
-    return null;
+    return [];
   }
-  return findKoReplacement(
+  return findKoReplacements(
     state,
     targetId,
     getInstance(state, battle.attackerId).controller,
@@ -65,6 +86,12 @@ function koBattleCharacter(state: MatchState) {
   // card is trashed, then resolve while the card is in the trash.
   enqueueKoEffectsForTrigger(state, battle.targetId, defendingSeat, triggerEvent);
   if (target.attachedDon > 0) {
+    transferDonIdentities(
+      state,
+      { attachedTo: battle.targetId },
+      { seat: defendingSeat, area: "rested" },
+      target.attachedDon,
+    );
     getPlayer(state, defendingSeat).restedDon += target.attachedDon;
     target.attachedDon = 0;
   }
@@ -87,8 +114,10 @@ function enqueueLifeRemovedAfterDamage(
   lifeCardId: string,
   defendingSeat: MatchSeat,
   effectController: MatchSeat,
+  lifeCountAfterRemoval: number,
 ) {
   enqueueInPlayEffectsForTrigger(state, "whenLifeRemoved", {
+    lifeCountAfterRemoval,
     instanceId: lifeCardId,
     effectController,
     targetInstanceId: getPlayer(state, defendingSeat).leaderInstanceId,
@@ -195,11 +224,13 @@ export function beginBattleCounterStep(state: MatchState) {
       label,
       value: instanceId,
       targetId: instanceId,
-      enabled: isCharacterCounter || (isEventCounter && player.activeDon >= baseCost(card)),
+      enabled:
+        isCharacterCounter ||
+        (isEventCounter && player.activeDon >= getPaidPlayCost(state, instanceId)),
     };
   });
 
-  if (options.length === 0) {
+  if (!options.some((option) => option.enabled !== false)) {
     return;
   }
 
@@ -207,13 +238,13 @@ export function beginBattleCounterStep(state: MatchState) {
     choiceKind: "selectCards",
     seat: defendingSeat,
     label: `${getPlayer(state, defendingSeat).playerName} takes the Counter step.`,
-    details: "Select counter cards or pass.",
+    details: "Use one Counter card, or pass to end the Counter Step.",
     sourceCardId: getInstance(state, state.battle.attackerId).cardId,
     sourceInstanceId: state.battle.attackerId,
     eventId: state.battle.id,
     options,
     minSelections: 0,
-    maxSelections: options.length,
+    maxSelections: 1,
     context: {
       battleId: state.battle.id,
     },
@@ -229,6 +260,7 @@ function createBattleLifeTriggerPrompt(
   battle: NonNullable<MatchState["battle"]>,
   lifeCardId: string,
   resume: "continueDamage" | "completeBattle",
+  lifeCountAfterRemoval: number,
 ) {
   const defendingSeat = getInstance(state, battle.targetId).controller;
   const defender = getPlayer(state, defendingSeat);
@@ -250,6 +282,7 @@ function createBattleLifeTriggerPrompt(
     context: { battleId: battle.id },
     resolutionContext: {
       intent: "lifeTrigger",
+      lifeCountAfterRemoval,
       sourceInstanceId: lifeCardId,
       controller: defendingSeat,
       trigger: "trigger",
@@ -264,6 +297,7 @@ export function queueBattleLifeTriggerPrompt(
   state: MatchState,
   battleId: string,
   lifeCardId: string,
+  lifeCountAfterRemoval: number,
 ) {
   const battle = state.battle;
   if (!battle || battle.id !== battleId) {
@@ -275,7 +309,7 @@ export function queueBattleLifeTriggerPrompt(
     enqueueResolution(state, { kind: "battleDamageComplete", battleId });
     return;
   }
-  createBattleLifeTriggerPrompt(state, battle, lifeCardId, "completeBattle");
+  createBattleLifeTriggerPrompt(state, battle, lifeCardId, "completeBattle", lifeCountAfterRemoval);
 }
 
 function enqueueBattleDamageEffects(state: MatchState, battle: NonNullable<MatchState["battle"]>) {
@@ -370,7 +404,9 @@ export function continueLeaderDamage(state: MatchState) {
       lifeCard.cardType === "stage") &&
     Boolean(lifeCard.trigger);
   const hasTrigger =
-    !banished && (hasPrintedTrigger || effectBlocksFor(lifeCard, "trigger").length > 0);
+    !banished &&
+    !faceUpLifeToHandReplacement(state, lifeCardId) &&
+    (hasPrintedTrigger || effectBlocksFor(lifeCard, "trigger").length > 0);
   moveCard(
     state,
     lifeCardId,
@@ -401,23 +437,34 @@ export function continueLeaderDamage(state: MatchState) {
           ? `${cardName(lifeCard)} was trashed from your Life by [Banish].`
           : hasTrigger
             ? `You revealed ${cardName(lifeCard)} from Life for its [Trigger].`
-            : `You took ${cardName(lifeCard)} from Life to hand.`,
+            : getInstance(state, lifeCardId).zone === "deck"
+              ? `You placed ${cardName(lifeCard)} from Life at the bottom of your deck.`
+              : `You took ${cardName(lifeCard)} from Life to hand.`,
       },
       judgeMessage: banished
         ? `${defender.playerName} trashes ${cardName(lifeCard)} from Life due to [Banish].`
         : hasTrigger
           ? `${defender.playerName} reveals ${cardName(lifeCard)} from Life for its [Trigger].`
-          : `${defender.playerName} takes ${cardName(lifeCard)} from Life to hand.`,
+          : getInstance(state, lifeCardId).zone === "deck"
+            ? `${defender.playerName} places ${cardName(lifeCard)} from Life at the bottom of their deck.`
+            : `${defender.playerName} takes ${cardName(lifeCard)} from Life to hand.`,
     },
   );
 
   if (hasTrigger) {
     if (battle.damageRemaining > 0) {
-      createBattleLifeTriggerPrompt(state, battle, lifeCardId, "continueDamage");
+      createBattleLifeTriggerPrompt(
+        state,
+        battle,
+        lifeCardId,
+        "continueDamage",
+        defender.life.length,
+      );
       return;
     }
     enqueueResolution(state, {
       kind: "battleLifeTriggerPrompt",
+      lifeCountAfterRemoval: defender.life.length,
       battleId: battle.id,
       lifeCardId,
     });
@@ -447,6 +494,11 @@ export function finalizeBattle(state: MatchState) {
   battle.attackPower = getCardPower(state, battle.attackerId);
   battle.defensePower = getCardPower(state, targetId) + battle.counterTotal;
   battle.step = "damage";
+  battle.powerCompared = true;
+  battle.comparedParticipants = [battle.attackerId, targetId].map((instanceId) => ({
+    instanceId,
+    zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
+  }));
 
   if (battle.attackPower >= battle.defensePower) {
     if (target.zone === "leader") {
@@ -455,7 +507,6 @@ export function finalizeBattle(state: MatchState) {
       return;
     } else {
       const defendingSeat = target.controller;
-      const defender = getPlayer(state, defendingSeat);
       if (isKoPreventedByModifier(state, battle.targetId, battle.attackerId, "battle")) {
         battle.result = "no_damage";
         emitLog(
@@ -471,17 +522,30 @@ export function finalizeBattle(state: MatchState) {
         completeBattleResolution(state);
         return;
       }
-      const replacementSource = battleKoReplacementSource(state, battle.targetId);
+      const replacements = battleKoReplacementSource(state, battle.targetId);
+      const replacementSource = replacements[0];
+      const replacementController = replacementSource?.controller ?? defendingSeat;
+      const replacementPlayer = getPlayer(state, replacementController);
+      const replacementChoices = replacements.map((candidate) => ({
+        id: replacementOptionId(candidate),
+        sourceInstanceId: candidate.sourceInstanceId,
+        replacementEffectIndex: candidate.replacementEffectIndex,
+        replacementEffectKey: candidate.effectKey,
+        replacementAction: candidate.effect.replacementAction,
+        replacementTargetIds: [battle.targetId],
+      }));
       const replacementAction = replacementSource?.effect.replacementAction;
       const trashReplacement =
-        replacementAction?.action === "trashFromHand" && replacementAction.amount === 1
+        replacementAction?.action === "trashFromHand" &&
+        replacementAction.amount === 1 &&
+        replacementAction.player === "self"
           ? replacementAction
           : null;
-      const replacementHandIds = defender.hand.filter((instanceId) =>
+      const replacementHandIds = replacementPlayer.hand.filter((instanceId) =>
         (trashReplacement?.filters ?? []).every((filter) => {
           const result = matchesTargetFilter(
             state,
-            replacementSource?.sourceInstanceId ?? defender.leaderInstanceId,
+            replacementSource?.sourceInstanceId ?? replacementPlayer.leaderInstanceId,
             instanceId,
             filter,
           );
@@ -496,8 +560,12 @@ export function finalizeBattle(state: MatchState) {
       const canOfferTrashReplacement =
         (hasSnapshotTrashReplacement || trashReplacement !== null) && replacementHandIds.length > 0;
       const canOfferActionReplacement =
-        replacementAction !== undefined && replacementAction.action !== "trashFromHand";
-      if (canOfferActionReplacement && replacementSource?.effect.mandatory) {
+        replacementAction !== undefined && trashReplacement === null;
+      if (
+        replacementAction !== undefined &&
+        replacementSource?.effect.mandatory &&
+        replacements.length === 1
+      ) {
         getInstance(state, replacementSource!.sourceInstanceId).usedEffectKeys.push(
           replacementSource!.effectKey,
         );
@@ -506,8 +574,13 @@ export function finalizeBattle(state: MatchState) {
           {
             kind: "effectAction",
             sourceInstanceId: replacementSource!.sourceInstanceId,
-            controller: defendingSeat,
+            controller: replacementController,
             action: replacementAction,
+            replacementProcess: extendReplacementProcess(
+              state,
+              replacementSource!.sourceInstanceId,
+              replacementSource!.effectKey,
+            ),
             previousActionTargetIds: [battle.targetId],
           },
           { next: true },
@@ -517,39 +590,63 @@ export function finalizeBattle(state: MatchState) {
         return;
       }
       if (canOfferTrashReplacement || canOfferActionReplacement) {
-        const isActionReplacement = canOfferActionReplacement;
+        const isActionReplacement = canOfferActionReplacement || replacements.length > 1;
         createChoicePrompt(state, {
-          choiceKind: isActionReplacement ? "confirm" : "selectCards",
-          seat: defendingSeat,
-          label: `${defender.playerName} may replace the battle K.O.`,
+          replacementGroup: replacements.map((candidate) =>
+            replacementProcessKey(state, candidate.sourceInstanceId, candidate.effectKey),
+          ),
+          choiceKind:
+            replacements.length > 1
+              ? "chooseOption"
+              : isActionReplacement
+                ? "confirm"
+                : "selectCards",
+          seat: replacementController,
+          label: `${replacementPlayer.playerName} may replace the battle K.O.`,
           details: isActionReplacement
             ? "Apply the replacement effect instead of allowing the K.O.?"
             : "Trash 1 card from hand instead, or choose none to allow the K.O.",
           sourceCardId: getInstance(
             state,
-            replacementSource?.sourceInstanceId ?? defender.leaderInstanceId,
+            replacementSource?.sourceInstanceId ?? replacementPlayer.leaderInstanceId,
           ).cardId,
-          sourceInstanceId: replacementSource?.sourceInstanceId ?? defender.leaderInstanceId,
+          sourceInstanceId:
+            replacementSource?.sourceInstanceId ?? replacementPlayer.leaderInstanceId,
           eventId: battle.id,
-          options: isActionReplacement
-            ? [
-                { id: "no", label: "Allow K.O.", value: "no" },
-                { id: "yes", label: "Apply replacement", value: "yes" },
-              ]
-            : replacementHandIds.map((instanceId) => ({
-                id: instanceId,
-                label: cardName(getCardForInstance(state, instanceId)),
-                value: instanceId,
-                targetId: instanceId,
-              })),
-          minSelections: 0,
+          options:
+            replacements.length > 1
+              ? [
+                  ...(!replacements.some((candidate) => candidate.effect.mandatory)
+                    ? [{ id: "no", label: "Decline these replacements", value: "no" }]
+                    : []),
+                  ...replacementChoices.map((choice) => ({
+                    id: choice.id,
+                    value: choice.id,
+                    label: replacementChoiceLabel(state, choice.sourceInstanceId),
+                    targetId: choice.sourceInstanceId,
+                  })),
+                ]
+              : isActionReplacement
+                ? [
+                    { id: "no", label: "Allow K.O.", value: "no" },
+                    { id: "yes", label: "Apply replacement", value: "yes" },
+                  ]
+                : replacementHandIds.map((instanceId) => ({
+                    id: instanceId,
+                    label: cardName(getCardForInstance(state, instanceId)),
+                    value: instanceId,
+                    targetId: instanceId,
+                  })),
+          minSelections: replacements.length > 1 ? 1 : 0,
           maxSelections: 1,
           context: { battleId: battle.id, replacement: "battleKo" },
           resolutionContext: {
             intent: "battleKoReplacement",
+            replacementRequired: replacements.some((candidate) => candidate.effect.mandatory),
+            replacementChoices: replacements.length > 1 ? replacementChoices : undefined,
             battleId: battle.id,
             targetId: battle.targetId,
-            controller: defendingSeat,
+            controller: replacementController,
             candidateIds: replacementHandIds,
             sourceInstanceId: replacementSource?.sourceInstanceId,
             replacementEffectIndex: replacementSource?.replacementEffectIndex,
@@ -648,7 +745,9 @@ export function continueEffectDamage(
       lifeCard.cardType === "event" ||
       lifeCard.cardType === "stage") &&
     Boolean(lifeCard.trigger);
-  const hasTrigger = hasPrintedTrigger || effectBlocksFor(lifeCard, "trigger").length > 0;
+  const hasTrigger =
+    !faceUpLifeToHandReplacement(state, lifeCardId) &&
+    (hasPrintedTrigger || effectBlocksFor(lifeCard, "trigger").length > 0);
   moveCard(state, lifeCardId, targetSeat, hasTrigger ? "resolution" : "hand", {
     faceUp: hasTrigger,
     publicKnowledge: hasTrigger,
@@ -664,11 +763,15 @@ export function continueEffectDamage(
     privateMessages: {
       [targetSeat]: hasTrigger
         ? `You revealed ${cardName(lifeCard)} from Life for its [Trigger].`
-        : `You took ${cardName(lifeCard)} from Life to hand.`,
+        : getInstance(state, lifeCardId).zone === "deck"
+          ? `You placed ${cardName(lifeCard)} from Life at the bottom of your deck.`
+          : `You took ${cardName(lifeCard)} from Life to hand.`,
     },
     judgeMessage: hasTrigger
       ? `${target.playerName} reveals ${cardName(lifeCard)} from Life for its [Trigger].`
-      : `${target.playerName} takes ${cardName(lifeCard)} from Life to hand.`,
+      : getInstance(state, lifeCardId).zone === "deck"
+        ? `${target.playerName} places ${cardName(lifeCard)} from Life at the bottom of their deck.`
+        : `${target.playerName} takes ${cardName(lifeCard)} from Life to hand.`,
   });
 
   const damageRemaining = remaining - 1;
@@ -690,6 +793,7 @@ export function continueEffectDamage(
       context: { damageKind: "effect" },
       resolutionContext: {
         intent: "lifeTrigger",
+        lifeCountAfterRemoval: target.life.length,
         sourceInstanceId: lifeCardId,
         controller: targetSeat,
         trigger: "trigger",
@@ -885,6 +989,7 @@ export function beginAttack(
     targetInstanceId: targetId,
   };
   enqueueEffectsForTrigger(state, attackerId, seat, "whenAttacking", undefined, attackEvent);
+  enqueueInPlayEffectsForTrigger(state, "onYourAttack", attackEvent, [seat]);
   // "When your opponent attacks" can only live on the defending player's
   // in-play cards, and the attacking (turn) player's [When Attacking] effects
   // enqueue above, so 8-6-1 turn-player-first ordering already holds.
@@ -895,6 +1000,7 @@ export function beginAttack(
 export function resolvePrompt(
   state: MatchState,
   command: Extract<GameCommand, { type: "resolvePrompt" }>,
+  selectedDonIds?: string[],
 ): boolean {
   const prompt = state.promptQueue.find((candidate) => candidate.id === command.promptId);
   if (!prompt || prompt.seat !== command.seat) {
@@ -991,6 +1097,7 @@ export function resolvePrompt(
       const selectedIds = command.selectedIds ?? [];
       const player = getPlayer(state, command.seat);
       if (
+        selectedIds.length > 1 ||
         new Set(selectedIds).size !== selectedIds.length ||
         selectedIds.some((instanceId) => !player.hand.includes(instanceId))
       ) {
@@ -1009,13 +1116,34 @@ export function resolvePrompt(
       ) {
         return false;
       }
-      const eventCost = selectedCards.reduce(
-        (total, { card }) => total + (card.cardType === "event" ? baseCost(card) : 0),
+      const eventCost = selectedIds.reduce(
+        (total, id) =>
+          total +
+          (getCardForInstance(state, id).cardType === "event" ? getPaidPlayCost(state, id) : 0),
         0,
       );
       if (eventCost > player.activeDon) {
         return false;
       }
+      if (selectedIds[0] && selectedCards[0]?.card.cardType === "event")
+        revealCardPlay(state, command.seat, selectedIds[0]);
+      if (eventCost > 0) {
+        const payment = requestCommandDonPayment(
+          state,
+          command,
+          eventCost,
+          selectedIds[0]!,
+          selectedDonIds,
+        );
+        if (payment !== "ready") return payment === "prompt";
+      }
+      transferDonIdentities(
+        state,
+        { seat: command.seat, area: "active" },
+        { seat: command.seat, area: "rested" },
+        eventCost,
+        selectedDonIds,
+      );
       player.activeDon -= eventCost;
       player.restedDon += eventCost;
       let counterTotal = 0;
@@ -1033,6 +1161,8 @@ export function resolvePrompt(
             suppressLog: true,
           });
         } else if (card.cardType === "event") {
+          const baseCostAtActivation = getBaseCost(state, instanceId);
+          consumeNextPlayCostModifiers(state, instanceId);
           moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
             faceUp: true,
             publicKnowledge: true,
@@ -1040,7 +1170,7 @@ export function resolvePrompt(
             suppressLog: true,
           });
           enqueueEffectsForTrigger(state, instanceId, command.seat, "counter", undefined);
-          const triggerEvent = { instanceId, effectController: command.seat };
+          const triggerEvent = { instanceId, effectController: command.seat, baseCostAtActivation };
           enqueueMirroredInPlayEffectsForTrigger(
             state,
             command.seat,
@@ -1051,7 +1181,7 @@ export function resolvePrompt(
         }
       }
 
-      battle.counterCardIds = selectedIds;
+      battle.counterCardIds.push(...selectedIds);
       battle.counterTotal += counterTotal;
       if (selectedIds.length > 0) {
         emitLog(
@@ -1064,13 +1194,21 @@ export function resolvePrompt(
         );
       }
       enqueueResolution(state, {
-        kind: "battleFinalize",
+        kind: selectedIds.length > 0 ? "battleCounterStep" : "battleFinalize",
         battleId: battle.id,
       });
       return true;
     }
     case "battleKoReplacement": {
-      const context = prompt.resolutionContext;
+      const originalContext = prompt.resolutionContext;
+      if (originalContext.replacementRequired && command.optionId === "no") return false;
+      const selected = originalContext.replacementChoices?.find(
+        (choice) => choice.id === command.optionId,
+      );
+      if (originalContext.replacementChoices && command.optionId !== "no" && !selected)
+        return false;
+      const context = selected ? { ...originalContext, ...selected } : originalContext;
+      const optionId = selected ? "yes" : command.optionId;
       const battle = state.battle;
       if (
         !battle ||
@@ -1081,10 +1219,10 @@ export function resolvePrompt(
         return false;
       }
       if (context.replacementAction) {
-        if (command.optionId !== "yes" && command.optionId !== "no") {
+        if (optionId !== "yes" && optionId !== "no") {
           return false;
         }
-        if (command.optionId === "yes") {
+        if (optionId === "yes") {
           if (
             context.sourceInstanceId !== undefined &&
             context.replacementEffectIndex !== undefined
@@ -1102,13 +1240,24 @@ export function resolvePrompt(
                 context.sourceInstanceId ?? getPlayer(state, context.controller).leaderInstanceId,
               controller: context.controller,
               action: context.replacementAction,
+              replacementProcess: extendReplacementProcess(
+                state,
+                context.sourceInstanceId ?? getPlayer(state, context.controller).leaderInstanceId,
+                context.replacementEffectKey ??
+                  `replacement:${context.replacementEvent ?? "ko"}:${context.replacementEffectIndex}`,
+              ),
               previousActionTargetIds: [context.targetId],
             },
             { next: true },
           );
           battle.result = "no_damage";
         } else {
-          koBattleCharacter(state);
+          withReplacementProcess(
+            state,
+            declineReplacementProcess(state, [context.targetId], prompt.replacementGroup ?? []),
+            () => finalizeBattle(state),
+          );
+          return true;
         }
         completeBattleResolution(state);
         return true;
@@ -1155,12 +1304,22 @@ export function resolvePrompt(
           },
         );
       } else {
+        if (context.replacementRequired) return false;
+        if (prompt.replacementGroup?.length) {
+          withReplacementProcess(
+            state,
+            declineReplacementProcess(state, [context.targetId], prompt.replacementGroup),
+            () => finalizeBattle(state),
+          );
+          return true;
+        }
         koBattleCharacter(state);
       }
       completeBattleResolution(state);
       return true;
     }
     case "lifeTrigger": {
+      const continuationStart = state.resolutionQueue.length;
       const lifeCardId = prompt.sourceInstanceId;
       if (command.optionId === "activate" && prompt.sourceInstanceId) {
         enqueueEffectsForTrigger(
@@ -1227,6 +1386,7 @@ export function resolvePrompt(
               lifeCardId,
               command.seat,
               getInstance(state, battle.attackerId).controller,
+              prompt.resolutionContext.lifeCountAfterRemoval,
             );
           }
         } else {
@@ -1235,6 +1395,7 @@ export function resolvePrompt(
             lifeCardId,
             command.seat,
             prompt.resolutionContext.damageController,
+            prompt.resolutionContext.lifeCountAfterRemoval,
           );
         }
       }
@@ -1255,6 +1416,10 @@ export function resolvePrompt(
           remaining: prompt.resolutionContext.damageRemaining,
         });
       }
+      // Life Triggers interrupt damage. Resume them and remaining damage before
+      // the originating effect's later actions or its completion boundary.
+      const damageContinuations = state.resolutionQueue.splice(continuationStart);
+      state.resolutionQueue.unshift(...damageContinuations);
       return true;
     }
     case "judge":

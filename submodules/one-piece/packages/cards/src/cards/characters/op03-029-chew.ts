@@ -23,7 +23,7 @@ export const op03Chew029: CharacterCard = {
   cost: 4,
   power: 3000,
   counter: 1000,
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   attribute: "ranged",
   effect:
     "[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.\n[Trigger] Play this card.",

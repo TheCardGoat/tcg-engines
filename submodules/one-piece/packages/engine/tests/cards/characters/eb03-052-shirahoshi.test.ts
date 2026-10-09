@@ -45,7 +45,7 @@ describe("EB03-052 Shirahoshi", () => {
     ).toBe(op11BulgeEyedNeptunian027.power);
   });
 
-  test("may trash itself when the Leader condition fails and still boosts Neptunians", () => {
+  test("may trash itself when the Leader condition fails but does not boost Neptunians", () => {
     const engine = OnePieceTestEngine.create({
       hand: [eb03Shirahoshi052],
       character: [op11BulgeEyedNeptunian027, eb01Doma005],
@@ -68,7 +68,7 @@ describe("EB03-052 Shirahoshi", () => {
     expect(view.players.south.lifeCount).toBe(lifeCount);
     expect(
       view.players.south.characters.find((card) => card?.instanceId === neptunianId)?.power,
-    ).toBe(7000);
+    ).toBe(op11BulgeEyedNeptunian027.power);
     expect(view.players.south.characters.find((card) => card?.instanceId === otherId)?.power).toBe(
       eb01Doma005.power,
     );

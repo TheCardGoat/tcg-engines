@@ -37,6 +37,7 @@ import { grandArchivePlayerEnabledElements } from "../../game/elements.ts";
 import {
   deriveGrandArchivePlayerProperty,
   evaluateGrandArchiveAmount,
+  withGrandArchiveDerivedVariables,
   evaluateGrandArchiveCondition,
   grandArchiveDefinitionMatchesCardFilter,
   matchesGrandArchiveCardFilter,
@@ -46,7 +47,7 @@ import {
   type GrandArchiveEvaluationContext,
   type GrandArchiveExecutionBinding,
 } from "../effects/evaluation.ts";
-import { grandArchiveStackItemId } from "../../game/identity.ts";
+import { grandArchiveObjectId, grandArchiveStackItemId } from "../../game/identity.ts";
 import type {
   GrandArchiveObjectId,
   GrandArchivePlayerId,
@@ -1299,9 +1300,7 @@ export function isGrandArchiveTargetCandidate(
     if (!player || player.lost) return false;
     const eligible = new Set(
       isRelativePlayerList(candidates.players)
-        ? candidates.players.flatMap((candidate) =>
-            resolveGrandArchivePlayers(candidate, evaluation),
-          )
+        ? candidates.players.flatMap((candidate) => resolveCandidatePlayers(candidate, evaluation))
         : resolveGrandArchivePlayers(candidates.players, evaluation),
     );
     if (!eligible.has(player.id)) return false;
@@ -1368,7 +1367,12 @@ export function isGrandArchiveTargetCandidate(
       return false;
     }
     if ("binding" in candidates) {
-      if (object.zone === "field" || object.zone === "effects-stack") return false;
+      if (
+        candidates.kind === "object"
+          ? object.zone !== "field"
+          : object.zone === "field" || object.zone === "effects-stack"
+      )
+        return false;
       const binding = evaluation.bindings[candidates.binding];
       if (!Array.isArray(binding) || !binding.includes(object.id)) return false;
       if (
@@ -1664,7 +1668,6 @@ export function declareGrandArchiveObjectChoice(
     ...(options.mayFailToFind ? { allowEmpty: true } : {}),
   });
   const declared = submitted;
-  const bounds = selectionCountBounds(selection, evaluation);
   const sources =
     selection.candidates.kind === "union"
       ? selection.candidates.sources
@@ -1683,11 +1686,12 @@ export function declareGrandArchiveObjectChoice(
         return source.fromBottom ? [...zoneIds].reverse() : zoneIds;
       }),
     );
-    const maximum = Number.isFinite(bounds.maximum) ? bounds.maximum : ordered.length;
-    const permitted = new Set(ordered.slice(0, maximum));
     const selectedFromSource = declared.filter((objectId) =>
       isGrandArchiveTargetCandidate(objectId, { ...declaration, candidates: source }, evaluation),
     );
+    // Choosing an amount from an ordered zone takes that many consecutive edge cards.
+    // "Up to two from the top" does not permit taking only the second card.
+    const permitted = new Set(ordered.slice(0, selectedFromSource.length));
     if (selectedFromSource.some((objectId) => !permitted.has(objectId))) {
       throw new Error("Ordered-zone choice must use cards from the indicated edge");
     }
@@ -1934,6 +1938,20 @@ function submittedObjectIds(
   return objectIds;
 }
 
+/** Candidate lists describe eligible players, not a previously declared single opponent. */
+function resolveCandidatePlayers(
+  player: import("@tcg/grand-archive-types").GrandArchiveRelativePlayer,
+  evaluation: GrandArchiveEvaluationContext,
+): readonly GrandArchivePlayerId[] {
+  if (player === "opponent" || player === "another-player")
+    return resolveGrandArchivePlayers("each-opponent", evaluation);
+  if (player === "non-turn-player")
+    return resolveGrandArchivePlayers("each-player", evaluation).filter(
+      (id) => id !== evaluation.state.turn.playerId,
+    );
+  return resolveGrandArchivePlayers(player, evaluation);
+}
+
 function isRelativePlayerList(
   players:
     | readonly import("@tcg/grand-archive-types").GrandArchiveRelativePlayer[]
@@ -2136,7 +2154,7 @@ export function declareGrandArchiveResolutionChoice(
     }
     const eligible = new Set(
       isRelativePlayerList(candidates.players)
-        ? candidates.players.flatMap((player) => resolveGrandArchivePlayers(player, evaluation))
+        ? candidates.players.flatMap((player) => resolveCandidatePlayers(player, evaluation))
         : resolveGrandArchivePlayers(candidates.players, evaluation),
     );
     for (const playerId of submitted) {
@@ -2810,12 +2828,10 @@ export function proposeGrandArchiveCardActivation(
   assertActionRuleLegality(fastActivationRules, "Fast activation");
   const speed =
     activationContext.effect?.speed ??
-    (fastActivationRules.some((rule) => ruleGrantsPermissionToPlayer(rule, playerId))
+    (fastActivationRules.some((rule) => ruleGrantsPermissionToPlayer(rule, playerId)) ||
+    grandArchiveObjectHasActiveKeyword(program, state, card, "fast-activation")
       ? "fast"
-      : (face.speed ??
-        (grandArchiveObjectHasActiveKeyword(program, state, card, "fast-activation")
-          ? "fast"
-          : "slow")));
+      : (face.speed ?? "slow"));
   if (
     !effectGranted &&
     !activatedViaStarcalling &&
@@ -2840,8 +2856,14 @@ export function proposeGrandArchiveCardActivation(
     command,
     evaluation,
   );
-  if (imbueAnnouncement.imbued) {
-    evaluation = { ...evaluation, announcementActivationStates: ["imbued"] };
+  if (imbueAnnouncement.imbued || paysPrepare) {
+    evaluation = {
+      ...evaluation,
+      announcementActivationStates: [
+        ...(imbueAnnouncement.imbued ? (["imbued"] as const) : []),
+        ...(paysPrepare ? (["prepared"] as const) : []),
+      ],
+    };
   }
   const resolution = composeGrandArchiveCardResolution(face, evaluation);
   const announcedCardResolutionAbilities = captureGrandArchiveCardResolutionAbilities(
@@ -2886,6 +2908,20 @@ export function proposeGrandArchiveCardActivation(
   }
   const paymentEvaluation: GrandArchiveEvaluationContext = {
     ...evaluation,
+    // Card Activation 1.1 precedes cost calculation (1.7) and payment (1.8).
+    // Preview announcement so the source no longer contributes to its old
+    // zone, while the command remains atomic if any payment is illegal.
+    state: new GrandArchiveTransactionKernel().transact(state, [
+      {
+        type: "object-moved",
+        objectId: card.id,
+        from: card.zone,
+        to: "effects-stack",
+        newControllerId: playerId,
+        actorId: playerId,
+        cause: { kind: "command", move: "activate-card" },
+      },
+    ]).state,
     bindings: Object.fromEntries(targets.map((target) => [target.binding, target.targetIds])),
     declaredTargetIds: targets.flatMap((target) => target.targetIds),
   };
@@ -3489,6 +3525,26 @@ export function proposeGrandArchiveCardActivation(
       finalizedTargetDeclarations = paymentCompletedTargetDeclarations;
     }
   }
+  // Distribution limits can depend on additional costs (for example, sacrificed Herbs).
+  // Validate only after payment is known, while the entire activation can still roll back.
+  for (const declaration of finalizedTargetDeclarations) {
+    if (declaration.distributedAmount === undefined) continue;
+    const count =
+      finalizedTargets.find((target) => target.binding === declaration.id)?.targetIds.length ?? 0;
+    const distributionEvaluation = withGrandArchiveDerivedVariables(
+      finalizedResolution?.variables,
+      {
+        ...paymentEvaluation,
+        bindings: { ...paymentEvaluation.bindings, ...paidBindings },
+      },
+    );
+    const amount = evaluateGrandArchiveAmount(
+      declaration.distributedAmount,
+      distributionEvaluation,
+    );
+    if (count > amount)
+      throw new Error("Distributed damage requires at least one damage per target");
+  }
   const stackItem: GrandArchiveStackItem = {
     id: grandArchiveStackItemId(`stack-${state.nextStackOrdinal}`),
     kind: "card-activation",
@@ -3942,6 +3998,49 @@ export function proposeGrandArchiveAbilityActivation(
   if (!ability) throw new Error("Activated ability does not exist on the source's active face");
   if (!grandArchiveAbilityIsFunctional(face, ability, source))
     throw new Error("Ability is not functional in the source zone");
+  if (
+    ability.keyword?.name === "lineage-release" &&
+    source.zone === "field" &&
+    !source.baseLineageCardId
+  ) {
+    if (source.controllerId !== playerId)
+      throw new Error("Player cannot release this champion's base card");
+    const cardId = grandArchiveObjectId(`${source.id}:base-lineage`);
+    const separation: GrandArchiveProposedEvent = {
+      type: "object-created",
+      separatedChampionBaseId: source.id,
+      placement: "bottom",
+      object: {
+        ...source,
+        id: cardId,
+        activeDefinitionId: undefined,
+        baseLineageCardId: undefined,
+        nameOverride: undefined,
+        zone: "inner-lineage",
+        hostId: source.id,
+        face: "default",
+        facing: "face-up",
+        states: new Set(),
+        activationStates: new Set(),
+        activationPayment: [],
+        activationBindings: {},
+        activationVariables: {},
+        cascadeCounts: {},
+        counters: {},
+        damage: 0,
+        incarnation: 1,
+        objectVersion: 1,
+      },
+      actorId: playerId,
+      cause: { kind: "rule", rule: "separate-base-champion-card" },
+    };
+    const preview = new GrandArchiveTransactionKernel().transact(state, [separation]).state;
+    const proposal = proposeGrandArchiveAbilityActivation(program, preview, playerId, {
+      ...command,
+      sourceId: cardId,
+    });
+    return { ...proposal, events: [separation, ...proposal.events] };
+  }
   if (ability.keyword?.name === "lineage-release") {
     const host = source.hostId ? state.objects[source.hostId] : undefined;
     const representativeCardId = host?.activeDefinitionId
@@ -4139,6 +4238,14 @@ export function proposeGrandArchiveAbilityActivation(
       event.objectId === executionObject.id &&
       event.from !== event.to,
   ).length;
+  // Choices made by this source must survive sacrificing it as an activation cost.
+  const tracked = state.trackedCharacteristics[executionObject.id];
+  const trackedBindings =
+    tracked?.incarnation === executionObject.incarnation
+      ? Object.fromEntries(
+          Object.entries(tracked.values).map(([key, values]) => [`tracked:${key}`, values]),
+        )
+      : {};
   const stackItem: GrandArchiveStackItem = {
     id: grandArchiveStackItemId(`stack-${state.nextStackOrdinal}`),
     kind: "activated-ability",
@@ -4158,7 +4265,7 @@ export function proposeGrandArchiveAbilityActivation(
     activationPayment,
     championLevelModifier: 0,
     variables: command.variables ?? {},
-    bindings: { ...contribution.paidBindings, ...payment.paidBindings },
+    bindings: { ...trackedBindings, ...contribution.paidBindings, ...payment.paidBindings },
   };
   return {
     stackItem,
@@ -4207,6 +4314,30 @@ export function proposeGrandArchiveAbilityActivation(
           ]),
     ],
   };
+}
+
+class GrandArchiveUnpayableMaterializationError extends Error {}
+
+/** A sufficient resource-shortfall proof, never a bounded search for legal declarations. */
+export function grandArchiveEffectMaterializationIsUnpayable(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  cardId: GrandArchiveObjectId,
+  context: GrandArchiveMaterializationContext,
+): boolean {
+  try {
+    proposeGrandArchiveMaterialization(
+      program,
+      state,
+      playerId,
+      { move: "materialize", cardId },
+      context,
+    );
+  } catch (error) {
+    return error instanceof GrandArchiveUnpayableMaterializationError;
+  }
+  return false;
 }
 
 export function proposeGrandArchiveMaterialization(
@@ -4434,6 +4565,38 @@ export function proposeGrandArchiveMaterialization(
     ...addedCostsFromRules(materializationCostRules),
     ...(resolution?.additionalCost ? [resolution.additionalCost] : []),
   ];
+  // An effect cannot require a declaration that has no possible memory payment.
+  // Restrict this proof to a fixed cost without alternative declarations or payment
+  // methods. Count every active Floating Memory card as an upper bound: restrictions
+  // may reduce that pool, but cannot make an insufficient pool sufficient.
+  if (
+    effectGranted &&
+    paysCosts &&
+    typeof face.cost.amount === "number" &&
+    primaryCost.kind === "pay-memory" &&
+    (resolution?.variables?.length ?? 0) === 0 &&
+    modes.modes.length === 0 &&
+    targetDeclarations.length === 0 &&
+    !grandArchiveObjectActiveAbilities(program, state, card).some(
+      (ability) => "variables" in ability && (ability.variables?.length ?? 0) > 0,
+    ) &&
+    !materializationCostRules.some((rule) => rule.effect.mode === "replace-cost") &&
+    optionalReplacementCostRules.length === 0 &&
+    paymentContributionRules.length === 0
+  ) {
+    const floatingMemory = Object.values(state.objects).filter(
+      (object) =>
+        object.ownerId === playerId &&
+        object.zone === "graveyard" &&
+        grandArchiveObjectHasActiveKeyword(program, state, object, "floating-memory"),
+    ).length;
+    if (state.zones[playerId].memory.length + floatingMemory < amount) {
+      throw new GrandArchiveUnpayableMaterializationError(
+        `Memory payment requires ${amount} cards in memory`,
+      );
+    }
+  }
+
   let paymentEvents: readonly GrandArchiveProposedEvent[];
   let paidBindings: GrandArchiveEvaluationContext["bindings"];
   if (!paysCosts) {

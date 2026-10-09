@@ -65,7 +65,7 @@ describe("OP04-101 through OP04-106 transformations", () => {
     });
   });
 
-  test("preserves Hiyori's inclusive Wano buff and physical Trigger play", () => {
+  test("preserves Hiyori's exact Wano buff and physical Trigger play", () => {
     expect(
       buildCardEffects(
         "[On Play] Up to 1 of your [Land of Wano] type Leader or Character cards gains +1000 power during this turn. [Trigger] Play this card.",
@@ -81,7 +81,7 @@ describe("OP04-101 through OP04-106 transformations", () => {
                 player: "self",
                 zones: ["leader", "character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
+                filters: [{ filter: "trait", value: "Land of Wano", match: "exact" }],
               },
               value: 1000,
               duration: "thisTurn",

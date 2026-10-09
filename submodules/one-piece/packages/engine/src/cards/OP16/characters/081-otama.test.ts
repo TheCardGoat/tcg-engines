@@ -27,7 +27,7 @@ describe("OP16-081 Otama", () => {
     ).toBe(true);
   });
 
-  test("without a cost-8-or-more Character the effect is not offered", () => {
+  test("declining the rest payment keeps Otama active", () => {
     const engine = OnePieceTestEngine.create(
       { character: ["OP16-081"], activeDon: 5 },
       { character: ["OP13-013"] },
@@ -42,5 +42,28 @@ describe("OP16-081 Otama", () => {
         ?.rested,
     ).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("erratum: an opponent-only cost8 Character enables the reduction", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP16-081"] },
+      { character: ["OP16-003", "OP13-013"] },
+    );
+    e.activateEffect(e.findCardInZone("south", "character", "OP16-081"), "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [e.findCardInZone("north", "character", "OP13-013")] },
+      "south",
+    );
+    expect(e.getView("south").players.north.characters[1]?.power).toBe(1000);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
+  test("can pay the rest cost with no cost8 Character but causes no reduction", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP16-081"] }, { character: ["OP13-013"] });
+    e.activateEffect(e.findCardInZone("south", "character", "OP16-081"), "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(3000);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

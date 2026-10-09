@@ -23,7 +23,7 @@ export const op12Kalgara099: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   attribute: "slash",
   effect:
     "[Your Turn] When a card is removed from your or your opponent's Life cards, draw 1 card. Then, you cannot draw cards using your own effects during this turn.",

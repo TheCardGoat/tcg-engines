@@ -89,6 +89,35 @@ const st01MainDeck = [
 const fiftyCardDeck = [st01Leader, ...st01MainDeck];
 
 describe("One Piece deck construction rules", () => {
+  it("rejects fractional quantities even when they total exactly 50", () => {
+    const result = validateDeckForFormat(
+      "standard",
+      fiftyCardDeck.map((entry, index) => ({
+        ...entry,
+        quantity: entry.quantity + (index === 1 ? -0.5 : index === 10 ? 0.5 : 0),
+      })),
+    );
+    expect(result.valid).toBe(false);
+  });
+
+  it("rejects negative quantities that cancel extra copies", () => {
+    const result = validateDeckForFormat("standard", [
+      ...fiftyCardDeck,
+      { cardId: "ST01-002", quantity: 1 },
+      { cardId: "ST01-002", quantity: -1 },
+    ]);
+    expect(result.valid).toBe(false);
+  });
+
+  it("rejects a zero-quantity Leader used to bypass the actual Leader's colors", () => {
+    const result = validateDeckForFormat("standard", [
+      { cardId: "ST01-001", quantity: 0 },
+      { cardId: "OP01-060", quantity: 1 },
+      ...st01MainDeck,
+    ]);
+    expect(result.valid).toBe(false);
+  });
+
   it("accepts exactly 50 main-deck cards and rejects any other size", () => {
     const full = validateDeckForFormat("standard", fiftyCardDeck);
     expect(ruleOf(full, "deck-size")).toMatchObject({ passed: true });
@@ -168,5 +197,199 @@ describe("One Piece deck construction rules", () => {
     expect(ruleOf(result, "leader-count")).toMatchObject({ passed: true });
     expect(ruleOf(result, "color-legality")).toMatchObject({ passed: true });
     expect(result.valid).toBe(true);
+  });
+});
+
+describe("Leader deck construction overrides", () => {
+  it("rejects Rayleigh cost-five cards even when color, deck size and copies are legal", () => {
+    const deck = buildDeck("OP12-001", [{ cardId: "ST01-013", quantity: 1 }]);
+    expect(ruleOf(validateDeckForFormat("standard", deck), "leader-restrictions").passed).toBe(
+      false,
+    );
+  });
+  it("permits Rayleigh cost-four cards in a complete legal deck", () => {
+    const entries: DeckValidationEntry[] = [];
+    for (const card of getAllCards()) {
+      if (entries.reduce((n, e) => n + e.quantity, 0) >= 50) break;
+      if (
+        !("cost" in card) ||
+        card.cost >= 5 ||
+        !card.color.includes("red") ||
+        !MAIN_DECK_CARD_TYPES.has(card.cardType)
+      )
+        continue;
+      const remaining = 50 - entries.reduce((n, e) => n + e.quantity, 0);
+      entries.push({ cardId: card.id, quantity: Math.min(4, remaining) });
+    }
+    expect(
+      validateDeckForFormat("standard", [{ cardId: "OP12-001", quantity: 1 }, ...entries]).valid,
+    ).toBe(true);
+  });
+  it("honors Enel's six-card DON deck while rejecting ten", () => {
+    const don = getAllCards().find((c) => c.cardType === "don");
+    if (!don) throw Error("DON catalog");
+    const deck = buildDeck("OP15-058");
+    expect(
+      validateDeckForFormat("standard", [...deck, { cardId: don.id, quantity: 6 }]).valid,
+    ).toBe(true);
+    expect(
+      ruleOf(
+        validateDeckForFormat("standard", [...deck, { cardId: don.id, quantity: 10 }]),
+        "don-deck",
+      ).passed,
+    ).toBe(false);
+  });
+  it("uses exact negated traits for restricted Leaders (future P117 metadata fixture)", () => {
+    const leader = getCard("OP01-060"),
+      old = leader.effects;
+    try {
+      leader.effects = {
+        ...old,
+        deckBuildingRules: [
+          {
+            rule: "cannotInclude",
+            filters: [{ filter: "trait", value: "East Blue", match: "exact", negate: true }],
+          },
+        ],
+      };
+      const valid = validateDeckForFormat("standard", [
+        { cardId: leader.id, quantity: 1 },
+        { cardId: "OP03-051", quantity: 4 },
+      ]);
+      expect(ruleOf(valid, "leader-restrictions").passed).toBe(true);
+      // A synthetic longer type must not match the exact East Blue restriction.
+      const card = getCard("OP03-051"),
+        oldTraits = card.traits;
+      try {
+        card.traits = ["East Blue Pirates"];
+        expect(
+          ruleOf(
+            validateDeckForFormat("standard", [
+              { cardId: leader.id, quantity: 1 },
+              { cardId: card.id, quantity: 4 },
+            ]),
+            "leader-restrictions",
+          ).passed,
+        ).toBe(false);
+      } finally {
+        card.traits = oldTraits;
+      }
+
+      expect(
+        ruleOf(
+          validateDeckForFormat("standard", [
+            { cardId: leader.id, quantity: 1 },
+            { cardId: "OP03-060", quantity: 4 },
+          ]),
+          "leader-restrictions",
+        ).passed,
+      ).toBe(false);
+    } finally {
+      leader.effects = old;
+    }
+  });
+});
+
+describe("One Piece sealed construction and designated-event eligibility", () => {
+  const sealedDeck: DeckValidationEntry[] = [
+    { cardId: "ST01-001", quantity: 1 },
+    { cardId: "OP01-075", quantity: 20 },
+    { cardId: "EB01-005", quantity: 20 },
+    { cardId: "DON-001", quantity: 10 },
+  ];
+
+  it("permits any color and more than four copies in a forty-card main deck", () => {
+    const result = validateDeckForFormat("sealed", sealedDeck);
+    expect(result.valid).toBe(true);
+    expect(result.label).toBe("Sealed");
+    expect(ruleOf(result, "color-legality").passed).toBe(true);
+    expect(ruleOf(result, "copy-limit").passed).toBe(true);
+    expect(ruleOf(result, "deck-size").message).toBe("Deck has exactly 40 main-deck cards");
+    const standard = validateDeckForFormat("standard", sealedDeck);
+    expect(standard.valid).toBe(false);
+    expect(ruleOf(standard, "color-legality").passed).toBe(false);
+    expect(ruleOf(standard, "copy-limit").passed).toBe(false);
+  });
+
+  it.each([39, 41])("rejects a sealed main deck of %i cards", (count) => {
+    const result = validateDeckForFormat("sealed", [
+      { cardId: "ST01-001", quantity: 1 },
+      { cardId: "EB01-005", quantity: count },
+      { cardId: "DON-001", quantity: 10 },
+    ]);
+    expect(result.valid).toBe(false);
+    expect(ruleOf(result, "deck-size").passed).toBe(false);
+  });
+
+  it.each([0, 9, 11])("requires the sealed DON deck when %i are submitted", (count) => {
+    const deck = sealedDeck.filter((entry) => entry.cardId !== "DON-001");
+    if (count) deck.push({ cardId: "DON-001", quantity: count });
+    const result = validateDeckForFormat("sealed", deck);
+    expect(result.valid).toBe(false);
+    expect(ruleOf(result, "don-deck").passed).toBe(false);
+  });
+
+  it("retains printed Leader restrictions despite relaxed color and copy rules", () => {
+    const base = [
+      { cardId: "OP12-001", quantity: 1 },
+      { cardId: "DON-001", quantity: 10 },
+    ];
+    expect(
+      validateDeckForFormat("sealed", [...base, { cardId: "EB01-025", quantity: 40 }]).valid,
+    ).toBe(true);
+    const prohibited = validateDeckForFormat("sealed", [
+      ...base,
+      { cardId: "EB01-018", quantity: 40 },
+    ]);
+    expect(prohibited.valid).toBe(false);
+    expect(ruleOf(prohibited, "leader-restrictions").passed).toBe(false);
+  });
+
+  it("retains a printed Leader DON-deck override", () => {
+    const base = [
+      { cardId: "OP15-058", quantity: 1 },
+      { cardId: "EB01-005", quantity: 40 },
+    ];
+    expect(
+      validateDeckForFormat("sealed", [...base, { cardId: "DON-001", quantity: 6 }]).valid,
+    ).toBe(true);
+    expect(
+      ruleOf(
+        validateDeckForFormat("sealed", [...base, { cardId: "DON-001", quantity: 10 }]),
+        "don-deck",
+      ).passed,
+    ).toBe(false);
+  });
+
+  it("requires an explicit designated-event opt-in in sealed", () => {
+    const deck = sealedDeck.map((entry) =>
+      entry.cardId === "ST01-001" ? { ...entry, cardId: "EVENT-LEADER-MONKEY-D-LUFFY" } : entry,
+    );
+    expect(validateDeckForFormat("sealed", deck).valid).toBe(false);
+    expect(
+      ruleOf(validateDeckForFormat("sealed", deck), "designated-event-eligibility").passed,
+    ).toBe(false);
+    expect(validateDeckForFormat("sealed", deck, { allowDesignatedEventCards: false }).valid).toBe(
+      false,
+    );
+    expect(validateDeckForFormat("sealed", deck, { allowDesignatedEventCards: true }).valid).toBe(
+      true,
+    );
+  });
+
+  it("never admits the designated-event Leader to standard, even with opt-in", () => {
+    const deck = buildDeck("EVENT-LEADER-MONKEY-D-LUFFY");
+    for (const options of [{}, { allowDesignatedEventCards: true }]) {
+      const result = validateDeckForFormat("standard", deck, options);
+      expect(result.valid).toBe(false);
+      expect(ruleOf(result, "designated-event-eligibility").passed).toBe(false);
+      expect(ruleOf(result, "deck-size").passed).toBe(true);
+    }
+  });
+
+  it("still rejects unknown formats even with event eligibility", () => {
+    expect(() =>
+      validateDeckForFormat("event", sealedDeck, { allowDesignatedEventCards: true }),
+    ).toThrow("Unknown One Piece format: event");
   });
 });

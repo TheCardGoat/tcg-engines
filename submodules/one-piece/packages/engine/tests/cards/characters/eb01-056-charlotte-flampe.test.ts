@@ -61,4 +61,21 @@ describe("EB01-056 Charlotte Flampe", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("pays the top Life card and draws the exact next deck card", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB01-056"],
+      activeDon: 1,
+      life: ["EB01-005", "EB01-025"],
+      deck: ["EB01-018", "EB01-005"],
+    });
+    const top = e.findCardInZone("south", "life", "EB01-005"),
+      drawn = e.findCardInZone("south", "deck", "EB01-018");
+    e.playCard("EB01-056");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostAddLifeToHand", { optionId: "top" }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([top, drawn]);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

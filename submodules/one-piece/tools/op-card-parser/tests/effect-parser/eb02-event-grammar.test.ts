@@ -53,7 +53,7 @@ describe("EB02 Event parser grammar", () => {
             cost: "trashFromHand",
             amount: 1,
             filters: [
-              { filter: "trait", value: "GERMA 66", match: "includes" },
+              { filter: "trait", value: "GERMA 66", match: "exact" },
               { filter: "cardCategory", value: "character" },
               { filter: "power", comparison: "lte", value: 4000 },
             ],
@@ -78,7 +78,7 @@ describe("EB02 Event parser grammar", () => {
     ]);
   });
 
-  test("keeps a qualified trait branch or a named Character branch", () => {
+  test("shares color across the trait or named Character alternatives (FAQ Q881)", () => {
     expect(
       parseActions(
         'play up to 1 of your yellow "Straw Hat Crew" type Character cards or [Sanji] with a cost of 5 or less from your hand',
@@ -91,13 +91,11 @@ describe("EB02 Event parser grammar", () => {
         filters: [
           { filter: "cost", comparison: "lte", value: 5 },
           { filter: "cardCategory", value: "character" },
+          { filter: "color", value: "yellow" },
           {
             filter: "anyOf",
             groups: [
-              [
-                { filter: "color", value: "yellow" },
-                { filter: "trait", value: "Straw Hat Crew", match: "includes" },
-              ],
+              [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
               [{ filter: "name", value: "Sanji" }],
             ],
           },

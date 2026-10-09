@@ -29,9 +29,13 @@ export const diabloProtectingHisMistress: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_1891abf25f274a67914bedfb95b434bd",
+    tcgPlayer: "704689",
+  },
   text: [
     {
-      title: "Flurry of Feathers",
+      title: "FLURRY OF FEATHERS",
       description: "Your characters named Maleficent gain Resist +1.",
     },
   ],

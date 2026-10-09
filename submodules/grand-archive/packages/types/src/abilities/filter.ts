@@ -61,6 +61,7 @@ export type GrandArchiveCardFilter =
   | { readonly kind: "activation-state"; readonly state: GrandArchiveActivationState }
   | { readonly kind: "token"; readonly value: boolean }
   | { readonly kind: "entered-field-this-turn" }
+  | { readonly kind: "leveled-up-this-turn" }
   | { readonly kind: "linked"; readonly value: boolean }
   | {
       readonly kind: "same-characteristic";

@@ -45,6 +45,13 @@ function parseConditionChain(text: string): Condition | null {
  * no "If"/"When" prefix is present or the condition can't be parsed.
  */
 export function parseInlineCondition(text: string): InlineConditionResult | null {
+  const discardedThisTurn =
+    /^During the turn in which a card in your hand is trashed by an effect,\s*(.+)$/i.exec(text);
+  if (discardedThisTurn)
+    return {
+      condition: { condition: "cardTrashedFromHandByEffectThisTurn", player: "self" },
+      remainingText: discardedThisTurn[1]!,
+    };
   // "This effect can be activated at the start of your turn. Y"
   const activatedStartOfTurnMatch =
     /^This\s+effect\s+can\s+be\s+activated\s+at\s+the\s+start\s+of\s+your\s+turn\.\s*(.+)$/is.exec(
@@ -208,7 +215,7 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
 
   // "this Character is K.O.'d (by your opponent's effect)?"
   if (
-    /^this\s+Character\s+is\s+K\.O\.\u2019?'?d(?:\s+by\s+your\s+opponent[''\u2019]s\s+effect)?$/i.test(
+    /^this\s+Character\s+is\s+K\.O\.\u2019?'?d(?:\s+by\s+(?:your\s+opponent[''\u2019]s|an?)\s+effect)?$/i.test(
       t,
     )
   )
@@ -230,6 +237,9 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
   // "your opponent activates [Blocker] or an Event"
   if (/^your\s+opponent\s+activates\s+\[Blocker\]\s+or\s+an\s+Event$/i.test(t))
     return "whenBlockerActivated";
+
+  // Enel's Life threshold describes the event, not a later mutable condition.
+  if (/^your\s+number\s+of\s+Life\s+cards\s+becomes\s+0$/i.test(t)) return "whenLifeRemoved";
 
   // "a card is removed from your, your opponent's, or either player's Life cards"
   if (
@@ -260,6 +270,14 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
     )
   )
     return "whenCharacterKod";
+
+  // A removed Character of a specified own trait; the block retains its filters.
+  if (
+    /^your\s+["“{][^"”}]+["”}]\s+type\s+Character(?:\s+card)?\s+is\s+removed\s+from\s+the\s+field$/i.test(
+      t,
+    )
+  )
+    return "whenCharacterRemoved";
 
   // "a Character is removed from the field by your/your opponent's effect"
   if (
@@ -415,6 +433,8 @@ function parseSingleCondition(text: string): Condition | null {
 }
 
 function parseCompoundCondition(text: string): Condition | null {
+  // Shared subject in "you have N cards in hand and a Character ...".
+  text = text.replace(/^(you\s+have\s+.+?)\s+and\s+(a\s+Character\b)/i, "$1 and you have $2");
   // Split on " and " followed by condition-starting words
   const splitPattern = /\s+and\s+(?=(?:you(?:r|\s)|this\s|the\s+number|there\s|is\s))/i;
   const parts = text.split(splitPattern);

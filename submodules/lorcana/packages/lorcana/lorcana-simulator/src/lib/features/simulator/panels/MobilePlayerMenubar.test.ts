@@ -85,6 +85,7 @@ describe("MobilePlayerMenubar rendering", () => {
       discardCount: 3,
       availableInk: 2,
       inkwellCount: 5,
+      inkDrops: 0,
     },
     isActive: true,
     isTurnPlayer: true,
@@ -188,5 +189,21 @@ describe("MobilePlayerMenubar rendering", () => {
     expect(body).toContain("quick-action--icon-only");
     expect(body).not.toContain('quick-action__label">Play card');
     expect(body).not.toContain('quick-action__badge">2<');
+  });
+
+  it("keeps undo turn off the board chrome", async () => {
+    const { default: MobilePlayerMenubar } =
+      await import("@/features/simulator/panels/MobilePlayerMenubar.svelte");
+    const { body } = render(MobilePlayerMenubar, {
+      props: {
+        seat: "bottom",
+        player,
+        canUndoTurn: true,
+        onUndoTurn: () => {},
+      },
+    });
+
+    expect(body).toContain("mobile-bottom-pass-turn");
+    expect(body).not.toContain('data-testid="undo-turn"');
   });
 });

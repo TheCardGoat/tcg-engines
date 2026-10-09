@@ -89,6 +89,7 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
         "manualDryCard",
         "manualSetDamage",
         "manualSetLore",
+        "manualSetInkDrops",
         "manualShuffleDeck",
         "manualPassTurn",
       ], // For testing purposes, to be removed
@@ -132,6 +133,16 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
                   const registry = getOrBuildMoveRegistry(ctx);
                   const cantReady =
                     hasTemporaryRestriction(card.meta, currentTurn, "cant-ready", {
+                      isSourceInPlay: (sourceId) => {
+                        const zoneKey = ctx.framework.zones.getCardZone(sourceId);
+                        return (
+                          typeof zoneKey === "string" &&
+                          (zoneKey === "play" || zoneKey.startsWith("play:"))
+                        );
+                      },
+                      isCardAtLocation: isCardAtLoc,
+                    }) ||
+                    hasTemporaryRestriction(card.meta, currentTurn, "cant-ready-at-start-of-turn", {
                       isSourceInPlay: (sourceId) => {
                         const zoneKey = ctx.framework.zones.getCardZone(sourceId);
                         return (
@@ -188,6 +199,7 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
               "manualDryCard",
               "manualSetDamage",
               "manualSetLore",
+              "manualSetInkDrops",
               "manualShuffleDeck",
               "manualPassTurn",
             ],
@@ -217,6 +229,7 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
               "manualDryCard",
               "manualSetDamage",
               "manualSetLore",
+              "manualSetInkDrops",
               "manualShuffleDeck",
               "manualPassTurn",
             ],
@@ -238,6 +251,7 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
               "manualDryCard",
               "manualSetDamage",
               "manualSetLore",
+              "manualSetInkDrops",
               "manualShuffleDeck",
               "manualPassTurn",
             ],

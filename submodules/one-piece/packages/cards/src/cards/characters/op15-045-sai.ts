@@ -23,7 +23,7 @@ export const op15Sai045: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Happosui Army Dressrosa"],
+  traits: ["Dressrosa", "Happosui Army"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] You may trash 1 Event from your hand: Draw 2 cards.",

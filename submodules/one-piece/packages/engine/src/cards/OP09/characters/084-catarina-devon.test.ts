@@ -103,7 +103,7 @@ describe("OP09-084 Catarina Devon", () => {
     engine.endTurn("south");
     const lifeBefore = engine.getView("south").players.south.lifeCount;
     engine.declareAttack(secondAttackerId, engine.leader("south"), "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore - 1);
   });
 
@@ -118,5 +118,27 @@ describe("OP09-084 Catarina Devon", () => {
       trigger: "activateMain",
     });
     expect(failure.reason).toBe("The activation conditions are not met.");
+  });
+  test("keeps the granted Blocker when Teach negates the Character's printed effects", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-081", character: ["OP09-084"], activeDon: 1 },
+      { leaderCardId: "OP09-081", hand: ["OP09-093"], activeDon: 10 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const source = engine.findCardInZone("south", "character", "OP09-084");
+    engine.asSouth().activateMain(source);
+    engine.resolveDecision("effectActionChoice", { optionId: "2" }, "south");
+    engine.asSouth().endTurn();
+
+    engine.asNorth().play("OP09-093");
+    engine.asNorth().activateMain(engine.findCardInZone("north", "character", "OP09-093"));
+    engine.asNorth().chooseNoTargets();
+    engine.asNorth().chooseTargets(source);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    const block = engine.pendingDecision("battleBlocker", "south").steps[0];
+    if (block?.kind !== "selectEntity") throw new Error("Expected granted Blocker");
+    expect(block.candidates.map((c) => c.ref.id)).toContain(source);
+    engine.asSouth().chooseBlocker(source);
+    expect(engine.getView("south").players.south.lifeCount).toBe(5);
   });
 });

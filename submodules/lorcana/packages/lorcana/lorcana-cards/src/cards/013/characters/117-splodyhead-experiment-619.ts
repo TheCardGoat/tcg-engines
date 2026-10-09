@@ -32,6 +32,7 @@ export const splodyheadExperiment619: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8d805d5c743f499b8cf14fcc7de1d3e1",
+    tcgPlayer: "704625",
   },
   classifications: ["Storyborn", "Ally", "Alien"],
   i18n: splodyheadExperiment619I18n,

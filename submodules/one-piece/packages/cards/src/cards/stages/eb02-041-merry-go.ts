@@ -32,7 +32,7 @@ export const eb02MerryGo041: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -64,7 +64,7 @@ export const eb02MerryGo041: StageCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

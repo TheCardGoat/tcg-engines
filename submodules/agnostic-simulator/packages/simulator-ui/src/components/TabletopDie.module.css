@@ -1,0 +1,70 @@
+.face {
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  width: var(--tabletop-die-size, 48px);
+  height: var(--tabletop-die-size, 48px);
+  flex: none;
+  aspect-ratio: 1;
+  padding: 4px;
+  border: 1px solid var(--board-border, #68717e);
+  border-radius: 8px;
+  background: var(--board-surface, #18202c);
+  color: var(--board-text, #f8fbff);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.label {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 3px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease-out;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--game-accent, #d9b75f);
+  outline-offset: 3px;
+}
+
+.button[aria-pressed="true"] {
+  border-color: var(--game-accent, #d9b75f);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:active:not(:disabled) {
+    transform: none;
+  }
+}

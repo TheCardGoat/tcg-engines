@@ -53,5 +53,11 @@ describe("OP12-118 Jewelry Bonney", () => {
     const choice = blocker.pendingDecision("battleBlocker", "south").steps[0];
     if (choice?.kind !== "selectEntity") throw new Error("Expected Bonney's Blocker choice.");
     expect(choice.candidates.map((candidate) => candidate.ref.id)).toContain(bonneyId);
+    const lifeBefore = blocker.getView("south").players.south.lifeCount;
+    blocker.asSouth().chooseBlocker(bonneyId);
+    expect(blocker.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(blocker.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(
+      bonneyId,
+    );
   });
 });

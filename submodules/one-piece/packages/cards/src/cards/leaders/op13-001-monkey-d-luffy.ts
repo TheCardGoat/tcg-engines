@@ -30,7 +30,7 @@ export const op13MonkeyDLuffy001: LeaderCard = {
   setId: "OP13",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[DON!! x1] [On Your Opponent\'s Attack] If you have 5 or less active DON!! cards, you may rest any number of your DON!! cards. For every DON!! card rested this way, this Leader or up to 1 of your "Straw Hat Crew" type Characters gains +2000 power during this battle.',
@@ -56,7 +56,7 @@ export const op13MonkeyDLuffy001: LeaderCard = {
                     [{ filter: "cardCategory", value: "leader" }],
                     [
                       { filter: "cardCategory", value: "character" },
-                      { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                      { filter: "trait", value: "Straw Hat Crew", match: "exact" },
                     ],
                   ],
                 },

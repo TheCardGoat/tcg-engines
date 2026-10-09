@@ -62,12 +62,12 @@ export const op14eb04JinbeOp14040040: LeaderCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

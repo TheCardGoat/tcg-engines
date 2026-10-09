@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import { moanaChosenByTheOcean } from "./117-moana-chosen-by-the-ocean";
-import { teKTheBurningOne } from "./126-te-k-the-burning-one";
-import { teKHeartless } from "./192-te-k-heartless";
+import { teKTheBurningOne } from "./126-te-ka-the-burning-one";
+import { teKHeartless } from "./192-te-ka-heartless";
 
 const nonTeKaCharacter = createMockCharacter({
   id: "moana-test-non-teka",

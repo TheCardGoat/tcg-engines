@@ -175,7 +175,7 @@ describe("Grand Archive Standard practice", () => {
       fireEvent.click(screen.getByTestId("ga-practice-bot-pause"));
       fireEvent.click(screen.getByTestId("ga-practice-bot-next"));
       fireEvent.click(screen.getByTestId("ga-practice-bot-play"));
-      fireEvent.click(screen.getByRole("button", { name: "Undo last accepted move" }));
+      fireEvent.click(screen.getByRole("button", { name: "Undo" }));
 
       const restored = JSON.parse(container.querySelector("output")!.textContent!) as {
         stateVersion: number;

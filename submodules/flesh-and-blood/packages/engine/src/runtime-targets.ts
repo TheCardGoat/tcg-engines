@@ -137,11 +137,19 @@ export function legalFabDecisionTargets(
         )
           continue;
         seen.add(instanceId);
+        // CR 1.8.6b: a face-down object is not public — the chooser may
+        // determine it without learning its identity, so the candidate is
+        // anonymized end to end (label, printed name, payload metadata).
+        const hiddenPick = snapshot.markers.some((marker) => marker.kind === "face-down");
         matches.push({
           instanceId,
           target: { kind: "object", ref: snapshot.ref },
-          label: snapshot.current.names.join(" // ") || snapshot.canonicalId || instanceId,
-          printedName: printedIdentityKey(snapshot.current.names, snapshot.canonicalId),
+          ...(hiddenPick
+            ? { label: "Face-down card", hidden: true }
+            : {
+                label: snapshot.current.names.join(" // ") || snapshot.canonicalId || instanceId,
+                printedName: printedIdentityKey(snapshot.current.names, snapshot.canonicalId),
+              }),
         });
       }
       candidates.push(...(position ? matches.slice(0, positionedCount) : matches));

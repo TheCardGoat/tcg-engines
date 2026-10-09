@@ -23,7 +23,7 @@ export const op10Usopp081: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     '[On Play] You may rest 1 of your "Dressrosa" type Leader or Stage cards: K.O. up to 1 of your opponent\'s Characters with a cost of 2 or less. Then, trash 2 cards from the top of your deck.',
@@ -39,7 +39,7 @@ export const op10Usopp081: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

@@ -22,7 +22,7 @@ export const op13TheFiveEldersAreAtYourService096: EventCard = {
   setId: "OP13",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   effect:
     '[Main] Look at 3 cards from the top of your deck; reveal up to 1 "Celestial Dragons" type card other than [The Five Elders Are at Your Service!!!] and add it to your hand. Then, trash the rest.',
   effects: {
@@ -49,7 +49,7 @@ export const op13TheFiveEldersAreAtYourService096: EventCard = {
               {
                 filter: "trait",
                 value: "Celestial Dragons",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

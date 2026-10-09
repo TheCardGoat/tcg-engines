@@ -63,7 +63,7 @@ export const op14eb04BirdNeptunian016: CharacterCard = {
               {
                 filter: "trait",
                 value: "Neptunian",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

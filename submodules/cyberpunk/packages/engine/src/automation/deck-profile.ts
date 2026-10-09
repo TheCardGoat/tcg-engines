@@ -94,6 +94,35 @@ export interface DeckStrategyProfile {
    * attacks — unless the gig race is already closing.
    */
   readonly preferSpendOverAttack?: readonly string[];
+  /**
+   * Printed names preferred when a free-play choice offers several cards.
+   * Other candidates are dropped while at least one preferred card is legal.
+   */
+  readonly preferredFreeCards?: readonly string[];
+  /**
+   * Carrier printed name → payload printed names. While the carrier can be
+   * played and a payload is in hand, the payload is not played on its own.
+   */
+  readonly playThrough?: Readonly<Record<string, readonly string[]>>;
+  /** Printed names whose optional triggered choices are not declined. */
+  readonly commitSources?: readonly string[];
+  /** Printed names whose Gig adjust chooses 1 when that face is legal. */
+  readonly minGigSources?: readonly string[];
+  /**
+   * Printed unit names played immediately when they are legal, a program is
+   * in hand, and a rival unit can be answered. Placide's discard line.
+   */
+  readonly priorityPlays?: readonly string[];
+  /**
+   * Programs that fund the curve. When one is a legal sell and this turn has
+   * not sold, passing the turn is removed.
+   */
+  readonly curveSellCards?: readonly string[];
+  /**
+   * Curve units in development order. When two are legal plays, the cheaper
+   * one is kept. A 4-drop does not jump a legal 3-drop.
+   */
+  readonly curveUnits?: readonly string[];
   /** Weight overrides merged over the strategy's weights (profile wins). */
   readonly weights?: Partial<GreedyWeights>;
 }

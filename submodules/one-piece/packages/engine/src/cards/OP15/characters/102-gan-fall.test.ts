@@ -38,4 +38,12 @@ describe("OP15-102 Gan Fall", () => {
     ).toBe(true);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("combined Sky Island traits enable the reduction", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["OP15-119"], hand: [op15GanFall102], activeDon: 1 },
+      {},
+    );
+    engine.playCard(op15GanFall102);
+    expect(engine.getView("south").players.south.activeDon).toBe(0);
+  });
 });

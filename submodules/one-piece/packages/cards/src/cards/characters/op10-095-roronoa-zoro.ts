@@ -39,7 +39,7 @@ export const op10RoronoaZoro095: CharacterCard = {
   setId: "OP10",
   cost: 4,
   power: 6000,
-  traits: ["Straw Hat Crew Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[On Play] You may rest 1 of your "Dressrosa" type Leader or Stage cards: K.O. up to 1 of your opponent\'s Characters with a cost of 4 or less. Then, trash 2 cards from the top of your deck.',
@@ -55,7 +55,7 @@ export const op10RoronoaZoro095: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

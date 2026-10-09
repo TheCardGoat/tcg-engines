@@ -30,7 +30,7 @@ export const op01RoronoaZoro001: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 5,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect: "[DON!! x1] [Your Turn] All of your Characters gain +1000 power.",
   effects: {

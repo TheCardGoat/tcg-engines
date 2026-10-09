@@ -23,7 +23,7 @@ export const op01Gordon011: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 2000,
-  traits: ["Film"],
+  traits: ["FILM"],
   attribute: "wisdom",
   effect: "[On Play] You may place 1 card from your hand at the bottom of your deck: Draw 1 card.",
   effects: {

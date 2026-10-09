@@ -33,6 +33,7 @@ export const woodyBuzzLightyearBestBuddies: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_862f035f533244a8a59a469e5c0cae9c",
+    tcgPlayer: "702673",
   },
   text: [
     {
@@ -41,12 +42,7 @@ export const woodyBuzzLightyearBestBuddies: CharacterCard = {
     {
       title: "TO INFINITY...",
       description:
-        "When you play this character, if chosen opponent has more cards in their hand than you, draw cards until you have the same number....",
-    },
-    {
-      title: "AND BEYOND!",
-      description:
-        "Whenever this character quests, you may play a card with cost 2 or less for free.",
+        "When you play this character, if chosen opponent has more cards in their hand than you, draw cards until you have the same number....AND BEYOND! Whenever this character quests, you may play a card with cost 2 or less for free.",
     },
   ],
   classifications: ["Storyborn", "Team", "Hero", "Toy", "Captain"],

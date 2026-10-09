@@ -34,7 +34,7 @@ describe("OP05-038 Charlestone", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("effectActionOptional", { optionId: "yes" }, "north");
 
     const donDecision = engine.pendingDecision("effectSetActiveDon", "north");
     const donStep = donDecision.steps[0];
@@ -80,7 +80,8 @@ describe("OP05-038 Charlestone", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("effectActionOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBefore);
@@ -91,6 +92,38 @@ describe("OP05-038 Charlestone", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(retainedId);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("with no remaining hand, accepts the optional action but cannot activate DON", () => {
+    let engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [op05Charlestone038], activeDon: 2, restedDon: 3 },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+    engine
+      .asSouth()
+      .attack(
+        engine.findCardInZone("south", "character", eb01MountainGod018),
+        engine.leader("north"),
+      );
+    engine.resolveDecision(
+      "battleCounter",
+      { selectedIds: [engine.findCardInZone("north", "hand", op05Charlestone038)] },
+      "north",
+    );
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("north")] },
+      "north",
+    );
+    expect(engine.getView("north").players.north.leader?.power).toBe(9000);
+    engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    engine.resolveDecision("effectActionOptional", { optionId: "yes" }, "north");
+    expect(engine.getView("north").players.north.activeDon).toBe(0);
+    expect(engine.getView("north").players.north.restedDon).toBe(5);
+    expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("north").prompts).toHaveLength(0);
   });
 
   test("Life Trigger maps Leader-or-Character and effective cost-3 filtering", () => {

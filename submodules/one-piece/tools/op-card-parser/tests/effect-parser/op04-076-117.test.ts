@@ -12,6 +12,7 @@ describe("OP04-076/093/094/096/116/117 transformations", () => {
       effects: [
         {
           trigger: "counter",
+          optional: true,
           costs: [{ cost: "returnDon", amount: 1 }],
           actions: [
             {
@@ -56,7 +57,7 @@ describe("OP04-076/093/094/096/116/117 transformations", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
               value: 6000,
               duration: "thisTurn",
@@ -67,7 +68,7 @@ describe("OP04-076/093/094/096/116/117 transformations", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
               keyword: "doubleAttack",
               duration: "thisTurn",
@@ -184,7 +185,7 @@ describe("OP04-076/093/094/096/116/117 transformations", () => {
             {
               condition: "leaderTrait",
               trait: "Dressrosa",
-              match: "includes",
+              match: "exact",
             },
           ],
           actions: [
@@ -194,7 +195,7 @@ describe("OP04-076/093/094/096/116/117 transformations", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: "all" },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
               keyword: "rushCharacter",
               duration: "permanent",

@@ -23,7 +23,7 @@ export const op09Sanji028: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On K.O.] You may add 1 card from the top or bottom of your Life cards to your hand: Play up to 1 {ODYSSEY} or {Straw Hat Crew} type Character card with a cost of 4 or less from your trash rested.",
@@ -61,12 +61,12 @@ export const op09Sanji028: CharacterCard = {
                   {
                     filter: "trait",
                     value: "ODYSSEY",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

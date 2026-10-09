@@ -362,6 +362,23 @@ export function getActiveStatModifierTotal(
   }, 0);
 }
 
+/** CR 3.4.1.2: this-turn stats end before the final turn-end game state check. */
+export function cleanupEndOfTurnStatModifiers(
+  state: ContinuousEffectWriteContext,
+  currentTurn: number,
+): void {
+  const effects = getOrCreateContinuousEffectState(state);
+  const before = effects.instances.length;
+  effects.instances = effects.instances.filter(
+    (instance) =>
+      instance.kind !== "stat-modifier" ||
+      instance.duration !== "this-turn" ||
+      instance.expiresAtTurn > currentTurn,
+  );
+  effects.byTarget = rebuildByTarget(effects.instances);
+  if (state.G && effects.instances.length !== before) invalidateStaticEffects(state);
+}
+
 export function cleanupExpiredEffects(
   state: ContinuousEffectWriteContext,
   currentTurn: number,

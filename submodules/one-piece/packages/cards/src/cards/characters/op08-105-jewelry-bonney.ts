@@ -31,7 +31,7 @@ export const op08JewelryBonney105: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[DON!! x1] [Your Turn] [Once Per Turn] When a card is removed from your opponent's Life cards, draw 2 cards and trash 1 card from your hand. [Trigger] Draw 2 cards and trash 1 card from your hand.",

@@ -94,9 +94,7 @@ describe("prevent gig steal modal", () => {
     }
     await harness.dispatchEngine((engine, payload) => {
       engine.attackRival(payload.rivalAttackerId, { as: CYBERPUNK_P2 });
-      engine.resolveAttack({ as: CYBERPUNK_P2 });
-      engine.resolveAttack({ as: CYBERPUNK_P2, pass: true });
-      engine.resolveAttack({ as: CYBERPUNK_P2, gigIdsToSteal: [payload.stolenDieId] });
+      engine.resolveAttack({ as: CYBERPUNK_P1, pass: true });
     }, setup);
 
     const defenderChoice = await harness.evalEngine(

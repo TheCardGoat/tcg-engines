@@ -66,7 +66,7 @@ export const op03Izo003: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Land of Wano Whitebeard Pirates"],
+  traits: ["Land of Wano", "Whitebeard Pirates"],
   attribute: "ranged",
   effect:
     '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including "Whitebeard Pirates" other than [Izo] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',

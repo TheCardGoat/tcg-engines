@@ -22,7 +22,7 @@ export const op17Aramaki059: CharacterCard = {
   setId: "OP17",
   cost: 7,
   power: 8000,
-  traits: ["Navy Admiral"],
+  traits: ["Admiral", "Navy"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] DON!! -1: Draw 1 card and K.O. up to 2 of your opponent's Characters with a cost of 2 or less.",

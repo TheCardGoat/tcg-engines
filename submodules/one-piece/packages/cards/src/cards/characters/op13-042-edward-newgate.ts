@@ -30,7 +30,7 @@ export const op13EdwardNewgate042: CharacterCard = {
   setId: "OP13",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[Blocker]\n[On Play] Draw 2 cards and trash 1 card from your hand. Then, give your Leader and 1 Character up to 2 rested DON!! cards each.",

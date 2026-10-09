@@ -23,7 +23,7 @@ describe("OP04-081 Cavendish", () => {
       },
       { firstPlayer: "north", activeSeat: "south" },
     );
-    expect(op04Cavendish081.traits).toEqual(["Beautiful Pirates", "Dressrosa"]);
+    expect(op04Cavendish081.traits).toEqual(["Dressrosa", "Beautiful Pirates"]);
     const cavendishId = engine.findCardInZone("south", "character", op04Cavendish081);
     const activeTargetId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const lowCostId = engine.findCardInZone("north", "character", eb01Doma005);

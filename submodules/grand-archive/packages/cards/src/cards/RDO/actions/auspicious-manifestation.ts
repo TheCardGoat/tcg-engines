@@ -180,6 +180,7 @@ export const auspiciousManifestation: GrandArchiveCard<GrandArchiveAbilityDefini
               },
             ],
           },
+          functionalZones: ["hand"],
         },
       ],
     },

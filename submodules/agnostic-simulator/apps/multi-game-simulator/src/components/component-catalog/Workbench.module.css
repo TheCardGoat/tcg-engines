@@ -1,0 +1,115 @@
+.root {
+  color: #e9eef3;
+  background: #0d141d;
+  padding: 20px;
+  border-radius: 10px;
+}
+.root a {
+  color: #7de1e7;
+}
+.note {
+  font-size: 13px;
+  color: #b9c8d7;
+  line-height: 1.6;
+}
+.knobs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 16px;
+  border: 1px solid #455565;
+  border-radius: 8px;
+}
+.knobs legend {
+  font-size: 13px;
+  padding: 0 8px;
+}
+.knobs label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  min-height: 44px;
+}
+.knobs input[type="number"] {
+  width: 65px;
+}
+.root input,
+.root select,
+.root button {
+  accent-color: #5be0df;
+}
+.knobs input[type="number"],
+.picker select,
+.knobs button {
+  padding: 8px;
+  background: #202c3b;
+  color: inherit;
+  border: 1px solid #596a7a;
+  border-radius: 6px;
+  min-height: 40px;
+}
+.picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+}
+.picker select {
+  max-width: 100%;
+}
+.specimen {
+  border-top: 1px solid #354657;
+  margin-top: 24px;
+  padding-top: 24px;
+}
+.specimen h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+.specimen code {
+  font-size: 11px;
+  color: #adbdce;
+  overflow-wrap: anywhere;
+}
+.objects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 36px;
+  margin: 30px 0;
+  padding: 12px;
+}
+.card {
+  width: 180px;
+  min-height: 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.card > div {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card small {
+  font-size: 11px;
+  color: #bbc8d6;
+}
+.zone {
+  max-width: 100%;
+  min-width: 150px;
+}
+
+.card[data-rested] > div {
+  transform: rotate(90deg);
+  transition: transform 160ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card[data-rested] > div {
+    transition: none;
+  }
+}

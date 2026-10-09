@@ -23,7 +23,7 @@ export const op13TonyTonyChopper030: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Animal FILM Straw Hat Crew"],
+  traits: ["Animal", "FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect: "[On Play] Set up to 2 of your DON!! cards as active.",
   effects: {

@@ -55,4 +55,17 @@ describe("EB02-054 Sanji", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("above two Life the On Play effect neither draws nor trashes", () => {
+    const e = OnePieceTestEngine.create({
+      hand: [eb02Sanji054, eb01Doma005],
+      activeDon: 5,
+      life: 3,
+      deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+    });
+    e.playCard(eb02Sanji054);
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([eb01Doma005.id]);
+    expect(e.getView("south").players.south.deckCount).toBe(3);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

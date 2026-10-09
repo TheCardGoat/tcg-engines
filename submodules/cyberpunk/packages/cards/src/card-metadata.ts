@@ -2,30 +2,15 @@
 import type { CardPrinting } from "@tcg/cyberpunk-types";
 
 export interface CyberpunkCardMetadataEntry {
-  i18n: {
-    en: {
-      name: string;
-      subname?: string;
-      displayName: string;
-      rulesText?: string;
-      flavorText?: string;
-      description?: string;
-      youtubeUrl?: string;
-      sourceUrl?: string;
-    };
-  };
+  /** The structured set that owns the canonical definition for this slug. */
+  canonicalSetCode: string;
   printings: (Partial<CardPrinting> & Pick<CardPrinting, "id" | "collectorNumber" | "setCode">)[];
   selectedPrintingId?: string;
 }
 
 export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> = {
-  "promo:lucyna-kushinada": {
-    i18n: {
-      en: {
-        name: "Lucyna Kushinada",
-        displayName: "Lucyna Kushinada",
-      },
-    },
+  "lucyna-kushinada": {
+    canonicalSetCode: "promo",
     printings: [
       {
         id: "14dc2e38-a373-4b25-be12-e74b1f79e3b2",
@@ -37,14 +22,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "14dc2e38-a373-4b25-be12-e74b1f79e3b2",
   },
-  "PRM01:rebecca-having-a-moment": {
-    i18n: {
-      en: {
-        name: "Rebecca",
-        subname: "Having a Moment",
-        displayName: "Rebecca: Having a Moment",
-      },
-    },
+  "rebecca-having-a-moment": {
+    canonicalSetCode: "PRM01",
     printings: [
       {
         id: "71a35836-e604-4d98-ab56-58bfb4581033",
@@ -65,16 +44,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "71a35836-e604-4d98-ab56-58bfb4581033",
   },
-  "theheistretailstarterdeck:dexter-deshawn-one-last-chance": {
-    i18n: {
-      en: {
-        name: "Dexter DeShawn",
-        subname: "One Last Chance",
-        displayName: "Dexter DeShawn: One Last Chance",
-        rulesText:
-          "{Play} {Attack} Adjust a Gig by up to 1.\n{Defeated} If your ☆ (Street Cred) differs from a Rival's by 10+, draw 2.",
-      },
-    },
+  "dexter-deshawn-one-last-chance": {
+    canonicalSetCode: "theheistretailstarterdeck",
     printings: [
       {
         id: "e2f38541-ecc9-41dc-ae15-164171391bff",
@@ -104,16 +75,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e2f38541-ecc9-41dc-ae15-164171391bff",
   },
-  "theheistretailstarterdeck:jackie-welles-pour-one-out-for-me": {
-    i18n: {
-      en: {
-        name: "Jackie Welles",
-        subname: "Pour One Out For Me",
-        displayName: "Jackie Welles: Pour One Out For Me",
-        rulesText:
-          "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
-      },
-    },
+  "jackie-welles-pour-one-out-for-me": {
+    canonicalSetCode: "theheistretailstarterdeck",
     printings: [
       {
         id: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
@@ -167,14 +130,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
   },
-  "theheistretailstarterdeck:mt0d12-flathead": {
-    i18n: {
-      en: {
-        name: "MT0D12 Flathead",
-        displayName: "MT0D12 Flathead",
-        rulesText: "If you have less ☆ (Street Cred) than a Rival, this Unit can't be blocked.",
-      },
-    },
+  "mt0d12-flathead": {
+    canonicalSetCode: "theheistretailstarterdeck",
     printings: [
       {
         id: "5f0d9dac-2547-4ecb-896e-0c603968422a",
@@ -204,16 +161,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5f0d9dac-2547-4ecb-896e-0c603968422a",
   },
-  "theheistretailstarterdeck:v-corporate-exile": {
-    i18n: {
-      en: {
-        name: "V",
-        subname: "Corporate Exile",
-        displayName: "V: Corporate Exile",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. When it leaves the field, remove it from the game.)",
-      },
-    },
+  "v-corporate-exile": {
+    canonicalSetCode: "theheistretailstarterdeck",
     printings: [
       {
         id: "4a5591f9-743e-4186-8deb-560971bb3f82",
@@ -267,16 +216,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "4a5591f9-743e-4186-8deb-560971bb3f82",
   },
-  "theheistretailstarterdeck:viktor-vektor-sit-down-and-relax": {
-    i18n: {
-      en: {
-        name: "Viktor Vektor",
-        subname: "Sit Down and Relax",
-        displayName: "Viktor Vektor: Sit Down and Relax",
-        rulesText:
-          "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
-      },
-    },
+  "viktor-vektor-sit-down-and-relax": {
+    canonicalSetCode: "theheistretailstarterdeck",
     printings: [
       {
         id: "7d539173-4022-402e-a9f4-100338935fd2",
@@ -330,16 +271,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7d539173-4022-402e-a9f4-100338935fd2",
   },
-  "embracingpowerretailstarterdeck:goro-takemura-hands-unclean": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Hands Unclean",
-        displayName: "Goro Takemura: Hands Unclean",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-      },
-    },
+  "goro-takemura-hands-unclean": {
+    canonicalSetCode: "embracingpowerretailstarterdeck",
     printings: [
       {
         id: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
@@ -394,16 +327,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
   },
-  "embracingpowerretailstarterdeck:goro-takemura-losing-his-way": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Losing His Way",
-        displayName: "Goro Takemura: Losing His Way",
-        rulesText:
-          "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
-      },
-    },
+  "goro-takemura-losing-his-way": {
+    canonicalSetCode: "embracingpowerretailstarterdeck",
     printings: [
       {
         id: "42e03e7a-923d-4f2b-8d79-191e69873947",
@@ -434,15 +359,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "42e03e7a-923d-4f2b-8d79-191e69873947",
   },
-  "embracingpowerretailstarterdeck:minotaur": {
-    i18n: {
-      en: {
-        name: "Minotaur",
-        displayName: "Minotaur",
-        rulesText:
-          "{Play} If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 5 or less.",
-      },
-    },
+  minotaur: {
+    canonicalSetCode: "embracingpowerretailstarterdeck",
     printings: [
       {
         id: "19587d4f-6d47-44fe-b4da-99743e2742f7",
@@ -489,16 +407,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "19587d4f-6d47-44fe-b4da-99743e2742f7",
   },
-  "embracingpowerretailstarterdeck:saburo-arasaka-stubborn-patriarch": {
-    i18n: {
-      en: {
-        name: "Saburo Arasaka",
-        subname: "Stubborn Patriarch",
-        displayName: "Saburo Arasaka: Stubborn Patriarch",
-        rulesText:
-          "Friendly ARASAKA Units have +1 power while attacking.\n(Units steal an extra Gig for every 10 power.)",
-      },
-    },
+  "saburo-arasaka-stubborn-patriarch": {
+    canonicalSetCode: "embracingpowerretailstarterdeck",
     printings: [
       {
         id: "6ac7adce-01af-4b5b-956b-698eda0bed14",
@@ -553,16 +463,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "6ac7adce-01af-4b5b-956b-698eda0bed14",
   },
-  "embracingpowerretailstarterdeck:yorinobu-arasaka-embracing-destruction": {
-    i18n: {
-      en: {
-        name: "Yorinobu Arasaka",
-        subname: "Embracing Destruction",
-        displayName: "Yorinobu Arasaka: Embracing Destruction",
-        rulesText:
-          "The first time a friendly ARASAKA Unit attacks each turn, draw 1. Then, if you have less than 20 ☆ (Street Cred), discard 1.",
-      },
-    },
+  "yorinobu-arasaka-embracing-destruction": {
+    canonicalSetCode: "embracingpowerretailstarterdeck",
     printings: [
       {
         id: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
@@ -617,14 +519,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
   },
-  "welcometonightcityretail:6th-street-recruits": {
-    i18n: {
-      en: {
-        name: "6th Street Recruits",
-        displayName: "6th Street Recruits",
-        rulesText: "When a friendly Unit steals a d6, increase a Gig by up to 6.",
-      },
-    },
+  "6th-street-recruits": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "756f3e53-9ff3-4c01-9f33-bb27a1cd5957",
@@ -645,16 +541,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "756f3e53-9ff3-4c01-9f33-bb27a1cd5957",
   },
-  "welcometonightcityretail:adam-smasher-ender-of-legends": {
-    i18n: {
-      en: {
-        name: "Adam Smasher",
-        subname: "Ender of Legends",
-        displayName: "Adam Smasher: Ender of Legends",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Play} Defeat a rival Unit.",
-      },
-    },
+  "adam-smasher-ender-of-legends": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "a9c1137e-2e33-4293-9dcc-9351c9a0bbee",
@@ -699,15 +587,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a9c1137e-2e33-4293-9dcc-9351c9a0bbee",
   },
-  "welcometonightcityretail:adam-smasher-metal-over-meat": {
-    i18n: {
-      en: {
-        name: "Adam Smasher",
-        subname: "Metal Over Meat",
-        displayName: "Adam Smasher: Metal Over Meat",
-        rulesText: "{Play} Defeat all other Units.",
-      },
-    },
+  "adam-smasher-metal-over-meat": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d23e322f-ad60-431d-b33e-1e8a813248ff",
@@ -760,15 +641,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d23e322f-ad60-431d-b33e-1e8a813248ff",
   },
-  "welcometonightcityretail:adrenaline-converter": {
-    i18n: {
-      en: {
-        name: "Adrenaline Converter",
-        displayName: "Adrenaline Converter",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nIf a Rival controls at least 2 more Gigs than you, this Unit has {Adrenaline}. (This Unit can attack the turn it's played.)",
-      },
-    },
+  "adrenaline-converter": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
@@ -789,15 +663,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
   },
-  "welcometonightcityretail:afterparty-at-lizzie-s": {
-    i18n: {
-      en: {
-        name: "Afterparty at Lizzie's",
-        displayName: "Afterparty at Lizzie's",
-        rulesText:
-          "Adjust a Gig by up to 1. If you control 2 or more Gigs with different values, draw 1.",
-      },
-    },
+  "afterparty-at-lizzie-s": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d53925ee-df55-4b71-8ca0-13ec3ede2076",
@@ -859,14 +726,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d53925ee-df55-4b71-8ca0-13ec3ede2076",
   },
-  "welcometonightcityretail:all-is-lost": {
-    i18n: {
-      en: {
-        name: "All is Lost",
-        displayName: "All is Lost",
-        rulesText: "Trash 3. Add a Unit from among them to your hand.",
-      },
-    },
+  "all-is-lost": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
@@ -887,16 +748,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
   },
-  "welcometonightcityretail:alt-cunningham-mother-of-daemons": {
-    i18n: {
-      en: {
-        name: "Alt Cunningham",
-        subname: "Mother of Daemons",
-        displayName: "Alt Cunningham: Mother of Daemons",
-        rulesText:
-          "When a friendly equipped Unit or Legend is spent, draw 1.\nWhen a rival Unit would steal a Gig, you may discard 1 with cost equal to that Gig's value. If you do, the Gig isn't stolen.",
-      },
-    },
+  "alt-cunningham-mother-of-daemons": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e782dd02-a136-4bf8-b04b-328c65b84f19",
@@ -925,16 +778,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e782dd02-a136-4bf8-b04b-328c65b84f19",
   },
-  "welcometonightcityretail:alt-cunningham-soulkiller-architect": {
-    i18n: {
-      en: {
-        name: "Alt Cunningham",
-        subname: "Soulkiller Architect",
-        displayName: "Alt Cunningham: Soulkiller Architect",
-        rulesText:
-          "1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
-      },
-    },
+  "alt-cunningham-soulkiller-architect": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
@@ -987,14 +832,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
   },
-  "welcometonightcityretail:animals-wrecker": {
-    i18n: {
-      en: {
-        name: "Animals Wrecker",
-        displayName: "Animals Wrecker",
-        rulesText: "[Flavour Text] Takes a lot of juice to break bones like they do.",
-      },
-    },
+  "animals-wrecker": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7514dd38-6e2d-43dd-9715-6b3a32615382",
@@ -1015,15 +854,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7514dd38-6e2d-43dd-9715-6b3a32615382",
   },
-  "welcometonightcityretail:appetite-for-destruction": {
-    i18n: {
-      en: {
-        name: "Appetite for Destruction",
-        displayName: "Appetite for Destruction",
-        rulesText:
-          "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
-      },
-    },
+  "appetite-for-destruction": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "f274789d-69f2-4acf-a511-f728c67d1a13",
@@ -1044,15 +876,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f274789d-69f2-4acf-a511-f728c67d1a13",
   },
-  "welcometonightcityretail:arasaka-emergency-radioport": {
-    i18n: {
-      en: {
-        name: "Arasaka Emergency Radioport",
-        displayName: "Arasaka Emergency Radioport",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, you may look at a friendly face-down Legend. If that Legend is ARASAKA or has {Go Solo}, you may Call it for free. (You may only Call a Legend once per turn.)",
-      },
-    },
+  "arasaka-emergency-radioport": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
@@ -1091,15 +916,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
   },
-  "welcometonightcityretail:augmented-negotiators": {
-    i18n: {
-      en: {
-        name: "Augmented Negotiators",
-        displayName: "Augmented Negotiators",
-        rulesText:
-          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nWhen this Unit uses {Blocker}, a Rival discards 1.",
-      },
-    },
+  "augmented-negotiators": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
@@ -1120,15 +938,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
   },
-  "welcometonightcityretail:bonnie-and-clyde": {
-    i18n: {
-      en: {
-        name: "Bonnie and Clyde",
-        displayName: "Bonnie and Clyde",
-        rulesText:
-          "Defeat a rival Unit with power 4 or less. You may defeat 2 instead if a Rival controls at least 2 Gigs more than you.",
-      },
-    },
+  "bonnie-and-clyde": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
@@ -1149,15 +960,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
   },
-  "welcometonightcityretail:bootleg-black-sapphire-show": {
-    i18n: {
-      en: {
-        name: "Bootleg Black Sapphire Show",
-        displayName: "Bootleg Black Sapphire Show",
-        rulesText:
-          "Sell the top card of your deck.\nIf you control a Gig with an even value and a Gig with an odd value, draw 2.",
-      },
-    },
+  "bootleg-black-sapphire-show": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
@@ -1194,16 +998,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
   },
-  "welcometonightcityretail:caliber-totentanz-s-top-dog": {
-    i18n: {
-      en: {
-        name: "Caliber",
-        subname: "Totentanz's Top Dog",
-        displayName: "Caliber: Totentanz's Top Dog",
-        rulesText:
-          "{Play} Defeat a rival Unit with cost 2 or less.\n{Defeated} A Rival discards 1. If the card's cost equals the value of a friendly Gig, that Rival discards 1 more.",
-      },
-    },
+  "caliber-totentanz-s-top-dog": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "4b5dc479-0db1-46dd-859f-e7dc34d50f03",
@@ -1224,15 +1020,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "4b5dc479-0db1-46dd-859f-e7dc34d50f03",
   },
-  "welcometonightcityretail:carnage-at-the-colosseum": {
-    i18n: {
-      en: {
-        name: "Carnage at the Colosseum",
-        displayName: "Carnage at the Colosseum",
-        rulesText:
-          "Play this Program for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.\nDefeat a rival Unit with less power than a friendly Unit.",
-      },
-    },
+  "carnage-at-the-colosseum": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
@@ -1253,15 +1042,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
   },
-  "welcometonightcityretail:chrome-fang": {
-    i18n: {
-      en: {
-        name: "Chrome Fang",
-        displayName: "Chrome Fang",
-        rulesText:
-          "{Play} Until your next turn, rival Units can't steal friendly Gigs with value higher than their power.",
-      },
-    },
+  "chrome-fang": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
@@ -1300,15 +1082,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
   },
-  "welcometonightcityretail:chrome-reverie": {
-    i18n: {
-      en: {
-        name: "Chrome Reverie",
-        displayName: "Chrome Reverie",
-        rulesText:
-          "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
-      },
-    },
+  "chrome-reverie": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3f0319b8-e315-4e71-85b7-147a5b8ceba5",
@@ -1329,15 +1104,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3f0319b8-e315-4e71-85b7-147a5b8ceba5",
   },
-  "welcometonightcityretail:corpo-security": {
-    i18n: {
-      en: {
-        name: "Corpo Security",
-        displayName: "Corpo Security",
-        rulesText:
-          "This Unit can't attack.\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-      },
-    },
+  "corpo-security": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "80dcc139-d31d-4b89-86ff-cdbdd2664953",
@@ -1400,14 +1168,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "80dcc139-d31d-4b89-86ff-cdbdd2664953",
   },
-  "welcometonightcityretail:corporate-surveillance": {
-    i18n: {
-      en: {
-        name: "Corporate Surveillance",
-        displayName: "Corporate Surveillance",
-        rulesText: "Spend a rival Unit with cost 4 or less.",
-      },
-    },
+  "corporate-surveillance": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d3dc7194-a545-4588-9702-b094c27ce359",
@@ -1454,15 +1216,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d3dc7194-a545-4588-9702-b094c27ce359",
   },
-  "welcometonightcityretail:cyberpsychosis": {
-    i18n: {
-      en: {
-        name: "Cyberpsychosis",
-        displayName: "Cyberpsychosis",
-        rulesText:
-          "{Quick} Give an equipped Unit +3 power this turn for each of its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
-      },
-    },
+  cyberpsychosis: {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
@@ -1499,15 +1254,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
   },
-  "welcometonightcityretail:deadman-transmitter": {
-    i18n: {
-      en: {
-        name: "Deadman Transmitter",
-        displayName: "Deadman Transmitter",
-        rulesText:
-          '(Equip to a friendly Unit or face-up Legend.)\nIf this Unit would be defeated, defeat its "DEADMAN TRANSMITTER" instead.',
-      },
-    },
+  "deadman-transmitter": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "32957075-42ff-47e3-8252-e78877ef61f7",
@@ -1528,14 +1276,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "32957075-42ff-47e3-8252-e78877ef61f7",
   },
-  "welcometonightcityretail:delamain-cab": {
-    i18n: {
-      en: {
-        name: "Delamain Cab",
-        displayName: "Delamain Cab",
-        rulesText: "At the end of your turn, if this Unit stole a Gig this turn, ready 1 Eddie.",
-      },
-    },
+  "delamain-cab": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
@@ -1597,15 +1339,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
   },
-  "welcometonightcityretail:delamain-rideshare-ai": {
-    i18n: {
-      en: {
-        name: "Delamain",
-        subname: "Rideshare AI",
-        displayName: "Delamain: Rideshare AI",
-        rulesText: "{Play} Draw 2.\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "delamain-rideshare-ai": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
@@ -1626,14 +1361,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
   },
-  "welcometonightcityretail:detonate": {
-    i18n: {
-      en: {
-        name: "Detonate",
-        displayName: "Detonate",
-        rulesText: "{Quick} Defeat a rival Gear with power 2 or less.",
-      },
-    },
+  detonate: {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
@@ -1654,16 +1383,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
   },
-  "welcometonightcityretail:dexter-deshawn-off-the-grid": {
-    i18n: {
-      en: {
-        name: "Dexter DeShawn",
-        subname: "Off the Grid",
-        displayName: "Dexter DeShawn: Off the Grid",
-        rulesText:
-          "{Call} Choose one effect.\nGive a friendly Unit +2 power this turn. // Draw 1.\n{Spend}: Increase a Gig by up to 2.",
-      },
-    },
+  "dexter-deshawn-off-the-grid": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
@@ -1724,14 +1445,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
   },
-  "welcometonightcityretail:don-t-fear-the-reaper": {
-    i18n: {
-      en: {
-        name: "(Don't Fear) The Reaper",
-        displayName: "(Don't Fear) The Reaper",
-        rulesText: "Spend all rival Units. Then, defeat a spent Unit.",
-      },
-    },
+  "don-t-fear-the-reaper": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e96d3167-5115-4c82-9b35-546cba0aaead",
@@ -1768,16 +1483,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e96d3167-5115-4c82-9b35-546cba0aaead",
   },
-  "welcometonightcityretail:dum-dum-maelstrom-triggerman": {
-    i18n: {
-      en: {
-        name: "Dum Dum",
-        subname: "Maelstrom Triggerman",
-        displayName: "Dum Dum: Maelstrom Triggerman",
-        rulesText:
-          "{Call} You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.\n{Quick} 1 €$, {Spend} Give a friendly Unit +1 power this turn for each of its equipped Gear.",
-      },
-    },
+  "dum-dum-maelstrom-triggerman": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "aaac486c-dbfd-4137-b373-24a2df29522c",
@@ -1814,16 +1521,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "aaac486c-dbfd-4137-b373-24a2df29522c",
   },
-  "welcometonightcityretail:dying-night-v-s-pistol": {
-    i18n: {
-      en: {
-        name: "Dying Night",
-        subname: "V's Pistol",
-        displayName: "Dying Night: V's Pistol",
-        rulesText:
-          '(Equip to a friendly Unit or face-up Legend.)\n{Attack} Decrease a Gig by up to 2. At the end of your turn, if this Unit is named "V", ready 2 Eddies.',
-      },
-    },
+  "dying-night-v-s-pistol": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2b1b6268-193f-4b9e-a63c-0cbc200d6db7",
@@ -1885,16 +1584,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2b1b6268-193f-4b9e-a63c-0cbc200d6db7",
   },
-  "welcometonightcityretail:el-sombreron-la-venganza-lenta": {
-    i18n: {
-      en: {
-        name: "El Sombrerón",
-        subname: "La Venganza Lenta",
-        displayName: "El Sombrerón: La Venganza Lenta",
-        rulesText:
-          "{Attack} You may pay 2 €$. If you do, this Unit gains power equal to a friendly max Gig this turn.",
-      },
-    },
+  "el-sombreron-la-venganza-lenta": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "94180516-28a6-4f5c-b79e-de38a95ed47b",
@@ -1915,14 +1606,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "94180516-28a6-4f5c-b79e-de38a95ed47b",
   },
-  "welcometonightcityretail:emergency-atlus": {
-    i18n: {
-      en: {
-        name: "Emergency Atlus",
-        displayName: "Emergency Atlus",
-        rulesText: '"Grab the policyholder, leave the rest for the city meatwagon."',
-      },
-    },
+  "emergency-atlus": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "9c18b6ae-765d-4244-8de4-e382c4767de1",
@@ -1969,16 +1654,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "9c18b6ae-765d-4244-8de4-e382c4767de1",
   },
-  "welcometonightcityretail:evelyn-parker-beautiful-enigma": {
-    i18n: {
-      en: {
-        name: "Evelyn Parker",
-        subname: "Beautiful Enigma",
-        displayName: "Evelyn Parker: Beautiful Enigma",
-        rulesText:
-          "When a friendly CORPO or GANGER Unit steals 1 or more Gigs, ready 1 Eddie.\n1 €$, {Spend} A rival Unit must attack next turn if it can.",
-      },
-    },
+  "evelyn-parker-beautiful-enigma": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "ba766c1d-d929-4a22-bc91-7400784536c8",
@@ -2023,16 +1700,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "ba766c1d-d929-4a22-bc91-7400784536c8",
   },
-  "welcometonightcityretail:evelyn-parker-scheming-siren": {
-    i18n: {
-      en: {
-        name: "Evelyn Parker",
-        subname: "Scheming Siren",
-        displayName: "Evelyn Parker: Scheming Siren",
-        rulesText:
-          "{Attack} Draw 1. Then, if you have more ☆ (Street Cred) than a Rival, discard 1.\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "evelyn-parker-scheming-siren": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7d174619-2183-4058-a89a-082c6b7b5a5c",
@@ -2078,14 +1747,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7d174619-2183-4058-a89a-082c6b7b5a5c",
   },
-  "welcometonightcityretail:field-operator": {
-    i18n: {
-      en: {
-        name: "Field Operator",
-        displayName: "Field Operator",
-        rulesText: "{Play} If your ☆ (Street Cred) is an even number, draw 1.",
-      },
-    },
+  "field-operator": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "876dfa5c-6df4-4930-b284-f2c466e6b90c",
@@ -2140,14 +1803,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "876dfa5c-6df4-4930-b284-f2c466e6b90c",
   },
-  "welcometonightcityretail:floor-it": {
-    i18n: {
-      en: {
-        name: "Floor It",
-        displayName: "Floor It",
-        rulesText: "{Quick} Give a rival Unit -1 power this turn. Draw 1.",
-      },
-    },
+  "floor-it": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "91f9d30c-f74d-4be4-8505-52f05d309c92",
@@ -2209,15 +1866,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "91f9d30c-f74d-4be4-8505-52f05d309c92",
   },
-  "welcometonightcityretail:fool-on-the-hill": {
-    i18n: {
-      en: {
-        name: "Fool on the Hill",
-        displayName: "Fool on the Hill",
-        rulesText:
-          "Reveal the top 2 cards of your deck. A Rival chooses whether you add them to your hand or trash them. If you trash them, draw 2.",
-      },
-    },
+  "fool-on-the-hill": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7751b719-978b-44b1-a82f-b2881d3a416e",
@@ -2238,15 +1888,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7751b719-978b-44b1-a82f-b2881d3a416e",
   },
-  "welcometonightcityretail:gilded-maton": {
-    i18n: {
-      en: {
-        name: "Gilded Matón",
-        displayName: "Gilded Matón",
-        rulesText:
-          "{Play} You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
-      },
-    },
+  "gilded-maton": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "846b55b4-5e12-44b6-a204-53bd8c862888",
@@ -2267,15 +1910,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "846b55b4-5e12-44b6-a204-53bd8c862888",
   },
-  "welcometonightcityretail:gorilla-arms": {
-    i18n: {
-      en: {
-        name: "Gorilla Arms",
-        displayName: "Gorilla Arms",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nThe first time this Unit steals 1 or more Gigs each turn, steal a rival Gig with a value not shared by a friendly Gig.",
-      },
-    },
+  "gorilla-arms": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e1959b9e-d32d-43be-94c3-a595809e0c28",
@@ -2296,16 +1932,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e1959b9e-d32d-43be-94c3-a595809e0c28",
   },
-  "welcometonightcityretail:goro-takemura-vengeful-bodyguard": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Vengeful Bodyguard",
-        displayName: "Goro Takemura: Vengeful Bodyguard",
-        rulesText:
-          "{Quick} 1 €$, {Spend} Give a friendly Unit with cost 4 or less {Blocker} this turn. If you control a value-pair of Gigs, also give it +1 power this turn.\nWhen a friendly Unit uses {Blocker}, you may discard 1. If you do, draw 1.",
-      },
-    },
+  "goro-takemura-vengeful-bodyguard": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
@@ -2342,15 +1970,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
   },
-  "welcometonightcityretail:gunpoint-diplomacy": {
-    i18n: {
-      en: {
-        name: "Gunpoint Diplomacy",
-        displayName: "Gunpoint Diplomacy",
-        rulesText:
-          "Give a friendly Unit these effects. If you have less ☆ (Street Cred) than a Rival, they instead choose one effect for you.\nThe next time this Unit attacks this turn, it may attack ready Units. // Give this Unit +3 power this turn.",
-      },
-    },
+  "gunpoint-diplomacy": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
@@ -2371,14 +1992,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
   },
-  "welcometonightcityretail:hacked-corpo": {
-    i18n: {
-      en: {
-        name: "Hacked Corpo",
-        displayName: "Hacked Corpo",
-        rulesText: "{Play} Trash 3. Add a Program from among them to your hand.",
-      },
-    },
+  "hacked-corpo": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
@@ -2399,16 +2014,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
   },
-  "welcometonightcityretail:hanako-arasaka-daughter-of-the-emperor": {
-    i18n: {
-      en: {
-        name: "Hanako Arasaka",
-        subname: "Daughter of the Emperor",
-        displayName: "Hanako Arasaka: Daughter of the Emperor",
-        rulesText:
-          "{Spend} Swap a friendly Gig with a rival Gig.\nAt the start of your turn, draw 1 for each friendly value-pair of Gigs.",
-      },
-    },
+  "hanako-arasaka-daughter-of-the-emperor": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
@@ -2437,16 +2044,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
   },
-  "welcometonightcityretail:hanako-arasaka-in-a-gilded-cage": {
-    i18n: {
-      en: {
-        name: "Hanako Arasaka",
-        subname: "In a Gilded Cage",
-        displayName: "Hanako Arasaka: In a Gilded Cage",
-        rulesText:
-          "{Play} Search the top 4 cards of your deck. Reveal any number of cards with cost equal to any friendly Gig values and add them to your hand. Bottom-deck the rest.",
-      },
-    },
+  "hanako-arasaka-in-a-gilded-cage": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7386d22f-1065-4043-a6c4-9cee6256fe8a",
@@ -2475,15 +2074,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7386d22f-1065-4043-a6c4-9cee6256fe8a",
   },
-  "welcometonightcityretail:heywood-ripperdoc": {
-    i18n: {
-      en: {
-        name: "Heywood Ripperdoc",
-        displayName: "Heywood Ripperdoc",
-        rulesText:
-          "{Play} You may defeat a Gear. If its cost equals the value of a friendly Gig, draw 1.",
-      },
-    },
+  "heywood-ripperdoc": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
@@ -2521,14 +2113,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
   },
-  "welcometonightcityretail:industrial-assembly": {
-    i18n: {
-      en: {
-        name: "Industrial Assembly",
-        displayName: "Industrial Assembly",
-        rulesText: "Increase a Gig by up to 4. If you control a Gig with 8+ value, draw 1.",
-      },
-    },
+  "industrial-assembly": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "9103b5db-bf95-4385-8941-308cb0353c9a",
@@ -2591,14 +2177,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "9103b5db-bf95-4385-8941-308cb0353c9a",
   },
-  "welcometonightcityretail:jacked-in-voodoo-boy": {
-    i18n: {
-      en: {
-        name: "Jacked-In Voodoo Boy",
-        displayName: "Jacked-In Voodoo Boy",
-        rulesText: "This Unit can't attack unless you played a Program this turn.",
-      },
-    },
+  "jacked-in-voodoo-boy": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
@@ -2619,16 +2199,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
   },
-  "welcometonightcityretail:jackie-welles-mama-s-favorite": {
-    i18n: {
-      en: {
-        name: "Jackie Welles",
-        subname: "Mama's Favorite",
-        displayName: "Jackie Welles: Mama's Favorite",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nIf a friendly Unit would be defeated, you may spend 1 €$ to defeat this Legend instead. (Remove it from the game.)",
-      },
-    },
+  "jackie-welles-mama-s-favorite": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
@@ -2681,16 +2253,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
   },
-  "welcometonightcityretail:jackie-welles-ride-or-die-choom": {
-    i18n: {
-      en: {
-        name: "Jackie Welles",
-        subname: "Ride or Die Choom",
-        displayName: "Jackie Welles: Ride or Die Choom",
-        rulesText:
-          "{Attack} Give this Unit +2 power this turn for each friendly Gig with an even value.\n{Defeated} Draw 1 for each friendly Gig with an odd value.",
-      },
-    },
+  "jackie-welles-ride-or-die-choom": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "12d44604-ad7b-4e82-b517-9edb0be44427",
@@ -2727,15 +2291,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "12d44604-ad7b-4e82-b517-9edb0be44427",
   },
-  "welcometonightcityretail:japantown-jonin": {
-    i18n: {
-      en: {
-        name: "Japantown Jonin",
-        displayName: "Japantown Jonin",
-        rulesText:
-          "{Play} Give a friendly Unit +2 power this turn.\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "japantown-jonin": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
@@ -2756,16 +2313,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
   },
-  "welcometonightcityretail:johnny-silverhand-never-stop-fighting": {
-    i18n: {
-      en: {
-        name: "Johnny Silverhand",
-        subname: "Never Stop Fighting",
-        displayName: "Johnny Silverhand: Never Stop Fighting",
-        rulesText:
-          "The first time this Unit wins a fight each turn, ready it.\nThis Unit wins all fights against CORPO Units.",
-      },
-    },
+  "johnny-silverhand-never-stop-fighting": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "14ab188f-2ce3-4790-8823-5a352371ff1f",
@@ -2794,16 +2343,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "14ab188f-2ce3-4790-8823-5a352371ff1f",
   },
-  "welcometonightcityretail:johnny-silverhand-rocking-renegade": {
-    i18n: {
-      en: {
-        name: "Johnny Silverhand",
-        subname: "Rocking Renegade",
-        displayName: "Johnny Silverhand: Rocking Renegade",
-        rulesText:
-          "2 €$, {Spend} A friendly Unit can attack spent rival Units the turn it's played. If it's a ROCKER Unit, also give it +2 power this turn. This effect costs -1 €$ for each friendly Gig with 8+ value.",
-      },
-    },
+  "johnny-silverhand-rocking-renegade": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
@@ -2832,16 +2373,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
   },
-  "welcometonightcityretail:judy-alvarez-braindance-maestro": {
-    i18n: {
-      en: {
-        name: "Judy Álvarez",
-        subname: "Braindance Maestro",
-        displayName: "Judy Álvarez: Braindance Maestro",
-        rulesText:
-          "When you play a BRAINDANCE Program, give a friendly Unit +1 power this turn.\n{Spend} Trash the top card of your deck. If it's a Program, you may add it to your hand.",
-      },
-    },
+  "judy-alvarez-braindance-maestro": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
@@ -2910,16 +2443,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
   },
-  "welcometonightcityretail:judy-alvarez-nothing-to-doubt": {
-    i18n: {
-      en: {
-        name: "Judy Álvarez",
-        subname: "Nothing to Doubt",
-        displayName: "Judy Álvarez: Nothing to Doubt",
-        rulesText:
-          "1 €$, {Spend} Reveal the top card of your deck. You may play it for free. Otherwise, add it to your hand.",
-      },
-    },
+  "judy-alvarez-nothing-to-doubt": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "dcfe8370-9abf-4395-b50b-efea505609ba",
@@ -2948,16 +2473,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "dcfe8370-9abf-4395-b50b-efea505609ba",
   },
-  "welcometonightcityretail:kerry-eurodyne-axe-attitude-audience": {
-    i18n: {
-      en: {
-        name: "Kerry Eurodyne",
-        subname: "Axe, Attitude, Audience",
-        displayName: "Kerry Eurodyne: Axe, Attitude, Audience",
-        rulesText:
-          "When you roll in a Gig from your fixer area, you may ignore the result and reroll it once.\nWhen you roll a min or max value on a Gig, draw 1. If it's a d20, draw 3 instead.",
-      },
-    },
+  "kerry-eurodyne-axe-attitude-audience": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e54e06c0-3f9c-412a-8dea-942eebecd687",
@@ -2986,15 +2503,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
   },
-  "welcometonightcityretail:kerry-eurodyne-the-last-rockerboy": {
-    i18n: {
-      en: {
-        name: "Kerry Eurodyne",
-        subname: "The Last Rockerboy",
-        displayName: "Kerry Eurodyne: The Last Rockerboy",
-        rulesText: "{Spend} If you control a Gig with 8+ value, draw 2.",
-      },
-    },
+  "kerry-eurodyne-the-last-rockerboy": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "c26c7db6-f540-4073-ab33-b09335631764",
@@ -3031,15 +2541,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "c26c7db6-f540-4073-ab33-b09335631764",
   },
-  "welcometonightcityretail:kiroshi-optics": {
-    i18n: {
-      en: {
-        name: "Kiroshi Optics",
-        displayName: "Kiroshi Optics",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\n{Attack} Look at a friendly face-down Legend. (Don't reveal it.)",
-      },
-    },
+  "kiroshi-optics": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "ec3368a9-79f1-4dfc-9cf7-1cb464ec1c88",
@@ -3085,16 +2588,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "ec3368a9-79f1-4dfc-9cf7-1cb464ec1c88",
   },
-  "welcometonightcityretail:la-llorona-ghost-of-the-past": {
-    i18n: {
-      en: {
-        name: "La Llorona",
-        subname: "Ghost of the Past",
-        displayName: "La Llorona: Ghost of the Past",
-        rulesText:
-          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nWhen this Unit uses {Blocker}, increase a Gig by up to 3.",
-      },
-    },
+  "la-llorona-ghost-of-the-past": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e3d1d8a0-1d53-4c85-84ca-66439fd3639a",
@@ -3115,14 +2610,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e3d1d8a0-1d53-4c85-84ca-66439fd3639a",
   },
-  "welcometonightcityretail:les-elemens": {
-    i18n: {
-      en: {
-        name: "Les Élémens",
-        displayName: "Les Élémens",
-        rulesText: "Bottom-deck a Rival's lowest-power Unit. (If there are multiple, choose 1.)",
-      },
-    },
+  "les-elemens": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
@@ -3143,14 +2632,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
   },
-  "welcometonightcityretail:live-with-the-aftermath": {
-    i18n: {
-      en: {
-        name: "Live with the Aftermath",
-        displayName: "Live with the Aftermath",
-        rulesText: "Each player defeats one of their Units.",
-      },
-    },
+  "live-with-the-aftermath": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "f931c82e-a382-4f60-808c-5910ac9850be",
@@ -3171,16 +2654,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f931c82e-a382-4f60-808c-5910ac9850be",
   },
-  "welcometonightcityretail:lizzy-wizzy-delicate-weapon": {
-    i18n: {
-      en: {
-        name: "Lizzy Wizzy",
-        subname: "Delicate Weapon",
-        displayName: "Lizzy Wizzy: Delicate Weapon",
-        rulesText:
-          "{Play} You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.\n{Blocker}",
-      },
-    },
+  "lizzy-wizzy-delicate-weapon": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7072a2d2-ec4f-4575-909e-15a107dfef79",
@@ -3201,14 +2676,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7072a2d2-ec4f-4575-909e-15a107dfef79",
   },
-  "welcometonightcityretail:maelstrom-goons": {
-    i18n: {
-      en: {
-        name: "Maelstrom Goons",
-        displayName: "Maelstrom Goons",
-        rulesText: "When this Unit steals a Gig, if it's equipped, a Rival discards 1.",
-      },
-    },
+  "maelstrom-goons": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e14bdd12-1214-4104-bfdd-ae023c21527c",
@@ -3229,15 +2698,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e14bdd12-1214-4104-bfdd-ae023c21527c",
   },
-  "welcometonightcityretail:maelstrom-zealots": {
-    i18n: {
-      en: {
-        name: "Maelstrom Zealots",
-        displayName: "Maelstrom Zealots",
-        rulesText:
-          "When this Unit loses a fight, defeat the opposing rival Unit.\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "maelstrom-zealots": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "43e5568f-a609-4eff-8502-e81ba9134d2c",
@@ -3258,16 +2720,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "43e5568f-a609-4eff-8502-e81ba9134d2c",
   },
-  "welcometonightcityretail:maman-brigitte-spirit-of-death": {
-    i18n: {
-      en: {
-        name: "Maman Brigitte",
-        subname: "Spirit of Death",
-        displayName: "Maman Brigitte: Spirit of Death",
-        rulesText:
-          "{Play} You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
-      },
-    },
+  "maman-brigitte-spirit-of-death": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
@@ -3312,15 +2766,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
   },
-  "welcometonightcityretail:mandibular-upgrade": {
-    i18n: {
-      en: {
-        name: "Mandibular Upgrade",
-        displayName: "Mandibular Upgrade",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-      },
-    },
+  "mandibular-upgrade": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "219b7a29-0f8b-4750-bc46-0f39eec6721b",
@@ -3382,14 +2829,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "219b7a29-0f8b-4750-bc46-0f39eec6721b",
   },
-  "welcometonightcityretail:mantis-blades": {
-    i18n: {
-      en: {
-        name: "Mantis Blades",
-        displayName: "Mantis Blades",
-        rulesText: '(Equip to a friendly Unit or face-up Legend.)\n"One cut, one kill."',
-      },
-    },
+  "mantis-blades": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "7ffa8ba4-f187-4ba0-a719-fa8ebf45a03b",
@@ -3444,14 +2885,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7ffa8ba4-f187-4ba0-a719-fa8ebf45a03b",
   },
-  "welcometonightcityretail:maxtac-av": {
-    i18n: {
-      en: {
-        name: "MaxTac AV",
-        displayName: "MaxTac AV",
-        rulesText: "{Play} You may swap a friendly Gig with a rival Gig.",
-      },
-    },
+  "maxtac-av": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "f1fa787d-e936-42a8-b42f-14999e722793",
@@ -3490,14 +2925,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f1fa787d-e936-42a8-b42f-14999e722793",
   },
-  "welcometonightcityretail:maxtac-heavy": {
-    i18n: {
-      en: {
-        name: "MaxTac Heavy",
-        displayName: "MaxTac Heavy",
-        rulesText: "Play this Unit for -1 €$ for each of a Rival’s Units, to a minimum of 1 €$.",
-      },
-    },
+  "maxtac-heavy": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
@@ -3518,15 +2947,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
   },
-  "welcometonightcityretail:maxtac-squadron": {
-    i18n: {
-      en: {
-        name: "MaxTac Squadron",
-        displayName: "MaxTac Squadron",
-        rulesText:
-          "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
-      },
-    },
+  "maxtac-squadron": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "22b276f4-7cf6-4b14-a220-8368a0839287",
@@ -3563,14 +2985,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "22b276f4-7cf6-4b14-a220-8368a0839287",
   },
-  "welcometonightcityretail:maxtac-suppression-team": {
-    i18n: {
-      en: {
-        name: "MaxTac Suppression Team",
-        displayName: "MaxTac Suppression Team",
-        rulesText: "Rival Units can't attack the turn they're played.",
-      },
-    },
+  "maxtac-suppression-team": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
@@ -3591,15 +3007,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
   },
-  "welcometonightcityretail:memory-relapse": {
-    i18n: {
-      en: {
-        name: "Memory Relapse",
-        displayName: "Memory Relapse",
-        rulesText:
-          "Spend a rival Unit. It can't ready until your next turn. If your ☆ (Street Cred) is an even number, draw 1.",
-      },
-    },
+  "memory-relapse": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
@@ -3620,16 +3029,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
   },
-  "welcometonightcityretail:meredith-stout-stone-cold-corpo": {
-    i18n: {
-      en: {
-        name: "Meredith Stout",
-        subname: "Stone Cold Corpo",
-        displayName: "Meredith Stout: Stone Cold Corpo",
-        rulesText:
-          "{Blocker}\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
-      },
-    },
+  "meredith-stout-stone-cold-corpo": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5939771d-bdcc-4b42-aea4-376311189e93",
@@ -3650,16 +3051,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5939771d-bdcc-4b42-aea4-376311189e93",
   },
-  "welcometonightcityretail:misty-olszewski-mender-of-broken-spirits": {
-    i18n: {
-      en: {
-        name: "Misty Olszewski",
-        subname: "Mender of Broken Spirits",
-        displayName: "Misty Olszewski: Mender of Broken Spirits",
-        rulesText:
-          "This Unit can't attack.\nAt the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it.\n(Card types include Unit, Gear, and Program.)",
-      },
-    },
+  "misty-olszewski-mender-of-broken-spirits": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "17252514-02ba-4d0d-a9cc-3590cee528af",
@@ -3688,15 +3081,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "17252514-02ba-4d0d-a9cc-3590cee528af",
   },
-  "welcometonightcityretail:modded-kusanagi": {
-    i18n: {
-      en: {
-        name: "Modded Kusanagi",
-        displayName: "Modded Kusanagi",
-        rulesText:
-          "{Adrenaline} (This Unit can attack the turn it's played.)\nAt the end of your turn, return this Unit to its owner's hand.",
-      },
-    },
+  "modded-kusanagi": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "50e8101a-3d0e-45ea-9444-22007f7f9cb0",
@@ -3717,15 +3103,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "50e8101a-3d0e-45ea-9444-22007f7f9cb0",
   },
-  "welcometonightcityretail:modded-muramasa": {
-    i18n: {
-      en: {
-        name: "Modded Muramasa",
-        displayName: "Modded Muramasa",
-        rulesText:
-          "At the end of your turn, if you have less ☆ (Street Cred) than a Rival, ready this Unit.",
-      },
-    },
+  "modded-muramasa": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
@@ -3746,15 +3125,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
   },
-  "welcometonightcityretail:mox-inciters": {
-    i18n: {
-      en: {
-        name: "Mox Inciters",
-        displayName: "Mox Inciters",
-        rulesText:
-          "{Play} A rival Unit must attack next turn if it can.\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-      },
-    },
+  "mox-inciters": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "354fd7d3-070d-4767-989c-5b3efbd9f30d",
@@ -3775,16 +3147,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "354fd7d3-070d-4767-989c-5b3efbd9f30d",
   },
-  "welcometonightcityretail:muamar-reyes-el-capitan": {
-    i18n: {
-      en: {
-        name: "Muamar Reyes",
-        subname: "El Capitán",
-        displayName: "Muamar Reyes: El Capitán",
-        rulesText:
-          "{Call} Choose one effect.\nA friendly Unit can't be defeated in a fight this turn. // Draw 1.\n{Spend} Adjust a Gig by 1.",
-      },
-    },
+  "muamar-reyes-el-capitan": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
@@ -3845,16 +3209,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
   },
-  "welcometonightcityretail:nadia-fighting-through-grief": {
-    i18n: {
-      en: {
-        name: "Nadia",
-        subname: "Fighting Through Grief",
-        displayName: "Nadia: Fighting Through Grief",
-        rulesText:
-          "If a Rival controls more Gigs than you, this Unit can attack their Gig area the turn it's played.",
-      },
-    },
+  "nadia-fighting-through-grief": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "4bab255b-763a-4762-b5e2-430316526b8a",
@@ -3875,15 +3231,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "4bab255b-763a-4762-b5e2-430316526b8a",
   },
-  "welcometonightcityretail:netwatch-netdriver": {
-    i18n: {
-      en: {
-        name: "NetWatch Netdriver",
-        displayName: "NetWatch Netdriver",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, draw 1.",
-      },
-    },
+  "netwatch-netdriver": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "07f119d6-8fb2-4b23-9862-818a7e941010",
@@ -3920,15 +3269,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "07f119d6-8fb2-4b23-9862-818a7e941010",
   },
-  "welcometonightcityretail:nocturne-op55-n1": {
-    i18n: {
-      en: {
-        name: "Nocturne OP55 N1",
-        displayName: "Nocturne OP55 N1",
-        rulesText:
-          "If your fixer area is empty, play this Program for 1 €$. Choose one effect.\nDraw 2. // A Unit can't attack until your next turn. // A friendly Legend may use {Go Solo} for -2 €$ this turn, to a minimum of 1 €$.",
-      },
-    },
+  "nocturne-op55-n1": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
@@ -3949,15 +3291,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
   },
-  "welcometonightcityretail:octant": {
-    i18n: {
-      en: {
-        name: "Octant",
-        displayName: "Octant",
-        rulesText:
-          "Play this Unit for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.",
-      },
-    },
+  octant: {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "089df0e6-0000-4e6c-b6d3-d9119466b624",
@@ -3978,14 +3313,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
   },
-  "welcometonightcityretail:offduty-malfini": {
-    i18n: {
-      en: {
-        name: "Offduty Malfini",
-        displayName: "Offduty Malfini",
-        rulesText: "{Play} Spend this Unit and a rival Unit.",
-      },
-    },
+  "offduty-malfini": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "fbefb447-34a3-4d53-9b23-d1bf141f8eec",
@@ -4023,14 +3352,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "fbefb447-34a3-4d53-9b23-d1bf141f8eec",
   },
-  "welcometonightcityretail:over-the-edge": {
-    i18n: {
-      en: {
-        name: "Over the Edge",
-        displayName: "Over the Edge",
-        rulesText: "Defeat a Unit with power equal to or less than the value of a friendly d20.",
-      },
-    },
+  "over-the-edge": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "f1cf4133-45ef-4de5-abfc-757de1613731",
@@ -4077,16 +3400,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f1cf4133-45ef-4de5-abfc-757de1613731",
   },
-  "welcometonightcityretail:overwatch-panam-s-gift": {
-    i18n: {
-      en: {
-        name: "Overwatch",
-        subname: "Panam's Gift",
-        displayName: "Overwatch: Panam's Gift",
-        rulesText:
-          "{Quick} 1 €$, {Spend} Discard 1. Defeat a spent rival Unit with cost equal to or less than the discarded card's cost.",
-      },
-    },
+  "overwatch-panam-s-gift": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "336131d1-3bc8-4b39-b893-5fce9be8ce7f",
@@ -4115,15 +3430,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "336131d1-3bc8-4b39-b893-5fce9be8ce7f",
   },
-  "welcometonightcityretail:pacifica-netrunner": {
-    i18n: {
-      en: {
-        name: "Pacifica Netrunner",
-        displayName: "Pacifica Netrunner",
-        rulesText:
-          "{Play} If your ☆ (Street Cred) is an even number, a rival Unit can't ready until your next turn.",
-      },
-    },
+  "pacifica-netrunner": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "b43f5006-7388-4189-81ff-343b5428305b",
@@ -4144,16 +3452,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "b43f5006-7388-4189-81ff-343b5428305b",
   },
-  "welcometonightcityretail:padre-man-of-the-cross": {
-    i18n: {
-      en: {
-        name: "Padre",
-        subname: "Man of the Cross",
-        displayName: "Padre: Man of the Cross",
-        rulesText:
-          "{Call} Choose one effect.\nSpend a rival Unit. // Draw 1.\n{Spend} Set a player's Gig to the same value as another player's Gig.",
-      },
-    },
+  "padre-man-of-the-cross": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
@@ -4182,16 +3482,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
   },
-  "welcometonightcityretail:panam-palmer-nomad-cavalry": {
-    i18n: {
-      en: {
-        name: "Panam Palmer",
-        subname: "Nomad Cavalry",
-        displayName: "Panam Palmer: Nomad Cavalry",
-        rulesText:
-          "2 €$, {Spend} Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
-      },
-    },
+  "panam-palmer-nomad-cavalry": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "6e4ee31b-82d1-421c-b658-ba3f79520365",
@@ -4228,16 +3520,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "6e4ee31b-82d1-421c-b658-ba3f79520365",
   },
-  "welcometonightcityretail:panam-palmer-strength-through-family": {
-    i18n: {
-      en: {
-        name: "Panam Palmer",
-        subname: "Strength Through Family",
-        displayName: "Panam Palmer: Strength Through Family",
-        rulesText:
-          "During your turn, you may Call a Legend for free.\n{Attack} Discard 1. If you do, draw 1 for each friendly face-up Legend.",
-      },
-    },
+  "panam-palmer-strength-through-family": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
@@ -4266,15 +3550,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
   },
-  "welcometonightcityretail:peace-offering": {
-    i18n: {
-      en: {
-        name: "Peace Offering",
-        displayName: "Peace Offering",
-        rulesText:
-          "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
-      },
-    },
+  "peace-offering": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
@@ -4311,16 +3588,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
   },
-  "welcometonightcityretail:pepe-najarro-working-doubles": {
-    i18n: {
-      en: {
-        name: "Pepe Najarro",
-        subname: "Working Doubles",
-        displayName: "Pepe Najarro: Working Doubles",
-        rulesText:
-          "{Attack} If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
-      },
-    },
+  "pepe-najarro-working-doubles": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
@@ -4341,16 +3610,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
   },
-  "welcometonightcityretail:placide-voodoo-sentinel": {
-    i18n: {
-      en: {
-        name: "Placide",
-        subname: "Voodoo Sentinel",
-        displayName: "Placide: Voodoo Sentinel",
-        rulesText:
-          "{Play} {Attack} You may discard 1 Program. If you do, bottom-deck a rival Unit.",
-      },
-    },
+  "placide-voodoo-sentinel": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "81c55c1f-362e-4ffd-8f9b-4162b298dbd5",
@@ -4371,14 +3632,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "81c55c1f-362e-4ffd-8f9b-4162b298dbd5",
   },
-  "welcometonightcityretail:psycho-squad": {
-    i18n: {
-      en: {
-        name: "Psycho Squad",
-        displayName: "Psycho Squad",
-        rulesText: "[Flavour] Their protocol stops at “shoot first.”",
-      },
-    },
+  "psycho-squad": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "d7e0e2e5-6e22-4b45-9e91-50936773e2e1",
@@ -4424,15 +3679,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d7e0e2e5-6e22-4b45-9e91-50936773e2e1",
   },
-  "welcometonightcityretail:pyramid-song": {
-    i18n: {
-      en: {
-        name: "Pyramid Song",
-        displayName: "Pyramid Song",
-        rulesText:
-          "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -5 power this turn. // Bottom-deck a rival Unit with power 0.",
-      },
-    },
+  "pyramid-song": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
@@ -4453,15 +3701,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
   },
-  "welcometonightcityretail:reboot-optics": {
-    i18n: {
-      en: {
-        name: "Reboot Optics",
-        displayName: "Reboot Optics",
-        rulesText:
-          "{Quick} The next time a rival Unit fights this turn, it doesn't defeat the opposing friendly Unit.",
-      },
-    },
+  "reboot-optics": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "fb096d3f-48eb-47c0-a065-81b39691e12f",
@@ -4507,14 +3748,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "fb096d3f-48eb-47c0-a065-81b39691e12f",
   },
-  "welcometonightcityretail:riding-nomad": {
-    i18n: {
-      en: {
-        name: "Riding Nomad",
-        displayName: "Riding Nomad",
-        rulesText: "{Adrenaline} (This Unit can attack the turn it's played.)",
-      },
-    },
+  "riding-nomad": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "1ee3ba07-86b0-4309-be55-4b4698f700b8",
@@ -4543,15 +3778,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "1ee3ba07-86b0-4309-be55-4b4698f700b8",
   },
-  "welcometonightcityretail:riot-shield": {
-    i18n: {
-      en: {
-        name: "Riot Shield",
-        displayName: "Riot Shield",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nRivals must pay +2 €$ to use {Go Solo}.",
-      },
-    },
+  "riot-shield": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "ce570725-0de7-438a-a9c8-33074a7180ba",
@@ -4572,16 +3800,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "ce570725-0de7-438a-a9c8-33074a7180ba",
   },
-  "welcometonightcityretail:rita-wheeler-no-stupid-questions": {
-    i18n: {
-      en: {
-        name: "Rita Wheeler",
-        subname: "No Stupid Questions",
-        displayName: "Rita Wheeler: No Stupid Questions",
-        rulesText:
-          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nThe first time this Unit is spent each turn, draw 1, then discard 1.",
-      },
-    },
+  "rita-wheeler-no-stupid-questions": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5d795b32-9ad8-4c94-abd4-d01e389db389",
@@ -4602,16 +3822,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
   },
-  "welcometonightcityretail:river-ward-detective-on-the-hunt": {
-    i18n: {
-      en: {
-        name: "River Ward",
-        subname: "Detective on the Hunt",
-        displayName: "River Ward: Detective on the Hunt",
-        rulesText:
-          "{Quick} {Spend} Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
-      },
-    },
+  "river-ward-detective-on-the-hunt": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
@@ -4664,14 +3876,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
   },
-  "welcometonightcityretail:rockn-rockerboy": {
-    i18n: {
-      en: {
-        name: "Rockn' Rockerboy",
-        displayName: "Rockn' Rockerboy",
-        rulesText: "[Flavor] Scream your throat raw for something. Anything.",
-      },
-    },
+  "rockn-rockerboy": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "07aaea5c-5aef-466e-956a-2e68930669c0",
@@ -4692,16 +3898,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "07aaea5c-5aef-466e-956a-2e68930669c0",
   },
-  "welcometonightcityretail:rogue-amendiares-preem-solo": {
-    i18n: {
-      en: {
-        name: "Rogue Amendiares",
-        subname: "Preem Solo",
-        displayName: "Rogue Amendiares: Preem Solo",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nWhen a friendly Legend steals a Gig, if its value is even, draw 1. If its value is odd, a Rival discards 1.",
-      },
-    },
+  "rogue-amendiares-preem-solo": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2dd7547d-5098-4082-a98b-f39a583a222f",
@@ -4738,16 +3936,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2dd7547d-5098-4082-a98b-f39a583a222f",
   },
-  "welcometonightcityretail:rogue-amendiares-queen-of-the-afterlife": {
-    i18n: {
-      en: {
-        name: "Rogue Amendiares",
-        subname: "Queen of the Afterlife",
-        displayName: "Rogue Amendiares: Queen of the Afterlife",
-        rulesText:
-          "The first time another friendly Unit steals a Gig with value less than its power each turn, ready 2 Eddies.\n{Quick} 2 €$,  {Spend} A rival Unit loses power equal to this Unit's power this turn.",
-      },
-    },
+  "rogue-amendiares-queen-of-the-afterlife": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
@@ -4776,16 +3966,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
   },
-  "welcometonightcityretail:royce-don-t-call-me-simon": {
-    i18n: {
-      en: {
-        name: "Royce",
-        subname: "Don't Call Me Simon",
-        displayName: "Royce: Don't Call Me Simon",
-        rulesText:
-          "{Play} Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
-      },
-    },
+  "royce-don-t-call-me-simon": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
@@ -4814,16 +3996,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
   },
-  "welcometonightcityretail:royce-psycho-on-the-edge": {
-    i18n: {
-      en: {
-        name: "Royce",
-        subname: "Psycho on the Edge",
-        displayName: "Royce: Psycho on the Edge",
-        rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nDuring your turn, this Legend has +2 power for each of its equipped Gear.",
-      },
-    },
+  "royce-psycho-on-the-edge": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
@@ -4876,14 +4050,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
   },
-  "welcometonightcityretail:ruthless-lowlife": {
-    i18n: {
-      en: {
-        name: "Ruthless Lowlife",
-        displayName: "Ruthless Lowlife",
-        rulesText: "This Unit can only attack rival Units. (It can't attack Gig areas.)",
-      },
-    },
+  "ruthless-lowlife": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e1b674d0-4ac7-4523-be19-809308871d49",
@@ -4922,15 +4090,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e1b674d0-4ac7-4523-be19-809308871d49",
   },
-  "welcometonightcityretail:safety-override": {
-    i18n: {
-      en: {
-        name: "Safety Override",
-        displayName: "Safety Override",
-        rulesText:
-          "{Quick} The next time a friendly Unit loses a fight this turn, defeat the opposing rival Unit.",
-      },
-    },
+  "safety-override": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5d987aa8-baed-45b2-986c-a21e04a53331",
@@ -4951,16 +4112,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5d987aa8-baed-45b2-986c-a21e04a53331",
   },
-  "welcometonightcityretail:sandayu-oda-hanako-s-guardian": {
-    i18n: {
-      en: {
-        name: "Sandayu Oda",
-        subname: "Hanako's Guardian",
-        displayName: "Sandayu Oda: Hanako's Guardian",
-        rulesText:
-          "{Play} Spend a rival Unit for each friendly value-pair of Gigs.\nThis Unit can attack rival Units the turn it's played.",
-      },
-    },
+  "sandayu-oda-hanako-s-guardian": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "f452a0ca-3204-48d5-8565-ec746f27959b",
@@ -4989,15 +4142,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "f452a0ca-3204-48d5-8565-ec746f27959b",
   },
-  "welcometonightcityretail:sandevistan": {
-    i18n: {
-      en: {
-        name: "Sandevistan",
-        displayName: "Sandevistan",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nAt the end of your turn, ready this Unit or Legend.",
-      },
-    },
+  sandevistan: {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "97de62e2-3fea-4324-8367-87d1f1d674ed",
@@ -5060,16 +4206,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "97de62e2-3fea-4324-8367-87d1f1d674ed",
   },
-  "welcometonightcityretail:sasha-yakovleva-won-t-let-you-down": {
-    i18n: {
-      en: {
-        name: "Sasha Yakovleva",
-        subname: "Won't Let You Down",
-        displayName: "Sasha Yakovleva: Won't Let You Down",
-        rulesText:
-          "{Go Solo}\n{Attack} Reveal the top card of your deck and add it to your hand. This Unit gains power equal to that card's cost this turn.\n{Defeated} A Rival discards 1.",
-      },
-    },
+  "sasha-yakovleva-won-t-let-you-down": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2647f881-5a7e-4ffb-b231-6574dc531f43",
@@ -5098,16 +4236,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2647f881-5a7e-4ffb-b231-6574dc531f43",
   },
-  "welcometonightcityretail:satori-sword-of-saburo": {
-    i18n: {
-      en: {
-        name: "Satori",
-        subname: "Sword of Saburo",
-        displayName: "Satori: Sword of Saburo",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit wins a fight against a rival Unit, draw 1.",
-      },
-    },
+  "satori-sword-of-saburo": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "11a8fed4-5401-4cfc-901b-ab9b5b94d0ab",
@@ -5170,16 +4300,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "11a8fed4-5401-4cfc-901b-ab9b5b94d0ab",
   },
-  "welcometonightcityretail:saul-bright-stormrider": {
-    i18n: {
-      en: {
-        name: "Saul Bright",
-        subname: "Stormrider",
-        displayName: "Saul Bright: Stormrider",
-        rulesText:
-          "Other friendly Units have +2 power while attacking.\nAt the end of your turn, ready up to 3 friendly Units.",
-      },
-    },
+  "saul-bright-stormrider": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "60e476b4-51ab-4b10-8861-a8362b4232d7",
@@ -5200,15 +4322,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "60e476b4-51ab-4b10-8861-a8362b4232d7",
   },
-  "welcometonightcityretail:screw-lovelorn-fool": {
-    i18n: {
-      en: {
-        name: "Screw",
-        subname: "Lovelorn Fool",
-        displayName: "Screw: Lovelorn Fool",
-        rulesText: "{Defeated} Add another Unit from your trash to your hand.",
-      },
-    },
+  "screw-lovelorn-fool": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "a7117b0f-74ab-44b5-87fb-de267d0f2164",
@@ -5229,15 +4344,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a7117b0f-74ab-44b5-87fb-de267d0f2164",
   },
-  "welcometonightcityretail:secondhand-bombus": {
-    i18n: {
-      en: {
-        name: "Secondhand Bombus",
-        displayName: "Secondhand Bombus",
-        rulesText:
-          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "secondhand-bombus": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "fcbb6d58-6666-4bd3-8ff0-64930fb0f422",
@@ -5299,15 +4407,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "fcbb6d58-6666-4bd3-8ff0-64930fb0f422",
   },
-  "welcometonightcityretail:shattered-memories": {
-    i18n: {
-      en: {
-        name: "Shattered Memories",
-        displayName: "Shattered Memories",
-        rulesText:
-          "Each player discards their hand and may draw 5.\nIf the total number of discarded cards equals the value of a friendly Gig, draw 2.",
-      },
-    },
+  "shattered-memories": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3401c7cf-45c5-4fe4-a883-284a9334262d",
@@ -5346,15 +4447,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3401c7cf-45c5-4fe4-a883-284a9334262d",
   },
-  "welcometonightcityretail:sketchy-ripper": {
-    i18n: {
-      en: {
-        name: "Sketchy Ripper",
-        displayName: "Sketchy Ripper",
-        rulesText:
-          "{Attack} Search the top 3 cards of your deck. Reveal a Gear and add it to your hand. Bottom-deck the rest.\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "sketchy-ripper": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "12f0398c-bcc3-4944-af72-ac2ae9f36761",
@@ -5375,14 +4469,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "12f0398c-bcc3-4944-af72-ac2ae9f36761",
   },
-  "welcometonightcityretail:swordwise-huscle": {
-    i18n: {
-      en: {
-        name: "Swordwise Huscle",
-        displayName: "Swordwise Huscle",
-        rulesText: "{Attack} If this Unit has power 5+, draw 1.",
-      },
-    },
+  "swordwise-huscle": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "1c053198-187e-49ab-a9e0-0661b4c3b337",
@@ -5429,15 +4517,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "1c053198-187e-49ab-a9e0-0661b4c3b337",
   },
-  "welcometonightcityretail:synapse-burnout": {
-    i18n: {
-      en: {
-        name: "Synapse Burnout",
-        displayName: "Synapse Burnout",
-        rulesText:
-          "{Quick} A friendly Unit has +1 power for each friendly face-up Legend while fighting rival Units this turn.",
-      },
-    },
+  "synapse-burnout": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "4277845b-1209-46df-8353-8fd36f56148a",
@@ -5458,16 +4539,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "4277845b-1209-46df-8353-8fd36f56148a",
   },
-  "welcometonightcityretail:t-bug-amateur-philosopher": {
-    i18n: {
-      en: {
-        name: "T-Bug",
-        subname: "Amateur Philosopher",
-        displayName: "T-Bug: Amateur Philosopher",
-        rulesText:
-          "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
-      },
-    },
+  "t-bug-amateur-philosopher": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "e2e3d98d-0159-4a79-b543-e37264f23118",
@@ -5505,15 +4578,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e2e3d98d-0159-4a79-b543-e37264f23118",
   },
-  "welcometonightcityretail:take-control": {
-    i18n: {
-      en: {
-        name: "Take Control",
-        displayName: "Take Control",
-        rulesText:
-          "{Quick} A rival Unit steals 1 fewer Gig this turn. If that Unit is an AI, DRONE, or VEHICLE, draw 1.",
-      },
-    },
+  "take-control": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "bc1401d4-5b9b-495a-853e-0a22a11f6f4c",
@@ -5534,15 +4600,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "bc1401d4-5b9b-495a-853e-0a22a11f6f4c",
   },
-  "welcometonightcityretail:tetratronic-rippler": {
-    i18n: {
-      en: {
-        name: "Tetratronic Rippler",
-        displayName: "Tetratronic Rippler",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, search the top card of your deck. You may trash it. (Otherwise, keep it on the top of your deck.)",
-      },
-    },
+  "tetratronic-rippler": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
@@ -5580,15 +4639,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
   },
-  "welcometonightcityretail:the-heist": {
-    i18n: {
-      en: {
-        name: "The Heist",
-        displayName: "The Heist",
-        rulesText:
-          "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
-      },
-    },
+  "the-heist": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "a1e2c25e-fb27-458f-984d-df422f879664",
@@ -5609,16 +4661,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "a1e2c25e-fb27-458f-984d-df422f879664",
   },
-  "welcometonightcityretail:the-relic-experimental-biochip": {
-    i18n: {
-      en: {
-        name: "The Relic",
-        subname: "Experimental Biochip",
-        displayName: "The Relic: Experimental Biochip",
-        rulesText:
-          "{Defeated} Play another Unit with cost 9 or less from your trash for free. Then, bottom-deck this Unit.",
-      },
-    },
+  "the-relic-experimental-biochip": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "38d14168-c182-4a34-a3b2-1b8380ab6635",
@@ -5647,15 +4691,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "38d14168-c182-4a34-a3b2-1b8380ab6635",
   },
-  "welcometonightcityretail:three-mouths-one-desire": {
-    i18n: {
-      en: {
-        name: "Three Mouths, One Desire",
-        displayName: "Three Mouths, One Desire",
-        rulesText:
-          "Search the top 3 cards of your deck. Add 1 to your hand. You may add 1 more for each friendly min Gig. Bottom-deck the rest.",
-      },
-    },
+  "three-mouths-one-desire": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
@@ -5676,15 +4713,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
   },
-  "welcometonightcityretail:towerfall": {
-    i18n: {
-      en: {
-        name: "Towerfall",
-        displayName: "Towerfall",
-        rulesText:
-          "Choose one effect. If you have less ☆ (Street Cred) than a Rival, choose both instead.\nGive all rival Units -5 power this turn. // Bottom-deck all rival Units with power 0.",
-      },
-    },
+  towerfall: {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "15920617-a06f-4302-9dfb-c85d3470c7eb",
@@ -5713,14 +4743,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "15920617-a06f-4302-9dfb-c85d3470c7eb",
   },
-  "welcometonightcityretail:trauma-team-operatives": {
-    i18n: {
-      en: {
-        name: "Trauma Team Operatives",
-        displayName: "Trauma Team Operatives",
-        rulesText: "Play this Unit for -1 €$ for each Unit in your trash, to a minimum of 1 €$.",
-      },
-    },
+  "trauma-team-operatives": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
@@ -5741,14 +4765,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
   },
-  "welcometonightcityretail:trust-no-one": {
-    i18n: {
-      en: {
-        name: "Trust No One",
-        displayName: "Trust No One",
-        rulesText: "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
-      },
-    },
+  "trust-no-one": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
@@ -5785,15 +4803,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
   },
-  "welcometonightcityretail:tyger-s-whisper": {
-    i18n: {
-      en: {
-        name: "Tyger's Whisper",
-        displayName: "Tyger's Whisper",
-        rulesText:
-          "{Play} You may Call a Legend for free. (You can only Call a Legend once per turn.)\n(Units with power 0 don't steal Gigs.)",
-      },
-    },
+  "tyger-s-whisper": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
@@ -5814,14 +4825,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
   },
-  "welcometonightcityretail:unlikely-bond": {
-    i18n: {
-      en: {
-        name: "Unlikely Bond",
-        displayName: "Unlikely Bond",
-        rulesText: "Bottom-deck a ready friendly Unit. If you do, bottom-deck a spent rival Unit.",
-      },
-    },
+  "unlikely-bond": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
@@ -5842,16 +4847,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
   },
-  "welcometonightcityretail:v-roamer-of-the-badlands": {
-    i18n: {
-      en: {
-        name: "V",
-        subname: "Roamer of the Badlands",
-        displayName: "V: Roamer of the Badlands",
-        rulesText:
-          "When this Unit steals a Gig, increase it by up to 5.\nAt the end of your turn, if you control 2 or more Gigs with 8+ value, draw 1.",
-      },
-    },
+  "v-roamer-of-the-badlands": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
@@ -5872,16 +4869,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
   },
-  "welcometonightcityretail:v-streetkid": {
-    i18n: {
-      en: {
-        name: "V",
-        subname: "Streetkid",
-        displayName: "V: Streetkid",
-        rulesText:
-          "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.\n{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
-      },
-    },
+  "v-streetkid": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "3fc63c58-5954-4744-a5af-047bfc5cb159",
@@ -5960,15 +4949,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "3fc63c58-5954-4744-a5af-047bfc5cb159",
   },
-  "welcometonightcityretail:valentino-guerrera": {
-    i18n: {
-      en: {
-        name: "Valentino Guerrera",
-        displayName: "Valentino Guerrera",
-        rulesText:
-          "If you have more ☆ (Street Cred) than a Rival, this Unit can attack ready Units with {Blocker}.",
-      },
-    },
+  "valentino-guerrera": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
@@ -5989,15 +4971,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
   },
-  "welcometonightcityretail:valentino-street-racer": {
-    i18n: {
-      en: {
-        name: "Valentino Street Racer",
-        displayName: "Valentino Street Racer",
-        rulesText:
-          "{Play} Give another friendly Unit with cost 5 or less {Adrenaline} this turn. (A Unit with Adrenaline can attack the turn it's played.)",
-      },
-    },
+  "valentino-street-racer": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "dc15db71-3443-4de0-b988-c62601bae5e1",
@@ -6018,15 +4993,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "dc15db71-3443-4de0-b988-c62601bae5e1",
   },
-  "welcometonightcityretail:viktor-vektor-drop-your-illusions": {
-    i18n: {
-      en: {
-        name: "Viktor Vektor",
-        subname: "Drop Your Illusions",
-        displayName: "Viktor Vektor: Drop Your Illusions",
-        rulesText: "Play your first CYBERWARE Gear each turn for -3 €$, to a minimum of 1 €$.",
-      },
-    },
+  "viktor-vektor-drop-your-illusions": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
@@ -6047,16 +5015,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
   },
-  "welcometonightcityretail:viktor-vektor-you-might-feel-a-little-pinch": {
-    i18n: {
-      en: {
-        name: "Viktor Vektor",
-        subname: "You Might Feel a Little Pinch",
-        displayName: "Viktor Vektor: You Might Feel a Little Pinch",
-        rulesText:
-          "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
-      },
-    },
+  "viktor-vektor-you-might-feel-a-little-pinch": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "4eca7fcd-85c1-43d0-8a07-4227312ab0db",
@@ -6077,16 +5037,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "4eca7fcd-85c1-43d0-8a07-4227312ab0db",
   },
-  "welcometonightcityretail:wakako-okada-peace-and-harmony": {
-    i18n: {
-      en: {
-        name: "Wakako Okada",
-        subname: "Peace and Harmony",
-        displayName: "Wakako Okada: Peace and Harmony",
-        rulesText:
-          "{Call} Choose one effect.\nGive a rival Unit -2 power this turn. // Draw 1.\n{Spend}: Decrease a Gig by up to 2.",
-      },
-    },
+  "wakako-okada-peace-and-harmony": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
@@ -6115,15 +5067,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
   },
-  "welcometonightcityretail:we-gotta-live-together": {
-    i18n: {
-      en: {
-        name: "We Gotta Live Together",
-        displayName: "We Gotta Live Together",
-        rulesText:
-          "If a Rival controls at least 2 more Gigs than you, play this Program for 3 €$.\nPlay up to 2 Units with cost 3 or less from your trash for free.",
-      },
-    },
+  "we-gotta-live-together": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "63821536-cdf5-4347-812a-0bf72d727596",
@@ -6160,15 +5105,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "63821536-cdf5-4347-812a-0bf72d727596",
   },
-  "welcometonightcityretail:westbrook-netrunner": {
-    i18n: {
-      en: {
-        name: "Westbrook Netrunner",
-        displayName: "Westbrook Netrunner",
-        rulesText:
-          "{Play} Until your next turn, rival Legends can't steal friendly Gigs with value less than their power.",
-      },
-    },
+  "westbrook-netrunner": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "5801d086-7e87-4645-95e2-68239230098d",
@@ -6189,14 +5127,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5801d086-7e87-4645-95e2-68239230098d",
   },
-  "welcometonightcityretail:wild-in-the-streets": {
-    i18n: {
-      en: {
-        name: "Wild in the Streets",
-        displayName: "Wild in the Streets",
-        rulesText: "Defeat a spent Unit.",
-      },
-    },
+  "wild-in-the-streets": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "54f0308f-8fb2-4861-a414-c15ca24426c3",
@@ -6217,15 +5149,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "54f0308f-8fb2-4861-a414-c15ca24426c3",
   },
-  "welcometonightcityretail:wraith-marauders": {
-    i18n: {
-      en: {
-        name: "Wraith Marauders",
-        displayName: "Wraith Marauders",
-        rulesText:
-          "When this Unit steals a Gig, ready another friendly Unit with power equal to the Gig's value.",
-      },
-    },
+  "wraith-marauders": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "0944037e-5b14-4332-b345-7935924c2125",
@@ -6262,16 +5187,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "0944037e-5b14-4332-b345-7935924c2125",
   },
-  "welcometonightcityretail:yorinobu-arasaka-steel-dragon": {
-    i18n: {
-      en: {
-        name: "Yorinobu Arasaka",
-        subname: "Steel Dragon",
-        displayName: "Yorinobu Arasaka: Steel Dragon",
-        rulesText:
-          "{Play} You may play a Unit with cost 4 or less from your hand or trash for free. It can attack rival Units this turn.\nThe first time an ARASAKA Unit is defeated each turn, draw 1.",
-      },
-    },
+  "yorinobu-arasaka-steel-dragon": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "c057ccc4-bb15-4efd-8115-8d223568134b",
@@ -6292,15 +5209,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "c057ccc4-bb15-4efd-8115-8d223568134b",
   },
-  "welcometonightcityretail:zetatech-berserk": {
-    i18n: {
-      en: {
-        name: "Zetatech Berserk",
-        displayName: "Zetatech Berserk",
-        rulesText:
-          "Play this Gear for -1 €$ for each friendly face-up Legend, to a minimum of 1 €$.",
-      },
-    },
+  "zetatech-berserk": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
@@ -6321,15 +5231,8 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
   },
-  "welcometonightcityretail:zetatech-faceplate": {
-    i18n: {
-      en: {
-        name: "Zetatech Faceplate",
-        displayName: "Zetatech Faceplate",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
-      },
-    },
+  "zetatech-faceplate": {
+    canonicalSetCode: "welcometonightcityretail",
     printings: [
       {
         id: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",

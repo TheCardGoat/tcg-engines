@@ -45,7 +45,7 @@ export const op04Gyats080: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

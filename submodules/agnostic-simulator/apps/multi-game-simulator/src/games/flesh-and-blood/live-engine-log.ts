@@ -127,6 +127,10 @@ function parseFabEngineLogRecord(value: unknown): FabLiveEngineLogRecord | null 
     log.schemaVersion !== 1 ||
     typeof log.commandId !== "string" ||
     typeof log.moveType !== "string" ||
+    (log.moveType === "undo" &&
+      (typeof log.restoredCheckpointStateID !== "number" ||
+        !Number.isInteger(log.restoredCheckpointStateID) ||
+        log.restoredCheckpointStateID < 0)) ||
     typeof log.actorId !== "string" ||
     typeof log.timestamp !== "number" ||
     !Number.isFinite(log.timestamp) ||
@@ -182,5 +186,17 @@ export function appendFabEngineLogRecords(
     changed = true;
   }
   if (!changed) return existing;
-  return [...byKey.values()].slice(-FAB_LIVE_LOG_LIMIT);
+  const records = [...byKey.values()].sort((a, b) => a.stateVersion - b.stateVersion);
+  // Keep the audit receipt for Undo and discard the consequences it reverted.
+  const active: FabLiveEngineLogRecord[] = [];
+  for (const record of records) {
+    const restored = record.log.restoredCheckpointStateID;
+    if (record.log.moveType === "undo" && typeof restored === "number") {
+      for (let i = active.length - 1; i >= 0; i--) {
+        if (active[i]!.stateVersion > restored) active.splice(i, 1);
+      }
+    }
+    active.push(record);
+  }
+  return active.slice(-FAB_LIVE_LOG_LIMIT);
 }

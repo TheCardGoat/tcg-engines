@@ -25,34 +25,55 @@ export const op16CatarinaDevon104: CharacterCard = {
   counter: 2000,
   trigger:
     "Draw 1 card and play up to 1 {Blackbeard Pirates} type Character with a cost of 1 from your trash.",
-  traits: ["Blackbeard Pirates Impel Down"],
+  traits: ["Impel Down", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "[When Attacking] Select up to 1 of your opponent's Characters. This Character's base power becomes the same as the selected Character's power during this turn.",
   effects: {
     effects: [
       {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+              {
+                filter: "trait",
+                value: "Blackbeard Pirates",
+                match: "exact",
+              },
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 1,
+              },
+            ],
+          },
+        ],
+      },
+      {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "setBasePowerFrom",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            source: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              chosenBy: "self",
-            },
+            action: "copyPower",
+            target: { player: "opponent", zones: ["character"], count: { amount: 1, upTo: true } },
             duration: "thisTurn",
           },
         ],

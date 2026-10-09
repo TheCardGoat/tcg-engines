@@ -23,7 +23,7 @@ export const pGolDRoger107: CharacterCard = {
   setId: "P",
   cost: 8,
   power: 10000,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If either you or your opponent has 10 DON!! cards on the field, your Leader gains +2000 power until the end of your opponent's next End Phase.",

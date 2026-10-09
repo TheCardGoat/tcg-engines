@@ -23,7 +23,7 @@ export const op14eb04Killer005: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",

@@ -7,7 +7,10 @@ import {
   moveCardOutOfPlayWithStack,
 } from "../state/shift-stack";
 import { retargetContinuousEffects } from "../effects/continuous-effects";
-import { getEntersWithDamageAmount } from "../resolution/action-effects/play-card-effect";
+import {
+  getEntersWithDamageAmount,
+  getObservingEntersWithDamage,
+} from "../resolution/action-effects/play-card-effect";
 import { createProjectionState, getEffectiveWillpower } from "../../rules/derived-state";
 import { getOrBuildMoveRegistry } from "../rules/move-registry-cache";
 import {
@@ -52,7 +55,10 @@ export function executeShiftPlay(
   const entersWithDamage = getEntersWithDamageAmount(
     cardDef as Parameters<typeof getEntersWithDamageAmount>[0],
   );
-  const inheritedDamage = Number(shiftedMeta?.damage ?? 0) + entersWithDamage;
+  const inheritedDamage =
+    Number(shiftedMeta?.damage ?? 0) +
+    entersWithDamage +
+    getObservingEntersWithDamage(ctx, cardDef, playerId, cardId);
   ctx.cards.setMeta(cardId, {
     ...shiftedMeta,
     state: options?.entersExerted ? "exerted" : shiftedMeta?.state,

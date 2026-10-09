@@ -75,10 +75,13 @@ describe("OP10-070 Trebol", () => {
     if (protectedTarget?.kind !== "selectEntity") {
       throw new Error("Expected the protected K.O. target choice.");
     }
-    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      protectedId,
-    );
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.some((card) => card?.instanceId === protectedId),
+    ).toBe(true);
 
     engine.endTurn("north");
     engine.endTurn("south");

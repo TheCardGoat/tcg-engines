@@ -57,14 +57,11 @@ export const flickeringAfterglow: GrandArchiveCard<GrandArchiveAbilityDefinition
                 operator: "multiply",
                 operands: [
                   {
-                    kind: "sum-counters",
-                    collection: {
-                      zones: ["field"],
+                    kind: "counter-count",
+                    subject: {
+                      kind: "mastery",
                       player: "controller",
-                      filter: {
-                        kind: "name",
-                        value: "Fractured Memories",
-                      },
+                      name: "Fractured Memories",
                     },
                     counter: {
                       named: "sheen",

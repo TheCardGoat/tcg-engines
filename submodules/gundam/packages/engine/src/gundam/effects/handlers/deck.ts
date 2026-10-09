@@ -93,6 +93,8 @@ export function handleLookAtTopDeckAction(
       ctx.G.turnMetadata.deployedThisTurn.push(tutored);
       ctx.G.exhausted[tutored] = false;
       ctx.framework.cards.patchMeta(tutored, { exhausted: false, deployedThisTurn: true });
+      // Rule 11-4: deck effects must settle excess before Deploy triggers.
+      enqueueBattleAreaExcessManagement(ctx.G, playerId, tutored, ctx.framework);
       const event = {
         type: "unitDeployed",
         cardId: tutored,

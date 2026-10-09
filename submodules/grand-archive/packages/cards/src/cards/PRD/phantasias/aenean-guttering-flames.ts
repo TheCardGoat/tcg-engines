@@ -154,6 +154,10 @@ export const aeneanGutteringFlames: GrandArchiveCard<GrandArchiveAbilityDefiniti
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["AENEAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["SPELL"],
                       },
                     ],

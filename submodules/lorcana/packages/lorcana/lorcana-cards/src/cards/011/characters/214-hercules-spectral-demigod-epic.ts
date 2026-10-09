@@ -25,7 +25,7 @@ export const herculesSpectralDemigodEpic: CharacterCard = {
   franchise: "Hercules",
   set: "011",
   cardNumber: 214,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 0,

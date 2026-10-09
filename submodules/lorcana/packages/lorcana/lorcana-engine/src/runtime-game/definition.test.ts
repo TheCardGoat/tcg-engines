@@ -64,3 +64,18 @@ describe("lorcanaRuntimeConfig.boardSetup", () => {
     }
   });
 });
+
+it("normal match admission rejects additional seats while fixture setup stays separate", () => {
+  expect(() =>
+    initializeMatchState({
+      config: lorcanaRuntimeConfig,
+      players: [{ id: PLAYER_ONE }, { id: PLAYER_TWO }, { id: createPlayerId("player_three") }],
+      seed: "reject-live-three",
+      staticResources: {
+        cards: createRecordCardCatalog("empty", {}),
+        instances: createRecordCardInstanceRegistry("empty", {}),
+        zoneDefinitions: {},
+      },
+    }),
+  ).toThrow("exactly 2 players");
+});

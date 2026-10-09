@@ -142,8 +142,24 @@ describe("OP16-080 Marshall.D.Teach", () => {
     // defender's ordinary Counter step — no Teach optional and no trash cost.
     const prompts = engine.getView("south").prompts;
     expect(prompts).toHaveLength(1);
-    expect(prompts[0]?.details).toContain("counter cards or pass");
+    expect(prompts[0]?.details).toContain("Counter card, or pass");
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("a Character with a Trigger can pay, and trashing it does not activate that Trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP16-080", hand: ["ST07-009", "OP16-039"], character: ["OP16-109"] },
+      { character: [{ cardId: "EB01-005", playedOnTurn: 0 }] },
+      { activeSeat: "north" },
+    );
+    e.asNorth().attack(e.findCardInZone("north", "character", "EB01-005"), e.leader("south"));
+    e.asSouth().acceptOptional();
+    const triggerCard = e.findCardInZone("south", "hand", "ST07-009");
+    e.resolveDecision("effectCostTrashFromHand", { selectedIds: [triggerCard] }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("south")] }, "south");
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(triggerCard);
+    expect(
+      e.getView("south").players.south.characters.some((c) => c?.instanceId === triggerCard),
+    ).toBe(false);
   });
 });

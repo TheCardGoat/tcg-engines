@@ -5,7 +5,6 @@ import type { ScenarioId } from "./types";
 export const CURRENT_CARD_QA_INCLUDED_SET_CODES = [
   "promo",
   "PRM01",
-  "boxtoppersretail",
   "theheistretailstarterdeck",
   "embracingpowerretailstarterdeck",
   "welcometonightcityretail",
@@ -63,31 +62,6 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
     "octant",
     ["unitOctantRetail"],
     "8+ Gig cost reduction, floored at 1.",
-  ],
-  [
-    "boxtoppersretail",
-    "goro-takemura-hands-unclean",
-    ["legendGoroTakemuraHandsUnclean"],
-    "GO SOLO plus BLOCKER legend.",
-  ],
-  [
-    "boxtoppersretail",
-    "jackie-welles-pour-one-out-for-me",
-    ["legendJackieWellesPourOneOutForMe"],
-    "Blue card trigger increases a Gig.",
-  ],
-  [
-    "boxtoppersretail",
-    "saburo-arasaka-stubborn-patriarch",
-    ["legendSaburoArasakaStubbornPatriach"],
-    "Arasaka attack power passive.",
-  ],
-  ["boxtoppersretail", "v-corporate-exile", ["legendVCorporateExile"], "Revealed GO SOLO legend."],
-  [
-    "boxtoppersretail",
-    "yorinobu-arasaka-embracing-destruction",
-    ["legendYorinobuArasakaEmbracingDestruction"],
-    "First Arasaka attack trigger.",
   ],
   [
     "theheistretailstarterdeck",
@@ -789,6 +763,60 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
     "wakako-okada-peace-and-harmony",
     ["retailWtnc22TurnTriggerQa"],
     "Call −2 rival power or draw; Spend decreases a Gig.",
+  ],
+  [
+    "welcometonightcityretail",
+    "bonnie-and-clyde",
+    ["progBonnieAndClyde", "progBonnieAndClydeSingleTarget"],
+    "Defeat a ≤4-power Unit; second defeat behind a 2-Gig deficit.",
+  ],
+  [
+    "welcometonightcityretail",
+    "detonate",
+    ["regressionDetonateDetachesGear"],
+    "{Quick} defeat of a low-power rival Gear detaches cleanly.",
+  ],
+  [
+    "welcometonightcityretail",
+    "nocturne-op55-n1",
+    ["progNocturneOp55N1"],
+    "Cheap play on empty fixer area with three-way choose-one.",
+  ],
+  [
+    "welcometonightcityretail",
+    "safety-override",
+    ["progSafetyOverride"],
+    "{Quick} fight-loss replacement defeats the opposing Unit.",
+  ],
+  [
+    "welcometonightcityretail",
+    "synapse-burnout",
+    ["progSynapseBurnout"],
+    "{Quick} +1 power per friendly face-up Legend while fighting.",
+  ],
+  [
+    "welcometonightcityretail",
+    "the-heist",
+    ["progTheHeist"],
+    "Trash 4 and recover a Gear; free play on Gig cost match.",
+  ],
+  [
+    "welcometonightcityretail",
+    "towerfall",
+    ["progTowerfall"],
+    "Choose one effect, or both at lower Street Cred.",
+  ],
+  [
+    "welcometonightcityretail",
+    "we-gotta-live-together",
+    ["progWeGottaLiveTogether"],
+    "Discounted behind a 2-Gig deficit; free trash Units.",
+  ],
+  [
+    "welcometonightcityretail",
+    "wild-in-the-streets",
+    ["progWildInTheStreets"],
+    "Defeats a spent Unit.",
   ],
 ] as const satisfies readonly CurrentCardQaCaseInput[];
 

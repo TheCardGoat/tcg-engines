@@ -62,8 +62,17 @@ export const grimForeboding: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                     zones: ["field"],
                     player: "controller",
                     filter: {
-                      kind: "type",
-                      oneOf: ["PHANTASIA"],
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["PHANTASIA"],
+                        },
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
+                        },
+                      ],
                     },
                   },
                 },

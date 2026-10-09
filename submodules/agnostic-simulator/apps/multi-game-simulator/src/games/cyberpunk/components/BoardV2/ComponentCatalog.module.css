@@ -1,0 +1,162 @@
+.root {
+  height: auto;
+  background: #0c1115;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.intro {
+  padding: 20px;
+  font-family: system-ui, sans-serif;
+  background: #151f24;
+}
+.intro p {
+  color: #b9c7cc;
+  font-size: 13px;
+  max-width: 80ch;
+  margin-block: 8px;
+}
+.intro a {
+  color: #76dfea;
+}
+.specimen {
+  padding: 20px;
+  border-top: 1px solid #394449;
+}
+.specimen > header {
+  margin-bottom: 20px;
+  font-family: system-ui, sans-serif;
+}
+.specimen h3 {
+  margin: 0 0 5px;
+  font-size: 17px;
+  color: #e7edf1;
+}
+.specimen code {
+  color: #9dabb4;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.scene {
+  position: relative;
+  overflow: hidden;
+  height: clamp(280px, 42vw, 540px);
+  width: 100%;
+}
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  padding: 20px 12px 50px;
+  align-items: start;
+}
+.card {
+  width: 150px;
+  flex: 0 0 150px;
+}
+.dice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin-block: 22px;
+}
+.dice > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 58px;
+}
+.dice > div > :first-child {
+  width: 50px;
+  height: 50px;
+}
+.caption {
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  color: #b9c7cc;
+}
+.root .table {
+  aspect-ratio: auto;
+  max-height: none;
+  overflow: visible;
+  background: none;
+  --hud-scale: 1.5;
+}
+.counters {
+  position: relative;
+  min-height: 100px;
+}
+.counters > div {
+  position: static !important;
+  width: auto !important;
+  transform: none !important;
+  font-size: 22px;
+}
+.identity {
+  display: flex;
+  gap: 60px;
+  margin-top: 20px;
+}
+.root .table .piles {
+  position: relative;
+  inset: auto;
+  width: 210px;
+  height: 170px;
+  display: flex;
+  gap: 24px;
+  transform: none;
+  translate: none;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  min-height: 160px;
+}
+.root .table .clock {
+  position: relative;
+  inset: auto;
+  width: 270px;
+  height: 90px;
+  transform: none;
+  translate: none;
+}
+.root .table .pass {
+  position: relative;
+  inset: auto;
+  width: 280px;
+  height: 76px;
+  transform: none;
+  translate: none;
+}
+.status {
+  padding: 16px 20px;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.identity strong {
+  font-size: 22px;
+}
+.identity > div > div:last-child {
+  font-size: 12px;
+}
+
+.version,
+.options {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 20px;
+  font-family: system-ui, sans-serif;
+}
+.version select {
+  padding: 10px;
+  background: #202c3b;
+  color: #f4f7fa;
+  border: 1px solid #5a6c7f;
+  border-radius: 6px;
+}

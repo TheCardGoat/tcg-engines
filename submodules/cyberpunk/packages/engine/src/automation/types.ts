@@ -10,18 +10,21 @@ import type { ChoicePrompt, PlayerPrompt } from "../view/player-prompt.ts";
  * simulate actions before committing to them. Exposes only the methods a
  * regular AI player would already call (`getFilteredView`, `getPrompt`,
  * `processCommand`) plus `fork()` for cloning. Notably absent: any access
- * to raw `MatchState` — search strategies still can't peek at hidden
- * information (opponent hand, deck order).
+ * to raw `MatchState`. Fair strategies use the filtered view. The optional
+ * oracle projection is reserved for explicitly labelled practice strategies.
  */
 export interface EngineHandle {
   getFilteredView(playerId: PlayerId): FilteredMatchView;
+  /** Optional privileged projection, used only by labelled oracle strategies. */
+  getOracleView?(playerId: PlayerId): FilteredMatchView;
   getPrompt(playerId: PlayerId): PlayerPrompt;
-  processCommand(command: CommandEnvelope, playerId: PlayerId): CommandResult;
+  /** Search needs the outcome only; it must not read raw state from command results. */
+  processCommand(command: CommandEnvelope, playerId: PlayerId): Pick<CommandResult, "success">;
   fork(): EngineHandle;
 }
 
 export interface DecisionDiagnostics {
-  strategy: "tactical";
+  strategy: "tactical" | "expert-oracle";
   candidateCount: number;
   nodesEvaluated: number;
   depthReached: number;

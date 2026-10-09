@@ -22,7 +22,7 @@ export const op12HairRemovalFist098: EventCard = {
   setId: "OP12",
   cost: 1,
   trigger: "Draw 1 card and trash 1 card from the top of your deck.",
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   effect:
     '[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if you have a "Revolutionary Army" type Character with a cost of 8 or more, that card gains an additional +2000 power during this battle.',
   effects: {

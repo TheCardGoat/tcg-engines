@@ -90,18 +90,9 @@ export const geminiStarbearer: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                   zones: ["field"],
                   player: "controller",
                   filter: {
-                    kind: "all",
-                    filters: [
-                      {
-                        kind: "name",
-                        value: "Astral Shard",
-                        match: "exact",
-                      },
-                      {
-                        kind: "subtype",
-                        oneOf: ["SHARD"],
-                      },
-                    ],
+                    kind: "name",
+                    value: "Astral Shard",
+                    match: "exact",
                   },
                 },
               },

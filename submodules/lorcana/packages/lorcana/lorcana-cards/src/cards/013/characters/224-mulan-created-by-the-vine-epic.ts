@@ -23,7 +23,7 @@ export const mulanCreatedByTheVineEpic: CharacterCard = {
   franchise: "Mulan",
   set: "013",
   cardNumber: 224,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 3,
@@ -32,6 +32,7 @@ export const mulanCreatedByTheVineEpic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b029096c38df417993f00fb29603c9ff",
+    tcgPlayer: "704687",
   },
   text: [
     {

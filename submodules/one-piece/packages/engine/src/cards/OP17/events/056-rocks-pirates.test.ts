@@ -3,6 +3,42 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP17-056 Rocks Pirates", () => {
+  test("Counter does not grant power without its printed eligibility", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", hand: ["OP17-056"], character: [], activeDon: 3 },
+      {},
+      { activeSeat: "north" },
+    );
+    const before = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("south", "hand", "OP17-056")] },
+      "south",
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(before - 1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("Counter executes the printed power bonus through battle", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-039", hand: ["OP17-056"], character: [], activeDon: 3 },
+      {},
+      { activeSeat: "north" },
+    );
+    const lifeBefore = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("south", "hand", "OP17-056")] },
+      "south",
+    );
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("south")] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-056");
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[Main] resting 5 DON!! returns a cost-6-or-less Character to its owner's hand", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["OP17-056"], activeDon: 5 },

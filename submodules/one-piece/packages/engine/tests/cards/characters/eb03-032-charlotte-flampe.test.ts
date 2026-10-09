@@ -63,3 +63,16 @@ describe("EB03-032 Charlotte Flampe", () => {
     ).toBe(7000);
   });
 });
+
+test("Flampe can boost the named Leader, and the bonus expires at turn end", () => {
+  const e = OnePieceTestEngine.create({
+    leaderCardId: "OP03-099",
+    hand: ["EB03-032"],
+    activeDon: 1,
+  });
+  e.asSouth().play("EB03-032");
+  e.asSouth().chooseTargets(e.leader("south"));
+  expect(e.getView("south").players.south.leader.power).toBe(7000);
+  e.asSouth().endTurn();
+  expect(e.getView("south").players.south.leader.power).toBe(5000);
+});

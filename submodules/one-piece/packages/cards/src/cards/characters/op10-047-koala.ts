@@ -23,7 +23,7 @@ export const op10Koala047: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     '[When Attacking] You may return 1 of your "Revolutionary Army" type Characters with a cost of 3 or more to the owner\'s hand: This Character gains +3000 power during this turn.',
@@ -39,7 +39,7 @@ export const op10Koala047: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cost",

@@ -27,6 +27,7 @@ export const bestiesAssemble: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4497d30198144bd817e8dc4a8250c19",
+    tcgPlayer: "702676",
   },
   text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
   abilities: [

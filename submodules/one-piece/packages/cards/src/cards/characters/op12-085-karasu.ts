@@ -39,7 +39,7 @@ export const op12Karasu085: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "handCount",
@@ -65,7 +65,7 @@ export const op12Karasu085: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

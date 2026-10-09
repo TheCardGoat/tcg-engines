@@ -23,7 +23,7 @@ export const op17Shiki047: CharacterCard = {
   setId: "OP17",
   cost: 9,
   power: 10000,
-  traits: ["FILM Impel Down Golden Lion Pirates"],
+  traits: ["FILM", "Impel Down", "Golden Lion Pirates"],
   attribute: "slash",
   effect:
     "[End of Your Turn] If you have 2 or less cards in your hand, your opponent places 1 card from their hand at the bottom of their deck.",

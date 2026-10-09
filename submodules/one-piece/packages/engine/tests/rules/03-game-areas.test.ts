@@ -479,7 +479,8 @@ describe("Comprehensive Rules 3: Game Areas", () => {
           step.candidates.map((candidate) => candidate.ref.id).sort((a, b) => a.localeCompare(b)),
         ).toEqual([...fieldIds].sort((a, b) => a.localeCompare(b)));
       }
-      expect(engine.asSouth().view().players.south.restedDon).toBe(0);
+      // 2-7-2 pays before the full-field rule trash and placement.
+      expect(engine.asSouth().view().players.south.restedDon).toBe(eb01MountainGod018.cost);
 
       const trashedId = fieldIds[0]!;
       engine.asSouth().choose("playCharacterReplacement", [trashedId]);

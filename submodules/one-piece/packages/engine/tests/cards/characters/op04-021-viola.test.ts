@@ -16,13 +16,18 @@ describe("OP04-021 Viola", () => {
     expect(engine.pendingDecision("effectOptional", "south").actorId).toBe("south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
-    const count = engine.pendingDecision("effectRestDonCount", "south");
+    const count = engine.pendingDecision("effectMixedRestSelection", "south");
     expect(count.actorId).toBe("south");
     expect(count.steps[0]).toMatchObject({
-      kind: "chooseOption",
-      options: [{ id: "0" }, { id: "1" }],
+      kind: "payCost",
+      min: 0,
+      max: 1,
     });
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "south",
+    );
 
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
@@ -40,7 +45,7 @@ describe("OP04-021 Viola", () => {
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-    engine.resolveDecision("effectRestDonCount", { optionId: "0" }, "south");
+    engine.resolveDecision("effectMixedRestSelection", { selectedIds: [] }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 2 });

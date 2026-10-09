@@ -25,7 +25,7 @@ export const genieMagicalResearcherEpic: CharacterCard = {
   franchise: "Aladdin",
   set: "011",
   cardNumber: 210,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

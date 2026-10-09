@@ -9,6 +9,36 @@ import {
 } from "./gateway.js";
 
 describe("simulator gateway runtime", () => {
+  it("reports rejected snapshots without logging private state and accepts the next valid sync", () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      const snapshot = {
+        gameId: "g_1",
+        stateVersion: 70,
+        state: { privateCard: "secret" },
+        engineLogs: [],
+        animationPlan: null,
+      };
+      expect(
+        parseGatewayEvent("state_sync", { ...snapshot, interactionView: { protocolVersion: -1 } }),
+      ).toBeNull();
+      expect(error).toHaveBeenCalledWith(
+        "[gateway] authoritative snapshot rejected",
+        expect.objectContaining({
+          event: "state_sync",
+          stateVersion: 70,
+          issues: expect.any(Array),
+        }),
+      );
+      expect(JSON.stringify(error.mock.calls)).not.toContain("secret");
+      expect(parseGatewayEvent("state_sync", snapshot)).toMatchObject({
+        type: "state_sync",
+        stateVersion: 70,
+      });
+    } finally {
+      error.mockRestore();
+    }
+  });
   it("builds ticket and Socket.IO urls from game runtime config", () => {
     expect(buildGatewayTicketUrl("https://api.tcg.online/v1/")).toBe(
       "https://api.tcg.online/v1/gateway/ticket",

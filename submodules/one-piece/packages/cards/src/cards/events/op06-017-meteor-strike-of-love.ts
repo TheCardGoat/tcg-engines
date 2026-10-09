@@ -21,7 +21,7 @@ export const op06MeteorStrikeOfLove017: EventCard = {
   rarity: "C",
   setId: "OP06",
   cost: 2,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   effect:
     "[Main] / [Counter] You may add 1 card from the top of your Life cards to your hand: Up to 1 of your Leader or Character cards gains +3000 power during this turn.",
   effects: {

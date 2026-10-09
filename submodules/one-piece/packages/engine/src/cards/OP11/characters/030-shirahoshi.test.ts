@@ -62,4 +62,18 @@ describe("OP11-030 Shirahoshi", () => {
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 1 });
     expect(view.prompts).toHaveLength(0);
   });
+  test("may decline both rest costs without inspecting or changing the deck", () => {
+    const e = OnePieceTestEngine.create({
+      character: ["OP11-030"],
+      activeDon: 1,
+      deck: ["OP11-027", "ST02-012"],
+    });
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP11-030"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(false);
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.deckCount).toBe(2);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

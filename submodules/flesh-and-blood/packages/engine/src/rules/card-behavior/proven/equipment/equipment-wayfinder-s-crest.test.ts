@@ -5,15 +5,18 @@
  *   When you defend with Wayfinder's Crest, look at the top card of target
  *   hero's deck. Blade Break
  *
- * Model (after fix):
- *   defend subject:self → look at-resolution top of any hero's deck
+ * Model:
+ *   defend subject:self → look at-resolution top of the declared target
+ *   hero's deck (CR 1.8.5: the hero is declared when the trigger layer is
+ *   added; the deck top is a non-target subject scoped to that hero, so the
+ *   chooser is offered heroes, never the other deck's top)
  *
  * Reasoning:
  * 1. Name filter "Wayfinder's Crest" is brittle; subject:self is the standard
  *    "when you defend with this" model (Ollin / Flash of Brilliance).
- * 2. Target hero's deck: player any + position top + count 1 presents deck-top
- *    candidates (self and opponent in 1v1) and requires a chooser — not auto-
- *    look at every seat (engine structural fix for multi-seat positioned pools).
+ * 2. Target hero's deck: playerTarget any-hero + position top + count 1 asks
+ *    for the hero at trigger declaration and auto-scopes the look to that
+ *    hero's deck top (CR 1.8.5c / 1.8.6c) — exactly one look event commits.
  * 3. Look is private observation — assert committed look event; deck unchanged.
  * 4. Blade Break destroys at chain close after defend.
  * 5. Fixtures must set hand: [] when deck contents matter — undefined hand
@@ -28,28 +31,24 @@ import { wayfinderSCrest } from "../../../../../../cards/src/cards/equipment/way
 
 function answerLookTarget(
   game: ReturnType<typeof FabTestEngine.start>,
-  preferCanonicalId?: string,
+  lookAtPlayerId: string,
 ): void {
   for (let safety = 0; safety < 30; safety += 1) {
     const decision = game.getState().decision;
     if (decision?.kind === "entity-target") {
-      // Chooser should only see deck tops (one per hero), not whole decks.
-      expect(decision.candidates.length).toBeGreaterThanOrEqual(1);
-      expect(decision.candidates.length).toBeLessThanOrEqual(2);
-      const pick =
-        (preferCanonicalId
-          ? decision.candidates.find(
-              (c) => game.getState().objects[c.instanceId]?.canonicalId === preferCanonicalId,
-            )
-          : undefined) ?? decision.candidates[0];
-      if (!pick) throw new Error("no look-target candidate for wayfinder");
+      // The declaration offers the two heroes (CR 1.8.5); deck cards are
+      // never candidates.
+      expect(decision.candidates).toHaveLength(2);
+      for (const candidate of decision.candidates) {
+        expect(candidate.target).toMatchObject({ kind: "player" });
+      }
       game.exec({
         move: "answer-decision",
         actorId: decision.actorId,
         payload: {
           decisionId: decision.decisionId,
           stateVersion: decision.stateVersion,
-          answer: { kind: "entity-target", instanceIds: [pick.instanceId] },
+          answer: { kind: "entity-target", instanceIds: [lookAtPlayerId] },
         },
       });
       return;
@@ -78,6 +77,23 @@ function answerLookTarget(
     throw new Error("look target decision never appeared");
   }
   throw new Error("look target decision timed out");
+}
+
+function drainUntilLookCommitted(game: ReturnType<typeof FabTestEngine.start>): void {
+  for (let safety = 0; safety < 50; safety += 1) {
+    if (game.committedEvents().some((e) => e.name === "look")) return;
+    const decision = game.getState().decision;
+    if (decision) break;
+    const prio = game.getState().priority?.holderPlayerId;
+    if (prio && (game.combat() || game.getState().rulesStack.length > 0)) {
+      game.exec({ move: "pass", actorId: prio, payload: {} });
+      continue;
+    }
+    break;
+  }
+  if (!game.committedEvents().some((e) => e.name === "look")) {
+    throw new Error("look event never committed");
+  }
 }
 
 function drainRest(game: ReturnType<typeof FabTestEngine.start>): void {
@@ -163,9 +179,11 @@ describe("wayfinder-s-crest (AZL004)", () => {
 
     game.as(dash).attackWith(snatchRed);
     Bravo.defendWith(wayfinderSCrest);
-    answerLookTarget(game, tomeOfFyendalYellow.canonicalId);
+    answerLookTarget(game, Dash.id);
+    // The look resolves before the damage step, so Snatch's hit draw cannot
+    // pull the tome first.
+    drainUntilLookCommitted(game);
 
-    // Assert look immediately — before Snatch-on-hit draw can pull the top.
     const looks = game.committedEvents().filter((e) => e.name === "look");
     // Exactly one look — chooser picked one hero's top, not both seats.
     expect(looks).toHaveLength(1);
@@ -199,7 +217,8 @@ describe("wayfinder-s-crest (AZL004)", () => {
 
     game.as(dash).attackWith(snatchRed);
     Bravo.defendWith(wayfinderSCrest);
-    answerLookTarget(game, tomeOfFyendalYellow.canonicalId);
+    answerLookTarget(game, Bravo.id);
+    drainRest(game);
 
     const looks = game.committedEvents().filter((e) => e.name === "look");
     expect(looks).toHaveLength(1);

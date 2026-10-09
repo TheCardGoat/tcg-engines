@@ -423,7 +423,7 @@ export function hasSameName(card1: LorcanaCardDefinition, card2: LorcanaCardDefi
   return card1.name === card2.name;
 }
 
-function normalizeCardName(name: string): string {
+export function normalizeCardName(name: string): string {
   return name.normalize("NFD").replace(/\p{M}/gu, "").trim().toLowerCase();
 }
 

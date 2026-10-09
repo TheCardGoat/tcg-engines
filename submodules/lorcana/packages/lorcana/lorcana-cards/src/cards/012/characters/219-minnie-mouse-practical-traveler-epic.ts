@@ -22,7 +22,7 @@ export const minnieMousePracticalTravelerEpic: CharacterCard = {
   inkType: ["sapphire"],
   set: "012",
   cardNumber: 219,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 1,

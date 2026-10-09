@@ -49,4 +49,56 @@ describe("OP15-090 Perona", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("opponent's Red Roc Trigger cannot bottom a low-base-power Character after paid replacement even at 8000 current power", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP05-001",
+        character: ["OP15-090", "EB01-005"],
+        hand: ["OP02-117"],
+        activeDon: 5,
+      },
+      { leaderCardId: "OP01-060", life: ["OP04-056", "OP03-057"] },
+    );
+    const target = e.findCardInZone("south", "character", "EB01-005");
+    const payment = e.findCardInZone("south", "hand", "OP02-117");
+    e.asSouth().attachDon(target, 5);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === target)?.power,
+    ).toBe(8000);
+    const deck = e.getView("south").players.south.deckCount;
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "north");
+    e.resolveDecision("effectRemovalReplacement", { optionId: "yes" }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.characters.some((c) => c?.instanceId === target)).toBe(true);
+    expect(view.players.south.trash.map((c) => c.instanceId)).toContain(payment);
+    expect(view.players.south.handCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(deck);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("8000 base power remains ineligible after Otama reduces current power to 6000", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST06-001", character: ["OP15-090", "OP16-096"], hand: ["OP02-117"] },
+      { leaderCardId: "OP04-001", hand: ["OP01-006", "OP04-056"], activeDon: 7 },
+      { activeSeat: "north" },
+    );
+    const target = e.findCardInZone("south", "character", "OP16-096");
+    const payment = e.findCardInZone("south", "hand", "OP02-117");
+    e.asNorth().play("OP01-006");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "north");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === target)?.power,
+    ).toBe(6000);
+    const deck = e.getView("south").players.south.deckCount;
+    e.asNorth().play("OP04-056");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "north");
+    const view = e.getView("south");
+    expect(view.players.south.characters.some((c) => c?.instanceId === target)).toBe(false);
+    expect(view.players.south.hand.map((c) => c.instanceId)).toEqual([payment]);
+    expect(view.players.south.deckCount).toBe(deck + 1);
+    expect(view.players.south.trash).toHaveLength(0);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

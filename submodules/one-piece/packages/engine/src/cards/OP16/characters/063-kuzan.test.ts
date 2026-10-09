@@ -30,7 +30,8 @@ describe("OP16-063 Kuzan", () => {
     const lifeBefore = engine.getView("south").players.north.lifeCount;
 
     engine.activateEffect(kuzanId, "activateMain", "south");
-    // The DON!! 1 cost auto-pays.
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    // The DON!! 1 cost then auto-pays.
     const frozen = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (frozen?.kind !== "selectEntity") throw new Error("Expected the cannot-activate target.");
     engine.resolveDecision(
@@ -40,12 +41,26 @@ describe("OP16-063 Kuzan", () => {
     );
 
     // The blocker is denied: the attack lands on the Leader unblocked.
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-044", engine.asSouth().leader());
+    engine.asSouth().attack(kuzanId, engine.asNorth().leader());
     expect(() => engine.asNorth().chooseBlocker("OP16-044")).toThrow();
-    expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 1);
 
     // Once per turn: a second activation is rejected.
     expect(() => engine.activateEffect(kuzanId, "activateMain", "south")).toThrow();
+  });
+  test("declining DON return preserves payment and leaves once-per-turn available", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP16-063"], activeDon: 2 },
+      { character: ["OP16-044"] },
+    );
+    const id = e.findCardInZone("south", "character", "OP16-063");
+    e.activateEffect(id, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(2);
+    expect(e.getView("south").prompts).toHaveLength(0);
+    e.activateEffect(id, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
   });
 });

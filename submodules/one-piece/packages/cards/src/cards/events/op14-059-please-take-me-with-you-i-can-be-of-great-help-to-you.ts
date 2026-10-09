@@ -22,7 +22,7 @@ export const op14eb04PleaseTakeMeWithYouICanBeOfGreatHelpToYou059: EventCard = {
   setId: "OP14",
   cost: 1,
   trigger: "Return up to 1 Character with a cost of 4 or less to the owner's hand.",
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   effect:
     "[Main] If your Leader is [Jinbe] and you have 2 or less cards in your hand, draw 2 cards.",
   effects: {

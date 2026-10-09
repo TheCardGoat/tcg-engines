@@ -59,4 +59,22 @@ describe("OP17-078 Drunken Dragon Bagua", () => {
 
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
+  test("wrong Leader may pay both Main costs but adds no DON", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP01-001",
+        hand: ["OP17-078", "EB01-005", "EB01-025"],
+        activeDon: 4,
+        donDeckCount: 6,
+      },
+      {},
+    );
+    e.playCard("OP17-078");
+    e.acceptLeadingOptional("south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(4);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").players.south.donDeckCount).toBe(6);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

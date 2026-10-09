@@ -23,7 +23,7 @@ export const eb01Hamlet024: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "slash",
   effect:
     "If you have 4 or less cards in your hand, all of your [SMILE] type Characters gain +1000 power.",
@@ -45,7 +45,7 @@ export const eb01Hamlet024: CharacterCard = {
               player: "self",
               zones: ["character"],
               count: { amount: "all" },
-              filters: [{ filter: "trait", value: "SMILE", match: "includes" }],
+              filters: [{ filter: "trait", value: "SMILE", match: "exact" }],
             },
             value: 1000,
             duration: "permanent",

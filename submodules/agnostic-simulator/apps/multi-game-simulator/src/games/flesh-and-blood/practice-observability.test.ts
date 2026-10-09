@@ -15,7 +15,6 @@ vi.mock("../../observability/browser", () => ({
 import {
   reportFabPracticeCommandFailure,
   reportFabPracticeDispatchException,
-  reportFabPracticeCommandSubmitted,
   reportFabPracticeRulesReversal,
   runFabPracticePostCommandWork,
 } from "./practice-observability";
@@ -58,25 +57,6 @@ describe("FAB practice observability", () => {
     expect(telemetry.error).toHaveBeenCalledWith(
       "fab.practice.post_command_failure",
       expect.objectContaining({ "fab.post_command.stage": "animation" }),
-    );
-  });
-
-  it("records the command submitted to the engine without its payload", () => {
-    const consoleInfo = vi.spyOn(console, "info").mockImplementation(() => undefined);
-
-    reportFabPracticeCommandSubmitted({ ...command, commandId: "practice:8:1" });
-
-    expect(consoleInfo).toHaveBeenCalledWith(
-      "[fab-practice] engine command submitted",
-      expect.objectContaining({
-        "fab.command.id": "practice:8:1",
-        "fab.command.label": "Confirm selections",
-        "fab.command.move": "answer-decision",
-      }),
-    );
-    expect(telemetry.info).toHaveBeenCalledWith(
-      "fab.practice.command_submitted",
-      expect.objectContaining({ "fab.command.id": "practice:8:1" }),
     );
   });
 

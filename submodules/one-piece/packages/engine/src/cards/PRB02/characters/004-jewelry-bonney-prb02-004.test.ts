@@ -39,7 +39,7 @@ describe("PRB02-004 Jewelry Bonney", () => {
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Bonney's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(bonneyId);
     engine.resolveDecision("battleBlocker", { selectedIds: [bonneyId] }, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 1 });

@@ -1,159 +1,178 @@
-import { useCallback, useEffect, useRef } from "react";
-
+import { CardInspectionDialog } from "./CardInspectionDialog";
+import {
+  cloneElement,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useRef,
+  type HTMLAttributes,
+} from "react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-
-import { cx } from "../class-names";
 import { CardFace } from "./CardFace";
+import { projectSimulatorEntityForFace } from "./entity-visibility";
+import classes from "./CardDetailSheet.module.css";
 
 export interface CardDetailSheetProps {
   entity: SimulatorEntity;
   open: boolean;
   onClose?: () => void;
+  onOpen?: () => void;
+  /** Compose the trigger onto one existing interactive child instead of nesting buttons. */
+  asChild?: boolean;
   /** Optional trigger. Omit when a game provides its own action control. */
   children?: React.ReactNode;
 }
 
-export function CardDetailSheet({ entity, open, onClose, children }: CardDetailSheetProps) {
+export function CardDetailSheet({
+  entity: sourceEntity,
+  open,
+  onClose,
+  onOpen,
+  asChild = false,
+  children,
+}: CardDetailSheetProps) {
+  const entity = projectSimulatorEntityForFace(sourceEntity);
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
+  const longPressOpened = useRef(false);
   const handlePointerDown = useCallback(() => {
+    clearTimeout(longPressTimer.current);
+    longPressOpened.current = false;
     longPressTimer.current = setTimeout(() => {
-      // Parent controls open state
+      longPressOpened.current = true;
+      onOpen?.();
     }, 500);
-  }, []);
-
-  const handlePointerUp = useCallback(() => {
-    clearTimeout(longPressTimer.current);
-  }, []);
-
-  const handlePointerLeave = useCallback(() => {
-    clearTimeout(longPressTimer.current);
-  }, []);
-
-  useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) onClose?.();
-    };
-    window.addEventListener("keydown", handleKeydown);
-    return () => window.removeEventListener("keydown", handleKeydown);
-  }, [open, onClose]);
-
+  }, [onOpen]);
+  const clearLongPress = useCallback(() => clearTimeout(longPressTimer.current), []);
+  useEffect(() => clearLongPress, [clearLongPress]);
+  const triggerProps: HTMLAttributes<HTMLElement> = {
+    onClick: () => {
+      if (!longPressOpened.current) onOpen?.();
+      longPressOpened.current = false;
+    },
+    onPointerDown: handlePointerDown,
+    onPointerUp: clearLongPress,
+    onPointerLeave: clearLongPress,
+    onPointerCancel: clearLongPress,
+    "aria-haspopup": "dialog",
+    "aria-expanded": open,
+  };
+  const childTrigger =
+    asChild && isValidElement<HTMLAttributes<HTMLElement>>(children)
+      ? cloneElement(children, {
+          ...triggerProps,
+          onClick: (event) => {
+            children.props.onClick?.(event);
+            if (!event.defaultPrevented) triggerProps.onClick?.(event);
+          },
+          onPointerDown: (event) => {
+            children.props.onPointerDown?.(event);
+            if (!event.defaultPrevented) handlePointerDown();
+          },
+          onPointerUp: (event) => {
+            children.props.onPointerUp?.(event);
+            clearLongPress();
+          },
+          onPointerLeave: (event) => {
+            children.props.onPointerLeave?.(event);
+            clearLongPress();
+          },
+          onPointerCancel: (event) => {
+            children.props.onPointerCancel?.(event);
+            clearLongPress();
+          },
+        })
+      : null;
   return (
     <>
-      {children ? (
-        <span
-          className="card-detail-trigger inline-block"
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerLeave}
-          role="button"
-          tabIndex={0}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-        >
+      {asChild ? (
+        childTrigger
+      ) : children ? (
+        <button type="button" className="card-detail-trigger inline-block" {...triggerProps}>
           {children}
-        </span>
+        </button>
       ) : null}
-
-      {open && (
-        <>
-          <div
-            className="card-detail-backdrop fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-            onClick={onClose}
-            role="presentation"
-          />
-          <div
-            className={cx(
-              "choice-detail-sheet fixed z-50 overflow-hidden rounded-t-2xl border border-[var(--board-border)] bg-[var(--board-surface)] shadow-2xl",
-              "bottom-0 left-0 right-0 max-h-[85vh] md:bottom-auto md:left-1/2 md:top-1/2 md:max-h-[80vh] md:w-[420px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl",
-            )}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${entity.title} details`}
-          >
-            <button
-              type="button"
-              className="absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-full border border-[var(--board-border)] bg-[var(--board-surface)] text-lg font-black text-[var(--board-text)] shadow-lg transition-colors hover:bg-[var(--board-surface-soft)]"
-              aria-label="Close card details"
-              onClick={onClose}
-            >
-              ×
-            </button>
-            <div className="flex justify-center pt-3 pb-1 md:hidden">
-              <div className="h-1 w-10 rounded-full bg-[var(--board-border)]" />
-            </div>
-            <div className="max-h-[calc(85vh-24px)] overflow-y-auto p-4 md:max-h-[calc(80vh-24px)] md:p-6">
-              <div className="mx-auto max-w-[280px]">
-                <CardFace entity={entity} density="full" />
-              </div>
-              <div className="mt-4 grid gap-3">
-                {entity.states.length > 0 && (
-                  <section>
-                    <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
-                      States
-                    </h4>
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {entity.states.map((state) => (
-                        <span
-                          key={state}
-                          className="inline-flex min-h-6 items-center rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] px-2 py-1 text-[11px] font-extrabold leading-none text-[var(--pill-text)]"
-                        >
-                          {state}
-                        </span>
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {entity.stats.length > 0 && (
-                  <section>
-                    <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
-                      Stats
-                    </h4>
-                    <div className="mt-1 grid grid-cols-2 gap-2">
-                      {entity.stats.map((stat) => (
-                        <span
-                          key={`${stat.label}:${stat.value}`}
-                          className="inline-grid gap-0.5 rounded-md border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-3 py-2"
-                        >
-                          <span className="text-[11px] font-extrabold uppercase leading-none text-[var(--board-muted)]">
-                            {stat.label}
-                          </span>
-                          <strong className="text-base leading-none text-[var(--board-text)]">
-                            {stat.value}
-                          </strong>
-                        </span>
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {entity.traits.length > 0 && (
-                  <section>
-                    <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
-                      Traits
-                    </h4>
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {entity.traits.map((trait) => (
-                        <span
-                          key={trait}
-                          className="inline-flex min-h-6 items-center rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] px-2 py-1 text-[11px] font-extrabold leading-none text-[var(--pill-text)]"
-                        >
-                          {trait}
-                        </span>
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </div>
-              <button
-                className="mt-4 w-full rounded-md bg-[var(--game-accent)]/20 py-2.5 text-sm font-black text-[var(--game-accent)] transition-colors hover:bg-[var(--game-accent)]/30"
-                onClick={onClose}
-              >
-                Close
-              </button>
-            </div>
+      <CardInspectionDialog
+        opened={open}
+        onClose={() => onClose?.()}
+        title={`${entity.face === "hidden" ? "Hidden card" : entity.title} details`}
+        size={420}
+        centered
+        classNames={{ inner: classes.inner, content: classes.content }}
+        closeButtonProps={{
+          "aria-label": "Close card details",
+          style: { minWidth: 44, minHeight: 44 },
+        }}
+      >
+        <div className="max-h-[calc(85vh-24px)] overflow-y-auto p-4 md:max-h-[calc(80vh-24px)] md:p-6">
+          <div className="mx-auto max-w-[280px]">
+            <CardFace entity={entity} density="full" />
           </div>
-        </>
-      )}
+          <div className="mt-4 grid gap-3">
+            {entity.face !== "hidden" && entity.states.length > 0 && (
+              <section>
+                <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
+                  States
+                </h4>
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {entity.states.map((state) => (
+                    <span
+                      key={state}
+                      className="inline-flex min-h-6 items-center rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] px-2 py-1 text-[11px] font-extrabold leading-none text-[var(--pill-text)]"
+                    >
+                      {state}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+            {entity.face !== "hidden" && entity.stats.length > 0 && (
+              <section>
+                <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
+                  Stats
+                </h4>
+                <div className="mt-1 grid grid-cols-2 gap-2">
+                  {entity.stats.map((stat) => (
+                    <span
+                      key={`${stat.label}:${stat.value}`}
+                      className="inline-grid gap-0.5 rounded-md border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-3 py-2"
+                    >
+                      <span className="text-[11px] font-extrabold uppercase leading-none text-[var(--board-muted)]">
+                        {stat.label}
+                      </span>
+                      <strong className="text-base leading-none text-[var(--board-text)]">
+                        {stat.value}
+                      </strong>
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+            {entity.face !== "hidden" && entity.traits.length > 0 && (
+              <section>
+                <h4 className="text-[11px] font-black uppercase tracking-normal text-[var(--board-muted)]">
+                  Traits
+                </h4>
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {entity.traits.map((trait) => (
+                    <span
+                      key={trait}
+                      className="inline-flex min-h-6 items-center rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] px-2 py-1 text-[11px] font-extrabold leading-none text-[var(--pill-text)]"
+                    >
+                      {trait}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+          <button
+            className="mt-4 min-h-11 w-full rounded-md bg-[var(--game-accent)]/20 py-2.5 text-sm font-black text-[var(--game-accent)] transition-colors hover:bg-[var(--game-accent)]/30"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
+      </CardInspectionDialog>
     </>
   );
 }

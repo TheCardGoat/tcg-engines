@@ -254,6 +254,40 @@ export const manualSetLore: LorcanaMoveDefinition<"manualSetLore"> = {
 };
 
 /**
+ * Manually set a player's Hyperia City ink-drop counter
+ */
+export const manualSetInkDrops: LorcanaMoveDefinition<"manualSetInkDrops"> = {
+  ...manualMoveDefinitionDefaults,
+  validate: (ctx): RuntimeValidationResult => {
+    const { playerId, amount } = ctx.args;
+
+    // Validate player exists
+    const players = getAllPlayerIds(ctx);
+    if (!players.includes(playerId as PlayerId)) {
+      return { valid: false, error: "Invalid player", errorCode: "INVALID_PLAYER" };
+    }
+
+    // Amount must be non-negative
+    if (amount < 0) {
+      return {
+        valid: false,
+        error: "Ink drops cannot be negative",
+        errorCode: "INVALID_INK_DROPS",
+      };
+    }
+
+    return { valid: true };
+  },
+
+  execute: (ctx) => {
+    const { playerId, amount } = ctx.args;
+
+    ctx.G.inkDrops[playerId as PlayerId] = amount;
+  },
+  available: (ctx) => getAllPlayerIds(ctx).length > 0,
+};
+
+/**
  * Manually shuffle a player's deck
  */
 export const manualShuffleDeck: LorcanaMoveDefinition<"manualShuffleDeck"> = {

@@ -39,7 +39,7 @@ export const op06VinsmokeReiju042: LeaderCard = {
   setId: "OP06",
   power: 5000,
   life: 4,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
 
   effect:

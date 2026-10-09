@@ -30,7 +30,7 @@ export const op11Koby119: CharacterCard = {
   setId: "OP11",
   cost: 8,
   power: 9000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "strike",
   effect:
     "[On Play] Up to 1 of your Characters can also attack active Characters during this turn.\n[When Attacking] You may place 2 cards from your trash at the bottom of your deck in any order: Up to 1 of your Leader or Character cards gains +1000 power until the end of your opponent's next turn.",

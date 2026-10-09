@@ -39,7 +39,7 @@ export const op06HodyJones020: LeaderCard = {
   setId: "OP06",
   power: 5000,
   life: 5,
-  traits: ["Fish-Man New Fish-Man Pirates"],
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
   attribute: "strike",
 
   effect:

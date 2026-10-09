@@ -33,7 +33,7 @@ export const op15Nami108: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   attribute: "special",
   effect:
     "[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Sky Island} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -57,7 +57,7 @@ export const op15Nami108: CharacterCard = {
               {
                 filter: "trait",
                 value: "Sky Island",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

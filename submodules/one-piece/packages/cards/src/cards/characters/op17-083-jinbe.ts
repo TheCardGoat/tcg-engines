@@ -24,7 +24,7 @@ export const op17Jinbe083: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Fish-Man Straw Hat Crew Elbaph"],
+  traits: ["Fish-Man", "Elbaph", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains [Blocker] and +3000 power.\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -16,7 +16,7 @@ describe("OP04-046/050/051/052 Character transformations", () => {
             {
               condition: "leaderTrait",
               trait: "Animal Kingdom Pirates",
-              match: "includes",
+              match: "exact",
             },
           ],
           actions: [
@@ -60,7 +60,7 @@ describe("OP04-046/050/051/052 Character transformations", () => {
     });
   });
 
-  test("parses Who's.Who's inclusive trait search and self-name exclusion", () => {
+  test("parses Who's.Who's exact trait search and self-name exclusion", () => {
     expect(
       buildCardEffects(
         "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Animal Kingdom Pirates] type card other than [Who's.Who] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -77,7 +77,7 @@ describe("OP04-046/050/051/052 Character transformations", () => {
               revealCount: { amount: 1, upTo: true },
               revealFilters: [
                 { filter: "excludeName", value: "Who's.Who" },
-                { filter: "trait", value: "Animal Kingdom Pirates", match: "includes" },
+                { filter: "trait", value: "Animal Kingdom Pirates", match: "exact" },
               ],
               revealDestination: "hand",
               remainderPosition: "bottom",

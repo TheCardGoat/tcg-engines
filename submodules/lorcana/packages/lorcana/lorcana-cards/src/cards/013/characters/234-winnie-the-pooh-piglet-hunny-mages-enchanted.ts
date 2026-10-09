@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { winnieThePoohPigletHunnyMages } from "./062-winnie-the-pooh-piglet-hunny-mages";
 import { winnieThePoohPigletHunnyMagesEnchantedI18n } from "./234-winnie-the-pooh-piglet-hunny-mages-enchanted.i18n";
+
+import { shift } from "../../../helpers/abilities/shift";
 
 export const winnieThePoohPigletHunnyMagesEnchanted: CharacterCard = {
   id: "5EY",
@@ -33,6 +34,7 @@ export const winnieThePoohPigletHunnyMagesEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e2c9423df7b4642914deccabf922ff5",
+    tcgPlayer: "704580",
   },
   text: [
     {
@@ -45,6 +47,23 @@ export const winnieThePoohPigletHunnyMagesEnchanted: CharacterCard = {
     },
   ],
   classifications: ["Dreamborn", "Team", "Hero", "Sorcerer", "Hunny"],
-  abilities: winnieThePoohPigletHunnyMages.abilities,
+  abilities: [
+    shift("Winnie the Pooh or Piglet", 3),
+    {
+      type: "static",
+      name: "MAGICAL MIX",
+      text: "MAGICAL MIX This character gets +1 {L} for each different ink type of characters you have in play.",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: {
+          type: "count",
+          what: "distinct-character-ink-types",
+          controller: "you",
+        },
+        target: "SELF",
+      },
+    },
+  ],
   i18n: winnieThePoohPigletHunnyMagesEnchantedI18n,
 };

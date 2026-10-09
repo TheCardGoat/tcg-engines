@@ -252,6 +252,11 @@
     min-height: auto;
   }
 
+  .rail,
+  .metaGrid {
+    display: none;
+  }
+
   .title {
     max-width: 18ch;
     font-size: 26px;

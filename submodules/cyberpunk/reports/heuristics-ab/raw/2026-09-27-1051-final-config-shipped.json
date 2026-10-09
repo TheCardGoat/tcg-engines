@@ -1,0 +1,22 @@
+{
+  "aOff": [],
+  "bOff": [
+    "safe-steal",
+    "remove-targets",
+    "gear-power",
+    "legend-gear"
+  ],
+  "games": 1080,
+  "aWins": 644,
+  "aLosses": 436,
+  "draws": 0,
+  "aWinRate": 0.5963,
+  "pairs": 540,
+  "aSweeps": 229,
+  "bSweeps": 125,
+  "splits": 186,
+  "pairedImprovement": 0.1926,
+  "failures": [],
+  "avgSteps": 94,
+  "elapsedMs": 1092121
+}

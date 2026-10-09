@@ -550,7 +550,20 @@
   padding-inline: 0.65rem;
 }
 
-.tabList button {
+.tabHeader {
+  display: flex;
+  min-width: 0;
+  border-bottom: 1px solid var(--match-sidebar-border);
+  padding-right: 0.65rem;
+}
+
+.tabHeader .tabList {
+  flex: 1 1 auto;
+  border-bottom: 0;
+  padding-right: 0;
+}
+
+.tabList > button {
   min-width: 0;
   min-height: 2.25rem;
   flex: 1 1 0;
@@ -566,14 +579,26 @@
   cursor: pointer;
 }
 
-.tabList button[aria-selected="true"] {
+.tabList > button[aria-selected="true"] {
   border-bottom-color: var(--match-sidebar-accent);
   color: var(--match-sidebar-text);
 }
 
-.tabList button:focus-visible {
+.tabList > button:focus-visible {
   outline: 2px solid var(--match-sidebar-accent);
   outline-offset: -3px;
+}
+
+.tabHeaderActions {
+  display: grid;
+  flex: 0 0 2.25rem;
+  min-height: 2.25rem;
+  place-items: center;
+}
+
+.tabHeaderActions button[aria-label="Event log options"] {
+  width: 2rem;
+  height: 2rem;
 }
 
 .tabPanel {
@@ -667,5 +692,95 @@
   .actionDock {
     gap: 0.25rem;
     padding: 0.25rem;
+  }
+}
+
+/* Compact identities disclose secondary metadata without squeezing the clock. */
+.root[data-compact-layout="true"] {
+  --match-sidebar-participant-height: auto;
+}
+.compactParticipant {
+  --connection-indicator-size: 24px;
+  position: relative;
+  min-width: 0;
+  padding: var(--simulator-surface-inset, 0.65rem 0.75rem);
+  background: var(--match-sidebar-raised);
+  border-bottom: 1px solid var(--match-sidebar-border);
+}
+.compactIdentity {
+  display: flex;
+  align-items: center;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+  min-width: 0;
+}
+.compactIdentity strong {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--match-sidebar-type-value);
+}
+.compactState .clock {
+  flex: none;
+}
+.compactParticipant[data-role="opponent"] .compactIdentity {
+  min-height: calc(
+    var(--simulator-sidebar-control-size, 2rem) + var(--simulator-sidebar-control-gap, 0.25rem)
+  );
+  padding-right: var(--simulator-sidebar-collapse-inset, 0);
+}
+.compactState > :first-child {
+  flex: 1;
+}
+
+.compactState {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--simulator-surface-gap, 0.55rem);
+  color: var(--match-sidebar-muted);
+  font-size: var(--match-sidebar-type-metadata);
+}
+.compactMetrics {
+  display: flex;
+  align-items: center;
+  gap: var(--simulator-surface-gap, 0.55rem);
+  white-space: nowrap;
+}
+.compactParticipant[data-role="opponent"] .compactState {
+  flex-direction: column;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+  padding-right: var(--simulator-sidebar-collapse-inset, 0);
+}
+.compactParticipant[data-role="opponent"] .compactActions {
+  position: absolute;
+  top: calc(
+    var(--simulator-sidebar-control-inset, 0.75rem) + var(--simulator-sidebar-control-size, 2rem) +
+      var(--simulator-sidebar-control-gap, 0.25rem)
+  );
+  right: var(--simulator-sidebar-control-inset, 0.75rem);
+  margin: 0;
+}
+.compactParticipant[data-role="opponent"] .compactActions > button {
+  width: var(--simulator-sidebar-control-size, 2rem);
+  height: var(--simulator-sidebar-control-size, 2rem);
+  min-width: var(--simulator-sidebar-control-size, 2rem);
+  min-height: var(--simulator-sidebar-control-size, 2rem);
+}
+.compactActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--simulator-sidebar-control-gap, 0.25rem);
+}
+.actionDock:not(:has([data-action="danger"])) {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+}
+.tabPanel[hidden] {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .compactParticipant {
+    --connection-indicator-size: 44px;
   }
 }

@@ -1,13 +1,28 @@
-import type { Action, Condition, EffectTrigger } from "@tcg/op-types";
+import type { Action, Condition, EffectTrigger, TargetFilter } from "@tcg/op-types";
 
 export type ParsedCondition =
   | Extract<Condition, { condition: "donAttached" }>
   | Extract<Condition, { condition: "turn" }>;
 
 export type RawCost =
+  | {
+      type: "addCharacterToLife";
+      player?: "self" | "opponent";
+      amount: number;
+      filters: TargetFilter[];
+      position: "top" | "bottom" | "choice";
+      faceUp: boolean;
+    }
   | { type: "restDon"; amount: number }
-  | { type: "giveDon"; amount: number }
-  | { type: "returnDon"; amount: number; minimumAmount?: never }
+  | { type: "giveDon"; amount: number; recipientFilters?: TargetFilter[] }
+  | { type: "returnDon"; amount: number; minimumAmount?: never; donState?: "active" | "rested" }
+  | {
+      type: "returnDon";
+      amount: number;
+      minimumAmount?: never;
+      donState: "attached";
+      destination: "costAreaRested";
+    }
   | { type: "returnDon"; minimumAmount: number; amount?: never }
   | { type: "trashFromHand"; raw: string }
   | { type: "trashFromDeck"; amount: number; position: "top" }
@@ -17,10 +32,10 @@ export type RawCost =
   | { type: "returnThisToHand" }
   | { type: "returnThisToDeck"; position: "top" | "bottom" }
   | { type: "returnThisAndHandToDeck"; handAmount: number; position: "top" | "bottom" }
-  | { type: "turnLifeFaceUp"; count: number; faceUp: boolean }
+  | { type: "turnLifeFaceUp"; count: number; faceUp: boolean; position?: "top" | "any" | "choice" }
   | { type: "returnCharacter"; raw: string }
   | { type: "returnCharacterToDeck"; raw: string }
-  | { type: "returnFromTrashToDeck"; raw: string }
+  | { type: "returnFromTrashToDeck"; raw: string; includeSelf?: true }
   | { type: "returnHandToDeck"; amount: number; position: "top" | "bottom" }
   | { type: "addLifeToHand"; amount: number; position: "top" | "bottom" | "choice" }
   | { type: "revealFromHand"; raw: string }

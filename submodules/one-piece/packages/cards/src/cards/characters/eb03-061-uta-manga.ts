@@ -5,7 +5,7 @@ export const eb03UtaManga061: CharacterCard = {
   id: "EB03-061",
   canonicalId: "EB03-061",
   slug: "uta-manga",
-  name: "Uta (Manga)",
+  name: "Uta",
   printings: [
     {
       id: "EB03-061",
@@ -95,7 +95,7 @@ export const eb03UtaManga061: CharacterCard = {
                 {
                   filter: "trait",
                   value: "FILM",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

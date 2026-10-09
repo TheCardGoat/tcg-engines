@@ -23,7 +23,7 @@ export const op07VinsmokeSanji061: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["Kingdom of GERMA", "The Vinsmoke Family"],
   attribute: "strike",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [The Vinsmoke Family] type, draw 1 card.",
@@ -45,7 +45,7 @@ export const op07VinsmokeSanji061: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "The Vinsmoke Family",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

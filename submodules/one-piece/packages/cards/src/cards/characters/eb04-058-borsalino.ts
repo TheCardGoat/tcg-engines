@@ -32,7 +32,7 @@ export const eb04Borsalino058: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Navy Egghead"],
+  traits: ["Egghead", "Navy"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] If you have 2 or less Life cards, add up to 1 card from the top of your deck to the top of your Life cards.",

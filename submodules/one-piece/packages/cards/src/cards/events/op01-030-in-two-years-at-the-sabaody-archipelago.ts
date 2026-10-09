@@ -44,7 +44,7 @@ export const op01InTwoYearsAtTheSabaodyArchipelago030: EventCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

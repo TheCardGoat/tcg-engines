@@ -28,6 +28,30 @@ export const op17Marco015: CharacterCard = {
   effect:
     'If one of your Characters would be removed from the field by your opponent\'s effect, you may K.O. this Character instead.\n[On K.O.] You may trash 1 card with a type including "Whitebeard Pirates" from your hand: Play this Character card from your trash.',
   effects: {
+    replacementEffects: [
+      {
+        replacedEvent: "removeFromField",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+        },
+        source: "opponentEffect",
+        replacementAction: {
+          action: "ko",
+          target: {
+            player: "self",
+            zones: ["character"],
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        },
+      },
+    ],
     effects: [
       {
         trigger: "onKo",

@@ -32,7 +32,7 @@ export const op15Krieg001: LeaderCard = {
   setId: "OP15",
   power: 5000,
   life: 4,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "slash",
   effect:
     "[DON!! x1] [Opponent's Turn] If the only Characters on your field are {East Blue} type Characters, give all of your opponent's Characters -2000 power.\n[Activate: Main] [Once Per Turn] Rest up to 1 of your opponent's Characters that has 2 or more DON!! cards given.",
@@ -78,13 +78,20 @@ export const op15Krieg001: LeaderCard = {
             condition: "zoneCount",
             player: "self",
             zone: "character",
+            comparison: "gte",
+            value: 1,
+          },
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
             comparison: "eq",
             value: 0,
             filters: [
               {
                 filter: "trait",
                 value: "East Blue",
-                match: "includes",
+                match: "exact",
                 negate: true,
               },
             ],

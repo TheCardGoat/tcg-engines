@@ -24,6 +24,13 @@
   filter: drop-shadow(0 0 0.35rem var(--supporter-glow));
 }
 
+.supporter-player-name__device {
+  width: 0.9em;
+  height: 0.9em;
+  flex: 0 0 auto;
+  color: var(--board-muted, currentColor);
+}
+
 .supporter-player-name__text {
   min-width: 0;
   overflow: hidden;

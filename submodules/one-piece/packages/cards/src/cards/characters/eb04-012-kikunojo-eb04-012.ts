@@ -32,7 +32,7 @@ export const op14eb04KikunojoEb04012012: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 8000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[Activate:Main] [Once Per Turn] If this Character has played on this turn, set your {Land of Wano} type Leader as active.",
@@ -58,7 +58,7 @@ export const op14eb04KikunojoEb04012012: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

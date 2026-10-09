@@ -23,7 +23,7 @@ export const op10SanjuanWolf084: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Blackbeard Pirates Giant"],
+  traits: ["Giant", "Blackbeard Pirates"],
   attribute: "special",
   i18n: op10SanjuanWolf084I18n,
 };

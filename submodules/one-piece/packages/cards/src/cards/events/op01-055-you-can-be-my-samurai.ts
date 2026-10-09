@@ -38,7 +38,7 @@ export const op01YouCanBeMySamurai055: EventCard = {
   rarity: "C",
   setId: "OP01",
   cost: 1,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   effect: "[Main] You may rest 2 of your Characters: Draw 2 cards.",
   effects: {
     effects: [

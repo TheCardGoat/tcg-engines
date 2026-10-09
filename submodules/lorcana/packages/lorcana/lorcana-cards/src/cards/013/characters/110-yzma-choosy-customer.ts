@@ -29,9 +29,13 @@ export const yzmaChoosyCustomer: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_4beee54c6a964f8f8f0f1f14d52435e0",
+    tcgPlayer: "704619",
+  },
   text: [
     {
-      title: "Get This Right",
+      title: "GET THIS RIGHT",
       description: "When you play this character, each opponent loses 1 lore.",
     },
   ],

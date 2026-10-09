@@ -19,9 +19,25 @@ describe("OP17-014 Whitey Bay", () => {
     );
   });
 
-  test("is present on the field", () => {
-    const engine = OnePieceTestEngine.create({ character: ["OP17-014"], activeDon: 5 }, {});
-    const cardId = engine.findCardInZone("south", "character", "OP17-014");
-    expect(cardId).toBeDefined();
-  });
+  test.each([true, false])(
+    "opponent attack self-trash accepted=%s changes this battle only",
+    (accept) => {
+      const e = OnePieceTestEngine.create(
+        { character: ["OP17-014"], hand: [] },
+        {},
+        { activeSeat: "north", firstPlayer: "south" },
+      );
+      const bay = e.findCardInZone("south", "character", "OP17-014");
+      const life = e.getView("south").players.south.lifeCount;
+      e.asNorth().attack(e.leader("north"), e.leader("south"));
+      if (accept) e.asSouth().acceptOptional();
+      else e.asSouth().declineOptional();
+      const after = e.getView("south").players.south;
+      expect(after.lifeCount).toBe(life - (accept ? 0 : 1));
+      expect(after.characters.some((c) => c?.instanceId === bay)).toBe(!accept);
+      expect(after.trash.some((c) => c.instanceId === bay)).toBe(accept);
+      expect(after.leader.power).toBe(5000);
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

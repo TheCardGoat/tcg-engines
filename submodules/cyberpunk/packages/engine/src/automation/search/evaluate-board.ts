@@ -1,4 +1,12 @@
 import type { FilteredCardView, FilteredMatchView } from "../../view/filter.ts";
+import { gigPlanValue } from "../util/gig-plan.ts";
+import { evaluateLateGigRace, isLateGigRace } from "./gig-race.ts";
+import {
+  canAttackRivalThisTurn,
+  canAttackThisTurn,
+  hasCardRule,
+  isReadyBlocker,
+} from "../util/attack-readiness.ts";
 
 export interface BoardFeatures {
   gigRace: number;
@@ -10,6 +18,7 @@ export interface BoardFeatures {
   handSize: number;
   availableEddies: number;
   deckSafety: number;
+  gigSetup: number;
 }
 
 export interface BoardEvaluationWeights {
@@ -22,6 +31,7 @@ export interface BoardEvaluationWeights {
   handSize: number;
   availableEddies: number;
   deckSafety: number;
+  gigSetup: number;
 }
 
 export const DEFAULT_BOARD_EVALUATION_WEIGHTS: BoardEvaluationWeights = {
@@ -34,6 +44,7 @@ export const DEFAULT_BOARD_EVALUATION_WEIGHTS: BoardEvaluationWeights = {
   handSize: 8,
   availableEddies: 6,
   deckSafety: 2,
+  gigSetup: 1,
 };
 
 const TERMINAL_SCORE = 1_000_000;
@@ -52,10 +63,15 @@ export function evaluateBoard(
   const own = extractBoardFeatures(view, playerId);
   const rivalIds = Object.keys(view.players).filter((id) => id !== playerId);
   if (rivalIds.length === 0) return scoreFeatures(own, weights);
-  return Math.min(
-    ...rivalIds.map((rivalId) =>
-      scoreFeatureDelta(own, extractBoardFeatures(view, rivalId), weights),
-    ),
+  const late = isLateGigRace(view);
+  const positionalWeights = late ? { ...weights, gigRace: 0 } : weights;
+  return (
+    evaluateLateGigRace(view, playerId) +
+    Math.min(
+      ...rivalIds.map((rivalId) =>
+        scoreFeatureDelta(own, extractBoardFeatures(view, rivalId), positionalWeights),
+      ),
+    )
   );
 }
 
@@ -64,8 +80,13 @@ export function extractBoardFeatures(view: FilteredMatchView, playerId: string):
   if (!player) return emptyFeatures();
   const field = zoneCards(player.zones.field);
   const legends = zoneCards(player.zones.legendArea).filter((card) => !card.faceDown);
-  const readyUnits = field.filter((card) => isAttackReadyUnit(card));
-  const blockers = field.filter((card) => isAvailableBlocker(card));
+  const hasPlayedProgramThisTurn =
+    view.playedCardTypesThisTurn[playerId]?.includes("program") === true;
+  const readyUnits = field.filter((card) => canAttackThisTurn(card, hasPlayedProgramThisTurn));
+  const directAttackers = field.filter((card) =>
+    canAttackRivalThisTurn(card, hasPlayedProgramThisTurn),
+  );
+  const blockers = field.filter(isReadyBlocker);
   const gigCount = player.gigCount;
 
   return {
@@ -79,13 +100,14 @@ export function extractBoardFeatures(view: FilteredMatchView, playerId: string):
       (total, card) => total + 1 + Math.max(0, card.effectivePower) / 10,
       0,
     ),
-    attackPressure: readyUnits.reduce(
+    attackPressure: directAttackers.reduce(
       (total, card) => total + directStealPotential(card.effectivePower),
       0,
     ),
     handSize: zoneCount(player.zones.hand),
     availableEddies: player.availableEddies,
     deckSafety: Math.min(10, zoneCount(player.zones.deck)),
+    gigSetup: gigPlanValue(view, playerId),
   };
 }
 
@@ -117,7 +139,7 @@ function cardMaterialValue(card: FilteredCardView): number {
   const power = Math.max(0, card.effectivePower);
   const printedCost = Math.max(0, card.cost ?? 0);
   const attachedGear = card.attachedGearIds.length * 2;
-  const blocker = hasRule(card, "blocker") ? 3 : 0;
+  const blocker = hasCardRule(card, "blocker") ? 3 : 0;
   const immediateAttack =
     card.keywords.includes("adrenaline") || card.keywords.includes("goSolo") ? 2 : 0;
   const triggers = Math.min(3, card.triggerHints.length);
@@ -137,25 +159,6 @@ function zoneCount(zone: FilteredCardView[] | number | undefined): number {
   return Array.isArray(zone) ? zone.length : (zone ?? 0);
 }
 
-function isAttackReadyUnit(card: FilteredCardView): boolean {
-  if (card.type !== "unit" || card.faceDown || card.spent) return false;
-  if (card.grantedRules.includes("cantAttack")) return false;
-  return (
-    !card.hasLag ||
-    hasRule(card, "adrenaline") ||
-    card.grantedRules.includes("canAttackRivalOnPlayedTurn")
-  );
-}
-
-function isAvailableBlocker(card: FilteredCardView): boolean {
-  const isFieldUnit = card.type === "unit" || card.keywords.includes("goSolo");
-  return isFieldUnit && !card.faceDown && !card.spent && hasRule(card, "blocker");
-}
-
-function hasRule(card: FilteredCardView, rule: string): boolean {
-  return card.keywords.includes(rule) || card.grantedRules.includes(rule);
-}
-
 function emptyFeatures(): BoardFeatures {
   return {
     gigRace: 0,
@@ -167,5 +170,6 @@ function emptyFeatures(): BoardFeatures {
     handSize: 0,
     availableEddies: 0,
     deckSafety: 0,
+    gigSetup: 0,
   };
 }

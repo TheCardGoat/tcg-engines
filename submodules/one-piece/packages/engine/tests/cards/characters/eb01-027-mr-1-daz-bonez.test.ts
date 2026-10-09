@@ -12,7 +12,7 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
-describe("EB01-027 Mr. 1 (Daz.Bonez)", () => {
+describe("EB01-027 Mr.1(Daz.Bonez)", () => {
   test("draws then trashes while counting only complete Event pairs for power", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op01Crocodile062,
@@ -35,6 +35,9 @@ describe("EB01-027 Mr. 1 (Daz.Bonez)", () => {
     engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [selectedId] }, "south");
 
     const view = engine.getView("south");
+    expect(view.players.south.characters.find((card) => card?.instanceId === mr1Id)?.name).toBe(
+      "Mr.1(Daz.Bonez)",
+    );
     expect(view.players.south.hand).toHaveLength(2);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(selectedId);
     expect(view.players.south.characters.find((card) => card?.instanceId === mr1Id)?.power).toBe(

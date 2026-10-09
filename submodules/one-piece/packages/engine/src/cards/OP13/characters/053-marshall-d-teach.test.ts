@@ -83,4 +83,18 @@ describe("OP13-053 Marshall.D.Teach", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(lifeId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("trashing the attacker itself still draws one and ends the battle without Life damage", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [{ card: op13MarshallDTeach053, playedOnTurn: 0 }],
+      deck: [eb01Doma005, eb01Fourtricks025],
+    });
+    const source = engine.findCardInZone("south", "character", op13MarshallDTeach053);
+    const drawn = engine.findCardInZone("south", "deck", eb01Doma005);
+    engine.asSouth().attack(source, engine.leader("north"));
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(source);
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([drawn]);
+    expect(engine.getView("south").players.north.lifeCount).toBe(4);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

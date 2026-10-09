@@ -114,10 +114,10 @@ describe("Sisu - Uniting Dragon", () => {
     });
 
     it("stops repeating when a non-dragon is revealed", () => {
-      // The first deck entry is the top card, so nonDragon is revealed first.
+      // The last fixture entry is the top card, so nonDragon is revealed first.
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
         play: [sisuUnitingDragon],
-        deck: [nonDragon, dragonOne],
+        deck: [dragonOne, nonDragon],
       });
 
       expect(testEngine.asPlayerOne().quest(sisuUnitingDragon)).toBeSuccessfulCommand();

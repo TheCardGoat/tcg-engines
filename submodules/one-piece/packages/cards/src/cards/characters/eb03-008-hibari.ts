@@ -30,7 +30,7 @@ export const eb03Hibari008: CharacterCard = {
   setId: "EB03",
   cost: 3,
   power: 5000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "ranged",
   effect:
     "[On Play]/[When Attacking] Up to 1 of your {SWORD} type Leader or Character cards can also attack active Characters during this turn.\n[Activate: Main] [Once Per Turn] Give up to 1 of your opponent's Characters -1000 power during this turn.",
@@ -52,7 +52,7 @@ export const eb03Hibari008: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -76,7 +76,7 @@ export const eb03Hibari008: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

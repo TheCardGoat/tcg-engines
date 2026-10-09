@@ -23,7 +23,7 @@ export const op11MissSarahebi087: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "wisdom",
   i18n: op11MissSarahebi087I18n,
 };

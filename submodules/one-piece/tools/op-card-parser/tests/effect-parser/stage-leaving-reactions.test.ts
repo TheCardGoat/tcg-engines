@@ -34,7 +34,7 @@ describe("Stage leave-field reactions", () => {
       eventFilter: {
         player: "self",
         causedBy: "opponent",
-        filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+        filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
       },
       conditions: [{ condition: "turn", value: "opponent" }],
       costs: [{ cost: "restThisCard" }],

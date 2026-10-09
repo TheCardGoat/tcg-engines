@@ -23,7 +23,7 @@ export const op01GeckoMoria068: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] This Character gains [Double Attack] if you have 5 or more cards in your hand. (This card deals 2 damage.)",

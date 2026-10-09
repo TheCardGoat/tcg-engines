@@ -353,6 +353,10 @@
   "sim.inkwell.dialog.summary": "{matchCount} / {totalCount} matches",
   "sim.inkwell.playerOne": "Player One",
   "sim.inkwell.playerTwo": "Player Two",
+  "sim.inkDropsBadge.instructionStart": "click to start paying with ink drops",
+  "sim.inkDropsBadge.instructionStop": "click to stop paying with ink drops",
+  "sim.inkDropsBadge.countOne": "{count} ink drop",
+  "sim.inkDropsBadge.countMany": "{count} ink drops",
   "sim.hand.count": "{count} cards",
   "sim.hand.hide": "Hide hand",
   "sim.hand.returnToHand": "Return to hand",
@@ -582,6 +586,8 @@
   "sim.actions.selectionSummary.singer": "Singer",
   "sim.actions.selectionSummary.source": "Source",
   "sim.actions.selectionSummary.target": "Target",
+  "sim.card.tags.adventurous.label": "Adventurous",
+  "sim.card.tags.adventurous.tooltip": "Adventurous: This character can't challenge and must quest if able.",
   "sim.card.tags.atLocation.label": "At Location",
   "sim.card.tags.atLocation.tooltip": "This character is currently at a location.",
   "sim.card.tags.bodyguard.label": "Bodyguard",
@@ -710,5 +716,8 @@
   "sim.settings.openAccount": "Open account settings",
   "practice_mode_self_title": "Play both sides",
   "practice_mode_self_controlling": "Controlling Player {player}",
-  "practice_mode_self_status": "The board follows the player making the next decision."
+  "practice_mode_self_status": "The board follows the player making the next decision.",
+  "sim.effect.canChallengeReady": "Can challenge ready characters",
+  "sim.support.openTriageLabel": "View bug report",
+  "sim.support.dismissReminderLabel": "Dismiss feedback reminder for one week"
 }

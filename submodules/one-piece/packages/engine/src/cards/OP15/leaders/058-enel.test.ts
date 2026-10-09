@@ -55,4 +55,23 @@ describe("OP15-058 Enel", () => {
     expect(south.characters.find((card) => card?.instanceId === domaId)?.attachedDon).toBe(4);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("skipping both DON additions still gives existing rested DON to a Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op15Enel058, character: [eb01Doma005], restedDon: 2, donDeckCount: 4 },
+      {},
+    );
+    engine.asSouth().activateMain(engine.leader("south"));
+    engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    expect(engine.getView("south").players.south.characters[0]?.attachedDon).toBe(2);
+    expect(engine.getView("south").players.south.leader?.attachedDon).toBe(0);
+    expect(engine.getView("south").players.south.donDeckCount).toBe(4);
+    engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: engine.leader("south"),
+      trigger: "activateMain",
+    });
+  });
 });

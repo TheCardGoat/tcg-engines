@@ -23,7 +23,7 @@ export const stitchCarefreeSnowboarderEpic: CharacterCard = {
   franchise: "Lilo and Stitch",
   set: "011",
   cardNumber: 207,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 4,
@@ -32,6 +32,7 @@ export const stitchCarefreeSnowboarderEpic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_adca393d2367497aac99f2c4dd29b8ce",
+    tcgPlayer: "658221",
   },
   text: [
     {

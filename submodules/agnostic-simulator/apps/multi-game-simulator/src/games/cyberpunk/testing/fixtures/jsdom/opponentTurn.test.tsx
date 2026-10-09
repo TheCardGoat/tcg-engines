@@ -29,19 +29,9 @@ async function expectOpponentTurnState(pom: CyberpunkSimulatorPom): Promise<void
   await pom.expectBoardMode(CYBERPUNK_P2, "select-action");
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectPendingChoiceType(CYBERPUNK_P2, null);
-
-  await pom.expectHandSize(CYBERPUNK_P1, 3);
-  await pom.expectFieldSize(CYBERPUNK_P1, 2);
-  await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 2);
-  await pom.expectFixerDiceCount(CYBERPUNK_P1, 6);
-  await pom.expectGigCount(CYBERPUNK_P1, 0);
-  await pom.expectEddies(CYBERPUNK_P1, 5);
-
-  await pom.expectFieldSize(CYBERPUNK_P2, 2);
-  await pom.expectFaceDownLegendsCount(CYBERPUNK_P2, 0);
-  await pom.expectFixerDiceCount(CYBERPUNK_P2, 5);
-  await pom.expectGigCount(CYBERPUNK_P2, 1);
-  await pom.expectEddies(CYBERPUNK_P2, 3);
+  // Zone counts are covered by expectStructuralState; the spectator must see
+  // the rival's redacted legend as a face-down back.
+  await pom.expectFaceDownLegendsCount(CYBERPUNK_P2, 1);
 }
 
 describe("opponentTurn fixture behavior", () => {

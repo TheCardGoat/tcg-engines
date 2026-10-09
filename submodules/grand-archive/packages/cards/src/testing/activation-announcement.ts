@@ -22,6 +22,7 @@ export type GrandArchiveAnnouncementPreparation =
   | "stack-target"
   | "attacking-enemy-ally"
   | "stack-action"
+  | "stack-spell"
   | "stack-ability";
 
 export function positiveFilterLeaves(
@@ -43,6 +44,13 @@ function selectionMinimum(
   const choose = declaration.choose;
   if (typeof choose === "undefined") throw new Error("Mode declaration lacks a choose count.");
   switch (choose.kind) {
+    case "conditional":
+      if (choose.condition.kind !== "activation-state" || choose.condition.state !== "imbued")
+        throw new Error("Conditional modes need an explicit fixture derivation.");
+      return selectionMinimum(
+        { choose: announcement.activationImbued ? choose.then : choose.else },
+        announcement,
+      );
     case "exactly":
     case "at-least":
       if (typeof choose.amount === "number") return choose.amount;
@@ -65,7 +73,7 @@ function selectionMinimum(
     case "any-number":
       return 0;
     default:
-      throw new Error(`Mode selection ${choose.kind} needs an explicit fixture derivation.`);
+      throw new Error("Mode selection needs an explicit fixture derivation.");
   }
 }
 

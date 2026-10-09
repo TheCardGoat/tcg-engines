@@ -233,6 +233,21 @@ export interface EnablePlayFromDiscardEffect {
   source?: "source" | "trigger-subject";
   cardType?: CardType | "song" | "floodborn";
   duration?: EffectDuration;
+  /** Cards played via this permission enter play exerted (Remember Me). */
+  entersExerted?: boolean;
+  /**
+   * "all-cards" makes the permission player-wide: every card matching cardType
+   * is playable from the discard (e.g. Remember Me: "you may play characters
+   * from your discard"). Defaults to the source card only.
+   */
+  scope?: "source" | "all-cards";
+  /**
+   * With scope "all-cards": each card played via this permission records its
+   * name, and further plays of an already-played name are refused
+   * (Remember Me: "you can't play characters with the same name as characters
+   * you played this way this turn").
+   */
+  uniqueByName?: boolean;
 }
 
 // ============================================================================

@@ -23,7 +23,7 @@ export const op17Gerd081: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 2000,
-  traits: ["Giant Elbaph New Giant Pirates"],
+  traits: ["Giant", "Elbaph", "New Giant Pirates"],
   attribute: "slash",
   effect:
     "If your Leader has the {Elbaph} type, this Character gains +12 cost.\n[On Play] You may trash 1 card from your hand: Add up to 1 Character card with a cost of 8 or less other than [Gerd] from your trash to your hand.",
@@ -74,7 +74,7 @@ export const op17Gerd081: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Elbaph",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

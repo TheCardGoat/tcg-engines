@@ -22,6 +22,7 @@ import Sparkles from "@lucide/svelte/icons/sparkles";
 import Star from "@lucide/svelte/icons/star";
 import Trash2 from "@lucide/svelte/icons/trash-2";
 import type { Snippet } from "svelte";
+import { mergeProps } from "bits-ui";
 import PlayerTimer from "./PlayerTimer.svelte";
 
 interface PlayerInfoProps {
@@ -308,8 +309,7 @@ function handleSupportClick() {
                   class="settings-trigger"
                   aria-label={m["sim.player.support.openAria"]({})}
                   title={m["sim.player.support.openAria"]({})}
-                  onclick={handleSupportClick}
-                  {...props}
+                  {...mergeProps(props, { onclick: handleSupportClick })}
                 >
                   <Bug />
                 </button>

@@ -23,7 +23,7 @@ export const eb02Crocodile023: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[Your Turn] [Once Per Turn] When your opponent's Character is returned to the owner's hand by your effect, look at 3 cards from the top of your deck and place them at the top or bottom of the deck in any order.",

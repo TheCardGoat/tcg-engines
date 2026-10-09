@@ -1,8 +1,41 @@
-import type { Action, Cost, GroupedPlayAction, PlayAction } from "@tcg/op-types";
+import {
+  scheduledActions,
+  delayedTargetIsCurrent,
+  delayedActionChain,
+  delayedSourceIsCurrent,
+} from "./delayed-identity.ts";
+import {
+  beginDonIdentityProcess,
+  endDonIdentityProcess,
+  donIdentitiesAt,
+  donIdentityLabel,
+  requiresDonIdentityChoice,
+  locateDonIdentity,
+  moveDonIdentities,
+  donIdentitiesForVirtualIds,
+  virtualIdsForDonIdentities,
+  transferDonIdentities,
+} from "../engine/don-state.ts";
+import { observeOptionalLoop } from "../engine/optional-loop.ts";
+import { currentEffectTriggerEvent } from "./trigger-context.ts";
+import {
+  currentReplacementProcess,
+  withReplacementProcess,
+  extendReplacementProcess,
+  replacementProcessKey,
+} from "./replacement-process.ts";
+import type {
+  Action,
+  Cost,
+  Duration,
+  EffectBlock,
+  GroupedPlayAction,
+  PlayAction,
+} from "@tcg/op-types";
 import {
   basePower,
   cardName,
-  cardNames,
+  cardsShareName,
   effectBlocksFor,
   effectBlocksForInstance,
   emitEvent,
@@ -13,21 +46,27 @@ import {
   enqueueResolution,
   getCardForInstance,
   getCardCost,
+  getBaseCost,
   getCardPower,
+  getSetBasePower,
   getInstance,
   getKeywords,
   getPlayer,
+  donCardsOnField,
   hasFlagModifier,
   isDonActivationByCharacterEffectPrevented,
   recordCapabilityIssue,
   restCard,
   otherSeat,
+  publishDonGiven,
   shuffle,
 } from "../shared.ts";
 import {
+  completedLifeReplacementMoves,
+  replacedLifeToHandIds,
+  promptForLifeReplacementOrder,
   addDonFromDeck,
   addModifier,
-  consumeNextPlayCostModifiers,
   createChoicePrompt,
   drawCards,
   enqueueJudgePrompt,
@@ -37,10 +76,15 @@ import {
 } from "../state.ts";
 import type {
   EffectBlockContinuation,
+  RestCostProcess,
   EffectPlayReplacementContinuation,
   MatchSeat,
+  SimultaneousStateChangeProcess,
+  DonTransferProcess,
   MatchState,
   PromptOption,
+  PromptResolutionContext,
+  PromptState,
   ReturnToDeckContinuation,
   ReturnToDeckOwnerGroup,
 } from "../types.ts";
@@ -53,9 +97,13 @@ import {
   isRestPreventedByPermanentEffect,
 } from "./permanent.ts";
 import {
+  unavailableRemovalPayments,
   findKoReplacement,
-  findRemoveFromFieldReplacement,
-  findRestReplacement,
+  findKoReplacements,
+  replacementOptionId,
+  replacementChoiceLabel,
+  findRemoveFromFieldReplacements,
+  findRestReplacements,
   restActionCandidateIds,
 } from "./replacements.ts";
 import type { TargetFilter } from "@tcg/op-types";
@@ -77,7 +125,7 @@ type CardCostOption = PlayCardCost | TrashCardCost["options"][number];
 type TrashFromHandCost = Extract<Cost, { cost: "trashFromHand" }>;
 type EffectRemovalAction = Extract<
   Action,
-  { action: "returnToHand" | "returnToDeck" | "trashFromField" }
+  { action: "returnToHand" | "returnToDeck" | "trashFromField" | "addToLife" }
 >;
 
 function delayedActionMovesSource(action: Action): boolean {
@@ -136,6 +184,18 @@ function randomizedConcealedHandOrder(
   });
 }
 
+function effectCanRestCard(
+  state: MatchState,
+  instanceId: string,
+  sourceInstanceId: string,
+): boolean {
+  return (
+    !getInstance(state, instanceId).rested &&
+    !hasFlagModifier(state, instanceId, "cannotBeRested") &&
+    !isRestPreventedByPermanentEffect(state, instanceId, sourceInstanceId)
+  );
+}
+
 export function restCharacterByEffect(
   state: MatchState,
   instanceId: string,
@@ -143,7 +203,10 @@ export function restCharacterByEffect(
   sourceInstanceId: string,
 ): boolean {
   const instance = getInstance(state, instanceId);
-  if (!restCard(state, instanceId, effectController, sourceInstanceId)) {
+  if (
+    !effectCanRestCard(state, instanceId, sourceInstanceId) ||
+    !restCard(state, instanceId, effectController, sourceInstanceId)
+  ) {
     return false;
   }
   if (instance.zone === "character") {
@@ -164,39 +227,503 @@ export function restCharacterByEffect(
   return true;
 }
 
-function promptForEffectRestReplacement(
+/** Source choices stay physical while a simultaneous instruction holds DON references. */
+export function continueDonTransfers(state: MatchState, process: DonTransferProcess): boolean {
+  const used = new Set<string>();
+  for (const [index, move] of process.moves.entries()) {
+    const live = donIdentitiesAt(state, move.from);
+    if (move.selected) {
+      if (
+        move.selected.length !== move.count ||
+        new Set(move.selected).size !== move.selected.length ||
+        move.selected.some(
+          (id) => used.has(id) || !move.candidates.includes(id) || !live.includes(id),
+        )
+      )
+        return false;
+      move.selected.forEach((id) => used.add(id));
+      continue;
+    }
+    const available = move.candidates.filter((id) => live.includes(id) && !used.has(id));
+    if (available.length < move.count) return false;
+    if (!requiresDonIdentityChoice(state, available, move.count)) {
+      move.selected = available.slice(0, move.count);
+      move.selected.forEach((id) => used.add(id));
+      continue;
+    }
+    createChoicePrompt(state, {
+      choiceKind: "costPayment",
+      seat: process.controller,
+      label: `Choose ${move.count} DON!! card(s) to move.`,
+      details: "Choose the specific DON!! cards.",
+      sourceCardId: getInstance(state, process.sourceInstanceId).cardId,
+      sourceInstanceId: process.sourceInstanceId,
+      eventId: null,
+      options: available.map((id) => ({ id, value: id, label: donIdentityLabel(state, id) })),
+      minSelections: move.count,
+      maxSelections: move.count,
+      context: { resource: "don" },
+      resolutionContext: { intent: "effectDonTransferSelection", process, index },
+    });
+    return true;
+  }
+  for (const move of process.moves) {
+    moveDonIdentities(state, move.selected!, move.to);
+    if ("attachedTo" in move.from)
+      getInstance(state, move.from.attachedTo).attachedDon -= move.count;
+    else
+      getPlayer(state, move.from.seat)[move.from.area === "active" ? "activeDon" : "restedDon"] -=
+        move.count;
+    if ("attachedTo" in move.to) getInstance(state, move.to.attachedTo).attachedDon += move.count;
+    else
+      getPlayer(state, move.to.seat)[move.to.area === "active" ? "activeDon" : "restedDon"] +=
+        move.count;
+  }
+  for (const move of process.moves)
+    if (move.count > 0 && "attachedTo" in move.to && !("attachedTo" in move.from))
+      publishDonGiven(
+        state,
+        move.to.attachedTo,
+        move.count,
+        process.controller,
+        process.sourceInstanceId,
+      );
+  for (const move of process.moves) {
+    if (move.count === 0) continue;
+    const destination =
+      "attachedTo" in move.to
+        ? `to ${cardName(getCardForInstance(state, move.to.attachedTo))}`
+        : `to the ${move.to.area} cost area`;
+    emitLog(
+      state,
+      process.controller,
+      `${effectSourceName(state, process.sourceInstanceId)} moves ${move.count} DON!! ${destination}.`,
+      {
+        sourceCardId: getInstance(state, process.sourceInstanceId).cardId,
+        sourceInstanceId: process.sourceInstanceId,
+        visibility: "public",
+      },
+    );
+  }
+  for (const action of [...(process.afterActions ?? [])].reverse())
+    enqueueResolution(
+      state,
+      {
+        kind: "effectAction",
+        controller: process.controller,
+        sourceInstanceId: process.sourceInstanceId,
+        action,
+        effectTriggerEvent: process.effectTriggerEvent,
+      },
+      { next: true },
+    );
+  return true;
+}
+
+function donTransferMove(
+  state: MatchState,
+  from: DonTransferProcess["moves"][number]["from"],
+  to: DonTransferProcess["moves"][number]["to"],
+  count: number,
+): DonTransferProcess["moves"][number] {
+  return { from, to, count, candidates: donIdentitiesAt(state, from) };
+}
+
+/** Resolve one explicit simultaneous instruction, not an ordinary action sequence. */
+export function continueSimultaneousStateChange(
+  state: MatchState,
+  process: SimultaneousStateChangeProcess,
+): boolean {
+  const { controller, sourceInstanceId } = process;
+  for (const [groupIndex, group] of process.groups.entries()) {
+    if (group.selectedIds !== undefined) continue;
+    if (
+      group.maximum === 0 ||
+      (group.minimum === group.candidateIds.length && group.maximum === group.minimum)
+    ) {
+      group.selectedIds = [...group.candidateIds];
+      continue;
+    }
+    createChoicePrompt(state, {
+      choiceKind: "selectTargets",
+      seat: group.chooser,
+      label: `Choose cards to ${process.action.groups[group.index]!.state === "rested" ? "rest" : "set active"}.`,
+      details: "All choices are made before these simultaneous state changes occur.",
+      sourceCardId: getInstance(state, sourceInstanceId).cardId,
+      sourceInstanceId,
+      eventId: null,
+      options: group.candidateIds.map((id) => ({
+        id,
+        value: id,
+        ...(id.startsWith("don-token:") ? {} : { targetId: id }),
+        label: id.startsWith("don-token:")
+          ? donIdentityLabel(state, id)
+          : cardName(getCardForInstance(state, id)),
+      })),
+      minSelections: group.minimum,
+      maxSelections: group.maximum,
+      context: {},
+      resolutionContext: { intent: "effectSimultaneousStateSelection", process, groupIndex },
+    });
+    return false;
+  }
+  if (!process.winners) {
+    const winners = new Map<string, boolean>();
+    for (const group of process.groups) {
+      const rested = process.action.groups[group.index]!.state === "rested";
+      for (const id of group.selectedIds ?? []) winners.set(id, rested || winners.get(id) === true);
+    }
+    process.winners = [...winners].map(([id, rested]) => ({ id, rested }));
+  }
+  while (process.replacementIndex < process.winners.length) {
+    const winner = process.winners[process.replacementIndex]!;
+    const snapshot = process.snapshots[winner.id]!;
+    const card = state.cards[winner.id];
+    if (
+      winner.rested &&
+      snapshot.canRest &&
+      card?.zone === snapshot.zone &&
+      card.zoneChangeCounter === snapshot.zoneChangeCounter
+    ) {
+      const action: Extract<Action, { action: "rest" }> = {
+        action: "rest",
+        target: { player: "any", zones: ["leader", "character", "stage"], count: { amount: 1 } },
+      };
+      if (
+        promptForEffectRestReplacement(
+          state,
+          winner.id,
+          controller,
+          sourceInstanceId,
+          action,
+          [],
+          process,
+        )
+      )
+        return false;
+    }
+    process.replacementIndex += 1;
+  }
+  // Commit all original results before publishing any new activation timing.
+  const restedIds: string[] = [];
+  const activeIds: string[] = [];
+  for (const winner of process.winners) {
+    const snapshot = process.snapshots[winner.id]!;
+    const card = state.cards[winner.id];
+    if (snapshot.donSeat) {
+      const location = locateDonIdentity(state, winner.id);
+      if (!location || "attachedTo" in location || location.seat !== snapshot.donSeat) continue;
+      if (
+        (winner.rested && !snapshot.canRest) ||
+        (!winner.rested && !snapshot.canActivate) ||
+        location.area === (winner.rested ? "rested" : "active")
+      )
+        continue;
+      const player = getPlayer(state, location.seat);
+      if (winner.rested) {
+        player.activeDon--;
+        player.restedDon++;
+      } else {
+        player.restedDon--;
+        player.activeDon++;
+      }
+      moveDonIdentities(state, [winner.id], {
+        seat: location.seat,
+        area: winner.rested ? "rested" : "active",
+      });
+      continue;
+    }
+    if (
+      winner.replaced ||
+      !card ||
+      card.zone !== snapshot.zone ||
+      card.zoneChangeCounter !== snapshot.zoneChangeCounter
+    )
+      continue;
+    if (winner.rested) {
+      if (!snapshot.canRest || card.rested) continue;
+      card.rested = true;
+      restedIds.push(winner.id);
+    } else if (card.rested) {
+      card.rested = false;
+      activeIds.push(winner.id);
+    }
+  }
+  for (const instanceId of restedIds) {
+    const event = {
+      instanceId,
+      effectController: controller,
+      sourceInstanceId,
+      targetInstanceId: instanceId,
+    };
+    enqueueInPlayEffectsForTrigger(state, "whenBecomesRested", event);
+    if (state.cards[instanceId]?.zone === "character")
+      enqueueInPlayEffectsForTrigger(state, "whenCharacterRestedByEffect", event, [controller]);
+  }
+  for (const [ids, verb] of [
+    [restedIds, "rests"],
+    [activeIds, "sets active"],
+  ] as const) {
+    if (ids.length)
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} ${verb} ${targetNames(state, [...ids])}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds: [...ids],
+          visibility: "public",
+        },
+      );
+  }
+  if (process.donProcessId) endDonIdentityProcess(state, process.donProcessId);
+  return true;
+}
+
+function beginSimultaneousStateChange(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  action: Extract<Action, { action: "simultaneousStateChange" }>,
+  allowDonFieldQualifiers = false,
+): boolean {
+  const process: SimultaneousStateChangeProcess = {
+    sourceInstanceId,
+    controller,
+    action,
+    groups: [],
+    snapshots: {},
+    replacementIndex: 0,
+    effectTriggerEvent: currentEffectTriggerEvent(state),
+  };
+  if (action.groups.some((group) => group.target.zones.includes("costArea")))
+    process.donProcessId = beginDonIdentityProcess(state);
+  for (const [index, group] of action.groups.entries()) {
+    const fieldZones = group.target.zones.filter((zone) => zone !== "costArea");
+    const pool = fieldZones.length
+      ? candidatePoolForTarget(state, controller, sourceInstanceId, {
+          ...group.target,
+          zones: fieldZones,
+        })
+      : { supported: true, candidateIds: [] as string[] };
+    if (group.target.zones.includes("costArea")) {
+      const seats =
+        group.target.player === "both" || group.target.player === "any"
+          ? [controller, otherSeat(controller)]
+          : [group.target.player === "opponent" ? otherSeat(controller) : controller];
+      for (const seat of seats)
+        for (const area of ["active", "rested"] as const) {
+          if (
+            (group.target.filters ?? []).some(
+              (filter) => filter.filter === "state" && filter.value !== area,
+            )
+          )
+            continue;
+          for (const token of donIdentitiesAt(state, { seat, area })) {
+            pool.candidateIds.push(token);
+            process.snapshots[token] ??= {
+              zone: "costArea",
+              zoneChangeCounter: 0,
+              canRest: area === "active",
+              canActivate: !isDonActivationByCharacterEffectPrevented(
+                state,
+                sourceInstanceId,
+                seat,
+              ),
+              donSeat: seat,
+              cost: 0,
+              power: 0,
+            };
+          }
+        }
+    }
+    if (
+      !pool.supported ||
+      (group.target.zones.includes("costArea") &&
+        !allowDonFieldQualifiers &&
+        (group.target.self ||
+          group.target.totalConstraint ||
+          (group.target.filters ?? []).some((filter) => filter.filter !== "state"))) ||
+      group.target.zones.some(
+        (zone) => !["leader", "character", "stage", "costArea"].includes(zone),
+      )
+    ) {
+      if (process.donProcessId) endDonIdentityProcess(state, process.donProcessId);
+      const details = "This simultaneous state-change target is not supported.";
+      const issue = recordCapabilityIssue(state, {
+        kind: "unsupportedTarget",
+        code: "simultaneous-state-target",
+        actor: controller,
+        sourceCardId: getInstance(state, sourceInstanceId).cardId,
+        sourceInstanceId,
+        eventId: null,
+        details,
+      });
+      enqueueJudgePrompt(
+        state,
+        sourceInstanceId,
+        "Judge review: simultaneous state change",
+        details,
+        { issueId: issue.id },
+      );
+      return false;
+    }
+    const maximum =
+      group.target.count.amount === "all"
+        ? pool.candidateIds.length
+        : Math.min(
+            resolveTargetCount(state, controller, sourceInstanceId, group.target),
+            pool.candidateIds.length,
+          );
+    process.groups.push({
+      index,
+      chooser: group.target.chosenBy === "opponent" ? otherSeat(controller) : controller,
+      candidateIds: pool.candidateIds,
+      maximum,
+      minimum: group.target.count.upTo || group.target.totalConstraint ? 0 : maximum,
+    });
+    for (const id of pool.candidateIds) {
+      if (id.startsWith("don-token:")) continue;
+      const card = getInstance(state, id);
+      process.snapshots[id] ??= {
+        zone: card.zone,
+        zoneChangeCounter: card.zoneChangeCounter,
+        canRest: effectCanRestCard(state, id, sourceInstanceId),
+        cost: getCardCost(state, id),
+        power: getCardPower(state, id),
+      };
+    }
+  }
+  // 1-3-4: both players' choices belong to the same simultaneous instruction.
+  process.groups.sort(
+    (a, b) => Number(b.chooser === state.activeSeat) - Number(a.chooser === state.activeSeat),
+  );
+  return continueSimultaneousStateChange(state, process);
+}
+
+export function promptForEffectRestReplacement(
   state: MatchState,
   targetId: string,
   controller: MatchSeat,
   sourceInstanceId: string,
   action: Extract<Action, { action: "rest" }>,
   remainingTargetIds: string[],
+  simultaneousStateChange?: SimultaneousStateChangeProcess,
+  restCostProcess?: RestCostProcess,
 ): boolean {
   const target = getInstance(state, targetId);
-  if (target.zone !== "character") {
+  if (
+    target.zone !== "character" ||
+    (!simultaneousStateChange && !effectCanRestCard(state, targetId, sourceInstanceId))
+  ) {
     return false;
   }
-  const replacement = findRestReplacement(state, targetId, controller, sourceInstanceId);
-  if (!replacement) {
-    return false;
+  const replacements = findRestReplacements(state, targetId, controller, sourceInstanceId);
+  const replacement = replacements[0];
+  if (!replacement) return false;
+  const restAction = {
+    ...action,
+    target: { ...action.target, count: { amount: remainingTargetIds.length } },
+  };
+  if (replacement.effect.mandatory && replacements.length === 1) {
+    if (restCostProcess) {
+      restCostProcess.incomplete = true;
+      restCostProcess.index += 1;
+      enqueueResolution(
+        state,
+        {
+          kind: "effectRestCostContinue",
+          process: restCostProcess,
+          replacementProcess: currentReplacementProcess(state),
+        },
+        { next: true },
+      );
+    }
+    if (simultaneousStateChange) {
+      simultaneousStateChange.winners![simultaneousStateChange.replacementIndex]!.replaced = true;
+      simultaneousStateChange.replacementIndex += 1;
+      enqueueResolution(
+        state,
+        { kind: "effectStateChangeContinue", process: simultaneousStateChange },
+        { next: true },
+      );
+    }
+    if (remainingTargetIds.length)
+      enqueueResolution(
+        state,
+        {
+          kind: "effectAction",
+          sourceInstanceId,
+          controller,
+          action: restAction,
+          selectedTargetIds: remainingTargetIds,
+        },
+        { next: true },
+      );
+    getInstance(state, replacement.sourceInstanceId).usedEffectKeys.push(replacement.effectKey);
+    enqueueResolution(
+      state,
+      {
+        kind: "effectAction",
+        sourceInstanceId: replacement.sourceInstanceId,
+        controller: replacement.controller,
+        action: replacement.effect.replacementAction,
+        previousActionTargetIds: [targetId],
+        replacementProcess: extendReplacementProcess(
+          state,
+          replacement.sourceInstanceId,
+          replacement.effectKey,
+        ),
+      },
+      { next: true },
+    );
+    return true;
   }
+  const replacementChoices = replacements.map((candidate) => ({
+    id: replacementOptionId(candidate),
+    sourceInstanceId: candidate.sourceInstanceId,
+    replacementEffectIndex: candidate.replacementEffectIndex,
+    replacementEffectKey: candidate.effectKey,
+    replacementAction: candidate.effect.replacementAction,
+    replacementTargetIds: [targetId],
+  }));
+  const required = replacements.some((candidate) => candidate.effect.mandatory);
   createChoicePrompt(state, {
-    choiceKind: "confirm",
+    choiceKind: replacements.length > 1 ? "chooseOption" : "confirm",
+    replacementGroup: replacements.map((candidate) =>
+      replacementProcessKey(state, candidate.sourceInstanceId, candidate.effectKey),
+    ),
     seat: replacement.controller,
     label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace being rested.`,
-    details: "Apply the replacement effect instead of resting this Character?",
+    details: "Apply a replacement effect instead of resting this Character?",
     sourceCardId: getInstance(state, replacement.sourceInstanceId).cardId,
     sourceInstanceId: replacement.sourceInstanceId,
     eventId: null,
-    options: [
-      { id: "no", label: "Rest this Character", value: "no" },
-      { id: "yes", label: "Apply replacement", value: "yes" },
-    ],
+    options:
+      replacements.length > 1
+        ? [
+            ...(!required ? [{ id: "no", label: "Decline these replacements", value: "no" }] : []),
+            ...replacementChoices.map((choice) => ({
+              id: choice.id,
+              value: choice.id,
+              label: replacementChoiceLabel(state, choice.sourceInstanceId),
+              targetId: choice.sourceInstanceId,
+            })),
+          ]
+        : [
+            { id: "no", label: "Decline replacement", value: "no" },
+            { id: "yes", label: "Apply replacement", value: "yes" },
+          ],
     minSelections: 1,
     maxSelections: 1,
     context: { action: "rest", replacement: true },
     resolutionContext: {
       intent: "effectRestReplacement",
+      restCostProcess,
+      simultaneousStateChange,
+      replacementRequired: required,
+      replacementChoices: replacements.length > 1 ? replacementChoices : undefined,
       targetId,
       controller: replacement.controller,
       replacementSourceInstanceId: replacement.sourceInstanceId,
@@ -205,13 +732,7 @@ function promptForEffectRestReplacement(
       replacementAction: replacement.effect.replacementAction,
       restSourceInstanceId: sourceInstanceId,
       restController: controller,
-      restAction: {
-        ...action,
-        target: {
-          ...action.target,
-          count: { amount: remainingTargetIds.length },
-        },
-      },
+      restAction,
       remainingTargetIds,
     },
   });
@@ -236,7 +757,7 @@ export function koCharacterByEffect(
         visibility: "public",
       },
     );
-    return;
+    return false;
   }
   const target = getInstance(state, targetId);
   const owner = target.owner;
@@ -253,6 +774,12 @@ export function koCharacterByEffect(
   // card is trashed, then resolve while the card is in the trash.
   enqueueKoEffectsForTrigger(state, targetId, effectController, triggerEvent);
   if (target.attachedDon > 0) {
+    transferDonIdentities(
+      state,
+      { attachedTo: targetId },
+      { seat: effectController, area: "rested" },
+      target.attachedDon,
+    );
     getPlayer(state, effectController).restedDon += target.attachedDon;
     target.attachedDon = 0;
   }
@@ -273,6 +800,7 @@ export function koCharacterByEffect(
       visibility: "public",
     },
   );
+  return true;
 }
 
 function effectSourceName(state: MatchState, sourceInstanceId: string): string {
@@ -320,6 +848,12 @@ export function returnAttachedDonToCostArea(state: MatchState, instanceId: strin
   if (instance.zone !== "character" || instance.attachedDon === 0) {
     return;
   }
+  transferDonIdentities(
+    state,
+    { attachedTo: instanceId },
+    { seat: instance.controller, area: "rested" },
+    instance.attachedDon,
+  );
   getPlayer(state, instance.controller).restedDon += instance.attachedDon;
   instance.attachedDon = 0;
 }
@@ -333,8 +867,17 @@ export function promptForEffectRemovalReplacement(
   remainingTargetIds: string[],
   returnToDeckContinuation?: ReturnToDeckContinuation,
   returnCharacterCostContinuation?: EffectBlockContinuation,
+  skipRemovalReplacementIds?: string[],
+  removalCostPaymentId?: string,
+  movementCompletionId?: string,
 ): boolean {
-  const replacement = findRemoveFromFieldReplacement(state, targetId, controller, sourceInstanceId);
+  const replacements = findRemoveFromFieldReplacements(
+    state,
+    targetId,
+    controller,
+    sourceInstanceId,
+  );
+  const replacement = replacements[0];
   if (!replacement) {
     return false;
   }
@@ -342,7 +885,7 @@ export function promptForEffectRemovalReplacement(
   if (replacementEvent !== "removeFromField" && replacementEvent !== "leaveField") {
     return false;
   }
-  if (replacement.effect.mandatory) {
+  if (replacement.effect.mandatory && replacements.length === 1) {
     if (remainingTargetIds.length > 0) {
       enqueueResolution(
         state,
@@ -351,8 +894,11 @@ export function promptForEffectRemovalReplacement(
           sourceInstanceId,
           controller,
           action,
+          removalCostPaymentId,
+          movementCompletionId,
           selectedTargetIds: remainingTargetIds,
           returnToDeckContinuation,
+          skipRemovalReplacementIds,
         },
         { next: true },
       );
@@ -364,8 +910,11 @@ export function promptForEffectRemovalReplacement(
           sourceInstanceId,
           controller,
           action,
+          removalCostPaymentId,
+          movementCompletionId,
           selectedTargetIds: [],
           returnToDeckContinuation,
+          skipRemovalReplacementIds,
         },
         { next: true },
       );
@@ -378,29 +927,71 @@ export function promptForEffectRemovalReplacement(
         sourceInstanceId: replacement.sourceInstanceId,
         controller: replacement.controller,
         action: replacement.effect.replacementAction,
+        replacementProcess: extendReplacementProcess(
+          state,
+          replacement.sourceInstanceId,
+          replacement.effectKey,
+        ),
         previousActionTargetIds: [targetId],
       },
       { next: true },
     );
     return true;
   }
+  const replacementChoices = replacements.map((candidate) => ({
+    id: replacementOptionId(candidate),
+    sourceInstanceId: candidate.sourceInstanceId,
+    replacementEffectIndex: candidate.replacementEffectIndex,
+    replacementEffectKey: candidate.effectKey,
+    replacementAction: candidate.effect.replacementAction,
+    replacementTargetIds: [
+      targetId,
+      ...remainingTargetIds.filter(
+        (id) =>
+          !skipRemovalReplacementIds?.includes(id) &&
+          findRemoveFromFieldReplacements(state, id, controller, sourceInstanceId).some(
+            (eligible) => replacementOptionId(eligible) === replacementOptionId(candidate),
+          ),
+      ),
+    ],
+  }));
   createChoicePrompt(state, {
-    choiceKind: "confirm",
+    choiceKind: replacements.length > 1 ? "chooseOption" : "confirm",
+    replacementGroup: replacements.map((candidate) =>
+      replacementProcessKey(state, candidate.sourceInstanceId, candidate.effectKey),
+    ),
     seat: replacement.controller,
     label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace the removal.`,
     details: "Apply the replacement effect instead of removing the card from the field?",
     sourceCardId: getInstance(state, replacement.sourceInstanceId).cardId,
     sourceInstanceId: replacement.sourceInstanceId,
     eventId: null,
-    options: [
-      { id: "no", label: "Allow removal", value: "no" },
-      { id: "yes", label: "Apply replacement", value: "yes" },
-    ],
+    options:
+      replacements.length > 1
+        ? [
+            ...(!replacements.some((candidate) => candidate.effect.mandatory)
+              ? [{ id: "no", label: "Decline these replacements", value: "no" }]
+              : []),
+            ...replacementChoices.map((choice) => ({
+              id: choice.id,
+              value: choice.id,
+              label: replacementChoiceLabel(state, choice.sourceInstanceId),
+              targetId: choice.sourceInstanceId,
+            })),
+          ]
+        : [
+            { id: "no", label: "Allow removal", value: "no" },
+            { id: "yes", label: "Apply replacement", value: "yes" },
+          ],
     minSelections: 1,
     maxSelections: 1,
     context: { action: action.action, replacement: true },
     resolutionContext: {
       intent: "effectRemovalReplacement",
+      removalCostPaymentId,
+      movementCompletionId,
+      replacementRequired: replacements.some((candidate) => candidate.effect.mandatory),
+      replacementChoices: replacements.length > 1 ? replacementChoices : undefined,
       targetId,
       controller: replacement.controller,
       replacementSourceInstanceId: replacement.sourceInstanceId,
@@ -414,6 +1005,7 @@ export function promptForEffectRemovalReplacement(
       remainingTargetIds,
       returnToDeckContinuation,
       returnCharacterCostContinuation,
+      skipRemovalReplacementIds,
     },
   });
   return true;
@@ -478,6 +1070,7 @@ function enqueueReturnToDeckOwnerGroup(
   group: ReturnToDeckOwnerGroup,
   remainingOwnerGroups: ReturnToDeckOwnerGroup[],
   allTargetIds: string[],
+  removalCostPaymentId?: string,
 ) {
   enqueueResolution(
     state,
@@ -488,6 +1081,7 @@ function enqueueReturnToDeckOwnerGroup(
       action,
       selectedTargetIds: group.targetIds,
       returnToDeckContinuation: {
+        removalCostPaymentId,
         owner: group.owner,
         allTargetIds,
         publicTargetIds: group.targetIds,
@@ -542,6 +1136,7 @@ function finalizeReturnToDeckOwnerGroup(
       nextGroup,
       remainingOwnerGroups,
       continuation.allTargetIds,
+      continuation.removalCostPaymentId,
     );
   }
 }
@@ -555,21 +1150,38 @@ export function removeCardByEffectAction(
   redactDeckOrder = false,
 ) {
   if (isCharacterRemovalPreventedByPermanentEffect(state, targetId, controller)) {
-    return;
+    return false;
   }
   const target = getInstance(state, targetId);
   returnAttachedDonToCostArea(state, targetId);
+  if (action.action === "addToLife") {
+    if (action.position === "choice") return false;
+    const destination =
+      action.target.player === "self"
+        ? controller
+        : action.target.player === "opponent"
+          ? otherSeat(controller)
+          : target.controller;
+    moveCard(state, targetId, destination, "life", {
+      lifePosition: action.position,
+      faceUp: action.faceUp ?? false,
+      publicKnowledge: action.faceUp ?? false,
+      actor: controller,
+      visibility: action.faceUp ? "public" : "private",
+    });
+    return true;
+  }
   if (action.action === "returnToHand") {
     moveCard(state, targetId, target.owner, "hand", {
       faceUp: false,
       publicKnowledge: false,
       actor: controller,
     });
-    return;
+    return getInstance(state, targetId).zone === "hand";
   }
   if (action.action === "returnToDeck") {
     if (action.position === "any") {
-      return;
+      return false;
     }
     const destination = returnToDeckDestination(state, controller, targetId, action);
     const returnsFromHand = target.zone === "hand";
@@ -594,13 +1206,14 @@ export function removeCardByEffectAction(
       suppressLog: returnsFromHand || redactDeckOrder,
       redactIdentity: redactDeckOrder,
     });
-    return;
+    return true;
   }
   moveCard(state, targetId, target.owner, "trash", {
     faceUp: true,
     publicKnowledge: true,
     actor: controller,
   });
+  return true;
 }
 
 export function addTopDeckCardsToLife(
@@ -665,7 +1278,7 @@ export function trashTopDeckCards(
     });
   }
   const completedTrash = action.upTo ? targetIds.length > 0 : targetIds.length === requestedAmount;
-  if (completedTrash) {
+  if (!action.thenRequiresFullAmount || completedTrash) {
     for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
       enqueueResolution(
         state,
@@ -714,7 +1327,11 @@ export function removeLifeCards(
 
   const targetIds =
     selectedTargetIds ??
-    (action.position === "bottom" ? player.life.slice(-amount) : player.life.slice(0, amount));
+    (amount === 0
+      ? []
+      : action.position === "bottom"
+        ? player.life.slice(-amount)
+        : player.life.slice(0, amount));
   if (
     targetIds.length !== amount ||
     new Set(targetIds).size !== targetIds.length ||
@@ -722,6 +1339,8 @@ export function removeLifeCards(
   ) {
     return false;
   }
+  const replacedIds = destination === "hand" ? replacedLifeToHandIds(state, targetIds) : [];
+  let completedMoves = 0;
   for (const targetId of targetIds) {
     const targetOwner = getInstance(state, targetId).owner;
     const destinationSeat = destination === "trash" ? targetOwner : targetSeat;
@@ -737,8 +1356,10 @@ export function removeLifeCards(
       visibility: destination === "trash" ? "public" : "private",
       redactIdentity,
     });
+    if (getInstance(state, targetId).zone === destination) completedMoves++;
   }
-  if (targetIds.length > 0) {
+  promptForLifeReplacementOrder(state, completedLifeReplacementMoves(state, replacedIds));
+  if (completedMoves > 0) {
     for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
       enqueueResolution(
         state,
@@ -753,6 +1374,26 @@ export function removeLifeCards(
     }
   }
   return true;
+}
+
+// Turn-end cleanup follows the relevant seat across extra turns. This is the
+// earliest turn at whose end the duration may expire (OP01 FAQ: Mr.3/Galdino).
+function modifierExpiryTurn(
+  state: MatchState,
+  controller: MatchSeat,
+  duration: Duration,
+): number | null {
+  switch (duration) {
+    case "thisTurn":
+      return state.turnNumber;
+    case "untilEndOfYourNextTurn":
+      return state.turnNumber + 1;
+    case "untilEndOfOpponentNextTurn":
+    case "untilEndOfOpponentNextEndPhase":
+      return state.turnNumber + (state.activeSeat === controller ? 1 : 0);
+    default:
+      return null;
+  }
 }
 
 function durationLabel(duration: string): string {
@@ -783,11 +1424,11 @@ export function candidatesForPlayAction(
   action: PlayAction,
   previousActionTargetIds: string[] = [],
 ): string[] | null {
+  const playingSeat = action.source.player === "self" ? controller : otherSeat(controller);
   const zones = Array.isArray(action.source.zone) ? action.source.zone : [action.source.zone];
   const topDeckOnly = action.topOnly && zones.length === 1 && zones[0] === "deck";
   if (action.self) {
     const source = getInstance(state, sourceInstanceId);
-    const playingSeat = action.source.player === "self" ? controller : otherSeat(controller);
     const sourceZoneMatches =
       source.zone === "resolution" ? zones.includes("hand") : zones.includes(source.zone);
     const filtersMatch = (action.filters ?? []).every((filter) => {
@@ -826,14 +1467,9 @@ export function candidatesForPlayAction(
   const previousColors = new Set(
     previousActionTargetIds.flatMap((instanceId) => getCardForInstance(state, instanceId).color),
   );
-  const previousNames = new Set(
-    previousActionTargetIds.flatMap((instanceId) =>
-      cardNames(getCardForInstance(state, instanceId)),
-    ),
-  );
 
   const candidateIds = topDeckOnly
-    ? pool.candidateIds.filter((instanceId) => instanceId === getPlayer(state, controller).deck[0])
+    ? pool.candidateIds.filter((instanceId) => instanceId === getPlayer(state, playingSeat).deck[0])
     : pool.candidateIds;
 
   return candidateIds.filter((instanceId) => {
@@ -842,14 +1478,15 @@ export function candidatesForPlayAction(
       (card.cardType === "stage" || card.cardType === "character") &&
       !isCardPlayRestricted(
         state,
-        controller,
+        playingSeat,
         instanceId,
         getInstance(state, instanceId).zone,
         "effect",
       ) &&
       (!action.differentColorFromPreviousCharacter ||
         (previousColors.size > 0 && card.color.every((color) => !previousColors.has(color)))) &&
-      (!action.sameNameAsPreviousCard || cardNames(card).some((name) => previousNames.has(name)))
+      (!action.sameNameAsPreviousCard ||
+        previousActionTargetIds.some((id) => cardsShareName(card, getCardForInstance(state, id))))
     );
   });
 }
@@ -927,7 +1564,12 @@ export function validActiveIdsForGroupedPlayAction(
   ) {
     return [];
   }
-  if (selectedIds.length === 1 || !action.playStates.byGroup) return [...selectedIds];
+  if (
+    selectedIds.length === 1 ||
+    action.playStates.multiple.every((playState) => playState === "active") ||
+    !action.playStates.byGroup
+  )
+    return [...selectedIds];
 
   const candidatesByGroup = action.groups.map((group) =>
     candidatesForPlayAction(state, controller, sourceInstanceId, {
@@ -967,7 +1609,7 @@ export function candidatesForRestCardsCost(
   cost: RestCardsCost,
 ): string[] {
   const player = getPlayer(state, controller);
-  return [
+  const candidates = [
     player.leaderInstanceId,
     ...player.characterArea.filter((entry): entry is string => Boolean(entry)),
     ...(player.stageArea ? [player.stageArea] : []),
@@ -980,6 +1622,17 @@ export function candidatesForRestCardsCost(
         return result.supported && result.matches;
       }),
   );
+  // Generic "your cards" costs include active DON!! in the cost area.
+  // Catalog costs with category, name, or trait filters exclude DON!!.
+  if (!cost.filters?.length) {
+    candidates.push(
+      ...Array.from(
+        { length: player.activeDon },
+        (_, index) => `active-don:${controller}:${index}`,
+      ),
+    );
+  }
+  return candidates;
 }
 
 function candidatesForCardCostOption(
@@ -1102,6 +1755,53 @@ export function candidatesForTrashCharacterCost(
     );
 }
 
+function recordHandTrashedByEffect(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  seat: MatchSeat,
+  selected: string[],
+) {
+  if (selected.length === 0) return;
+  getPlayer(state, seat).handTrashedByEffectOnTurn = state.turnNumber;
+  const triggerEvent = {
+    instanceId: selected[0]!,
+    effectController: controller,
+    amount: selected.length,
+    sourceInstanceId,
+  };
+  enqueueInPlayEffectsForTrigger(state, "whenCardTrashedFromHandByEffect", triggerEvent);
+  enqueueInPlayEffectsForTrigger(state, "whenCardsTrashedFromHandByEffect", triggerEvent);
+}
+
+export function candidatesForLifeCardCost(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  cost: Extract<Cost, { cost: "addCharacterToLife" | "turnLifeFaceUp" }>,
+): string[] {
+  if (cost.cost === "turnLifeFaceUp") {
+    // Orientation and position are independent printed restrictions.
+    const ids = getPlayer(state, controller).life;
+    const candidates =
+      cost.position === "any"
+        ? ids
+        : cost.position === "choice"
+          ? [...new Set([...ids.slice(0, 1), ...ids.slice(-1)])]
+          : ids.slice(0, cost.count);
+    return candidates.filter((id) => getInstance(state, id).faceUp !== (cost.faceUp ?? true));
+  }
+  return getPlayer(state, cost.player === "opponent" ? otherSeat(controller) : controller)
+    .characterArea.filter((id): id is string => Boolean(id))
+    .filter((id) => !isCharacterRemovalPreventedByPermanentEffect(state, id, controller))
+    .filter((id) =>
+      (cost.filters ?? []).every((filter) => {
+        const result = matchesTargetFilter(state, sourceInstanceId, id, filter);
+        return result.supported && result.matches;
+      }),
+    );
+}
+
 export function candidatesForReturnCharacterCost(
   state: MatchState,
   controller: MatchSeat,
@@ -1162,11 +1862,13 @@ export function candidatesForReturnCharacterToDeckCost(
           : []
         : player.characterArea.filter((entry): entry is string => Boolean(entry)),
     );
-    return candidates.filter((instanceId) =>
-      (cost.filters ?? []).every((filter) => {
-        const result = matchesTargetFilter(state, sourceInstanceId, instanceId, filter);
-        return result.supported && result.matches;
-      }),
+    return candidates.filter(
+      (instanceId) =>
+        !isCharacterRemovalPreventedByPermanentEffect(state, instanceId, controller) &&
+        (cost.filters ?? []).every((filter) => {
+          const result = matchesTargetFilter(state, sourceInstanceId, instanceId, filter);
+          return result.supported && result.matches;
+        }),
     );
   });
 }
@@ -1188,22 +1890,32 @@ export function candidatesForReturnTrashToDeckCost(
 export function returnDonCostOptions(
   state: MatchState,
   controller: MatchSeat,
+  donState: "active" | "rested" | "any" | "attached" = "any",
 ): Array<{ id: string; label: string }> {
   const player = getPlayer(state, controller);
   const options = [
-    ...Array.from({ length: player.activeDon }, (_, index) => ({
-      id: `active-don:${index}`,
-      label: `Active DON!! in cost area ${index + 1}`,
-    })),
-    ...Array.from({ length: player.restedDon }, (_, index) => ({
-      id: `rested-don:${index}`,
-      label: `Rested DON!! in cost area ${index + 1}`,
-    })),
+    ...Array.from(
+      { length: donState === "rested" || donState === "attached" ? 0 : player.activeDon },
+      (_, index) => ({
+        id: `active-don:${index}`,
+        label: `Active DON!! in cost area ${index + 1}`,
+      }),
+    ),
+    ...Array.from(
+      { length: donState === "active" || donState === "attached" ? 0 : player.restedDon },
+      (_, index) => ({
+        id: `rested-don:${index}`,
+        label: `Rested DON!! in cost area ${index + 1}`,
+      }),
+    ),
   ];
-  const attachedTargets = [
-    player.leaderInstanceId,
-    ...player.characterArea.filter((entry): entry is string => Boolean(entry)),
-  ];
+  const attachedTargets =
+    donState === "any" || donState === "attached"
+      ? [
+          player.leaderInstanceId,
+          ...player.characterArea.filter((entry): entry is string => Boolean(entry)),
+        ]
+      : [];
   for (const instanceId of attachedTargets) {
     const instance = getInstance(state, instanceId);
     for (let index = 0; index < instance.attachedDon; index += 1) {
@@ -1213,7 +1925,12 @@ export function returnDonCostOptions(
       });
     }
   }
-  return options;
+  return state.donIdentities
+    ? options.map((option) => {
+        const token = donIdentitiesForVirtualIds(state, controller, [option.id])[0];
+        return token ? { ...option, label: donIdentityLabel(state, token) } : option;
+      })
+    : options;
 }
 
 export function returnSelectedDonToDeck(
@@ -1224,6 +1941,7 @@ export function returnSelectedDonToDeck(
   effectController?: MatchSeat,
 ): void {
   const player = getPlayer(state, seat);
+  moveDonIdentities(state, donIdentitiesForVirtualIds(state, seat, selectedIds));
   const orderedIds = [...selectedIds].sort((left, right) => {
     const leftIndex = left.startsWith("rested-don:")
       ? Number(left.slice("rested-don:".length))
@@ -1240,7 +1958,13 @@ export function returnSelectedDonToDeck(
       const returnedIndex = Number(id.slice("rested-don:".length));
       for (const modifier of Object.values(state.modifiers)) {
         const match = new RegExp(`^rested-don:${seat}:(\\d+)$`).exec(modifier.targetId);
-        if (modifier.type !== "flag" || modifier.flag !== "freezeDon" || !match) continue;
+        if (
+          modifier.donIdentity ||
+          modifier.type !== "flag" ||
+          modifier.flag !== "freezeDon" ||
+          !match
+        )
+          continue;
         const frozenIndex = Number(match[1]);
         if (frozenIndex === returnedIndex) {
           delete state.modifiers[modifier.id];
@@ -1288,9 +2012,6 @@ export function playCardFromEffect(
     const slotIndex = options.slotIndex ?? getOpenCharacterSlots(state, controller)[0];
     if (slotIndex === undefined) {
       return false;
-    }
-    if (fromZone === "hand") {
-      consumeNextPlayCostModifiers(state, instanceId);
     }
     moveCard(state, instanceId, controller, "character", {
       slotIndex,
@@ -1699,13 +2420,17 @@ function targetSelectionLabel(
   return label;
 }
 
-function promptForTargetSelection(
+export function promptForTargetSelection(
   state: MatchState,
   controller: MatchSeat,
   sourceInstanceId: string,
   action: Action,
   candidateIds: string[],
   previousActionTargetIds?: string[],
+  groupedRemovalSelection?: Extract<
+    PromptState["resolutionContext"],
+    { intent: "effectTargetSelection" }
+  >["groupedRemovalSelection"],
 ) {
   const sourceCard = getCardForInstance(state, sourceInstanceId);
   const target = "target" in action ? action.target : null;
@@ -1763,6 +2488,7 @@ function promptForTargetSelection(
       controller,
       action,
       previousActionTargetIds,
+      groupedRemovalSelection,
       ...(Object.keys(opaqueCandidateIds).length > 0 && { opaqueCandidateIds }),
     },
   });
@@ -1777,7 +2503,7 @@ function resolveActionTargets(
   previousActionTargetIds?: string[],
 ): string[] | null | "prompt" {
   if (!("target" in action) || !action.target || selectedTargetIds) {
-    return selectedTargetIds ?? [];
+    return (selectedTargetIds ?? []).filter((id) => delayedTargetIsCurrent(state, action, id));
   }
 
   const targetIds = candidatesForTarget(state, controller, sourceInstanceId, action.target);
@@ -1856,32 +2582,40 @@ export function actionTargetIsEligible(
   state: MatchState,
   action: Action,
   instanceId: string,
-  sourceInstanceId: string,
+  _sourceInstanceId: string,
 ): boolean {
+  if (!delayedTargetIsCurrent(state, action, instanceId)) return false;
   if (
-    ["ko", "returnToHand", "returnToDeck", "trashFromField", "addToLife"].includes(action.action) &&
-    getInstance(state, instanceId).zone === "character" &&
-    isCharacterRemovalPreventedByPermanentEffect(
-      state,
-      instanceId,
-      getInstance(state, sourceInstanceId).controller,
+    action.action === "modifyLifeValue" &&
+    getCardForInstance(state, instanceId).cardType !== "leader"
+  )
+    return false;
+  // Activating an Event resolves its Main effect, not its Counter or Life Trigger.
+  // Keep this in shared action eligibility so prompts and retries use the same rule.
+  if (action.action === "activateEvent") {
+    return (
+      getCardForInstance(state, instanceId).cardType === "event" &&
+      effectBlocksForInstance(state, instanceId, action.effectTrigger).length > 0
+    );
+  }
+  const paymentTrash = currentReplacementProcess(state)?.paymentTrash;
+  if (
+    action.action === "returnToDeck" &&
+    paymentTrash &&
+    getInstance(state, instanceId).zone === "trash"
+  ) {
+    const instance = getInstance(state, instanceId);
+    if (
+      !paymentTrash.some(
+        (entry) =>
+          entry.instanceId === instanceId && entry.zoneChangeCounter === instance.zoneChangeCounter,
+      )
     )
-  ) {
-    return false;
+      return false;
   }
-  if (
-    action.action === "ko" &&
-    isKoPreventedByModifier(state, instanceId, sourceInstanceId, "effect")
-  ) {
-    return false;
-  }
-  if (
-    action.action === "rest" &&
-    (getInstance(state, instanceId).rested ||
-      hasFlagModifier(state, instanceId, "cannotBeRested") ||
-      isRestPreventedByPermanentEffect(state, instanceId, sourceInstanceId))
-  ) {
-    return false;
+  if (action.action === "giveDon" && action.donorPlayer === "targetOwner") {
+    const available = giveDonPoolAmount(state, getInstance(state, instanceId).owner, action);
+    return available >= (action.count.amount === "all" ? 1 : action.count.amount);
   }
   if (
     action.action === "cannotActivate" &&
@@ -1930,6 +2664,253 @@ export function promptForRearrangeDeckOrder(
   });
 }
 
+function giveDonPoolAmount(
+  state: MatchState,
+  seat: MatchSeat,
+  action: Extract<Action, { action: "giveDon" }>,
+): number {
+  const player = getPlayer(state, seat);
+  return action.donState === "rested"
+    ? player.restedDon
+    : action.donState === "active"
+      ? player.activeDon
+      : player.restedDon + player.activeDon;
+}
+
+export function availableDonForGive(
+  state: MatchState,
+  controller: MatchSeat,
+  action: Extract<Action, { action: "giveDon" }>,
+): number {
+  if (action.donorPlayer === "targetOwner") {
+    // A single recipient cannot combine resources belonging to different owners.
+    return Math.max(
+      giveDonPoolAmount(state, controller, action),
+      giveDonPoolAmount(state, otherSeat(controller), action),
+    );
+  }
+  return giveDonPoolAmount(
+    state,
+    action.donorPlayer === "opponent" ? otherSeat(controller) : controller,
+    action,
+  );
+}
+
+export function completeGiveDon(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  action: Extract<Action, { action: "giveDon" }>,
+  targetId: string,
+  activeCount: number,
+): boolean {
+  if (action.count.amount === "all") return false;
+  const amount = action.count.amount;
+  const donor =
+    action.donorPlayer === "targetOwner"
+      ? getInstance(state, targetId).owner
+      : action.donorPlayer === "opponent"
+        ? otherSeat(controller)
+        : controller;
+  const player = getPlayer(state, donor);
+  const restedCount = amount - activeCount;
+  if (
+    !Number.isInteger(activeCount) ||
+    activeCount < 0 ||
+    restedCount < 0 ||
+    activeCount > player.activeDon ||
+    restedCount > player.restedDon ||
+    (action.donState === "rested" && activeCount !== 0) ||
+    (action.donState === "active" && restedCount !== 0)
+  )
+    return false;
+  if (state.donIdentities)
+    return continueDonTransfers(state, {
+      controller,
+      sourceInstanceId,
+      effectTriggerEvent: currentEffectTriggerEvent(state),
+      moves: [
+        donTransferMove(
+          state,
+          { seat: donor, area: "active" },
+          { attachedTo: targetId },
+          activeCount,
+        ),
+        donTransferMove(
+          state,
+          { seat: donor, area: "rested" },
+          { attachedTo: targetId },
+          restedCount,
+        ),
+      ],
+    });
+  player.activeDon -= activeCount;
+  player.restedDon -= restedCount;
+  getInstance(state, targetId).attachedDon += amount;
+  publishDonGiven(state, targetId, amount, controller, sourceInstanceId);
+  emitLog(
+    state,
+    controller,
+    `${effectSourceName(state, sourceInstanceId)} gives ${amount} DON!! to ${cardName(getCardForInstance(state, targetId))}.`,
+    {
+      sourceCardId: getInstance(state, sourceInstanceId).cardId,
+      sourceInstanceId,
+      targetIds: [targetId],
+      visibility: "public",
+    },
+  );
+  return true;
+}
+
+type GiveDonEachContext = Extract<PromptResolutionContext, { intent: "effectGiveDonEachCount" }>;
+
+/** Reserve all recipient choices before moving resources, so invalid retries cannot partially pay. */
+export function continueGiveDonEach(
+  state: MatchState,
+  context: GiveDonEachContext,
+  optionId?: string,
+): boolean {
+  const { action, controller, sourceInstanceId, recipients } = context;
+  if (action.count.amount === "all" || !action.count.upTo) return false;
+  const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
+  if (
+    !pool.supported ||
+    new Set(recipients.map((r) => r.instanceId)).size !== recipients.length ||
+    recipients.some(
+      (r) =>
+        !pool.candidateIds.includes(r.instanceId) ||
+        getInstance(state, r.instanceId).zoneChangeCounter !== r.zoneChangeCounter,
+    )
+  )
+    return false;
+  const remaining = {
+    north: {
+      active: getPlayer(state, "north").activeDon,
+      rested: getPlayer(state, "north").restedDon,
+    },
+    south: {
+      active: getPlayer(state, "south").activeDon,
+      rested: getPlayer(state, "south").restedDon,
+    },
+  };
+  const donorFor = (targetId: string) =>
+    action.donorPlayer === "targetOwner"
+      ? getInstance(state, targetId).owner
+      : action.donorPlayer === "opponent"
+        ? otherSeat(controller)
+        : controller;
+  for (const [index, allocation] of context.allocations.entries()) {
+    const recipient = recipients[index];
+    if (
+      !recipient ||
+      !Number.isInteger(allocation.amount) ||
+      !Number.isInteger(allocation.active) ||
+      allocation.amount < 0 ||
+      allocation.amount > action.count.amount ||
+      allocation.active < 0 ||
+      allocation.active > allocation.amount
+    )
+      return false;
+    const resource = remaining[donorFor(recipient.instanceId)];
+    resource.active -= allocation.active;
+    resource.rested -= allocation.amount - allocation.active;
+    if (
+      resource.active < 0 ||
+      resource.rested < 0 ||
+      (action.donState === "rested" && allocation.active !== 0) ||
+      (action.donState === "active" && allocation.active !== allocation.amount)
+    )
+      return false;
+  }
+  const recipient = recipients[context.allocations.length];
+  if (!recipient) {
+    if (optionId !== undefined) return false;
+    if (state.donIdentities)
+      return continueDonTransfers(state, {
+        controller,
+        sourceInstanceId,
+        effectTriggerEvent: currentEffectTriggerEvent(state),
+        moves: context.allocations.flatMap((allocation, index) => {
+          const targetId = recipients[index]!.instanceId,
+            donor = donorFor(targetId);
+          return [
+            donTransferMove(
+              state,
+              { seat: donor, area: "active" },
+              { attachedTo: targetId },
+              allocation.active,
+            ),
+            donTransferMove(
+              state,
+              { seat: donor, area: "rested" },
+              { attachedTo: targetId },
+              allocation.amount - allocation.active,
+            ),
+          ];
+        }),
+      });
+    for (const [index, allocation] of context.allocations.entries()) {
+      if (allocation.amount === 0) continue;
+      completeGiveDon(
+        state,
+        controller,
+        sourceInstanceId,
+        { ...action, count: { amount: allocation.amount } },
+        recipients[index]!.instanceId,
+        allocation.active,
+      );
+    }
+    return true;
+  }
+  const resource = remaining[donorFor(recipient.instanceId)];
+  const options: Array<PromptOption & { amount: number; active: number }> = [];
+  for (let amount = 0; amount <= action.count.amount; amount++) {
+    for (let active = 0; active <= amount; active++) {
+      if (
+        active > resource.active ||
+        amount - active > resource.rested ||
+        (action.donState === "rested" && active !== 0) ||
+        (action.donState === "active" && active !== amount)
+      )
+        continue;
+      const fixedState = action.donState === "rested" || action.donState === "active";
+      const id = fixedState ? String(amount) : `${amount}:${active}`;
+      options.push({
+        id,
+        value: id,
+        label: fixedState
+          ? String(amount)
+          : `${amount} DON!! (${active} active, ${amount - active} rested)`,
+        amount,
+        active,
+      });
+    }
+  }
+  if (optionId !== undefined) {
+    const selected = options.find((option) => option.id === optionId);
+    if (!selected) return false;
+    return continueGiveDonEach(state, {
+      ...context,
+      allocations: [...context.allocations, { amount: selected.amount, active: selected.active }],
+    });
+  }
+  createChoicePrompt(state, {
+    choiceKind: "chooseOption",
+    seat: controller,
+    label: `Give DON!! to ${cardName(getCardForInstance(state, recipient.instanceId))}`,
+    details: `Choose up to ${action.count.amount} DON!! for Character ${getInstance(state, recipient.instanceId).zoneIndex + 1}.`,
+    sourceCardId: getInstance(state, sourceInstanceId).cardId,
+    sourceInstanceId,
+    eventId: null,
+    options: options.map(({ amount: _amount, active: _active, ...option }) => option),
+    minSelections: 1,
+    maxSelections: 1,
+    context: { action: "giveDon", resource: "don" },
+    resolutionContext: context,
+  });
+  return true;
+}
+
 export function processEffectAction(
   state: MatchState,
   controller: MatchSeat,
@@ -1940,7 +2921,49 @@ export function processEffectAction(
   skipRemovalReplacementIds?: string[],
   returnToDeckContinuation?: ReturnToDeckContinuation,
   setPowerFromSourceIds?: string[],
+  removalCostPaymentId?: string,
+  koCompletionId?: string,
+  movementCompletionId?: string,
 ): boolean {
+  if (delayedActionMovesSource(action) && !delayedSourceIsCurrent(state, action)) return true;
+  const process = currentReplacementProcess(state);
+  if (
+    process?.unavailableRemovalPayments === undefined &&
+    ["ko", "returnToHand", "returnToDeck", "trashFromField", "addToLife"].includes(action.action)
+  ) {
+    // One instruction is one removal batch. Persist the initial affordability
+    // through its selection/replacement prompts; transformed replacement actions
+    // get a fresh process in extendReplacementProcess.
+    return withReplacementProcess(
+      state,
+      {
+        ...process,
+        applied: process?.applied ?? [],
+        unavailableRemovalPayments: unavailableRemovalPayments(state),
+        removalTrash: (["south", "north"] as const).flatMap((seat) =>
+          getPlayer(state, seat).trash.map((instanceId) => ({
+            instanceId,
+            zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
+          })),
+        ),
+      },
+      () =>
+        processEffectAction(
+          state,
+          controller,
+          sourceInstanceId,
+          action,
+          selectedTargetIds,
+          previousActionTargetIds,
+          skipRemovalReplacementIds,
+          returnToDeckContinuation,
+          setPowerFromSourceIds,
+          removalCostPaymentId,
+          koCompletionId,
+          movementCompletionId,
+        ),
+    );
+  }
   switch (action.action) {
     case "sequence":
       for (const nestedAction of [...action.actions].reverse()) {
@@ -1957,7 +2980,37 @@ export function processEffectAction(
         );
       }
       return true;
-    case "optional":
+    case "optional": {
+      const boundary = {
+        kind: "effectAction" as const,
+        id: "optional-action-boundary",
+        sourceInstanceId,
+        controller,
+        action,
+        previousActionTargetIds,
+        effectTriggerEvent: currentEffectTriggerEvent(state),
+      };
+      const loop = observeOptionalLoop(state, boundary);
+      if (loop === "pause") {
+        enqueueResolution(state, boundary, { next: true });
+        return false;
+      }
+      if (loop === "skip") return true;
+      if (loop === "resolve") {
+        for (const nestedAction of [...action.actions].reverse())
+          enqueueResolution(
+            state,
+            {
+              kind: "effectAction",
+              sourceInstanceId,
+              controller,
+              action: nestedAction,
+              previousActionTargetIds,
+            },
+            { next: true },
+          );
+        return true;
+      }
       createChoicePrompt(state, {
         choiceKind: "confirm",
         seat: controller,
@@ -1982,11 +3035,17 @@ export function processEffectAction(
         },
       });
       return false;
+    }
     case "delayed":
       if (action.timing === "endOfThisBattle" && !state.battle) {
         return false;
       }
-      for (const nestedAction of action.actions) {
+      for (const nestedAction of scheduledActions(
+        state,
+        action.actions,
+        sourceInstanceId,
+        previousActionTargetIds,
+      )) {
         state.delayedEffectActions.push({
           sourceInstanceId,
           controller,
@@ -2006,13 +3065,16 @@ export function processEffectAction(
         });
       }
       return true;
+    case "setCounter":
     case "modifyCounter":
       // Counter modifiers are continuous effects evaluated from their source card.
       return false;
     case "draw": {
-      const resolvedAmount = action.amountFromTarget
-        ? resolveAmountFromTarget(state, controller, sourceInstanceId, action.amountFromTarget)
-        : action.amount;
+      const resolvedAmount = action.amountFromPreviousActionTargets
+        ? (previousActionTargetIds?.length ?? 0)
+        : action.amountFromTarget
+          ? resolveAmountFromTarget(state, controller, sourceInstanceId, action.amountFromTarget)
+          : action.amount;
       if (resolvedAmount === null) {
         return false;
       }
@@ -2119,9 +3181,8 @@ export function processEffectAction(
       const minimum = resolvedAction.upTo ? 0 : maximum;
       if (selectedTargetIds === undefined) {
         if (maximum === 0) {
-          return true;
-        }
-        if (!resolvedAction.upTo && maximum === pool.length) {
+          selectedTargetIds = [];
+        } else if (!resolvedAction.upTo && maximum === pool.length) {
           selectedTargetIds = [...pool];
         } else {
           const concealFromChooser = choiceSeat !== seat;
@@ -2204,15 +3265,21 @@ export function processEffectAction(
           judgeMessage: `${getPlayer(state, seat).playerName} trashes ${formatCardList(state, selected)} from hand.`,
         },
       );
-      if (selected.length > 0) {
-        const triggerEvent = {
-          instanceId: selected[0]!,
-          effectController: controller,
-          amount: selected.length,
-          sourceInstanceId,
-        };
-        enqueueInPlayEffectsForTrigger(state, "whenCardTrashedFromHandByEffect", triggerEvent);
-        enqueueInPlayEffectsForTrigger(state, "whenCardsTrashedFromHandByEffect", triggerEvent);
+      recordHandTrashedByEffect(state, controller, sourceInstanceId, seat, selected);
+      if (!resolvedAction.thenRequiresFullAmount || selected.length === requestedAmount) {
+        for (const nestedAction of [...(resolvedAction.thenActions ?? [])].reverse()) {
+          enqueueResolution(
+            state,
+            {
+              kind: "effectAction",
+              sourceInstanceId,
+              controller,
+              action: nestedAction,
+              previousActionTargetIds: selected,
+            },
+            { next: true },
+          );
+        }
       }
       return true;
     }
@@ -2384,7 +3451,11 @@ export function processEffectAction(
                 sourceInstanceId,
                 action.target,
               );
-              return pool.supported && pool.candidateIds.includes(instanceId);
+              return (
+                pool.supported &&
+                pool.candidateIds.includes(instanceId) &&
+                delayedTargetIsCurrent(state, action, instanceId)
+              );
             })
           : resolveActionTargets(
               state,
@@ -2451,15 +3522,7 @@ export function processEffectAction(
           type: "power",
           value: targetModifierValue,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfYourNextTurn"
-                ? state.turnNumber + 1
-                : action.duration === "untilEndOfOpponentNextTurn" ||
-                    action.duration === "untilEndOfOpponentNextEndPhase"
-                  ? state.turnNumber + 1
-                  : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -2513,7 +3576,7 @@ export function processEffectAction(
           type: "basePower",
           value,
           duration: action.duration,
-          expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -2549,14 +3612,7 @@ export function processEffectAction(
           type: "basePower",
           value: action.value,
           duration,
-          expiresAtTurn:
-            duration === "thisTurn"
-              ? state.turnNumber
-              : duration === "untilEndOfYourNextTurn" ||
-                  duration === "untilEndOfOpponentNextTurn" ||
-                  duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, duration),
           expiresAtBattleId: duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: null,
         });
@@ -2628,13 +3684,15 @@ export function processEffectAction(
         );
         return false;
       }
-      const copiedBasePower = basePower(getCardForInstance(state, sourceIds[0]!));
+      const copiedBasePower =
+        getSetBasePower(state, sourceIds[0]!) ??
+        basePower(getCardForInstance(state, sourceIds[0]!));
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
           type: "basePower",
           value: copiedBasePower,
           duration: action.duration,
-          expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -2673,7 +3731,7 @@ export function processEffectAction(
         type: "basePower",
         value: copiedPower,
         duration: action.duration,
-        expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
+        expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
         expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
         expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
       });
@@ -2694,7 +3752,11 @@ export function processEffectAction(
       const targetIds = action.previousActionTargets
         ? (previousActionTargetIds ?? []).filter((instanceId) => {
             const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
+            return (
+              pool.supported &&
+              pool.candidateIds.includes(instanceId) &&
+              delayedTargetIsCurrent(state, action, instanceId)
+            );
           })
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
@@ -2719,14 +3781,7 @@ export function processEffectAction(
           type: "attribute",
           attribute: action.value,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfYourNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: null,
         });
@@ -2748,7 +3803,11 @@ export function processEffectAction(
       const targetIds = action.previousActionTargets
         ? (previousActionTargetIds ?? []).filter((instanceId) => {
             const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
+            return (
+              pool.supported &&
+              pool.candidateIds.includes(instanceId) &&
+              delayedTargetIsCurrent(state, action, instanceId)
+            );
           })
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
@@ -2773,14 +3832,7 @@ export function processEffectAction(
           type: "keyword",
           keyword: action.keyword,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfYourNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -2800,6 +3852,24 @@ export function processEffectAction(
     }
     case "modifyCost": {
       const duration = action.duration ?? "permanent";
+      if (action.consumeOnPlay) {
+        addModifier(state, sourceInstanceId, getPlayer(state, controller).leaderInstanceId, {
+          type: "cost",
+          value: action.value,
+          playerScope: true,
+          nextPaidPlay: { controller, target: action.target },
+          duration,
+          expiresAtTurn: modifierExpiryTurn(state, controller, duration),
+          expiresAtBattleId: null,
+          expiresOnTurnStartOfSeat: duration === "untilStartOfNextTurn" ? controller : null,
+        });
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} reduces the cost of the next qualifying card played from hand by ${Math.abs(action.value)}.`,
+        );
+        return true;
+      }
       const targetIds = resolveActionTargets(
         state,
         controller,
@@ -2828,15 +3898,8 @@ export function processEffectAction(
         addModifier(state, sourceInstanceId, targetId, {
           type: "cost",
           value: action.value,
-          consumeOnPlay: action.consumeOnPlay,
           duration,
-          expiresAtTurn:
-            duration === "thisTurn"
-              ? state.turnNumber
-              : duration === "untilEndOfOpponentNextTurn" ||
-                  duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, duration),
           expiresAtBattleId: null,
           expiresOnTurnStartOfSeat: duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -2845,6 +3908,90 @@ export function processEffectAction(
         state,
         controller,
         `${effectSourceName(state, sourceInstanceId)} gives ${targetNames(state, targetIds)} ${action.value >= 0 ? "+" : ""}${action.value} cost ${durationLabel(duration)}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
+      return true;
+    }
+    case "modifyLifeValue": {
+      const targetIds = resolveActionTargets(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        selectedTargetIds,
+      );
+      if (targetIds === "prompt" || !targetIds) return false;
+      for (const targetId of targetIds) {
+        if (getCardForInstance(state, targetId).cardType !== "leader") continue;
+        addModifier(state, sourceInstanceId, targetId, {
+          type: "lifeValue",
+          value: action.value,
+          duration: action.duration,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
+          expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
+          expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
+        });
+      }
+      return true;
+    }
+    case "addActivationCosts":
+    case "addActivationConditions": {
+      const targetIds = resolveActionTargets(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        selectedTargetIds,
+      );
+      if (targetIds === "prompt" || !targetIds) return false;
+      for (const targetId of targetIds) {
+        addModifier(state, sourceInstanceId, targetId, {
+          type: "activationRequirements",
+          activationRequirements: {
+            effectTypes: action.effectTypes,
+            targetZoneChangeCounter: getInstance(state, targetId).zoneChangeCounter,
+            ...(action.action === "addActivationCosts"
+              ? { costs: action.costs }
+              : { conditions: action.conditions }),
+          },
+          duration: action.duration,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
+          expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
+          expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
+        });
+      }
+      return true;
+    }
+    case "setBaseCost": {
+      const targetIds = resolveActionTargets(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        selectedTargetIds,
+      );
+      if (targetIds === "prompt" || !targetIds) return false;
+      const duration = action.duration ?? "thisTurn";
+      for (const targetId of targetIds) {
+        addModifier(state, sourceInstanceId, targetId, {
+          type: "baseCost",
+          value: action.value,
+          baseCostTargetGeneration: getInstance(state, targetId).zoneChangeCounter,
+          duration,
+          expiresAtTurn: modifierExpiryTurn(state, controller, duration),
+          expiresAtBattleId: duration === "thisBattle" ? (state.battle?.id ?? null) : null,
+          expiresOnTurnStartOfSeat: duration === "untilStartOfNextTurn" ? controller : null,
+        });
+      }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} sets the base cost of ${targetNames(state, targetIds)} to ${action.value} ${durationLabel(duration)}.`,
         {
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -2868,8 +4015,8 @@ export function processEffectAction(
       const duration = action.duration ?? "permanent";
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
-          type: "cost",
-          value: action.value - getCardCost(state, targetId),
+          type: "setCost",
+          value: action.value,
           duration,
           expiresAtTurn: duration === "thisTurn" ? state.turnNumber : null,
           expiresAtBattleId: duration === "thisBattle" ? (state.battle?.id ?? null) : null,
@@ -2879,24 +4026,93 @@ export function processEffectAction(
       return true;
     }
     case "ko": {
-      const targetIds = action.previousActionTargets
-        ? (previousActionTargetIds ?? []).filter((instanceId) => {
-            const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
-          })
-        : resolveActionTargets(
-            state,
-            controller,
-            sourceInstanceId,
-            action,
-            selectedTargetIds,
-            previousActionTargetIds,
-          );
+      const participants = state.battle?.comparedParticipants;
+      const battleSource = participants?.find((entry) => entry.instanceId === sourceInstanceId);
+      const battleOpponent = participants?.find((entry) => entry.instanceId !== sourceInstanceId);
+      const boundTargetIds =
+        battleSource &&
+        battleOpponent &&
+        getInstance(state, sourceInstanceId).zoneChangeCounter === battleSource.zoneChangeCounter &&
+        getInstance(state, battleOpponent.instanceId).zoneChangeCounter ===
+          battleOpponent.zoneChangeCounter &&
+        getInstance(state, battleOpponent.instanceId).zone === "character" &&
+        getInstance(state, battleOpponent.instanceId).controller !== controller
+          ? [battleOpponent.instanceId]
+          : [];
+      let targetIds = action.battleOpponent
+        ? boundTargetIds
+        : action.previousActionTargets
+          ? (previousActionTargetIds ?? []).filter((instanceId) => {
+              const pool = candidatePoolForTarget(
+                state,
+                controller,
+                sourceInstanceId,
+                action.target,
+              );
+              return (
+                pool.supported &&
+                pool.candidateIds.includes(instanceId) &&
+                delayedTargetIsCurrent(state, action, instanceId)
+              );
+            })
+          : resolveActionTargets(
+              state,
+              controller,
+              sourceInstanceId,
+              action,
+              selectedTargetIds,
+              previousActionTargetIds,
+            );
       if (targetIds === "prompt" || !targetIds) {
         return false;
       }
+      targetIds = targetIds.filter((targetId) =>
+        (action.selectedTargetFilters ?? []).every((filter) => {
+          const result = matchesTargetFilter(state, sourceInstanceId, targetId, filter);
+          return result.supported && result.matches;
+        }),
+      );
+      if (action.thenActions?.length && !koCompletionId) {
+        koCompletionId = enqueueResolution(
+          state,
+          {
+            kind: "effectKoComplete",
+            effectTriggerEvent: currentEffectTriggerEvent(state),
+            sourceInstanceId,
+            sourceZoneChangeCounter: getInstance(state, sourceInstanceId).zoneChangeCounter,
+            controller,
+            successfulTargetIds: [],
+            actions: action.thenActions,
+          },
+          { next: true },
+        ).id;
+      }
+      // Freeze the entire original group before any member's aura disappears.
+      // The process survives declined replacements and saved continuations; a
+      // transformed replacement action starts its own process and observations.
+      if (process && !process.koBasePowers) {
+        process.koBasePowers = targetIds.map((instanceId) => ({
+          instanceId,
+          zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
+          value:
+            getSetBasePower(state, instanceId) ?? basePower(getCardForInstance(state, instanceId)),
+        }));
+      }
+      // One K.O. instruction affects its selected group simultaneously. Protection
+      // present now still applies if its source is removed earlier in this loop
+      // (OP04-119). Protected cards must not enter a replacement continuation.
+      const initiallyProtectedIds = new Set(
+        targetIds.filter(
+          (id) =>
+            isKoPreventedByModifier(state, id, sourceInstanceId, "effect") ||
+            isCharacterRemovalPreventedByPermanentEffect(state, id, controller),
+        ),
+      );
       for (const [targetIndex, targetId] of targetIds.entries()) {
-        if (isKoPreventedByModifier(state, targetId, sourceInstanceId, "effect")) {
+        if (
+          initiallyProtectedIds.has(targetId) ||
+          isKoPreventedByModifier(state, targetId, sourceInstanceId, "effect")
+        ) {
           emitLog(
             state,
             controller,
@@ -2910,15 +4126,18 @@ export function processEffectAction(
           );
           continue;
         }
-        const replacement = findKoReplacement(
+        const replacements = findKoReplacements(
           state,
           targetId,
           controller,
           "effect",
           sourceInstanceId,
         );
+        const replacement = replacements[0];
         if (replacement) {
-          const remainingTargetIds = targetIds.slice(targetIndex + 1);
+          const remainingTargetIds = targetIds
+            .slice(targetIndex + 1)
+            .filter((id) => !initiallyProtectedIds.has(id));
           const replacementTargetIds = [
             targetId,
             ...remainingTargetIds.filter((remainingTargetId) => {
@@ -2935,7 +4154,7 @@ export function processEffectAction(
               );
             }),
           ];
-          if (replacement.effect.mandatory) {
+          if (replacement.effect.mandatory && replacements.length === 1) {
             getInstance(state, replacement.sourceInstanceId).usedEffectKeys.push(
               replacement.effectKey,
             );
@@ -2944,6 +4163,8 @@ export function processEffectAction(
                 state,
                 {
                   kind: "effectAction",
+                  removalCostPaymentId,
+                  koCompletionId,
                   sourceInstanceId,
                   controller,
                   action: {
@@ -2969,29 +4190,69 @@ export function processEffectAction(
                 sourceInstanceId: replacement.sourceInstanceId,
                 controller: replacement.controller,
                 action: replacement.effect.replacementAction,
+                replacementProcess: extendReplacementProcess(
+                  state,
+                  replacement.sourceInstanceId,
+                  replacement.effectKey,
+                ),
                 previousActionTargetIds: replacementTargetIds,
               },
               { next: true },
             );
             return false;
           }
+          const replacementChoices = replacements.map((candidate) => ({
+            id: replacementOptionId(candidate),
+            sourceInstanceId: candidate.sourceInstanceId,
+            replacementEffectIndex: candidate.replacementEffectIndex,
+            replacementEffectKey: candidate.effectKey,
+            replacementAction: candidate.effect.replacementAction,
+            replacementTargetIds: [
+              targetId,
+              ...remainingTargetIds.filter((id) =>
+                findKoReplacements(state, id, controller, "effect", sourceInstanceId).some(
+                  (eligible) => replacementOptionId(eligible) === replacementOptionId(candidate),
+                ),
+              ),
+            ],
+          }));
           createChoicePrompt(state, {
-            choiceKind: "confirm",
+            choiceKind: replacements.length > 1 ? "chooseOption" : "confirm",
+            replacementGroup: replacements.map((candidate) =>
+              replacementProcessKey(state, candidate.sourceInstanceId, candidate.effectKey),
+            ),
             seat: replacement.controller,
             label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace the K.O.`,
             details: "Apply the replacement effect instead of allowing the K.O.?",
             sourceCardId: getInstance(state, replacement.sourceInstanceId).cardId,
             sourceInstanceId: replacement.sourceInstanceId,
             eventId: null,
-            options: [
-              { id: "no", label: "Allow K.O.", value: "no" },
-              { id: "yes", label: "Apply replacement", value: "yes" },
-            ],
+            options:
+              replacements.length > 1
+                ? [
+                    ...(!replacements.some((candidate) => candidate.effect.mandatory)
+                      ? [{ id: "no", label: "Decline these replacements", value: "no" }]
+                      : []),
+                    ...replacementChoices.map((choice) => ({
+                      id: choice.id,
+                      value: choice.id,
+                      label: replacementChoiceLabel(state, choice.sourceInstanceId),
+                      targetId: choice.sourceInstanceId,
+                    })),
+                  ]
+                : [
+                    { id: "no", label: "Allow K.O.", value: "no" },
+                    { id: "yes", label: "Apply replacement", value: "yes" },
+                  ],
             minSelections: 1,
             maxSelections: 1,
             context: { action: "ko", replacement: true },
             resolutionContext: {
               intent: "effectKoReplacement",
+              removalCostPaymentId,
+              koCompletionId,
+              replacementRequired: replacements.some((candidate) => candidate.effect.mandatory),
+              replacementChoices: replacements.length > 1 ? replacementChoices : undefined,
               targetId,
               controller: replacement.controller,
               replacementSourceInstanceId: replacement.sourceInstanceId,
@@ -3007,22 +4268,45 @@ export function processEffectAction(
           });
           return false;
         }
-        koCharacterByEffect(state, targetId, controller, sourceInstanceId);
+        if (koCharacterByEffect(state, targetId, controller, sourceInstanceId)) {
+          const completion = state.resolutionQueue.find((item) => item.id === koCompletionId);
+          if (completion?.kind === "effectKoComplete")
+            completion.successfulTargetIds.push(targetId);
+          const payment = state.resolutionQueue.find((item) => item.id === removalCostPaymentId);
+          if (payment?.kind === "effectRemovalCostComplete") payment.paidTargetIds.push(targetId);
+        }
       }
       return true;
     }
+    case "simultaneousStateChange":
+      return beginSimultaneousStateChange(state, controller, sourceInstanceId, action);
     case "rest": {
-      const hasFieldZone = action.target.zones.some((zone) => zone !== "costArea");
-      if (
-        action.target.zones.includes("costArea") &&
-        hasFieldZone &&
-        selectedTargetIds === undefined
-      ) {
+      if (state.donIdentities && action.target.zones.includes("costArea")) {
+        const zones = action.target.zones.filter(
+          (zone): zone is "leader" | "character" | "stage" | "costArea" =>
+            ["leader", "character", "stage", "costArea"].includes(zone),
+        );
+        return beginSimultaneousStateChange(
+          state,
+          controller,
+          sourceInstanceId,
+          {
+            action: "simultaneousStateChange",
+            groups: [{ state: "rested", target: { ...action.target, zones } }],
+          },
+          true,
+        );
+      }
+      const selectionMode = currentReplacementProcess(state)?.applied.length
+        ? "performable"
+        : "selection";
+      if (action.target.zones.includes("costArea") && selectedTargetIds === undefined) {
         const candidateIds = restActionCandidateIds(
           state,
           controller,
           sourceInstanceId,
           action.target,
+          selectionMode,
         );
         const requested =
           action.target.count.amount === "all"
@@ -3033,7 +4317,7 @@ export function processEffectAction(
         }
         createChoicePrompt(state, {
           choiceKind: "costPayment",
-          seat: controller,
+          seat: action.target.chosenBy === "opponent" ? otherSeat(controller) : controller,
           label: `${effectSourceName(state, sourceInstanceId)} rests cards.`,
           details: `Choose ${requested} card${requested === 1 ? "" : "s"} or DON!! to rest.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
@@ -3043,9 +4327,13 @@ export function processEffectAction(
             id,
             label: id.startsWith("active-don:")
               ? "Active DON!! in cost area"
-              : cardName(getCardForInstance(state, id)),
+              : id.startsWith("rested-don:")
+                ? "Rested DON!! in cost area"
+                : cardName(getCardForInstance(state, id)),
             value: id,
-            ...(!id.startsWith("active-don:") ? { targetId: id } : {}),
+            ...(!id.startsWith("active-don:") && !id.startsWith("rested-don:")
+              ? { targetId: id }
+              : {}),
           })),
           minSelections: action.target.count.upTo ? 0 : requested,
           maxSelections: requested,
@@ -3061,56 +4349,13 @@ export function processEffectAction(
         });
         return false;
       }
-      if (
-        action.target.zones.includes("costArea") &&
-        !hasFieldZone &&
-        selectedTargetIds === undefined
-      ) {
-        const targetSeat = action.target.player === "self" ? controller : otherSeat(controller);
-        const requestedAmount =
-          action.target.count.amount === "all"
-            ? getPlayer(state, targetSeat).activeDon
-            : action.target.count.amount;
-        const maximum = Math.min(requestedAmount, getPlayer(state, targetSeat).activeDon);
-        if (maximum > 0) {
-          const choiceSeat =
-            action.target.chosenBy === "opponent" ? otherSeat(controller) : controller;
-          createChoicePrompt(state, {
-            choiceKind: "chooseOption",
-            seat: choiceSeat,
-            label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards.`,
-            details: `Choose how many of ${getPlayer(state, targetSeat).playerName}'s active DON!! cards to rest.`,
-            sourceCardId: getInstance(state, sourceInstanceId).cardId,
-            sourceInstanceId,
-            eventId: null,
-            options: Array.from(
-              { length: action.target.count.upTo ? maximum + 1 : 1 },
-              (_, index) => {
-                const count = action.target.count.upTo ? index : maximum;
-                return { id: String(count), label: String(count), value: String(count) };
-              },
-            ),
-            minSelections: 1,
-            maxSelections: 1,
-            context: { action: "rest", resource: "don" },
-            resolutionContext: {
-              intent: "effectRestDonCount",
-              sourceInstanceId,
-              controller,
-              action,
-              targetSeat,
-              maximum,
-            },
-          });
-          return false;
-        }
-      }
-      if (action.target.zones.includes("costArea") && hasFieldZone && selectedTargetIds) {
+      if (action.target.zones.includes("costArea") && selectedTargetIds) {
         const liveCandidateIds = restActionCandidateIds(
           state,
           controller,
           sourceInstanceId,
           action.target,
+          selectionMode,
         );
         const requested =
           action.target.count.amount === "all"
@@ -3124,11 +4369,14 @@ export function processEffectAction(
         ) {
           return false;
         }
+        const consumedDonIds: string[] = [];
         for (const [targetIndex, id] of selectedTargetIds.entries()) {
+          if (id.startsWith("rested-don:")) continue;
           if (id.startsWith("active-don:")) {
             const seat = id.split(":")[1] as MatchSeat;
             getPlayer(state, seat).activeDon -= 1;
             getPlayer(state, seat).restedDon += 1;
+            consumedDonIds.push(id);
           } else {
             if (
               promptForEffectRestReplacement(
@@ -3137,7 +4385,16 @@ export function processEffectAction(
                 controller,
                 sourceInstanceId,
                 action,
-                selectedTargetIds.slice(targetIndex + 1),
+                selectedTargetIds.slice(targetIndex + 1).map((remainingId) => {
+                  if (!remainingId.startsWith("active-don:")) return remainingId;
+                  const [, seat, indexText] = remainingId.split(":");
+                  const index = Number(indexText);
+                  const removedBefore = consumedDonIds.filter((used) => {
+                    const [, usedSeat, usedIndex] = used.split(":");
+                    return usedSeat === seat && Number(usedIndex) < index;
+                  }).length;
+                  return `active-don:${seat}:${index - removedBefore}`;
+                }),
               )
             ) {
               return false;
@@ -3157,6 +4414,7 @@ export function processEffectAction(
       if (targetIds === "prompt" || !targetIds) {
         return false;
       }
+      const restedIds: string[] = [];
       for (const [targetIndex, targetId] of targetIds.entries()) {
         if (
           promptForEffectRestReplacement(
@@ -3170,19 +4428,21 @@ export function processEffectAction(
         ) {
           return false;
         }
-        restCharacterByEffect(state, targetId, controller, sourceInstanceId);
+        if (restCharacterByEffect(state, targetId, controller, sourceInstanceId))
+          restedIds.push(targetId);
       }
-      emitLog(
-        state,
-        controller,
-        `${effectSourceName(state, sourceInstanceId)} rests ${targetNames(state, targetIds)}.`,
-        {
-          sourceCardId: getInstance(state, sourceInstanceId).cardId,
-          sourceInstanceId,
-          targetIds,
-          visibility: "public",
-        },
-      );
+      if (restedIds.length > 0)
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} rests ${targetNames(state, restedIds)}.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds: restedIds,
+            visibility: "public",
+          },
+        );
       return true;
     }
     case "restDonForPower": {
@@ -3255,6 +4515,15 @@ export function processEffectAction(
           });
           return false;
         }
+        if (state.donIdentities)
+          return continueDonTransfers(state, {
+            controller,
+            sourceInstanceId,
+            effectTriggerEvent: currentEffectTriggerEvent(state),
+            moves: [
+              donTransferMove(state, { seat, area: "rested" }, { seat, area: "active" }, maximum),
+            ],
+          });
         player.restedDon -= maximum;
         player.activeDon += maximum;
         return true;
@@ -3286,14 +4555,56 @@ export function processEffectAction(
       return true;
     }
     case "returnToHand": {
-      const targetIds = resolveActionTargets(
+      const chosenTargetIds = resolveActionTargets(
         state,
         controller,
         sourceInstanceId,
         action,
         selectedTargetIds,
       );
-      if (targetIds === "prompt" || !targetIds) {
+      if (chosenTargetIds === "prompt" || !chosenTargetIds) {
+        return false;
+      }
+      movementCompletionId ??= enqueueResolution(
+        state,
+        {
+          kind: "effectMovementComplete",
+          sourceInstanceId,
+          controller,
+          movedIds: [],
+          delayedActionChainId: delayedActionChain(action),
+        },
+        { next: true },
+      ).id;
+      const targetIds = chosenTargetIds.filter(
+        (id) => !isCharacterRemovalPreventedByPermanentEffect(state, id, controller),
+      );
+      const lifeReplacementIds = replacedLifeToHandIds(state, targetIds);
+      if (lifeReplacementIds.length > 0 && lifeReplacementIds.length < targetIds.length) {
+        // CR3-1-7/8: settle the simultaneous Life destination and its private
+        // order before another replacement can read or change that deck.
+        // The remaining field processing belongs to this same movement result.
+        const lifeReplacementSet = new Set(lifeReplacementIds);
+        for (const id of lifeReplacementIds)
+          removeCardByEffectAction(state, id, controller, sourceInstanceId, action);
+        enqueueResolution(
+          state,
+          {
+            kind: "effectAction",
+            sourceInstanceId,
+            controller,
+            // This is a continuation of the same action, not a new condition check.
+            action: { ...action, condition: undefined },
+            selectedTargetIds: targetIds.filter((id) => !lifeReplacementSet.has(id)),
+            movementCompletionId,
+            skipRemovalReplacementIds,
+          },
+          { next: true },
+        );
+        promptForLifeReplacementOrder(
+          state,
+          completedLifeReplacementMoves(state, lifeReplacementIds),
+        );
         return false;
       }
       for (const [targetIndex, targetId] of targetIds.entries()) {
@@ -3306,11 +4617,27 @@ export function processEffectAction(
             sourceInstanceId,
             action,
             targetIds.slice(targetIndex + 1),
+            undefined,
+            undefined,
+            skipRemovalReplacementIds,
+            undefined,
+            movementCompletionId,
           )
         ) {
           return false;
         }
-        removeCardByEffectAction(state, targetId, controller, sourceInstanceId, action);
+        const replacedLife = replacedLifeToHandIds(state, [targetId]);
+        if (removeCardByEffectAction(state, targetId, controller, sourceInstanceId, action)) {
+          const result = state.resolutionQueue.find((item) => item.id === movementCompletionId);
+          if (result?.kind === "effectMovementComplete") result.movedIds.push(targetId);
+        }
+        if (replacedLife.length && getInstance(state, targetId).zone === "deck") {
+          const result = state.resolutionQueue.find((item) => item.id === movementCompletionId);
+          if (result?.kind === "effectMovementComplete")
+            (result.replacedLifeCards ??= []).push(
+              ...completedLifeReplacementMoves(state, [targetId]),
+            );
+        }
       }
       if (targetIds.length > 0) {
         for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
@@ -3327,18 +4654,45 @@ export function processEffectAction(
           );
         }
       }
+      // The movement boundary must precede nested continuations as well as
+      // sibling actions, so private replacement order and actual counts settle first.
+      const completionIndex = state.resolutionQueue.findIndex(
+        (item) => item.id === movementCompletionId,
+      );
+      if (completionIndex > 0) {
+        const [completion] = state.resolutionQueue.splice(completionIndex, 1);
+        if (completion) state.resolutionQueue.unshift(completion);
+      }
       return true;
     }
     case "returnToDeck": {
-      const targetIds = action.previousActionTargets
-        ? (previousActionTargetIds ?? []).filter((instanceId) => {
-            const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
-          })
-        : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
-      if (targetIds === "prompt" || !targetIds) {
+      removalCostPaymentId ??= returnToDeckContinuation?.removalCostPaymentId;
+      const chosenTargetIds =
+        action.previousActionTargets || action.costPaymentTargets
+          ? (action.costPaymentTargets
+              ? (selectedTargetIds ?? [])
+              : (previousActionTargetIds ?? [])
+            ).filter((instanceId) => {
+              const pool = candidatePoolForTarget(
+                state,
+                controller,
+                sourceInstanceId,
+                action.target,
+              );
+              return (
+                pool.supported &&
+                pool.candidateIds.includes(instanceId) &&
+                delayedTargetIsCurrent(state, action, instanceId)
+              );
+            })
+          : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
+      if (chosenTargetIds === "prompt" || !chosenTargetIds) {
         return false;
       }
+      const targetIds = chosenTargetIds.filter(
+        (id) => !isCharacterRemovalPreventedByPermanentEffect(state, id, controller),
+      );
+      if (targetIds.length === 0) return true;
       const orderedHandOwners =
         action.order === "any" &&
         action.position === "any" &&
@@ -3447,6 +4801,7 @@ export function processEffectAction(
             firstGroup,
             remainingOwnerGroups,
             targetIds,
+            removalCostPaymentId,
           );
           return true;
         }
@@ -3460,11 +4815,21 @@ export function processEffectAction(
               sourceInstanceId,
               action,
               targetIds.slice(targetIndex + 1),
+              undefined,
+              undefined,
+              skipRemovalReplacementIds,
+              removalCostPaymentId,
             )
           ) {
             return false;
           }
-          removeCardByEffectAction(state, targetId, controller, sourceInstanceId, action);
+          if (
+            removeCardByEffectAction(state, targetId, controller, sourceInstanceId, action) &&
+            removalCostPaymentId
+          ) {
+            const payment = state.resolutionQueue.find((item) => item.id === removalCostPaymentId);
+            if (payment?.kind === "effectRemovalCostComplete") payment.paidTargetIds.push(targetId);
+          }
         }
         return true;
       }
@@ -3490,11 +4855,14 @@ export function processEffectAction(
             action,
             targetIds.slice(targetIndex + 1),
             returnToDeckContinuation,
+            undefined,
+            skipRemovalReplacementIds,
+            removalCostPaymentId,
           )
         ) {
           return false;
         }
-        removeCardByEffectAction(
+        const moved = removeCardByEffectAction(
           state,
           targetId,
           controller,
@@ -3502,6 +4870,10 @@ export function processEffectAction(
           action,
           returnToDeckContinuation.publicTargetIds.length > 1,
         );
+        if (moved && removalCostPaymentId) {
+          const payment = state.resolutionQueue.find((item) => item.id === removalCostPaymentId);
+          if (payment?.kind === "effectRemovalCostComplete") payment.paidTargetIds.push(targetId);
+        }
       }
       if (
         returnToDeckContinuation.finalizeOwnerGroup &&
@@ -3525,6 +4897,7 @@ export function processEffectAction(
             nextGroup,
             remainingOwnerGroups,
             returnToDeckContinuation.allTargetIds,
+            removalCostPaymentId,
           );
         }
       }
@@ -3681,18 +5054,21 @@ export function processEffectAction(
         return addTopDeckCardsToLife(state, controller, sourceInstanceId, action, maximum);
       }
 
-      const targetIds = action.previousActionTargets
+      const chosenTargetIds = action.previousActionTargets
         ? (previousActionTargetIds ?? []).filter((instanceId) => {
             const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
+            return (
+              pool.supported &&
+              pool.candidateIds.includes(instanceId) &&
+              delayedTargetIsCurrent(state, action, instanceId)
+            );
           })
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
-      if (targetIds === "prompt") {
-        return false;
-      }
-      if (targetIds === null || targetIds.length === 0) {
-        return targetIds !== null;
-      }
+      if (chosenTargetIds === "prompt" || chosenTargetIds === null) return false;
+      const targetIds = chosenTargetIds.filter(
+        (id) => !isCharacterRemovalPreventedByPermanentEffect(state, id, controller),
+      );
+      if (targetIds.length === 0) return true;
       if (action.position === "choice") {
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
@@ -3711,6 +5087,7 @@ export function processEffectAction(
           context: { action: "addToLife", resource: "life" },
           resolutionContext: {
             intent: "effectLifePosition",
+            removalCostPaymentId,
             sourceInstanceId,
             controller,
             action,
@@ -3719,23 +5096,35 @@ export function processEffectAction(
         });
         return false;
       }
-      for (const targetId of targetIds) {
+      for (const [index, targetId] of targetIds.entries()) {
         if (isCharacterRemovalPreventedByPermanentEffect(state, targetId, controller)) continue;
-        const target = getInstance(state, targetId);
-        const destinationSeat =
-          action.target.player === "self"
-            ? controller
-            : action.target.player === "opponent"
-              ? otherSeat(controller)
-              : target.controller;
-        returnAttachedDonToCostArea(state, targetId);
-        moveCard(state, targetId, destinationSeat, "life", {
-          lifePosition: action.position,
-          faceUp: action.faceUp ?? false,
-          publicKnowledge: action.faceUp ?? false,
-          actor: controller,
-          visibility: action.faceUp ? "public" : "private",
-        });
+        if (
+          !skipRemovalReplacementIds?.includes(targetId) &&
+          promptForEffectRemovalReplacement(
+            state,
+            targetId,
+            controller,
+            sourceInstanceId,
+            action,
+            targetIds.slice(index + 1),
+            undefined,
+            undefined,
+            skipRemovalReplacementIds,
+            removalCostPaymentId,
+          )
+        )
+          return false;
+        const moved = removeCardByEffectAction(
+          state,
+          targetId,
+          controller,
+          sourceInstanceId,
+          action,
+        );
+        if (moved && removalCostPaymentId) {
+          const payment = state.resolutionQueue.find((item) => item.id === removalCostPaymentId);
+          if (payment?.kind === "effectRemovalCostComplete") payment.paidTargetIds.push(targetId);
+        }
       }
       return true;
     }
@@ -3745,11 +5134,10 @@ export function processEffectAction(
         ? (previousActionTargetIds?.length ?? 0)
         : action.amount;
       const maximum = Math.min(requestedAmount, getPlayer(state, targetSeat).deck.length);
+      // Resolve as much as possible (1-3-2), including the independent
+      // "Then" continuation when no cards remain (4-10-2).
       if (maximum === 0) {
-        return true;
-      }
-      if (!action.upTo && maximum < requestedAmount) {
-        return true;
+        return trashTopDeckCards(state, controller, sourceInstanceId, action, 0, requestedAmount);
       }
       if (action.upTo) {
         createChoicePrompt(state, {
@@ -3833,6 +5221,7 @@ export function processEffectAction(
           context: { action: "removeFromLife", resource: "life" },
           resolutionContext: {
             intent: "effectLifePosition",
+            removalCostPaymentId,
             sourceInstanceId,
             controller,
             action,
@@ -3958,14 +5347,32 @@ export function processEffectAction(
       const targetIds = action.previousActionTargets
         ? (previousActionTargetIds ?? []).filter((instanceId) => {
             const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
+            return (
+              pool.supported &&
+              pool.candidateIds.includes(instanceId) &&
+              delayedTargetIsCurrent(state, action, instanceId)
+            );
           })
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
         return false;
       }
-      const cardTargetIds = targetIds.filter((targetId) => !targetId.startsWith("rested-don:"));
-      const donTargetIds = targetIds.filter((targetId) => targetId.startsWith("rested-don:"));
+      const refreshSeat =
+        action.refreshPlayer === "self"
+          ? controller
+          : action.refreshPlayer === "opponent"
+            ? otherSeat(controller)
+            : undefined;
+      // A player's Refresh only readies that player's cards. A chosen card on
+      // the other field remains a legal choice, but this restriction has no effect.
+      const applicableIds = targetIds.filter(
+        (id) =>
+          refreshSeat === undefined ||
+          (id.startsWith("rested-don:") ? id.split(":")[1] : getInstance(state, id).controller) ===
+            refreshSeat,
+      );
+      const cardTargetIds = applicableIds.filter((targetId) => !targetId.startsWith("rested-don:"));
+      const donTargetIds = applicableIds.filter((targetId) => targetId.startsWith("rested-don:"));
       for (const targetId of cardTargetIds) {
         addModifier(state, sourceInstanceId, targetId, {
           type: "flag",
@@ -3987,7 +5394,7 @@ export function processEffectAction(
           expiresOnTurnStartOfSeat: seat,
         });
       }
-      if (targetIds.length > 0) {
+      if (applicableIds.length > 0) {
         const targetDescription = [
           ...(cardTargetIds.length > 0 ? [targetNames(state, cardTargetIds)] : []),
           ...(donTargetIds.length > 0
@@ -4037,19 +5444,35 @@ export function processEffectAction(
       return true;
     }
     case "giveDon": {
-      const player = getPlayer(
+      let player = getPlayer(
         state,
         action.donorPlayer === "opponent" ? otherSeat(controller) : controller,
       );
-      const availableDon =
-        action.donState === "rested"
-          ? player.restedDon
-          : action.donState === "active"
-            ? player.activeDon
-            : player.restedDon + player.activeDon;
+      const availableDon = availableDonForGive(state, controller, action);
       if (action.distribution === "each") {
         if (action.count.amount === "all") {
           return false;
+        }
+        if (action.count.upTo) {
+          const targetIds = resolveActionTargets(
+            state,
+            controller,
+            sourceInstanceId,
+            action,
+            selectedTargetIds,
+          );
+          if (targetIds === "prompt" || !targetIds) return false;
+          return continueGiveDonEach(state, {
+            intent: "effectGiveDonEachCount",
+            sourceInstanceId,
+            controller,
+            action,
+            recipients: targetIds.map((instanceId) => ({
+              instanceId,
+              zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
+            })),
+            allocations: [],
+          });
         }
         const amountPerTarget = action.count.amount;
         const targetPool = candidatePoolForTarget(
@@ -4097,6 +5520,23 @@ export function processEffectAction(
         if (totalDon > availableDon) {
           return false;
         }
+        if (state.donIdentities)
+          return continueDonTransfers(state, {
+            controller,
+            sourceInstanceId,
+            effectTriggerEvent: currentEffectTriggerEvent(state),
+            moves: targetIds.map((targetId) =>
+              donTransferMove(
+                state,
+                {
+                  seat: action.donorPlayer === "opponent" ? otherSeat(controller) : controller,
+                  area: action.donState === "rested" ? "rested" : "active",
+                },
+                { attachedTo: targetId },
+                amountPerTarget,
+              ),
+            ),
+          });
         if (action.donState === "rested") {
           player.restedDon -= totalDon;
         } else {
@@ -4104,6 +5544,7 @@ export function processEffectAction(
         }
         for (const targetId of targetIds) {
           getInstance(state, targetId).attachedDon += amountPerTarget;
+          publishDonGiven(state, targetId, amountPerTarget, controller, sourceInstanceId);
         }
         emitLog(
           state,
@@ -4166,60 +5607,68 @@ export function processEffectAction(
         return false;
       }
       const amount = action.count.amount;
-      if (action.donState === "rested") {
-        if (player.restedDon < amount) {
-          enqueueJudgePrompt(
-            state,
-            sourceInstanceId,
-            "Judge review: rested DON!! source",
-            "Not enough rested DON!! is available.",
-          );
-          return false;
-        }
-        player.restedDon -= amount;
-      } else if (action.donState === "active") {
-        if (player.activeDon < amount) {
-          enqueueJudgePrompt(
-            state,
-            sourceInstanceId,
-            "Judge review: active DON!! source",
-            "Not enough active DON!! is available.",
-          );
-          return false;
-        }
-        player.activeDon -= amount;
-      } else {
-        const fromRested = Math.min(player.restedDon, amount);
-        player.restedDon -= fromRested;
-        player.activeDon -= amount - fromRested;
+      if (action.donorPlayer === "targetOwner") {
+        player = getPlayer(state, getInstance(state, targetIds[0]!).owner);
       }
-      getInstance(state, targetIds[0]!).attachedDon += amount;
-      emitLog(
-        state,
-        controller,
-        `${effectSourceName(state, sourceInstanceId)} gives ${amount} DON!! to ${cardName(getCardForInstance(state, targetIds[0]!))}.`,
-        {
+      const minimumActive =
+        action.donState === "active" ? amount : Math.max(0, amount - player.restedDon);
+      const maximumActive = action.donState === "rested" ? 0 : Math.min(amount, player.activeDon);
+      if (minimumActive < maximumActive) {
+        createChoicePrompt(state, {
+          choiceKind: "chooseOption",
+          seat: controller,
+          label: `${effectSourceName(state, sourceInstanceId)} chooses DON!! from the cost area`,
+          details: "Choose how many active and rested DON!! cards to give.",
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
-          targetIds,
-          visibility: "public",
-        },
+          eventId: null,
+          options: Array.from({ length: maximumActive - minimumActive + 1 }, (_, index) => {
+            const active = minimumActive + index;
+            return {
+              id: String(active),
+              value: String(active),
+              label: `${active} active, ${amount - active} rested`,
+            };
+          }),
+          minSelections: 1,
+          maxSelections: 1,
+          context: { action: "giveDon", resource: "don" },
+          resolutionContext: {
+            intent: "effectGiveDonSource",
+            controller,
+            sourceInstanceId,
+            action,
+            targetId: targetIds[0]!,
+          },
+        });
+        return false;
+      }
+      return completeGiveDon(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        targetIds[0]!,
+        minimumActive,
       );
-      return true;
     }
+
     case "giveDonFromDonPhase":
       return true;
     case "trashFromField": {
-      const targetIds = resolveActionTargets(
+      const chosenTargetIds = resolveActionTargets(
         state,
         controller,
         sourceInstanceId,
         action,
         selectedTargetIds,
       );
-      if (targetIds === "prompt" || !targetIds) {
+      if (chosenTargetIds === "prompt" || !chosenTargetIds) {
         return false;
       }
+      const targetIds = chosenTargetIds.filter(
+        (id) => !isCharacterRemovalPreventedByPermanentEffect(state, id, controller),
+      );
       for (const [targetIndex, targetId] of targetIds.entries()) {
         if (
           !skipRemovalReplacementIds?.includes(targetId) &&
@@ -4230,6 +5679,9 @@ export function processEffectAction(
             sourceInstanceId,
             action,
             targetIds.slice(targetIndex + 1),
+            undefined,
+            undefined,
+            skipRemovalReplacementIds,
           )
         ) {
           return false;
@@ -4240,6 +5692,7 @@ export function processEffectAction(
     }
     case "trashThisCard": {
       const source = getInstance(state, sourceInstanceId);
+      returnAttachedDonToCostArea(state, sourceInstanceId);
       moveCard(state, sourceInstanceId, source.owner, "trash", {
         faceUp: true,
         publicKnowledge: true,
@@ -4408,12 +5861,13 @@ export function processEffectAction(
         const eventCard = getCardForInstance(state, eventInstanceId);
         const eventInstance = getInstance(state, eventInstanceId);
         if (
-          eventCard.cardType !== "event" ||
+          !actionTargetIsEligible(state, action, eventInstanceId, sourceInstanceId) ||
           eventInstance.controller !== controller ||
           eventInstance.zone !== "hand"
         ) {
           return false;
         }
+        const baseCostAtActivation = getBaseCost(state, eventInstanceId);
         moveCard(state, eventInstanceId, eventInstance.controller, "resolution", {
           faceUp: true,
           publicKnowledge: true,
@@ -4445,7 +5899,11 @@ export function processEffectAction(
             blockIndex,
           });
         }
-        const triggerEvent = { instanceId: eventInstanceId, effectController: controller };
+        const triggerEvent = {
+          instanceId: eventInstanceId,
+          effectController: controller,
+          baseCostAtActivation,
+        };
         enqueueMirroredInPlayEffectsForTrigger(
           state,
           controller,
@@ -4507,6 +5965,35 @@ export function processEffectAction(
         return false;
       }
       const deck = getPlayer(state, controller).deck;
+      if (action.lookCountUpTo) {
+        const maximum = Math.min(action.lookCount, deck.length);
+        if (maximum === 0) return true;
+        createChoicePrompt(state, {
+          choiceKind: "chooseOption",
+          seat: controller,
+          label: `${effectSourceName(state, sourceInstanceId)} may look at up to ${maximum} cards.`,
+          details: "Choose how many cards to look at before seeing their contents.",
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          eventId: null,
+          options: Array.from({ length: maximum + 1 }, (_, count) => ({
+            id: String(count),
+            label: String(count),
+            value: String(count),
+          })),
+          minSelections: 1,
+          maxSelections: 1,
+          context: { action: "search", role: "lookCount" },
+          resolutionContext: {
+            intent: "effectSearchLookCount",
+            sourceInstanceId,
+            controller,
+            action,
+            maximum,
+          },
+        });
+        return false;
+      }
       const lookedIds = action.lookCount === 0 ? [...deck] : deck.slice(0, action.lookCount);
       if (lookedIds.length === 0) {
         return true;
@@ -4543,7 +6030,7 @@ export function processEffectAction(
         details:
           action.revealDestination === "character"
             ? `Choose up to ${maximum} eligible card(s) to play.`
-            : `Choose up to ${maximum} eligible card(s) to reveal and add to your hand.`,
+            : `Choose up to ${maximum} eligible card(s) to ${action.reveal === false ? "add to your hand" : "reveal and add to your hand"}.`,
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
         eventId: null,
@@ -4725,11 +6212,7 @@ export function processEffectAction(
         });
         return false;
       }
-      const maximum = Math.min(
-        action.groups.length,
-        candidateIds.length,
-        getOpenCharacterSlots(state, playingSeat).length,
-      );
+      const maximum = Math.min(action.groups.length, candidateIds.length);
       if (maximum === 0) return true;
       createChoicePrompt(state, {
         choiceKind: "selectCards",
@@ -4779,6 +6262,10 @@ export function processEffectAction(
           visibility: "public",
         },
       );
+      const matchesConditional = (action.conditional?.filters ?? []).every((filter) => {
+        const result = matchesTargetFilter(state, sourceInstanceId, revealedInstanceId, filter);
+        return result.supported && result.matches;
+      });
       enqueueResolution(
         state,
         {
@@ -4787,14 +6274,12 @@ export function processEffectAction(
           controller,
           revealedInstanceId,
           owner,
-          position: action.finalPosition,
+          position: matchesConditional
+            ? (action.conditional?.finalPosition ?? action.finalPosition)
+            : action.finalPosition,
         },
         { next: true },
       );
-      const matchesConditional = (action.conditional?.filters ?? []).every((filter) => {
-        const result = matchesTargetFilter(state, sourceInstanceId, revealedInstanceId, filter);
-        return result.supported && result.matches;
-      });
       if (action.conditional && matchesConditional) {
         for (const nestedAction of [...action.conditional.actions].reverse()) {
           enqueueResolution(
@@ -4955,6 +6440,7 @@ export function processEffectAction(
         sourceInstanceId,
         [action.predicate],
         previousActionTargetIds,
+        currentEffectTriggerEvent(state),
       );
       if (!result.supported) {
         const source = getInstance(state, sourceInstanceId);
@@ -4993,7 +6479,12 @@ export function processEffectAction(
       return true;
     }
     case "scheduleAtEndOfTurn":
-      for (const nestedAction of action.actions) {
+      for (const nestedAction of scheduledActions(
+        state,
+        action.actions,
+        sourceInstanceId,
+        previousActionTargetIds,
+      )) {
         state.delayedEffectActions.push({
           sourceInstanceId,
           controller,
@@ -5042,7 +6533,7 @@ export function processEffectAction(
     }
     case "cannotAttack": {
       const targetIds = action.previousActionTargets
-        ? (previousActionTargetIds ?? [])
+        ? (previousActionTargetIds ?? []).filter((id) => delayedTargetIsCurrent(state, action, id))
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
         return false;
@@ -5067,13 +6558,7 @@ export function processEffectAction(
           flag: action.unlessTrashFromHand ? "attackHandTrashCost" : "cannotAttack",
           ...(action.unlessTrashFromHand && { value: action.unlessTrashFromHand }),
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5092,13 +6577,9 @@ export function processEffectAction(
       return true;
     }
     case "cannotBeKod": {
-      const targetIds = resolveActionTargets(
-        state,
-        controller,
-        sourceInstanceId,
-        action,
-        selectedTargetIds,
-      );
+      const targetIds = action.previousActionTargets
+        ? (previousActionTargetIds ?? []).filter((id) => delayedTargetIsCurrent(state, action, id))
+        : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
         return false;
       }
@@ -5124,13 +6605,7 @@ export function processEffectAction(
           koByPlayer: action.byPlayer,
           koByFilters: action.byFilter,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5166,7 +6641,7 @@ export function processEffectAction(
           flag: "effectsNegated",
           negatedEffectTypes: action.effectTypes,
           duration: action.duration,
-          expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5193,13 +6668,7 @@ export function processEffectAction(
         negatedEffectTypes: action.effectTypes,
         playerScope: true,
         duration: action.duration,
-        expiresAtTurn:
-          action.duration === "thisTurn"
-            ? state.turnNumber
-            : action.duration === "untilEndOfOpponentNextTurn" ||
-                action.duration === "untilEndOfOpponentNextEndPhase"
-              ? state.turnNumber + 1
-              : null,
+        expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
         expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
         expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
       });
@@ -5246,13 +6715,7 @@ export function processEffectAction(
           type: "flag",
           flag: "cannotBeRested",
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5286,13 +6749,7 @@ export function processEffectAction(
           type: "flag",
           flag: "canAttackActive",
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5336,13 +6793,7 @@ export function processEffectAction(
           keyword: action.keyword,
           playerScope: true,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5354,13 +6805,7 @@ export function processEffectAction(
             flag: "cannotActivate",
             keyword: action.keyword,
             duration: action.duration,
-            expiresAtTurn:
-              action.duration === "thisTurn"
-                ? state.turnNumber
-                : action.duration === "untilEndOfOpponentNextTurn" ||
-                    action.duration === "untilEndOfOpponentNextEndPhase"
-                  ? state.turnNumber + 1
-                  : null,
+            expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
             expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
             expiresOnTurnStartOfSeat:
               action.duration === "untilStartOfNextTurn" ? controller : null,
@@ -5415,13 +6860,7 @@ export function processEffectAction(
           type: "power",
           value: action.value === 0 && currentPower < 0 ? 0 : action.value - currentPower,
           duration: action.duration,
-          expiresAtTurn:
-            action.duration === "thisTurn"
-              ? state.turnNumber
-              : action.duration === "untilEndOfOpponentNextTurn" ||
-                  action.duration === "untilEndOfOpponentNextEndPhase"
-                ? state.turnNumber + 1
-                : null,
+          expiresAtTurn: modifierExpiryTurn(state, controller, action.duration),
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
@@ -5478,6 +6917,7 @@ export function processEffectAction(
         playerScope: true,
         playRestrictionFilters: action.filters,
         playRestrictionSourceZones: action.sourceZones,
+        playRestrictionOrigin: action.origin,
         duration: action.duration,
         expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
         expiresAtBattleId: null,
@@ -5721,7 +7161,7 @@ export function processEffectAction(
     }
     case "opponentReturnDon": {
       const returningSeat = otherSeat(controller);
-      const options = returnDonCostOptions(state, returningSeat);
+      const options = returnDonCostOptions(state, returningSeat, action.donState);
       const amount = Math.min(action.amount, options.length);
       if (amount === 0) {
         return true;
@@ -5733,7 +7173,19 @@ export function processEffectAction(
             : option.id.slice(0, option.id.indexOf(":")),
         ),
       );
-      if (options.length > amount && sourceKeys.size > 1) {
+      if (
+        options.length > amount &&
+        (sourceKeys.size > 1 ||
+          requiresDonIdentityChoice(
+            state,
+            donIdentitiesForVirtualIds(
+              state,
+              returningSeat,
+              options.map((option) => option.id),
+            ),
+            amount,
+          ))
+      ) {
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: returningSeat,
@@ -5757,6 +7209,7 @@ export function processEffectAction(
             returningSeat,
             amount,
             candidateIds: options.map((option) => option.id),
+            action,
           },
         });
         return false;
@@ -5779,6 +7232,7 @@ export function processEffectAction(
           {
             action: "opponentReturnDon",
             amount: action.amount,
+            donState: action.donState,
             condition: action.condition,
           },
           selectedTargetIds,
@@ -5786,9 +7240,13 @@ export function processEffectAction(
         );
       }
       const returningSeat = action.player === "self" ? controller : otherSeat(controller);
-      const options = returnDonCostOptions(state, returningSeat);
+      const options = returnDonCostOptions(state, returningSeat, action.donState);
       const requestedAmount = action.untilSameCountAsOpponent
-        ? Math.max(0, options.length - returnDonCostOptions(state, otherSeat(returningSeat)).length)
+        ? Math.max(
+            0,
+            options.length -
+              returnDonCostOptions(state, otherSeat(returningSeat), action.donState).length,
+          )
         : action.amount;
       const amount = Math.min(requestedAmount, options.length);
       if (amount === 0) {
@@ -5823,7 +7281,7 @@ export function processEffectAction(
         });
         return false;
       }
-      const selectedIds = options.map((option) => option.id);
+      const selectedIds = options.slice(0, amount).map((option) => option.id);
       returnSelectedDonToDeck(state, returningSeat, selectedIds, sourceInstanceId, controller);
       for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
         enqueueResolution(
@@ -6004,6 +7462,9 @@ export function processEffectAction(
       });
       return false;
     }
+    case "lifeToHandReplacement":
+      // Continuous replacement evaluated at each Life-to-hand movement.
+      return true;
     case "cannotBeRemoved": {
       const supportedLifeRestriction =
         action.bySource === "ownEffect" &&
@@ -6059,6 +7520,486 @@ export function giveDonCostParts(
   return { donorSeat, recipientSeat, poolAmount };
 }
 
+/** Resolve the legal recipients for a give-DON!! cost. */
+export function giveDonCostCandidateIds(
+  state: MatchState,
+  controller: MatchSeat,
+  cost: Extract<Cost, { cost: "giveDon" }>,
+  sourceInstanceId: string,
+): string[] {
+  const { recipientSeat } = giveDonCostParts(state, controller, cost);
+  const recipient = getPlayer(state, recipientSeat);
+  const zones = cost.recipientZones ?? ["leader", "character"];
+  return [
+    ...(zones.includes("leader") ? [recipient.leaderInstanceId] : []),
+    ...(zones.includes("character")
+      ? recipient.characterArea.filter((instanceId): instanceId is string => instanceId !== null)
+      : []),
+  ].filter((candidateId) =>
+    (cost.recipientFilters ?? []).every((filter) => {
+      const result = matchesTargetFilter(state, sourceInstanceId, candidateId, filter);
+      return result.supported && result.matches;
+    }),
+  );
+}
+
+export function effectBlockWithSelectedCost(
+  block: EffectBlock | undefined,
+  selectedAlternativeCostIndex?: number,
+  costIndex?: number,
+): EffectBlock | undefined {
+  if (!block) return undefined;
+  const alternative =
+    selectedAlternativeCostIndex === undefined
+      ? undefined
+      : block.alternativeCosts?.[selectedAlternativeCostIndex];
+  if (selectedAlternativeCostIndex !== undefined && !alternative) return undefined;
+  const selected = alternative
+    ? { ...block, costs: [...(block.costs ?? []), ...alternative] }
+    : block;
+  return costIndex === undefined
+    ? selected
+    : { ...selected, costs: selected.costs?.slice(costIndex, costIndex + 1) };
+}
+
+// Explore original payments in order without resolving triggered/replacement effects.
+// This is an affordability preview only; real payment still uses the public cost cursor.
+function* costSelections(
+  state: MatchState,
+  controller: MatchSeat,
+  source: string,
+  cost: Cost,
+): Generator<string[] | undefined> {
+  let candidates: string[] | undefined;
+  let amount = 0;
+  switch (cost.cost) {
+    case "trashFromHand":
+      candidates = candidatesForTrashFromHandCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "playCard":
+      candidates = candidatesForPlayCardCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "trashCard":
+      candidates = candidatesForTrashCardCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "returnCharacterToDeck":
+      candidates = candidatesForReturnCharacterToDeckCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "returnCharacter":
+      candidates = candidatesForReturnCharacterCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "koCharacter":
+      candidates = candidatesForKoCharacterCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "trashCharacter":
+      candidates = candidatesForTrashCharacterCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "restCards":
+      candidates = candidatesForRestCardsCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "revealFromHand":
+      candidates = candidatesForRevealFromHandCost(state, controller, source, cost);
+      amount = cost.amount;
+      break;
+    case "returnHandToDeck":
+      candidates = [...getPlayer(state, controller).hand];
+      amount = cost.amount;
+      break;
+    case "returnThisAndHandToDeck":
+      for (const hand of combinations(getPlayer(state, controller).hand, cost.handAmount))
+        yield [source, ...hand];
+      return;
+    case "returnTrashToDeck":
+      for (const trash of combinations(
+        candidatesForReturnTrashToDeckCost(state, controller, source, cost),
+        cost.amount,
+      ))
+        yield [...(cost.includeSelf ? [source] : []), ...trash];
+      return;
+    case "addCharacterToLife":
+    case "turnLifeFaceUp":
+      candidates = candidatesForLifeCardCost(state, controller, source, cost);
+      amount = cost.cost === "turnLifeFaceUp" ? cost.count : cost.amount;
+      break;
+    case "giveDon":
+      candidates = giveDonCostCandidateIds(state, controller, cost, source);
+      amount = 1;
+      break;
+    case "returnDon": {
+      candidates = returnDonCostOptions(state, controller, cost.donState).map(
+        (option) => option.id,
+      );
+      for (
+        let count = cost.minimumAmount ?? cost.amount;
+        count <= Math.min(cost.amount ?? candidates.length, candidates.length);
+        count++
+      )
+        yield* combinations(candidates, count);
+      return;
+    }
+    case "addLifeToHand":
+    case "trashLife":
+      if (cost.position === "choice") {
+        yield ["top"];
+        yield ["bottom"];
+        return;
+      }
+      yield undefined;
+      return;
+    default:
+      yield undefined;
+      return;
+  }
+  yield* combinations(candidates, amount);
+}
+
+function* combinations(
+  ids: readonly string[],
+  count: number,
+  start = 0,
+  selected: string[] = [],
+): Generator<string[]> {
+  if (selected.length === count) {
+    yield selected;
+    return;
+  }
+  for (let index = start; index <= ids.length - (count - selected.length); index++) {
+    yield* combinations(ids, count, index + 1, [...selected, ids[index]!]);
+  }
+}
+
+export function costSourceIsCurrent(
+  state: MatchState,
+  source: string,
+  cost: Cost,
+  generation?: number,
+): boolean {
+  const refersToSource =
+    [
+      "restThisCard",
+      "trashThisCard",
+      "returnThisToHand",
+      "returnThisToDeck",
+      "returnThisAndHandToDeck",
+    ].includes(cost.cost) ||
+    (cost.cost === "returnTrashToDeck" && cost.includeSelf === true);
+  return (
+    !refersToSource ||
+    generation === undefined ||
+    getInstance(state, source).zoneChangeCounter === generation
+  );
+}
+
+function* previewCostPlays(
+  state: MatchState,
+  controller: MatchSeat,
+  source: string,
+  ids: string[],
+): Generator<MatchState> {
+  const [id, ...remaining] = ids;
+  if (!id) {
+    yield state;
+    return;
+  }
+  const full =
+    getCardForInstance(state, id).cardType === "character" &&
+    getOpenCharacterSlots(state, controller).length === 0;
+  const replacements = full
+    ? getPlayer(state, controller).characterArea.filter(
+        (candidate): candidate is string => candidate !== null,
+      )
+    : [undefined];
+  for (const replacement of replacements) {
+    const preview: MatchState = JSON.parse(JSON.stringify(state));
+    if (replacement) {
+      returnAttachedDonToCostArea(preview, replacement);
+      moveCard(preview, replacement, getInstance(preview, replacement).owner, "trash", {
+        faceUp: true,
+        publicKnowledge: true,
+        actor: controller,
+      });
+    }
+    if (playCardFromEffect(preview, controller, id, "active", source, { deferOnPlay: true }))
+      yield* previewCostPlays(preview, controller, source, remaining);
+  }
+}
+
+function canPayOrderedCosts(
+  state: MatchState,
+  controller: MatchSeat,
+  source: string,
+  costs: Cost[],
+  index = 0,
+  suppliedTrashHandIds?: string[],
+  sourceGeneration = getInstance(state, source).zoneChangeCounter,
+): boolean {
+  const cost = costs[index];
+  if (!cost) return true;
+  if (!costSourceIsCurrent(state, source, cost, sourceGeneration)) return false;
+  // A hand-only consumption prefix cannot spend more physical cards than exist.
+  // Stop at any possible hand supplier; reveal/rest/DON costs do not supply cards.
+  let handNeeded = 0;
+  for (const later of costs.slice(index)) {
+    if (["addLifeToHand", "returnCharacter", "returnThisToHand"].includes(later.cost)) break;
+    if (
+      (later.cost === "trashFromHand" && !later.fieldZones?.length) ||
+      later.cost === "returnHandToDeck"
+    )
+      handNeeded += later.amount;
+    if (later.cost === "returnThisAndHandToDeck") handNeeded += later.handAmount;
+    if (handNeeded > getPlayer(state, controller).hand.length) return false;
+  }
+  const choices =
+    cost.cost === "trashFromHand" && suppliedTrashHandIds !== undefined
+      ? [suppliedTrashHandIds]
+      : costSelections(state, controller, source, cost);
+  for (const selected of choices) {
+    const trashIds = cost.cost === "trashFromHand" ? selected : undefined;
+    const byType = cost.cost === "giveDon" ? { giveDon: selected } : undefined;
+    if (!canPayCosts(state, controller, source, [cost], trashIds, selected, byType)) continue;
+    if (index === costs.length - 1) return true;
+    // Logs, old queued work and pending prompts cannot affect original-payment
+    // eligibility. Event history stays intact for characteristic predicates.
+    const preview: MatchState = JSON.parse(
+      JSON.stringify({
+        ...state,
+        logHistory: [],
+        promptQueue: [],
+        resolutionQueue: [],
+        pendingAutoEffects: undefined,
+        readyEffectGroup: undefined,
+      }),
+    );
+    if (cost.cost === "playCard") {
+      for (const placed of previewCostPlays(preview, controller, source, selected ?? []))
+        if (
+          canPayOrderedCosts(
+            placed,
+            controller,
+            source,
+            costs,
+            index + 1,
+            suppliedTrashHandIds,
+            sourceGeneration,
+          )
+        )
+          return true;
+      continue;
+    }
+    if (cost.cost === "restThisCard" || cost.cost === "restCards") {
+      const ids = cost.cost === "restThisCard" ? [source] : (selected ?? []);
+      const donIds = ids.filter((id) => id.startsWith(`active-don:${controller}:`));
+      // Preview original payment without Character rest replacements or triggers.
+      // DON tokens are resources, not CardInstances; preserve their identities.
+      moveDonIdentities(preview, donIdentitiesForVirtualIds(preview, controller, donIds), {
+        seat: controller,
+        area: "rested",
+      });
+      getPlayer(preview, controller).activeDon -= donIds.length;
+      getPlayer(preview, controller).restedDon += donIds.length;
+      for (const id of ids)
+        if (!id.startsWith(`active-don:${controller}:`)) getInstance(preview, id).rested = true;
+    } else if (cost.cost === "addLifeToHand") {
+      // Eligibility concerns the original payment, even when a replacement will
+      // prevent its completion later (8-3-1-7). Do not apply that replacement here.
+      const player = getPlayer(preview, controller);
+      const bottom = cost.position === "bottom" || selected?.[0] === "bottom";
+      const ids = bottom ? player.life.splice(-cost.amount) : player.life.splice(0, cost.amount);
+      for (const id of ids) {
+        player.hand.push(id);
+        const card = getInstance(preview, id);
+        card.zone = "hand";
+        card.zoneChangeCounter += 1;
+      }
+    } else if (!payCosts(preview, controller, source, [cost], trashIds, selected, byType)) continue;
+    if (
+      canPayOrderedCosts(
+        preview,
+        controller,
+        source,
+        costs,
+        index + 1,
+        cost.cost === "trashFromHand" ? undefined : suppliedTrashHandIds,
+        sourceGeneration,
+      )
+    )
+      return true;
+  }
+  return false;
+}
+
+/** Maximum original payment still possible after an earlier cost was paid. */
+export function partiallyPayableCost(
+  state: MatchState,
+  controller: MatchSeat,
+  source: string,
+  cost: Cost,
+  sourceGeneration?: number,
+): Cost | null {
+  if (!costSourceIsCurrent(state, source, cost, sourceGeneration)) {
+    if (cost.cost === "returnThisAndHandToDeck") {
+      cost = { cost: "returnHandToDeck", amount: cost.handAmount, position: cost.position };
+    } else if (cost.cost === "returnTrashToDeck") {
+      cost = { ...cost, includeSelf: undefined };
+    } else return null;
+  }
+  let required: number;
+  let resize: (amount: number) => Cost;
+  if (cost.cost === "returnDon") {
+    if (cost.minimumAmount !== undefined) {
+      required = cost.minimumAmount;
+      resize = (amount) => ({ ...cost, minimumAmount: amount });
+    } else {
+      required = cost.amount;
+      resize = (amount) => ({ ...cost, amount });
+    }
+  } else if (cost.cost === "turnLifeFaceUp") {
+    // Reducing top-N to top-M would change the original eligible cards.
+    // The cursor binds every remaining original candidate before execution.
+    const count = Math.min(
+      cost.count,
+      candidatesForLifeCardCost(state, controller, source, cost).length,
+    );
+    return count > 0 ? { ...cost, count, position: "any" } : null;
+  } else if (cost.cost === "returnThisAndHandToDeck") {
+    required = cost.handAmount;
+    resize = (handAmount) => ({ ...cost, handAmount });
+  } else if ("amount" in cost) {
+    required = cost.amount;
+    resize = (amount) => ({ ...cost, amount });
+  } else {
+    return null;
+  }
+  // All quantitative native costs spend/reveal physical cards or DON. Cap the
+  // search by actual resources, then use monotone single-entry affordability.
+  const resources =
+    Object.keys(state.cards).length +
+    donCardsOnField(state, "south") +
+    donCardsOnField(state, "north");
+  let low = 0;
+  let high = Math.min(required, resources);
+  if (!canPayCosts(state, controller, source, [resize(0)], undefined)) return null;
+  while (low < high) {
+    const middle = Math.ceil((low + high) / 2);
+    if (canPayCosts(state, controller, source, [resize(middle)], undefined)) low = middle;
+    else high = middle - 1;
+  }
+  // These compound entries can still move the source when no hand/trash card
+  // remains. Other zero-sized entries perform no payment operation.
+  if (
+    low === 0 &&
+    cost.cost !== "returnThisAndHandToDeck" &&
+    !(cost.cost === "returnTrashToDeck" && cost.includeSelf)
+  )
+    return null;
+  return resize(low);
+}
+
+export function canPayEffectBlockCosts(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  block: EffectBlock,
+  trashHandIds?: string[],
+): boolean {
+  const groups = block.alternativeCosts?.map((costs) => [...(block.costs ?? []), ...costs]) ?? [
+    block.costs,
+  ];
+  return groups.some((costs) =>
+    (costs?.length ?? 0) > 1
+      ? canPayOrderedCosts(state, controller, sourceInstanceId, costs!, 0, trashHandIds)
+      : canPayCosts(state, controller, sourceInstanceId, costs, trashHandIds),
+  );
+}
+
+export function bindDonCostSelections(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  costs: Cost[],
+  paymentIds: string[] | undefined,
+  byType: EffectBlockContinuation["costPaymentIdsByType"],
+): Array<string[] | undefined> | null {
+  if (!state.donIdentities) return costs.map(() => undefined);
+  const preview: MatchState = JSON.parse(JSON.stringify(state));
+  preview.donIdentities!.processes.push("payment-preview");
+  const bound: Array<string[] | undefined> = [];
+  for (const cost of costs) {
+    let tokens: string[] | undefined,
+      valid: (token: string) => boolean = () => true;
+    let destination: import("../engine/don-state.ts").DonLocation | undefined;
+    if (cost.cost === "restDon") {
+      tokens =
+        byType?.restDon ??
+        donIdentitiesAt(state, { seat: controller, area: "active" }).slice(0, cost.amount);
+      valid = (token) =>
+        donIdentitiesAt(preview, { seat: controller, area: "active" }).includes(token);
+      destination = { seat: controller, area: "rested" };
+    } else if (cost.cost === "giveDon") {
+      const { donorSeat } = giveDonCostParts(state, controller, cost);
+      const from = {
+        seat: donorSeat,
+        area: cost.donState === "rested" ? ("rested" as const) : ("active" as const),
+      };
+      tokens = byType?.giveDonSources ?? donIdentitiesAt(state, from).slice(0, cost.amount);
+      valid = (token) => donIdentitiesAt(preview, from).includes(token);
+      const targetId = (byType?.giveDon ??
+        giveDonCostCandidateIds(state, controller, cost, sourceInstanceId))[0];
+      if (!targetId) return null;
+      destination = { attachedTo: targetId };
+    } else if (cost.cost === "returnDon") {
+      const ids =
+        paymentIds ??
+        returnDonCostOptions(state, controller, cost.donState)
+          .slice(0, cost.minimumAmount ?? cost.amount)
+          .map((option) => option.id);
+      tokens = byType?.returnDonSources ?? donIdentitiesForVirtualIds(state, controller, ids);
+      if (tokens.length !== ids.length) return null;
+      valid = (token) => {
+        const location = locateDonIdentity(preview, token);
+        if (!location) return false;
+        if ("attachedTo" in location)
+          return (
+            getInstance(preview, location.attachedTo).controller === controller &&
+            (cost.donState === undefined || cost.donState === "attached" || cost.donState === "any")
+          );
+        return (
+          location.seat === controller &&
+          (cost.donState === undefined ||
+            cost.donState === "any" ||
+            cost.donState === location.area)
+        );
+      };
+      if (cost.destination === "costAreaRested") destination = { seat: controller, area: "rested" };
+    } else if (cost.cost === "restCards") {
+      const ids =
+        byType?.restCards ??
+        (costs.some((candidate) => candidate.cost === "returnDon") ? undefined : paymentIds) ??
+        candidatesForRestCardsCost(state, controller, sourceInstanceId, cost).slice(0, cost.amount);
+      tokens = byType?.restCardsSources ?? donIdentitiesForVirtualIds(state, controller, ids);
+      if (tokens.length !== ids.filter((id) => id.startsWith("active-don:")).length) return null;
+      valid = (token) =>
+        donIdentitiesAt(preview, { seat: controller, area: "active" }).includes(token);
+      destination = { seat: controller, area: "rested" };
+    }
+    if (tokens) {
+      if (new Set(tokens).size !== tokens.length || tokens.some((token) => !valid(token)))
+        return null;
+      moveDonIdentities(preview, tokens, destination);
+    }
+    bound.push(tokens);
+  }
+  return bound;
+}
+
 export function canPayCosts(
   state: MatchState,
   controller: MatchSeat,
@@ -6068,6 +8009,10 @@ export function canPayCosts(
   costPaymentIds?: string[],
   costPaymentIdsByType?: {
     giveDon?: string[];
+    giveDonSources?: string[];
+    restDon?: string[];
+    returnDonSources?: string[];
+    restCardsSources?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   },
@@ -6093,19 +8038,35 @@ export function canPayCosts(
         break;
       }
       case "restDon":
+        if (
+          costPaymentIdsByType?.restDon &&
+          (costPaymentIdsByType.restDon.length !== cost.amount ||
+            new Set(costPaymentIdsByType.restDon).size !== cost.amount ||
+            costPaymentIdsByType.restDon.some(
+              (id) => !donIdentitiesAt(state, { seat: controller, area: "active" }).includes(id),
+            ))
+        )
+          return false;
         if (getPlayer(state, controller).activeDon < cost.amount) {
           return false;
         }
         break;
       case "giveDon": {
-        const { recipientSeat, poolAmount } = giveDonCostParts(state, controller, cost);
-        const recipient = getPlayer(state, recipientSeat);
-        const candidates = [
-          recipient.leaderInstanceId,
-          ...recipient.characterArea.filter(
-            (instanceId): instanceId is string => instanceId !== null,
-          ),
-        ];
+        const { poolAmount, donorSeat } = giveDonCostParts(state, controller, cost);
+        if (
+          costPaymentIdsByType?.giveDonSources &&
+          (costPaymentIdsByType.giveDonSources.length !== cost.amount ||
+            new Set(costPaymentIdsByType.giveDonSources).size !== cost.amount ||
+            costPaymentIdsByType.giveDonSources.some(
+              (id) =>
+                !donIdentitiesAt(state, {
+                  seat: donorSeat,
+                  area: cost.donState === "rested" ? "rested" : "active",
+                }).includes(id),
+            ))
+        )
+          return false;
+        const candidates = giveDonCostCandidateIds(state, controller, cost, sourceInstanceId);
         const selected = costPaymentIdsByType?.giveDon ?? candidates.slice(0, 1);
         if (
           poolAmount < cost.amount ||
@@ -6117,11 +8078,16 @@ export function canPayCosts(
         break;
       }
       case "returnDon":
-        if (returnDonCostOptions(state, controller).length < (cost.minimumAmount ?? cost.amount)) {
+        if (
+          returnDonCostOptions(state, controller, cost.donState).length <
+          (cost.minimumAmount ?? cost.amount)
+        ) {
           return false;
         }
         if (costPaymentIds) {
-          const candidateIds = returnDonCostOptions(state, controller).map((option) => option.id);
+          const candidateIds = returnDonCostOptions(state, controller, cost.donState).map(
+            (option) => option.id,
+          );
           const minimumAmount = cost.minimumAmount ?? cost.amount;
           const maximumAmount =
             cost.minimumAmount === undefined ? minimumAmount : candidateIds.length;
@@ -6246,11 +8212,23 @@ export function canPayCosts(
           sourceInstanceId,
           cost,
         );
-        const selected = costPaymentIds ?? candidates.slice(0, cost.amount);
+        const source = getInstance(state, sourceInstanceId);
+        if (cost.includeSelf && (source.controller !== controller || source.zone !== "character")) {
+          return false;
+        }
+        const selected = costPaymentIds ?? [
+          ...(cost.includeSelf ? [sourceInstanceId] : []),
+          ...candidates.slice(0, cost.amount),
+        ];
+        const selectedTrash = cost.includeSelf
+          ? selected.filter((instanceId) => instanceId !== sourceInstanceId)
+          : selected;
         if (
-          selected.length !== cost.amount ||
+          selected.length !== cost.amount + (cost.includeSelf ? 1 : 0) ||
           new Set(selected).size !== selected.length ||
-          selected.some((instanceId) => !candidates.includes(instanceId))
+          (cost.includeSelf && !selected.includes(sourceInstanceId)) ||
+          selectedTrash.length !== cost.amount ||
+          selectedTrash.some((instanceId) => !candidates.includes(instanceId))
         ) {
           return false;
         }
@@ -6285,18 +8263,19 @@ export function canPayCosts(
         }
         break;
       }
-      case "turnLifeFaceUp":
-        if (getPlayer(state, controller).life.length < cost.count) {
-          return false;
-        }
+      case "addCharacterToLife":
+      case "turnLifeFaceUp": {
+        const candidates = candidatesForLifeCardCost(state, controller, sourceInstanceId, cost);
+        const count = cost.cost === "turnLifeFaceUp" ? cost.count : cost.amount;
+        const selected = costPaymentIds ?? candidates.slice(0, count);
         if (
-          getPlayer(state, controller)
-            .life.slice(0, cost.count)
-            .some((instanceId) => getInstance(state, instanceId).faceUp === (cost.faceUp ?? true))
-        ) {
+          selected.length !== count ||
+          new Set(selected).size !== count ||
+          selected.some((id) => !candidates.includes(id))
+        )
           return false;
-        }
         break;
+      }
       case "addLifeToHand": {
         const player = getPlayer(state, controller);
         if (
@@ -6319,7 +8298,11 @@ export function canPayCosts(
       case "restCards": {
         const candidates = candidatesForRestCardsCost(state, controller, sourceInstanceId, cost);
         const selected =
-          costPaymentIdsByType?.restCards ?? costPaymentIds ?? candidates.slice(0, cost.amount);
+          costPaymentIdsByType?.restCards ??
+          (costs.some((candidate) => candidate.cost === "returnDon")
+            ? undefined
+            : costPaymentIds) ??
+          candidates.slice(0, cost.amount);
         if (
           selected.length !== cost.amount ||
           new Set(selected).size !== selected.length ||
@@ -6398,6 +8381,22 @@ export function canPayCosts(
     }
   }
 
+  if (
+    state.donIdentities &&
+    costPaymentIds &&
+    (costPaymentIdsByType?.restDon ||
+      costPaymentIdsByType?.giveDonSources ||
+      costPaymentIdsByType?.restCards) &&
+    !bindDonCostSelections(
+      state,
+      controller,
+      sourceInstanceId,
+      costs,
+      costPaymentIds,
+      costPaymentIdsByType,
+    )
+  )
+    return false;
   return true;
 }
 
@@ -6410,6 +8409,10 @@ export function payCosts(
   costPaymentIds?: string[],
   costPaymentIdsByType?: {
     giveDon?: string[];
+    giveDonSources?: string[];
+    restDon?: string[];
+    returnDonSources?: string[];
+    restCardsSources?: string[];
     restCards?: string[];
     returnCharacter?: string[];
   },
@@ -6432,26 +8435,51 @@ export function payCosts(
     return false;
   }
 
-  for (const cost of costs) {
+  const donPayments = bindDonCostSelections(
+    state,
+    controller,
+    sourceInstanceId,
+    costs,
+    costPaymentIds,
+    costPaymentIdsByType,
+  );
+  if (!donPayments) return false;
+  let fullyPaid = true;
+  for (const [costIndex, cost] of costs.entries()) {
     switch (cost.cost) {
       case "restDon":
+        transferDonIdentities(
+          state,
+          { seat: controller, area: "active" },
+          { seat: controller, area: "rested" },
+          cost.amount,
+          donPayments[costIndex],
+        );
         getPlayer(state, controller).activeDon -= cost.amount;
         getPlayer(state, controller).restedDon += cost.amount;
         break;
       case "giveDon": {
-        const { donorSeat, recipientSeat, poolAmount } = giveDonCostParts(state, controller, cost);
+        const { donorSeat, poolAmount } = giveDonCostParts(state, controller, cost);
         const donor = getPlayer(state, donorSeat);
-        const recipient = getPlayer(state, recipientSeat);
-        const targetId = (costPaymentIdsByType?.giveDon ?? [recipient.leaderInstanceId])[0]!;
+        const targetId = (costPaymentIdsByType?.giveDon ??
+          giveDonCostCandidateIds(state, controller, cost, sourceInstanceId))[0]!;
         if (poolAmount < cost.amount) {
           return false;
         }
+        transferDonIdentities(
+          state,
+          { seat: donorSeat, area: cost.donState === "rested" ? "rested" : "active" },
+          { attachedTo: targetId },
+          cost.amount,
+          donPayments[costIndex],
+        );
         if (cost.donState === "rested") {
           donor.restedDon -= cost.amount;
         } else {
           donor.activeDon -= cost.amount;
         }
         getInstance(state, targetId).attachedDon += cost.amount;
+        publishDonGiven(state, targetId, cost.amount, controller, sourceInstanceId);
         emitLog(
           state,
           controller,
@@ -6467,16 +8495,39 @@ export function payCosts(
       }
       case "returnDon": {
         const minimumAmount = cost.minimumAmount ?? cost.amount;
-        const selectedIds =
-          costPaymentIds ??
-          returnDonCostOptions(state, controller)
-            .slice(0, minimumAmount)
-            .map((option) => option.id);
-        returnSelectedDonToDeck(state, controller, selectedIds, sourceInstanceId, controller);
+        const selectedIds = donPayments[costIndex]
+          ? virtualIdsForDonIdentities(state, donPayments[costIndex]!)
+          : (costPaymentIds ??
+            returnDonCostOptions(state, controller, cost.donState)
+              .slice(0, minimumAmount)
+              .map((option) => option.id));
+        if (cost.destination === "costAreaRested") {
+          moveDonIdentities(state, donIdentitiesForVirtualIds(state, controller, selectedIds), {
+            seat: controller,
+            area: "rested",
+          });
+          for (const id of selectedIds) {
+            const instanceId = id.slice("attached-don:".length, id.lastIndexOf(":"));
+            getInstance(state, instanceId).attachedDon -= 1;
+          }
+          getPlayer(state, controller).restedDon += selectedIds.length;
+          emitLog(
+            state,
+            controller,
+            `${effectSourceName(state, sourceInstanceId)} returns ${selectedIds.length} given DON!! to the cost area rested as an activation cost.`,
+            {
+              sourceCardId: getInstance(state, sourceInstanceId).cardId,
+              sourceInstanceId,
+              visibility: "public",
+            },
+          );
+        } else {
+          returnSelectedDonToDeck(state, controller, selectedIds, sourceInstanceId, controller);
+        }
         break;
       }
       case "restThisCard":
-        restCard(state, sourceInstanceId, controller);
+        restCharacterByEffect(state, sourceInstanceId, controller, sourceInstanceId);
         break;
       case "modifyLeaderPower": {
         const leaderId = getPlayer(state, controller).leaderInstanceId;
@@ -6526,6 +8577,7 @@ export function payCosts(
         const selected =
           trashHandIds ??
           candidatesForTrashFromHandCost(state, seat, sourceInstanceId, cost).slice(0, cost.amount);
+        const discardedHandIds = selected.filter((id) => getInstance(state, id).zone === "hand");
         for (const instanceId of selected) {
           returnAttachedDonToCostArea(state, instanceId);
           // The aggregate "trashes N card(s) from hand." line below is the
@@ -6555,6 +8607,7 @@ export function payCosts(
             },
           );
         }
+        recordHandTrashedByEffect(state, controller, sourceInstanceId, seat, discardedHandIds);
         break;
       }
       case "playCard": {
@@ -6570,6 +8623,7 @@ export function payCosts(
       case "trashCard": {
         const candidates = candidatesForTrashCardCost(state, controller, sourceInstanceId, cost);
         const selected = costPaymentIds ?? candidates.slice(0, cost.amount);
+        const discardedHandIds = selected.filter((id) => getInstance(state, id).zone === "hand");
         for (const instanceId of selected) {
           returnAttachedDonToCostArea(state, instanceId);
           moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
@@ -6578,6 +8632,13 @@ export function payCosts(
             actor: controller,
           });
         }
+        recordHandTrashedByEffect(
+          state,
+          controller,
+          sourceInstanceId,
+          controller,
+          discardedHandIds,
+        );
         break;
       }
       case "trashLife": {
@@ -6644,12 +8705,15 @@ export function payCosts(
           sourceInstanceId,
           cost,
         );
-        const selected = costPaymentIds ?? candidates.slice(0, cost.amount);
+        const selected = costPaymentIds ?? [
+          ...(cost.includeSelf ? [sourceInstanceId] : []),
+          ...candidates.slice(0, cost.amount),
+        ];
         const publiclyRevealedIds = [...selected].sort((left, right) => left.localeCompare(right));
         emitLog(
           state,
           controller,
-          `${getPlayer(state, controller).playerName} returns ${formatCardList(state, publiclyRevealedIds)} from trash to the ${cost.position} of their deck in a private order.`,
+          `${getPlayer(state, controller).playerName} returns ${formatCardList(state, publiclyRevealedIds)} ${cost.includeSelf ? "from the field and trash" : "from trash"} to the ${cost.position} of their deck in a private order.`,
           {
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -6659,6 +8723,9 @@ export function payCosts(
         );
         const movementOrder = cost.position === "top" ? [...selected].reverse() : selected;
         for (const instanceId of movementOrder) {
+          if (cost.includeSelf && instanceId === sourceInstanceId) {
+            returnAttachedDonToCostArea(state, instanceId);
+          }
           moveCard(state, instanceId, controller, "deck", {
             deckPosition: cost.position,
             faceUp: false,
@@ -6706,13 +8773,24 @@ export function payCosts(
       case "restCards": {
         const selected =
           costPaymentIdsByType?.restCards ??
-          costPaymentIds ??
+          (costs?.some((candidate) => candidate.cost === "returnDon")
+            ? undefined
+            : costPaymentIds) ??
           candidatesForRestCardsCost(state, controller, sourceInstanceId, cost).slice(
             0,
             cost.amount,
           );
+        moveDonIdentities(state, donPayments[costIndex] ?? [], {
+          seat: controller,
+          area: "rested",
+        });
         for (const instanceId of selected) {
-          restCard(state, instanceId, controller);
+          if (instanceId.startsWith(`active-don:${controller}:`)) {
+            getPlayer(state, controller).activeDon -= 1;
+            getPlayer(state, controller).restedDon += 1;
+          } else {
+            restCharacterByEffect(state, instanceId, controller, sourceInstanceId);
+          }
         }
         break;
       }
@@ -6743,7 +8821,9 @@ export function payCosts(
         break;
       }
       case "turnLifeFaceUp": {
-        const lifeIds = getPlayer(state, controller).life.slice(0, cost.count);
+        const lifeIds =
+          costPaymentIds ??
+          candidatesForLifeCardCost(state, controller, sourceInstanceId, cost).slice(0, cost.count);
         const faceUp = cost.faceUp ?? true;
         for (const instanceId of lifeIds) {
           const instance = getInstance(state, instanceId);
@@ -6773,6 +8853,7 @@ export function payCosts(
           position === "bottom"
             ? player.life.slice(-cost.amount)
             : player.life.slice(0, cost.amount);
+        const replacedIds = replacedLifeToHandIds(state, selected);
         for (const instanceId of selected) {
           moveCard(state, instanceId, controller, "hand", {
             faceUp: false,
@@ -6781,7 +8862,9 @@ export function payCosts(
             sourceInstanceId,
             visibility: "private",
           });
+          if (getInstance(state, instanceId).zone !== "hand") fullyPaid = false;
         }
+        promptForLifeReplacementOrder(state, completedLifeReplacementMoves(state, replacedIds));
         break;
       }
       case "returnCharacter": {
@@ -6831,7 +8914,7 @@ export function payCosts(
     }
   }
 
-  return true;
+  return fullyPaid;
 }
 
 export function candidatesForRevealFromHandCost(

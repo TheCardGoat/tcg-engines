@@ -23,7 +23,7 @@ export const ednaModeFashionDesignerEpic: CharacterCard = {
   franchise: "Incredibles",
   set: "012",
   cardNumber: 209,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 2,

@@ -22,7 +22,7 @@ export const op15WouldYouLetMeEatTheFlameFlameFruit056: EventCard = {
   setId: "OP15",
   cost: 7,
   trigger: "Draw 2 cards.",
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   effect:
     "[Main] Draw 2 cards. Then, your [Lucy] Leader gains [Double Attack] and +3000 power during this turn.\n(This card deals 2 damage.)",
   effects: {

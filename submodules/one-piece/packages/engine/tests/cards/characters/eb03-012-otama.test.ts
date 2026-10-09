@@ -65,11 +65,15 @@ describe("EB03-012 Otama", () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
 
-    const count = engine.pendingDecision("effectRestDonCount", "south").steps[0];
-    expect(count?.kind).toBe("chooseOption");
-    if (count?.kind !== "chooseOption") throw new Error("Expected Otama's DON!! count.");
-    expect(count.options.map((option) => option.id)).toEqual(["0", "1"]);
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
+    const count = engine.pendingDecision("effectMixedRestSelection", "south").steps[0];
+    expect(count?.kind).toBe("payCost");
+    if (count?.kind !== "payCost") throw new Error("Expected Otama's DON!! count.");
+    expect(count).toMatchObject({ min: 0, max: 1 });
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "south",
+    );
 
     expect(engine.getView("south").players.north).toMatchObject({
       activeDon: 1,

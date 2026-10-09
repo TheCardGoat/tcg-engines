@@ -12,10 +12,10 @@ reconciles catalog entries.
 | EB02-009 | Thousand Sunny | verified | Rested Stage activation and physical given-DON!! redistribution to one inclusive Straw Hat Crew Character target |
 | EB02-041 | Merry Go | verified | Included Straw Hat Crew Leader On Play draw; rested Stage cost and temporary +2 cost on an included Character through the opponent's next turn |
 | EB02-060 | Merry Go | verified | Rested Stage plus top-Life face-up payment; included Straw Hat Crew Character +1000 power through the opponent's next turn |
-| EB04-010 | Lulucia Kingdom | verified | onPlay, permanent |
+| EB04-010 | Lulucia Kingdom | verified | Paid Stage play sets power to zero with turn expiry and decline; opponent-turn aura uses base cost despite live cost reduction |
 | OP02-024 | Moby Dick | verified | Dynamic low-Life turn power and Life Trigger play |
 | OP02-048 | Land of Wano | verified | Paid filtered power boost, up-to DON!! attachment, and unpayable boundary |
-| OP02-070 | New Kama Land | verified | Leader-gated ordered exact-or-up-to hand trash and draw |
+| OP02-070 | New Kama Land | verified | Rest Stage, then Leader gate covers draw and both hand-trash choices |
 | OP02-092 | Impel Down | verified | Paid reveal, eligible play, illegal candidate rejection, and remainder order |
 | OP03-020 | Striker | verified | DON!! and Stage-rest costs, Leader gate, Event search, and remainder order |
 | OP03-075 | Galley-La Company | verified | Leader-gated optional Stage rest and rested-DON!! reactivation |
@@ -28,9 +28,9 @@ reconciles catalog entries.
 | OP06-041 | The Ark Noah | verified | Cost-free Life Trigger play and automatic all-opponent rest |
 | OP06-079 | Kingdom of GERMA | verified | Paid inclusive GERMA search and ordered remainder |
 | OP06-098 | Thriller Bark | verified | Optional paid Leader-gated rested Character play from Trash |
-| OP06-117 | The Ark Maxim | verified | Stage and filtered-card rest costs with automatic cost-threshold K.O. sweep |
+| OP06-117 | The Ark Maxim | verified | Stage and filtered Enel rest costs, including the Leader; automatic cost-threshold K.O. sweep |
 | OP07-058 | Island of Women | verified | Alternative exact and composite trait filtering in one target choice |
-| OP07-117 | Egghead | verified | Controller-owned filtered End Phase reactivation and Life Trigger play |
+| OP07-117 | Egghead | verified | Either-owner filtered End Phase reactivation and Life Trigger play |
 | OP08-020 | Drum Kingdom | verified | Dynamic exact-or-composite trait permanent power modifier |
 | OP08-039 | Zou | verified | Paid Stage activation, post-cost Minks gate, DON!! and Character choices |
 | OP08-056 | Moby Dick | verified | Controller-owned inclusive leave-field reaction, draw, hand placement, once-per-turn, and Life Trigger |
@@ -45,17 +45,26 @@ reconciles catalog entries.
 | OP13-078 | Oro Jackson | verified | Inclusive Roger Pirates leave-field reaction and once-per-turn DON!! choice |
 | OP13-099 | The Empty Throne | verified | Non-selective 19-trash Leader boost; Stage and 3-DON!! rest costs; black inclusive Five Elders Character play with live DON!! cost ceiling |
 | OP14-039 | Coffin Boat | verified | Dracule Mihawk identity gate, On Play draw, and controller-owned end-turn 0–1 rested-DON!! reactivation |
-| OP15-057 | Dressrosa Kingdom | verified | onPlay, onOpponentAttack |
-| OP16-021 | Moby Dick | verified | onPlay, activateMain |
-| OP16-078 | Marineford | verified | onPlay, activateMain |
-| OP17-057 | Fullalead | verified | Opponent-attack window: rest Stage + trash hand card, Rocks-trait Leader +1000 for the battle (trait mutation killed; non-Rocks decline) |
+| OP15-057 | Dressrosa Kingdom | verified | Dressrosa Leader On Play draw; optional Stage-rest and Event-or-Stage discard before battle power; decline pays neither cost |
+| OP16-021 | Moby Dick | verified | Private unfiltered look/add and ordered remainder; activation trashes Stage before rested DON assignment; payable decline |
+| OP16-078 | Marineford | verified | Navy search and ordered remainder; activation returns DON and rests Stage before draw/discard; repeat rejected and decline preserved |
+| OP17-057 | Fullalead | verified | Opponent-attack Stage rest and hand-trash payment boosts Rocks Character; payable decline keeps Stage active and hand intact |
+| P-142 | Merry Go | verified | Optional Stage payment for battle and effect K.O.; base-power versus DON power, high-base and wrong-trait exclusions, retained Stage after decline |
 | ST01-017 | Thousand Sunny | verified | Stage-rest activation; inclusive Straw Hat Crew Leader-or-Character candidates; exclusion, power, and duration boundaries |
+| ST04-017 | Onigashima Island | verified | Optional Stage rest and Animal Kingdom Pirates Leader gate for rested DON addition; decline |
+| ST06-017 | Navy HQ | verified | Separate On Play and Activate Main cost-minus-one targets; Navy Leader gate after rest, decline and expiry |
+| ST07-017 | Queen Mama Chanter | verified | Stage-rest and Life payment before exact-cost-three Character-to-Life choice; face-up result, zero target and decline |
 | ST14-017 | Thousand Sunny (Pirate Foil) | verified | On Play Leader power and permanent trait-based cost modifier with canonical default duration |
+| ST31-005 | Thousand Sunny | verified | Top-five exact Straw Hat Character/Event search and saved bottom order; optional Stage-rest cost and rested DON to Luffy Leader/Character |
 
 ## Progress
 
-- Canonical stages: 44.
-- Verified: 39.
-- Structured pending: 4.
-- Printed but unstructured: 1.
-- Canonical vanilla awaiting the parameterized invariant: 0.
+- Canonical stages: 49.
+- Verified rows: 49.
+- Structured pending rows: 0.
+- Printed but unstructured rows: 0.
+- Canonical vanilla rows: 0.
+
+Counts reflect current row labels, not a new semantic audit. See the October 7,
+2026 audit checkpoint in `card-behavior-inventory.md` for confirmed corrections
+and remaining limits.

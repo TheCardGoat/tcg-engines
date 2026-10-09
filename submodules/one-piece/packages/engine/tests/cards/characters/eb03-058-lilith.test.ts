@@ -62,3 +62,17 @@ describe("EB03-058 Lilith", () => {
     expect(view.prompts).toHaveLength(0);
   });
 });
+
+test("Lilith's Life Trigger cannot play her with a different Leader", () => {
+  const e = OnePieceTestEngine.create(
+    { leaderCardId: "ST01-001", life: ["EB03-058"] },
+    { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const id = e.findCardInZone("south", "life", "EB03-058");
+  e.asNorth().attack(e.findCardInZone("north", "character", "EB01-018"), e.leader("south"));
+  e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+  expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === id)).toBe(false);
+  expect(e.getView("south").players.south.trash.some((c) => c.instanceId === id)).toBe(true);
+  expect(e.getView("south").players.south.lifeCount).toBe(0);
+});

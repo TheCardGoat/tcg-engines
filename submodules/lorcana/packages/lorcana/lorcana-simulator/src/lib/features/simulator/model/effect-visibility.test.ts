@@ -48,6 +48,7 @@ function createBoard(): {
       players: {
         [playerOne]: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 5,
           deckCount: 40,
           handCount: 4,
@@ -58,6 +59,7 @@ function createBoard(): {
         },
         [playerTwo]: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 3,
           deckCount: 40,
           handCount: 4,
@@ -205,12 +207,39 @@ describe("effect visibility summaries", () => {
       },
     ];
 
+    board.activeEffects.push({
+      id: "temporary-draw",
+      type: "temporary-ability",
+      sourceId: "source-card",
+      targetCardId: "target-card",
+      startsAtTurn: 1,
+      expiresAtTurn: 1,
+      payload: {
+        ability: "BqG-1-way-of-the-hero-challenge-draw",
+        abilityName: "",
+        abilityText: "Whenever this character challenges another character, draw a card.",
+        duration: "this-turn",
+      },
+    });
+
+    board.activeEffects.push({
+      id: "temporary-ready-challenge",
+      type: "temporary-ability",
+      sourceId: "source-card",
+      targetCardId: "target-card",
+      startsAtTurn: 1,
+      expiresAtTurn: 1,
+      payload: { ability: "can-challenge-ready", duration: "this-turn" },
+    });
+
     const snapshots = buildCardSnapshotMap(board, staticResources);
     const targetSnapshot = snapshots["target-card"];
 
     expect(targetSnapshot?.activeEffects?.map((effect) => effect.label)).toEqual([
       "Strength -1",
       "Ward",
+      "Can challenge ready characters",
+      "Whenever this character challenges another character, draw a card.",
     ]);
     expect(targetSnapshot?.activeEffects?.[0]).toMatchObject({
       sourceCardId: "source-card",
@@ -218,6 +247,22 @@ describe("effect visibility summaries", () => {
       targetCardId: "target-card",
       amount: -1,
     });
+
+    // Separate applications stack even when their labels and source match.
+    const firstModifier = board.activeEffects[0]!;
+    board.activeEffects.push({ ...firstModifier, id: "ce_2" }, firstModifier);
+    const stacked = buildCardSnapshotMap(board, staticResources)["target-card"];
+    expect(
+      stacked?.activeEffects?.filter((effect) => effect.type === "stat-modifier"),
+    ).toMatchObject([
+      { id: "ce_1", label: "Strength -1", amount: -1 },
+      { id: "ce_2", label: "Strength -1", amount: -1 },
+    ]);
+    board.activeEffects = board.activeEffects.filter((effect) => effect.id !== "ce_1");
+    const remaining = buildCardSnapshotMap(board, staticResources)["target-card"];
+    expect(
+      remaining?.activeEffects?.filter((effect) => effect.type === "stat-modifier"),
+    ).toMatchObject([{ id: "ce_2", label: "Strength -1", amount: -1 }]);
   });
 
   it("builds player active effect summaries and source ids from projected player-targeted effects", () => {

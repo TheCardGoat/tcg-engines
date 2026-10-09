@@ -10,6 +10,8 @@ export default defineConfig({
   lint: { options: { typeAware: true, typeCheck: true } },
   test: {
     environment: "jsdom",
+    // Match the CI runner capacity; simulation tests have wall-clock budgets.
+    maxWorkers: 2,
     exclude: [
       "**/.claude/**",
       "**/node_modules/**",
@@ -25,7 +27,13 @@ export default defineConfig({
     ...(isWorkspaceRoot ? { cache: { tasks: true, scripts: false } } : {}),
     tasks: {
       "ci:check": {
-        command: 'vp fmt "**/*.{ts,tsx,css}" --check && vp check --no-fmt && bunx turbo run test',
+        command:
+          'node --test tools/card-faq-inventory.checks.mjs && vp fmt "**/*.{ts,tsx,css}" --check && vp check --no-fmt && node packages/cards/scripts/audit-canonical-card-layout.mjs && node tools/check-card-faq-coverage.mjs --all-tests',
+        cache: false,
+      },
+      "ci:faq": {
+        command:
+          "node --test tools/card-faq-inventory.checks.mjs && node tools/check-card-faq-coverage.mjs --run-tests",
         cache: false,
       },
       "ci:full": {

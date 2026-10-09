@@ -111,6 +111,8 @@ describe("useSimulatorProjection scry submissions", () => {
         id: "pass",
         required: false,
         text: { key: "test.pass" },
+        trueText: { key: "test.pass" },
+        falseText: { key: "test.decline" },
       },
     ];
 

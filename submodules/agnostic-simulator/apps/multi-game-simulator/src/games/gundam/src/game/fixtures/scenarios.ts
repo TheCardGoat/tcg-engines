@@ -241,6 +241,15 @@ export const GUNDAM_FIXTURE_SCENARIOS: readonly GundamFixtureScenario[] = [
   },
   ...RELEASE_REVIEW_SCENARIOS,
   {
+    id: "red-gundam-shuji-link-demo",
+    group: "Effects and prompts",
+    label: "Red Gundam links with Shuji Itō",
+    description: "The printed ST06-006 and ST06-010 cards exercise same-turn Link attack legality.",
+    instructions: "Deploy Red Gundam, pair Shuji Itō, then attack and resolve the top-card choice.",
+    startPoint: "main-phase",
+    cards: ["ST06-006", "ST06-010"],
+  },
+  {
     id: "pilot-pair-demo",
     group: "Effects and prompts",
     label: "Pair a Pilot",
@@ -339,6 +348,16 @@ export const GUNDAM_FIXTURE_SCENARIOS: readonly GundamFixtureScenario[] = [
     instructions:
       "Play the Command, choose an eligible card, and verify hidden information stays safe.",
     startPoint: "main-phase",
+  },
+  {
+    id: "deck-deploy-excess-demo",
+    group: "Effects and prompts",
+    label: "Deck deployment at the six-Unit limit",
+    description: "GD02-038 deploys Red Gundam from the Deck into a full battle area.",
+    instructions:
+      "Deploy GQuuuuuuX, choose Red Gundam, then place an existing Unit into the trash.",
+    startPoint: "main-phase",
+    cards: ["GD02-038", "ST06-005"],
   },
   {
     id: "battle-ready-demo",

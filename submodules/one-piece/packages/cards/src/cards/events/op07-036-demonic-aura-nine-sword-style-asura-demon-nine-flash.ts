@@ -21,7 +21,7 @@ export const op07DemonicAuraNineSwordStyleAsuraDemonNineFlash036: EventCard = {
   rarity: "R",
   setId: "OP07",
   cost: 2,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   effect:
     "[Main] Up to 1 of your Leader or Character cards gains +3000 power during this turn. Then, you may rest 1 of your Characters with a cost of 3 or more. If you do, rest up to 1 of your opponent's Characters with a cost of 5 or less. [Trigger] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {

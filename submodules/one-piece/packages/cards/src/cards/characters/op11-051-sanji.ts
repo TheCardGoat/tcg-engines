@@ -30,7 +30,7 @@ export const op11Sanji051: CharacterCard = {
   setId: "OP11",
   cost: 6,
   power: 7000,
-  traits: ["Straw Hat Crew The Vinsmoke Family"],
+  traits: ["The Vinsmoke Family", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "When this Character is K.O.'d by your opponent's effect, look at 5 cards from the top of your deck and play up to 1 \"Straw Hat Crew\" type Character card with a cost of 5 or less. Then, place the rest at the bottom of your deck in any order.\n[On Play] Return up to 1 Character with 5000 base power or less to the owner's hand.",
@@ -60,7 +60,7 @@ export const op11Sanji051: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -1,0 +1,67 @@
+.ga-play {
+  background: radial-gradient(ellipse at 50% 40%, #243a3d, #0d191e 75%);
+}
+.ga-play .motion-stage {
+  background: radial-gradient(ellipse, #22474855, #0b2025 75%);
+}
+.ga-play .ga-subject {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.ga-play .ga-subject:active {
+  cursor: grabbing;
+}
+.ga-play .ga-target {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.ga-play [aria-disabled="true"] {
+  cursor: default;
+}
+.ga-play .tcg-card-surface:focus-visible {
+  outline: 2px solid var(--selection-rim);
+}
+.ga-drop {
+  position: absolute;
+  inset: 18px 18px auto;
+  height: 470px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: transparent;
+  pointer-events: none;
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  transition:
+    background 160ms,
+    border-color 160ms;
+}
+.ga-drop[data-active="true"] {
+  border-color: #f5e64255;
+  background: #f5e64208;
+  color: #e8df9a;
+}
+.ga-vfx {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+}
+.ga-target-summary {
+  color: #f5e642 !important;
+}
+.ga-damage {
+  position: absolute;
+  z-index: 30;
+  border: 1px solid #849d8c;
+  padding: 5px 10px;
+  background: #122b2c;
+  color: #efe5bc;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.ga-play .motion-step {
+  width: 345px;
+}

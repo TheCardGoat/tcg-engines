@@ -21,7 +21,7 @@ export const eb04GumGumHawkGatling060: EventCard = {
   rarity: "C",
   setId: "EB04",
   cost: 2,
-  traits: ["Straw Hat Crew The Four Emperors Egghead"],
+  traits: ["Egghead", "The Four Emperors", "Straw Hat Crew"],
   effect:
     "[Main] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 {Egghead} type Character card from your hand to the top of your Life cards face-up. Then, give up to 1 of your opponent's Characters -1000 power during this turn.[Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {
@@ -32,7 +32,7 @@ export const eb04GumGumHawkGatling060: EventCard = {
           {
             cost: "addLifeToHand",
             amount: 1,
-            position: "top",
+            position: "choice",
           },
         ],
         actions: [
@@ -49,7 +49,7 @@ export const eb04GumGumHawkGatling060: EventCard = {
                 {
                   filter: "trait",
                   value: "Egghead",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

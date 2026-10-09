@@ -6,7 +6,7 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 function attackBorsalinoController(handCount: number) {
   const engine = OnePieceTestEngine.create(
     { character: [{ card: op06Aramaki043, playedOnTurn: 0 }] },
-    { hand: handCount, character: [op06Borsalino054] },
+    { hand: Array.from({ length: handCount }, () => "EB01-005"), character: [op06Borsalino054] },
     { firstPlayer: "north", activeSeat: "south" },
   );
   const attackerId = engine.findCardInZone("south", "character", op06Aramaki043);
@@ -39,7 +39,7 @@ describe("OP06-054 Borsalino", () => {
     const { borsalinoId, engine, lifeBefore } = attackBorsalinoController(5);
 
     expect(() => engine.pendingDecision("battleBlocker", "north")).toThrow();
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.asNorth().chooseCounter();
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBefore - 1);
     expect(

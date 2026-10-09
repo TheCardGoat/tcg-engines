@@ -23,7 +23,7 @@ export const op15Pearl011: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 1000,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "strike",
   effect:
     "[Opponent's Turn] If your Leader has the {East Blue} type, this Character gains [Blocker] and +2000 power. [On K.O.] If your Leader has the {East Blue} type, K.O. up to 1 of your opponent's Characters with 6000 base power or less.",
@@ -35,7 +35,7 @@ export const op15Pearl011: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -70,7 +70,7 @@ export const op15Pearl011: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

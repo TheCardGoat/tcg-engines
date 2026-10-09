@@ -7,12 +7,36 @@ import {
 } from "./move-logs.js";
 
 describe("canonical engine move logs", () => {
+  it("preserves validated undo checkpoints through the public narrative projection", () => {
+    const log = {
+      kind: "player-narrative",
+      schemaVersion: 1,
+      commandId: "undo-8",
+      moveType: "undo",
+      actorId: "p1",
+      timestamp: 8,
+      turnNumber: 1,
+      turnPlayerId: "p1",
+      phase: "action",
+      restoredCheckpointStateID: 4,
+      entries: [{ entryId: "undo-8:0", publicMessage: { key: "test.undo" } }],
+    };
+    for (const viewer of ["p1", "p2", null]) {
+      expect(selectVisibleEngineLogForViewer(log, viewer)).toMatchObject({
+        restoredCheckpointStateID: 4,
+      });
+    }
+    expect(
+      selectVisibleEngineLogForViewer({ ...log, restoredCheckpointStateID: -1 }, null),
+    ).toBeNull();
+  });
   it("replaces a public narrative message with only the viewer's private version", () => {
     const log = {
       kind: "player-narrative" as const,
       schemaVersion: 1,
       commandId: "command-1",
       moveType: "draw",
+      restoredCheckpointStateID: 3,
       actorId: "player-one",
       timestamp: 10,
       turnNumber: 2,
@@ -31,6 +55,7 @@ describe("canonical engine move logs", () => {
 
     expect(selectVisibleEngineLogForViewer(log, "player-one")).toMatchObject({
       turnPlayerId: "player-one",
+      restoredCheckpointStateID: 3,
       entries: [
         {
           entryId: "command-1:entry-0",

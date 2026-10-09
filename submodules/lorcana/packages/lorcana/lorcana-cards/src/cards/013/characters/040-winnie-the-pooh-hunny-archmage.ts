@@ -31,6 +31,7 @@ export const winnieThePoohHunnyArchmage: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_82dcfa6128384ac2b40f0fcedee35777",
+    tcgPlayer: "702678",
   },
   text: [
     {

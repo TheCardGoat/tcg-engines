@@ -34,7 +34,7 @@ export const op16MonkeyDLuffy034: CharacterCard = {
   power: 0,
   counter: 1000,
   attribute: "strike",
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   effect:
     "[DON!! x1] [Your Turn] This Character gains +1000 power for each of your Characters with a different card name.\n\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Impel Down} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
@@ -57,7 +57,7 @@ export const op16MonkeyDLuffy034: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

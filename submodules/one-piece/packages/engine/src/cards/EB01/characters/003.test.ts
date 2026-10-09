@@ -40,4 +40,30 @@ describe("EB01-003", () => {
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("keeps the attack bonus when Gastino raises opposing Life to three, then expires", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["EB01-003", "EB01-053"], activeDon: 7 },
+      {
+        character: [{ cardId: "EB01-005", rested: true }, "OP13-013"],
+        life: ["EB01-005", "EB01-005"],
+      },
+    );
+    const doma = engine.findCardInZone("north", "character", "EB01-005");
+    const higuma = engine.findCardInZone("north", "character", "OP13-013");
+    engine.playCard("EB01-003");
+    const kid = engine.findCardInZone("south", "character", "EB01-003");
+    engine.declareAttack(kid, doma, "south");
+    expect(engine.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(doma);
+    engine.playCard("EB01-053");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [higuma] }, "south");
+    engine.resolveDecision("effectLifePosition", { optionId: "top" }, "south");
+    expect(engine.getView("south").players.north.lifeCount).toBe(3);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === kid)?.power,
+    ).toBe(7000);
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === kid)?.power,
+    ).toBe(5000);
+  });
 });

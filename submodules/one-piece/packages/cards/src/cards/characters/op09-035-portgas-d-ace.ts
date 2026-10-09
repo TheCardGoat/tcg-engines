@@ -23,7 +23,7 @@ export const op09PortgasDAce035: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Whitebeard Pirates ODYSSEY"],
+  traits: ["ODYSSEY", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[On Play] If you have 2 or more rested Characters, rest up to 1 of your opponent's Characters with a cost of 5 or less.",

@@ -1,5 +1,5 @@
 import { P1, P2 } from "@tcg/cyberpunk-engine";
-import { getSupporterDisplayConfig, isVisibleSupporterTier } from "@tcg/shared/supporter-display";
+import { isVisibleSupporterTier } from "@tcg/shared/supporter-display";
 
 /**
  * Local-side: from this player's perspective. The simulator currently shows
@@ -19,9 +19,33 @@ export interface PlayerIdentityInfo {
   subscriptionTier?: string;
   isMobile?: boolean;
   mmrAtMatch?: number;
+  /** Catalog id snapshotted onto the match participant. */
+  playmatId?: string;
+  /** Non-Legend card back snapshotted onto the match participant. */
+  cardBackId?: string;
 }
 
 export type PlayerIdentityBySide = Partial<Record<Side, PlayerIdentityInfo>>;
+
+/** Seated players map by actor id. Spectators have no actor ids, so seats 1 and 2 paint both playmats. */
+export function playerIdentitiesByActorOrSeat<T extends PlayerIdentityInfo & { seat?: number }>(
+  participants: readonly T[],
+  actorIds: { player: string; opponent: string } | undefined,
+): PlayerIdentityBySide | undefined {
+  if (participants.length === 0) return undefined;
+  if (!actorIds) {
+    const bySeat = new Map(participants.map((participant) => [participant.seat, participant]));
+    const player = bySeat.get(1);
+    const opponent = bySeat.get(2);
+    if (!player && !opponent) return undefined;
+    return { player, opponent };
+  }
+  const byId = new Map(participants.map((participant) => [participant.id, participant]));
+  return {
+    player: byId.get(actorIds.player),
+    opponent: byId.get(actorIds.opponent),
+  };
+}
 
 export type PlayerConnectionStatus = "connected" | "reconnecting" | "disconnected";
 
@@ -37,36 +61,11 @@ export interface PlayerConnectionInfo {
 export type PlayerConnectionBySide = Partial<Record<Side, PlayerConnectionInfo>>;
 
 export function formatPlayerIdentityMeta(info: PlayerIdentityInfo | undefined): string {
-  if (!info) {
-    return "";
-  }
-  const parts: string[] = [];
-  const tier = info.subscriptionTier;
-  if (isVisibleSubscriptionTier(tier)) {
-    parts.push(formatSubscriptionTier(tier));
-  }
-  if (typeof info.isMobile === "boolean") {
-    parts.push(info.isMobile ? "Mobile" : "Desktop");
-  }
-  if (typeof info.mmrAtMatch === "number") {
-    parts.push(`${Math.round(info.mmrAtMatch)} MMR`);
-  }
-  return parts.join(" · ");
+  return typeof info?.mmrAtMatch === "number" ? `${Math.round(info.mmrAtMatch)} MMR` : "";
 }
 
 export function isVisibleSubscriptionTier(tier: string | undefined): tier is string {
   return isVisibleSupporterTier(tier);
-}
-
-function formatSubscriptionTier(tier: string): string {
-  const supporter = getSupporterDisplayConfig(tier);
-  if (supporter) return supporter.label;
-
-  return tier
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
 }
 
 const SIDE_FLIP: Record<Side, Side> = { player: "opponent", opponent: "player" };

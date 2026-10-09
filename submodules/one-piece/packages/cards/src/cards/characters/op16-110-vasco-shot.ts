@@ -24,7 +24,7 @@ export const op16VascoShot110: CharacterCard = {
   power: 2000,
   counter: 1000,
   trigger: "Activate this card's [On K.O.] effect.",
-  traits: ["Blackbeard Pirates Impel Down"],
+  traits: ["Impel Down", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "[On K.O.] Draw 1 card and rest up to 1 of your opponent's Characters with a cost of 6 or less.",
@@ -55,6 +55,15 @@ export const op16VascoShot110: CharacterCard = {
                 },
               ],
             },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onKo",
           },
         ],
       },

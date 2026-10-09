@@ -10,6 +10,7 @@ const platformSessionWithDates: SessionResult = {
     username: null,
     displayUsername: "Player",
     emailVerified: true,
+    isAnonymous: false,
     role: "user",
     subscriptionTier: "free",
     subscriptionExpiresAt: null,

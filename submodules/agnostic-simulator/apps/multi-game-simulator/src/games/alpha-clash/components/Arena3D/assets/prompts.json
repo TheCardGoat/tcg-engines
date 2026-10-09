@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "purpose": "Alpha Clash local 3D arena POC",
+  "assets": [
+    {
+      "file": "table.webp",
+      "source": "exec-33986828-bed3-41d2-bc3c-0a4701f0c53b.png",
+      "transparent": false,
+      "prompt": "Game-ready environment texture asset for a Three.js Alpha Clash superhero card game arena, matching premium MTG Arena-like material rendering. A perfectly straight overhead orthographic view of one large rectangular futuristic battle table, landscape 3:2. Entire central 85 percent is dark graphite finely weathered slate and brushed gunmetal with restrained seams and subtle scratches, plenty of quiet space for 3D cards. Rich sculpted angular outer metal rim with restrained icy cyan light at bottom and amber at top, industrial science-fiction architecture only in outermost margins. Empty recessed playing surface. Physical realistic cinematic texture, high quality. Absolutely NO cards, NO objects on table, NO text, NO letters, NO symbols, NO numbers, NO buttons, NO HUD, NO perspective foreshortening, NO baked drop shadows crossing central space, NO dividing panels. This will be applied as a single diffuse texture to a tabletop plane in an actual perspective 3D scene. Edge-to-edge rectangular image, opaque background."
+    },
+    {
+      "file": "action.webp",
+      "source": "exec-b7969c9e-a74a-4f56-a160-b93682b677ae.png",
+      "transparent": true,
+      "prompt": "One game-ready UI button sprite, isolated on genuinely TRANSPARENT background. No text, no symbols. Front orthographic view of a premium wide horizontally elongated 4:1 sci-fi card-game action button, entire button fits uncropped. Deep black gunmetal face with fine brushed material, sculpted beveled chamfered corners, layered dark metal outer housing, thin lustrous warm gold inner rim, restrained amber edge light. The center is quiet very dark charcoal and empty to overlay a dynamic readable label. MTG Arena-like tactile premium quality but futuristic superhero equipment. Strong physically rendered bevel highlights, no cast shadow outside silhouette except tiny tight edge shadow. Single button centered, occupies almost entire canvas width, minimal transparent margin. NOT a sheet, not a scene, not a mockup."
+    },
+    {
+      "file": "card-back.webp",
+      "source": "exec-94a755b7-d218-4745-b72a-9142670399a9.png",
+      "transparent": false,
+      "prompt": "Create one full-bleed portrait 5:7 card BACK texture for an original Alpha Clash superhero trading card game. Game-ready flat orthographic asset, no perspective. Deep navy graphite metal, subtly worn black border, concentric sculpted angular silver rails around a central abstract faceted crystal emblem with restrained cyan glow and tiny warm gold accents. Premium physically rendered material with fine etched diagonal details, crisp symmetry. No words, no text, no actual logos, no numbers, no extra scene, no hands. Entire rectangular image is the card back, no external margin. Matches a cinematic science-fiction metal arena, readable at thumbnail size."
+    },
+    {
+      "file": "health.webp",
+      "source": "exec-33ec820d-8d35-4aa3-8462-24014e2ccc2e.png",
+      "transparent": true,
+      "prompt": "Single isolated game-ready health medallion sprite on transparent background, square 1:1. Front orthographic view, circular recessed black glass center completely blank and dark for a large numeric overlay. Sculpted sci-fi gunmetal and silver outer ring, thin warm gold accent, restrained ice cyan glowing ring on inner circumference. Premium realistic 3D physically rendered trim like a cinematic digital card game. Center occupies 65 percent diameter, very quiet. Entire medallion visible with minimal transparent margin, no text, no numbers, no symbols, no lettering, no additional props or background. Sharp clean alpha edges, no broad drop shadow. Designed to remain readable at 80px."
+    }
+  ]
+}

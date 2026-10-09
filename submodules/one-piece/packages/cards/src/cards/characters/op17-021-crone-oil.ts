@@ -5,7 +5,7 @@ export const op17CroneOil021: CharacterCard = {
   id: "OP17-021",
   canonicalId: "OP17-021",
   slug: "crone-oil/op17-021",
-  name: "Crone Oil",
+  name: "Crone Oli",
   printings: [
     {
       id: "OP17-021",

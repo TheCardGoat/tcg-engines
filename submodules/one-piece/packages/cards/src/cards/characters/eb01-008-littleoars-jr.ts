@@ -23,7 +23,7 @@ export const eb01LittleoarsJr008: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Giant Whitebeard Pirates Allies"],
+  traits: ["Giant", "Whitebeard Pirates Allies"],
   attribute: "strike",
   effect:
     "[Once Per Turn] If this Character would be K.O.'d by an effect, you may trash 1 Event or Stage card from your hand instead.",

@@ -29,13 +29,17 @@ export const hundredAcreWoodHunnyCampsite: LocationCard = {
   moveCost: 1,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_d0021c77de1045cd933d1fe9a08efc81",
+    tcgPlayer: "704671",
+  },
   text: [
     {
-      title: "Home Away from Home",
+      title: "HOME AWAY FROM HOME",
       description: "Characters get +1 {W} while here.",
     },
     {
-      title: "Hunny Quest",
+      title: "HUNNY QUEST",
       description: "Hunny characters get +1 {L} while here.",
     },
   ],

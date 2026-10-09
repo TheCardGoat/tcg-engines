@@ -59,3 +59,50 @@ describe("Comprehensive Rules 9: Rule Processing", () => {
     expect(view.finishReason).toBeNull();
   });
 });
+
+describe.each(["south", "north"] as const)("8-6-1 and 1-2-5: Roger attacks as %s", (seat) => {
+  test.each([0, 1])(
+    "Roger has %s Life when Boa blocks with Nami's final card still in deck",
+    (life) => {
+      const defender = seat === "south" ? "north" : "south";
+      const attackerPlayer = {
+        leaderCardId: "OP01-001",
+        character: [{ cardId: "OP09-118", playedOnTurn: 0 }],
+        life,
+        deck: ["OP13-013", "OP13-013"],
+      };
+      const defendingPlayer = {
+        leaderCardId: "OP03-040",
+        character: [{ cardId: "OP01-078", attachedDon: 1 }],
+        hand: [],
+        life: ["OP03-044"],
+        deck: ["OP03-044"],
+      };
+      const e = OnePieceTestEngine.create(
+        seat === "south" ? attackerPlayer : defendingPlayer,
+        seat === "north" ? attackerPlayer : defendingPlayer,
+        { activeSeat: seat },
+      );
+      const roger = e.findCardInZone(seat, "character", "OP09-118");
+      const boa = e.findCardInZone(defender, "character", "OP01-078");
+      e.declareAttack(roger, e.leader(defender), seat);
+      e.resolveDecision("battleBlocker", { selectedIds: [boa] }, defender);
+      const view = e.getView(defender);
+      // Roger is the turn player's ready effect. With zero Life it ends the
+      // game before non-turn-player Boa can draw and produce Nami's win.
+      expect(view).toMatchObject({
+        status: "finished",
+        phase: "finished",
+        winner: life === 0 ? seat : defender,
+        finishReason: "effectWin",
+      });
+      expect(view.players[defender].deckCount).toBe(life === 0 ? 1 : 0);
+      expect(view.players[defender].hand.map((c) => c.cardId)).toEqual(
+        life === 0 ? [] : ["OP03-044"],
+      );
+      expect(view.players[defender].characters.some((c) => c?.instanceId === boa)).toBe(true);
+      expect(view.players[defender].lifeCount).toBe(1);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+});

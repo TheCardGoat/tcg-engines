@@ -111,7 +111,7 @@ describe("CR real-card: overview, costs, card types, areas", () => {
     const eddie = engine.getCardsInZone("eddieArea", P1)[0]!;
     expect(eddie.definitionId).toBe(welcomeToNightCityRetailFloorIt.id);
     expect(eddie.meta.spent).toBe(false);
-    expect(eddie.meta.revealed).toBe(false);
+    expect(eddie.meta.revealed).toBe(true);
     expect(eddie.meta.faceDown).toBe(true);
     const p1View = engine.getFilteredView(P1);
     const p2View = engine.getFilteredView(P2);
@@ -121,8 +121,8 @@ describe("CR real-card: overview, costs, card types, areas", () => {
     const rivalSold = (
       p2View.players[P1 as string]!.zones.eddieArea as { cardName: string | null }[]
     )[0];
-    expect(ownSold?.cardName).toBeNull();
-    expect(rivalSold?.cardName).toBeNull();
+    expect(ownSold?.cardName).toBe("Floor It");
+    expect(rivalSold?.cardName).toBe("Floor It");
     const sellLog = engine.getLastActionLog();
     if (sellLog?.messageKey !== "move.sellCard") throw new Error("Expected Sell action log");
     expect(stripPrivateFields(sellLog, P2)?.params).toMatchObject({ cardName: "Floor It" });

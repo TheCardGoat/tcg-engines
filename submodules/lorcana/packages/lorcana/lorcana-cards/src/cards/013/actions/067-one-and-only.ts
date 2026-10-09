@@ -27,6 +27,7 @@ export const oneAndOnly: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69429f224b234571a1257b20258d97a4",
+    tcgPlayer: "704585",
   },
   text: "Choose a character. Banish all other characters with the same name as that character.",
   abilities: [

@@ -25,7 +25,7 @@ export const op07Jinbe102: CharacterCard = {
   counter: 1000,
   trigger:
     "Return up to 1 of your opponent's Characters with a cost of 4 or less to the owner's hand and add this card to your hand.",
-  traits: ["Fish-Man Straw Hat Crew Egghead"],
+  traits: ["Fish-Man", "Egghead", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Trigger] Return up to 1 of your opponent's Characters with a cost of 4 or less to the owner's hand and add this card to your hand.",

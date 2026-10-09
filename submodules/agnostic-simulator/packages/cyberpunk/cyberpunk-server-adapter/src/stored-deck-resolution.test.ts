@@ -47,6 +47,23 @@ function buildStoredDeck(): Array<{ slug: string; printingId: string }> {
 }
 
 describe("stored deck version -> engine resolution", () => {
+  it("retains the selected printing on each materialized copy", () => {
+    const card = getMergedCyberpunkCardsById().get("animals-wrecker")!;
+    const printingId = defaultCyberpunkPrintingId(card.canonicalId)!;
+    const maps = cyberpunkServerAdapter.buildCardInstances([
+      {
+        owner: "player",
+        deck: [{ cardId: card.canonicalId, qty: 2, printingId, sectionId: "main" }],
+      },
+    ]);
+    for (const instanceId of maps.owners.player!) {
+      expect(maps.cardInstances[instanceId]).toBe(card.canonicalId);
+      expect(maps.presentation?.printingIdByInstanceId[instanceId]).toBe(printingId);
+      expect(maps.instanceSections?.[instanceId]).toBe("main");
+    }
+    expect(maps.owners.player).toHaveLength(2);
+  });
+
   it("deals every stored slug 1:1 with no substitutions", async () => {
     const stored = buildStoredDeck();
     expect(stored).toHaveLength(43); // 3 legends + 40 distinct mains
@@ -143,7 +160,7 @@ describe("stored deck version -> engine resolution", () => {
   });
 
   it("refuses an unknown stored slug instead of substituting a catalog card", async () => {
-    const validation = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+    const validation = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
       { cardId: "afterparty-at-lizzie-s", quantity: 1 },
       { cardId: "definitely-not-a-cyberpunk-card", quantity: 2 },
     ]);

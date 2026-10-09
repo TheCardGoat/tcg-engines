@@ -59,23 +59,10 @@ export const op16PortgasDAce001: LeaderCard = {
                       filter: "name",
                       value: "Monkey.D.Luffy",
                     },
-                    {
-                      filter: "allOf",
-                      filters: [
-                        {
-                          filter: "trait",
-                          value: "Whitebeard Pirates",
-                          match: "includes",
-                        },
-                        {
-                          filter: "power",
-                          comparison: "gte",
-                          value: 8000,
-                        },
-                      ],
-                    },
+                    { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
                   ],
                 },
+                { filter: "power", comparison: "gte", value: 8000 },
               ],
             },
             keyword: "rush",

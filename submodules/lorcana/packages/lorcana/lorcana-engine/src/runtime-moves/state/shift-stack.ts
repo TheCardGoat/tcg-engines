@@ -1,5 +1,7 @@
 import type { CardInstanceId, MoveExecutionContext, MoveInput, PlayerId } from "#core";
-import type { LorcanaCard, LorcanaCardMeta, LorcanaG } from "../../types";
+import type { LorcanaCard, LorcanaCardMeta, LorcanaG, LorcanaRuntimeCard } from "../../types";
+import type { LorcanaCardDerived } from "../../types/projected-board";
+import { cleanupDanglingTargetEffects } from "../effects/continuous-effects";
 import { recomputeLoreToWin } from "../effects/win-condition-effects";
 import { applyReplacementEffects } from "../effects/replacement-effects";
 import type { ReplacementEvent } from "../effects/replacement-effects";
@@ -194,6 +196,24 @@ export function moveCardOutOfPlayWithStack(
     (ctx.framework.zones.getCardOwner(cardId) as PlayerId | undefined) ??
     (destinationZoneRef.playerId as PlayerId | undefined);
   const topSourceZoneKey = ctx.framework.zones.getCardZone(cardId);
+  const lastKnownStrength =
+    zoneFromZoneKey(topSourceZoneKey) === "play"
+      ? (ctx.cards.require(cardId) as LorcanaRuntimeCard & LorcanaCardDerived).strength
+      : undefined;
+  if (typeof lastKnownStrength === "number" && Number.isFinite(lastKnownStrength)) {
+    for (const entry of ctx.G.triggeredAbilities.bag.items ?? []) {
+      if (entry.sourceId !== cardId) continue;
+      entry.resolutionInput ??= {};
+      entry.resolutionInput.eventSnapshot ??= {};
+      entry.resolutionInput.eventSnapshot.sourceStrengthWhenLeftPlay ??= lastKnownStrength;
+    }
+    for (const pending of ctx.G.pendingEffects ?? []) {
+      if (pending.sourceCardId !== cardId) continue;
+      pending.resolutionInput ??= {};
+      pending.resolutionInput.eventSnapshot ??= {};
+      pending.resolutionInput.eventSnapshot.sourceStrengthWhenLeftPlay ??= lastKnownStrength;
+    }
+  }
   let replacedStackEvent: Extract<ReplacementEvent, { kind: "zone-change" }> | undefined;
 
   if (topOwnerId) {
@@ -234,6 +254,13 @@ export function moveCardOutOfPlayWithStack(
           : { index: startIndex + index };
     ctx.framework.zones.moveCard(movedCardId, moveZoneRef, moveOptions);
     const metaPatch: Partial<LorcanaCardMeta> = {};
+    if (
+      movedCardId === cardId &&
+      typeof lastKnownStrength === "number" &&
+      Number.isFinite(lastKnownStrength)
+    ) {
+      metaPatch.lastKnownStrength = lastKnownStrength;
+    }
     if (replacedStackEvent?.replacementState) {
       metaPatch.state = replacedStackEvent.replacementState;
     }
@@ -245,6 +272,9 @@ export function moveCardOutOfPlayWithStack(
       ctx.cards.patchMeta(String(movedCardId), metaPatch);
     }
   }
+
+  // CR 7.1.6: gained stats end on leaving play, even if the instance is replayed.
+  cleanupDanglingTargetEffects(ctx);
 
   // A card leaving play may remove a win-condition-modification effect.
   recomputeLoreToWin(ctx);

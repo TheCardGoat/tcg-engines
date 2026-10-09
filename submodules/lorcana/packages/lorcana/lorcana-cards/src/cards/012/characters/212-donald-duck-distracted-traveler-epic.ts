@@ -22,7 +22,7 @@ export const donaldDuckDistractedTravelerEpic: CharacterCard = {
   inkType: ["emerald"],
   set: "012",
   cardNumber: 212,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 3,

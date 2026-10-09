@@ -29,13 +29,17 @@ export const sulleyProtectiveMonster: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_fdbb9d60b67c409682154ec3b20bd530",
+    tcgPlayer: "702691",
+  },
   text: [
     {
-      title: "Fearsome Glare",
+      title: "FEARSOME GLARE",
       description: "When you play this character, you may exert all cards in your inkwell.",
     },
     {
-      title: "Riled Up",
+      title: "RILED UP",
       description:
         "While all cards in your inkwell are exerted, this character gains Rush. (They can challenge the turn they're played.)",
     },

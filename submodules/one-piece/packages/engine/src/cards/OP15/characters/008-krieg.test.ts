@@ -31,6 +31,16 @@ describe("OP15-008 Krieg", () => {
     engine.resolveDecision("effectTargetSelection", { selectedIds: [domaId] }, "south");
   }
 
+  test("choosing zero DON!! still grants Rush and allows an attack on the play turn", () => {
+    const { engine, kriegId } = setup();
+    engine.playCard(op15Krieg008, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    engine.declareAttack(kriegId(), engine.leader("north"), "south");
+    expect(engine.getView("south").players.north.restedDon).toBe(4);
+    expect(engine.getView("south").players.north.lifeCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] moves opponent rested DON!! onto one opponent Character and grants Rush", () => {
     const { engine, kriegId, domaId } = setup();
 

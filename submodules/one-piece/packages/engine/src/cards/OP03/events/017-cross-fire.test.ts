@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op03CrossFire017 } from "../../../../../cards/src/cards/events/op03-017-cross-fire.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP03-017 Cross Fire", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op03CrossFire017);
-  });
-});

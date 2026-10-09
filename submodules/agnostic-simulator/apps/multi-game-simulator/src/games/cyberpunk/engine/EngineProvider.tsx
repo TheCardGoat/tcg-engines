@@ -19,6 +19,7 @@ import {
   type CyberpunkTestEngine,
   type GameEvent,
   type MatchState,
+  type FilteredMatchView,
   type MoveDecision,
   type MoveLog,
   type PlayerPrompt,
@@ -38,6 +39,7 @@ import type {
   InteractionSubmissionValue,
   UndoScopeValue,
 } from "@tcg/protocol";
+import { INTERACTION_PROTOCOL_VERSION } from "@tcg/protocol";
 import { DEFAULT_SCENARIO, getScenario, P1, P2, type ScenarioId } from "./fixtures/scenarios";
 import { AI_SPEED_MS, type AiMode, type AiSpeed } from "./aiStatus";
 import type { ChatMessage, ChatPresetKey } from "./chat";
@@ -47,11 +49,29 @@ import { EngineContext } from "./engineContext";
 import { actionToInteractionSubmission } from "./live/actionToInteraction";
 import { isManualEngineAction, manualActionPayload } from "./boardCorrection";
 import { otherSide, PLAYER_SIDE_TO_ID, type Side } from "./sides";
+import {
+  hidePendingMoveRecoveryNotification,
+  showPendingMoveRecoveryNotification,
+} from "../components/pendingMoveFeedback";
 
 // Re-export so consumers that imported `EngineAction` from this module keep
 // compiling. The canonical declaration now lives in `src/types/e2e.ts` so the
 // Playwright harness can share it without dragging React into its tsconfig.
 export type { EngineAction };
+
+function unavailableCorrectionInteractionView(
+  actorId: string,
+  stateVersion: number,
+): EngineInteractionView {
+  return {
+    protocolVersion: INTERACTION_PROTOCOL_VERSION,
+    gameSlug: "cyberpunk",
+    actorId,
+    stateVersion,
+    status: "idle",
+    actions: [],
+  };
+}
 
 function sideForPlayerId(playerId: unknown): MoveLogEntry["side"] {
   if (playerId === P1) {
@@ -101,6 +121,17 @@ function undoMoveLog(
   };
 }
 
+function rejectedActionLog(state: MatchState, playerId: typeof P1, reason: string): MoveLog {
+  return {
+    type: "action",
+    playerId,
+    turnNumber: state.G.turnMetadata.turnNumber,
+    timestamp: Date.now(),
+    messageKey: "move.rejected",
+    params: { reason },
+  };
+}
+
 function resolvePrioritySide(
   views: Readonly<Record<Side, EngineInteractionView>>,
   fallback: Side,
@@ -145,8 +176,11 @@ const STALL_FALLBACK_STRATEGY: AIStrategy = {
   decideAction: (ctx) => {
     const moves = ctx.prompt.availableMoves;
     const safeMove =
+      moves.find((move) => move.moveId === "cancelPendingResolution") ??
       moves.find((move) => move.moveId === "keepHand") ??
       moves.find((move) => move.moveId === "passPhase") ??
+      moves.find((move) => move.moveId === "resolveAttack") ??
+      moves.find((move) => move.moveId === "concede") ??
       moves.find((move) => move.inputSpec.type === "none") ??
       moves[0];
     if (!safeMove) {
@@ -155,6 +189,32 @@ const STALL_FALLBACK_STRATEGY: AIStrategy = {
     return { kind: "command", move: safeMove.moveId };
   },
 };
+
+export interface AuthoritativeBotEscape {
+  actionId: string;
+  values: Record<string, InteractionSubmissionValue>;
+}
+
+/**
+ * Pick a no-guess escape from the server-authored action view. Cancellation
+ * and normal turn progression are preferred; concession is the final option.
+ */
+export function pickAuthoritativeBotEscape(
+  view: EngineInteractionView,
+): AuthoritativeBotEscape | null {
+  const enabled = (actionId: string) =>
+    view.actions.find((action) => action.id === actionId && action.enabled);
+  if (enabled("cancelPendingResolution")) {
+    return { actionId: "cancelPendingResolution", values: {} };
+  }
+  if (enabled("keepHand")) return { actionId: "keepHand", values: {} };
+  if (enabled("passPhase")) return { actionId: "passPhase", values: {} };
+  if (enabled("resolveAttack")) {
+    return { actionId: "resolveAttack", values: { pass: true } };
+  }
+  if (enabled("concede")) return { actionId: "concede", values: {} };
+  return null;
+}
 
 /** Optional AI configuration: drive one or both sides with a strategy. */
 export interface AISideConfig {
@@ -323,7 +383,7 @@ export interface CyberpunkPostGameContext {
   matchId: string;
   gameNumber: number;
   format: "best_of_1" | "best_of_3";
-  matchStatus: "in_progress" | "completed" | "abandoned";
+  matchStatus: "waiting" | "in_progress" | "completed" | "abandoned";
   currentGameId?: string;
   nextGameId?: string;
   player1Score?: number;
@@ -351,6 +411,8 @@ export interface EngineContextValue {
   /** Rebuild the current scenario from its fixture (clears log + errors). */
   resetScenario: () => void;
   matchState: MatchState;
+  /** Authoritative public card rules for hosted matches. */
+  remoteProjection?: FilteredMatchView;
   /** Player-facing prompt for each side. */
   prompts: { player: PlayerPrompt; opponent: PlayerPrompt };
   /** Game-agnostic interaction projection for each side. */
@@ -469,6 +531,8 @@ export interface EngineContextValue {
   isRemote: boolean;
   /** True while a server-authority live match has one optimistic move awaiting ack. */
   hasPendingRemoteMove: boolean;
+  /** Action id for the pending server-authority move, when one exists. */
+  pendingRemoteActionId: string | null;
 }
 
 interface EngineProviderProps {
@@ -529,6 +593,7 @@ interface EngineProviderProps {
   remoteInteractionView?: EngineInteractionView;
   /** Viewer-safe native prompt paired with the live interaction projection. */
   remotePrompt?: PlayerPrompt;
+  remoteProjection?: FilteredMatchView;
   /** Request a server-authority undo through the host surface. */
   requestRemoteUndo?: (scope: UndoScopeValue) => boolean;
   /** Server-authority move logs collected from gateway updates. */
@@ -569,6 +634,8 @@ interface EngineProviderProps {
   }) => boolean;
   /** Server-authority live match has one optimistic move awaiting ack. */
   hasPendingRemoteMove?: boolean;
+  /** Action id for the pending server-authority move, when one exists. */
+  pendingRemoteActionId?: string | null;
   /** Return target for hosted matches once the game is over. */
   remoteReturnUrl?: string;
   /** Hosted-match context for analytics, notes, feedback, and series navigation. */
@@ -709,7 +776,21 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
     case "useBlocker":
       return eng.useBlocker(action.blockerId, { as: action.as });
     case "activateAbility":
-      return eng.activateAbility(action.cardId, action.abilityIndex, { as: action.as });
+      return eng.executeMove(
+        "activateAbility",
+        {
+          args: {
+            cardId: action.cardId,
+            abilityIndex: action.abilityIndex,
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
+          },
+        },
+        action.as,
+      );
+    case "setCombatPriority":
+      return eng.executeMove("setCombatPriority", { args: { mode: action.mode } }, action.as);
     case "resolveAttack":
       return eng.executeMove("resolveAttack", { args: { pass: action.pass } }, action.as);
     case "resolveStealGigs":
@@ -784,6 +865,9 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
           args: {
             cardId: action.cardId,
             ...(action.attachToId ? { attachToId: action.attachToId } : {}),
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
           },
         },
         action.as,
@@ -797,7 +881,18 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
     case "resolveCardToMove":
       return eng.resolveCardToMove(action.cardId, { pass: action.pass, as: action.as });
     case "resolveRedirectDefeat":
-      return eng.executeMove("resolveRedirectDefeat", { args: { pass: action.pass } }, action.as);
+      return eng.executeMove(
+        "resolveRedirectDefeat",
+        {
+          args: {
+            ...(action.pass === undefined ? {} : { pass: action.pass }),
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
+          },
+        },
+        action.as,
+      );
     case "resolveSacrificialGear":
       return eng.executeMove(
         "resolveSacrificialGear",
@@ -965,6 +1060,7 @@ export function EngineProvider({
   remoteSubmitInteraction,
   remoteInteractionView,
   remotePrompt,
+  remoteProjection,
   requestRemoteUndo,
   remoteMoveLogs = EMPTY_REMOTE_MOVE_LOGS,
   remoteEngineEvents = EMPTY_REMOTE_ENGINE_EVENTS,
@@ -983,6 +1079,7 @@ export function EngineProvider({
   requestRemoteBoardCorrectionExit,
   remoteExecuteMove,
   hasPendingRemoteMove = false,
+  pendingRemoteActionId = null,
   remoteReturnUrl,
   postGameContext,
   postGameSurface = "default",
@@ -1004,7 +1101,7 @@ export function EngineProvider({
   // The AI-player rebuild effect depends on this so its players never point at
   // a stale engine instance after a same-scenario reset.
   const [engineBuildId, setEngineBuildId] = useState(0);
-  const [, bump] = useState(0);
+  const [renderVersion, bump] = useState(0);
 
   const [humanSide, setHumanSideState] = useState<Side>(initialHumanSide);
   const [aiStrategies, setAiStrategies] = useState<Record<Side, AIStrategy | null>>(() =>
@@ -1325,12 +1422,12 @@ export function EngineProvider({
   }, [remoteDispatch, remoteEngineEvents]);
 
   useEffect(() => {
-    if (!hasHostedChat) {
+    if (!hasHostedChat && !remoteDispatch) {
       return;
     }
     setChatMessages(remoteChatMessages.slice(-CHAT_LOG_CAP));
     chatIdRef.current = remoteChatMessages.reduce((max, message) => Math.max(max, message.id), 0);
-  }, [hasHostedChat, remoteChatMessages]);
+  }, [hasHostedChat, remoteChatMessages, remoteDispatch]);
 
   // ── Chat ──────────────────────────────────────────────────────────────────
 
@@ -1482,6 +1579,12 @@ export function EngineProvider({
   // ── Read engine state every render ────────────────────────────────────────
 
   const engine = engineRef.current;
+  engine.setCombatProgression(
+    import.meta.env.DEV &&
+      new URLSearchParams(window.location.search).get("auto-advance-attack") === "off"
+      ? "manual"
+      : "automatic",
+  );
   const matchState = engine.getState();
   const engineStateId = matchState.ctx.stateID;
   // State numbers can repeat after restart, undo or hosted-engine replacement.
@@ -1489,23 +1592,28 @@ export function EngineProvider({
   const derived = useMemo(() => {
     const playerPrompt = engine.getPrompt(P1);
     const opponentPrompt = engine.getPrompt(P2);
+    const interactionViewFor = (actorId: string, prompt: PlayerPrompt) => {
+      try {
+        return buildCyberpunkInteractionView({
+          actorId,
+          stateVersion: engineStateId,
+          prompt,
+          state: matchState,
+        });
+      } catch (error) {
+        if (!boardCorrectionEnabled) throw error;
+        // A corrupted state must not expose a guessed normal-game action. Keep
+        // the board available only for its explicit repair controls.
+        return unavailableCorrectionInteractionView(actorId, engineStateId);
+      }
+    };
     return {
       playerPrompt,
       opponentPrompt,
-      playerView: buildCyberpunkInteractionView({
-        actorId: P1,
-        stateVersion: engineStateId,
-        prompt: playerPrompt,
-        state: matchState,
-      }),
-      opponentView: buildCyberpunkInteractionView({
-        actorId: P2,
-        stateVersion: engineStateId,
-        prompt: opponentPrompt,
-        state: matchState,
-      }),
+      playerView: interactionViewFor(P1, playerPrompt),
+      opponentView: interactionViewFor(P2, opponentPrompt),
     };
-  }, [engine, matchState, engineStateId]);
+  }, [boardCorrectionEnabled, engine, matchState, engineStateId, renderVersion]);
   const remoteSide: Side | null = remoteInteractionView
     ? String(remoteInteractionView.actorId) === String(P1)
       ? "player"
@@ -1566,9 +1674,9 @@ export function EngineProvider({
         { rngSeed: `${scenarioId}:${side}:remote` },
       );
       const result = probe.step();
-      recordStep(side, result);
 
       if (result.kind !== "acted") {
+        recordStep(side, result);
         return false;
       }
       const values = submissionValuesFromDecision(result.decision);
@@ -1577,7 +1685,7 @@ export function EngineProvider({
         return false;
       }
 
-      return remoteSubmitInteraction(
+      const submitted = remoteSubmitInteraction(
         {
           side,
           interactionView,
@@ -1586,6 +1694,16 @@ export function EngineProvider({
         },
         engineRef.current.getState(),
       );
+      if (!submitted) {
+        recordStep(side, {
+          kind: "stuck",
+          reason: `authoritative view rejected ${result.decision.move}`,
+          decisionDurationMs: result.decisionDurationMs,
+        });
+        return false;
+      }
+      recordStep(side, result);
+      return true;
     },
     [
       aiStrategies,
@@ -1596,6 +1714,23 @@ export function EngineProvider({
       remoteSubmitInteraction,
       scenarioId,
     ],
+  );
+
+  const submitAuthoritativeBotEscape = useCallback(
+    (side: Side): boolean => {
+      if (!remoteSubmitInteraction || hasPendingRemoteMove) return false;
+      const interactionView = side === "player" ? playerInteractionView : opponentInteractionView;
+      const escape = pickAuthoritativeBotEscape(interactionView);
+      if (!escape) {
+        setLastAiError("No authoritative bot escape action is available");
+        return false;
+      }
+      return remoteSubmitInteraction(
+        { side, interactionView, actionId: escape.actionId, values: escape.values },
+        engineRef.current.getState(),
+      );
+    },
+    [hasPendingRemoteMove, opponentInteractionView, playerInteractionView, remoteSubmitInteraction],
   );
 
   /**
@@ -1651,6 +1786,14 @@ export function EngineProvider({
     animationCommandGate.isBlocked,
   );
 
+  useEffect(() => {
+    if (!hasPendingRemoteMove) {
+      hidePendingMoveRecoveryNotification();
+      return;
+    }
+    return hidePendingMoveRecoveryNotification;
+  }, [hasPendingRemoteMove]);
+
   const dispatch = useCallback<EngineContextValue["dispatch"]>(
     (action) => {
       const eng = engineRef.current;
@@ -1666,6 +1809,15 @@ export function EngineProvider({
         };
       }
       if (remoteDispatch) {
+        if (action.type === "rewindToTurnStart") {
+          if (requestRemoteUndo?.("turn_start")) {
+            return {
+              success: false as const,
+              error: "Turn undo proposal sent; waiting for opponent approval",
+            };
+          }
+          return { success: false as const, error: "Undo is unavailable in live matches" };
+        }
         if (isManualEngineAction(action)) {
           if (!boardCorrectionEnabled) {
             return {
@@ -1712,6 +1864,7 @@ export function EngineProvider({
         }
         if (hasPendingRemoteMove) {
           warnDrop("Waiting for the previous move to be confirmed");
+          showPendingMoveRecoveryNotification();
           return {
             success: false as const,
             error: "Waiting for the previous move to be confirmed",
@@ -1789,7 +1942,22 @@ export function EngineProvider({
             result = eng.useBlocker(action.blockerId, { as: action.as });
             break;
           case "activateAbility":
-            result = eng.activateAbility(action.cardId, action.abilityIndex, { as: action.as });
+            result = eng.executeMove(
+              "activateAbility",
+              {
+                args: {
+                  cardId: action.cardId,
+                  abilityIndex: action.abilityIndex,
+                  ...(action.paymentSourceIds === undefined
+                    ? {}
+                    : { paymentSourceIds: action.paymentSourceIds }),
+                },
+              },
+              action.as,
+            );
+            break;
+          case "setCombatPriority":
+            result = executeEngineAction(eng, action);
             break;
           case "resolveAttack":
             result = eng.executeMove("resolveAttack", { args: { pass: action.pass } }, action.as);
@@ -1870,6 +2038,9 @@ export function EngineProvider({
                     args: {
                       cardId: action.cardId,
                       ...(action.attachToId ? { attachToId: action.attachToId } : {}),
+                      ...(action.paymentSourceIds === undefined
+                        ? {}
+                        : { paymentSourceIds: action.paymentSourceIds }),
                     },
                   },
                   action.as,
@@ -1891,7 +2062,14 @@ export function EngineProvider({
           case "resolveRedirectDefeat":
             result = eng.executeMove(
               "resolveRedirectDefeat",
-              { args: { pass: action.pass } },
+              {
+                args: {
+                  ...(action.pass === undefined ? {} : { pass: action.pass }),
+                  ...(action.paymentSourceIds === undefined
+                    ? {}
+                    : { paymentSourceIds: action.paymentSourceIds }),
+                },
+              },
               action.as,
             );
             break;
@@ -2006,6 +2184,10 @@ export function EngineProvider({
             action,
             result,
           });
+        } else {
+          appendMoveLogs([
+            rejectedActionLog(preMoveState, PLAYER_SIDE_TO_ID[humanSide], result.error),
+          ]);
         }
         if (import.meta.env.DEV) {
           dispatchLogRef.current.push({ action, result });
@@ -2020,6 +2202,7 @@ export function EngineProvider({
         // eslint-disable-next-line no-console
         console.warn("[engine] dispatch failed:", action, message);
         notifyInsufficientEddies(message);
+        appendMoveLogs([rejectedActionLog(eng.getState(), PLAYER_SIDE_TO_ID[humanSide], message)]);
         const failure = { success: false as const, error: message };
         if (import.meta.env.DEV) {
           dispatchLogRef.current.push({ action, result: failure });
@@ -2282,7 +2465,6 @@ export function EngineProvider({
         forced: 0,
         fallbackDone: false,
       };
-      return;
     }
     const interval = setInterval(() => {
       const current = aiStallRef.current;
@@ -2318,7 +2500,7 @@ export function EngineProvider({
       // eslint-disable-next-line no-console
       console.warn("[engine] AI stall watchdog answering stalled prompt", { side, promptKey });
       if (remoteSubmitInteraction) {
-        runRemoteStepFor(side, STALL_FALLBACK_STRATEGY);
+        submitAuthoritativeBotEscape(side);
       } else {
         const fallback = new AIPlayer(
           engineRef.current.getLocalEngine(),
@@ -2347,6 +2529,7 @@ export function EngineProvider({
     hasPendingRemoteMove,
     remoteSubmitInteraction,
     runRemoteStepFor,
+    submitAuthoritativeBotEscape,
     runStepFor,
     recordStep,
     scenarioId,
@@ -2399,10 +2582,12 @@ export function EngineProvider({
     resetScenario,
     isRemote: Boolean(remoteDispatch),
     hasPendingRemoteMove,
+    pendingRemoteActionId,
     remoteReturnUrl,
     postGameContext,
     postGameSurface,
     matchState,
+    remoteProjection,
     prompts,
     interactionViews,
     activeSide,

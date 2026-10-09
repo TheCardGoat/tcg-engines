@@ -22,7 +22,7 @@ export const op13TrafalgarLaw031: CharacterCard = {
   setId: "OP13",
   cost: 6,
   power: 6000,
-  traits: ["FILM Heart Pirates Supernovas"],
+  traits: ["FILM", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "If you have 1 or less Life cards, this Character gains [Blocker].\n[On Play] You may return 1 of your Characters to the owner's hand: Play up to 1 Character card with a cost of 5 or less from your hand rested.",

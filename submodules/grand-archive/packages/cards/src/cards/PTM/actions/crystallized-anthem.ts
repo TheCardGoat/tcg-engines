@@ -53,15 +53,9 @@ export const crystallizedAnthem: GrandArchiveCard<GrandArchiveAbilityDefinition,
             afterApply: {
               kind: "add-counter",
               subject: {
-                kind: "each",
-                collection: {
-                  zones: ["field"],
-                  player: "controller",
-                  filter: {
-                    kind: "name",
-                    value: "Fractured Memories",
-                  },
-                },
+                kind: "mastery",
+                player: "controller",
+                name: "Fractured Memories",
               },
               counter: {
                 named: "sheen",
@@ -118,14 +112,11 @@ export const crystallizedAnthem: GrandArchiveCard<GrandArchiveAbilityDefinition,
                   operator: "divide",
                   operands: [
                     {
-                      kind: "sum-counters",
-                      collection: {
-                        zones: ["field"],
+                      kind: "counter-count",
+                      subject: {
+                        kind: "mastery",
                         player: "controller",
-                        filter: {
-                          kind: "name",
-                          value: "Fractured Memories",
-                        },
+                        name: "Fractured Memories",
                       },
                       counter: {
                         named: "sheen",

@@ -1,5 +1,6 @@
 export { firstLegalStrategy } from "./first-legal.ts";
 export { randomStrategy } from "./random.ts";
+export { defaultStrategy } from "./default.ts";
 export {
   passOnlyStrategy,
   attackUnitOnlyStrategy,
@@ -7,7 +8,6 @@ export {
   callLegendOnlyStrategy,
 } from "./forced.ts";
 export {
-  defaultStrategy,
   greedyStrategy,
   createGreedyStrategy,
   DEFAULT_GREEDY_WEIGHTS,

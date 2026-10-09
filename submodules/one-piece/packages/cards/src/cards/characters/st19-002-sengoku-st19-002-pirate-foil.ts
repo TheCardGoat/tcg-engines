@@ -53,7 +53,7 @@ export const prb02SengokuSt19002PirateFoil002: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -66,7 +66,7 @@ export const prb02SengokuSt19002PirateFoil002: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Navy",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

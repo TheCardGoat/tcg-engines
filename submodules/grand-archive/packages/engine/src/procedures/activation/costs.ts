@@ -398,6 +398,9 @@ function selectCostObjects(
     throw new Error(`Cost ${cost.kind} contains an ineligible object`);
   }
   if (cost.kind === "select-and-remove-counters") {
+    if (cost.singleObject && new Set(selected).size > 1) {
+      throw new Error("Counter payment must use a single object");
+    }
     const selectedCounts = new Map<GrandArchiveObjectId, number>();
     for (const id of selected) selectedCounts.set(id, (selectedCounts.get(id) ?? 0) + 1);
     for (const [id, amount] of selectedCounts) {
@@ -821,7 +824,8 @@ function pay(
         (objectId) => evaluation.state.objects[objectId]?.hostId === champion.id,
       );
       const cardId = lineage.at(-1);
-      if (!cardId) throw new Error("Champion cannot be deleveled below its base card");
+      if (!cardId || (lineage.length === 1 && champion.baseLineageCardId))
+        throw new Error("Champion cannot be deleveled below its base card");
       appendPaymentEvents(cursor, [
         {
           type: "champion-deleveled",

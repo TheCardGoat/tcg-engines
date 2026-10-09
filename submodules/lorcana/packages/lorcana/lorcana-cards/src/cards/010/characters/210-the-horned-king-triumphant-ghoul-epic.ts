@@ -23,7 +23,7 @@ export const theHornedKingTriumphantGhoulEpic: CharacterCard = {
   franchise: "Black Cauldron",
   set: "010",
   cardNumber: 210,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 2,

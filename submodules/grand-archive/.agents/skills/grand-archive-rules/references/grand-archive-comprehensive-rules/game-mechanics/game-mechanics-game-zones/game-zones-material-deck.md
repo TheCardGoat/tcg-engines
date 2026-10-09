@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-material-deck"
+  relation: "current_index"
+---
+
 # Game Zones - Material Deck
 
 #### General Rules:

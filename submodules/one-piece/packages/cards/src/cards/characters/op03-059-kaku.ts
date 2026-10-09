@@ -23,7 +23,7 @@ export const op03Kaku059: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "slash",
   effect:
     "[When Attacking] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): This Character gains [Banish] during this battle. (When this card deals damage, the target card is trashed without activating its Trigger.)",

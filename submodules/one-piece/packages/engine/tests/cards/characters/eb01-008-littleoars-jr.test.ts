@@ -68,12 +68,54 @@ describe("EB01-008 LittleOars Jr.", () => {
     const attackerId = engine.findCardInZone("north", "character", eb01LittleoarsJr008);
 
     engine.declareAttack(attackerId, targetId, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
       targetId,
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("cannot replace an effect K.O. with only a Character in hand", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [eb01Doma005], character: [eb01LittleoarsJr008] },
+      { hand: [op08BurnBlade117], life: [eb01Doma005], activeDon: 5 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const oars = engine.findCardInZone("south", "character", eb01LittleoarsJr008);
+    engine.playCard(op08BurnBlade117, "north");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [oars] }, "north");
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(oars);
+    expect(engine.getView("south").players.south.hand).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("a second effect K.O. succeeds despite another payable Event after replacement was used", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [eb01JustShutUpAndComeWithUs009, eb01MiniMerry011],
+        character: [eb01LittleoarsJr008],
+      },
+      {
+        hand: [op08BurnBlade117, op08BurnBlade117],
+        life: [eb01Doma005, eb01Doma005],
+        activeDon: 10,
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const oars = engine.findCardInZone("south", "character", eb01LittleoarsJr008);
+    const stage = engine.findCardInZone("south", "hand", eb01MiniMerry011);
+    engine.playCard(op08BurnBlade117, "north");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [oars] }, "north");
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [stage] }, "south");
+    engine.playCard(op08BurnBlade117, "north");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [oars] }, "north");
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(oars);
+    expect(engine.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["EB01-009"]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -62,10 +62,8 @@ describe("OP10-070 Trebol", () => {
     const protectedChoice = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(protectedChoice?.kind).toBe("selectEntity");
     if (protectedChoice?.kind !== "selectEntity") throw new Error("Expected a K.O. choice.");
-    expect(protectedChoice.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      protectedId,
-    );
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+    expect(protectedChoice.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
     expect(
       engine.getView("south").players.south.characters.map((card) => card?.instanceId),
     ).toContain(protectedId);
@@ -103,5 +101,26 @@ describe("OP10-070 Trebol", () => {
     expect(
       view.players.south.characters.find((card) => card?.instanceId === trebolId)?.rested,
     ).toBe(true);
+  });
+  test("protection stays on Bentham after its attack raises base power above the original threshold", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP10-070"], character: [{ cardId: "EB01-061", playedOnTurn: 0 }], activeDon: 5 },
+      { character: ["EB01-005"], hand: ["OP01-026"], activeDon: 2 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const bentham = e.findCardInZone("south", "character", "EB01-061");
+    e.asSouth().play("OP10-070");
+    e.asSouth().attack(bentham, e.leader("north"));
+    e.asSouth().chooseTargets(e.findCardInZone("north", "character", "EB01-005"));
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === bentham)?.power,
+    ).toBe(3000);
+    e.asNorth().chooseCounter("OP01-026");
+    e.asNorth().chooseTargets(e.leader("north"));
+    e.asNorth().chooseTargets(bentham);
+    expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === bentham)).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).not.toContain(bentham);
   });
 });

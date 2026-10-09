@@ -62,7 +62,7 @@ describe("OP01-078 Boa Hancock", () => {
       {
         character: [{ card: op01BoaHancock078, attachedDon: 1, playedOnTurn: 0 }],
         hand: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, "EB01-025"],
       },
       { character: [{ card: eb01Doma005, playedOnTurn: 0 }] },
       { firstPlayer: "south", activeSeat: "north" },
@@ -77,7 +77,7 @@ describe("OP01-078 Boa Hancock", () => {
 
     const view = engine.getView("south");
     expect(view.players.south.handCount).toBe(6);
-    expect(view.players.south.deckCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(1);
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(
       view.players.south.characters.find((card) => card?.instanceId === blockerId)?.rested,

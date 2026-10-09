@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-skipping-phases"
+  relation: "current_index"
+---
+
 # Turn Order - Skipping Phases
 
 #### General Rules:

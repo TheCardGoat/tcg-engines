@@ -50,15 +50,9 @@ export const quietRefraction: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               {
                 kind: "add-counter",
                 subject: {
-                  kind: "each",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "name",
-                      value: "Fractured Memories",
-                    },
-                  },
+                  kind: "mastery",
+                  player: "controller",
+                  name: "Fractured Memories",
                 },
                 counter: {
                   named: "sheen",
@@ -90,15 +84,9 @@ export const quietRefraction: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           effect: {
             kind: "add-counter",
             subject: {
-              kind: "each",
-              collection: {
-                zones: ["field"],
-                player: "controller",
-                filter: {
-                  kind: "name",
-                  value: "Fractured Memories",
-                },
-              },
+              kind: "mastery",
+              player: "controller",
+              name: "Fractured Memories",
             },
             counter: {
               named: "sheen",

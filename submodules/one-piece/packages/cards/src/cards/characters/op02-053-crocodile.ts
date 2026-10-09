@@ -23,7 +23,7 @@ export const op02Crocodile053: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "special",
   i18n: op02Crocodile053I18n,
 };

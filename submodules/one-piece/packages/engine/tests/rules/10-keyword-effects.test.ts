@@ -5,7 +5,7 @@ import {
   eb01TonyTonyChopper006,
   op01RoronoaZoro025,
   op02Minotaur087,
-  op03Curiel004,
+  op17Izo003,
   op03Minozebra068,
   op04Chaka008,
   op13GumGumGatlingGun021,
@@ -279,24 +279,24 @@ describe("Comprehensive Rules 10-1: Keyword Effects", () => {
 
   test("10-1-6-1: [Rush: Character] may attack only Characters on the turn it is played", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: [op03Curiel004], activeDon: 3 },
+      { hand: [op17Izo003], activeDon: 4 },
       { character: [{ card: op13Higuma013, rested: true }], life: 4 },
       SOUTH_ATTACKS,
     );
 
-    engine.asSouth().play(op03Curiel004);
-    const curielId = engine.asSouth().findOnField(op03Curiel004);
+    engine.asSouth().play(op17Izo003);
+    const izoId = engine.asSouth().findOnField(op17Izo003);
     const higumaId = engine.asNorth().findOnField(op13Higuma013);
 
     // The Leader is still not a legal target on the played turn.
     engine.expectFailure({
       type: "declareAttack",
       seat: "south",
-      attackerId: curielId,
+      attackerId: izoId,
       targetId: engine.leader("north"),
     });
     // An opposing Character remains a legal target on the played turn.
-    engine.asSouth().attack(curielId, higumaId);
+    engine.asSouth().attack(izoId, higumaId);
 
     expect(
       engine

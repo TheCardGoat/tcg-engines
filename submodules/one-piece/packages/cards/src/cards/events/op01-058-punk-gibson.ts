@@ -21,7 +21,7 @@ export const op01PunkGibson058: EventCard = {
   rarity: "R",
   setId: "OP01",
   cost: 2,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, rest up to 1 of your opponent's Characters with a cost of 4 or less. [Trigger] Rest up to 1 of your opponent's Characters.  This card has been officially errata'd.",
   effects: {

@@ -67,4 +67,52 @@ describe("OP15-010 Nezumi", () => {
     expect(view.characters.find((c) => c?.cardId === eb01Doma005.id)?.attachedDon ?? 0).toBe(0);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["south", "north"] as const)(
+    "chooses %s DON!! without moving it between owners",
+    (owner) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [op15Nezumi010], restedDon: 1 },
+        { character: [eb01Doma005], restedDon: 1 },
+      );
+      engine.activateEffect(
+        engine.findCardInZone("south", "character", op15Nezumi010),
+        "activateMain",
+      );
+      engine.resolveDecision("effectGiveDonCount", { optionId: "1" });
+      const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (choice?.kind !== "selectEntity") throw new Error("Expected recipient choice");
+      expect(choice.candidates.map((candidate) => candidate.ref.id)).toEqual(
+        expect.arrayContaining([engine.leader("south"), engine.leader("north")]),
+      );
+      engine.resolveDecision("effectTargetSelection", { selectedIds: [engine.leader(owner)] });
+      const view = engine.getView("south");
+      expect(view.players[owner].restedDon).toBe(0);
+      expect(view.players[owner].leader.attachedDon).toBe(1);
+      const other = owner === "south" ? "north" : "south";
+      expect(view.players[other].restedDon).toBe(1);
+      expect(view.players[other].leader.attachedDon).toBe(0);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
+  test("offers only recipients whose owner has rested DON!!", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Nezumi010], restedDon: 0 },
+      { character: [eb01Doma005], restedDon: 1 },
+    );
+    engine.activateEffect(
+      engine.findCardInZone("south", "character", op15Nezumi010),
+      "activateMain",
+    );
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" });
+    const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected recipient choice");
+    expect(choice.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      engine.leader("north"),
+      engine.findCardInZone("north", "character", eb01Doma005),
+    ]);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [engine.leader("north")] });
+    expect(engine.getView("south").players.north.leader.attachedDon).toBe(1);
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(0);
+  });
 });

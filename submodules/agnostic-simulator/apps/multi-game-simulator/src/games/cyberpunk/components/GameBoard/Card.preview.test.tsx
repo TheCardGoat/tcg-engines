@@ -45,10 +45,15 @@ describe("Cyberpunk face-up legend hover preview", () => {
     expect(legend).not.toBeNull();
 
     fireEvent.mouseEnter(legend!);
+    // The preview must show the hovered legend's own art: a SECOND img with
+    // the legend's name appears while hovering (the first is the legend slot).
     await waitFor(() => {
-      expect(
-        document.body.querySelector('[class*="_preview_"][class*="_visible_"]'),
-      ).not.toBeNull();
+      const artCount = [...document.body.querySelectorAll("img")].filter((img) =>
+        (img.getAttribute("aria-label") ?? img.getAttribute("alt") ?? "").includes(
+          "Corporate Exile",
+        ),
+      ).length;
+      expect(artCount).toBeGreaterThan(1);
     });
   });
 });

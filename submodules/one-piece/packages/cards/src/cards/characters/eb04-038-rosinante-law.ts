@@ -6,6 +6,7 @@ export const eb04RosinanteLaw038: CharacterCard = {
   canonicalId: "EB04-038",
   slug: "rosinante-law/eb04-038",
   name: "Rosinante & Law",
+  alternateNames: ["Trafalgar Law", "Donquixote Rosinante"],
   printings: [
     {
       id: "EB04-038",
@@ -31,7 +32,7 @@ export const eb04RosinanteLaw038: CharacterCard = {
   setId: "EB04",
   cost: 6,
   power: 8000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: ["special", "wisdom"],
   effect:
     "Under the rules of this game, also treat this card's name as [Trafalgar Law] and [Donquixote Rosinante]. [Blocker] [On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, draw 1 card. Then, add up to 1 DON!! card from your DON!! deck and set it as active.",
@@ -40,15 +41,17 @@ export const eb04RosinanteLaw038: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        conditions: [
+          {
+            condition: "donFieldComparison",
+            selfComparison: "lte",
+          },
+        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "donFieldComparison",
-              selfComparison: "lte",
-            },
           },
           {
             action: "addDon",

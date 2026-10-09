@@ -22,7 +22,7 @@ export const op06ShadowsAsgard095: EventCard = {
   setId: "OP06",
   cost: 2,
   trigger: "Draw 2 cards and trash 1 card from your hand.",
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   effect:
     "[Main] / [Counter] Your Leader gains +1000 power during this turn. Then, you may K.O. any number of your [Thriller Bark Pirates] type Characters with a cost of 2 or less. Your Leader gains an additional +1000 power during this turn for every Character K.O.'d.",
   effects: {
@@ -55,7 +55,7 @@ export const op06ShadowsAsgard095: EventCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",
@@ -108,7 +108,7 @@ export const op06ShadowsAsgard095: EventCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

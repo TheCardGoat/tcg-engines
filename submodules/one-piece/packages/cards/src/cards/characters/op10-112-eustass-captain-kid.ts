@@ -38,7 +38,7 @@ export const op10EustassCaptainKid112: CharacterCard = {
   setId: "OP10",
   cost: 8,
   power: 9000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: "special",
 
   effect:

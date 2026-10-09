@@ -13,3 +13,15 @@ describe("Blood Dragon's Pact — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveLinkedStats } from "../../../testing/linked-stats.ts";
+
+/** @covers g23WBQW2Ro-a2 */
+describe("Linked stat bonus", () => {
+  proveLinkedStats({ card: bloodDragonsPact, host: "ally", power: 4, life: 4 });
+});
+
+import { provePhaseSelfDamage } from "../../../testing/phase-self-damage.ts";
+/** @covers g23WBQW2Ro-a3 */
+describe("bloodDragonsPact phase damage", () =>
+  provePhaseSelfDamage(bloodDragonsPact, "end", 4, true, true));

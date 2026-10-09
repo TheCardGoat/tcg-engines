@@ -1,0 +1,22 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "meta-v1",
+  "cardCatalogHash": "fnv1a32:de23a4df",
+  "changes": {},
+  "engineRevision": "fnv1a32:c8337234",
+  "evaluation": {
+    "batchSize": 3,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 3,
+    "maximumCellRegression": 1,
+    "minimumBlocks": 3,
+    "minimumMeanImprovement": 0,
+    "seedBase": "alpha-clash-meta-calibration-v1",
+    "suiteId": "meta"
+  },
+  "game": "alpha-clash",
+  "hypothesis": "Calibrate the laboratory baseline against itself on Clarity and Absence. This plan does not train or claim an improved heuristic.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "meta-v1",
+  "schemaVersion": 1
+}

@@ -1,19 +1,47 @@
+import {
+  basePowerActionKey,
+  deterministicPowerTarget,
+} from "../engine/continuous-numeric-dependencies.ts";
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
-import type { Action, EffectTrigger, Keyword } from "@tcg/op-types";
+import type { Action, Condition, EffectTrigger, Keyword } from "@tcg/op-types";
 import type { CardInstance, MatchState } from "../types.ts";
+import { getSetBasePower } from "../shared.ts";
 import { evaluateConditions } from "./conditions.ts";
 import { candidatePoolForTarget, matchesTargetFilter } from "./targeting.ts";
 
+const excludedPowerSetters = new WeakMap<MatchState, ReadonlySet<string>>();
+export function evaluatingLegacyBasePower(state: MatchState): boolean {
+  return excludedPowerSetters.has(state);
+}
+export function withExcludedPowerSetters<T>(
+  state: MatchState,
+  excluded: ReadonlySet<string>,
+  run: () => T,
+): T {
+  const prior = excludedPowerSetters.get(state);
+  excludedPowerSetters.set(state, excluded);
+  try {
+    return run();
+  } finally {
+    if (prior) excludedPowerSetters.set(state, prior);
+    else excludedPowerSetters.delete(state);
+  }
+}
 const activeEvaluations = new WeakMap<MatchState, Set<string>>();
 
 function actionIsDynamicModifier(
   action: Action,
-  type: "power" | "cost" | "counter",
-): action is Extract<Action, { action: "modifyPower" | "modifyCost" | "modifyCounter" }> {
+  type: "power" | "cost" | "counter" | "playCost" | "lifeValue",
+): action is Extract<
+  Action,
+  { action: "modifyPower" | "modifyCost" | "modifyCounter" | "modifyLifeValue" }
+> {
   return (
     (type === "power" && action.action === "modifyPower") ||
-    (type === "cost" && action.action === "modifyCost") ||
-    (type === "counter" && action.action === "modifyCounter")
+    (type === "cost" && action.action === "modifyCost" && !action.paymentOnly) ||
+    (type === "playCost" && action.action === "modifyCost" && action.paymentOnly === true) ||
+    (type === "counter" && action.action === "modifyCounter") ||
+    (type === "lifeValue" && action.action === "modifyLifeValue")
   );
 }
 
@@ -72,6 +100,53 @@ function sourceEffectsAreNegated(state: MatchState, sourceInstanceId: string): b
     sourceEffectsAreNegatedByModifier(state, sourceInstanceId) ||
     effectsNegatedByPermanentEffect(state, sourceInstanceId, undefined)
   );
+}
+
+/** Live provider gates use the provider; returned conditions use the recipient. */
+export function getPermanentActivationConditions(
+  state: MatchState,
+  recipientId: string,
+  trigger: EffectTrigger,
+): Condition[] {
+  const conditions: Condition[] = [];
+  for (const source of inPlaySources(state)) {
+    const effects = (getCard(source.cardId).effects?.permanentEffects ?? []).filter((effect) =>
+      effect.actions.some((action) => action.action === "addActivationConditions"),
+    );
+    if (!effects.length || sourceEffectsAreNegated(state, source.instanceId)) continue;
+    for (const effect of effects) {
+      const gate = evaluateConditions(
+        state,
+        source.controller,
+        source.instanceId,
+        effect.conditions,
+      );
+      if (!gate.supported || !gate.matches) continue;
+      for (const action of effect.actions) {
+        if (
+          action.action !== "addActivationConditions" ||
+          (action.effectTypes && !action.effectTypes.includes(trigger))
+        )
+          continue;
+        const actionGate = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          action.condition ? [action.condition] : [],
+        );
+        if (!actionGate.supported || !actionGate.matches) continue;
+        const pool = candidatePoolForTarget(
+          state,
+          source.controller,
+          source.instanceId,
+          action.target,
+        );
+        if (pool.supported && pool.candidateIds.includes(recipientId))
+          conditions.push(...action.conditions);
+      }
+    }
+  }
+  return conditions;
 }
 
 export function isPlayedRestedByPermanentEffect(
@@ -167,7 +242,11 @@ export function isCardPlayRestricted(
       if (
         conditions.supported &&
         conditions.matches &&
-        effect.actions.some((action) => action.action === "cannotBePlayedByEffects")
+        effect.actions.some(
+          (action) =>
+            action.action === "cannotBePlayedByEffects" &&
+            (!action.sourceZones || action.sourceZones.some((zone) => zone === sourceZone)),
+        )
       ) {
         return true;
       }
@@ -180,6 +259,7 @@ export function isCardPlayRestricted(
       modifier.type === "flag" &&
       modifier.flag === "cannotPlay" &&
       modifier.playerScope === true &&
+      (!modifier.playRestrictionOrigin || modifier.playRestrictionOrigin === origin) &&
       (!modifier.playRestrictionSourceZones ||
         modifier.playRestrictionSourceZones.includes(sourceZone)) &&
       (modifier.playRestrictionFilters ?? []).every((filter) => {
@@ -313,6 +393,11 @@ export function isRestPreventedByPermanentEffect(
         if (!conditions.supported || !conditions.matches) continue;
         for (const action of effect.actions) {
           if (action.action !== "cannotBeRested") continue;
+          if (
+            action.byCardTypes &&
+            !action.byCardTypes.includes(getCard(state.cards[sourceInstanceId]!.cardId).cardType)
+          )
+            continue;
           const expectedSourceController =
             action.byPlayer === "self"
               ? targetController
@@ -459,10 +544,332 @@ export function isCharacterRemovalPreventedByPermanentEffect(
   return false;
 }
 
+// Cost filters must see the current continuous-effect result, including an
+// already-applied effect's own contribution (OP10-042 FAQ).
+const evaluatingCosts = new WeakMap<MatchState, Map<string, number>>();
+
+export function getEvaluatingCardCost(state: MatchState, instanceId: string): number | undefined {
+  return evaluatingCosts.get(state)?.get(instanceId);
+}
+
+export function withEvaluatingCardCosts<T>(
+  state: MatchState,
+  values: Record<string, number>,
+  run: () => T,
+): T {
+  const previous = evaluatingCosts.get(state);
+  evaluatingCosts.set(state, new Map(Object.entries(values)));
+  try {
+    return run();
+  } finally {
+    if (previous) evaluatingCosts.set(state, previous);
+    else evaluatingCosts.delete(state);
+  }
+}
+
+const evaluatingBaseCosts = new WeakMap<MatchState, Record<string, number>>();
+export function getEvaluatingBaseCost(state: MatchState, id: string): number | undefined {
+  return evaluatingBaseCosts.get(state)?.[id];
+}
+const evaluatingBasePowers = new WeakMap<MatchState, Record<string, number>>();
+export function getEvaluatingBasePower(state: MatchState, id: string): number | undefined {
+  return evaluatingBasePowers.get(state)?.[id];
+}
+const evaluatingPowers = new WeakMap<MatchState, Record<string, number>>();
+export function getEvaluatingCardPower(state: MatchState, id: string): number | undefined {
+  return evaluatingPowers.get(state)?.[id];
+}
+export function withEvaluatingNumericValues<T>(
+  state: MatchState,
+  values: {
+    costs: Record<string, number>;
+    powers: Record<string, number>;
+    baseCosts?: Record<string, number>;
+    basePowers?: Record<string, number>;
+  },
+  run: () => T,
+): T {
+  const previousBasePowers = evaluatingBasePowers.get(state);
+  if (values.basePowers) evaluatingBasePowers.set(state, values.basePowers);
+  const previousBaseCosts = evaluatingBaseCosts.get(state);
+  if (values.baseCosts) evaluatingBaseCosts.set(state, values.baseCosts);
+  const previous = evaluatingPowers.get(state);
+  evaluatingPowers.set(state, values.powers);
+  try {
+    return withEvaluatingCardCosts(state, values.costs, run);
+  } finally {
+    if (previousBasePowers) evaluatingBasePowers.set(state, previousBasePowers);
+    else evaluatingBasePowers.delete(state);
+    if (previousBaseCosts) evaluatingBaseCosts.set(state, previousBaseCosts);
+    else evaluatingBaseCosts.delete(state);
+    if (previous) evaluatingPowers.set(state, previous);
+    else evaluatingPowers.delete(state);
+  }
+}
+
+export function continuousCostEntries(
+  state: MatchState,
+  orderedPower: ReadonlySet<string> = new Set(),
+) {
+  return Object.values(state.cards).flatMap((source) => {
+    if (!sourceIsInPlay(state, source.instanceId) && source.zone !== "hand") return [];
+    return (getCard(source.cardId).effects?.permanentEffects ?? []).flatMap((effect, index) => {
+      const actions = effect.actions.filter(
+        (
+          action,
+          actionIndex,
+        ): action is Extract<
+          Action,
+          {
+            action:
+              | "modifyCost"
+              | "modifyPower"
+              | "setBaseCost"
+              | "setBasePower"
+              | "setBasePowerFrom";
+          }
+        > =>
+          ((action.action === "modifyCost" && !action.paymentOnly) ||
+            action.action === "modifyPower" ||
+            action.action === "setBaseCost" ||
+            ((action.action === "setBasePower" || action.action === "setBasePowerFrom") &&
+              orderedPower.has(basePowerActionKey(source, index, actionIndex)))) &&
+          (source.zone !== "hand" || action.target.self === true) &&
+          (action.action === "setBasePower" || action.action === "setBasePowerFrom"
+            ? deterministicPowerTarget(action.target)
+            : action.target.count.amount === "all" || action.target.self === true),
+      );
+      return actions.length
+        ? [
+            {
+              id: `${source.instanceId}:${source.zoneChangeCounter}:${index}`,
+              source,
+              effect,
+              actions,
+            },
+          ]
+        : [];
+    });
+  });
+}
+
+export function evaluateContinuousCostEntry(
+  state: MatchState,
+  entry: ReturnType<typeof continuousCostEntries>[number],
+  previous: {
+    contributions: Record<string, Record<string, number>>;
+    basePowerContributions?: Record<string, Record<string, number>>;
+    baseCostContributions?: Record<string, Record<string, number>>;
+    powerContributions?: Record<string, Record<string, number>>;
+  },
+  values: (
+    contributions: Record<string, Record<string, number>>,
+    powerContributions: Record<string, Record<string, number>>,
+    baseCostContributions: Record<string, Record<string, number>>,
+    basePowerContributions: Record<string, Record<string, number>>,
+  ) => {
+    costs: Record<string, number>;
+    powers: Record<string, number>;
+    baseCosts?: Record<string, number>;
+    basePowers?: Record<string, number>;
+  },
+): {
+  contributions: Record<string, Record<string, number>>;
+  powerContributions: Record<string, Record<string, number>>;
+  baseCostContributions: Record<string, Record<string, number>>;
+  basePowerContributions: Record<string, Record<string, number>>;
+} {
+  const basePowerResult = { ...previous.basePowerContributions };
+  const result = { ...previous.contributions };
+  const baseCostResult = { ...previous.baseCostContributions };
+  const powerResult = { ...previous.powerContributions };
+  const { source, effect, actions } = entry;
+  const enabled = withEvaluatingNumericValues(
+    state,
+    values(result, powerResult, baseCostResult, basePowerResult),
+    () => {
+      if (sourceEffectsAreNegated(state, source.instanceId)) return false;
+      const conditions = evaluateConditions(
+        state,
+        source.controller,
+        source.instanceId,
+        effect.conditions,
+      );
+      if (!conditions.supported) throw new Error("Unsupported continuous cost condition");
+      return conditions.matches;
+    },
+  );
+  let costIndex = 0;
+  let powerIndex = 0;
+  let baseCostIndex = 0;
+  let basePowerIndex = 0;
+  actions.forEach((action) => {
+    // A block is one ordering unit. Its actions use the result of the preceding
+    // action, replacing each action's old contribution rather than stacking it.
+    const contribution = withEvaluatingNumericValues(
+      state,
+      values(result, powerResult, baseCostResult, basePowerResult),
+      () => {
+        const output: Record<string, number> = {};
+        if (!enabled) return output;
+        const condition = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          "condition" in action && action.condition ? [action.condition] : [],
+        );
+        if (!condition.supported) throw new Error("Unsupported continuous cost action condition");
+        if (!condition.matches) return output;
+        const pool = candidatePoolForTarget(
+          state,
+          source.controller,
+          source.instanceId,
+          action.target,
+        );
+        if (!pool.supported) throw new Error("Unsupported continuous cost target");
+        let value: number;
+        if (action.action === "setBasePowerFrom") {
+          const copied = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.source,
+          );
+          if (!copied.supported || copied.candidateIds.length !== 1)
+            throw new Error("Unsupported base-power copy source");
+          const id = copied.candidateIds[0]!;
+          const definition = getCard(state.cards[id]!.cardId);
+          value =
+            getSetBasePower(state, id) ??
+            (definition.cardType === "leader" || definition.cardType === "character"
+              ? (definition.power ?? 0)
+              : 0);
+        } else value = action.value;
+        if (action.action === "modifyPower" && action.restedDonGroupSize) {
+          value *= Math.floor(
+            state.players[source.controller].restedDon / action.restedDonGroupSize,
+          );
+        } else if (
+          (action.action === "modifyCost" || action.action === "modifyPower") &&
+          action.valuePerCardGroup
+        ) {
+          const group = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.valuePerCardGroup.target,
+          );
+          if (!group.supported) throw new Error("Unsupported continuous cost count target");
+          value *= Math.floor(group.candidateIds.length / action.valuePerCardGroup.size);
+        } else if (action.action === "modifyPower" && action.valuePerDifferentNameOn) {
+          const names = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.valuePerDifferentNameOn,
+          );
+          if (!names.supported) throw new Error("Unsupported continuous power name-count target");
+          value *= distinctNameCount(state, names.candidateIds);
+        }
+        for (const id of pool.candidateIds) {
+          if (source.zone !== "hand" || id === source.instanceId) output[id] = value;
+        }
+        return output;
+      },
+    );
+    if (action.action === "modifyCost") result[`${entry.id}/${costIndex++}`] = contribution;
+    else if (action.action === "setBaseCost")
+      baseCostResult[`${entry.id}/${baseCostIndex++}`] = contribution;
+    else if (action.action === "setBasePower" || action.action === "setBasePowerFrom")
+      basePowerResult[`${entry.id}/${basePowerIndex++}`] = contribution;
+    else powerResult[`${entry.id}/${powerIndex++}`] = contribution;
+  });
+  return {
+    contributions: result,
+    powerContributions: powerResult,
+    baseCostContributions: baseCostResult,
+    basePowerContributions: basePowerResult,
+  };
+}
+
+export function getContinuousCardCost(
+  state: MatchState,
+  targetInstanceId: string,
+  printedCost: number,
+  resolvedModifier: number,
+): number {
+  const costs = evaluatingCosts.get(state) ?? new Map<string, number>();
+  evaluatingCosts.set(state, costs);
+  costs.set(targetInstanceId, Math.max(0, printedCost));
+  const sources = Object.values(state.cards).sort(
+    (a, b) => Number(b.controller === state.activeSeat) - Number(a.controller === state.activeSeat),
+  );
+  const entries = sources.flatMap((source) => {
+    const inHand = source.instanceId === targetInstanceId && source.zone === "hand";
+    if (!sourceIsInPlay(state, source.instanceId) && !inHand) return [];
+    return (getCard(source.cardId).effects?.permanentEffects ?? []).flatMap((effect) =>
+      effect.actions.flatMap((action) =>
+        action.action === "modifyCost" &&
+        !action.paymentOnly &&
+        (!inHand || action.target.self) &&
+        (action.target.count.amount === "all" || action.target.self)
+          ? [{ source, effect, action, value: 0 }]
+          : [],
+      ),
+    );
+  });
+  try {
+    let total = 0;
+    // Permanent effects apply before resolved automatic effects. Then repeat
+    // their conditions against the resulting cost (rules 8-1-3-3-5).
+    for (const temporary of [0, resolvedModifier]) {
+      costs.set(targetInstanceId, Math.max(0, printedCost + total + temporary));
+      let changed: boolean;
+      do {
+        changed = false;
+        for (const entry of entries) {
+          const { source, effect, action } = entry;
+          const conditions = evaluateConditions(state, source.controller, source.instanceId, [
+            ...(effect.conditions ?? []),
+            ...(action.condition ? [action.condition] : []),
+          ]);
+          const pool =
+            !sourceEffectsAreNegated(state, source.instanceId) &&
+            conditions.supported &&
+            conditions.matches
+              ? candidatePoolForTarget(state, source.controller, source.instanceId, action.target)
+              : undefined;
+          let value = 0;
+          if (pool?.supported && pool.candidateIds.includes(targetInstanceId)) {
+            const group = action.valuePerCardGroup;
+            const groupPool = group
+              ? candidatePoolForTarget(state, source.controller, source.instanceId, group.target)
+              : undefined;
+            value =
+              group && groupPool?.supported
+                ? Math.floor(groupPool.candidateIds.length / group.size) * action.value
+                : action.value;
+          }
+          if (entry.value !== value) {
+            total += value - entry.value;
+            entry.value = value;
+            changed = true;
+            costs.set(targetInstanceId, Math.max(0, printedCost + total + temporary));
+          }
+        }
+      } while (changed);
+    }
+    return costs.get(targetInstanceId) ?? Math.max(0, printedCost + resolvedModifier);
+  } finally {
+    costs.delete(targetInstanceId);
+    if (costs.size === 0) evaluatingCosts.delete(state);
+  }
+}
+
 export function getPermanentModifierTotal(
   state: MatchState,
   targetInstanceId: string,
-  type: "power" | "cost" | "counter",
+  type: "power" | "cost" | "counter" | "playCost" | "lifeValue",
 ): number {
   const evaluationKey = `${type}:${targetInstanceId}`;
   const active = activeEvaluations.get(state) ?? new Set<string>();
@@ -476,16 +883,9 @@ export function getPermanentModifierTotal(
     let total = 0;
     for (const source of Object.values(state.cards)) {
       const card = getCard(source.cardId);
-      const relevantActions = (card.effects?.permanentEffects ?? []).flatMap((effect) =>
-        effect.actions.filter((action) => actionIsDynamicModifier(action, type)),
-      );
-      const sourceIsHandScoped =
-        source.zone === "hand" &&
-        relevantActions.length > 0 &&
-        relevantActions.every((action) => action.target.zones.includes("hand"));
       const sourceIsSelfInHand = source.instanceId === targetInstanceId && source.zone === "hand";
       if (
-        (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand && !sourceIsHandScoped) ||
+        (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand) ||
         sourceEffectsAreNegated(state, source.instanceId)
       ) {
         continue;
@@ -496,14 +896,6 @@ export function getPermanentModifierTotal(
           actionIsDynamicModifier(action, type),
         );
         if (relevantActions.length === 0) {
-          continue;
-        }
-        // A permanent modifier printed on a card still in hand only reaches
-        // cards in the hand zone (for example a counter boost to hand cards).
-        const relevantToHandCards = relevantActions.every((action) =>
-          action.target.zones.includes("hand"),
-        );
-        if (source.zone === "hand" && !sourceIsSelfInHand && !relevantToHandCards) {
           continue;
         }
         const conditions = evaluateConditions(
@@ -520,6 +912,8 @@ export function getPermanentModifierTotal(
           if (!actionIsDynamicModifier(action, type)) {
             continue;
           }
+          // Off-field modifiers apply only to the source card itself in hand.
+          if (source.zone === "hand" && !action.target.self) continue;
           if (action.condition) {
             const actionCondition = evaluateConditions(
               state,
@@ -545,7 +939,9 @@ export function getPermanentModifierTotal(
             const restedDonGroupSize =
               action.action === "modifyPower" ? action.restedDonGroupSize : undefined;
             const valuePerCardGroup =
-              action.action === "modifyPower" ? action.valuePerCardGroup : undefined;
+              action.action === "modifyPower" || action.action === "modifyCost"
+                ? action.valuePerCardGroup
+                : undefined;
             const cardGroupPool = valuePerCardGroup
               ? candidatePoolForTarget(
                   state,
@@ -603,6 +999,23 @@ export function getPermanentSetBasePower(
   try {
     let setBasePower: number | null = null;
     for (const source of Object.values(state.cards)) {
+      const card = getCard(source.cardId);
+      const relevantEffects = (card.effects?.permanentEffects ?? [])
+        .map((effect, effectIndex) => ({
+          ...effect,
+          actions: effect.actions.filter(
+            (_, actionIndex) =>
+              !excludedPowerSetters
+                .get(state)
+                ?.has(basePowerActionKey(source, effectIndex, actionIndex)),
+          ),
+        }))
+        .filter((effect) =>
+          effect.actions.some(
+            (action) => action.action === "setBasePowerFrom" || action.action === "setBasePower",
+          ),
+        );
+      if (!relevantEffects.length) continue;
       const sourceIsSelfInHand = source.instanceId === targetInstanceId && source.zone === "hand";
       if (
         (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand) ||
@@ -610,8 +1023,7 @@ export function getPermanentSetBasePower(
       ) {
         continue;
       }
-      const card = getCard(source.cardId);
-      for (const effect of card.effects?.permanentEffects ?? []) {
+      for (const effect of relevantEffects) {
         const setBaseActions = effect.actions.filter(
           (action) => action.action === "setBasePowerFrom" || action.action === "setBasePower",
         );
@@ -628,6 +1040,12 @@ export function getPermanentSetBasePower(
           continue;
         }
         for (const action of setBaseActions) {
+          if (action.action === "setBasePowerFrom" && action.condition) {
+            const condition = evaluateConditions(state, source.controller, source.instanceId, [
+              action.condition,
+            ]);
+            if (!condition.supported || !condition.matches) continue;
+          }
           const targetPool = candidatePoolForTarget(
             state,
             source.controller,
@@ -651,10 +1069,13 @@ export function getPermanentSetBasePower(
           if (!sourcePool.supported || sourcePool.candidateIds.length !== 1) {
             continue;
           }
-          const sourceCard = getCard(state.cards[sourcePool.candidateIds[0]!]!.cardId);
+          const copiedSourceId = sourcePool.candidateIds[0]!;
+          const sourceCard = getCard(state.cards[copiedSourceId]!.cardId);
+          // A continuous base-power copy follows other base setters (8-1-3-3-5),
+          // but does not copy additive power or given DON!! power.
           const sourceBasePower =
             sourceCard.cardType === "leader" || sourceCard.cardType === "character"
-              ? (sourceCard.power ?? 0)
+              ? (getSetBasePower(state, copiedSourceId) ?? sourceCard.power ?? 0)
               : 0;
           setBasePower =
             setBasePower === null ? sourceBasePower : Math.max(setBasePower, sourceBasePower);
@@ -670,6 +1091,76 @@ export function getPermanentSetBasePower(
   }
 }
 
+export function getPermanentSetBaseCost(
+  state: MatchState,
+  targetInstanceId: string,
+): number | null {
+  const evaluationKey = `setBaseCost:${targetInstanceId}`;
+  const active = activeEvaluations.get(state) ?? new Set<string>();
+  if (active.has(evaluationKey)) return null;
+  activeEvaluations.set(state, active);
+  active.add(evaluationKey);
+  try {
+    let result: number | null = null;
+    for (const source of Object.values(state.cards)) {
+      const effects = (getCard(source.cardId).effects?.permanentEffects ?? []).filter((effect) =>
+        effect.actions.some((action) => action.action === "setBaseCost"),
+      );
+      if (!effects.length) continue;
+      const inHand = source.instanceId === targetInstanceId && source.zone === "hand";
+      if (
+        (!sourceIsInPlay(state, source.instanceId) && !inHand) ||
+        sourceEffectsAreNegated(state, source.instanceId)
+      )
+        continue;
+      for (const effect of effects) {
+        const enabled = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          effect.conditions,
+        );
+        if (!enabled.supported || !enabled.matches) continue;
+        for (const action of effect.actions) {
+          if (action.action !== "setBaseCost" || (inHand && !action.target.self)) continue;
+          const condition = evaluateConditions(
+            state,
+            source.controller,
+            source.instanceId,
+            action.condition ? [action.condition] : [],
+          );
+          if (!condition.supported || !condition.matches) continue;
+          const targets = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.target,
+          );
+          if (targets.supported && targets.candidateIds.includes(targetInstanceId))
+            result = result === null ? action.value : Math.max(result, action.value);
+        }
+      }
+    }
+    return result;
+  } finally {
+    active.delete(evaluationKey);
+    if (!active.size) activeEvaluations.delete(state);
+  }
+}
+
+/** Area-valid declarations; conditions and negation remain live evaluator checks. */
+export function permanentSetCostEntries(state: MatchState, targetInstanceId?: string) {
+  return Object.values(state.cards).flatMap((source) => {
+    const handApplies =
+      source.zone === "hand" &&
+      (targetInstanceId === undefined || source.instanceId === targetInstanceId);
+    if (!sourceIsInPlay(state, source.instanceId) && !handApplies) return [];
+    return (getCard(source.cardId).effects?.permanentEffects ?? [])
+      .filter((effect) => effect.actions.some((action) => action.action === "setCost"))
+      .map((effect) => ({ source, effect }));
+  });
+}
+
 export function getPermanentSetCost(state: MatchState, targetInstanceId: string): number | null {
   const evaluationKey = `setCost:${targetInstanceId}`;
   const active = activeEvaluations.get(state) ?? new Set<string>();
@@ -680,6 +1171,59 @@ export function getPermanentSetCost(state: MatchState, targetInstanceId: string)
   active.add(evaluationKey);
 
   try {
+    for (const { source, effect } of permanentSetCostEntries(state, targetInstanceId)) {
+      if (sourceEffectsAreNegated(state, source.instanceId)) continue;
+      const conditions = evaluateConditions(
+        state,
+        source.controller,
+        source.instanceId,
+        effect.conditions,
+      );
+      if (!conditions.supported || !conditions.matches) {
+        continue;
+      }
+      for (const action of effect.actions) {
+        if (action.action !== "setCost") {
+          continue;
+        }
+        const actionCondition = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          action.condition ? [action.condition] : [],
+        );
+        if (!actionCondition.supported || !actionCondition.matches) continue;
+        const pool = candidatePoolForTarget(
+          state,
+          source.controller,
+          source.instanceId,
+          action.target,
+        );
+        if (pool.supported && pool.candidateIds.includes(targetInstanceId)) {
+          return action.value;
+        }
+      }
+    }
+    return null;
+  } finally {
+    active.delete(evaluationKey);
+    if (active.size === 0) {
+      activeEvaluations.delete(state);
+    }
+  }
+}
+
+export function getPermanentSetCounter(state: MatchState, targetInstanceId: string): number | null {
+  const evaluationKey = `setCounter:${targetInstanceId}`;
+  const active = activeEvaluations.get(state) ?? new Set<string>();
+  if (active.has(evaluationKey)) {
+    return null;
+  }
+  activeEvaluations.set(state, active);
+  active.add(evaluationKey);
+
+  try {
+    let value: number | null = null;
     for (const source of Object.values(state.cards)) {
       const sourceIsSelfInHand = source.instanceId === targetInstanceId && source.zone === "hand";
       if (
@@ -700,8 +1244,15 @@ export function getPermanentSetCost(state: MatchState, targetInstanceId: string)
           continue;
         }
         for (const action of effect.actions) {
-          if (action.action !== "setCost") {
+          if (action.action !== "setCounter") {
             continue;
+          }
+          if (source.zone === "hand" && !action.target.self) continue;
+          if (action.condition) {
+            const result = evaluateConditions(state, source.controller, source.instanceId, [
+              action.condition,
+            ]);
+            if (!result.supported || !result.matches) continue;
           }
           const pool = candidatePoolForTarget(
             state,
@@ -710,12 +1261,12 @@ export function getPermanentSetCost(state: MatchState, targetInstanceId: string)
             action.target,
           );
           if (pool.supported && pool.candidateIds.includes(targetInstanceId)) {
-            return action.value;
+            value = value === null ? action.value : Math.max(value, action.value);
           }
         }
       }
     }
-    return null;
+    return value;
   } finally {
     active.delete(evaluationKey);
     if (active.size === 0) {
@@ -736,14 +1287,18 @@ export function getPermanentKeywords(state: MatchState, targetInstanceId: string
   try {
     const keywords = new Set<Keyword>();
     for (const source of Object.values(state.cards)) {
+      const card = getCard(source.cardId);
+      const relevantEffects = (card.effects?.permanentEffects ?? []).filter((effect) =>
+        effect.actions.some((action) => action.action === "grantKeyword"),
+      );
+      if (!relevantEffects.length) continue;
       if (
         !sourceIsInPlay(state, source.instanceId) ||
         sourceEffectsAreNegated(state, source.instanceId)
       ) {
         continue;
       }
-      const card = getCard(source.cardId);
-      for (const effect of card.effects?.permanentEffects ?? []) {
+      for (const effect of relevantEffects) {
         const conditions = evaluateConditions(
           state,
           source.controller,
@@ -947,9 +1502,10 @@ export function isAttackTargetAllowedByPermanentEffects(
     if (!attacker) {
       return false;
     }
+    let hasNamedTargetRestriction = false;
+    let matchesNamedTargetRestriction = false;
     for (const source of Object.values(state.cards)) {
       if (
-        source.controller === attacker.controller ||
         !sourceIsInPlay(state, source.instanceId) ||
         sourceEffectsAreNegated(state, source.instanceId)
       ) {
@@ -967,7 +1523,7 @@ export function isAttackTargetAllowedByPermanentEffects(
           continue;
         }
         for (const action of effect.actions) {
-          if (action.action !== "attackRestriction") {
+          if (action.action !== "attackRestriction" && action.action !== "cannotAttackTargets") {
             continue;
           }
           if (action.condition) {
@@ -981,6 +1537,31 @@ export function isAttackTargetAllowedByPermanentEffects(
               continue;
             }
           }
+          if (action.action === "cannotAttackTargets") {
+            if (source.controller !== attacker.controller) continue;
+            const attackers = candidatePoolForTarget(
+              state,
+              source.controller,
+              source.instanceId,
+              action.attacker,
+            );
+            if (
+              attackers.supported &&
+              attackers.candidateIds.includes(attackerInstanceId) &&
+              action.filters.every((filter) => {
+                const result = matchesTargetFilter(
+                  state,
+                  source.instanceId,
+                  targetInstanceId,
+                  filter,
+                );
+                return result.supported && result.matches;
+              })
+            )
+              return false;
+            continue;
+          }
+          if (source.controller === attacker.controller) continue;
           const pool = candidatePoolForTarget(
             state,
             source.controller,
@@ -991,13 +1572,18 @@ export function isAttackTargetAllowedByPermanentEffects(
             continue;
           }
           const matches = pool.candidateIds.includes(targetInstanceId);
-          if (action.restriction === "cannotAttack" ? matches : !matches) {
+          if (action.restriction === "cannotAttackOtherThan") {
+            // OP17-044 FAQ: simultaneous named-target restrictions permit either
+            // named Character. Other prohibitions still apply independently.
+            hasNamedTargetRestriction = true;
+            matchesNamedTargetRestriction ||= matches;
+          } else if (action.restriction === "cannotAttack" ? matches : !matches) {
             return false;
           }
         }
       }
     }
-    return true;
+    return !hasNamedTargetRestriction || matchesNamedTargetRestriction;
   } finally {
     active.delete(evaluationKey);
     if (active.size === 0) {
@@ -1060,4 +1646,37 @@ export function isRefreshPreventedByPermanentEffect(
       activeEvaluations.delete(state);
     }
   }
+}
+
+/** ST13-003 replaces the Life-to-hand move, not every move out of Life. */
+export function faceUpLifeToHandReplacementSource(
+  state: MatchState,
+  instanceId: string,
+): string | undefined {
+  const target = state.cards[instanceId];
+  if (!target || target.zone !== "life" || !target.faceUp) return undefined;
+  return inPlaySources(state).find((source) => {
+    if (
+      source.controller !== target.controller ||
+      sourceEffectsAreNegated(state, source.instanceId)
+    )
+      return false;
+    return (getCard(source.cardId).effects?.permanentEffects ?? []).some((effect) => {
+      const conditions = evaluateConditions(
+        state,
+        source.controller,
+        source.instanceId,
+        effect.conditions,
+      );
+      return (
+        conditions.supported &&
+        conditions.matches &&
+        effect.actions.some((action) => action.action === "lifeToHandReplacement")
+      );
+    });
+  })?.instanceId;
+}
+
+export function faceUpLifeToHandReplacement(state: MatchState, instanceId: string): boolean {
+  return faceUpLifeToHandReplacementSource(state, instanceId) !== undefined;
 }

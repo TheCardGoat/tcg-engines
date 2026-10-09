@@ -12,3 +12,8 @@ describe("Aenean Scorching Comet — fixed damage", () => {
     targetKind: "unit",
   });
 });
+
+import { proveAeneanDamageLevels } from "../../../testing/aenean-damage-levels.ts";
+/** @covers 50m1nBduUZ-a2 @covers 50m1nBduUZ-a3 */
+describe("Aenean Scorching Comet level replacements", () =>
+  proveAeneanDamageLevels(aeneanScorchingComet));

@@ -142,7 +142,20 @@
   const idleStore = new IdleStore(30_000);
 
   /** Pending undo proposal received from the opponent — awaiting accept/decline. */
-  let pendingUndoProposal = $state<{ senderPlayerId: string; deadline: number } | null>(null);
+  let pendingUndoProposal = $state<{
+    senderPlayerId: string;
+    deadline: number;
+    undoScope: 'last_move' | 'turn_start';
+  } | null>(null);
+  $effect(() => {
+    const deadline = pendingUndoProposal?.deadline;
+    if (deadline === undefined) return;
+    const timeout = window.setTimeout(() => {
+      if (pendingUndoProposal?.deadline === deadline) pendingUndoProposal = null;
+    }, Math.max(0, deadline - Date.now()));
+    return () => window.clearTimeout(timeout);
+  });
+  let canUndoTurn = $state(false);
   let pendingFreeTextProposal = $state<{ senderPlayerId: string; deadline: number } | null>(null);
   let pendingManualModeProposal = $state<{
     senderPlayerId: string;
@@ -274,6 +287,7 @@
         pendingUndoProposal = {
           senderPlayerId: proposal.senderPlayerId,
           deadline: proposal.deadline,
+          undoScope: proposal.undoScope ?? 'last_move',
         };
       } else if (proposal.actionType === 'enable_free_text_chat') {
         pendingFreeTextProposal = {
@@ -471,6 +485,39 @@
     pendingUndoProposal = null;
   }
 
+  async function requestUndo(undoScope: 'last_move' | 'turn_start'): Promise<void> {
+    const connection = gateway;
+    if (!connection || gatewayStatus !== 'connected' || !gameSubscribed || pendingUndoProposal) return;
+    const deadline = Date.now() + 15_000;
+    pendingUndoProposal = {
+      senderPlayerId: presenceSelfPlayerId ?? '',
+      deadline,
+      undoScope,
+    };
+    try {
+      const response = await connection.sendWithAck({
+        type: 'proposal_send',
+        gameId: data.gameId,
+        actionType: 'undo',
+        undoScope,
+      });
+      if (response.type === 'proposal_send:response' && response.status === 'ok') return;
+      const responseData = response.data;
+      const message =
+        responseData &&
+        typeof responseData === 'object' &&
+        'message' in responseData &&
+        typeof responseData.message === 'string'
+          ? responseData.message
+          : 'Undo request failed.';
+      if (pendingUndoProposal?.deadline === deadline) pendingUndoProposal = null;
+      toast.error(message, { duration: 4000 });
+    } catch {
+      if (pendingUndoProposal?.deadline === deadline) pendingUndoProposal = null;
+      toast.error('Undo request did not reach the match. Try again.', { duration: 4000 });
+    }
+  }
+
   function handleDeclineUndoProposal(): void {
     gateway?.send({ type: 'proposal_decline', gameId: data.gameId, actionType: 'undo' });
     pendingUndoProposal = null;
@@ -581,6 +628,13 @@
         matchType: match.matchType,
         onMessage: (msg) => {
           if (msg.type === 'game_joined') gameSubscribed = true;
+          if (
+            (msg.type === 'game_joined' || msg.type === 'state_sync' ||
+              msg.type === 'state_update' || msg.type === 'move_accepted') &&
+            msg.gameId === data.gameId
+          ) {
+            canUndoTurn = msg.undoTurnAvailable === true;
+          }
           handleMessage(msg);
         },
       });
@@ -593,6 +647,7 @@
       gateway = result.gateway;
       gameSubscribed = true;
       const joinedMsg = result.joinedMsg!;
+      canUndoTurn = joinedMsg.undoTurnAvailable === true;
 
       // Sync Manual Mode state from the authoritative join payload. The
       // server emits `manualModeEnabled: true` only when the flag is set;
@@ -607,8 +662,19 @@
       // recipients re-see the Accept/Decline banner, and senders re-see
       // the "Awaiting opponent…" banner.
       const pending = joinedMsg.pendingProposal as
-        | { actionType?: string; senderPlayerId?: string; deadline?: number }
+        | { actionType?: string; senderPlayerId?: string; deadline?: number; undoScope?: string }
         | undefined;
+      if (
+        pending?.actionType === 'undo' &&
+        typeof pending.senderPlayerId === 'string' &&
+        typeof pending.deadline === 'number'
+      ) {
+        pendingUndoProposal = {
+          senderPlayerId: pending.senderPlayerId,
+          deadline: pending.deadline,
+          undoScope: pending.undoScope === 'turn_start' ? 'turn_start' : 'last_move',
+        };
+      }
       if (
         pending &&
         (pending.actionType === 'enable_manual_mode' ||
@@ -739,7 +805,14 @@
   {/if}
   {#if pendingUndoProposal}
     <div class="undo-proposal-banner" role="alertdialog" aria-label="Undo request from opponent">
-      <span class="undo-proposal-banner__text">Opponent requests to undo their last move</span>
+      <span class="undo-proposal-banner__text">
+        {pendingUndoProposal.senderPlayerId === presenceSelfPlayerId
+          ? 'Waiting for the match to process your undo request'
+          : pendingUndoProposal.undoScope === 'turn_start'
+            ? 'Opponent requests to undo their turn'
+            : 'Opponent requests to undo their last move'}
+      </span>
+      {#if pendingUndoProposal.senderPlayerId !== presenceSelfPlayerId}
       <div class="undo-proposal-banner__actions">
         <button class="undo-proposal-banner__btn undo-proposal-banner__btn--accept" onclick={handleAcceptUndoProposal}>
           Accept
@@ -748,6 +821,7 @@
           Decline
         </button>
       </div>
+      {/if}
     </div>
   {/if}
   {#if pendingFreeTextProposal}
@@ -796,11 +870,15 @@
   {/if}
   <LorcanaTabletopSimulator
     engine={orchestrator.currentEngine}
+    onRequestUndo={() => requestUndo('last_move')}
+    onUndoTurn={() => requestUndo('turn_start')}
+    canUndoTurn={canUndoTurn && gatewayStatus === 'connected' && gameSubscribed && pendingUndoProposal === null}
     readModel={orchestrator.readModel}
     playerSettings={playerVisualSettings}
     {playerMetadataMap}
     serverGameplaySettings={data.userSettings?.resolvedGameplaySettings ?? data.userSettings?.gameplaySettings}
     postGameGameId={data.gameId}
+      moderationMatchId={data.matchId}
     isAuthenticated={authSession.isAuthenticated}
     {opponentGameProfileId}
     {matchChatController}

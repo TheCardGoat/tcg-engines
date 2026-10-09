@@ -97,6 +97,7 @@ export const tristanShadowreaver: GrandArchiveCard<GrandArchiveAbilityDefinition
                   previousObject: {
                     kind: "source",
                   },
+                  sameBaseLevel: true,
                 },
               },
               effect: {

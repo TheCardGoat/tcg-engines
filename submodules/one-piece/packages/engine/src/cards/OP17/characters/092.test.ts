@@ -66,4 +66,68 @@ describe("OP17-092 Brogy", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("replays its named partner from trash then prevents another Character play", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP17-079",
+        hand: ["OP17-092", "ST02-002"],
+        trash: ["OP17-085"],
+        activeDon: 10,
+      },
+      {},
+    );
+    const partner = e.findCardInZone("south", "trash", "OP17-085");
+    e.asSouth().play("OP17-092");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "OP17-092")?.cost,
+    ).toBe(17);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [partner] }, "south");
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(
+      partner,
+    );
+    expect(() => e.asSouth().play("ST02-002")).toThrow();
+    expect(e.getView("south").players.south.activeDon).toBe(5);
+  });
+  test.each([true, false])(
+    "hand partner selected=%s still locks Character plays only for this turn",
+    (select) => {
+      const e = OnePieceTestEngine.create(
+        { leaderCardId: "OP17-079", hand: ["OP17-092", "OP17-085", "ST06-006"], activeDon: 10 },
+        {},
+      );
+      const partner = e.findCardInZone("south", "hand", "OP17-085");
+      const later = e.findCardInZone("south", "hand", "ST06-006");
+      e.asSouth().play("OP17-092");
+      e.resolveDecision("effectPlaySelection", { selectedIds: select ? [partner] : [] }, "south");
+      expect(
+        e.getView("south").players.south.characters.some((c) => c?.instanceId === partner),
+      ).toBe(select);
+      expect(e.getView("south").players.south.hand.some((c) => c.instanceId === partner)).toBe(
+        !select,
+      );
+      e.expectFailure({ type: "playCard", seat: "south", instanceId: later });
+      expect(e.getView("south").players.south.activeDon).toBe(5);
+      e.endTurn("south");
+      e.endTurn("north");
+      e.asSouth().play("ST06-006");
+      expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === later)).toBe(
+        true,
+      );
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
+  test("a non-Elbaph Leader gets neither partner play nor Character restriction", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST06-001", hand: ["OP17-092", "OP17-085", "ST06-006"], activeDon: 10 },
+      {},
+    );
+    const partner = e.findCardInZone("south", "hand", "OP17-085");
+    e.asSouth().play("OP17-092");
+    expect(e.getView("south").prompts).toHaveLength(0);
+    expect(e.getView("south").players.south.hand.some((c) => c.instanceId === partner)).toBe(true);
+    e.asSouth().play("ST06-006");
+    expect(e.getView("south").players.south.characters.some((c) => c?.cardId === "ST06-006")).toBe(
+      true,
+    );
+  });
 });

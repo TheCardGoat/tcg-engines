@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-hand"
+  relation: "current_index"
+---
+
 # Game Zones - Hand
 
 #### General Rules:

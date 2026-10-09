@@ -11,7 +11,7 @@ export const theFamilyScattered: ActionCard = {
       artId: "set12-097",
       setCode: "set12",
       collectorNumber: "97",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const theFamilyScattered: ActionCard = {
   franchise: "Encanto",
   set: "012",
   cardNumber: 97,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 8,
   inkable: false,
   externalIds: {

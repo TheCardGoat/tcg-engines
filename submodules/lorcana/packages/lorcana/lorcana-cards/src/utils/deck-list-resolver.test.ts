@@ -31,7 +31,10 @@ describe("deck-list-resolver", () => {
     const intoTheUnknown = result.resolvedCards[1];
 
     expect(underTheSea?.card.set).toBe("009");
-    expect(intoTheUnknown?.card.rarity).toBe("common");
+    // Regular printing (now correctly super_rare after the rarity-vocabulary
+    // fix) must still win over the set8-213 enchanted special.
+    expect(intoTheUnknown?.card.set).toBe("008");
+    expect(intoTheUnknown?.card.rarity).toBe("super_rare");
   });
 
   it("reports malformed lines without throwing", async () => {

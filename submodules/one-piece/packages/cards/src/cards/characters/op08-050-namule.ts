@@ -23,7 +23,7 @@ export const op08Namule050: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 1000,
-  traits: ["Fish-Man Whitebeard Pirates"],
+  traits: ["Fish-Man", "Whitebeard Pirates"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Draw 2 cards and place 2 cards from your hand at the top or bottom of your deck in any order.",

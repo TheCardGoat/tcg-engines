@@ -33,7 +33,7 @@ export const prb02MonkeyDLuffySt16005PirateFoil005: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 2000,
-  traits: ["FILM Straw Hat Crew Supernovas"],
+  traits: ["FILM", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect: "If you have a rested [Uta], this Character gains +1000 power.",
   effects: {

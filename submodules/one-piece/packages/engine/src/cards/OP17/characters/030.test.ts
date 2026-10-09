@@ -1,94 +1,66 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
-
-// Auto-verified: Monkey.D.Luffy (OP17-030) cost=4 power=5000 counter=1000
 describe("OP17-030 Monkey.D.Luffy", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-030"], activeDon: 6 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-
-    engine.playCard("OP17-030");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-030",
-    );
+  test("pays one DON!! for Rush and attacks the Leader on the turn played", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP17-030"], activeDon: 5 }, { life: 3 });
+    e.playCard("OP17-030");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(5);
+    e.declareAttack(e.findCardInZone("south", "character", "OP17-030"), e.leader("north"), "south");
+    expect(e.getView("south").players.north.lifeCount).toBe(2);
   });
-  test("[Activate: Main] resolves its activated ability", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: ["OP17-030", "EB01-005"], activeDon: 8 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const cardId = engine.findCardInZone("south", "character", "OP17-030");
-
-    engine.activateEffect(cardId, "activateMain", "south");
-    engine.acceptLeadingOptional("south");
-
-    for (let i = 0; i < 3; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("declines optional payable DON!! cost and cannot attack on the turn played", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP17-030"], activeDon: 5 });
+    e.playCard("OP17-030");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const failed = e.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: e.findCardInZone("south", "character", "OP17-030"),
+      targetId: e.leader("north"),
+    });
+    const v = OnePieceTestEngine.fromState(failed.state).getView("south");
+    expect(v.players.south.activeDon).toBe(1);
+    expect(v.players.south.restedDon).toBe(4);
+    expect(v.players.south.characters[0]?.rested).toBe(false);
+  });
+  test("five hand cards enable one reactivation and OPT stops a second with rested DON!! remaining", () => {
+    const e = OnePieceTestEngine.create({
+      character: ["OP17-030"],
+      hand: Array(5).fill("EB01-005"),
+      restedDon: 2,
+    });
+    const luffy = e.findCardInZone("south", "character", "OP17-030");
+    e.activateEffect(luffy, "activateMain", "south");
+    e.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.restedDon).toBe(1);
+    const failed = e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: luffy,
+      trigger: "activateMain",
+    });
+    expect(failed.reason).toBe("This effect has already been used this turn.");
+    expect(
+      OnePieceTestEngine.fromState(failed.state).getView("south").players.south.restedDon,
+    ).toBe(1);
+  });
+  test("six hand cards fail the condition with a rested DON!! available", () => {
+    const e = OnePieceTestEngine.create({
+      character: ["OP17-030"],
+      hand: Array(6).fill("EB01-005"),
+      restedDon: 1,
+    });
+    const failed = e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.findCardInZone("south", "character", "OP17-030"),
+      trigger: "activateMain",
+    });
+    expect(
+      OnePieceTestEngine.fromState(failed.state).getView("south").players.south.restedDon,
+    ).toBe(1);
   });
 });

@@ -24,7 +24,7 @@ export const op11LordOfTheCoast028: CharacterCard = {
   power: 5000,
   counter: 1000,
   trigger: "K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",
-  traits: ["East Blue Neptunian"],
+  traits: ["Neptunian", "East Blue"],
   attribute: "strike",
   effect:
     "[On Play] Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase.",

@@ -91,14 +91,15 @@ export interface SimulatorCardAction {
   children?: readonly SimulatorCardAction[];
 }
 
-export interface SimulatorEntityRule {
+interface SimulatorEntityRuleBase {
   id: string;
-  kind: "text" | "keyword" | "ability";
-  label?: string;
-  text: string;
   /** Associates printed explanatory text with an action when available. */
   actionId?: string;
 }
+
+export type SimulatorEntityRule =
+  | (SimulatorEntityRuleBase & { kind: "keyword"; label: string; text?: string })
+  | (SimulatorEntityRuleBase & { kind: "text" | "ability"; label?: string; text: string });
 
 export interface SimulatorEntityRelationship {
   id: string;

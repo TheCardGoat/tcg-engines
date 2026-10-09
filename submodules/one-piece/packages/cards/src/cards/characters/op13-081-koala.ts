@@ -23,7 +23,7 @@ export const op13Koala081: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     'If your Leader has the "Revolutionary Army" type, this Character gains +3 cost.\n[Activate: Main] [Once Per Turn] You may place 1 card from your trash at the bottom of your deck: Give up to 1 rested DON!! card to your Leader or 1 of your Characters.',
@@ -65,7 +65,7 @@ export const op13Koala081: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

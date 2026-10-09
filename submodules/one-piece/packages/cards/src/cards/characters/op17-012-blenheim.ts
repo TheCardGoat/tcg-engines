@@ -39,6 +39,10 @@ export const op17Blenheim012: CharacterCard = {
               player: "self",
               zone: "hand",
             },
+            filters: [
+              { filter: "cost", comparison: "eq", value: 1 },
+              { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
+            ],
             count: {
               amount: 1,
               upTo: true,

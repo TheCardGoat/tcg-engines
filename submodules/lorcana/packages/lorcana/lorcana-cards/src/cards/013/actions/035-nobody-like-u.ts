@@ -29,15 +29,16 @@ export const nobodyLikeU: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_75d00cba7421498eb3495416f8046095",
+    tcgPlayer: "704561",
   },
   text: [
     {
       title: "Sing Together 5",
       description:
-        "(Any number of your or your teammates' characters with total cost 5 or more may exert to sing this song for free.)",
+        "(Any number of your or your teammates' characters with total cost 5 or more may {E} to sing this song for free.)",
     },
     {
-      title: "Play a character with cost 4 of less for free.",
+      title: "Play a character with cost 4 or less for free.",
     },
   ],
   actionSubtype: "song",

@@ -23,7 +23,7 @@ export const meridaFormidableArcherIconic: CharacterCard = {
   franchise: "Brave",
   set: "012",
   cardNumber: 242,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 5,
   strength: 3,

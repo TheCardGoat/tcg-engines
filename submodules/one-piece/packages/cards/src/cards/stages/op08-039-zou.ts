@@ -47,7 +47,7 @@ export const op08Zou039: StageCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Minks",
-              match: "includes",
+              match: "exact",
             },
           },
         ],
@@ -69,7 +69,7 @@ export const op08Zou039: StageCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

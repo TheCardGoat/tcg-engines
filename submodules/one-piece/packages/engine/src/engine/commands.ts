@@ -1,10 +1,11 @@
+import { requestCommandDonPayment, validCommandDonSelection } from "./command-don-payment.ts";
+import { transferDonIdentities, ensureDonIdentityRestrictions } from "./don-state.ts";
+import { resolvePrompt as resolveBattlePrompt } from "../battle.ts";
+import { beginStartOfGameEffects } from "./setup-effects.ts";
+import { validLoopDeclaration } from "./optional-loop.ts";
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import { attackHandTrashCost, beginAttack } from "../battle.ts";
-import {
-  enqueueEffectsForTrigger,
-  enqueueInPlayEffectsForTrigger,
-  enqueueMirroredInPlayEffectsForTrigger,
-} from "../effects.ts";
+import { enqueueEffectsForTrigger, enqueueMirroredInPlayEffectsForTrigger } from "../effects.ts";
 import { applyJudgeCommand } from "../judge.ts";
 import {
   cardName,
@@ -12,10 +13,13 @@ import {
   emitLog,
   enqueueResolution,
   getCardForInstance,
-  getCardCost,
+  getPaidPlayCost,
+  getBaseCost,
   getInstance,
   getPlayer,
+  getLeaderLifeValue,
   otherSeat,
+  publishDonGiven,
   shuffle,
 } from "../shared.ts";
 import {
@@ -26,6 +30,7 @@ import {
   getOpenCharacterSlots,
   moveCard,
   placeStartingLife,
+  processStartingEmptyDeckDefeat,
 } from "../state.ts";
 import type { EngineCommand, JoKenPoChoice, MatchSeat, MatchState } from "../types.ts";
 import {
@@ -40,7 +45,12 @@ import {
   canPlayCard,
   canStartGame,
 } from "./legality.ts";
-import { completeCharacterPlayFromHand, projectCharacterReplacementPrompt } from "./play.ts";
+import {
+  completeCharacterPlayFromHand,
+  payCharacterPlayCost,
+  revealCardPlay,
+  projectCharacterReplacementPrompt,
+} from "./play.ts";
 import { handlePlayerPromptResolution } from "./prompt.ts";
 
 interface CommandMutationContext {
@@ -166,17 +176,61 @@ export function applyQueuedCommandMutation(
   state: MatchState,
   command: EngineCommand,
   context: CommandMutationContext = privateChoicesForJoKenPo(state),
+  selectedDonIds?: string[],
 ): { accepted: boolean; reason: string | null } {
+  ensureDonIdentityRestrictions(state);
   let accepted = false;
   let reason: string | null = null;
 
   if (command.seat === "judge") {
+    const startupPrompt =
+      command.type === "judgeResolvePrompt"
+        ? state.promptQueue.find(
+            (prompt) => prompt.id === command.promptId && prompt.status === "pending",
+          )
+        : undefined;
+    const startupIssueId =
+      startupPrompt?.resolutionContext?.intent === "judge"
+        ? startupPrompt.resolutionContext.issueId
+        : undefined;
+    const resumesStartup =
+      state.status === "active" &&
+      state.phase === "setup" &&
+      state.setup.started &&
+      startupPrompt?.resolutionContext?.intent === "judge" &&
+      state.capabilityHistory.some(
+        (issue) =>
+          issue.id === startupIssueId && issue.code === "simultaneous-startup-alternate-wins",
+      );
     accepted = applyJudgeCommand(state, command);
     if (!accepted) {
       reason = "Judge command could not be applied.";
+    } else {
+      // External intervention invalidates an observed cycle. Resume the queued
+      // effect normally instead of applying a shortcut to the edited state.
+      if (resumesStartup && !processStartingEmptyDeckDefeat(state)) {
+        enqueueResolution(state, {
+          kind: "beginTurn",
+          seat: state.config.firstPlayer,
+          skipDraw: state.config.skipFirstTurnDraw,
+        });
+      }
+      state.optionalLoopEvidence = undefined;
+      state.optionalLoopPlan = undefined;
+      for (const prompt of state.promptQueue) {
+        if (prompt.status === "pending" && prompt.resolutionContext?.intent === "loopIterations")
+          prompt.status = "resolved";
+      }
     }
     return { accepted, reason };
   }
+
+  const resolvedIntent =
+    command.type === "resolvePrompt"
+      ? state.promptQueue.find(
+          (prompt) => prompt.id === command.promptId && prompt.status === "pending",
+        )?.resolutionContext?.intent
+      : undefined;
 
   switch (command.type) {
     case "concede": {
@@ -278,6 +332,7 @@ export function applyQueuedCommandMutation(
           visibility: "public",
         },
       );
+      beginStartOfGameEffects(state);
       accepted = true;
       break;
     }
@@ -362,9 +417,15 @@ export function applyQueuedCommandMutation(
       }
       // 5-2-1-7: starting Life is placed after the opening-hand redraws
       // (5-2-1-6), just before the first player starts their turn (5-2-1-8).
+      // Both quantities belong to the same setup instruction. Capture them
+      // before placement can change either Leader's permanent conditions.
+      const startingLife = {
+        south: getLeaderLifeValue(state, getPlayer(state, "south").leaderInstanceId),
+        north: getLeaderLifeValue(state, getPlayer(state, "north").leaderInstanceId),
+      };
       for (const seat of ["south", "north"] as const) {
         if (!state.setup.lifePlaced[seat]) {
-          placeStartingLife(state, seat);
+          placeStartingLife(state, seat, startingLife[seat]);
           state.setup.lifePlaced[seat] = true;
         }
       }
@@ -379,6 +440,10 @@ export function applyQueuedCommandMutation(
       emitLog(state, "system", "The match begins.", {
         visibility: "public",
       });
+      if (processStartingEmptyDeckDefeat(state)) {
+        accepted = true;
+        break;
+      }
       enqueueResolution(state, {
         kind: "beginTurn",
         seat: state.config.firstPlayer,
@@ -471,23 +536,56 @@ export function applyQueuedCommandMutation(
       const instance = getInstance(state, command.instanceId);
       const card = getCard(instance.cardId);
       const player = getPlayer(state, command.seat);
-      const cardCost = card.cardType === "leader" ? 0 : getCardCost(state, command.instanceId);
+      const cardCost = card.cardType === "leader" ? 0 : getPaidPlayCost(state, command.instanceId);
 
+      revealCardPlay(state, command.seat, command.instanceId);
+      const payment = requestCommandDonPayment(
+        state,
+        command,
+        cardCost,
+        command.instanceId,
+        selectedDonIds,
+      );
+      if (payment !== "ready") {
+        accepted = payment === "prompt";
+        if (!accepted) reason = "The selected active DON!! cannot pay this cost.";
+        break;
+      }
       if (card.cardType === "character") {
         const openSlots = getOpenCharacterSlots(state, command.seat);
         const slotIndex = command.slotIndex ?? openSlots[0];
         if (slotIndex === undefined || !openSlots.includes(slotIndex)) {
           // 3-7-6-1: with a full Character area, the player reveals the card
           // and trashes 1 of their Characters before completing the play.
-          projectCharacterReplacementPrompt(state, command.seat, command.instanceId);
+          const paidCost = payCharacterPlayCost(
+            state,
+            command.seat,
+            command.instanceId,
+            selectedDonIds,
+          );
+          projectCharacterReplacementPrompt(state, command.seat, command.instanceId, paidCost);
           accepted = true;
           break;
         }
-        completeCharacterPlayFromHand(state, command.seat, command.instanceId, slotIndex);
+        completeCharacterPlayFromHand(
+          state,
+          command.seat,
+          command.instanceId,
+          slotIndex,
+          selectedDonIds,
+        );
         accepted = true;
         break;
       }
       if (card.cardType === "event") {
+        const baseCostAtActivation = getBaseCost(state, command.instanceId);
+        transferDonIdentities(
+          state,
+          { seat: command.seat, area: "active" },
+          { seat: command.seat, area: "rested" },
+          cardCost,
+          selectedDonIds,
+        );
         player.activeDon -= cardCost;
         player.restedDon += cardCost;
         emitEvent(state, "cardPlayed", command.seat, {
@@ -511,12 +609,19 @@ export function applyQueuedCommandMutation(
           command.seat,
           "whenYouActivateEvent",
           "whenOpponentActivatesEvent",
-          { instanceId: command.instanceId, effectController: command.seat },
+          { instanceId: command.instanceId, effectController: command.seat, baseCostAtActivation },
         );
         accepted = true;
         break;
       }
       // canPlayCard rejects Leaders, so only Stages reach the shared play path.
+      transferDonIdentities(
+        state,
+        { seat: command.seat, area: "active" },
+        { seat: command.seat, area: "rested" },
+        cardCost,
+        selectedDonIds,
+      );
       player.activeDon -= cardCost;
       player.restedDon += cardCost;
       const existingStage = player.stageArea;
@@ -555,18 +660,30 @@ export function applyQueuedCommandMutation(
         reason = legality.reason;
         break;
       }
+      const payment = requestCommandDonPayment(
+        state,
+        command,
+        amount,
+        command.targetId,
+        selectedDonIds,
+      );
+      if (payment !== "ready") {
+        accepted = payment === "prompt";
+        if (!accepted) reason = "The selected active DON!! cannot be given.";
+        break;
+      }
       const player = getPlayer(state, command.seat);
       const target = getInstance(state, command.targetId);
+      transferDonIdentities(
+        state,
+        { seat: command.seat, area: "active" },
+        { attachedTo: command.targetId },
+        amount,
+        selectedDonIds,
+      );
       player.activeDon -= amount;
       target.attachedDon += amount;
-      emitEvent(state, "donAttached", command.seat, {
-        sourceCardId: target.cardId,
-        sourceInstanceId: command.targetId,
-        visibility: "public",
-        data: {
-          amount,
-        },
-      });
+      publishDonGiven(state, command.targetId, amount, command.seat);
       emitLog(
         state,
         command.seat,
@@ -577,10 +694,7 @@ export function applyQueuedCommandMutation(
           visibility: "public",
         },
       );
-      enqueueInPlayEffectsForTrigger(state, "whenDonGiven", {
-        instanceId: command.targetId,
-        effectController: command.seat,
-      });
+
       accepted = true;
       break;
     }
@@ -651,12 +765,77 @@ export function applyQueuedCommandMutation(
       accepted = true;
       break;
     }
-    case "resolvePrompt":
+    case "resolvePrompt": {
+      const paymentPrompt = state.promptQueue.find(
+        (p) => p.id === command.promptId && p.status === "pending",
+      );
+      const payment = paymentPrompt?.resolutionContext;
+      if (paymentPrompt && payment?.intent === "commandDonPayment") {
+        const ids = command.selectedIds ?? [];
+        const object = state.cards[payment.objectId];
+        if (
+          payment.controller !== command.seat ||
+          !object ||
+          object.zoneChangeCounter !== payment.objectGeneration ||
+          ids.some((id) => !payment.candidateIds.includes(id)) ||
+          !validCommandDonSelection(state, command.seat, payment.amount, ids) ||
+          (payment.battleId !== undefined && payment.battleId !== state.battle?.id)
+        ) {
+          reason = "The selected active DON!! payment is no longer valid.";
+          break;
+        }
+        paymentPrompt.status = "resolved";
+        if (payment.command.type === "resolvePrompt") {
+          const originalPromptId = payment.command.promptId;
+          const originalPrompt = state.promptQueue.find((p) => p.id === originalPromptId);
+          accepted =
+            originalPrompt?.status === "resolved" &&
+            originalPrompt.seat === command.seat &&
+            originalPrompt.resolutionContext?.intent === "battleCounter" &&
+            state.battle?.defendingSeat === command.seat &&
+            resolveBattlePrompt(state, payment.command, ids);
+        } else {
+          const result = applyQueuedCommandMutation(state, payment.command, context, ids);
+          accepted = result.accepted;
+          reason = result.reason;
+        }
+        if (!accepted) paymentPrompt.status = "pending";
+        else
+          emitEvent(state, "promptResolved", command.seat, {
+            visibility: "public",
+            data: { promptId: paymentPrompt.id },
+          });
+        break;
+      }
+      if (
+        state.promptQueue.some(
+          (prompt) =>
+            prompt.id === command.promptId &&
+            prompt.status === "pending" &&
+            prompt.resolutionContext?.intent === "loopIterations",
+        ) &&
+        !validLoopDeclaration(state, command.seat, command.iterations)
+      ) {
+        reason = "Declare a nonnegative safe integer at your loop declaration turn.";
+        break;
+      }
       accepted = handlePlayerPromptResolution(state, command);
       if (!accepted) {
         reason = "Prompt resolution could not be applied.";
       }
       break;
+    }
+  }
+
+  if (
+    accepted &&
+    (command.type !== "resolvePrompt" ||
+      (resolvedIntent !== "effectOptional" &&
+        resolvedIntent !== "effectActionOptional" &&
+        resolvedIntent !== "loopIterations"))
+  ) {
+    state.optionalLoopEvidence = undefined;
+    state.optionalLoopPlan = undefined;
   }
 
   return { accepted, reason };

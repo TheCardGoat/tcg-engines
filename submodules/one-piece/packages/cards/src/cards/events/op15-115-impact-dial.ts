@@ -21,9 +21,10 @@ export const op15ImpactDial115: EventCard = {
   rarity: "C",
   setId: "OP15",
   cost: 2,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   effect:
     "[Main] K.O. up to 1 of your opponent's Characters with a cost of 4 or less. Then, add 1 card from the top of your Life cards to your hand.",
+  trigger: "K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
   effects: {
     effects: [
       {
@@ -55,6 +56,20 @@ export const op15ImpactDial115: EventCard = {
             },
             destination: "hand",
             position: "top",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: 1, upTo: true },
+              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+            },
           },
         ],
       },

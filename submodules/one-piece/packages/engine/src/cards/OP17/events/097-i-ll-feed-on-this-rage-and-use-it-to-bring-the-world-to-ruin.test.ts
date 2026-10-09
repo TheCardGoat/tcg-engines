@@ -42,4 +42,21 @@ describe("OP17-097 I'll Feed on This Rage and Use It to Bring the World to Ruin"
     expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-097");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: a Character played by a later Life Trigger does not receive the cost reduction", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-097"], activeDon: 1 },
+      { character: ["EB01-005"], life: ["OP17-107", "EB01-025"] },
+    );
+    e.playCard("OP17-097");
+    expect(e.getView("south").players.north.characters[0]?.cost).toBe(0);
+    e.declareAttack(e.leader("south"), e.leader("north"));
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.cardId === "OP17-107")?.cost,
+    ).toBe(3);
+    expect(e.getView("south").players.north.characters[0]?.cost).toBe(0);
+    e.endTurn("south");
+    expect(e.getView("south").players.north.characters[0]?.cost).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -1,14 +1,27 @@
+import { BackgroundMusicControls } from "../../audio/BackgroundMusic";
 import { useState } from "react";
 import { SimulatorSettingsDialog } from "../../../../simulator/participant-actions/SimulatorParticipantActions";
-import { PaymentSelectionModeControl } from "../../../../simulator/settings";
+import { SIMULATOR_SOUND_PACKS } from "../../../../simulator/audio";
+import { useSimulatorAuth } from "../../../../simulator/providers";
+import { normalizeSoundPack, useSimulatorSettings } from "../../../../simulator/settings";
 import {
   useUserConfig,
   useSetUserConfig,
+  useCyberpunkVisualSelection,
+  useSetCyberpunkVisualSelection,
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
   type FieldCardSize,
 } from "../../engine";
+import { resolveCyberpunkPlaymat } from "../../playmats";
+import {
+  CYBERPUNK_CARD_BACK_OPTIONS,
+  CYBERPUNK_PLAYMAT_OPTIONS,
+  cyberpunkCardBackUrl,
+  resolveCyberpunkCardBackId,
+  resolveCyberpunkPlaymatId,
+} from "../../visualAppearance";
 import classes from "./UserConfigDialog.module.css";
 
 // ── option lists ────────────────────────────────────────────────────────────
@@ -58,8 +71,61 @@ const FIELD_CARD_SIZES: ReadonlyArray<{ value: FieldCardSize; label: string; des
 export function CyberpunkSettingsFields() {
   const config = useUserConfig();
   const setConfig = useSetUserConfig();
+  const visual = useCyberpunkVisualSelection();
+  const setVisual = useSetCyberpunkVisualSelection();
+  const auth = useSimulatorAuth();
+  const { settings, setSoundPack } = useSimulatorSettings();
   return (
     <div className={classes.body}>
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Playmat</legend>
+        <select
+          className={classes.select}
+          aria-label="Playmat"
+          value={visual.playmatId}
+          onChange={(event) =>
+            setVisual({ playmatId: resolveCyberpunkPlaymatId(event.currentTarget.value) })
+          }
+        >
+          {CYBERPUNK_PLAYMAT_OPTIONS.map((option) => (
+            <option key={option.id} value={option.id} disabled={option.premium && !auth.isPremium}>
+              {option.premium && !auth.isPremium ? `${option.label} · Supporter` : option.label}
+            </option>
+          ))}
+        </select>
+        {resolveCyberpunkPlaymat(visual.playmatId).src ? (
+          <img
+            className={classes.playmatPreview}
+            src={resolveCyberpunkPlaymat(visual.playmatId).src ?? undefined}
+            alt={`${CYBERPUNK_PLAYMAT_OPTIONS.find((option) => option.id === visual.playmatId)?.label ?? "Playmat"} preview`}
+          />
+        ) : null}
+      </fieldset>
+
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Card back</legend>
+        <select
+          className={classes.select}
+          aria-label="Card back"
+          value={visual.cardBackId}
+          onChange={(event) =>
+            setVisual({ cardBackId: resolveCyberpunkCardBackId(event.currentTarget.value) })
+          }
+        >
+          {CYBERPUNK_CARD_BACK_OPTIONS.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <img
+          className={classes.cardBackPreview}
+          src={cyberpunkCardBackUrl(visual.cardBackId)}
+          alt={`${CYBERPUNK_CARD_BACK_OPTIONS.find((option) => option.id === visual.cardBackId)?.label ?? "Card back"} preview`}
+        />
+        <span className={classes.radioDesc}>Legend cards keep their distinct back.</span>
+      </fieldset>
+
       {/* ── dice display mode ── */}
       <fieldset className={classes.fieldset}>
         <legend className={classes.legend}>Dice Display</legend>
@@ -150,7 +216,43 @@ export function CyberpunkSettingsFields() {
 
       <fieldset className={classes.fieldset}>
         <legend className={classes.legend}>Payment</legend>
-        <PaymentSelectionModeControl />
+        <label
+          className={`${classes.toggleRow} ${config.choosePaymentSources ? classes.toggleRowActive : ""}`}
+        >
+          <input
+            type="checkbox"
+            className={classes.toggleInput}
+            checked={config.choosePaymentSources}
+            onChange={(event) => setConfig({ choosePaymentSources: event.currentTarget.checked })}
+          />
+          <span className={classes.radioLabel}>
+            <span className={classes.radioTitle}>Choose payment sources</span>
+            <span className={classes.radioDesc}>
+              Select each Eddie or Legend used to pay every cost.
+            </span>
+          </span>
+        </label>
+      </fieldset>
+
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Sound Effects</legend>
+        <select
+          className={classes.select}
+          aria-label="Sound effects pack"
+          value={settings.soundPack}
+          onChange={(event) => setSoundPack(normalizeSoundPack(event.currentTarget.value))}
+        >
+          {SIMULATOR_SOUND_PACKS.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <span className={classes.radioDesc}>
+          {SIMULATOR_SOUND_PACKS.find((option) => option.id === settings.soundPack)?.description ??
+            ""}{" "}
+          Applies to every game's simulator.
+        </span>
       </fieldset>
     </div>
   );
@@ -169,6 +271,7 @@ export function UserConfigDialog({
     <SimulatorSettingsDialog
       gameConfiguration={{
         settings: <CyberpunkSettingsFields />,
+        audioSettings: <BackgroundMusicControls />,
         onSelect: () => window.location.assign("/cyberpunk/simulator"),
       }}
       accountSettingsHref="/dashboard/settings"

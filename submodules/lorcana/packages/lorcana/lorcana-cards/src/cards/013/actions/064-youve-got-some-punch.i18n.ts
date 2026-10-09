@@ -3,7 +3,7 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 export const youveGotSomePunchI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "You've Got Some Punch",
-    text: "Chosen character gains rush and Challenger +2 this turn. (They can challenge the turn they're played. They get +2 strength while challenging.)",
+    text: "Chosen character gains Rush and Challenger +2 this turn. (They can challenge the turn they're played. They get +2 {S} while challenging.)",
   },
   de: {
     name: "Du hast jetzt Feuer",
@@ -36,7 +36,7 @@ export const youveGotSomePunchI18n: Record<Languages, I18nProperties> = {
     ],
   },
   es: {
-    name: "Tienes algo de ponche",
-    text: "El personaje elegido gana Rush y Challenger +2 este turno. (Pueden desafiar el turno en el que se juega. Obtienen +2 de fuerza mientras desafían).",
+    name: "You've Got Some Punch",
+    text: "Chosen character gains Rush and Challenger +2 this turn. (They can challenge the turn they're played. They get +2 {S} while challenging.)",
   },
 };

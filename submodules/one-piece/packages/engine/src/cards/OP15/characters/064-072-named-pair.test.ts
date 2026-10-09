@@ -37,6 +37,7 @@ describe("OP15-064 Kotori / OP15-072 Hotori named pair", () => {
         ?.rested,
     ).toBe(true);
     expect(engine.getView("south").players.south.activeDon).toBe(2);
+    expect(engine.getView("south").players.south.restedDon).toBe(0);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
@@ -64,6 +65,7 @@ describe("OP15-064 Kotori / OP15-072 Hotori named pair", () => {
       engine.getView("south").players.north.characters.find((c) => c?.instanceId === domaId)?.power,
     ).toBe(0);
     expect(engine.getView("south").players.south.activeDon).toBe(2);
+    expect(engine.getView("south").players.south.restedDon).toBe(0);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
   test("declining the windows leaves DON!! and characters untouched", () => {
@@ -98,4 +100,30 @@ describe("OP15-064 Kotori / OP15-072 Hotori named pair", () => {
     ).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["OP15-064", "OP15-072"])(
+    "%s returns rested and attached DON!! without active DON!!",
+    (cardId) => {
+      const otherId = cardId === "OP15-064" ? "OP15-072" : "OP15-064";
+      const engine = OnePieceTestEngine.create(
+        { character: [{ cardId, attachedDon: 1 }, "OP15-066", otherId], restedDon: 1 },
+        { character: [eb01Doma005] },
+      );
+      const source = engine.findCardInZone("south", "character", cardId);
+      const beforeDonDeck = engine.getView("south").players.south.donDeckCount;
+      engine.activateEffect(source, "activateMain", "south");
+      engine.acceptLeadingOptional("south");
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [engine.findCardInZone("north", "character", eb01Doma005)] },
+        "south",
+      );
+      const south = engine.getView("south").players.south;
+      expect(south.activeDon).toBe(0);
+      expect(south.restedDon).toBe(0);
+      expect(south.donDeckCount).toBe(beforeDonDeck + 2);
+      expect(south.characters.find((c) => c?.instanceId === source)?.attachedDon).toBe(0);
+      expect(south.characters.find((c) => c?.instanceId === source)?.rested).toBe(true);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

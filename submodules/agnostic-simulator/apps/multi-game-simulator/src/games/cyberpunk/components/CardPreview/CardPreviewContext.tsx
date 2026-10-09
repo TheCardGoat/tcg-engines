@@ -11,8 +11,8 @@ import {
 import { IconX } from "@tabler/icons-react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { useHasHover } from "../../../../lib/media-query";
-import { ViewerSafeCardImage } from "@tcg/simulator-ui";
-import { useCardInspect } from "../GameBoard/CardInspectContext";
+import { CARD_PRESENTATION_LAYERS, ViewerSafeCardImage } from "@tcg/simulator-ui";
+import { useCardInspect, type InspectCard } from "../GameBoard/CardInspectContext";
 import classes from "./CardPreview.module.css";
 
 const CARD_BACK = "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp";
@@ -26,6 +26,7 @@ interface CardPreviewState {
   alt?: string;
   color?: CardAccent;
   details?: CardPreviewDetails;
+  attachments?: InspectCard[];
 }
 
 type PreviewImageStatus = "loading" | "loaded" | "error";
@@ -87,6 +88,7 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
             face: "public",
             name: next.details?.name ?? next.alt,
             color: next.color,
+            attachments: next.attachments,
           });
           return;
         }
@@ -111,6 +113,7 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
         style={
           state
             ? ({
+                zIndex: CARD_PRESENTATION_LAYERS.focus,
                 border: `2px solid ${state.color ? ACCENT_HEX[state.color] : "#f5e642"}`,
                 boxShadow: `0 0 0 1px rgb(0 0 0 / 80%), 0 0 24px ${
                   state.color ? ACCENT_HEX[state.color] : "#f5e642"

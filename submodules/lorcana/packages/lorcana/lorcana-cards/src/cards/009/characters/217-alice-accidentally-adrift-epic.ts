@@ -23,7 +23,7 @@ export const aliceAccidentallyAdriftEpic: CharacterCard = {
   franchise: "Alice in Wonderland",
   set: "009",
   cardNumber: 217,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 2,

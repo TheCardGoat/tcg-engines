@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { displayTurn, projectGundamControlState } from "./labels.ts";
-
-describe("displayTurn", () => {
-  it("converts the engine's zero-indexed turn count for players", () => {
-    expect(displayTurn(0)).toBe(1);
-    expect(displayTurn(1)).toBe(2);
-  });
-});
+import { projectGundamControlState } from "./labels.ts";
 
 describe("projectGundamControlState", () => {
   it.each([

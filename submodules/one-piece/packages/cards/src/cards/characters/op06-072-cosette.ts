@@ -35,7 +35,7 @@ export const op06Cosette072: CharacterCard = {
             condition: "compound",
             operator: "and",
             conditions: [
-              { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+              { condition: "leaderTrait", trait: "GERMA 66", match: "exact" },
               { condition: "donFieldComparison", selfComparison: "lte", difference: 2 },
             ],
           },

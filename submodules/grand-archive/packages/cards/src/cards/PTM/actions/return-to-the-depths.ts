@@ -29,7 +29,7 @@ export const returnToTheDepths: GrandArchiveCard<GrandArchiveAbilityDefinition, 
         {
           id: "fNlJ0MaxiI-a1",
           kind: "card-resolution",
-          text: "The next time damage would be dealt to your champion this turn, prevent all but 1 of that damage.",
+          text: "The next time damage would be dealt to your champion this turn, prevent all but 1 of that damage.\n\n[Ciel Bonus] When 3 or more damage is prevented this way, you may banish a card from your graveyard and put an omen counter on it.",
           effect: {
             kind: "replacement",
             event: {
@@ -63,73 +63,70 @@ export const returnToTheDepths: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                 kind: "this-turn",
               },
             },
-          },
-        },
-        {
-          id: "fNlJ0MaxiI-a2",
-          kind: "card-resolution",
-          text: "[Ciel Bonus] When 3 or more damage is prevented this way, you may banish a card from your graveyard and put an omen counter on it.",
-          restrictions: [
-            {
-              kind: "static",
-              name: "champion-bonus",
+            afterApply: {
+              kind: "conditional",
               condition: {
-                kind: "champion-lineage-is",
-                name: "Ciel",
-              },
-            },
-          ],
-          effect: {
-            kind: "conditional",
-            condition: {
-              kind: "compare",
-              comparison: {
-                left: {
-                  kind: "modified-ability-result-amount",
-                  metric: "damage-prevented",
-                },
-                operator: "gte",
-                right: 3,
-              },
-            },
-            then: {
-              kind: "optional",
-              player: "controller",
-              allOrNothing: true,
-              effect: {
-                kind: "sequence",
-                effects: [
+                kind: "all",
+                conditions: [
                   {
-                    kind: "banish",
-                    player: "controller",
-                    selection: {
-                      id: "new-omen",
-                      kind: "choice",
-                      declared: "resolution",
-                      chooser: "controller",
-                      count: {
-                        kind: "exactly",
-                        amount: 1,
-                      },
-                      candidates: {
-                        kind: "card",
-                        zones: ["graveyard"],
-                        relationship: "zone-of",
-                        player: "controller",
-                      },
-                    },
-                    bindResultAs: "new-omen",
+                    kind: "champion-lineage-is",
+                    name: "Ciel",
                   },
                   {
-                    kind: "add-counter",
-                    subject: {
-                      kind: "bound",
-                      binding: "new-omen",
+                    kind: "compare",
+                    comparison: {
+                      left: {
+                        kind: "modified-ability-result-amount",
+                        metric: "damage-prevented",
+                      },
+                      operator: "gte",
+                      right: 3,
                     },
-                    counter: "omen",
-                    amount: 1,
                   },
                 ],
+              },
+              then: {
+                kind: "create-reflexive-trigger",
+                effect: {
+                  kind: "optional",
+                  player: "controller",
+                  allOrNothing: true,
+                  effect: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "banish",
+                        player: "controller",
+                        selection: {
+                          id: "new-omen",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "controller",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          candidates: {
+                            kind: "card",
+                            zones: ["graveyard"],
+                            relationship: "zone-of",
+                            player: "controller",
+                          },
+                        },
+                        bindResultAs: "new-omen",
+                      },
+                      {
+                        kind: "add-counter",
+                        subject: {
+                          kind: "bound",
+                          binding: "new-omen",
+                        },
+                        counter: "omen",
+                        amount: 1,
+                      },
+                    ],
+                  },
+                },
               },
             },
           },

@@ -77,4 +77,25 @@ describe("OP10-016 Monet", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: no rested DON still permits the opponent power reduction", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP10-016"] }, { character: ["ST02-012"] });
+    const target = e.findCardInZone("north", "character", "ST02-012");
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP10-016"));
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.characters[0]?.power).toBe(2000);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    e.asSouth().endTurn();
+    expect(e.getView("north").players.north.characters[0]?.power).toBe(3000);
+  });
+  test("FAQ: no opposing Character still permits giving rested DON to the Leader", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP10-016"], restedDon: 2 });
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP10-016"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(2);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

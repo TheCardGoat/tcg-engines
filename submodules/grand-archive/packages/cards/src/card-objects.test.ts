@@ -110,9 +110,10 @@ describe("generated Grand Archive card objects", () => {
           }
         }
     }
-    expect(executable).toBe(4545);
+    // Linked prevention text is one executable ability with its restricted follow-up.
+    expect(executable).toBe(4544);
     expect(unparsed).toBe(0);
-    expect(executable + unparsed).toBe(4545);
+    expect(executable + unparsed).toBe(4544);
   });
 
   it("uses canonical engine keys for every rules-defined counter", () => {

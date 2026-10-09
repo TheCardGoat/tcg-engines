@@ -28,7 +28,7 @@ describe("OP16-087 Shinobu", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("without a Land of Wano Leader the effect is not offered", () => {
+  test("without a Land of Wano Leader the optional cost can be declined", () => {
     const engine = OnePieceTestEngine.create(
       { character: ["OP16-084"], hand: ["OP16-087"], activeDon: 5 },
       {},
@@ -36,7 +36,8 @@ describe("OP16-087 Shinobu", () => {
 
     engine.playCard("OP16-087");
 
-    // The optional On Play is not offered without the Land of Wano Leader.
+    engine.asSouth().declineOptional();
+    // Declining leaves Shinobu in play even when the post-cost condition is false.
     const south = engine.getView("south").players.south;
     expect(south.characters.map((card) => card?.cardId)).toContain("OP16-087");
     expect(south.characters.map((card) => card?.cardId)).toContain("OP16-084");

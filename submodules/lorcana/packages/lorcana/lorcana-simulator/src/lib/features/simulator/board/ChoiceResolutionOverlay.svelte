@@ -18,6 +18,7 @@ interface ChoiceResolutionOverlayProps {
 	view: PlayerInteractionView;
 	/** Card that created the choice prompt. */
 	sourceCard?: LorcanaCardSnapshot | null;
+	abilityIndex?: number | null;
 	/** Card already locked by an earlier step, if the choice is about a specific card. */
 	targetCard?: LorcanaCardSnapshot | null;
 	/** Index of the option currently highlighted in the UI session, or `null` if none picked yet. */
@@ -33,6 +34,7 @@ interface ChoiceResolutionOverlayProps {
 let {
 	view,
 	sourceCard = null,
+	abilityIndex = null,
 	targetCard = null,
 	selectedChoiceIndex,
 	onSelectChoice,
@@ -71,7 +73,9 @@ const choiceInteractions = $derived(
 const canConfirm = $derived(selectedChoiceIndex !== null);
 const targetCardText = $derived(targetCard?.text?.trim() ?? "");
 const sourceAbilityTitle = $derived(
-	sourceCard?.textEntries?.find((entry) => entry.title.trim())?.title.trim() ?? "",
+	typeof abilityIndex === "number" && abilityIndex >= 0
+		? (sourceCard?.abilityTextEntries?.[abilityIndex] ?? sourceCard?.textEntries?.[abilityIndex])?.title.trim() ?? ""
+		: sourceCard?.textEntries?.length === 1 ? sourceCard.textEntries[0]?.title.trim() ?? "" : "",
 );
 
 const OVERLAY_PADDING = 8;

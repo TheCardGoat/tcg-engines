@@ -6,6 +6,7 @@ import type {
   ActionResolutionResult,
   PlayCardExecutionContext,
 } from "./types";
+import { markLastEffectPerformed } from "./event-snapshot-utils";
 import { evaluateActionCondition } from "./action-condition-evaluator";
 
 function isIfYouDoCondition(condition: Condition | undefined): boolean {
@@ -61,5 +62,6 @@ export function resolveConditionalEffect(
     return resolveNestedEffect(ctx, cardPlayed, nextEffect, resolutionInput, options);
   }
 
+  markLastEffectPerformed(resolutionInput.eventSnapshot, false);
   return { status: "resolved" };
 }

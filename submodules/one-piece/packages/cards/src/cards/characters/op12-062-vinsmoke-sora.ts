@@ -23,7 +23,7 @@ export const op12VinsmokeSora062: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["Kingdom of GERMA", "The Vinsmoke Family"],
   attribute: "wisdom",
   effect:
     "[On Play] If your Leader is [Sanji] and the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 DON!! card from your DON!! deck and rest it. Then, draw 1 card.",

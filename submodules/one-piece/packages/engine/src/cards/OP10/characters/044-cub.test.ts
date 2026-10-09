@@ -45,4 +45,24 @@ describe("OP10-044 Cub", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("paid rest returns cost1 but excludes cost2 and own Characters", () => {
+    const e = OnePieceTestEngine.create(
+      { stage: "OP04-096", hand: ["OP10-044"], activeDon: 3, character: ["ST02-012"] },
+      { character: ["ST02-012", "OP10-017"] },
+    );
+    const target = e.findCardInZone("north", "character", "ST02-012");
+    e.asSouth().play("OP10-044");
+    e.asSouth().acceptOptional();
+    const choice = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected return target.");
+    expect(choice.candidates.map((c) => c.ref.id)).toEqual([target]);
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("north").players.north.characters.some((c) => c?.cardId === "OP10-017")).toBe(
+      true,
+    );
+    expect(e.getView("south").players.south.characters.some((c) => c?.cardId === "ST02-012")).toBe(
+      true,
+    );
+  });
 });

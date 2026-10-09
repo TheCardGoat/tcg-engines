@@ -20,11 +20,18 @@ import type {
   CardsDrawnPayload,
   DamageDealtPayload,
   DamageMovedPayload,
+  DamageRemovedPayload,
+  InkDropChangedPayload,
   LoreChangedPayload,
   LorcanaDomainEventType,
+  TriggeredAbilitySkippedPayload,
 } from "../types/domain-events";
 
 type LoreChangeOutcome = NonNullable<MoveOutcomes["loreChanged"]>;
+type InkDropsChangeOutcome = NonNullable<MoveOutcomes["inkDropsChanged"]>[number];
+type TriggeredAbilitySkippedOutcome = NonNullable<
+  MoveOutcomes["triggeredAbilitiesSkipped"]
+>[number];
 
 function assertNever(value: never): never {
   throw new Error(`Unhandled customType: ${String(value)}`);
@@ -37,10 +44,13 @@ function isInkwellZone(zone: string | undefined): boolean {
 export class MoveOutcomeAccumulator {
   private damageDealt: DamageEntry[] = [];
   private damageMoved: MovedDamageEntry[] = [];
+  private damageRemoved: NonNullable<MoveOutcomes["damageRemoved"]> = [];
   private cardsBanished: CardInstanceId[] = [];
   private cardsDrawn: Array<{ playerId: PlayerId; amount: number; detail: CardInstanceId[] }> = [];
   private cardsDiscarded: NonNullable<MoveOutcomes["cardsDiscarded"]> = [];
   private loreChanges: LoreChangeOutcome[] = [];
+  private inkDropsChanged: InkDropsChangeOutcome[] = [];
+  private triggeredAbilitiesSkipped: TriggeredAbilitySkippedOutcome[] = [];
   private cardsExerted: CardInstanceId[] = [];
   private inkwellCardsExerted: Array<{ playerId: PlayerId; amount: number }> = [];
   private cardsReadied: CardInstanceId[] = [];
@@ -82,6 +92,13 @@ export class MoveOutcomeAccumulator {
       case "damageDealt":
         this.accumulateLorcanaDamageDealt(gameEvent.data as DamageDealtPayload);
         break;
+      case "damageRemoved": {
+        const data = gameEvent.data as DamageRemovedPayload;
+        if (Number.isFinite(data.amount) && data.amount > 0) {
+          this.damageRemoved.push({ targetId: data.targetId, amount: data.amount });
+        }
+        break;
+      }
       case "damageMoved":
         this.accumulateDamageMoved(gameEvent.data as DamageMovedPayload);
         break;
@@ -140,6 +157,18 @@ export class MoveOutcomeAccumulator {
         }
         break;
       }
+      case "inkDropChanged":
+        this.accumulateInkDropsChanged(gameEvent.data as InkDropChangedPayload);
+        break;
+      case "triggeredAbilitySkipped": {
+        const data = gameEvent.data as TriggeredAbilitySkippedPayload;
+        this.triggeredAbilitiesSkipped.push({
+          playerId: data.playerId,
+          sourceCardId: data.sourceCardId,
+          abilityName: data.abilityName,
+        });
+        break;
+      }
       default:
         assertNever(customType);
     }
@@ -151,6 +180,11 @@ export class MoveOutcomeAccumulator {
 
     if (this.damageDealt.length > 0) {
       outcomes.damageDealt = [...this.damageDealt];
+      hasAny = true;
+    }
+
+    if (this.damageRemoved.length > 0) {
+      outcomes.damageRemoved = [...this.damageRemoved];
       hasAny = true;
     }
 
@@ -190,6 +224,16 @@ export class MoveOutcomeAccumulator {
       if (lastLoreChange) {
         outcomes.loreChanged = lastLoreChange;
       }
+      hasAny = true;
+    }
+
+    if (this.inkDropsChanged.length > 0) {
+      outcomes.inkDropsChanged = [...this.inkDropsChanged];
+      hasAny = true;
+    }
+
+    if (this.triggeredAbilitiesSkipped.length > 0) {
+      outcomes.triggeredAbilitiesSkipped = [...this.triggeredAbilitiesSkipped];
       hasAny = true;
     }
 
@@ -246,10 +290,13 @@ export class MoveOutcomeAccumulator {
   private reset(): void {
     this.damageDealt = [];
     this.damageMoved = [];
+    this.damageRemoved = [];
     this.cardsBanished = [];
     this.cardsDrawn = [];
     this.cardsDiscarded = [];
     this.loreChanges = [];
+    this.inkDropsChanged = [];
+    this.triggeredAbilitiesSkipped = [];
     this.cardsExerted = [];
     this.inkwellCardsExerted = [];
     this.cardsReadied = [];
@@ -310,7 +357,6 @@ export class MoveOutcomeAccumulator {
   private accumulateLorcanaDamageDealt(payload: DamageDealtPayload): void {
     if (!("damageType" in payload)) return;
     if (payload.damageType === "combat") return;
-    if (payload.damageType === "put") return;
     if (!payload.sourceId) return;
     if (payload.amount <= 0) return;
 
@@ -318,7 +364,7 @@ export class MoveOutcomeAccumulator {
       sourceId: payload.sourceId,
       targetId: payload.targetId,
       amount: payload.amount,
-      kind: "effect",
+      kind: payload.damageType === "put" ? "put" : "effect",
     });
   }
 
@@ -405,6 +451,24 @@ export class MoveOutcomeAccumulator {
     }
   }
 
+  private accumulateInkDropsChanged(data: InkDropChangedPayload): void {
+    if (data.amount <= 0) return;
+
+    const existing = this.inkDropsChanged.find(
+      (entry) => entry.playerId === data.playerId && entry.operation === data.operation,
+    );
+    if (existing) {
+      existing.amount += data.amount;
+      return;
+    }
+
+    this.inkDropsChanged.push({
+      playerId: data.playerId,
+      amount: data.amount,
+      operation: data.operation,
+    });
+  }
+
   private accumulateCardExerted(data: CardExertedPayload, context: LogProjectionContext): void {
     if (data.isManual) return;
     if (data.source === "quest" || data.source === "challenge") return;
@@ -467,12 +531,14 @@ export class MoveOutcomeAccumulator {
     const cardId = data.cardId as CardInstanceId;
     if (data.private) {
       this.cardsInked.push({
-        cardId: privateField(cardId, [data.playerId]),
+        playerId: data.playerId,
+        cardId: privateField(cardId, data.identityVisibleTo ?? [data.playerId]),
         exerted: data.exerted ?? true,
       });
       return;
     }
     this.cardsInked.push({
+      playerId: data.playerId,
       cardId,
       exerted: data.exerted ?? true,
     });

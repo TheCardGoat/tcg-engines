@@ -32,7 +32,7 @@ export const op13JewelryBonney108: CharacterCard = {
   power: 10000,
   trigger:
     "If you have 1 or less Life cards, rest up to 1 of your opponent's Characters with a cost of 7 or less.",
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   attribute: "special",
   effect:
     '[On Play] If your Leader has the "Egghead" type, this Character gains [Rush] during this turn. Then, your opponent adds 1 card from the top of their Life cards to their hand.',
@@ -44,7 +44,7 @@ export const op13JewelryBonney108: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

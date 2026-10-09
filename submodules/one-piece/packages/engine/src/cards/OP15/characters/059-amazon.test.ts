@@ -12,6 +12,7 @@ describe("OP15-059 Amazon", () => {
       {
         character: [{ card: eb01Doma005, rested: false, playedOnTurn: 0 }],
         activeDon: 3,
+        restedDon: 2,
       },
       OPPONENTS_TURN,
     );
@@ -29,6 +30,7 @@ describe("OP15-059 Amazon", () => {
 
     const north = engine.getView("south").players.north;
     expect(north.activeDon).toBe(2);
+    expect(north.restedDon).toBe(2);
     expect(
       engine.getView("south").players.south.characters.find((c) => c?.instanceId === amazonId)
         ?.rested,
@@ -80,5 +82,21 @@ describe("OP15-059 Amazon", () => {
     expect(south.characters.find((c) => c?.instanceId === amazonId)?.rested).toBe(false);
     expect(engine.getView("south").players.north.activeDon).toBe(3);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: no active opponent DON forces the power reduction after paying rest", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["OP15-059"] },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("north")] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.characters[0]?.rested).toBe(true);
+    expect(engine.getView("south").players.north.leader.power).toBe(3000);
   });
 });

@@ -22,7 +22,7 @@ export const op08Pekoms029: CharacterCard = {
   setId: "OP08",
   cost: 4,
   power: 6000,
-  traits: ["Minks Big Mom Pirates"],
+  traits: ["Minks", "Big Mom Pirates"],
   attribute: "strike",
   effect:
     "If this Character is active, your {Minks} type Characters with a cost of 3 or less other than [Pekoms] cannot be K.O.'d by effects.",
@@ -51,7 +51,7 @@ export const op08Pekoms029: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "excludeName",

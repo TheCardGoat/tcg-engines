@@ -40,7 +40,6 @@ export const lakereavingChill: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           kind: "static",
           staticKind: "effects",
           text: "Linked object loses all abilities, and can't be used for an attack.",
-          executionSource: "linked-object",
           effects: [
             {
               kind: "continuous",

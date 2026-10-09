@@ -43,4 +43,17 @@ describe("OP09-032 Donquixote Rosinante", () => {
     ).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+  test("FAQ: attack-trigger rest resolves before Rosinante readies and blocks that same attack", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP01-035", attachedDon: 1 }] },
+      { character: ["OP09-032"], life: 3 },
+    );
+    const target = e.findCardInZone("north", "character", "OP09-032");
+    e.asSouth().attack(e.findCardInZone("south", "character", "OP01-035"), e.leader("north"));
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(false);
+    e.asNorth().chooseBlocker(target);
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(target);
+  });
 });

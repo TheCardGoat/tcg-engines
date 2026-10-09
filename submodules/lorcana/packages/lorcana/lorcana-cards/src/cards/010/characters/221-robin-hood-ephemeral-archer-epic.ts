@@ -25,7 +25,7 @@ export const robinHoodEphemeralArcherEpic: CharacterCard = {
   franchise: "Robin Hood",
   set: "010",
   cardNumber: 221,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 2,

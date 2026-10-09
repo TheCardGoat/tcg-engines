@@ -1,9 +1,29 @@
+import { rebindDelayedPrevious, delayedActionChain } from "./delayed-identity.ts";
+import {
+  requiresDonIdentityChoice,
+  beginDonIdentityProcess,
+  endDonIdentityProcess,
+  donIdentityLabel,
+  donIdentitiesAt,
+  donIdentitiesForVirtualIds,
+  transferDonIdentities,
+  locateDonIdentity,
+} from "../engine/don-state.ts";
+import { chooseContinuousCostOrder, settleContinuousCosts } from "../engine/continuous-cost.ts";
+import { faceUpLifeToHandReplacement } from "./permanent.ts";
+import {
+  extendReplacementProcess,
+  currentReplacementProcess,
+  declineReplacementProcess,
+  withReplacementProcess,
+} from "./replacement-process.ts";
+import { declareLoopIterations, observeOptionalLoop } from "../engine/optional-loop.ts";
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import {
-  baseCost,
+  getBaseCost,
   cardName,
-  effectBlocksFor,
   effectBlocksForInstance,
+  effectBlocksFor,
   emitEvent,
   emitLog,
   enqueueEffectsForTrigger,
@@ -17,6 +37,7 @@ import {
   recordCapabilityIssue,
 } from "../shared.ts";
 import {
+  continueLifeReplacementOrder,
   addDonFromDeck,
   createChoicePrompt,
   drawCards,
@@ -29,7 +50,19 @@ import { completeBattleResolution } from "../battle.ts";
 import {
   addTopDeckCardsToLife,
   actionTargetIsEligible,
+  bindDonCostSelections,
+  promptForEffectRestReplacement,
+  restCharacterByEffect,
+  availableDonForGive,
+  completeGiveDon,
+  continueSimultaneousStateChange,
+  continueDonTransfers,
+  continueGiveDonEach,
   canPayCosts,
+  canPayEffectBlockCosts,
+  partiallyPayableCost,
+  costSourceIsCurrent,
+  effectBlockWithSelectedCost,
   candidatesForGroupedPlayAction,
   candidatesForPlayAction,
   candidatesForKoCharacterCost,
@@ -39,20 +72,21 @@ import {
   candidatesForTrashFromHandCost,
   completePlayThisCard,
   freezeActionCandidateIds,
+  giveDonCostCandidateIds,
   giveDonCostParts,
   candidatesForRevealFromHandCost,
   candidatesForReturnCharacterCost,
+  candidatesForLifeCardCost,
   candidatesForRestCardsCost,
   candidatesForReturnCharacterToDeckCost,
   candidatesForReturnTrashToDeckCost,
-  koCharacterByEffect,
   playCardFromEffect,
   playCardsFromEffectSequence,
   promptForEffectCharacterReplacement,
   promptForEffectRemovalReplacement,
   promptForRearrangeDeckOrder,
+  promptForTargetSelection,
   processEffectAction,
-  restCharacterByEffect,
   removeLifeCards,
   returnDonCostOptions,
   returnSelectedDonToDeck,
@@ -63,13 +97,14 @@ import {
 } from "./actions.ts";
 import { evaluateConditions } from "./conditions.ts";
 import { isCardPlayRestricted } from "./permanent.ts";
+import { findRemoveFromFieldReplacement } from "./replacements.ts";
 import {
   candidatePoolForTarget,
   matchesTargetFilter,
   resolveTargetCount,
   selectionSatisfiesTotalConstraint,
 } from "./targeting.ts";
-import type { EffectTrigger } from "@tcg/op-types";
+import type { Action, EffectBlock, EffectTrigger } from "@tcg/op-types";
 
 /**
  * Printed form of an effect trigger for player-facing log lines, matching the
@@ -78,7 +113,7 @@ import type { EffectTrigger } from "@tcg/op-types";
  * until a printed form is chosen, so a raw engine literal can never leak
  * into the public log.
  */
-function triggerLabel(trigger: EffectTrigger): string {
+export function triggerLabel(trigger: EffectTrigger): string {
   switch (trigger) {
     case "onPlay":
       return "[On Play]";
@@ -94,6 +129,8 @@ function triggerLabel(trigger: EffectTrigger): string {
       return "[End of Your Turn]";
     case "endOfOpponentTurn":
       return "[End of Your Opponent's Turn]";
+    case "onYourAttack":
+      return "[When You Attack]";
     case "onOpponentAttack":
       return "[When Your Opponent Attacks]";
     case "activateMain":
@@ -173,6 +210,10 @@ export function processBattleEndEffects(
     effectController: item.attackerController,
     sourceInstanceId: item.attackerId,
     targetInstanceId: item.targetId,
+    battlePowerCompared: battle.powerCompared === true,
+    targetZoneChangeCounter: battle.comparedParticipants?.find(
+      (participant) => participant.instanceId === item.targetId,
+    )?.zoneChangeCounter,
   });
 
   const delayedActions = state.delayedEffectActions.filter(
@@ -207,9 +248,9 @@ function eventFilterMatches(
   eventFilter: NonNullable<NonNullable<ReturnType<typeof effectBlocksFor>[number]>["eventFilter"]>,
   event: NonNullable<Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"]>,
 ): boolean {
-  if (eventFilter.anyOf?.length) {
-    return eventFilter.anyOf.some((alt) => eventFilterMatches(state, item, alt, event));
-  }
+  const anyOfMatches =
+    !eventFilter.anyOf?.length ||
+    eventFilter.anyOf.some((alt) => eventFilterMatches(state, item, alt, event));
   const triggeringCard = getInstance(state, event.instanceId);
   const triggeringController = event.instanceController ?? triggeringCard.controller;
   const playerMatches =
@@ -232,7 +273,10 @@ function eventFilterMatches(
   const sourceSelfMatches =
     !eventFilter.sourceSelf || event.sourceInstanceId === item.sourceInstanceId;
   const filtersMatch = (eventFilter.filters ?? []).every((filter) => {
-    const result = matchesTargetFilter(state, item.sourceInstanceId, event.instanceId, filter);
+    const result = matchesTargetFilter(state, item.sourceInstanceId, event.instanceId, filter, {
+      basePower: event.koBasePower,
+      baseCost: event.baseCostAtActivation,
+    });
     return result.supported && result.matches;
   });
   const sourceFiltersMatch = (eventFilter.sourceFilters ?? []).every((filter) => {
@@ -242,6 +286,9 @@ function eventFilterMatches(
       item.sourceInstanceId,
       event.sourceInstanceId,
       filter,
+      event.sourceInstanceId === event.instanceId
+        ? { basePower: event.koBasePower, baseCost: event.baseCostAtActivation }
+        : undefined,
     );
     return result.supported && result.matches;
   });
@@ -252,14 +299,24 @@ function eventFilterMatches(
       item.sourceInstanceId,
       event.targetInstanceId,
       filter,
+      event.targetInstanceId === event.instanceId
+        ? { basePower: event.koBasePower, baseCost: event.baseCostAtActivation }
+        : undefined,
     );
     return result.supported && result.matches;
   });
   const sourceFromZoneMatches =
     !eventFilter.sourceFromZone || event.sourceFromZone === eventFilter.sourceFromZone;
+  const lifeCountMatches =
+    eventFilter.lifeCountAfterRemoval === undefined ||
+    event.lifeCountAfterRemoval === eventFilter.lifeCountAfterRemoval;
+  const battleComparisonMatches =
+    eventFilter.battlePowerCompared === undefined ||
+    event.battlePowerCompared === eventFilter.battlePowerCompared;
   const amountMatches =
     eventFilter.minimumAmount === undefined || (event.amount ?? 0) >= eventFilter.minimumAmount;
   return (
+    anyOfMatches &&
     playerMatches &&
     causeMatches &&
     koCauseMatches &&
@@ -271,34 +328,80 @@ function eventFilterMatches(
     sourceFiltersMatch &&
     targetFiltersMatch &&
     sourceFromZoneMatches &&
+    lifeCountMatches &&
+    battleComparisonMatches &&
     amountMatches
   );
 }
 
-export function processEffectBlock(
+function effectBlockForContinuation(
+  state: MatchState,
+  item: {
+    sourceInstanceId: string;
+    trigger: EffectTrigger;
+    blockIndex: number;
+    activatedBlock?: EffectBlock;
+    paidCostCount?: number;
+    selectedAlternativeCostIndex?: number;
+    costPaymentProgress?: import("../types.ts").CostPaymentProgress;
+  },
+): EffectBlock | undefined {
+  const block =
+    item.activatedBlock ??
+    effectBlocksForInstance(state, item.sourceInstanceId, item.trigger)[item.blockIndex];
+  const adjusted = item.costPaymentProgress?.adjustedCost;
+  if (!block || !adjusted) return block;
+  const index = item.paidCostCount ?? 0;
+  const baseLength = block.costs?.length ?? 0;
+  if (index < baseLength)
+    return { ...block, costs: block.costs?.map((cost, i) => (i === index ? adjusted : cost)) };
+  return {
+    ...block,
+    alternativeCosts: block.alternativeCosts?.map((costs, alternativeIndex) =>
+      alternativeIndex === item.selectedAlternativeCostIndex
+        ? costs.map((cost, i) => (i === index - baseLength ? adjusted : cost))
+        : costs,
+    ),
+  };
+}
+
+function pendingEffectBlock(
   state: MatchState,
   item: Extract<ResolutionItem, { kind: "effectBlock" }>,
 ) {
   const source = getInstance(state, item.sourceInstanceId);
   if (
     item.sourceZoneChangeCounter !== undefined &&
-    source.zoneChangeCounter !== item.sourceZoneChangeCounter
+    source.zoneChangeCounter !== item.sourceZoneChangeCounter &&
+    !item.activatedBlock
   ) {
     return;
   }
   const card = getCard(source.cardId);
-  const block = effectBlocksFor(card, item.trigger)[item.blockIndex];
+  const fullBlock = effectBlockWithSelectedCost(
+    effectBlockForContinuation(state, item),
+    item.selectedAlternativeCostIndex,
+  );
+  const block =
+    fullBlock && item.orderedCostPayments
+      ? {
+          ...fullBlock,
+          costs: fullBlock.costs?.slice(item.paidCostCount ?? 0, (item.paidCostCount ?? 0) + 1),
+        }
+      : fullBlock && item.paidCostCount
+        ? { ...fullBlock, costs: fullBlock.costs?.slice(item.paidCostCount) }
+        : fullBlock;
 
   if (!block) {
     return;
   }
 
   const effectKey = block.oncePerTurnKey ?? `${item.trigger}:${item.blockIndex}`;
-  if (block.oncePerTurn && source.usedEffectKeys.includes(effectKey)) {
+  if (block.oncePerTurn && source.usedEffectKeys.includes(effectKey) && !item.activatedBlock) {
     return;
   }
 
-  if (block.eventFilter) {
+  if (block.eventFilter && !item.activatedBlock) {
     const event = item.triggerEvent;
     if (!event) {
       return;
@@ -307,7 +410,7 @@ export function processEffectBlock(
       return;
     }
   }
-  if (block.source) {
+  if (block.source && !item.activatedBlock) {
     const event = item.triggerEvent;
     if (!event?.effectController) {
       return;
@@ -339,6 +442,42 @@ export function processEffectBlock(
     [],
     item.triggerEvent,
   );
+  return { source, card, block, effectKey, conditions };
+}
+
+export function isReadyEffectStructurallyValid(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+): boolean {
+  return Boolean(pendingEffectBlock(state, item));
+}
+
+export function isReadyEffectEligible(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+): boolean {
+  const pending = pendingEffectBlock(state, item);
+  if (!pending || (pending.conditions.supported && !pending.conditions.matches)) return false;
+  return (
+    !pending.block.optional ||
+    canPayEffectBlockCosts(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      pending.block,
+      item.trashHandIds,
+    )
+  );
+}
+
+export function processEffectBlock(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+) {
+  const pending = pendingEffectBlock(state, item);
+  if (!pending) return;
+  const { source, card, effectKey, conditions } = pending;
+  let { block } = pending;
   if (!conditions.supported) {
     const issue = recordCapabilityIssue(state, {
       kind: "unsupportedCondition",
@@ -358,20 +497,33 @@ export function processEffectBlock(
     );
     return;
   }
-  if (!conditions.matches) {
+  if (!conditions.matches && !item.paidCostCount) {
     return;
+  }
+
+  // Only a fulfilled optional trigger is a loop stopping boundary. Ineligible
+  // queued blocks must not add participants or consume the selected stop.
+  if (block.optional && !item.confirmed) {
+    const loop = observeOptionalLoop(state, item);
+    if (loop === "pause") {
+      enqueueResolution(
+        state,
+        { ...item, sourceZoneChangeCounter: source.zoneChangeCounter },
+        { next: true },
+      );
+      return;
+    }
+    if (loop === "skip") return;
   }
 
   if (block.optional && !item.confirmed) {
     if (
-      !canPayCosts(
+      !canPayEffectBlockCosts(
         state,
         item.controller,
         item.sourceInstanceId,
-        block.costs,
+        block,
         item.trashHandIds,
-        item.costPaymentIds,
-        item.costPaymentIdsByType,
       )
     ) {
       return;
@@ -399,6 +551,11 @@ export function processEffectBlock(
         controller: item.controller,
         trigger: item.trigger,
         blockIndex: item.blockIndex,
+        activatedBlock: item.activatedBlock,
+        orderedCostPayments: item.orderedCostPayments,
+        paidCostCount: item.paidCostCount,
+        costPaymentProgress: item.costPaymentProgress,
+        selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
         trashHandIds: item.trashHandIds,
         costPaymentIdsByType: item.costPaymentIdsByType,
         triggerEvent: item.triggerEvent,
@@ -407,14 +564,167 @@ export function processEffectBlock(
     return;
   }
 
+  if (!item.activatedBlock) {
+    item.costPaymentProgress ??= {
+      incomplete: false,
+      sourceZoneChangeCounter: source.zoneChangeCounter,
+    };
+    item.orderedCostPayments =
+      (block.costs?.length ?? 0) > 1 ||
+      Boolean(
+        block.alternativeCosts?.some((costs) => (block.costs?.length ?? 0) + costs.length > 1),
+      );
+    if (
+      item.orderedCostPayments &&
+      !canPayEffectBlockCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block,
+        item.trashHandIds,
+      )
+    )
+      return;
+  }
+  item.activatedBlock ??= JSON.parse(
+    JSON.stringify(
+      effectBlocksForInstance(state, item.sourceInstanceId, item.trigger)[item.blockIndex],
+    ),
+  );
+
+  if (block.alternativeCosts && item.selectedAlternativeCostIndex === undefined) {
+    const affordableIndexes = block.alternativeCosts.flatMap((costs, index) =>
+      canPayEffectBlockCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        { ...block, costs: [...(block.costs ?? []), ...costs], alternativeCosts: undefined },
+        item.trashHandIds,
+      )
+        ? [index]
+        : [],
+    );
+    if (affordableIndexes.length === 0) return;
+    if (affordableIndexes.length === 1) {
+      enqueueResolution(
+        state,
+        { ...item, selectedAlternativeCostIndex: affordableIndexes[0], confirmed: true },
+        { next: true },
+      );
+      return;
+    }
+    createChoicePrompt(state, {
+      choiceKind: "chooseOption",
+      seat: item.controller,
+      label: `${cardName(card)} chooses a cost.`,
+      details: "Choose one cost to pay.",
+      sourceCardId: source.cardId,
+      sourceInstanceId: item.sourceInstanceId,
+      eventId: null,
+      options: affordableIndexes.map((index) => ({
+        id: String(index),
+        value: String(index),
+        label: block
+          .alternativeCosts![index]!.map((cost) =>
+            cost.cost === "trashFromHand"
+              ? `Trash ${cost.amount} card(s) from your hand`
+              : cost.cost === "restDon"
+                ? `Rest ${cost.amount} DON!! card(s)`
+                : `Pay cost option ${index + 1}`,
+          )
+          .join(" and "),
+      })),
+      minSelections: 1,
+      maxSelections: 1,
+      context: { trigger: item.trigger },
+      resolutionContext: {
+        intent: "effectAlternativeCost",
+        sourceInstanceId: item.sourceInstanceId,
+        controller: item.controller,
+        affordableIndexes,
+        continuation: { ...item, confirmed: true },
+      },
+    });
+    return;
+  }
+
+  if (item.orderedCostPayments) {
+    const full = effectBlockWithSelectedCost(
+      effectBlockForContinuation(state, item),
+      item.selectedAlternativeCostIndex,
+    );
+    block = {
+      ...block,
+      costs: full?.costs?.slice(item.paidCostCount ?? 0, (item.paidCostCount ?? 0) + 1),
+    };
+  }
+
+  if (
+    item.orderedCostPayments &&
+    item.paidCostCount &&
+    !item.costsPaid &&
+    block.costs?.[0] &&
+    (!costSourceIsCurrent(
+      state,
+      item.sourceInstanceId,
+      block.costs[0],
+      item.costPaymentProgress?.sourceZoneChangeCounter,
+    ) ||
+      !canPayCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block.costs,
+        item.trashHandIds,
+        item.costPaymentIds,
+        item.costPaymentIdsByType,
+      ))
+  ) {
+    // Pay the available part of each later entry, preserving original requirements.
+    const adjusted = partiallyPayableCost(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      block.costs[0],
+      item.costPaymentProgress?.sourceZoneChangeCounter,
+    );
+    if (block.costs[0].cost === "turnLifeFaceUp" && adjusted?.cost === "turnLifeFaceUp") {
+      // Preserve the original positional scope; all remaining eligible Life
+      // must be paid. Existing bindings survive a saved/resumed continuation.
+      item.costPaymentIds ??= candidatesForLifeCardCost(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block.costs[0],
+      ).slice(0, adjusted.count);
+    }
+    item.costPaymentProgress = {
+      ...item.costPaymentProgress,
+      incomplete: true,
+      adjustedCost: adjusted,
+    };
+    if (!adjusted) {
+      finishPaidEffect(state, { ...item, costsPaid: true }, block);
+      return;
+    }
+    block = { ...block, costs: [adjusted] };
+  }
+
   const giveDonCost = block.costs?.find((cost) => cost.cost === "giveDon");
   if (giveDonCost && !item.costPaymentIdsByType?.giveDon) {
     const { recipientSeat, poolAmount } = giveDonCostParts(state, item.controller, giveDonCost);
-    const recipient = getPlayer(state, recipientSeat);
-    const candidateIds = [
-      recipient.leaderInstanceId,
-      ...recipient.characterArea.filter((instanceId): instanceId is string => instanceId !== null),
-    ];
+    const candidateIds = giveDonCostCandidateIds(
+      state,
+      item.controller,
+      giveDonCost,
+      item.sourceInstanceId,
+    );
+    if (candidateIds.length === 1 && poolAmount >= giveDonCost.amount) {
+      item.costPaymentIdsByType = {
+        ...item.costPaymentIdsByType,
+        giveDon: candidateIds,
+      };
+    }
     if (candidateIds.length > 1 && poolAmount >= giveDonCost.amount) {
       createChoicePrompt(state, {
         choiceKind: "costPayment",
@@ -439,14 +749,116 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: giveDonCost.amount,
           candidateIds,
           costPaymentIdsByType: item.costPaymentIdsByType,
           triggerEvent: item.triggerEvent,
-          cost: giveDonCost,
         },
       });
       return;
+    }
+  }
+
+  if (state.donIdentities) {
+    const restCost = block.costs?.find((cost) => cost.cost === "restDon");
+    const giveCost = block.costs?.find((cost) => cost.cost === "giveDon");
+    const cost =
+      restCost && !item.costPaymentIdsByType?.restDon
+        ? restCost
+        : giveCost && !item.costPaymentIdsByType?.giveDonSources
+          ? giveCost
+          : undefined;
+    if (cost) {
+      const parts =
+        cost.cost === "giveDon"
+          ? giveDonCostParts(state, item.controller, cost)
+          : { donorSeat: item.controller };
+      const candidates = donIdentitiesAt(state, {
+        seat: parts.donorSeat,
+        area: cost.cost === "giveDon" && cost.donState === "rested" ? "rested" : "active",
+      });
+      const paymentType = cost.cost === "restDon" ? "restDon" : "giveDonSources";
+      if (requiresDonIdentityChoice(state, candidates, cost.amount)) {
+        createChoicePrompt(state, {
+          choiceKind: "costPayment",
+          seat: item.controller,
+          label: `Choose ${cost.amount} DON!! card(s) for the cost.`,
+          details: "Choose the specific DON!! cards.",
+          sourceCardId: source.cardId,
+          sourceInstanceId: item.sourceInstanceId,
+          eventId: null,
+          options: candidates.map((id) => ({ id, value: id, label: donIdentityLabel(state, id) })),
+          minSelections: cost.amount,
+          maxSelections: cost.amount,
+          context: { resource: "don" },
+          resolutionContext: {
+            intent: "effectCostDonIdentity",
+            continuation: { ...item, confirmed: true },
+            candidates,
+            amount: cost.amount,
+            paymentType,
+          },
+        });
+        return;
+      }
+      item.costPaymentIdsByType = {
+        ...item.costPaymentIdsByType,
+        [paymentType]: candidates.slice(0, cost.amount),
+      };
+    }
+  }
+
+  // A unique DON source needs no player choice, but its selected IDs must
+  // still advance ordered cost selection before a later hand-discard cost.
+  const automaticReturnDon = block.costs?.find((cost) => cost.cost === "returnDon");
+  if (
+    automaticReturnDon &&
+    !item.costPaymentIds &&
+    automaticReturnDon.minimumAmount === undefined
+  ) {
+    const options = returnDonCostOptions(state, item.controller, automaticReturnDon.donState);
+    const sourceKeys = new Set(
+      options.map((option) =>
+        option.id.startsWith("attached-don:")
+          ? option.id.slice(0, option.id.lastIndexOf(":"))
+          : option.id.slice(0, option.id.indexOf(":")),
+      ),
+    );
+    if (
+      options.length >= automaticReturnDon.amount &&
+      (options.length === automaticReturnDon.amount ||
+        (sourceKeys.size === 1 &&
+          !requiresDonIdentityChoice(
+            state,
+            donIdentitiesForVirtualIds(
+              state,
+              item.controller,
+              options.map((option) => option.id),
+            ),
+            automaticReturnDon.amount,
+          )))
+    ) {
+      item = {
+        ...item,
+        costPaymentIds: options.slice(0, automaticReturnDon.amount).map((option) => option.id),
+        costPaymentIdsByType: {
+          ...item.costPaymentIdsByType,
+          ...(state.donIdentities
+            ? {
+                returnDonSources: donIdentitiesForVirtualIds(
+                  state,
+                  item.controller,
+                  options.slice(0, automaticReturnDon.amount).map((option) => option.id),
+                ),
+              }
+            : {}),
+        },
+      };
     }
   }
 
@@ -491,6 +903,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: trashFromHandCost.amount,
           cost: trashFromHandCost,
           candidateIds,
@@ -535,6 +952,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: playCardCost.amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
@@ -576,6 +998,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: trashCardCost.amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
@@ -587,7 +1014,7 @@ export function processEffectBlock(
 
   const returnDonCost = block.costs?.find((cost) => cost.cost === "returnDon");
   if (returnDonCost && pendingOrderedCost === returnDonCost) {
-    const options = returnDonCostOptions(state, item.controller);
+    const options = returnDonCostOptions(state, item.controller, returnDonCost.donState);
     const minimumAmount = returnDonCost.minimumAmount ?? returnDonCost.amount;
     const maximumAmount =
       returnDonCost.minimumAmount === undefined ? minimumAmount : options.length;
@@ -601,16 +1028,29 @@ export function processEffectBlock(
     if (
       returnDonCost.minimumAmount !== undefined
         ? options.length > minimumAmount
-        : options.length > minimumAmount && sourceKeys.size > 1
+        : options.length > minimumAmount &&
+          (sourceKeys.size > 1 ||
+            requiresDonIdentityChoice(
+              state,
+              donIdentitiesForVirtualIds(
+                state,
+                item.controller,
+                options.map((option) => option.id),
+              ),
+              minimumAmount,
+            ))
     ) {
+      const destination =
+        returnDonCost.destination === "costAreaRested" ? "cost area rested" : "DON!! deck";
+      const pool = returnDonCost.donState === "attached" ? "currently given DON!!" : "DON!!";
       createChoicePrompt(state, {
         choiceKind: "costPayment",
         seat: item.controller,
-        label: `${cardName(card)} cost: return ${minimumAmount} DON!! to your DON!! deck.`,
+        label: `${cardName(card)} cost: return ${minimumAmount} ${pool} to your ${destination}.`,
         details:
           returnDonCost.minimumAmount === undefined
-            ? `Choose ${minimumAmount} DON!! card(s) from your field to return to your DON!! deck.`
-            : `Choose ${minimumAmount} or more DON!! cards from your field to return to your DON!! deck.`,
+            ? `Choose ${minimumAmount} ${pool} card(s) from your field to return to your ${destination}.`
+            : `Choose ${minimumAmount} or more ${pool} cards from your field to return to your ${destination}.`,
         sourceCardId: source.cardId,
         sourceInstanceId: item.sourceInstanceId,
         eventId: null,
@@ -630,11 +1070,107 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: minimumAmount,
           candidateIds: options.map((option) => option.id),
           trashHandIds: item.trashHandIds,
           costPaymentIdsByType: item.costPaymentIdsByType,
           triggerEvent: item.triggerEvent,
+        },
+      });
+      return;
+    }
+  }
+
+  // 8-3-1-1: finish the DON!! payment before selecting a later Character
+  // payment. Returning attached DON!! can change the eligible power boundary.
+  // Keep the paid prefix across the second prompt instead of reusing DON!! IDs
+  // as the Character selection or paying the DON!! a second time on resume.
+  if (
+    !item.costsPaid &&
+    block.costs?.[0]?.cost === "returnDon" &&
+    block.costs[1]?.cost === "returnCharacterToDeck"
+  ) {
+    if (
+      !payCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        [block.costs[0]],
+        item.trashHandIds,
+        item.costPaymentIds,
+        item.costPaymentIdsByType,
+      )
+    )
+      return;
+    item = {
+      ...item,
+      paidCostCount: (item.paidCostCount ?? 0) + 1,
+      costPaymentIds: undefined,
+    };
+    block = { ...block, costs: block.costs.slice(1) };
+    if (
+      !settleContinuousCosts(state) &&
+      (state.continuousCosts?.pending || state.continuousCosts?.unsupported)
+    ) {
+      enqueueResolution(state, { ...item, confirmed: true }, { next: true });
+      return;
+    }
+    if (
+      !canPayCosts(state, item.controller, item.sourceInstanceId, block.costs, item.trashHandIds)
+    ) {
+      // 8-3-1-3-1 / 10-2-13-5: a later payment can become impossible;
+      // retain the completed payment and consume the once-per-turn activation.
+      if (block.oncePerTurn) source.usedEffectKeys.push(effectKey);
+      return;
+    }
+  }
+
+  const lifeCardCost = block.costs?.find(
+    (cost) => cost.cost === "addCharacterToLife" || cost.cost === "turnLifeFaceUp",
+  );
+  if (lifeCardCost && !item.costPaymentIds && !item.costsPaid) {
+    const candidateIds = candidatesForLifeCardCost(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      lifeCardCost,
+    );
+    const amount =
+      lifeCardCost.cost === "turnLifeFaceUp" ? lifeCardCost.count : lifeCardCost.amount;
+    if (candidateIds.length > amount) {
+      createChoicePrompt(state, {
+        choiceKind: "costPayment",
+        seat: item.controller,
+        label:
+          lifeCardCost.cost === "turnLifeFaceUp"
+            ? "Choose Life cards to turn face-down."
+            : "Choose Characters to add to Life.",
+        details: `Choose ${amount} card(s) to pay the activation cost.`,
+        sourceCardId: source.cardId,
+        sourceInstanceId: item.sourceInstanceId,
+        eventId: null,
+        options: candidateIds.map((id) => ({
+          id,
+          label: cardName(getCardForInstance(state, id)),
+          value: id,
+          targetId: id,
+        })),
+        minSelections: amount,
+        maxSelections: amount,
+        context: { cost: lifeCardCost.cost },
+        resolutionContext: {
+          intent:
+            lifeCardCost.cost === "turnLifeFaceUp"
+              ? "effectCostTurnLifeFaceUp"
+              : "effectCostAddCharacterToLife",
+          continuation: { ...item },
+          candidateIds,
+          amount,
         },
       });
       return;
@@ -678,6 +1214,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: returnCharacterToDeckCost.amount,
           candidateIds,
           trashHandIds: item.trashHandIds,
@@ -741,6 +1282,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: returnCharacterCost.amount,
           candidateIds,
           costPaymentIdsByType: item.costPaymentIdsByType,
@@ -774,9 +1320,11 @@ export function processEffectBlock(
         eventId: null,
         options: candidateIds.map((instanceId) => ({
           id: instanceId,
-          label: cardName(getCardForInstance(state, instanceId)),
+          label: instanceId.startsWith("active-don:")
+            ? "Active DON!! in cost area"
+            : cardName(getCardForInstance(state, instanceId)),
           value: instanceId,
-          targetId: instanceId,
+          ...(!instanceId.startsWith("active-don:") ? { targetId: instanceId } : {}),
         })),
         minSelections: restCardsCost.amount,
         maxSelections: restCardsCost.amount,
@@ -789,8 +1337,15 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: restCardsCost.amount,
           candidateIds,
+          costPaymentIds: item.costPaymentIds,
+          trashHandIds: item.trashHandIds,
           costPaymentIdsByType: item.costPaymentIdsByType,
           triggerEvent: item.triggerEvent,
         },
@@ -831,6 +1386,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: koCharacterCost.amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
@@ -872,6 +1432,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: trashCharacterCost.amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
@@ -902,6 +1467,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           costPaymentIds: candidateIds,
           costsPaid: true,
           confirmed: true,
@@ -945,6 +1515,11 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           amount: revealFromHandCost.amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
@@ -952,6 +1527,7 @@ export function processEffectBlock(
       });
       return;
     }
+    if (candidateIds.length === revealFromHandCost.amount) item.costPaymentIds = candidateIds;
   }
 
   const returnHandToDeckCost = block.costs?.find((cost) => cost.cost === "returnHandToDeck");
@@ -983,6 +1559,11 @@ export function processEffectBlock(
         controller: item.controller,
         trigger: item.trigger,
         blockIndex: item.blockIndex,
+        activatedBlock: item.activatedBlock,
+        orderedCostPayments: item.orderedCostPayments,
+        paidCostCount: item.paidCostCount,
+        costPaymentProgress: item.costPaymentProgress,
+        selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
         amount: returnHandToDeckCost.amount,
         candidateIds,
         triggerEvent: item.triggerEvent,
@@ -999,12 +1580,17 @@ export function processEffectBlock(
       item.sourceInstanceId,
       returnTrashToDeckCost,
     );
-    if (candidateIds.length > returnTrashToDeckCost.amount || returnTrashToDeckCost.amount > 1) {
+    if (returnTrashToDeckCost.includeSelf) candidateIds.unshift(item.sourceInstanceId);
+    const amount = returnTrashToDeckCost.amount + (returnTrashToDeckCost.includeSelf ? 1 : 0);
+    const origins = returnTrashToDeckCost.includeSelf
+      ? "this Character and the selected cards from your trash"
+      : "the selected cards from your trash";
+    if (candidateIds.length > amount || amount > 1) {
       createChoicePrompt(state, {
         choiceKind: "costPayment",
         seat: item.controller,
-        label: `${cardName(card)} cost: return ${returnTrashToDeckCost.amount} card(s) from trash to the ${returnTrashToDeckCost.position} of your deck.`,
-        details: `Choose ${returnTrashToDeckCost.amount} card(s) from your trash in the order they should be placed at the ${returnTrashToDeckCost.position} of your deck.`,
+        label: `${cardName(card)} cost: return ${origins} to the ${returnTrashToDeckCost.position} of your deck.`,
+        details: `Choose ${amount} cards in the order they should be placed at the ${returnTrashToDeckCost.position} of your deck.`,
         sourceCardId: source.cardId,
         sourceInstanceId: item.sourceInstanceId,
         eventId: null,
@@ -1014,8 +1600,8 @@ export function processEffectBlock(
           value: instanceId,
           targetId: instanceId,
         })),
-        minSelections: returnTrashToDeckCost.amount,
-        maxSelections: returnTrashToDeckCost.amount,
+        minSelections: amount,
+        maxSelections: amount,
         context: { cost: "returnTrashToDeck", ordered: true },
         resolutionContext: {
           intent: "effectCostReturnTrashToDeck",
@@ -1023,7 +1609,12 @@ export function processEffectBlock(
           controller: item.controller,
           trigger: item.trigger,
           blockIndex: item.blockIndex,
-          amount: returnTrashToDeckCost.amount,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
+          amount,
           candidateIds,
           triggerEvent: item.triggerEvent,
         },
@@ -1064,6 +1655,11 @@ export function processEffectBlock(
         controller: item.controller,
         trigger: item.trigger,
         blockIndex: item.blockIndex,
+        activatedBlock: item.activatedBlock,
+        orderedCostPayments: item.orderedCostPayments,
+        paidCostCount: item.paidCostCount,
+        costPaymentProgress: item.costPaymentProgress,
+        selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
         handAmount: returnThisAndHandToDeckCost.handAmount,
         candidateIds,
         triggerEvent: item.triggerEvent,
@@ -1100,6 +1696,11 @@ export function processEffectBlock(
         controller: item.controller,
         trigger: item.trigger,
         blockIndex: item.blockIndex,
+        activatedBlock: item.activatedBlock,
+        orderedCostPayments: item.orderedCostPayments,
+        paidCostCount: item.paidCostCount,
+        costPaymentProgress: item.costPaymentProgress,
+        selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
         triggerEvent: item.triggerEvent,
       },
     });
@@ -1131,6 +1732,11 @@ export function processEffectBlock(
         controller: item.controller,
         trigger: item.trigger,
         blockIndex: item.blockIndex,
+        activatedBlock: item.activatedBlock,
+        orderedCostPayments: item.orderedCostPayments,
+        paidCostCount: item.paidCostCount,
+        costPaymentProgress: item.costPaymentProgress,
+        selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
         triggerEvent: item.triggerEvent,
       },
     });
@@ -1168,6 +1774,11 @@ export function processEffectBlock(
           kind: "playCardCost",
           trigger: item.trigger,
           blockIndex: item.blockIndex,
+          activatedBlock: item.activatedBlock,
+          orderedCostPayments: item.orderedCostPayments,
+          paidCostCount: item.paidCostCount,
+          costPaymentProgress: item.costPaymentProgress,
+          selectedAlternativeCostIndex: item.selectedAlternativeCostIndex,
           selectedIds: costPlayIds,
           trashHandIds: item.trashHandIds,
           costPaymentIdsByType: item.costPaymentIdsByType,
@@ -1176,6 +1787,231 @@ export function processEffectBlock(
       });
       return;
     }
+  }
+  const restCost = block.costs?.find(
+    (cost) => cost.cost === "restThisCard" || cost.cost === "restCards",
+  );
+  if (restCost && !item.costsPaid) {
+    if (
+      !canPayCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block.costs,
+        item.trashHandIds,
+        item.costPaymentIds,
+        item.costPaymentIdsByType,
+      )
+    )
+      return;
+    const selected =
+      restCost.cost === "restThisCard"
+        ? [item.sourceInstanceId]
+        : (item.costPaymentIdsByType?.restCards ??
+          item.costPaymentIds ??
+          candidatesForRestCardsCost(state, item.controller, item.sourceInstanceId, restCost).slice(
+            0,
+            restCost.amount,
+          ));
+    const donProcessId = selected.some((id) => id.startsWith("active-don:"))
+      ? beginDonIdentityProcess(state)
+      : undefined;
+    const bound = bindDonCostSelections(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      [restCost],
+      selected,
+      item.costPaymentIdsByType,
+    );
+    if (!bound) {
+      if (donProcessId) endDonIdentityProcess(state, donProcessId);
+      return;
+    }
+    const tokens = [...(bound[0] ?? [])];
+    const entries: import("../types.ts").RestCostProcess["entries"] = [];
+    for (const id of selected) {
+      if (id.startsWith("active-don:")) {
+        const token = tokens.shift();
+        if (!token) throw new Error("Rest cost requires a bound DON identity");
+        entries.push({ kind: "don", token, seat: item.controller });
+      } else {
+        const target = getInstance(state, id);
+        entries.push({
+          kind: "card",
+          instanceId: id,
+          zone: target.zone,
+          zoneChangeCounter: target.zoneChangeCounter,
+        });
+      }
+    }
+    if (
+      block.oncePerTurn &&
+      !source.usedEffectKeys.includes(effectKey) &&
+      (item.costPaymentProgress?.sourceZoneChangeCounter === undefined ||
+        source.zoneChangeCounter === item.costPaymentProgress.sourceZoneChangeCounter)
+    )
+      source.usedEffectKeys.push(effectKey);
+    enqueueResolution(
+      state,
+      {
+        kind: "effectRestCostContinue",
+        replacementProcess: currentReplacementProcess(state),
+        process: { continuation: item, block, entries, index: 0, incomplete: false, donProcessId },
+      },
+      { next: true },
+    );
+    return;
+  }
+  if (addLifeToHandCost && !item.costsPaid) {
+    const position =
+      addLifeToHandCost.position === "choice"
+        ? (item.costPaymentIds?.[0] ?? "top")
+        : addLifeToHandCost.position;
+    const life = getPlayer(state, item.controller).life;
+    const ids =
+      position === "bottom"
+        ? life.slice(-addLifeToHandCost.amount)
+        : life.slice(0, addLifeToHandCost.amount);
+    if (ids.some((id) => faceUpLifeToHandReplacement(state, id))) {
+      // 8-3-1-7: replacement processing is allowed, but does not pay the
+      // printed Life-to-hand cost. 10-2-13-5 still spends the activation.
+      if (
+        !canPayCosts(
+          state,
+          item.controller,
+          item.sourceInstanceId,
+          block.costs,
+          item.trashHandIds,
+          item.costPaymentIds,
+          item.costPaymentIdsByType,
+        )
+      )
+        return;
+      payCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block.costs,
+        item.trashHandIds,
+        item.costPaymentIds,
+        item.costPaymentIdsByType,
+      );
+      enqueueCharacterRemovalEffects(state, charactersBeforeCosts, item.controller);
+      if (block.oncePerTurn) source.usedEffectKeys.push(effectKey);
+      // Replacement order is already pending. Resume the cost cursor only
+      // after that private choice, retaining nonpayment of the original cost.
+      enqueueResolution(
+        state,
+        {
+          kind: "effectAfterCostSettlement",
+          continuation: {
+            ...item,
+            costsPaid: true,
+            costPaymentProgress: { ...item.costPaymentProgress, incomplete: true },
+          },
+          block,
+        },
+        { next: true },
+      );
+      return;
+    }
+  }
+  const removalCost =
+    koCharacterCost ??
+    returnCharacterToDeckCost ??
+    (lifeCardCost?.cost === "addCharacterToLife" ? lifeCardCost : undefined);
+  if (removalCost && !item.costsPaid) {
+    const targetIds =
+      item.costPaymentIds ??
+      (removalCost.cost === "koCharacter"
+        ? candidatesForKoCharacterCost(state, item.controller, item.sourceInstanceId, removalCost)
+        : removalCost.cost === "addCharacterToLife"
+          ? candidatesForLifeCardCost(state, item.controller, item.sourceInstanceId, removalCost)
+          : candidatesForReturnCharacterToDeckCost(
+              state,
+              item.controller,
+              item.sourceInstanceId,
+              removalCost,
+            )
+      ).slice(0, removalCost.amount);
+    if (
+      !canPayCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        block.costs,
+        item.trashHandIds,
+        targetIds,
+        item.costPaymentIdsByType,
+      )
+    )
+      return;
+    const otherCosts = block.costs?.filter((cost) => cost !== removalCost);
+    if (
+      !payCosts(
+        state,
+        item.controller,
+        item.sourceInstanceId,
+        otherCosts,
+        item.trashHandIds,
+        item.costPaymentIds,
+        item.costPaymentIdsByType,
+      )
+    )
+      return;
+    enqueueCharacterRemovalEffects(state, charactersBeforeCosts, item.controller);
+    // 10-2-13-5: the activation is spent even if a replacement prevents payment.
+    if (block.oncePerTurn) source.usedEffectKeys.push(effectKey);
+    const payment = enqueueResolution(
+      state,
+      {
+        kind: "effectRemovalCostComplete",
+        continuation: { ...item, costPaymentIds: targetIds, costsPaid: true },
+        targetIds,
+        paidTargetIds: [],
+      },
+      { next: true },
+    );
+    enqueueResolution(
+      state,
+      {
+        kind: "effectAction",
+        sourceInstanceId: item.sourceInstanceId,
+        controller: item.controller,
+        removalCostPaymentId: payment.id,
+        action:
+          removalCost.cost === "koCharacter"
+            ? {
+                action: "ko",
+                target: { player: "self", zones: ["character"], count: { amount: "all" } },
+              }
+            : removalCost.cost === "addCharacterToLife"
+              ? {
+                  action: "addToLife",
+                  position: removalCost.position,
+                  faceUp: removalCost.faceUp,
+                  target: {
+                    player: removalCost.player ?? "self",
+                    zones: ["character"],
+                    count: { amount: "all" },
+                    filters: removalCost.filters,
+                  },
+                }
+              : {
+                  action: "returnToDeck",
+                  position: removalCost.position,
+                  target: {
+                    player: removalCost.player ?? "self",
+                    zones: ["character"],
+                    count: { amount: "all" },
+                  },
+                },
+        selectedTargetIds: targetIds,
+      },
+      { next: true },
+    );
+    return;
   }
   if (
     !item.costsPaid &&
@@ -1211,6 +2047,178 @@ export function processEffectBlock(
     enqueueCharacterRemovalEffects(state, charactersBeforeCosts, item.controller);
   }
 
+  finishPaidEffect(state, item, block);
+}
+
+export function continueRestCostPayment(
+  state: MatchState,
+  process: import("../types.ts").RestCostProcess,
+) {
+  const item = process.continuation;
+  while (process.index < process.entries.length) {
+    const entry = process.entries[process.index]!;
+    if (entry.kind === "don") {
+      const location = locateDonIdentity(state, entry.token);
+      if (
+        location &&
+        "seat" in location &&
+        location.seat === entry.seat &&
+        location.area === "active"
+      ) {
+        transferDonIdentities(state, location, { seat: entry.seat, area: "rested" }, 1, [
+          entry.token,
+        ]);
+        getPlayer(state, entry.seat).activeDon -= 1;
+        getPlayer(state, entry.seat).restedDon += 1;
+      } else process.incomplete = true;
+    } else {
+      const card = state.cards[entry.instanceId];
+      if (!card || card.zone !== entry.zone || card.zoneChangeCounter !== entry.zoneChangeCounter)
+        process.incomplete = true;
+      else {
+        if (
+          promptForEffectRestReplacement(
+            state,
+            entry.instanceId,
+            item.controller,
+            item.sourceInstanceId,
+            {
+              action: "rest",
+              target: {
+                player: "self",
+                zones: ["leader", "character", "stage"],
+                count: { amount: 1 },
+              },
+            },
+            [],
+            undefined,
+            process,
+          )
+        )
+          return;
+        if (!restCharacterByEffect(state, entry.instanceId, item.controller, item.sourceInstanceId))
+          process.incomplete = true;
+      }
+    }
+    process.index += 1;
+  }
+  if (process.donProcessId) endDonIdentityProcess(state, process.donProcessId);
+  if (process.incomplete)
+    item.costPaymentProgress = { ...item.costPaymentProgress, incomplete: true };
+  finishPaidEffect(state, { ...item, costsPaid: true }, process.block);
+}
+
+export function completeRemovalCostPayment(
+  state: MatchState,
+  payment: Extract<ResolutionItem, { kind: "effectRemovalCostComplete" }>,
+) {
+  // Only the original, unreplaced removal pays the printed cost (8-3-1-7).
+  // A replacement that moves the same card does not pay that original cost.
+  const item = payment.continuation;
+  if (!payment.targetIds.every((id) => payment.paidTargetIds.includes(id)))
+    item.costPaymentProgress = { ...item.costPaymentProgress, incomplete: true };
+  const block = effectBlockWithSelectedCost(
+    effectBlockForContinuation(state, item),
+    item.selectedAlternativeCostIndex,
+    item.orderedCostPayments ? (item.paidCostCount ?? 0) : undefined,
+  );
+  if (block) finishPaidEffect(state, item, block);
+}
+
+function finishPaidEffect(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+  block: EffectBlock,
+) {
+  if (
+    !settleContinuousCosts(state) &&
+    (state.continuousCosts?.pending || state.continuousCosts?.unsupported)
+  ) {
+    enqueueResolution(
+      state,
+      { kind: "effectAfterCostSettlement", continuation: { ...item, costsPaid: true }, block },
+      { next: true },
+    );
+    return;
+  }
+  resolveEffectAfterCosts(state, item, block);
+}
+
+export function resolveEffectAfterCosts(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+  block: EffectBlock,
+) {
+  if (item.orderedCostPayments) {
+    const full = effectBlockWithSelectedCost(
+      item.activatedBlock,
+      item.selectedAlternativeCostIndex,
+    );
+    const nextCost = (item.paidCostCount ?? 0) + 1;
+    if (nextCost < (full?.costs?.length ?? 0)) {
+      enqueueResolution(
+        state,
+        {
+          ...item,
+          paidCostCount: nextCost,
+          costPaymentProgress: item.costPaymentProgress
+            ? { ...item.costPaymentProgress, adjustedCost: undefined }
+            : undefined,
+          costsPaid: false,
+          confirmed: true,
+          costPaymentIds: undefined,
+          costPaymentIdsByType: undefined,
+          trashHandIds: undefined,
+        },
+        { next: true },
+      );
+      return;
+    }
+  }
+  const source = getInstance(state, item.sourceInstanceId);
+  const card = getCard(source.cardId);
+  const effectKey = block.oncePerTurnKey ?? `${item.trigger}:${item.blockIndex}`;
+  if (item.costPaymentProgress?.incomplete) {
+    if (
+      block.oncePerTurn &&
+      (item.costPaymentProgress.sourceZoneChangeCounter === undefined ||
+        source.zoneChangeCounter === item.costPaymentProgress.sourceZoneChangeCounter) &&
+      !source.usedEffectKeys.includes(effectKey)
+    )
+      source.usedEffectKeys.push(effectKey);
+    return;
+  }
+  if (block.postCostConditions?.length) {
+    const postCostCondition = evaluateConditions(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      block.postCostConditions,
+    );
+    if (!postCostCondition.supported) {
+      const issue = recordCapabilityIssue(state, {
+        kind: "unsupportedCondition",
+        code: `post-cost-condition:${item.trigger}:${item.blockIndex}`,
+        actor: item.controller,
+        sourceCardId: source.cardId,
+        sourceInstanceId: item.sourceInstanceId,
+        eventId: null,
+        details: `${cardName(card)} has a post-cost condition that is not automated yet.`,
+      });
+      enqueueJudgePrompt(
+        state,
+        item.sourceInstanceId,
+        "Judge review: post-cost condition",
+        `${cardName(card)} has a post-cost condition that is not automated yet.`,
+        { issueId: issue.id },
+      );
+      return;
+    }
+    if (!postCostCondition.matches) {
+      return;
+    }
+  }
+
   const battle = state.battle;
   if (
     battle?.attackerId === item.sourceInstanceId &&
@@ -1221,9 +2229,30 @@ export function processEffectBlock(
     completeBattleResolution(state);
   }
 
-  if (block.oncePerTurn) {
+  if (block.oncePerTurn && !source.usedEffectKeys.includes(effectKey)) {
     source.usedEffectKeys.push(effectKey);
   }
+
+  // [DON!! xN] remains a requirement after paying the activation cost.
+  // OP10-069 FAQ: returning its sole attached DON!! pays DON!! -1, but the
+  // following K.O. does not resolve. Do not recheck unrelated textual gates.
+  const donConditions = block.conditions?.filter(
+    (condition) => condition.condition === "donAttached",
+  );
+  if (
+    donConditions?.length &&
+    !evaluateConditions(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      donConditions,
+      [],
+      // A removed source uses the DON!! count captured by its removal event.
+      // Live sources must use the post-payment count, not a trigger snapshot.
+      source.zone === "leader" || source.zone === "character" ? undefined : item.triggerEvent,
+    ).matches
+  )
+    return;
 
   emitEvent(state, "effectResolved", item.controller, {
     sourceCardId: source.cardId,
@@ -1256,24 +2285,37 @@ export function processEffectBlock(
         ? { ...action, amount: item.triggerEvent?.amount ?? 0 }
         : action;
     const bindsTriggerEventTarget =
-      (action.action === "returnToDeck" && action.triggerEventTarget) ||
+      ((action.action === "returnToDeck" || action.action === "grantKeyword") &&
+        action.triggerEventTarget) ||
       (action.action === "copyPower" && action.triggerEventAttacker);
     const triggerEventTargetId =
       action.action === "returnToDeck" && action.triggerEventTarget
         ? item.triggerEvent?.targetInstanceId
-        : action.action === "copyPower" && action.triggerEventAttacker
+        : (action.action === "copyPower" && action.triggerEventAttacker) ||
+            (action.action === "grantKeyword" && action.triggerEventTarget)
           ? item.triggerEvent?.instanceId
           : undefined;
+    const triggerEventTargetIsSameObject =
+      action.action !== "returnToDeck" ||
+      !action.triggerEventTarget ||
+      item.triggerEvent?.targetZoneChangeCounter === undefined ||
+      (triggerEventTargetId !== undefined &&
+        getInstance(state, triggerEventTargetId).zoneChangeCounter ===
+          item.triggerEvent.targetZoneChangeCounter);
     const triggerEventTargetPool = bindsTriggerEventTarget
       ? candidatePoolForTarget(state, item.controller, item.sourceInstanceId, action.target)
       : undefined;
-    const selectedTargetIds = bindsTriggerEventTarget
-      ? triggerEventTargetId &&
-        triggerEventTargetPool?.supported &&
-        triggerEventTargetPool.candidateIds.includes(triggerEventTargetId)
-        ? [triggerEventTargetId]
-        : []
-      : undefined;
+    const selectedTargetIds =
+      action.action === "returnToDeck" && action.costPaymentTargets
+        ? [...previousActionTargetIds]
+        : bindsTriggerEventTarget
+          ? triggerEventTargetId &&
+            triggerEventTargetIsSameObject &&
+            triggerEventTargetPool?.supported &&
+            triggerEventTargetPool.candidateIds.includes(triggerEventTargetId)
+            ? [triggerEventTargetId]
+            : []
+          : undefined;
     enqueueResolution(
       state,
       {
@@ -1281,12 +2323,97 @@ export function processEffectBlock(
         sourceInstanceId: item.sourceInstanceId,
         controller: item.controller,
         action: resolvedAction,
+        effectTriggerEvent: item.triggerEvent,
         ...(selectedTargetIds && { selectedTargetIds }),
         previousActionTargetIds,
       },
       { next: true },
     );
   }
+}
+
+function selectRemovalGroup(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  action: Extract<Action, { action: "ko" | "returnToDeck" | "returnToHand" }>,
+  selectedGroups: string[][],
+  previousActionTargetIds?: string[],
+) {
+  const reportUnsupportedGroup = () => {
+    const source = getInstance(state, sourceInstanceId);
+    const details = `${cardName(getCard(source.cardId))} uses a target group that is not automated yet.`;
+    const issue = recordCapabilityIssue(state, {
+      kind: "unsupportedTarget",
+      code: `action-target-group:${action.action}`,
+      actor: controller,
+      sourceCardId: source.cardId,
+      sourceInstanceId,
+      eventId: null,
+      details,
+    });
+    enqueueJudgePrompt(state, sourceInstanceId, "Judge review: unsupported target group", details, {
+      issueId: issue.id,
+    });
+  };
+  const groups = action.targetGroups ?? [];
+  while (selectedGroups.length < groups.length) {
+    const target = groups[selectedGroups.length];
+    if (!target) break;
+    const groupAction = { ...action, target };
+    const selected = new Set(selectedGroups.flat());
+    const pool = candidatePoolForTarget(state, controller, sourceInstanceId, target);
+    if (!pool.supported) {
+      reportUnsupportedGroup();
+      return;
+    }
+    const candidates = pool.candidateIds.filter(
+      (id) => !selected.has(id) && actionTargetIsEligible(state, groupAction, id, sourceInstanceId),
+    );
+    if (candidates.length > 0) {
+      promptForTargetSelection(
+        state,
+        controller,
+        sourceInstanceId,
+        groupAction,
+        candidates,
+        previousActionTargetIds,
+        { action, selectedGroups },
+      );
+      return;
+    }
+    selectedGroups = [...selectedGroups, []];
+  }
+  // Recheck every group against the current state before a single movement action.
+  const selectedTargetIds: string[] = [];
+  for (const [index, ids] of selectedGroups.entries()) {
+    const target = groups[index];
+    if (!target) continue;
+    const pool = candidatePoolForTarget(state, controller, sourceInstanceId, target);
+    if (!pool.supported) {
+      reportUnsupportedGroup();
+      return;
+    }
+    selectedTargetIds.push(
+      ...ids.filter(
+        (id) =>
+          pool.candidateIds.includes(id) &&
+          actionTargetIsEligible(state, { ...action, target }, id, sourceInstanceId),
+      ),
+    );
+  }
+  enqueueResolution(
+    state,
+    {
+      kind: "effectAction",
+      controller,
+      sourceInstanceId,
+      action,
+      selectedTargetIds,
+      previousActionTargetIds,
+    },
+    { next: true },
+  );
 }
 
 export function processQueuedEffectAction(
@@ -1300,6 +2427,7 @@ export function processQueuedEffectAction(
       item.sourceInstanceId,
       [item.action.condition],
       item.previousActionTargetIds,
+      item.effectTriggerEvent,
     );
     if (!condition.supported) {
       const source = getInstance(state, item.sourceInstanceId);
@@ -1327,6 +2455,24 @@ export function processQueuedEffectAction(
     }
   }
 
+  if (
+    (item.action.action === "ko" ||
+      item.action.action === "returnToDeck" ||
+      item.action.action === "returnToHand") &&
+    item.action.targetGroups &&
+    item.selectedTargetIds === undefined
+  ) {
+    selectRemovalGroup(
+      state,
+      item.controller,
+      item.sourceInstanceId,
+      item.action,
+      [],
+      item.previousActionTargetIds,
+    );
+    return;
+  }
+
   const zonesBefore = new Map(
     Object.values(state.cards).map((instance) => [instance.instanceId, instance.zone]),
   );
@@ -1345,6 +2491,9 @@ export function processQueuedEffectAction(
     item.skipRemovalReplacementIds,
     item.returnToDeckContinuation,
     item.setPowerFromSourceIds,
+    item.removalCostPaymentId,
+    item.koCompletionId,
+    item.movementCompletionId,
   );
   if (!completed) {
     return;
@@ -1357,11 +2506,16 @@ export function processQueuedEffectAction(
   if (
     nextItem?.kind === "effectAction" &&
     nextItem.sourceInstanceId === item.sourceInstanceId &&
-    nextItem.controller === item.controller
+    nextItem.controller === item.controller &&
+    delayedActionChain(nextItem.action) === delayedActionChain(item.action) &&
+    (!delayedActionChain(item.action) ||
+      !["sequence", "optional", "conditional"].includes(item.action.action))
   ) {
-    const completedTargetIds =
-      item.returnToDeckContinuation?.finalizeOwnerGroup &&
-      item.returnToDeckContinuation.remainingOwnerGroups.length === 0
+    const scheduling = ["delayed", "scheduleAtEndOfTurn"].includes(item.action.action);
+    const completedTargetIds = scheduling
+      ? item.previousActionTargetIds
+      : item.returnToDeckContinuation?.finalizeOwnerGroup &&
+          item.returnToDeckContinuation.remainingOwnerGroups.length === 0
         ? item.returnToDeckContinuation.allTargetIds
         : item.action.action === "ko"
           ? movedCardIds
@@ -1369,6 +2523,12 @@ export function processQueuedEffectAction(
     nextItem.previousActionTargetIds = completedTargetIds?.length
       ? completedTargetIds
       : movedCardIds;
+    if (!scheduling)
+      nextItem.action = rebindDelayedPrevious(
+        state,
+        nextItem.action,
+        nextItem.previousActionTargetIds,
+      );
   }
   enqueueCharacterRemovalEffects(state, charactersBefore, item.controller);
 }
@@ -1540,6 +2700,11 @@ function enqueueDeferredOnPlayBlocks(
   playedCards: Array<{ instanceId: string; zoneChangeCounter: number }>,
 ) {
   for (const playedCard of [...playedCards].reverse()) {
+    if (
+      getInstance(state, playedCard.instanceId).zoneChangeCounter !== playedCard.zoneChangeCounter
+    ) {
+      continue;
+    }
     const blocks = effectBlocksForInstance(state, playedCard.instanceId, "onPlay");
     for (let blockIndex = blocks.length - 1; blockIndex >= 0; blockIndex -= 1) {
       enqueueResolution(
@@ -1547,6 +2712,7 @@ function enqueueDeferredOnPlayBlocks(
         {
           kind: "effectBlock",
           sourceInstanceId: playedCard.instanceId,
+          sourceZoneChangeCounter: playedCard.zoneChangeCounter,
           controller,
           trigger: "onPlay",
           blockIndex,
@@ -1565,7 +2731,6 @@ function completeGroupedPlay(
   selectedIds: string[],
   activeId: string,
 ): boolean {
-  const playingSeat = action.source.player === "self" ? controller : otherSeat(controller);
   if (
     !selectionSatisfiesGroupedPlayAction(
       state,
@@ -1580,16 +2745,55 @@ function completeGroupedPlay(
       sourceInstanceId,
       action,
       selectedIds,
-    ).includes(activeId) ||
-    selectedIds.filter(
-      (instanceId) => getCardForInstance(state, instanceId).cardType === "character",
-    ).length > getOpenCharacterSlots(state, playingSeat).length
+    ).includes(activeId)
   ) {
     return false;
   }
 
-  for (const instanceId of selectedIds) {
-    const playState = instanceId === activeId ? "active" : "rested";
+  return continueGroupedPlay(
+    state,
+    sourceInstanceId,
+    controller,
+    action,
+    selectedIds,
+    activeId,
+    [],
+  );
+}
+
+function continueGroupedPlay(
+  state: MatchState,
+  sourceInstanceId: string,
+  controller: MatchSeat,
+  action: Extract<import("@tcg/op-types").Action, { action: "playGrouped" }>,
+  pendingIds: string[],
+  activeId: string,
+  playedCards: Array<{ instanceId: string; zoneChangeCounter: number }>,
+): boolean {
+  const playingSeat = action.source.player === "self" ? controller : otherSeat(controller);
+  for (const [index, instanceId] of pendingIds.entries()) {
+    const playState =
+      action.playStates.multiple.every((playState) => playState === "active") ||
+      instanceId === activeId
+        ? "active"
+        : "rested";
+    if (getOpenCharacterSlots(state, playingSeat).length === 0) {
+      promptForEffectCharacterReplacement(state, {
+        controller,
+        playingSeat,
+        sourceInstanceId,
+        instanceId,
+        playState,
+        continuation: {
+          kind: "groupedPlay",
+          action,
+          remainingIds: pendingIds.slice(index + 1),
+          playedCards,
+          activeId,
+        },
+      });
+      return true;
+    }
     if (
       !playCardFromEffect(state, playingSeat, instanceId, playState, sourceInstanceId, {
         deferOnPlay: true,
@@ -1597,42 +2801,19 @@ function completeGroupedPlay(
     ) {
       return false;
     }
+    if (effectBlocksForInstance(state, instanceId, "onPlay").length > 0) {
+      playedCards.push({
+        instanceId,
+        zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
+      });
+    }
   }
-
-  const playedCards = selectedIds
-    .filter((instanceId) => effectBlocksForInstance(state, instanceId, "onPlay").length > 0)
-    .map((instanceId) => ({
-      instanceId,
-      zoneChangeCounter: getInstance(state, instanceId).zoneChangeCounter,
-    }));
-  if (action.chooseOnPlayOrder && playedCards.length > 1) {
-    createChoicePrompt(state, {
-      choiceKind: "orderCards",
-      seat: playingSeat,
-      label: `${cardName(getCardForInstance(state, sourceInstanceId))} On Play order.`,
-      details: "Choose the order in which the played cards' On Play effects activate.",
-      sourceCardId: getInstance(state, sourceInstanceId).cardId,
-      sourceInstanceId,
-      eventId: null,
-      options: playedCards.map(({ instanceId }) => ({
-        id: instanceId,
-        label: cardName(getCardForInstance(state, instanceId)),
-        value: instanceId,
-        targetId: instanceId,
-      })),
-      minSelections: playedCards.length,
-      maxSelections: playedCards.length,
-      context: { action: "playGrouped", ordered: true },
-      resolutionContext: {
-        intent: "effectGroupedPlayOnPlayOrder",
-        sourceInstanceId,
-        controller: playingSeat,
-        playedCards,
-      },
-    });
-  } else {
-    enqueueDeferredOnPlayBlocks(state, playingSeat, playedCards);
-  }
+  // 8-1-3-1-3: a source that changed areas before activation has no
+  // pending On Play effect, including a just-played card replaced for space.
+  const pendingPlayedCards = playedCards.filter(
+    (card) => getInstance(state, card.instanceId).zoneChangeCounter === card.zoneChangeCounter,
+  );
+  enqueueDeferredOnPlayBlocks(state, playingSeat, pendingPlayedCards);
   return true;
 }
 
@@ -1758,12 +2939,20 @@ function playSearchSelections(
       emitLog(
         state,
         context.controller,
-        `${getPlayer(state, context.controller).playerName} reveals ${cardName(getCardForInstance(state, instanceId))} and adds it to their hand.`,
+        context.action.reveal === false
+          ? `${getPlayer(state, context.controller).playerName} adds a card to their hand.`
+          : `${getPlayer(state, context.controller).playerName} reveals ${cardName(getCardForInstance(state, instanceId))} and adds it to their hand.`,
         {
           sourceCardId: promptSourceCardId,
           sourceInstanceId: context.sourceInstanceId,
-          targetIds: [instanceId],
+          targetIds: context.action.reveal === false ? [] : [instanceId],
           visibility: "public",
+          privateMessages:
+            context.action.reveal === false
+              ? {
+                  [context.controller]: `${getPlayer(state, context.controller).playerName} adds ${cardName(getCardForInstance(state, instanceId))} to their hand.`,
+                }
+              : undefined,
         },
       );
       moveCard(state, instanceId, context.controller, "hand", {
@@ -1781,14 +2970,14 @@ function playSearchSelections(
           sourceCardId: promptSourceCardId,
           sourceInstanceId: context.sourceInstanceId,
           targetIds: [instanceId],
-          visibility: "private",
+          visibility: context.action.lifeFaceUp ? "public" : "private",
         },
       );
       moveCard(state, instanceId, context.controller, "life", {
-        faceUp: false,
-        publicKnowledge: false,
+        faceUp: context.action.lifeFaceUp ?? false,
+        publicKnowledge: context.action.lifeFaceUp ?? false,
         actor: context.controller,
-        visibility: "private",
+        visibility: context.action.lifeFaceUp ? "public" : "private",
         lifePosition: "top",
       });
     }
@@ -1805,12 +2994,55 @@ export function resolveEffectChoicePrompt(
   command: Extract<GameCommand, { type: "resolvePrompt" }>,
 ): boolean {
   switch (prompt.resolutionContext?.intent) {
-    case "effectKoReplacement": {
+    case "continuousCostOrder": {
       const context = prompt.resolutionContext;
-      if (command.optionId !== "yes" && command.optionId !== "no") {
+      return (
+        context.candidateIds.includes(command.optionId ?? "") &&
+        chooseContinuousCostOrder(state, context.fingerprint, command.optionId)
+      );
+    }
+    case "readyEffectOrder": {
+      const context = prompt.resolutionContext;
+      const group = state.readyEffectGroup;
+      const selected = group?.effects.find(
+        (item) => item.id === command.optionId && item.controller === context.controller,
+      );
+      if (
+        !selected ||
+        !context.candidateIds.includes(selected.id) ||
+        !isReadyEffectEligible(state, selected)
+      )
+        return false;
+      group!.effects = group!.effects.filter((item) => item.id !== selected.id);
+      enqueueResolution(state, { ...selected, readyEffectSelected: true }, { next: true });
+      return true;
+    }
+
+    case "loopIterations":
+      return (
+        command.iterations !== undefined &&
+        declareLoopIterations(state, command.seat, command.iterations)
+      );
+    case "effectKoReplacement": {
+      const originalContext = prompt.resolutionContext;
+      if (originalContext.replacementRequired && command.optionId === "no") return false;
+      const selected = originalContext.replacementChoices?.find(
+        (choice) => choice.id === command.optionId,
+      );
+      if (originalContext.replacementChoices && command.optionId !== "no" && !selected)
+        return false;
+      const context = selected
+        ? {
+            ...originalContext,
+            ...selected,
+            replacementSourceInstanceId: selected.sourceInstanceId,
+          }
+        : originalContext;
+      const optionId = selected ? "yes" : command.optionId;
+      if (optionId !== "yes" && command.optionId !== "no") {
         return false;
       }
-      if (command.optionId === "yes") {
+      if (optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
           context.replacementEffectKey,
         );
@@ -1822,6 +3054,8 @@ export function resolveEffectChoicePrompt(
             state,
             {
               kind: "effectAction",
+              removalCostPaymentId: context.removalCostPaymentId,
+              koCompletionId: context.koCompletionId,
               sourceInstanceId: context.koSourceInstanceId,
               controller: context.koController,
               action: {
@@ -1845,45 +3079,264 @@ export function resolveEffectChoicePrompt(
             sourceInstanceId: context.replacementSourceInstanceId,
             controller: context.controller,
             action: context.replacementAction,
+            replacementProcess: extendReplacementProcess(
+              state,
+              context.replacementSourceInstanceId,
+              context.replacementEffectKey,
+            ),
             previousActionTargetIds: context.replacementTargetIds,
           },
           { next: true },
         );
       } else {
-        koCharacterByEffect(
+        const declinedTargets =
+          context.replacementChoices?.flatMap((choice) => choice.replacementTargetIds) ??
+          context.replacementTargetIds;
+        enqueueResolution(
           state,
-          context.targetId,
-          context.koController,
-          context.koSourceInstanceId,
+          {
+            kind: "effectAction",
+            removalCostPaymentId: context.removalCostPaymentId,
+            koCompletionId: context.koCompletionId,
+            sourceInstanceId: context.koSourceInstanceId,
+            controller: context.koController,
+            action: {
+              action: "ko",
+              target: { player: "both", zones: ["character"], count: { amount: "all" } },
+              previousActionTargets: true,
+            },
+            previousActionTargetIds: [
+              ...new Set([context.targetId, ...context.remainingTargetIds]),
+            ],
+            replacementProcess: declineReplacementProcess(
+              state,
+              declinedTargets,
+              prompt.replacementGroup ?? [],
+            ),
+          },
+          { next: true },
         );
-        if (context.remainingTargetIds.length > 0) {
+      }
+      return true;
+    }
+    case "effectDonTransferSelection": {
+      const { process, index } = prompt.resolutionContext;
+      const move = process.moves[index];
+      const ids = command.selectedIds ?? [];
+      if (
+        !move ||
+        ids.length !== move.count ||
+        new Set(ids).size !== ids.length ||
+        ids.some(
+          (id) => !move.candidates.includes(id) || !donIdentitiesAt(state, move.from).includes(id),
+        )
+      )
+        return false;
+      const next = { ...process, moves: process.moves.map((move) => ({ ...move })) };
+      next.moves[index]!.selected = ids;
+      return continueDonTransfers(state, next);
+    }
+    case "effectCostDonIdentity": {
+      const context = prompt.resolutionContext,
+        ids = command.selectedIds ?? [];
+      if (
+        ids.length !== context.amount ||
+        new Set(ids).size !== ids.length ||
+        ids.some((id) => !context.candidates.includes(id) || !locateDonIdentity(state, id))
+      )
+        return false;
+      enqueueResolution(
+        state,
+        {
+          ...context.continuation,
+          kind: "effectBlock",
+          costPaymentIdsByType: {
+            ...context.continuation.costPaymentIdsByType,
+            [context.paymentType]: ids,
+          },
+        },
+        { next: true },
+      );
+      return true;
+    }
+    case "effectSimultaneousStateSelection": {
+      const { process, groupIndex } = prompt.resolutionContext;
+      const group = process.groups[groupIndex];
+      if (!group) return false;
+      const ids = command.selectedIds ?? (command.optionId ? [command.optionId] : []);
+      const constraint = process.action.groups[group.index]!.target.totalConstraint;
+      const total = constraint
+        ? ids.reduce((sum, id) => sum + (process.snapshots[id]?.[constraint.property] ?? 0), 0)
+        : 0;
+      const validTotal =
+        !constraint ||
+        {
+          eq: total === constraint.value,
+          lt: total < constraint.value,
+          lte: total <= constraint.value,
+          gt: total > constraint.value,
+          gte: total >= constraint.value,
+        }[constraint.comparison];
+      if (
+        ids.length < group.minimum ||
+        ids.length > group.maximum ||
+        new Set(ids).size !== ids.length ||
+        ids.some((id) => {
+          const snapshot = process.snapshots[id],
+            card = state.cards[id];
+          if (snapshot?.donSeat) {
+            const location = locateDonIdentity(state, id);
+            return (
+              !group.candidateIds.includes(id) ||
+              !location ||
+              "attachedTo" in location ||
+              location.seat !== snapshot.donSeat
+            );
+          }
+          return (
+            !group.candidateIds.includes(id) ||
+            !snapshot ||
+            !card ||
+            card.zone !== snapshot.zone ||
+            card.zoneChangeCounter !== snapshot.zoneChangeCounter
+          );
+        }) ||
+        !validTotal
+      )
+        return false;
+      group.selectedIds = ids;
+      continueSimultaneousStateChange(state, process);
+      return true;
+    }
+    case "effectRestReplacement": {
+      const originalContext = prompt.resolutionContext;
+      if (originalContext.replacementRequired && command.optionId === "no") return false;
+      const selected = originalContext.replacementChoices?.find(
+        (choice) => choice.id === command.optionId,
+      );
+      if (originalContext.replacementChoices && command.optionId !== "no" && !selected)
+        return false;
+      const context = selected
+        ? {
+            ...originalContext,
+            ...selected,
+            replacementSourceInstanceId: selected.sourceInstanceId,
+          }
+        : originalContext;
+      const optionId = selected ? "yes" : command.optionId;
+      if (optionId !== "yes" && optionId !== "no") return false;
+      if (context.restCostProcess) {
+        const process = context.restCostProcess;
+        const entry = process.entries[process.index];
+        const target = state.cards[context.targetId];
+        if (
+          !entry ||
+          entry.kind !== "card" ||
+          entry.instanceId !== context.targetId ||
+          !target ||
+          target.zone !== entry.zone ||
+          target.zoneChangeCounter !== entry.zoneChangeCounter
+        )
+          return false;
+        if (optionId === "yes") {
+          // The replacement is a different event, even if it rests this same card.
+          process.incomplete = true;
+          process.index += 1;
+          getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
+            context.replacementEffectKey,
+          );
+          enqueueResolution(
+            state,
+            {
+              kind: "effectRestCostContinue",
+              process,
+              replacementProcess: currentReplacementProcess(state),
+            },
+            { next: true },
+          );
           enqueueResolution(
             state,
             {
               kind: "effectAction",
-              sourceInstanceId: context.koSourceInstanceId,
-              controller: context.koController,
-              action: {
-                action: "ko",
-                target: {
-                  player: "both",
-                  zones: ["character"],
-                  count: { amount: "all" },
-                },
-                previousActionTargets: true,
-              },
-              previousActionTargetIds: context.remainingTargetIds,
+              sourceInstanceId: context.replacementSourceInstanceId,
+              controller: context.controller,
+              action: context.replacementAction,
+              replacementProcess: extendReplacementProcess(
+                state,
+                context.replacementSourceInstanceId,
+                context.replacementEffectKey,
+              ),
+              previousActionTargetIds: [context.targetId],
+            },
+            { next: true },
+          );
+        } else {
+          enqueueResolution(
+            state,
+            {
+              kind: "effectRestCostContinue",
+              process,
+              replacementProcess: declineReplacementProcess(
+                state,
+                [context.targetId],
+                prompt.replacementGroup ?? [],
+              ),
             },
             { next: true },
           );
         }
+        return true;
       }
-      return true;
-    }
-    case "effectRestReplacement": {
-      const context = prompt.resolutionContext;
-      if (command.optionId !== "yes" && command.optionId !== "no") {
-        return false;
+      if (context.simultaneousStateChange) {
+        const process = context.simultaneousStateChange;
+        const snapshot = process.snapshots[context.targetId];
+        const target = state.cards[context.targetId];
+        if (
+          !snapshot ||
+          !target ||
+          target.zone !== snapshot.zone ||
+          target.zoneChangeCounter !== snapshot.zoneChangeCounter
+        )
+          return false;
+        if (optionId === "yes") {
+          process.winners![process.replacementIndex]!.replaced = true;
+          process.replacementIndex += 1;
+          getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
+            context.replacementEffectKey,
+          );
+          enqueueResolution(state, { kind: "effectStateChangeContinue", process }, { next: true });
+          enqueueResolution(
+            state,
+            {
+              kind: "effectAction",
+              sourceInstanceId: context.replacementSourceInstanceId,
+              controller: context.controller,
+              action: context.replacementAction,
+              replacementProcess: extendReplacementProcess(
+                state,
+                context.replacementSourceInstanceId,
+                context.replacementEffectKey,
+              ),
+              previousActionTargetIds: [context.targetId],
+            },
+            { next: true },
+          );
+        } else {
+          enqueueResolution(
+            state,
+            {
+              kind: "effectStateChangeContinue",
+              process,
+              replacementProcess: declineReplacementProcess(
+                state,
+                [context.targetId],
+                prompt.replacementGroup ?? [],
+              ),
+            },
+            { next: true },
+          );
+        }
+        return true;
       }
       if (context.remainingTargetIds.length > 0) {
         enqueueResolution(
@@ -1898,7 +3351,7 @@ export function resolveEffectChoicePrompt(
           { next: true },
         );
       }
-      if (command.optionId === "yes") {
+      if (optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
           context.replacementEffectKey,
         );
@@ -1909,44 +3362,142 @@ export function resolveEffectChoicePrompt(
             sourceInstanceId: context.replacementSourceInstanceId,
             controller: context.controller,
             action: context.replacementAction,
+            replacementProcess: extendReplacementProcess(
+              state,
+              context.replacementSourceInstanceId,
+              context.replacementEffectKey,
+            ),
             previousActionTargetIds: [context.targetId],
           },
           { next: true },
         );
       } else {
-        restCharacterByEffect(
+        enqueueResolution(
           state,
-          context.targetId,
-          context.restController,
-          context.restSourceInstanceId,
+          {
+            kind: "effectAction",
+            sourceInstanceId: context.restSourceInstanceId,
+            controller: context.restController,
+            action: {
+              ...context.restAction,
+              target: { ...context.restAction.target, count: { amount: 1 } },
+            },
+            selectedTargetIds: [context.targetId],
+            replacementProcess: declineReplacementProcess(
+              state,
+              [context.targetId],
+              prompt.replacementGroup ?? [],
+            ),
+          },
+          { next: true },
         );
       }
       return true;
     }
     case "effectRemovalReplacement": {
-      const context = prompt.resolutionContext;
-      if (command.optionId !== "yes" && command.optionId !== "no") {
+      const originalContext = prompt.resolutionContext;
+      if (originalContext.replacementRequired && command.optionId === "no") return false;
+      const selected = originalContext.replacementChoices?.find(
+        (choice) => choice.id === command.optionId,
+      );
+      if (originalContext.replacementChoices && command.optionId !== "no" && !selected)
+        return false;
+      const context = selected
+        ? {
+            ...originalContext,
+            ...selected,
+            replacementSourceInstanceId: selected.sourceInstanceId,
+          }
+        : originalContext;
+      const optionId = selected ? "yes" : command.optionId;
+      if (optionId !== "yes" && optionId !== "no") {
         return false;
       }
-      if (context.remainingTargetIds.length > 0) {
+      if (optionId === "no") {
+        const declinedTargets = context.replacementChoices?.flatMap(
+          (choice) => choice.replacementTargetIds,
+        ) ?? [
+          context.targetId,
+          ...context.remainingTargetIds.filter((id) => {
+            const candidate = findRemoveFromFieldReplacement(
+              state,
+              id,
+              context.removalController,
+              context.removalSourceInstanceId,
+            );
+            return (
+              candidate?.sourceInstanceId === context.replacementSourceInstanceId &&
+              candidate.replacementEffectIndex === context.replacementEffectIndex
+            );
+          }),
+        ];
+        const process = declineReplacementProcess(
+          state,
+          declinedTargets,
+          prompt.replacementGroup ?? [],
+        );
+        if (
+          withReplacementProcess(state, process, () =>
+            promptForEffectRemovalReplacement(
+              state,
+              context.targetId,
+              context.removalController,
+              context.removalSourceInstanceId,
+              context.removalAction,
+              context.remainingTargetIds,
+              context.returnToDeckContinuation,
+              context.returnCharacterCostContinuation,
+              context.skipRemovalReplacementIds,
+              context.removalCostPaymentId,
+              context.movementCompletionId,
+            ),
+          )
+        )
+          return true;
+      }
+      const replacementTargetIds = selected?.replacementTargetIds ?? [
+        context.targetId,
+        ...context.remainingTargetIds.filter((targetId) => {
+          if (context.skipRemovalReplacementIds?.includes(targetId)) return false;
+          const replacement = findRemoveFromFieldReplacement(
+            state,
+            targetId,
+            context.removalController,
+            context.removalSourceInstanceId,
+          );
+          return (
+            replacement?.sourceInstanceId === context.replacementSourceInstanceId &&
+            replacement.replacementEffectIndex === context.replacementEffectIndex
+          );
+        }),
+      ];
+      const remainingTargetIds = context.remainingTargetIds.filter(
+        (targetId) => !replacementTargetIds.includes(targetId),
+      );
+      if (optionId === "yes" && remainingTargetIds.length > 0) {
         enqueueResolution(
           state,
           {
             kind: "effectAction",
             sourceInstanceId: context.removalSourceInstanceId,
+            removalCostPaymentId: context.removalCostPaymentId,
+            movementCompletionId: context.movementCompletionId,
             controller: context.removalController,
             action: context.removalAction,
-            selectedTargetIds: context.remainingTargetIds,
+            selectedTargetIds: remainingTargetIds,
+            skipRemovalReplacementIds: context.skipRemovalReplacementIds,
             returnToDeckContinuation: context.returnToDeckContinuation,
           },
           { next: true },
         );
-      } else if (command.optionId === "yes" && context.returnToDeckContinuation) {
+      } else if (optionId === "yes" && context.returnToDeckContinuation) {
         enqueueResolution(
           state,
           {
             kind: "effectAction",
             sourceInstanceId: context.removalSourceInstanceId,
+            removalCostPaymentId: context.removalCostPaymentId,
+            movementCompletionId: context.movementCompletionId,
             controller: context.removalController,
             action: context.removalAction,
             selectedTargetIds: [],
@@ -1965,7 +3516,7 @@ export function resolveEffectChoicePrompt(
           { next: true },
         );
       }
-      if (command.optionId === "yes") {
+      if (optionId === "yes") {
         getInstance(state, context.replacementSourceInstanceId).usedEffectKeys.push(
           context.replacementEffectKey,
         );
@@ -1976,7 +3527,12 @@ export function resolveEffectChoicePrompt(
             sourceInstanceId: context.replacementSourceInstanceId,
             controller: context.controller,
             action: context.replacementAction,
-            previousActionTargetIds: [context.targetId],
+            replacementProcess: extendReplacementProcess(
+              state,
+              context.replacementSourceInstanceId,
+              context.replacementEffectKey,
+            ),
+            previousActionTargetIds: replacementTargetIds,
           },
           { next: true },
         );
@@ -1986,73 +3542,16 @@ export function resolveEffectChoicePrompt(
           {
             kind: "effectAction",
             sourceInstanceId: context.removalSourceInstanceId,
+            removalCostPaymentId: context.removalCostPaymentId,
+            movementCompletionId: context.movementCompletionId,
             controller: context.removalController,
             action: context.removalAction,
-            selectedTargetIds: [context.targetId],
-            skipRemovalReplacementIds: [context.targetId],
-            returnToDeckContinuation: context.returnToDeckContinuation
-              ? {
-                  ...context.returnToDeckContinuation,
-                  finalizeOwnerGroup: context.remainingTargetIds.length === 0,
-                }
-              : undefined,
-          },
-          { next: true },
-        );
-      }
-      return true;
-    }
-    case "effectRestDonCount": {
-      const context = prompt.resolutionContext;
-      const count = Number(command.optionId);
-      const targetPlayer = getPlayer(state, context.targetSeat);
-      if (
-        !Number.isInteger(count) ||
-        count < 0 ||
-        count > context.maximum ||
-        count > targetPlayer.activeDon ||
-        (!context.action.target.count.upTo && count !== context.maximum)
-      ) {
-        return false;
-      }
-      targetPlayer.activeDon -= count;
-      targetPlayer.restedDon += count;
-      if (count > 0) {
-        emitLog(
-          state,
-          context.controller,
-          `${getPlayer(state, context.controller).playerName} rests ${count} of ${targetPlayer.playerName}'s DON!! cards.`,
-          {
-            sourceCardId: getInstance(state, context.sourceInstanceId).cardId,
-            sourceInstanceId: context.sourceInstanceId,
-            visibility: "public",
-          },
-        );
-      }
-      const originalAmount = context.action.target.count.amount;
-      const remaining = originalAmount === "all" ? null : Math.max(0, originalAmount - count);
-      const remainingZones = context.action.target.zones.filter((zone) => zone !== "costArea");
-      if ((remaining === null || remaining > 0) && remainingZones.length > 0) {
-        enqueueResolution(
-          state,
-          {
-            kind: "effectAction",
-            sourceInstanceId: context.sourceInstanceId,
-            controller: context.controller,
-            action: {
-              ...context.action,
-              target: {
-                ...context.action.target,
-                zones: remainingZones,
-                count:
-                  remaining === null
-                    ? { amount: "all" }
-                    : {
-                        amount: remaining,
-                        ...(context.action.target.count.upTo ? { upTo: true } : {}),
-                      },
-              },
-            },
+            selectedTargetIds: [context.targetId, ...context.remainingTargetIds],
+            skipRemovalReplacementIds: [
+              ...(context.skipRemovalReplacementIds ?? []),
+              ...replacementTargetIds,
+            ],
+            returnToDeckContinuation: context.returnToDeckContinuation,
           },
           { next: true },
         );
@@ -2095,6 +3594,27 @@ export function resolveEffectChoicePrompt(
       ) {
         return false;
       }
+      if (state.donIdentities)
+        return continueDonTransfers(state, {
+          controller: context.controller,
+          sourceInstanceId: context.sourceInstanceId,
+          moves: [
+            {
+              from: { seat: context.controller, area: "active" },
+              to: { seat: context.controller, area: "rested" },
+              count,
+              candidates: donIdentitiesAt(state, { seat: context.controller, area: "active" }),
+            },
+          ],
+          afterActions: [
+            {
+              action: "modifyPower",
+              target: context.action.target,
+              value: count * context.action.valuePerDon,
+              duration: context.action.duration,
+            },
+          ],
+        });
       player.activeDon -= count;
       player.restedDon += count;
       enqueueResolution(
@@ -2135,7 +3655,7 @@ export function resolveEffectChoicePrompt(
           visibility: "public",
         },
       );
-      if (baseCost(revealedCard) === chosenCost) {
+      if (getBaseCost(state, context.revealedInstanceId) === chosenCost) {
         for (const action of [...context.action.onMatch].reverse()) {
           enqueueResolution(
             state,
@@ -2203,6 +3723,37 @@ export function resolveEffectChoicePrompt(
       }
       return true;
     }
+    case "effectAlternativeCost": {
+      const context = prompt.resolutionContext;
+      const index = context.affordableIndexes.find(
+        (candidate) => String(candidate) === command.optionId,
+      );
+      if (index === undefined) return false;
+      const original = effectBlockForContinuation(state, context.continuation);
+      const selected = effectBlockWithSelectedCost(original, index);
+      if (
+        !selected ||
+        !canPayEffectBlockCosts(
+          state,
+          context.controller,
+          context.sourceInstanceId,
+          { ...selected, alternativeCosts: undefined },
+          context.continuation.trashHandIds,
+        )
+      )
+        return false;
+      enqueueResolution(
+        state,
+        {
+          kind: "effectBlock",
+          ...context.continuation,
+          selectedAlternativeCostIndex: index,
+          confirmed: true,
+        },
+        { next: true },
+      );
+      return true;
+    }
     case "effectOptional":
       if (command.optionId === "yes") {
         enqueueResolution(
@@ -2213,6 +3764,11 @@ export function resolveEffectChoicePrompt(
             controller: prompt.resolutionContext.controller,
             trigger: prompt.resolutionContext.trigger,
             blockIndex: prompt.resolutionContext.blockIndex,
+            activatedBlock: prompt.resolutionContext.activatedBlock,
+            orderedCostPayments: prompt.resolutionContext.orderedCostPayments,
+            paidCostCount: prompt.resolutionContext.paidCostCount,
+            costPaymentProgress: prompt.resolutionContext.costPaymentProgress,
+            selectedAlternativeCostIndex: prompt.resolutionContext.selectedAlternativeCostIndex,
             trashHandIds: prompt.resolutionContext.trashHandIds,
             costPaymentIdsByType: prompt.resolutionContext.costPaymentIdsByType,
             confirmed: true,
@@ -2221,6 +3777,7 @@ export function resolveEffectChoicePrompt(
           { next: true },
         );
       } else {
+        state.optionalLoopEvidence = undefined;
         // Rules 8-1-2 / 10-2-13: Once Per Turn is consumed only when activated
         // and resolved — declining leaves later opportunities available.
         emitLog(
@@ -2238,15 +3795,22 @@ export function resolveEffectChoicePrompt(
     case "effectCostGiveDon": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const cost = context.cost;
-      const { recipientSeat, poolAmount } = giveDonCostParts(state, context.controller, cost);
-      const recipient = getPlayer(state, recipientSeat);
-      const liveCandidateIds = [
-        recipient.leaderInstanceId,
-        ...recipient.characterArea.filter(
-          (instanceId): instanceId is string => instanceId !== null,
-        ),
-      ];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
+      const cost = block?.costs?.find((candidate) => candidate.cost === "giveDon");
+      if (!cost) {
+        return false;
+      }
+      const { poolAmount } = giveDonCostParts(state, context.controller, cost);
+      const liveCandidateIds = giveDonCostCandidateIds(
+        state,
+        context.controller,
+        cost,
+        context.sourceInstanceId,
+      );
       if (
         selectedIds.length !== 1 ||
         !context.candidateIds.includes(selectedIds[0]!) ||
@@ -2263,6 +3827,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIdsByType: {
             ...context.costPaymentIdsByType,
             giveDon: selectedIds,
@@ -2301,6 +3870,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           trashHandIds: selectedIds,
           costPaymentIds: context.costPaymentIds,
           costPaymentIdsByType: context.costPaymentIdsByType,
@@ -2330,6 +3904,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2341,13 +3920,18 @@ export function resolveEffectChoicePrompt(
     case "effectCostReturnDon": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const liveCandidateIds = returnDonCostOptions(state, context.controller).map(
-        (option) => option.id,
+      const paymentBlock = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
       );
-      const card = getCard(getInstance(state, context.sourceInstanceId).cardId);
-      const returnDonCost = effectBlocksFor(card, context.trigger)[context.blockIndex]?.costs?.find(
-        (cost) => cost.cost === "returnDon",
-      );
+      const returnDonCost = paymentBlock?.costs?.find((cost) => cost.cost === "returnDon");
+      if (!returnDonCost) return false;
+      const liveCandidateIds = returnDonCostOptions(
+        state,
+        context.controller,
+        returnDonCost.donState,
+      ).map((option) => option.id);
       const minimumAmount = returnDonCost?.minimumAmount ?? context.amount;
       const maximumAmount =
         returnDonCost?.minimumAmount === undefined ? context.amount : liveCandidateIds.length;
@@ -2361,6 +3945,17 @@ export function resolveEffectChoicePrompt(
       ) {
         return false;
       }
+      if (
+        !bindDonCostSelections(
+          state,
+          context.controller,
+          context.sourceInstanceId,
+          paymentBlock?.costs ?? [],
+          selectedIds,
+          context.costPaymentIdsByType,
+        )
+      )
+        return false;
       enqueueResolution(
         state,
         {
@@ -2369,9 +3964,25 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           trashHandIds: context.trashHandIds,
           costPaymentIds: selectedIds,
-          costPaymentIdsByType: context.costPaymentIdsByType,
+          costPaymentIdsByType: {
+            ...context.costPaymentIdsByType,
+            ...(state.donIdentities
+              ? {
+                  returnDonSources: donIdentitiesForVirtualIds(
+                    state,
+                    context.controller,
+                    selectedIds,
+                  ),
+                }
+              : {}),
+          },
           confirmed: true,
           triggerEvent: context.triggerEvent,
         },
@@ -2379,7 +3990,31 @@ export function resolveEffectChoicePrompt(
       );
       return true;
     }
-    case "effectCostReturnCharacterToDeck":
+    case "effectCostReturnCharacterToDeck": {
+      const context = prompt.resolutionContext;
+      const selectedIds = command.selectedIds ?? [];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
+      const cost = block?.costs?.find((candidate) => candidate.cost === "returnCharacterToDeck");
+      if (!cost) return false;
+      const liveCandidateIds = candidatesForReturnCharacterToDeckCost(
+        state,
+        context.controller,
+        context.sourceInstanceId,
+        cost,
+      );
+      if (
+        selectedIds.length !== context.amount ||
+        new Set(selectedIds).size !== selectedIds.length ||
+        selectedIds.some(
+          (instanceId) =>
+            !context.candidateIds.includes(instanceId) || !liveCandidateIds.includes(instanceId),
+        )
+      )
+        return false;
       enqueueResolution(
         state,
         {
@@ -2388,6 +4023,11 @@ export function resolveEffectChoicePrompt(
           controller: prompt.resolutionContext.controller,
           trigger: prompt.resolutionContext.trigger,
           blockIndex: prompt.resolutionContext.blockIndex,
+          activatedBlock: prompt.resolutionContext.activatedBlock,
+          orderedCostPayments: prompt.resolutionContext.orderedCostPayments,
+          paidCostCount: prompt.resolutionContext.paidCostCount,
+          costPaymentProgress: prompt.resolutionContext.costPaymentProgress,
+          selectedAlternativeCostIndex: prompt.resolutionContext.selectedAlternativeCostIndex,
           trashHandIds: prompt.resolutionContext.trashHandIds,
           costPaymentIds: command.selectedIds ?? [],
           confirmed: true,
@@ -2396,6 +4036,7 @@ export function resolveEffectChoicePrompt(
         { next: true },
       );
       return true;
+    }
     case "effectCostReturnCharacter": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
@@ -2434,6 +4075,11 @@ export function resolveEffectChoicePrompt(
             controller: context.controller,
             trigger: context.trigger,
             blockIndex: context.blockIndex,
+            activatedBlock: context.activatedBlock,
+            orderedCostPayments: context.orderedCostPayments,
+            paidCostCount: context.paidCostCount,
+            costPaymentProgress: context.costPaymentProgress,
+            selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
             costPaymentIdsByType: {
               ...context.costPaymentIdsByType,
               returnCharacter: selectedIds,
@@ -2453,6 +4099,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIdsByType: {
             ...context.costPaymentIdsByType,
             returnCharacter: selectedIds,
@@ -2478,10 +4129,46 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: [command.optionId],
           confirmed: true,
           triggerEvent: context.triggerEvent,
         },
+        { next: true },
+      );
+      return true;
+    }
+    case "effectCostAddCharacterToLife":
+    case "effectCostTurnLifeFaceUp": {
+      const context = prompt.resolutionContext;
+      const item = context.continuation;
+      const selectedIds = command.selectedIds ?? [];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, item),
+        item.selectedAlternativeCostIndex,
+        item.orderedCostPayments ? (item.paidCostCount ?? 0) : undefined,
+      );
+      const cost = block?.costs?.find((cost) =>
+        context.intent === "effectCostAddCharacterToLife"
+          ? cost.cost === "addCharacterToLife"
+          : cost.cost === "turnLifeFaceUp",
+      );
+      if (!cost || (cost.cost !== "addCharacterToLife" && cost.cost !== "turnLifeFaceUp"))
+        return false;
+      const live = candidatesForLifeCardCost(state, item.controller, item.sourceInstanceId, cost);
+      if (
+        selectedIds.length !== context.amount ||
+        new Set(selectedIds).size !== selectedIds.length ||
+        selectedIds.some((id) => !context.candidateIds.includes(id) || !live.includes(id))
+      )
+        return false;
+      enqueueResolution(
+        state,
+        { ...item, kind: "effectBlock", confirmed: true, costPaymentIds: selectedIds },
         { next: true },
       );
       return true;
@@ -2508,6 +4195,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2519,7 +4211,30 @@ export function resolveEffectChoicePrompt(
     case "effectCostReturnTrashToDeck": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const liveCandidateIds = getPlayer(state, context.controller).trash;
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
+      const cost = block?.costs?.find((cost) => cost.cost === "returnTrashToDeck");
+      if (!cost) return false;
+      const liveCandidateIds = candidatesForReturnTrashToDeckCost(
+        state,
+        context.controller,
+        context.sourceInstanceId,
+        cost,
+      );
+      if (cost.includeSelf) {
+        const source = getInstance(state, context.sourceInstanceId);
+        if (
+          source.zone !== "character" ||
+          source.controller !== context.controller ||
+          !selectedIds.includes(source.instanceId)
+        )
+          return false;
+        liveCandidateIds.unshift(source.instanceId);
+      }
+      if (context.amount !== cost.amount + (cost.includeSelf ? 1 : 0)) return false;
       if (
         selectedIds.length !== context.amount ||
         new Set(selectedIds).size !== selectedIds.length ||
@@ -2538,6 +4253,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2555,6 +4275,11 @@ export function resolveEffectChoicePrompt(
           controller: prompt.resolutionContext.controller,
           trigger: prompt.resolutionContext.trigger,
           blockIndex: prompt.resolutionContext.blockIndex,
+          activatedBlock: prompt.resolutionContext.activatedBlock,
+          orderedCostPayments: prompt.resolutionContext.orderedCostPayments,
+          paidCostCount: prompt.resolutionContext.paidCostCount,
+          costPaymentProgress: prompt.resolutionContext.costPaymentProgress,
+          selectedAlternativeCostIndex: prompt.resolutionContext.selectedAlternativeCostIndex,
           costPaymentIds: command.selectedIds ?? [],
           confirmed: true,
           triggerEvent: prompt.resolutionContext.triggerEvent,
@@ -2572,6 +4297,23 @@ export function resolveEffectChoicePrompt(
       ) {
         return false;
       }
+      const paymentBlock = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
+      if (
+        !canPayCosts(
+          state,
+          context.controller,
+          context.sourceInstanceId,
+          paymentBlock?.costs,
+          context.trashHandIds,
+          context.costPaymentIds,
+          { ...context.costPaymentIdsByType, restCards: selectedIds },
+        )
+      )
+        return false;
       enqueueResolution(
         state,
         {
@@ -2580,9 +4322,25 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
+          costPaymentIds: context.costPaymentIds,
+          trashHandIds: context.trashHandIds,
           costPaymentIdsByType: {
             ...context.costPaymentIdsByType,
             restCards: selectedIds,
+            ...(state.donIdentities
+              ? {
+                  restCardsSources: donIdentitiesForVirtualIds(
+                    state,
+                    context.controller,
+                    selectedIds,
+                  ),
+                }
+              : {}),
           },
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2594,8 +4352,11 @@ export function resolveEffectChoicePrompt(
     case "effectCostKoCharacter": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const card = getCard(getInstance(state, context.sourceInstanceId).cardId);
-      const block = effectBlocksFor(card, context.trigger)[context.blockIndex];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
       const cost = block?.costs?.find((candidate) => candidate.cost === "koCharacter");
       if (!cost) return false;
       const liveCandidateIds = candidatesForKoCharacterCost(
@@ -2622,6 +4383,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2633,8 +4399,11 @@ export function resolveEffectChoicePrompt(
     case "effectCostTrashCharacter": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const card = getCard(getInstance(state, context.sourceInstanceId).cardId);
-      const block = effectBlocksFor(card, context.trigger)[context.blockIndex];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
       const cost = block?.costs?.find((candidate) => candidate.cost === "trashCharacter");
       if (!cost) return false;
       const liveCandidateIds = candidatesForTrashCharacterCost(
@@ -2675,6 +4444,11 @@ export function resolveEffectChoicePrompt(
             controller: context.controller,
             trigger: context.trigger,
             blockIndex: context.blockIndex,
+            activatedBlock: context.activatedBlock,
+            orderedCostPayments: context.orderedCostPayments,
+            paidCostCount: context.paidCostCount,
+            costPaymentProgress: context.costPaymentProgress,
+            selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
             costPaymentIds: selectedIds,
             costsPaid: true,
             confirmed: true,
@@ -2692,6 +4466,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2703,8 +4482,11 @@ export function resolveEffectChoicePrompt(
     case "effectCostRevealFromHand": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const card = getCard(getInstance(state, context.sourceInstanceId).cardId);
-      const block = effectBlocksFor(card, context.trigger)[context.blockIndex];
+      const block = effectBlockWithSelectedCost(
+        effectBlockForContinuation(state, context),
+        context.selectedAlternativeCostIndex,
+        context.orderedCostPayments ? (context.paidCostCount ?? 0) : undefined,
+      );
       const cost = block?.costs?.find((candidate) => candidate.cost === "revealFromHand");
       if (!cost) {
         return false;
@@ -2733,6 +4515,11 @@ export function resolveEffectChoicePrompt(
           controller: context.controller,
           trigger: context.trigger,
           blockIndex: context.blockIndex,
+          activatedBlock: context.activatedBlock,
+          orderedCostPayments: context.orderedCostPayments,
+          paidCostCount: context.paidCostCount,
+          costPaymentProgress: context.costPaymentProgress,
+          selectedAlternativeCostIndex: context.selectedAlternativeCostIndex,
           costPaymentIds: selectedIds,
           confirmed: true,
           triggerEvent: context.triggerEvent,
@@ -2769,6 +4556,8 @@ export function resolveEffectChoicePrompt(
         prompt.resolutionContext.sourceInstanceId,
         target,
       );
+      const grouped = prompt.resolutionContext.groupedRemovalSelection;
+      const alreadySelected = new Set(grouped?.selectedGroups.flat() ?? []);
       const liveCandidateIds =
         action.action === "freeze" && target.zones.includes("costArea")
           ? freezeActionCandidateIds(
@@ -2777,8 +4566,10 @@ export function resolveEffectChoicePrompt(
               prompt.resolutionContext.sourceInstanceId,
               action,
             )
-          : pool.candidateIds.filter((instanceId) =>
-              actionTargetIsEligible(state, action, instanceId, sourceInstanceId),
+          : pool.candidateIds.filter(
+              (instanceId) =>
+                !alreadySelected.has(instanceId) &&
+                actionTargetIsEligible(state, action, instanceId, sourceInstanceId),
             );
       const maximum =
         target.count.amount === "all"
@@ -2801,10 +4592,23 @@ export function resolveEffectChoicePrompt(
         selectedTargetIds.length < minimum ||
         selectedTargetIds.length > maximum ||
         new Set(selectedTargetIds).size !== selectedTargetIds.length ||
-        selectedTargetIds.some((instanceId) => !liveCandidateIds.includes(instanceId)) ||
+        selectedTargetIds.some(
+          (instanceId) => alreadySelected.has(instanceId) || !liveCandidateIds.includes(instanceId),
+        ) ||
         !selectionSatisfiesTotalConstraint(state, selectedTargetIds, target.totalConstraint)
       ) {
         return false;
+      }
+      if (grouped) {
+        selectRemovalGroup(
+          state,
+          prompt.resolutionContext.controller,
+          sourceInstanceId,
+          grouped.action,
+          [...grouped.selectedGroups, selectedTargetIds],
+          prompt.resolutionContext.previousActionTargetIds,
+        );
+        return true;
       }
       enqueueResolution(
         state,
@@ -2947,6 +4751,9 @@ export function resolveEffectChoicePrompt(
       ) {
         return false;
       }
+      if (!selectionSatisfiesTotalConstraint(state, selectedIds, context.action.totalConstraint)) {
+        return false;
+      }
       enqueueResolution(
         state,
         {
@@ -2976,11 +4783,7 @@ export function resolveEffectChoicePrompt(
           ? context.controller
           : otherSeat(context.controller);
       const maximum = liveCandidateIds
-        ? Math.min(
-            context.action.groups.length,
-            liveCandidateIds.length,
-            getOpenCharacterSlots(state, playingSeat).length,
-          )
+        ? Math.min(context.action.groups.length, liveCandidateIds.length)
         : 0;
       if (
         !liveCandidateIds ||
@@ -3001,7 +4804,10 @@ export function resolveEffectChoicePrompt(
         return false;
       }
       if (selectedIds.length === 0) return true;
-      if (selectedIds.length === 1) {
+      if (
+        selectedIds.length === 1 ||
+        context.action.playStates.multiple.every((playState) => playState === "active")
+      ) {
         return completeGroupedPlay(
           state,
           context.sourceInstanceId,
@@ -3056,26 +4862,6 @@ export function resolveEffectChoicePrompt(
         command.optionId,
       );
     }
-    case "effectGroupedPlayOnPlayOrder": {
-      const context = prompt.resolutionContext;
-      const selectedIds = command.selectedIds ?? [];
-      const expectedIds = context.playedCards.map(({ instanceId }) => instanceId);
-      if (
-        selectedIds.length !== expectedIds.length ||
-        new Set(selectedIds).size !== selectedIds.length ||
-        selectedIds.some((instanceId) => !expectedIds.includes(instanceId))
-      ) {
-        return false;
-      }
-      enqueueDeferredOnPlayBlocks(
-        state,
-        context.controller,
-        selectedIds.map(
-          (instanceId) => context.playedCards.find((card) => card.instanceId === instanceId)!,
-        ),
-      );
-      return true;
-    }
     case "effectPlayCharacterReplacement": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? (command.optionId ? [command.optionId] : []);
@@ -3109,6 +4895,12 @@ export function resolveEffectChoicePrompt(
       // it is not a K.O. (10-2-1-3) and dispatches no triggers or replacements.
       // Return any attached DON!! to the cost area before the Character leaves play.
       if (trashedInstance.attachedDon > 0) {
+        transferDonIdentities(
+          state,
+          { attachedTo: trashedInstance.instanceId },
+          { seat: trashedInstance.owner, area: "rested" },
+          trashedInstance.attachedDon,
+        );
         getPlayer(state, trashedInstance.owner).restedDon += trashedInstance.attachedDon;
         trashedInstance.attachedDon = 0;
       }
@@ -3128,12 +4920,30 @@ export function resolveEffectChoicePrompt(
           context.instanceId,
           context.playState,
           context.sourceInstanceId,
-          { slotIndex },
+          { slotIndex, deferOnPlay: continuation.kind === "groupedPlay" },
         )
       ) {
         return false;
       }
       switch (continuation.kind) {
+        case "groupedPlay": {
+          const playedCards = [...continuation.playedCards];
+          if (effectBlocksForInstance(state, context.instanceId, "onPlay").length > 0) {
+            playedCards.push({
+              instanceId: context.instanceId,
+              zoneChangeCounter: getInstance(state, context.instanceId).zoneChangeCounter,
+            });
+          }
+          return continueGroupedPlay(
+            state,
+            context.sourceInstanceId,
+            context.controller,
+            continuation.action,
+            continuation.remainingIds,
+            continuation.activeId,
+            playedCards,
+          );
+        }
         case "playAction":
           return (
             playCardsFromEffectSequence(
@@ -3180,7 +4990,14 @@ export function resolveEffectChoicePrompt(
         case "playCardCost": {
           const sourceCard = getCardForInstance(state, context.sourceInstanceId);
           const otherCosts = (
-            effectBlocksFor(sourceCard, continuation.trigger)[continuation.blockIndex]?.costs ?? []
+            effectBlockWithSelectedCost(
+              effectBlockForContinuation(state, {
+                ...continuation,
+                sourceInstanceId: context.sourceInstanceId,
+              }),
+              continuation.selectedAlternativeCostIndex,
+              continuation.orderedCostPayments ? (continuation.paidCostCount ?? 0) : undefined,
+            )?.costs ?? []
           ).filter((cost) => cost.cost !== "playCard");
           if (
             otherCosts.length > 0 &&
@@ -3220,6 +5037,11 @@ export function resolveEffectChoicePrompt(
               controller: context.controller,
               trigger: continuation.trigger,
               blockIndex: continuation.blockIndex,
+              activatedBlock: continuation.activatedBlock,
+              orderedCostPayments: continuation.orderedCostPayments,
+              paidCostCount: continuation.paidCostCount,
+              costPaymentProgress: continuation.costPaymentProgress,
+              selectedAlternativeCostIndex: continuation.selectedAlternativeCostIndex,
               trashHandIds: continuation.trashHandIds,
               costPaymentIds: continuation.selectedIds,
               costPaymentIdsByType: continuation.costPaymentIdsByType,
@@ -3251,6 +5073,35 @@ export function resolveEffectChoicePrompt(
           action: context.action,
           previousActionTargetIds: context.previousActionTargetIds,
           setPowerFromSourceIds: selectedIds,
+        },
+        { next: true },
+      );
+      return true;
+    }
+    case "effectSearchLookCount": {
+      const context = prompt.resolutionContext;
+      const count = Number(command.optionId);
+      if (
+        !Number.isInteger(count) ||
+        command.optionId !== String(count) ||
+        count < 0 ||
+        count > context.maximum
+      )
+        return false;
+      // Zero means look at nothing here, not SearchAction's full-deck sentinel.
+      if (count === 0) return true;
+      enqueueResolution(
+        state,
+        {
+          kind: "effectAction",
+          sourceInstanceId: context.sourceInstanceId,
+          controller: context.controller,
+          action: {
+            ...context.action,
+            lookCount: count,
+            lookCountUpTo: false,
+            condition: undefined,
+          },
         },
         { next: true },
       );
@@ -3319,6 +5170,40 @@ export function resolveEffectChoicePrompt(
       );
       return true;
     }
+    case "effectLifeReplacementOrder": {
+      const { groups } = prompt.resolutionContext;
+      const group = groups[0];
+      const ids = command.selectedIds ?? [];
+      if (
+        !group ||
+        ids.length !== group.cards.length ||
+        new Set(ids).size !== ids.length ||
+        ids.some((id) => !group.cards.some((card) => card.instanceId === id)) ||
+        group.cards.some((card) => {
+          const current = state.cards[card.instanceId];
+          return (
+            !current ||
+            current.zone !== "deck" ||
+            current.controller !== group.destinationSeat ||
+            current.zoneChangeCounter !== card.zoneChangeCounter
+          );
+        })
+      )
+        return false;
+      const deck = getPlayer(state, group.destinationSeat).deck;
+      const selected = new Set(ids);
+      // Reorder only this simultaneous group. Later independent payments may
+      // already have placed other cards after it; their positions stay fixed.
+      let orderedIndex = 0;
+      getPlayer(state, group.destinationSeat).deck = deck.map((id) =>
+        selected.has(id) ? ids[orderedIndex++]! : id,
+      );
+      getPlayer(state, group.destinationSeat).deck.forEach((id, index) => {
+        getInstance(state, id).zoneIndex = index;
+      });
+      continueLifeReplacementOrder(state, groups.slice(1));
+      return true;
+    }
     case "effectReturnToDeckOwnerOrder": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
@@ -3336,7 +5221,8 @@ export function resolveEffectChoicePrompt(
           sourceInstanceId: context.sourceInstanceId,
           controller: context.controller,
           action: context.action,
-          selectedTargetIds: selectedIds,
+          selectedTargetIds:
+            context.action.position === "top" ? [...selectedIds].reverse() : selectedIds,
           returnToDeckContinuation: {
             ...context.continuation,
             orderResolved: true,
@@ -3698,6 +5584,17 @@ export function resolveEffectChoicePrompt(
         return false;
       }
       const recipient = getInstance(state, recipientInstanceId);
+      if (state.donIdentities)
+        return continueDonTransfers(state, {
+          controller: prompt.resolutionContext.controller,
+          sourceInstanceId: prompt.resolutionContext.sourceInstanceId,
+          moves: [...donorCounts].map(([donorInstanceId, count]) => ({
+            from: { attachedTo: donorInstanceId },
+            to: { attachedTo: recipientInstanceId },
+            count,
+            candidates: donIdentitiesAt(state, { attachedTo: donorInstanceId }),
+          })),
+        });
       for (const [donorInstanceId, count] of donorCounts) {
         getInstance(state, donorInstanceId).attachedDon -= count;
       }
@@ -3730,6 +5627,22 @@ export function resolveEffectChoicePrompt(
       ) {
         return false;
       }
+      if (state.donIdentities)
+        return continueDonTransfers(state, {
+          controller: prompt.resolutionContext.controller,
+          sourceInstanceId: prompt.resolutionContext.sourceInstanceId,
+          moves: [
+            {
+              from: { seat: prompt.resolutionContext.controller, area: "rested" },
+              to: { seat: prompt.resolutionContext.controller, area: "active" },
+              count: selectedCount,
+              candidates: donIdentitiesAt(state, {
+                seat: prompt.resolutionContext.controller,
+                area: "rested",
+              }),
+            },
+          ],
+        });
       player.restedDon -= selectedCount;
       player.activeDon += selectedCount;
       emitLog(
@@ -3772,7 +5685,11 @@ export function resolveEffectChoicePrompt(
             ...prompt.resolutionContext.action,
             position: command.optionId,
           },
-          selectedTargetIds: prompt.resolutionContext.selectedTargetIds,
+          selectedTargetIds:
+            command.optionId === "top" &&
+            prompt.resolutionContext.returnToDeckContinuation?.orderResolved
+              ? [...prompt.resolutionContext.selectedTargetIds].reverse()
+              : prompt.resolutionContext.selectedTargetIds,
           returnToDeckContinuation: prompt.resolutionContext.returnToDeckContinuation,
         },
         { next: true },
@@ -3823,6 +5740,7 @@ export function resolveEffectChoicePrompt(
             position: command.optionId,
           },
           selectedTargetIds,
+          removalCostPaymentId: prompt.resolutionContext.removalCostPaymentId,
         },
         { next: true },
       );
@@ -4070,9 +5988,11 @@ export function resolveEffectChoicePrompt(
     case "effectOpponentReturnDon": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const liveCandidateIds = returnDonCostOptions(state, context.returningSeat).map(
-        (option) => option.id,
-      );
+      const liveCandidateIds = returnDonCostOptions(
+        state,
+        context.returningSeat,
+        context.action.donState,
+      ).map((option) => option.id);
       if (
         selectedIds.length !== context.amount ||
         new Set(selectedIds).size !== selectedIds.length ||
@@ -4104,9 +6024,11 @@ export function resolveEffectChoicePrompt(
     case "effectReturnDon": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
-      const liveCandidateIds = returnDonCostOptions(state, context.returningSeat).map(
-        (option) => option.id,
-      );
+      const liveCandidateIds = returnDonCostOptions(
+        state,
+        context.returningSeat,
+        context.action.donState,
+      ).map((option) => option.id);
       if (
         selectedIds.length !== context.amount ||
         new Set(selectedIds).size !== selectedIds.length ||
@@ -4233,20 +6155,28 @@ export function resolveEffectChoicePrompt(
       );
       return true;
     }
+    case "effectGiveDonEachCount":
+      return (
+        command.optionId !== undefined &&
+        continueGiveDonEach(state, prompt.resolutionContext, command.optionId)
+      );
+    case "effectGiveDonSource": {
+      const context = prompt.resolutionContext;
+      const activeCount = Number(command.optionId);
+      if (command.optionId !== String(activeCount)) return false;
+      return completeGiveDon(
+        state,
+        context.controller,
+        context.sourceInstanceId,
+        context.action,
+        context.targetId,
+        activeCount,
+      );
+    }
     case "effectGiveDonCount": {
       const selectedCount = Number.parseInt(command.optionId ?? "", 10);
       const context = prompt.resolutionContext;
-      const donorSeat =
-        context.action.donorPlayer === "opponent"
-          ? otherSeat(context.controller)
-          : context.controller;
-      const player = getPlayer(state, donorSeat);
-      const availableDon =
-        context.action.donState === "rested"
-          ? player.restedDon
-          : context.action.donState === "active"
-            ? player.activeDon
-            : player.restedDon + player.activeDon;
+      const availableDon = availableDonForGive(state, context.controller, context.action);
       const maximum = Math.min(context.maximum, availableDon);
       if (
         !Number.isInteger(selectedCount) ||

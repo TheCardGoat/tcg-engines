@@ -26,6 +26,8 @@
  */
 export const DSL_VERSION = 1 as const;
 
+export { legendsInPlay, unitsAndLegendsInPlay } from "./targets.ts";
+
 /**
  * Minimum DSL version the current engine code can still load. Bumped only
  * when older bundles can no longer be interpreted at all (rare). Until that
@@ -157,6 +159,7 @@ export const KNOWN_SET_CODES = [
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
   "welcometonightcityretail",
+  "welcometonightcityretail-fr",
   "prereleasebeta",
   "edgerunneropens1",
   "nightcitybrawls1",
@@ -167,7 +170,34 @@ export type KnownSetCode = (typeof KNOWN_SET_CODES)[number];
 
 export type SetCode = KnownSetCode;
 
-export type KnownCardLegality = "legal";
+/**
+ * Runtime and code-generation priority for a card that exists in more than
+ * one released set. Keeping it with the set vocabulary makes canonical
+ * selection a shared contract, not two local copies.
+ */
+export const CYBERPUNK_CANONICAL_SET_PRIORITY: Readonly<Record<SetCode, number>> = {
+  alpha: 50,
+  PRM01: 70,
+  arasakademodeck: 50,
+  promo: 70,
+  spoiler: 50,
+  boxtoppersretail: 80,
+  boxtoppersbeta: 50,
+  embracingpowerbetastarterdeck: 50,
+  embracingpowerretailstarterdeck: 90,
+  mercdemodeck: 50,
+  theheistbetastarterdeck: 50,
+  theheistretailstarterdeck: 90,
+  welcometonightcitybeta: 50,
+  welcometonightcityretail: 100,
+  "welcometonightcityretail-fr": 95,
+  prereleasebeta: 50,
+  edgerunneropens1: 50,
+  nightcitybrawls1: 50,
+  nightcityshowdowns1: 50,
+};
+
+export type KnownCardLegality = "legal" | "not-legal";
 
 export type CardLegality = KnownCardLegality;
 
@@ -241,6 +271,34 @@ export interface CardText {
   sourceUrl?: string | null;
 }
 
+/** Official card FAQ or erratum, including its language and printing scope. */
+export interface CardRuling {
+  id: string;
+  kind: "faq" | "errata";
+  question: string | null;
+  answer: string;
+  languageCode: string;
+  cardPrintingId: string | null;
+  source: string | null;
+  rulingDate: string | null;
+}
+
+/**
+ * Locales Cyberpunk card display text is authored for. This is the extension
+ * point for localization: adding a locale here makes every `<slug>.i18n.ts`
+ * sibling's `Record<CyberpunkLocale, ...>` require that locale, so a new
+ * locale cannot ship half-translated.
+ */
+export type CyberpunkLocale = "en";
+
+/**
+ * Display text for one locale of a Cyberpunk card — the per-card
+ * `<slug>.i18n.ts` sibling's entry shape. Rules live on the card definition;
+ * everything a player READS lives here, keyed by {@link CyberpunkLocale}
+ * (the FAB `defineFamilyI18n` / One Piece `OPCardI18n` file pattern).
+ */
+export type CyberpunkCardLocale = Pick<CardIdentity, "name" | "subname" | "displayName"> & CardText;
+
 export interface CardSet {
   code: SetCode;
   name: string;
@@ -250,9 +308,9 @@ export interface CardSet {
  * A single physical printing of a Cyberpunk card.
  *
  * Satisfies the cross-game `Printing` contract (`@tcg/card-model`):
- *  - `artId` is platform-derived and 1:1 with `id` today (`artId = id`) —
- *    Cyberpunk does not reuse illustrations across sets yet (RFC §4, §7). Set
- *    by the merge layer, not authored per literal.
+ *  - `artId` is the reviewed visual appearance identity. Equivalent product
+ *    printings share one value; distinct illustrations or visible treatments
+ *    have separate values. Set by the merge layer from the artwork catalog.
  *  - `rarity` is a game-native string. Cyberpunk printings may carry no rarity
  *    (represented as the empty string `""`), which the atelier prices as
  *    `"common"` via `cyberpunkRarityCode`.
@@ -298,6 +356,7 @@ export interface CardCatalogMetadata extends BaseCardDefinition, CardIdentity, C
   rarity: CardRarity | null;
   legality: CardLegality;
   hasSellTag: boolean;
+  rulings?: CardRuling[];
 }
 
 export interface CardDefinitionBase extends CardCatalogMetadata {
@@ -353,6 +412,17 @@ export interface RawCardPrinting {
   artist: string;
 }
 
+export interface RawCardRuling {
+  id: string;
+  kind: "faq" | "errata";
+  question: string | null;
+  answer: string;
+  language_code: string;
+  card_printing_id: string | null;
+  source: string | null;
+  ruling_date: string | null;
+}
+
 export interface RawCardRecord {
   id: string;
   external_id: string;
@@ -382,6 +452,7 @@ export interface RawCardRecord {
   printings: RawCardPrinting[];
   selected_printing_id?: string | null;
   legality: CardLegality;
+  rulings?: RawCardRuling[];
 }
 
 export type Comparison = "eq" | "gt" | "gte" | "lt" | "lte";
@@ -527,6 +598,12 @@ export interface TargetSelectionDSL {
   min: number;
   max: number;
   /**
+   * Resolve a mandatory one-of-one selection without prompting when exactly
+   * one legal target exists. Use this when card text limits the choice to the
+   * multiple-target case.
+   */
+  autoSelectSingle?: boolean;
+  /**
    * Allow the chooser to decline this choice while preserving its exact
    * non-zero selection cardinality when the choice is accepted.
    */
@@ -575,6 +652,8 @@ export interface CardTargetDSL {
   hasAttachedCards?: boolean;
   /** Restrict to cards that currently have (or do not have) Lag. */
   hasLag?: boolean;
+  /** Restrict to cards played during the current turn, independently of Lag. */
+  playedThisTurn?: boolean;
   attachedTo?: TargetDSL;
   costEqualsGigValueOf?: TargetDSL;
   powerEqualsGigValueOf?: TargetDSL;
@@ -1020,11 +1099,9 @@ export interface AdjustGigEffect extends EffectBase {
   chooseUpTo?: boolean;
 }
 
-export interface ModifyPowerEffect extends EffectBase {
+export type ModifyPowerEffect = EffectBase & {
   effect: "modifyPower";
   target: TargetDSL;
-  value: NumericValue;
-  duration: AbilityDuration;
   /**
    * Scope the buff to fights only (e.g. "has +X power while fighting rival Units
    * this turn"). Unlike `conditions`, this is not evaluated at effect-placing
@@ -1032,7 +1109,12 @@ export interface ModifyPowerEffect extends EffectBase {
    * dynamically by checking current fight participation.
    */
   whileFighting?: boolean;
-}
+} &
+  /** Re-evaluate the count as the board changes during the effect's duration. */
+  (
+    | { value: PerCountValue; duration: Exclude<AbilityDuration, "permanent">; recalculate: true }
+    | { value: NumericValue; duration: AbilityDuration; recalculate?: false }
+  );
 
 export interface MultiplyPowerEffect extends EffectBase {
   effect: "multiplyPower";
@@ -1273,8 +1355,8 @@ export interface PreventNextRivalFightDefeatEffect extends EffectBase {
 }
 
 /**
- * Set one Gig die's face value to the face value of another Gig. The
- * destination die's value is clamped to its own [1, max-sides] range.
+ * Set one Gig die's face value to the face value of another Gig. If the
+ * destination die cannot show that value, the set instruction fails.
  * Both `source` and `target` should resolve to a single Gig.
  */
 export interface CopyGigValueEffect extends EffectBase {
@@ -1439,8 +1521,34 @@ export interface CardSpentEvent {
 export interface CardDefeatedEvent {
   event: "cardDefeated";
   player: EventPlayer;
-  target: CardTargetDSL;
+  target: DefeatedEventTargetDSL;
 }
+
+/** A defeat trigger can inspect only facts captured from the defeated object. */
+export type DefeatedEventCardTargetDSL = Pick<
+  CardTargetDSL,
+  | "selector"
+  | "controller"
+  | "zones"
+  | "cardTypes"
+  | "colors"
+  | "classifications"
+  | "keywords"
+  | "state"
+  | "face"
+  | "minCost"
+  | "maxCost"
+  | "minPower"
+  | "maxPower"
+  | "excludeSelf"
+  | "hasAttachedCards"
+  | "hasLag"
+>;
+
+export type DefeatedEventTargetDSL =
+  | DefeatedEventCardTargetDSL
+  | { selector: "self" }
+  | { selector: "host" };
 
 export interface BlockerActivatedEvent {
   event: "blockerActivated";
@@ -1556,11 +1664,15 @@ export interface AbilityTargetBinding {
 export interface Ability {
   kind: AbilityKind;
   text: string;
+  /** Resolve this optional roll replacement before triggers see the final Gig value. */
+  timing?: "gigRollReplacement";
   keyword?: CardKeyword;
   source?: TargetDSL;
   trigger?: AbilityTrigger;
   limits?: AbilityLimit[];
   bindings?: AbilityTargetBinding[];
+  /** Permit paying or triggering this ability when its effect has no legal targets. */
+  allowEmptyTargets?: boolean;
   conditions?: Condition[];
   costs?: Cost[];
   effects: Effect[];
@@ -1668,3 +1780,5 @@ export interface StructuredCardDefinitionBySetCode {
 }
 
 export type StructuredSetCode = keyof StructuredCardDefinitionBySetCode;
+export { DIE_MAX_VALUES, STANDARD_GIG_DICE, isDieType, isGigCopyPairAllowed } from "./gig-rules.ts";
+export type { GigCopyPairConstraint } from "./gig-rules.ts";

@@ -41,20 +41,63 @@ export const imperiousHighlander: GrandArchiveCard<GrandArchiveAbilityDefinition
               },
             },
           },
+          targets: [
+            {
+              id: "target-opponent",
+              kind: "target",
+              declared: "announcement",
+              chooser: "controller",
+              count: {
+                kind: "exactly",
+                amount: 1,
+              },
+              unique: true,
+              candidates: {
+                kind: "player",
+                players: ["opponent"],
+              },
+            },
+          ],
           variables: [
             {
               symbol: "X",
               kind: "derived",
               amount: {
-                kind: "count",
-                collection: {
-                  zones: ["field"],
-                  player: "controller",
-                  filter: {
-                    kind: "type",
-                    oneOf: ["ALLY"],
+                kind: "calculate",
+                operator: "maximum",
+                operands: [
+                  0,
+                  {
+                    kind: "calculate",
+                    operator: "subtract",
+                    operands: [
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: {
+                            binding: "target-opponent",
+                          },
+                          filter: {
+                            kind: "type",
+                            oneOf: ["ALLY"],
+                          },
+                        },
+                      },
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: "controller",
+                          filter: {
+                            kind: "type",
+                            oneOf: ["ALLY"],
+                          },
+                        },
+                      },
+                    ],
                   },
-                },
+                ],
               },
             },
           ],

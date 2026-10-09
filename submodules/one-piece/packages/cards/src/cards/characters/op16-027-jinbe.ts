@@ -24,7 +24,7 @@ export const op16Jinbe027: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Fish-Man The Sun Pirates Impel Down"],
+  traits: ["Fish-Man", "Impel Down", "The Sun Pirates"],
   attribute: "strike",
   effect: "[DON!! X1] This Character gains +2000 power.",
   effects: {

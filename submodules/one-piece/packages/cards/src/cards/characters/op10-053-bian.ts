@@ -23,7 +23,7 @@ export const op10Bian053: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "slash",
   effect:
     'If you have a "The Tontattas" type Character other than [Bian], this Character gains [Blocker].',
@@ -39,7 +39,7 @@ export const op10Bian053: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Tontattas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "excludeName",

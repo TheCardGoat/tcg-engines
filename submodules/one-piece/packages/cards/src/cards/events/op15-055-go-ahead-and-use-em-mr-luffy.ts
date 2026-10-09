@@ -21,7 +21,7 @@ export const op15GoAheadAndUseEmMrLuffy055: EventCard = {
   rarity: "R",
   setId: "OP15",
   cost: 3,
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   effect:
     "[Main] Choose one:\n• Draw 2 cards.\n• Up to 1 of your {Dressrosa} type Characters gains [Blocker] until the end of your opponent's next End Phase.",
   effects: {
@@ -53,7 +53,7 @@ export const op15GoAheadAndUseEmMrLuffy055: EventCard = {
                       {
                         filter: "trait",
                         value: "Dressrosa",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                   },

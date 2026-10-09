@@ -49,14 +49,6 @@
   line-height: 1.5;
 }
 
-.surface :global([aria-label="Card state and traits"] span) {
-  min-height: 19px;
-  border-radius: 2px;
-  font-size: 9px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
 .surface :global([data-card-context-details-toggle]) {
   color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 88%);
   font-size: 10px;
@@ -104,16 +96,12 @@
 
 .surface :global(button[aria-label^="Show"][aria-label$="card image"]),
 .surface :global(button[aria-label^="Hide"][aria-label$="card image"]),
-.surface :global(button[aria-label^="Switch to"]) {
+.surface :global(button[aria-label^="Switch to"]),
+.surface :global(button[aria-label="Close card menu"]) {
   border-color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 34%);
   border-radius: 3px;
   background: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 6%);
   color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 88%);
-}
-
-.surface :global(button[aria-label="Close card menu"]) {
-  border-radius: 3px;
-  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 72%);
 }
 
 .surface :global(button:focus-visible) {
@@ -134,14 +122,33 @@
 }
 
 .titleRow {
-  justify-content: space-between;
-  gap: 10px;
+  gap: 6px;
 }
 
-.titleRow strong {
+.inspectTitle {
+  appearance: none;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 96%);
+  cursor: zoom-in;
+  font: inherit;
+  text-align: start;
+  text-decoration-line: underline;
+  text-decoration-color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 68%);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.inspectTitle strong {
+  display: block;
   min-width: 0;
   overflow: hidden;
-  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 98%);
+  color: inherit;
   font-family: Rajdhani, "Arial Narrow", sans-serif;
   font-size: 17px;
   font-weight: 800;
@@ -152,15 +159,72 @@
   white-space: nowrap;
 }
 
-.titleRow > span {
+.inspectTitle:hover,
+.inspectTitle:focus-visible {
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 100%);
+  text-decoration-color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 100%);
+  text-shadow: 0 0 10px rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 48%);
+}
+
+.inspectTitle:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 72%);
+  outline-offset: 3px;
+}
+
+.typeBadge {
   flex: none;
-  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 76%);
-  font-size: 9px;
-  letter-spacing: 0.12em;
+  min-height: 17px;
+  padding: 3px 6px 2px;
+  border: 1px solid rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 58%);
+  border-radius: 0;
+  background: linear-gradient(
+    135deg,
+    rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 20%),
+    rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 5%)
+  );
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 98%);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
+.classificationBadges {
+  display: inline-flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.classificationBadge {
+  --classification-accent: var(--cp-signal-frost-rgb, 213 245 255);
+  min-height: 17px;
+  padding: 3px 5px 2px;
+  border: 1px solid rgb(var(--classification-accent) / 44%);
+  border-radius: 0;
+  background: linear-gradient(
+    135deg,
+    rgb(var(--classification-accent) / 16%),
+    rgb(var(--classification-accent) / 4%)
+  );
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
+  color: rgb(var(--classification-accent) / 96%);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.classificationBadge:nth-child(2n) {
+  --classification-accent: var(--cp-signal-green-rgb, 74 245 138);
+}
+
 .stats {
+  align-items: center;
   gap: 6px;
 }
 
@@ -190,7 +254,7 @@
     border-radius: 7px 7px 0 0;
   }
 
-  .titleRow strong {
+  .inspectTitle strong {
     white-space: normal;
     overflow-wrap: anywhere;
   }

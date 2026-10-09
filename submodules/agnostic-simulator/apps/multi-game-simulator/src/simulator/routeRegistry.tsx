@@ -1,7 +1,9 @@
 import { Suspense, lazy, type ComponentType, type ReactNode } from "react";
+import { useLocation } from "react-router";
 import type { GameSlug } from "@tcg/simulator-contract";
 
 import type { SimulatorRouteKind } from "./routeData";
+import { CyberpunkMatchLoading } from "../routes/CyberpunkMatchLoading";
 
 type PageComponent = ComponentType;
 type ProviderComponent = ComponentType<{ children: ReactNode }>;
@@ -10,21 +12,31 @@ function lazyPage(loader: () => Promise<{ default: PageComponent }>): PageCompon
   return lazy(loader);
 }
 
-function lazyProvider(loader: () => Promise<{ default: ProviderComponent }>): ProviderComponent {
+function lazyProvider(
+  loader: () => Promise<{ default: ProviderComponent }>,
+  fallback?: (pathname: string) => ReactNode,
+): ProviderComponent {
   const Provider = lazy(loader);
   return function SuspendedProvider({ children }: { children: ReactNode }) {
+    const { pathname } = useLocation();
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={fallback?.(pathname) ?? null}>
         <Provider>{children}</Provider>
       </Suspense>
     );
   };
 }
 
-const CyberpunkSimulatorProviders = lazyProvider(async () => {
-  const module = await import("../games/cyberpunk/App");
-  return { default: module.CyberpunkSimulatorProviders };
-});
+const CyberpunkSimulatorProviders = lazyProvider(
+  async () => {
+    const module = await import("../games/cyberpunk/App");
+    return { default: module.CyberpunkSimulatorProviders };
+  },
+  (pathname) =>
+    /^\/cyberpunk\/simulator\/matches\/[^/]+\/games\/[^/]+\/?$/.test(pathname) ? (
+      <CyberpunkMatchLoading />
+    ) : null,
+);
 const CyberpunkDeckDetailPage = lazyPage(async () => {
   const module = await import("../games/cyberpunk/pages/Decks.page");
   return { default: module.DeckDetailPage };
@@ -64,6 +76,10 @@ const CyberpunkReplayForkPage = lazyPage(async () => {
 const CyberpunkTestFixturePage = lazyPage(async () => {
   const module = await import("../games/cyberpunk/pages/TestFixture.page");
   return { default: module.TestFixturePage };
+});
+const CyberpunkDemoFixturePage = lazyPage(async () => {
+  const module = await import("../games/cyberpunk/pages/DemoFixture.page");
+  return { default: module.DemoFixturePage };
 });
 const CyberpunkTestStatePage = lazyPage(async () => {
   const module = await import("../games/cyberpunk/pages/TestState.page");
@@ -216,6 +232,14 @@ const AlphaClashLiveMatchPage = lazy(async () => {
   const module = await import("../games/alpha-clash/pages/LiveMatch.page");
   return { default: module.AlphaClashLiveMatchPage };
 });
+const AlphaClashFixtureIndexPage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/FixtureRoutes.page");
+  return { default: module.AlphaClashFixtureIndexPage };
+});
+const AlphaClashFixturePage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/FixtureRoutes.page");
+  return { default: module.AlphaClashFixturePage };
+});
 const AlphaClashLiveMatchLandingPage = lazy(async () => {
   const module = await import("../games/alpha-clash/pages/LiveMatchLanding.page");
   return { default: module.AlphaClashLiveMatchLandingPage };
@@ -354,6 +378,8 @@ const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = 
     Providers: AlphaClashSimulatorProviders,
     pages: {
       "game-index": withSuspense(AlphaClashHomePage),
+      tests: withSuspense(AlphaClashFixtureIndexPage),
+      "test-fixture": withSuspense(AlphaClashFixturePage),
       "play-practice": withSuspense(AlphaClashPracticePage),
       "practice-vs-ai": withSuspense(AlphaClashPracticePage),
       "match-landing": withSuspense(AlphaClashLiveMatchLandingPage),
@@ -397,6 +423,7 @@ const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = 
       "practice-vs-ai": CyberpunkPracticePage,
       tests: CyberpunkTestsPage,
       "test-engine-state": CyberpunkTestStatePage,
+      "test-demo": CyberpunkDemoFixturePage,
       "test-fixture": CyberpunkTestFixturePage,
       "match-landing": CyberpunkLiveMatchLandingPage,
       "live-match": CyberpunkLiveMatchPage,

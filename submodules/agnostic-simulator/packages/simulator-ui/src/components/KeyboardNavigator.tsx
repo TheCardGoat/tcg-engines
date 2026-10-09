@@ -21,12 +21,15 @@ export function KeyboardNavigator({
 }: KeyboardNavigatorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeNodeId, setActiveNodeId] = useState<string>();
 
   const getFocusables = (): HTMLElement[] => {
     if (!containerRef.current) return [];
     return Array.from(containerRef.current.querySelectorAll(selector)).filter(
       (el): el is HTMLElement =>
-        el instanceof HTMLElement && el.tabIndex >= -1 && !el.hasAttribute("disabled"),
+        el instanceof HTMLElement &&
+        (el.tabIndex >= 0 || el.hasAttribute("tabindex")) &&
+        !el.hasAttribute("disabled"),
     );
   };
 
@@ -36,8 +39,6 @@ export function KeyboardNavigator({
     );
     if (el) {
       el.focus();
-      setActiveId(entityId);
-      onFocusChange?.(entityId);
     }
   };
 
@@ -116,10 +117,19 @@ export function KeyboardNavigator({
       ref={containerRef}
       className="keyboard-navigator"
       onKeyDown={handleKeydown}
+      onFocusCapture={(event) => {
+        const node = event.target instanceof Element ? event.target.closest(selector) : null;
+        const entityId = node?.getAttribute(ENTITY_ID_ATTRIBUTE);
+        if (entityId) {
+          setActiveId(entityId);
+          setActiveNodeId(node?.id || undefined);
+          onFocusChange?.(entityId);
+        }
+      }}
       tabIndex={0}
       role="application"
       aria-label="Card board"
-      aria-activedescendant={activeId ? `entity-${activeId}` : undefined}
+      aria-activedescendant={activeNodeId}
     >
       {children}
     </div>

@@ -110,7 +110,16 @@ export class AIPlayer {
   private decideChoice(ctx: DecisionContext): MoveDecision {
     const choice = ctx.prompt.choice;
     if (!choice) return { kind: "stuck", reason: "decideChoice: no pending choice" };
-    return runResolver(choice, this.strategy, ctx);
+    const decision = runResolver(choice, this.strategy, ctx);
+    if (decision.kind !== "stuck") return decision;
+
+    // A player-activated effect may expose a rules-safe cancellation move.
+    // Use it when the resolver cannot produce a legal answer instead of
+    // leaving an automated seat on the same mandatory prompt forever.
+    if (ctx.prompt.availableMoves.some((move) => move.moveId === "cancelPendingResolution")) {
+      return { kind: "command", move: "cancelPendingResolution" };
+    }
+    return decision;
   }
 
   private dispatch(

@@ -23,7 +23,7 @@ export const op02Dobon080: CharacterCard = {
   cost: 2,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "strike",
   i18n: op02Dobon080I18n,
 };

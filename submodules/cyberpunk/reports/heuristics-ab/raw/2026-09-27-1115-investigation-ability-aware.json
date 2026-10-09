@@ -1,0 +1,21 @@
+{
+  "aOff": [],
+  "bOff": [],
+  "aConfig": {
+    "abilityAware": true
+  },
+  "bConfig": {},
+  "games": 360,
+  "aWins": 177,
+  "aLosses": 183,
+  "draws": 0,
+  "aWinRate": 0.4917,
+  "pairs": 180,
+  "aSweeps": 63,
+  "bSweeps": 66,
+  "splits": 51,
+  "pairedImprovement": -0.0167,
+  "failures": [],
+  "avgSteps": 96.4,
+  "elapsedMs": 373593
+}

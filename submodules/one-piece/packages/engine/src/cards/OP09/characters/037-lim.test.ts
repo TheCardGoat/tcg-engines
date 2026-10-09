@@ -71,4 +71,30 @@ describe("OP09-037 Lim", () => {
         .players.south.characters.find((card) => card?.instanceId === disabledId)?.rested,
     ).toBe(true);
   });
+  test("FAQ: three rested Lim copies allow only the chosen first copy to ready", () => {
+    const e = OnePieceTestEngine.create({
+      character: [
+        { cardId: "OP09-037", rested: true },
+        { cardId: "OP09-037", rested: true },
+        { cardId: "OP09-037", rested: true },
+      ],
+    });
+    const ids = e
+      .getView("south")
+      .players.south.characters.filter((c) => c !== null)
+      .map((c) => c.instanceId);
+    e.asSouth().endTurn();
+    const order = e.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw Error("order");
+    const selected = order.options.find((o) => o.targetId === ids[2]);
+    if (!selected) throw Error("thirdsource");
+    e.resolveDecision("readyEffectOrder", { optionId: selected.id }, "south");
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter((c) => c !== null)
+        .map((c) => c.rested),
+    ).toEqual([true, true, false]);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

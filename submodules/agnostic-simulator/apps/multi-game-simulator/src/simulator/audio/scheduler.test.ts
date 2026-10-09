@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { CompiledAudioCue } from "@tcg/simulator-runtime/animation";
-import { collectScheduledSimulatorAudioCues } from "./scheduler";
+import { collectScheduledSimulatorAudioCues } from "@tcg/simulator-presentation/audio/scheduler";
 
 describe("collectScheduledSimulatorAudioCues", () => {
   test("returns cue timing from animation steps", () => {

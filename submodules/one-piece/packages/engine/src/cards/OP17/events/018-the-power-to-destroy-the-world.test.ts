@@ -43,4 +43,24 @@ describe("OP17-018 The Power to Destroy the World", () => {
 
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
+
+  test("Counter requires base8000 rather than current power raised by another Counter", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["ST01-014", "OP17-018"], character: ["OP16-005", "EB01-025"], activeDon: 2 },
+      {},
+      { activeSeat: "north" },
+    );
+    const life = e.getView("south").players.south.lifeCount;
+    const target = e.findCardInZone("south", "character", "EB01-025");
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("battleBlocker", { selectedIds: [] }, "south");
+    e.asSouth().chooseCounter("ST01-014");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === target)?.power,
+    ).toBe(8000);
+    e.asSouth().chooseCounter("OP17-018");
+    expect(e.getView("south").players.south.lifeCount).toBe(life - 1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

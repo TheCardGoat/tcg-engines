@@ -80,8 +80,17 @@ export const breakTheLine: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                         relationship: "zone-of",
                         player: "controller",
                         filter: {
-                          kind: "type",
-                          oneOf: ["CHAMPION"],
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["CHAMPION"],
+                            },
+                            {
+                              kind: "class",
+                              oneOf: ["WARRIOR"],
+                            },
+                          ],
                         },
                       },
                     },

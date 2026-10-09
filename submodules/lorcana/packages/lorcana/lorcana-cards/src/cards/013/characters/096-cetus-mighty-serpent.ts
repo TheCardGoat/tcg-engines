@@ -30,6 +30,10 @@ export const cetusMightySerpent: CharacterCard = {
   lore: 2,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_fc059e12a8d44794a3cde13843740137",
+    tcgPlayer: "704608",
+  },
   classifications: ["Storyborn", "Monster"],
   i18n: cetusMightySerpentI18n,
 };

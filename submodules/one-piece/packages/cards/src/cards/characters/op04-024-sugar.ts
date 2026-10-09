@@ -56,7 +56,7 @@ export const op04Sugar024: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

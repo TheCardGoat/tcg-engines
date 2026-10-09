@@ -31,7 +31,7 @@ export const eb01TBone049: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Navy Water Seven"],
+  traits: ["Water Seven", "Navy"],
   attribute: "slash",
   effect: "[On Play] K.O. up to 1 of your opponent's Characters with a cost of 2 or less.",
   effects: {

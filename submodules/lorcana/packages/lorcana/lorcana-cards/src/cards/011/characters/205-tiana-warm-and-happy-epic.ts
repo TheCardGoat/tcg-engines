@@ -25,7 +25,7 @@ export const tianaWarmAndHappyEpic: CharacterCard = {
   franchise: "Princess and the Frog",
   set: "011",
   cardNumber: 205,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 3,

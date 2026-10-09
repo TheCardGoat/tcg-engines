@@ -41,7 +41,7 @@ export const op12Kuzan040: LeaderCard = {
         eventFilter: {
           player: "self",
           causedBy: "self",
-          sourceFilters: [{ filter: "trait", value: "Navy", match: "includes" }],
+          sourceFilters: [{ filter: "trait", value: "Navy", match: "exact" }],
           minimumAmount: 1,
         },
         actions: [

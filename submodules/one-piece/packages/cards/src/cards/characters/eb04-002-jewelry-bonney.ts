@@ -33,7 +33,7 @@ export const eb04JewelryBonney002: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Bonney Pirates Egghead"],
+  traits: ["Egghead", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 {Egghead} or {Straw Hat Crew} type card other than [Jewelry Bonney] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -64,12 +64,12 @@ export const eb04JewelryBonney002: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Egghead",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

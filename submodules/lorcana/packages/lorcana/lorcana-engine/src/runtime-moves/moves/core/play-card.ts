@@ -1,3 +1,4 @@
+import { sweepLethalDamageInPlay } from "../../state/lethal-damage-sweep";
 // .agents/skills/lorcana-rules/SKILL.md
 // .agents/skills/lorcana-rules/indexes/by-topic/turn-actions.md
 
@@ -57,10 +58,14 @@ import {
   type ShiftDiscardCost,
   type ShiftRules,
 } from "../../rules/play-card-rules";
+import { getAvailableInkDrops } from "../../rules/play-card-rules";
 import { executeShiftPlay } from "../../shared/execute-shift-play";
 import { recomputeLoreToWin } from "../../effects/win-condition-effects";
 import { recordDiscardExitThisTurn } from "../../state/turn-metrics";
 import { resolveActionCardEffects } from "../../resolution/action-effect-resolver";
+import { isScryEffect, validateScrySelection } from "../../resolution/action-effects/scry-effect";
+import { isConditionalEffect } from "../../resolution/action-effects/conditional-effect";
+import { evaluateActionCondition } from "../../resolution/action-effects/action-condition-evaluator";
 import type { ActionResolutionInput } from "../../resolution/action-effects/types";
 import {
   flattenSlottedTargets,
@@ -73,12 +78,16 @@ import {
   moveSuspendedActionCardToLimbo,
   EFFECT_PENDING_ERROR_CODE,
 } from "../../resolution/action-effects/pending-action-effects";
-import { getEntersWithDamageAmount } from "../../resolution/action-effects/play-card-effect";
+import {
+  getEntersWithDamageAmount,
+  getObservingEntersWithDamage,
+} from "../../resolution/action-effects/play-card-effect";
 import {
   hasTemporaryPlayerRestriction,
   hasTemporaryRestriction,
 } from "../../effects/temporary-effects";
 import {
+  beginTriggeredAbilitySourceLifetime,
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
   hasPendingBagItems,
@@ -102,6 +111,7 @@ import {
 } from "../../../runtime-trace";
 import {
   cardHasName,
+  getCardNameVariants,
   hasAdvancedMimicry,
   hasBodyguard,
   hasMayEnterPlayExertedOption,
@@ -586,10 +596,15 @@ function getActivePlayFromDiscardPermission(
     currentTurn,
   ).find(
     (permission) =>
-      permission.cardId === cardId && matchesPlayFromDiscardCardType(cardDef, permission.cardType),
+      (permission.allCards === true || permission.cardId === cardId) &&
+      matchesPlayFromDiscardCardType(cardDef, permission.cardType) &&
+      !(
+        permission.uniqueByName === true &&
+        (permission.playedNames ?? []).some((playedName) => cardHasName(cardDef, playedName))
+      ),
   );
   if (temporaryPermission) {
-    return { entersExerted: false, temporaryPermission };
+    return { entersExerted: temporaryPermission.entersExerted === true, temporaryPermission };
   }
 
   const playCards = ctx.framework.zones.getCards({
@@ -982,7 +997,16 @@ function getShiftPlayCardBasicCost(
   costReduction: CostReductionApplication,
 ): BasicPlayCostPayment {
   const shiftRules = getShiftRules(cardDef);
-  if (!shiftRules || shiftRules.unsupportedReason || typeof shiftRules.inkCost !== "number") {
+  if (!shiftRules || shiftRules.unsupportedReason) {
+    return {};
+  }
+
+  // Ink-drop shift costs are paid entirely with ink drops.
+  if (typeof shiftRules.inkDropsCost === "number") {
+    return { inkDrops: shiftRules.inkDropsCost };
+  }
+
+  if (typeof shiftRules.inkCost !== "number") {
     return {};
   }
 
@@ -1185,6 +1209,24 @@ function getPlayRestrictionError(
   cardDef: LorcanaCard,
   currentTurn: number,
 ): Extract<RuntimeValidationResult, { valid: false }> | undefined {
+  const restrictedDiscardName = getActivePlayFromDiscardPermissions(
+    ctx.G.playFromDiscardPermissions,
+    playerId,
+    currentTurn,
+  ).some(
+    (permission) =>
+      permission.uniqueByName === true &&
+      matchesPlayFromDiscardCardType(cardDef, permission.cardType) &&
+      (permission.playedNames ?? []).some((name) => cardHasName(cardDef, name)),
+  );
+  if (restrictedDiscardName) {
+    return {
+      valid: false,
+      error: "Cannot play a card with a name already played through this discard permission",
+      errorCode: "PLAYER_PLAY_RESTRICTED",
+    };
+  }
+
   const playerRestrictions = ctx.G.temporaryPlayerRestrictions;
   if (hasTemporaryPlayerRestriction(playerRestrictions, playerId, currentTurn, "cant-play")) {
     return {
@@ -1460,8 +1502,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer as PlayerId,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getStandardPlayCardBasicCost(cardDef, costReduction, costIncrease),
+          { inkDrops: params.inkDrops },
         );
         if (!costValidation.valid) {
           return fail(
@@ -1523,7 +1567,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             );
           }
         } else {
-          if (typeof shiftRules.inkCost !== "number") {
+          if (
+            typeof shiftRules.inkCost !== "number" &&
+            typeof shiftRules.inkDropsCost !== "number"
+          ) {
             return fail("Shift cost could not be resolved", "INVALID_SHIFT_COST", cardDef);
           }
 
@@ -1543,8 +1590,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
               framework: ctx.framework,
               cards: ctx.cards,
               playerId: currentPlayer as PlayerId,
+              G: ctx.G as { inkDrops?: Record<string, number> },
             },
             getShiftPlayCardBasicCost(cardDef, shiftCostReduction),
+            { inkDrops: params.inkDrops },
           );
           if (!costValidation.valid) {
             return fail(
@@ -1634,6 +1683,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer as PlayerId,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getSingPlayCardBasicCost(singer, singerDef),
         );
@@ -1742,6 +1792,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer as PlayerId,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getSingTogetherPlayCardBasicCost(singers, (cardId) =>
             getCardDefinitionFromContext(ctx, cardId),
@@ -2011,11 +2062,28 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             eventSnapshot: params.eventSnapshot,
             resolveOptional: params.resolveOptional,
           } satisfies ActionResolutionInput;
+          // Validation-time payload: payment has not run yet, so the verified
+          // paidWithInkDrops fact is only stamped on the post-payment payload.
           const cardPlayedPayload: CardPlayedPayload = {
             playerId: currentPlayer as PlayerId,
             cardId: cardId as CardInstanceId,
             cardType: cardDef.cardType,
             costType: cost,
+            // Clamp the claimed payment to what the payer actually holds and to
+            // the effective ink cost this play will pay (cost reduction and
+            // increase included) — spendInk's real ceiling. The printed cost
+            // would let reduced-cost plays claim drops the payment can never
+            // remove and unlock choice options gated on "if you removed an ink
+            // drop to play this". Non-standard cost modes pay no ink at all.
+            paidWithInkDrops:
+              Math.min(
+                Math.max(0, Math.floor(params.inkDrops ?? 0) || 0),
+                getAvailableInkDrops(
+                  ctx as Parameters<typeof getAvailableInkDrops>[0],
+                  currentPlayer,
+                ),
+                cost === "standard" ? reducedCardCost : 0,
+              ) || undefined,
           };
 
           for (const ability of actionEffects) {
@@ -2085,6 +2153,49 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             cardDef,
           );
         }
+        for (const ability of cardDef.abilities ?? []) {
+          if (ability.type !== "action") continue;
+          const cardPlayed: CardPlayedPayload = {
+            playerId: currentPlayer as PlayerId,
+            cardId: cardId as CardInstanceId,
+            cardType: cardDef.cardType,
+            costType: cost,
+            // Match actual payment: only held drops within the effective ink cost
+            // can select a branch gated on removing a drop for this play.
+            paidWithInkDrops:
+              Math.min(
+                Math.max(0, Math.floor(params.inkDrops ?? 0) || 0),
+                getAvailableInkDrops(ctx, currentPlayer),
+                cost === "standard" ? reducedCardCost : 0,
+              ) || undefined,
+          };
+          const resolutionInput: ActionResolutionInput = {
+            destinations: params.destinations,
+            eventSnapshot: params.eventSnapshot,
+          };
+          let effect: unknown = ability.effect;
+          while (isConditionalEffect(effect)) {
+            effect = evaluateActionCondition(effect.condition, ctx, cardPlayed, resolutionInput)
+              ? (effect.then ?? effect.effect ?? effect.ifTrue)
+              : (effect.else ?? effect.ifFalse);
+          }
+          if (!isScryEffect(effect)) continue;
+          const validation = validateScrySelection(
+            ctx,
+            {
+              playerId: currentPlayer as PlayerId,
+              cardId: cardId as CardInstanceId,
+              cardType: cardDef.cardType,
+              costType: cost,
+            },
+            effect,
+            {
+              destinations: params.destinations,
+              scryAmount: typeof effect.amount === "number" ? effect.amount : undefined,
+            },
+          );
+          if (!validation.valid) return validation;
+        }
       }
 
       if (params.targets !== undefined) {
@@ -2138,6 +2249,32 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             allowDuplicateTargets: false,
           },
         );
+
+        if (isSlottedTargetInput(params.targets) && params.targets.kind === "move-damage") {
+          for (const ability of actionEffects) {
+            if (ability.effect.type !== "move-damage") continue;
+            for (const slot of ["from", "to"] as const) {
+              const slotAnalysis = analyzeEffectTargets(
+                { type: "select-target", target: ability.effect[slot] },
+                currentPlayer as PlayerId,
+                ctx,
+                cardId as CardInstanceId,
+              );
+              const slotValidation = validateAndNormalizeTargetSelection(
+                params.targets[slot],
+                slotAnalysis,
+                { currentPlayer: currentPlayer as PlayerId, ctx },
+              );
+              if (!slotValidation.valid) {
+                return fail(
+                  slotValidation.error ?? "Damage movement target is invalid",
+                  slotValidation.errorCode ?? "INVALID_ACTION_TARGETS",
+                  cardDef,
+                );
+              }
+            }
+          }
+        }
 
         const { flatTargets: flatTargetsForValidation } = splitActionTargetInput(params.targets);
         const selectionValidation = validateInitialActionTargetSelection(
@@ -2211,6 +2348,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
     const costReduction = computedCostReduction;
 
     let inkPaid = 0;
+    let inkDropsSpent = 0;
     let shiftTargetId: CardInstanceId | undefined = selectedShiftTargetId;
     let additionalShiftTargetIds: CardInstanceId[] | undefined;
     let shiftTargetTriggerCandidates:
@@ -2239,13 +2377,16 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getStandardPlayCardBasicCost(cardDef, standardCostReduction),
+          { inkDrops: params.inkDrops },
         );
         if (!payResult.success) {
           throw new Error(`Failed to pay play cost: ${payResult.error} (${payResult.errorCode})`);
         }
         inkPaid = payResult.inkPaid;
+        inkDropsSpent = payResult.inkDropsSpent;
         break;
       }
 
@@ -2327,7 +2468,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
           recordDiscardExitThisTurn(ctx, deckBottomTargets.length);
           inkPaid = 0;
         } else {
-          if (typeof shiftRules.inkCost !== "number") {
+          if (
+            typeof shiftRules.inkCost !== "number" &&
+            typeof shiftRules.inkDropsCost !== "number"
+          ) {
             throw new Error("Shift execution requires a supported ink-only Shift cost");
           }
           // Compute shift-specific cost reduction (includes both general and shift-only reductions)
@@ -2346,13 +2490,16 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
               framework: ctx.framework,
               cards: ctx.cards,
               playerId: currentPlayer,
+              G: ctx.G as { inkDrops?: Record<string, number> },
             },
             getShiftPlayCardBasicCost(cardDef, shiftCostReduction),
+            { inkDrops: params.inkDrops },
           );
           if (!payResult.success) {
             throw new Error(`Failed to pay play cost: ${payResult.error} (${payResult.errorCode})`);
           }
           inkPaid = payResult.inkPaid;
+          inkDropsSpent = payResult.inkDropsSpent;
         }
         if (shiftTargetId) {
           shiftTargetTriggerCandidates = snapshotTriggeredCandidatesForCard(ctx, shiftTargetId);
@@ -2371,6 +2518,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getSingPlayCardBasicCost(singer!, singerDef),
         );
@@ -2388,6 +2536,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             framework: ctx.framework,
             cards: ctx.cards,
             playerId: currentPlayer,
+            G: ctx.G as { inkDrops?: Record<string, number> },
           },
           getSingTogetherPlayCardBasicCost(
             singers,
@@ -2520,6 +2669,9 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         : {}),
       ...(singerIds ? { singerIds } : {}),
       ...(cost === "standard" || cost === "shift" ? { inkPaid } : {}),
+      ...(cost === "standard" || cost === "shift"
+        ? { paidWithInkDrops: inkDropsSpent || undefined }
+        : {}),
     };
 
     // If the card was in limbo under an item, detach it from the stack before playing.
@@ -2540,6 +2692,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
     const playedFromDiscard = playFromDiscardPermission !== undefined;
 
     // Cards are always played into play first.
+    beginTriggeredAbilitySourceLifetime(ctx, cardId);
     ctx.framework.zones.moveCard(cardId, {
       zone: "play",
       playerId: currentPlayer,
@@ -2565,6 +2718,22 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
           toZone: "play",
         },
       );
+    }
+    // Record the played card's names for unique-by-name discard permissions
+    // BEFORE any early return (e.g. a Shift landing on lethal inherited damage
+    // banishes the character mid-execution): the play happened the moment the
+    // card was paid and moved into play. Every name variant is recorded so
+    // "Flotsam & Jetsam" also blocks "Flotsam" and vice versa (CR 5.2.6.1).
+    if (playFromDiscardPermission?.temporaryPermission?.uniqueByName === true) {
+      const permission = playFromDiscardPermission.temporaryPermission;
+      const recorded = permission.playedNames ?? [];
+      const additions = getCardNameVariants(cardDef).filter(
+        (playedName) =>
+          !recorded.some((existing) => existing.toLowerCase() === playedName.toLowerCase()),
+      );
+      if (additions.length > 0) {
+        permission.playedNames = [...recorded, ...additions];
+      }
     }
     // A card entering play may carry a win-condition-modification static ability.
     recomputeLoreToWin(ctx);
@@ -2830,7 +2999,9 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         return;
       }
     } else if (cardDef.cardType === "character") {
-      const entersWithDamage = getEntersWithDamageAmount(cardDef);
+      const entersWithDamage =
+        getEntersWithDamageAmount(cardDef) +
+        getObservingEntersWithDamage(ctx, cardDef, currentPlayer, cardId);
       const entersExerted =
         playFromDiscardPermission?.entersExerted === true ||
         entersPlayExerted(ctx, cardId, cardDef) ||
@@ -2867,7 +3038,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         playerId: currentPlayer,
         subjectCardId: cardId,
         triggerSourceCardId: cardId,
-        triggerCandidates: shiftTargetTriggerCandidates,
+        triggerCandidates: [
+          ...snapshotBoardTriggerCandidates(ctx),
+          ...(shiftTargetTriggerCandidates ?? []),
+        ],
       });
       if (singerIds) {
         singerIds.forEach((singerId) => {
@@ -2887,6 +3061,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
           });
         });
       }
+      sweepLethalDamageInPlay(ctx, { reasonCardId: cardId });
       flushTriggeredEventsToBag(ctx);
     }
 
@@ -2909,7 +3084,11 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
       zone: "hand",
       playerId: ctx.playerId,
     });
-    const availableInk = getAvailableInk(ctx, ctx.playerId as PlayerId);
+    // The move is available when some valid payment can cover its cost.
+    // Validation still requires an explicit ink-drop claim for a chosen play.
+    const availableInk =
+      getAvailableInk(ctx, ctx.playerId as PlayerId) +
+      getAvailableInkDrops(ctx, ctx.playerId as PlayerId);
     const playCards = ctx.framework.zones.getCards({
       zone: "play",
       playerId: ctx.playerId,
@@ -2961,13 +3140,19 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         "shift",
       );
       const shiftRules = getShiftRules(cardDef);
-      if (
-        shiftRules &&
-        !shiftRules.unsupportedReason &&
-        typeof shiftRules.inkCost === "number" &&
-        availableInk >= Math.max(0, shiftRules.inkCost - shiftCostReduction.reductionAmount)
-      ) {
-        if (availableInk >= Math.max(0, shiftRules.inkCost - shiftCostReduction.reductionAmount)) {
+      if (shiftRules && !shiftRules.unsupportedReason) {
+        const shiftInkPlayable =
+          typeof shiftRules.inkCost === "number" &&
+          availableInk >= Math.max(0, shiftRules.inkCost - shiftCostReduction.reductionAmount);
+        // Ink-drop Shifts pay a mandatory inkDropsCost instead of ink, so held
+        // drops alone make the shift available.
+        const inkDropShiftPlayable =
+          typeof shiftRules.inkDropsCost === "number" &&
+          getAvailableInkDrops(
+            { framework: ctx.framework, G: ctx.G } as never,
+            ctx.playerId as PlayerId,
+          ) >= shiftRules.inkDropsCost;
+        if (shiftInkPlayable || inkDropShiftPlayable) {
           const shiftCandidates = resolveShiftTargetCandidates(
             shiftRules,
             getControlledShiftTargetsInPlay(playCards, shiftRules, (candidateId) =>

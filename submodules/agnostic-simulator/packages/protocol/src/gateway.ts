@@ -4,6 +4,13 @@ import { EngineInteractionView, InteractionSubmission } from "./interactions.js"
 import { AnimationPlanV2Schema } from "./animations/plan.js";
 import { MAX_HEARTBEAT_ROUND_TRIP_MS } from "./schemas.js";
 import { DropEligibilitySchema } from "./drop-eligibility.js";
+import {
+  RequestPreparationSyncMessage,
+  ConfirmPreparationMessage,
+  ChoosePreparationFirstPlayerMessage,
+  PreparationSnapshotSchema,
+  PreparationCommandResultSchema,
+} from "./preparation.js";
 
 const opaqueId = z.string().min(1);
 const looseObject = z.record(z.string(), z.unknown());
@@ -113,6 +120,9 @@ export const RawGatewayRequestStateSyncMessageSchema = z
   .strict();
 
 export const RawGatewayClientMessageSchema = z.discriminatedUnion("type", [
+  RequestPreparationSyncMessage,
+  ConfirmPreparationMessage,
+  ChoosePreparationFirstPlayerMessage,
   RawGatewayPingMessageSchema,
   RawGatewayJoinGameMessageSchema,
   RawGatewayExecuteMoveMessageSchema,
@@ -179,6 +189,7 @@ export const RawGatewayGameJoinedMessageSchema = z
     manualModeEnabled: z.boolean().optional(),
     interactionView: EngineInteractionView.optional(),
     undoable: z.boolean().optional(),
+    undoTurnAvailable: z.boolean().optional(),
     dropEligibility: DropEligibilitySchema.optional(),
     correlationId: z.string().optional(),
   })
@@ -273,6 +284,7 @@ const rawGatewayUpdateBase = {
   matchInfo: RawGatewayMatchInfoSchema.optional(),
   interactionView: EngineInteractionView.optional(),
   undoable: z.boolean().optional(),
+  undoTurnAvailable: z.boolean().optional(),
 } as const;
 
 export const RawGatewayMoveAcceptedMessageSchema = z
@@ -333,6 +345,7 @@ export const RawGatewayStateSyncMessageSchema = z
     cardsMaps: z.unknown().optional(),
     interactionView: EngineInteractionView.optional(),
     undoable: z.boolean().optional(),
+    undoTurnAvailable: z.boolean().optional(),
   })
   .strict();
 
@@ -406,6 +419,20 @@ export const RawGatewayPongMessageSchema = z
   .strict();
 
 export const RawGatewayServerMessageSchema = z.discriminatedUnion("type", [
+  z
+    .object({
+      type: z.literal("preparation_state"),
+      snapshot: PreparationSnapshotSchema,
+      correlationId: z.string().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal("preparation_command_result"),
+      result: PreparationCommandResultSchema,
+      correlationId: z.string(),
+    })
+    .strict(),
   RawGatewayWelcomeMessageSchema,
   RawGatewayErrorMessageSchema,
   RawGatewayGameJoinedMessageSchema,

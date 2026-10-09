@@ -23,7 +23,7 @@ export const op01AshuraDoji032: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[DON!! x1] If your opponent has 2 or more rested Characters, this Character gains +2000 power.",

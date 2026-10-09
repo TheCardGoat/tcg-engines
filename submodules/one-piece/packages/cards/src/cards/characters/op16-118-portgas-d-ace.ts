@@ -43,7 +43,7 @@ export const op16PortgasDAce118: CharacterCard = {
         conditions: [],
         actions: [
           {
-            action: "modifyCounter",
+            action: "setCounter",
             target: {
               player: "self",
               zones: ["hand"],
@@ -59,7 +59,6 @@ export const op16PortgasDAce118: CharacterCard = {
               ],
             },
             value: 2000,
-            duration: "permanent",
           },
         ],
       },

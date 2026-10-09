@@ -1,5 +1,6 @@
 import type { Scenario, ScenarioGroup, ScenarioId } from "./types";
 import { coreScenarios } from "./core";
+import { emptyFieldScenarios } from "./empty-field";
 import { gearScenarios } from "./gears";
 import { legendScenarios } from "./legends";
 import { programScenarios } from "./programs";
@@ -15,6 +16,7 @@ export { P1, P2 } from "./shared";
 
 const SCENARIOS: Scenario[] = [
   ...coreScenarios,
+  ...emptyFieldScenarios,
   ...programScenarios,
   ...gearScenarios,
   ...legendScenarios,

@@ -1,0 +1,229 @@
+.bench {
+  margin-bottom: 28px;
+  border: 1px solid #45403a;
+  border-radius: 10px;
+  padding: 20px;
+  background: #191816;
+  color: #f6f0e7;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.header h2 {
+  font-size: 24px;
+  font-weight: 750;
+}
+.header > span,
+.muted {
+  color: #b9b0a6;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.eyebrow {
+  color: #e0aa57;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #c9c0b5;
+}
+.controls select,
+.controls button {
+  min-height: 36px;
+  padding: 6px 10px;
+  background: #25221e;
+  border: 1px solid #655749;
+  border-radius: 5px;
+  color: #f6f0e7;
+  font-size: 13px;
+}
+.controls button {
+  cursor: pointer;
+}
+.controls button:hover {
+  border-color: #e0aa57;
+}
+.controls button:disabled,
+.controls select:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.controls .check {
+  flex-direction: row;
+  align-items: center;
+  min-height: 36px;
+}
+.description {
+  font-size: 13px;
+  color: #b9b0a6;
+  margin: 16px 0 12px;
+  min-height: 22px;
+}
+.description strong {
+  color: #e0c998;
+}
+.stage {
+  position: relative;
+  display: grid;
+  gap: 36px;
+  padding: 32px 16px;
+  border: 1px solid #45403a;
+  border-radius: 8px;
+  background: radial-gradient(ellipse at center, #282923, #111413);
+  min-height: 415px;
+}
+.row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(36px, 10vw, 150px);
+  min-height: 143px;
+}
+.cardSlot {
+  width: 100px;
+  height: 140px;
+  flex: none;
+}
+.card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #b49962;
+  border-radius: 7px;
+  color: #eee0c4;
+  background: linear-gradient(145deg, #414a3e, #1c292a);
+  box-shadow: 0 4px 12px #0007;
+  overflow: hidden;
+}
+.card[data-face="hidden"] {
+  background: repeating-linear-gradient(45deg, #202a36, #202a36 7px, #263443 7px, #263443 9px);
+  border-color: #70819a;
+}
+.cardMark {
+  font-size: 32px;
+  color: #e0aa57;
+}
+.card strong {
+  font-size: 13px;
+}
+.card small {
+  font-size: 7px;
+  opacity: 0.7;
+}
+.zone {
+  position: relative;
+  width: 100px;
+  height: 140px;
+  border: 1px dashed #807258;
+  border-radius: 7px;
+}
+.zoneLabel {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  color: #a69d8d;
+}
+.progress {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #c9c0b5;
+}
+@media (max-width: 600px) {
+  .bench {
+    padding: 12px;
+  }
+  .header {
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stage {
+    padding: 25px 12px;
+    gap: 30px;
+    min-height: 380px;
+  }
+  .row {
+    gap: 40px;
+  }
+  .controls {
+    gap: 8px;
+  }
+  .controls select {
+    max-width: 220px;
+  }
+}
+
+.cardArt {
+  width: 65%;
+  height: 65%;
+  position: absolute;
+  opacity: 0.6;
+}
+.card {
+  position: relative;
+}
+.card strong,
+.card small,
+.cardMark {
+  position: relative;
+  z-index: 1;
+}
+.host {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform: translateY(-22px);
+}
+.discard {
+  position: absolute;
+  right: 12px;
+  bottom: 35px;
+  width: 75px;
+  height: 105px;
+  border: 1px dashed #807258;
+}
+.discard > div {
+  position: absolute;
+  inset: 0;
+  width: 75px;
+  height: 105px;
+}
+
+.counter {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  min-width: 18px;
+  text-align: center;
+  border: 1px solid #807258;
+  border-radius: 4px;
+  background: #111820;
+  color: #e0b967;
+  font-size: 11px;
+  z-index: 2;
+}
+.oldCounter {
+  position: absolute;
+  inset: 0;
+}

@@ -524,13 +524,13 @@ describe("keyword flavor stripping", () => {
     expect(result.segments[0]!.rawActionText).toBe("Draw 1 card.");
   });
 
-  test("keeps direct Activate:Main DON!! rest costs non-optional", () => {
+  test("keeps the printed optional direct Activate:Main DON!! rest cost", () => {
     const result = parseEffectText(
       "[Activate:Main] [Once Per Turn] (4) (You may rest the specified number of DON!! cards in your cost area.): Set up to 1 of your Characters as active.",
     );
     expect(result.segments).toHaveLength(1);
     expect(result.segments[0]!.costs).toEqual([{ type: "restDon", amount: 4 }]);
-    expect(result.segments[0]!.optional).toBe(false);
+    expect(result.segments[0]!.optional).toBe(true);
     expect(result.segments[0]!.rawActionText).toBe("Set up to 1 of your Characters as active.");
   });
 });

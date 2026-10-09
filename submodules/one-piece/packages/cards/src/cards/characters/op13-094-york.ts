@@ -23,7 +23,7 @@ export const op13York094: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Egghead", "Scientist"],
   attribute: "wisdom",
   effect:
     '[On Play] Up to 1 of your "Celestial Dragons" type Characters gains +2000 power during this turn.',
@@ -45,7 +45,7 @@ export const op13York094: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Celestial Dragons",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

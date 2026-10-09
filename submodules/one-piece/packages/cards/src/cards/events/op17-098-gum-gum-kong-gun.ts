@@ -21,7 +21,7 @@ export const op17GumGumKongGun098: EventCard = {
   rarity: "C",
   setId: "OP17",
   cost: 1,
-  traits: ["Elbaph The Four Emperors Straw Hat Crew"],
+  traits: ["Elbaph", "The Four Emperors", "Straw Hat Crew"],
   effect:
     "[Main] You may rest 6 of your DON!! cards: If there is a Character with a cost of 12 or more, K.O. up to 2 of your opponent's Characters with a cost of 6 or less.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

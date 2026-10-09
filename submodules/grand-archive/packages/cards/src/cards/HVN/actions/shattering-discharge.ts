@@ -91,6 +91,7 @@ export const shatteringDischarge: GrandArchiveCard<GrandArchiveAbilityDefinition
             },
             amount: 1,
           },
+          functionalZones: ["memory"],
         },
         {
           id: "uutqo9hm33-a3",

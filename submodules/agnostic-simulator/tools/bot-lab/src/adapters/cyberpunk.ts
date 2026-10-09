@@ -247,7 +247,7 @@ export const cyberpunkBotLabAdapter: BotLabAdapter = {
       schemaVersion: 1,
       game: "cyberpunk",
       candidateId,
-      parentStrategyId: "default",
+      parentStrategyId: "greedy",
       informationPolicy: "public",
       hypothesis: "Seat-balanced hill climbing improves the public greedy heuristic.",
       engineRevision: cyberpunkBotLabAdapter.getEngineRevision(),

@@ -22,7 +22,7 @@ export const op06Oars083: CharacterCard = {
   setId: "OP06",
   cost: 4,
   power: 7000,
-  traits: ["Giant Thriller Bark Pirates"],
+  traits: ["Giant", "Thriller Bark Pirates"],
   attribute: "strike",
   effect:
     "This Character cannot attack.\n[Activate:Main] You may K.O. 1 of your [Thriller Bark Pirates] type Characters: This Character's effect is negated during this turn.",
@@ -38,7 +38,7 @@ export const op06Oars083: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

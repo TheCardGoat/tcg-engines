@@ -11,7 +11,7 @@ export const blastFromYourPast: ActionCard = {
       artId: "set5-028",
       setCode: "set5",
       collectorNumber: "28",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const blastFromYourPast: ActionCard = {
   franchise: "Aladdin",
   set: "005",
   cardNumber: 28,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 6,
   inkable: false,
   externalIds: {

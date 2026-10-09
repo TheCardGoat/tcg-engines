@@ -42,7 +42,7 @@ describe("OP05-047 Basil Hawkins", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("does not draw above three hand cards but still gains battle power", () => {
+  test("does not draw or gain battle power above three hand cards", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op05BasilHawkins047],
@@ -62,7 +62,7 @@ describe("OP05-047 Basil Hawkins", () => {
     expect(view.players.south).toMatchObject({ handCount: 4, deckCount: 2 });
     expect(
       view.players.south.characters.find((card) => card?.instanceId === blockerId)?.power,
-    ).toBe(6000);
+    ).toBe(5000);
 
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
     expect(engine.getView("south").prompts).toHaveLength(0);

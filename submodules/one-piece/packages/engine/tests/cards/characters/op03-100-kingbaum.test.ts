@@ -30,6 +30,25 @@ function proveLifeChoice(position: "top" | "bottom") {
 }
 
 describe("OP03-100 Kingbaum", () => {
+  test("cannot use the triggering card itself to pay the last-Life trash cost", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { life: [op03Kingbaum100] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const kingbaumId = engine.findCardInZone("north", "life", op03Kingbaum100);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const view = engine.getView("north");
+    expect(view.players.north.lifeCount).toBe(0);
+    expect(view.players.north.characters.some((card) => card?.instanceId === kingbaumId)).toBe(
+      false,
+    );
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(kingbaumId);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("may trash the top Life card before playing itself from Trigger", () => {
     proveLifeChoice("top");
   });

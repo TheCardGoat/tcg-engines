@@ -54,7 +54,7 @@ export const op14eb04BoaHancockOp14112112: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

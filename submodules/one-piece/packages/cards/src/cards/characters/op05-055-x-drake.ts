@@ -31,7 +31,7 @@ export const op05XDrake055: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Drake Pirates Navy"],
+  traits: ["Navy", "Drake Pirates", "Animal Kingdom Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",

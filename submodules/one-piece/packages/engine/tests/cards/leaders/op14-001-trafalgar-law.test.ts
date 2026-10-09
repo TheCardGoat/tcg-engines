@@ -12,7 +12,12 @@ describe("OP14-001 Trafalgar Law", () => {
   test("maps the two-trait selection and swaps printed base power without erasing DON!! power", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op14eb04TrafalgarLawOp14001001,
-      character: [op14eb04MonkeyDLuffyOp14013013, op04TrafalgarLaw087, op14eb04Urouge002],
+      character: [
+        op14eb04MonkeyDLuffyOp14013013,
+        op04TrafalgarLaw087,
+        op14eb04Urouge002,
+        "EB01-005",
+      ],
       activeDon: 1,
     });
     const luffyId = engine.findCardInZone("south", "character", op14eb04MonkeyDLuffyOp14013013);
@@ -46,5 +51,33 @@ describe("OP14-001 Trafalgar Law", () => {
       7000,
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("keeps the swapped base power after the other selected Character leaves", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op14eb04TrafalgarLawOp14001001,
+      character: [op14eb04MonkeyDLuffyOp14013013, op04TrafalgarLaw087, op14eb04Urouge002],
+      hand: ["OP01-047"],
+      activeDon: 5,
+    });
+    const luffy = engine.findCardInZone("south", "character", op14eb04MonkeyDLuffyOp14013013);
+    const law = engine.findCardInZone("south", "character", op04TrafalgarLaw087);
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [luffy, law] }, "south");
+    engine.playCard("OP01-047", "south");
+    engine.accept("south");
+    engine.resolveDecision("effectCostReturnCharacter", { selectedIds: [luffy] }, "south");
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      luffy,
+    );
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === law)
+        ?.power,
+    ).toBe(0);
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === law)
+        ?.power,
+    ).toBe(7000);
   });
 });

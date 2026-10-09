@@ -59,7 +59,7 @@ export const op05Satori105: CharacterCard = {
   power: 5000,
   counter: 2000,
   trigger: "You may trash 1 card from your hand: Play this card.",
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "strike",
   effect: "[Trigger] You may trash 1 card from your hand: Play this card.",
   effects: {

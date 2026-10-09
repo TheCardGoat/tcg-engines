@@ -3,10 +3,11 @@ import {
   LEGACY_CYBERPUNK_USER_CONFIG_STORAGE_KEY,
   SIMULATOR_ANIMATION_SPEED_STORAGE_KEY,
   SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY,
-  SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY,
+  SIMULATOR_SOUND_PACK_STORAGE_KEY,
   SIMULATOR_SOUND_VOLUME_STORAGE_KEY,
   clampSoundVolume,
   normalizeSimulatorSettings,
+  normalizeSoundPack,
   readLocalSimulatorSettings,
   writeLocalSimulatorSettings,
 } from "./simulator-settings";
@@ -21,45 +22,57 @@ describe("simulator settings", () => {
 
   test("normalizes settings with defaults", () => {
     expect(normalizeSimulatorSettings(null)).toEqual({
-      soundVolume: 50,
+      soundVolume: 75,
+      soundPack: "original",
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
-      paymentSelectionMode: "automatic",
     });
     expect(
       normalizeSimulatorSettings({
         soundVolume: 150,
+        soundPack: "signal",
         cardInteractionMode: "quick",
         animationSpeed: "slow",
-        paymentSelectionMode: "choose",
       }),
     ).toEqual({
       soundVolume: 100,
+      soundPack: "signal",
       cardInteractionMode: "quick",
       animationSpeed: "slow",
-      paymentSelectionMode: "choose",
     });
+  });
+
+  test("normalizes sound packs against the shipped pack list", () => {
+    expect(normalizeSoundPack("kinetic")).toBe("kinetic");
+    expect(normalizeSoundPack("not-a-pack")).toBe("original");
+    expect(normalizeSoundPack(undefined, "tabletop")).toBe("tabletop");
   });
 
   test("reads and writes local simulator preferences", () => {
     const storage = new MemoryStorage();
     writeLocalSimulatorSettings(storage, {
       soundVolume: 24,
+      soundPack: "signal",
       cardInteractionMode: "quick",
       animationSpeed: "slow",
-      paymentSelectionMode: "choose",
     });
 
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("24");
+    expect(storage.getItem(SIMULATOR_SOUND_PACK_STORAGE_KEY)).toBe("signal");
     expect(storage.getItem(SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY)).toBe("quick");
     expect(storage.getItem(SIMULATOR_ANIMATION_SPEED_STORAGE_KEY)).toBe("slow");
-    expect(storage.getItem(SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY)).toBe("choose");
     expect(readLocalSimulatorSettings(storage)).toEqual({
       soundVolume: 24,
+      soundPack: "signal",
       cardInteractionMode: "quick",
       animationSpeed: "slow",
-      paymentSelectionMode: "choose",
     });
+  });
+
+  test("falls back to the default sound pack for unknown stored values", () => {
+    const storage = new MemoryStorage();
+    storage.setItem(SIMULATOR_SOUND_PACK_STORAGE_KEY, "loud");
+    expect(readLocalSimulatorSettings(storage).soundPack).toBe("original");
   });
 
   test("migrates legacy Cyberpunk sound volume", () => {
@@ -68,9 +81,9 @@ describe("simulator settings", () => {
 
     expect(readLocalSimulatorSettings(storage)).toEqual({
       soundVolume: 100,
+      soundPack: "original",
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
-      paymentSelectionMode: "automatic",
     });
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("100");
   });

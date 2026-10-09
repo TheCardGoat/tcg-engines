@@ -22,7 +22,7 @@ export const op08XDrake093: CharacterCard = {
   setId: "OP08",
   cost: 4,
   power: 6000,
-  traits: ["Animal Kingdom Pirates Drake Pirates Navy"],
+  traits: ["Navy", "Drake Pirates", "Animal Kingdom Pirates"],
   attribute: "slash",
   effect: "[DON!! x1] This Character gains +2 cost.",
   effects: {

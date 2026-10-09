@@ -56,7 +56,7 @@ export const op04Kaido044: CharacterCard = {
   setId: "OP04",
   cost: 10,
   power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "strike",
 
   effect:
@@ -68,39 +68,39 @@ export const op04Kaido044: CharacterCard = {
         actions: [
           {
             action: "returnToHand",
-            target: {
-              player: "any",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 8,
+            target: { player: "any", zones: ["character"], count: { amount: 2, upTo: true } },
+            targetGroups: [
+              {
+                player: "any",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-          },
-          {
-            action: "returnToHand",
-            target: {
-              player: "any",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 8,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
+              {
+                player: "any",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 3,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

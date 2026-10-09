@@ -113,21 +113,32 @@ export const fullBloom: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
             },
           ],
           effect: {
-            kind: "deal-damage",
-            source: {
-              kind: "source",
-            },
-            recipient: {
-              kind: "each",
-              collection: {
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["CHAMPION"],
+            kind: "sequence",
+            effects: [
+              {
+                kind: "deal-damage",
+                source: {
+                  kind: "source",
                 },
+                recipient: {
+                  kind: "each",
+                  collection: {
+                    zones: ["field"],
+                    player: "event-actor",
+                    filter: {
+                      kind: "type",
+                      oneOf: ["CHAMPION"],
+                    },
+                  },
+                },
+                amount: 2,
               },
-            },
-            amount: 2,
+              {
+                kind: "recover",
+                player: "controller",
+                amount: 2,
+              },
+            ],
           },
         },
       ],

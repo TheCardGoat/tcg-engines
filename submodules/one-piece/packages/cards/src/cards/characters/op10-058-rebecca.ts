@@ -39,22 +39,24 @@ export const op10Rebecca058: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        conditions: [
+          {
+            condition: "existsOnField",
+            zone: "character",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 8,
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "existsOnField",
-              zone: "character",
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "gte",
-                  value: 8,
-                },
-              ],
-            },
           },
           {
             action: "revealFromHand",
@@ -69,7 +71,7 @@ export const op10Rebecca058: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -114,7 +116,6 @@ export const op10Rebecca058: CharacterCard = {
                   multiple: ["active", "rested"],
                   byGroup: true,
                 },
-                chooseOnPlayOrder: true,
                 previousActionTargets: true,
               },
             ],

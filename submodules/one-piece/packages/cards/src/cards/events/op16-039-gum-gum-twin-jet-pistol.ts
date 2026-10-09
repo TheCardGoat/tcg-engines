@@ -22,11 +22,26 @@ export const op16GumGumTwinJetPistol039: EventCard = {
   setId: "OP16",
   cost: 1,
   trigger: "Rest your opponent's Leader.",
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   effect:
     "[Main] Up to 1 of your [Monkey.D.Luffy] cards gains [Double Attack] during this turn. Then, if your Leader has the {Impel Down} type, rest up to 2 of your opponent's Characters with a cost of 3 or less.",
   effects: {
     effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+          },
+        ],
+      },
       {
         trigger: "main",
         actions: [
@@ -54,7 +69,7 @@ export const op16GumGumTwinJetPistol039: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Impel Down",
-              match: "includes",
+              match: "exact",
             },
             target: {
               player: "opponent",

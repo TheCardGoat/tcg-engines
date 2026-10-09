@@ -33,7 +33,7 @@ export const eb04Sanji052: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 1000,
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[When Attacking] This Character's base power becomes the same as your opponent's Leader during this turn. [On K.O.] If you have 2 or less Life cards, play up to 1 yellow Character card with 6000 power or less from your hand.",
@@ -43,16 +43,8 @@ export const eb04Sanji052: CharacterCard = {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "setBasePowerFrom",
+            action: "copyPower",
             target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            source: {
               player: "opponent",
               zones: ["leader"],
               count: {

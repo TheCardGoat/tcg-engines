@@ -67,13 +67,11 @@ describe("choice modal action picker — resolveChooseEffect", () => {
     const picked = choiceModalActionFromInteractionView(
       [
         {
-          protocolVersion: 1,
-          gameSlug: "cyberpunk",
-          actorId: "p1",
-          stateVersion: 1,
-          status: "choice",
           id: "resolveChooseEffect",
+          requestId: "cyberpunk:1:resolveChooseEffect",
           intent: "choose-option",
+          text: { key: "test.chooseEffect" },
+          enabled: true,
           inputs: [],
         },
       ],
@@ -130,23 +128,22 @@ describe("choice modal action picker — atomic Gig adjustment", () => {
     choice: {
       type: "chooseTarget",
       chooserId: "p1",
-      effectId: "zetatech-faceplate-trigger",
       payload: {
         type: "effectTarget",
         targetKind: "gig",
         min: 0,
         max: 1,
         eligibleIds: ["friendly-d6", "rival-d8"],
-        selectedBindingId: "gig",
         adjustGig: {
           maxAmount: 1,
           direction: "either",
           chooseUpTo: true,
-          effectIndex: 0,
         },
       },
     } satisfies Extract<ChoicePrompt, { type: "chooseTarget" }>,
   };
+  // The picker only reads the players' public gigArea arrays off the state, so
+  // a stub carrying just those is sufficient for these spatial-target cases.
   const matchState = {
     G: {
       players: {
@@ -154,7 +151,7 @@ describe("choice modal action picker — atomic Gig adjustment", () => {
         p2: { gigArea: ["rival-d8"] },
       },
     },
-  } as MatchState;
+  } as unknown as MatchState;
 
   it("keeps public Gig candidates on the board instead of auto-opening the drawer", () => {
     const actions = viewActions(adjustGigPrompt);

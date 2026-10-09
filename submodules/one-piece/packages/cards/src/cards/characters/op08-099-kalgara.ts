@@ -40,7 +40,7 @@ export const op08Kalgara099: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   attribute: "slash",
   effect: "NULL",
   i18n: op08Kalgara099I18n,

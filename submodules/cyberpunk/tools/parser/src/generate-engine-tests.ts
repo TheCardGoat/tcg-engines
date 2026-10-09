@@ -100,7 +100,7 @@ function renderEngineTestFile(card: StructuredSetCardDefinition): string {
 
   return [
     `import { describe, it } from "vite-plus/test";`,
-    `import { CyberpunkTestEngine } from "../../testing/index.ts";`,
+    `import { CyberpunkTestEngine } from "../../../testing/index.ts";`,
     `import { ${name} } from "@tcg/cyberpunk-cards";`,
     ``,
     `describe("${card.displayName}", () => {`,
@@ -110,8 +110,9 @@ function renderEngineTestFile(card: StructuredSetCardDefinition): string {
   ].join("\n");
 }
 
-async function writeBucket(outputDir: string, bucket: CardBucket): Promise<void> {
-  const bucketDir = join(outputDir, bucket.dir);
+async function writeBucket(rootDir: string, bucket: CardBucket): Promise<void> {
+  const bucketDir = join(rootDir, bucket.dir);
+  await rm(bucketDir, { recursive: true, force: true });
   await mkdir(bucketDir, { recursive: true });
 
   for (const card of bucket.cards) {
@@ -119,20 +120,17 @@ async function writeBucket(outputDir: string, bucket: CardBucket): Promise<void>
   }
 }
 
-async function writeSetFiles(
-  outputDir: string,
-  config: SetConfig,
+async function writeTypeFiles(
+  rootDir: string,
   cards: StructuredSetCardDefinition[],
 ): Promise<void> {
-  const setDir = join(outputDir, config.code);
   const withAbilities = cards.filter((card) => card.abilities.length > 0);
   const buckets = buildBuckets(withAbilities);
 
-  await rm(setDir, { recursive: true, force: true });
-  await mkdir(setDir, { recursive: true });
-
+  // The parent is generator-owned. Write every bucket so a card removed from
+  // the promo source cannot leave a stale generated test behind.
   for (const bucket of buckets) {
-    await writeBucket(setDir, bucket);
+    await writeBucket(rootDir, bucket);
   }
 }
 
@@ -140,9 +138,18 @@ export async function generateEngineTestFiles(
   options: GenerateEngineTestFilesOptions,
 ): Promise<GenerateEngineTestFilesResult> {
   const generatedCards = await loadGeneratedCards(options.generatedFilePath);
-  const promoCards = parsePromoCards(generatedCards);
+  const parsed = parsePromoCards(generatedCards);
+  if (parsed.unparsedSegments.length > 0) {
+    const details = parsed.unparsedSegments
+      .map((segment) => `${segment.text}: ${segment.reason}`)
+      .join("\n");
+    throw new Error(`Cannot generate engine tests from partially parsed cards:\n${details}`);
+  }
+  const promoCards = parsed.definition;
 
-  await writeSetFiles(options.outputDir, SET_CONFIGS[0], promoCards);
+  await rm(options.outputDir, { recursive: true, force: true });
+
+  await writeTypeFiles(options.outputDir, promoCards);
 
   return {
     promoCards: promoCards.filter((c) => c.abilities.length > 0),

@@ -22,7 +22,7 @@ export const op01Jinbe014: CharacterCard = {
   setId: "OP01",
   cost: 4,
   power: 5000,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [DON!! x1] [On Block] Play up to 1 red Character card with a cost of 2 or less from your hand.  This card has been officially errata'd.",

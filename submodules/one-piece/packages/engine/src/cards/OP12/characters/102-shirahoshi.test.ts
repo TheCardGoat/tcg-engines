@@ -73,4 +73,33 @@ describe("OP12-102 Shirahoshi", () => {
       engine.getView("south").players.south.characters.map((card) => card?.instanceId),
     ).not.toContain(doflamingoId);
   });
+  test("FAQ: protects itself, but cannot pay again with its top Life already face-up", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [op12Shirahoshi102], life: [eb01Doma005] },
+      { hand: ["OP02-067", "OP02-067"], activeDon: 4 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const id = e.findCardInZone("south", "character", op12Shirahoshi102);
+    e.asNorth().play("OP02-067");
+    e.asNorth().chooseTargets(id);
+    e.asSouth().chooseOption("effectRemovalReplacement", "yes");
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(id);
+    e.asNorth().play("OP02-067");
+    e.asNorth().chooseTargets(id);
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("may decline flipping Life and allow its own removal", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [op12Shirahoshi102], life: [eb01Doma005] },
+      { hand: ["OP02-067"], activeDon: 2 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const id = e.findCardInZone("south", "character", op12Shirahoshi102);
+    e.asNorth().play("OP02-067");
+    e.asNorth().chooseTargets(id);
+    e.asSouth().chooseOption("effectRemovalReplacement", "no");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+  });
 });

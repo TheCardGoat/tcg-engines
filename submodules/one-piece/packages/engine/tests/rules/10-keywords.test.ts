@@ -695,7 +695,10 @@ describe("Rule 10-2-15: [On Block]", () => {
   test("10-2-15-1: an [On Block] effect activates during the Block Step when you activate your [Blocker]", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
-      { character: [{ card: op01BoaHancock078, attachedDon: 1 }] },
+      {
+        character: [{ card: op01BoaHancock078, attachedDon: 1 }],
+        deck: Array(30).fill("ST02-002"),
+      },
       SOUTH_ATTACKS,
     );
     const attackerId = engine.asSouth().findOnField(eb01MountainGod018);

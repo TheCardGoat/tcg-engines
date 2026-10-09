@@ -36,6 +36,7 @@ export const eb01OhComeMyWay038: EventCard = {
     effects: [
       {
         trigger: "counter",
+        optional: true,
         costs: [
           {
             cost: "returnDon",

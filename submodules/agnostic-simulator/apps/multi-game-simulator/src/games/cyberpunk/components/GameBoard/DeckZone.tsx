@@ -5,6 +5,7 @@ import { cyberpunkCardZoneToSimulatorZone } from "../../engine/projectSimulator"
 import { CardImage } from "./CardImage";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
+import { useSetupShuffle } from "./useSetupShuffle";
 import classes from "./DeckZone.module.css";
 
 interface DeckZoneProps {
@@ -15,6 +16,7 @@ interface DeckZoneProps {
 }
 
 export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZoneProps) {
+  const setupShuffle = useSetupShuffle();
   const zoneName = opponent ? "opp-deck" : "p-deck";
   const resolvedSide = side ?? (opponent ? "opponent" : "player");
   const zone = {
@@ -34,6 +36,7 @@ export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZon
       data-side={side}
       data-count={count}
       data-has-reveal={reveal ? "true" : "false"}
+      data-setup-shuffle={setupShuffle ? "true" : "false"}
     >
       <div className={classes.inner}>
         <DeckStackZone
@@ -52,7 +55,7 @@ export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZon
               data-sim-entity-id={`${opponent ? "opp" : "p"}-deck-stack`}
               data-testid="deck-stack"
             >
-              <CardImage faceDown alt="Deck" />
+              <CardImage faceDown alt="Deck" side={resolvedSide} />
             </div>
           )}
         />

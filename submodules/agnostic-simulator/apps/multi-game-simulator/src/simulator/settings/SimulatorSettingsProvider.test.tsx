@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/tes
 import { SimulatorAuthContextProvider } from "../providers/auth-context";
 import type { SimulatorAuthContextValue } from "../providers";
 import { SimulatorSettingsProvider, useSimulatorSettings } from "./SimulatorSettingsProvider";
-import type { SimulatorSettings } from "./simulator-settings";
+import { SIMULATOR_SOUND_PACK_STORAGE_KEY, type SimulatorSettings } from "./simulator-settings";
 
 describe("SimulatorSettingsProvider", () => {
   beforeEach(() => {
@@ -22,9 +22,9 @@ describe("SimulatorSettingsProvider", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }), {
       soundVolume: 50,
+      soundPack: "original",
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
-      paymentSelectionMode: "automatic",
     });
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
     fireEvent(window, new Event("pagehide"));
@@ -38,7 +38,6 @@ describe("SimulatorSettingsProvider", () => {
             soundVolume: 80,
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
-            paymentSelectionMode: "automatic",
           },
         }),
       }),
@@ -90,7 +89,6 @@ describe("SimulatorSettingsProvider", () => {
             soundVolume: 80,
             cardInteractionMode: "quick",
             animationSpeed: "normal",
-            paymentSelectionMode: "automatic",
           },
         }),
       }),
@@ -103,9 +101,9 @@ describe("SimulatorSettingsProvider", () => {
 
     renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }), {
       soundVolume: 35,
+      soundPack: "original",
       cardInteractionMode: "quick",
       animationSpeed: "slow",
-      paymentSelectionMode: "automatic",
     });
 
     expect(screen.getByTestId("volume").textContent).toBe("35");
@@ -133,9 +131,9 @@ describe("SimulatorSettingsProvider", () => {
       authContext({ isAuthenticated: true, userId: "user-1" }),
       {
         soundVolume: 35,
+        soundPack: "original",
         cardInteractionMode: "detailed",
         animationSpeed: "normal",
-        paymentSelectionMode: "automatic",
       },
     );
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
@@ -148,9 +146,9 @@ describe("SimulatorSettingsProvider", () => {
         <SimulatorSettingsProvider
           initialSettings={{
             soundVolume: 35,
+            soundPack: "original",
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
-            paymentSelectionMode: "automatic",
           }}
         >
           <SettingsProbe />
@@ -160,6 +158,52 @@ describe("SimulatorSettingsProvider", () => {
 
     expect(screen.getByTestId("volume").textContent).toBe("80");
     expect(fetchMock.mock.calls.some(([, init]) => init?.method !== "PUT")).toBe(true);
+  });
+
+  test("persists the chosen sound pack locally and keeps it out of the server payload", async () => {
+    const fetchMock = vi.fn((_: RequestInfo | URL, init?: RequestInit) =>
+      Promise.resolve(new Response("{}", { status: 200 })),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }));
+
+    fireEvent.click(screen.getByRole("button", { name: "use signal pack" }));
+    expect(screen.getByTestId("sound-pack").textContent).toBe("signal");
+
+    await act(async () => {
+      vi.advanceTimersByTime(500);
+      await Promise.resolve();
+    });
+
+    expect(window.localStorage.getItem(SIMULATOR_SOUND_PACK_STORAGE_KEY)).toBe("signal");
+    const putBody = JSON.parse(
+      fetchMock.mock.calls.find(([, init]) => init?.method === "PUT")?.[1]?.body as string,
+    ) as { playerSettings: Record<string, unknown> };
+    expect(putBody.playerSettings).not.toHaveProperty("soundPack");
+  });
+
+  test("keeps the stored sound pack when the server hydrates other settings", async () => {
+    const getSettings = deferred<Response>();
+    const fetchMock = vi.fn((_: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.method === "PUT") {
+        return Promise.resolve(new Response("{}", { status: 200 }));
+      }
+      return getSettings.promise;
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    window.localStorage.setItem(SIMULATOR_SOUND_PACK_STORAGE_KEY, "signal");
+
+    renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }));
+    await act(async () => {
+      getSettings.resolve(
+        new Response(JSON.stringify({ gameplaySettings: { soundVolume: 20 } }), { status: 200 }),
+      );
+      await Promise.resolve();
+    });
+
+    expect(screen.getByTestId("volume").textContent).toBe("20");
+    expect(screen.getByTestId("sound-pack").textContent).toBe("signal");
+    expect(window.localStorage.getItem(SIMULATOR_SOUND_PACK_STORAGE_KEY)).toBe("signal");
   });
 
   test("clears a pending server save when authentication is lost", async () => {
@@ -212,8 +256,9 @@ function renderSettingsProbe(
 
 function SettingsProbe() {
   const {
-    settings: { soundVolume, cardInteractionMode, animationSpeed },
+    settings: { soundVolume, soundPack, cardInteractionMode, animationSpeed },
     setSoundVolume,
+    setSoundPack,
     setCardInteractionMode,
     setAnimationSpeed,
   } = useSimulatorSettings();
@@ -221,10 +266,14 @@ function SettingsProbe() {
   return (
     <section>
       <output data-testid="volume">{soundVolume}</output>
+      <output data-testid="sound-pack">{soundPack}</output>
       <output data-testid="card-mode">{cardInteractionMode}</output>
       <output data-testid="animation-speed">{animationSpeed}</output>
       <button type="button" onClick={() => setSoundVolume(80)}>
         set volume
+      </button>
+      <button type="button" onClick={() => setSoundPack("signal")}>
+        use signal pack
       </button>
       <button type="button" onClick={() => setCardInteractionMode("quick")}>
         use quick actions

@@ -1,64 +1,49 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Charlotte Oven (OP17-102) cost=4 power=4000 counter=1000
-describe("OP17-102 Charlotte Oven", () => {
-  test("[On K.O.] resolves when this Character is K.O.'d", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-102", rested: true }], activeDon: 5 },
-      { character: ["OP16-003"], activeDon: 5 },
+describe("OP17-102", () => {
+  test("battle KO revives a different 4000-power Character and excludes Oven", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [{ cardId: "OP17-102", rested: true }],
+        trash: ["OP17-102", "OP17-107", "OP02-018"],
+        hand: [],
+      },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { activeSeat: "north" },
     );
-    const cardId = engine.findCardInZone("south", "character", "OP17-102");
-
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-003", "OP17-102");
-
-    // Resolve any follow-up prompts generically.
-    for (let i = 0; i < 3; i++) {
-      const view = engine.getView("south");
-      const remaining = view.prompts;
-      if (remaining.length === 0) break;
-      const d = (view.decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (!intent) break;
-      const step = engine.pendingDecision(intent, "south").steps[0];
-      if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { selectedIds: [step.candidates[0]!.ref.id] },
-          "south",
-        );
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
-      cardId,
-    );
+    const target = e.findCardInZone("south", "trash", "OP17-107");
+    e.asNorth().attack("EB01-018", "OP17-102");
+    const step = e.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected revival");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([target]);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(target);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-102", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("Life Trigger plays this physical Oven without a DON!! payment", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP17-102", "ST02-002"], activeDon: 0 },
+      {},
+      { activeSeat: "north" },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-102",
+    const oven = e.findCardInZone("south", "life", "OP17-102");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    expect(e.getView("south").players.south.characters[0]?.instanceId).toBe(oven);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+  });
+  test("declines OnKO play with an eligible 4000-power card in trash", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP17-102", rested: true }], trash: ["OP17-107"] },
+      {},
+      { activeSeat: "north" },
     );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const target = e.findCardInZone("south", "trash", "OP17-107");
+    e.asNorth().attack(e.leader("north"), "OP17-102");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(target);
   });
 });

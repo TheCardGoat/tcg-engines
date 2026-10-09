@@ -33,7 +33,7 @@ export const prb02CharlotteKatakuriPirateFoil003: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Big Mom Pirates"],
+  traits: ["FILM", "Big Mom Pirates"],
   attribute: "strike",
   effect:
     'If your Leader has the "FILM" type and you have 6 or more rested cards, this Character gains +2000 power.',
@@ -48,7 +48,7 @@ export const prb02CharlotteKatakuriPirateFoil003: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "FILM",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "restedCardCount",

@@ -38,7 +38,7 @@ export const op07HePossessesTheWorldSMostBrilliantMind114: EventCard = {
   rarity: "UC",
   setId: "OP07",
   cost: 1,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   effect:
     "[Main] Look at 5 cards from the top of your deck; reveal up to 1 [Egghead] type card other than [He Possesses the World's Most Brilliant Mind] and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Draw 1 card.",
   effects: {
@@ -65,7 +65,7 @@ export const op07HePossessesTheWorldSMostBrilliantMind114: EventCard = {
               {
                 filter: "trait",
                 value: "Egghead",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

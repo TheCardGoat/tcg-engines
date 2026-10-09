@@ -29,7 +29,10 @@ export const wayfinderSCrest = defineCard(fabCardIdentitiesByCanonicalId["rtR8zK
           target: {
             selector: "object",
             declared: "at-resolution",
-            player: "any",
+            // Printed "target hero's deck": declare the hero when the trigger
+            // layer is added (CR 1.8.5); only that hero's top is disclosed.
+            playerTarget: { selector: "any-hero" },
+            playerTargetBinding: "wayfinder-target-hero",
             zones: ["deck"],
             position: "top",
             count: 1,

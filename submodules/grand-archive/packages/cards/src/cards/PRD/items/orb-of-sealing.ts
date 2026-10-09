@@ -61,8 +61,11 @@ export const orbOfSealing: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                       },
                     },
                     {
-                      kind: "supertype",
-                      oneOf: ["REGALIA"],
+                      kind: "not",
+                      filter: {
+                        kind: "supertype",
+                        oneOf: ["REGALIA"],
+                      },
                     },
                   ],
                 },

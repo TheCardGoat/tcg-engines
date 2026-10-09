@@ -30,7 +30,7 @@ export const op11Jinbe031: CharacterCard = {
   setId: "OP11",
   cost: 6,
   power: 8000,
-  traits: ["The Sun Pirates Merfolk Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "The Sun Pirates"],
   attribute: "strike",
   effect:
     '[On Play] If your Leader has the "Fish-Man" or "Merfolk" type, rest up to 1 of your opponent\'s Characters with a cost of 5 or less.\n[Activate: Main] [Once Per Turn] Up to 1 of your "Fish-Man" or "Merfolk" type Characters can attack Characters on the turn in which it is played.',
@@ -46,12 +46,12 @@ export const op11Jinbe031: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Merfolk",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -96,12 +96,12 @@ export const op11Jinbe031: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

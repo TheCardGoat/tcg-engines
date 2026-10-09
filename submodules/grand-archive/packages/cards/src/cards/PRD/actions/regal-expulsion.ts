@@ -43,17 +43,24 @@ export const regalExpulsion: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               candidates: {
                 kind: "stack-item",
                 itemTypes: ["card-activation"],
-                activationFrom: ["material-deck"],
               },
             },
           ],
           effect: {
-            kind: "negate",
-            subject: {
-              kind: "bound",
+            kind: "conditional",
+            condition: {
+              kind: "bound-activation-origin",
               binding: "target-stack-item",
+              zone: "material-deck",
             },
-            bindResultAs: "negated-stack-item",
+            then: {
+              kind: "negate",
+              subject: {
+                kind: "bound",
+                binding: "target-stack-item",
+              },
+              bindResultAs: "negated-stack-item",
+            },
           },
         },
       ],

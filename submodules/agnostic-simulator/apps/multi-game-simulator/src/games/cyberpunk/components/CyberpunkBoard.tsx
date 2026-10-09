@@ -1,7 +1,9 @@
+import { DropDispatchBridge, SelectionReset } from "./GameBoard/BoardInputController";
 import { useEffect, useRef, useState } from "react";
+import { logHandDebug, summarizeHandState } from "../engine/live/handVisibilityDiagnostics";
 import { useMediaQuery } from "@mantine/hooks";
+import { useSimulatorAuth } from "../../../simulator/providers";
 import type { SimulatorRendererProps } from "@tcg/simulator-contract";
-import type { DropDisposition } from "@tcg/simulator-ui";
 import type { EngineInteractionView } from "@tcg/protocol";
 import type { ChoicePrompt, PlayerPrompt } from "@tcg/cyberpunk-engine";
 
@@ -15,44 +17,64 @@ import {
   HandZone,
   MobileBoard,
   MoveSelectionProvider,
-  useAttackSelection,
-  useDragDrop,
-  useMoveSelection,
 } from "./GameBoard";
 import { OpponentDisconnectOverlay } from "./GameBoard/OpponentDisconnectOverlay";
 import { useGameClock } from "./GameBoard/useGameClock";
+import { rivalTimeoutExpired } from "./GameBoard/rivalTimeout";
 import { CyberpunkInteractionPanel } from "./CyberpunkInteractionPanel";
 import { useCyberpunkBoardRuntime } from "./BoardRuntimeContext";
 import { DebugPanelProvider } from "./DebugPanel";
 import {
-  interactionActionIsAvailable,
-  interactionViewHasAttacker,
-  mapDropToAction,
   otherSide,
-  PLAYER_SIDE_TO_ID,
   useEngine,
-  useEngineInteractionView,
-  useEngineOptional,
   useUserConfig,
+  useCyberpunkVisualSelection,
   useSideZones,
-  handContainsPrivateCards,
-  type CardDropEvent,
+  handContainsHiddenIdentities,
   type Side,
 } from "../engine";
-import { connectionUiStatus } from "../engine/live/playerConnectionState";
 import classes from "./CyberpunkBoard.module.css";
 import { useTemporaryRevealedHandCardIds } from "./GameBoard/temporaryHandReveals";
 import { CyberpunkCardContextController } from "./CardContext/CyberpunkCardContextController";
 import { BoardCorrectionStrip } from "./GameBoard/BoardCorrectionStrip";
-import { usePaymentSelection } from "./PaymentSelection/PaymentSelectionContext";
+import { cyberpunkPlaymatSeatStyle, useCyberpunkFixturePlaymatId } from "../playmats";
+import { resolveCyberpunkSeatVisuals, type CyberpunkSeatVisuals } from "../seatVisuals";
+import { CardBackProvider } from "./GameBoard/CardImage";
+import { PLAYER_SIDE_TO_ID } from "../engine";
+import { CyberpunkZoneAnchor } from "../animation/CyberpunkZoneAnchor";
 
 const CYBERPUNK_MOBILE_BREAKPOINT_PX = 767;
 
 export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRendererProps) {
   const { humanSide } = useEngine();
   const { fieldCardSize } = useUserConfig();
+  const visual = useCyberpunkVisualSelection();
+  const auth = useSimulatorAuth();
   const boardRuntime = useCyberpunkBoardRuntime();
   const rivalSide = otherSide(humanSide);
+  const fixturePlaymatId = useCyberpunkFixturePlaymatId(true);
+  const seatVisuals: Record<Side, CyberpunkSeatVisuals> = {
+    player: resolveCyberpunkSeatVisuals({
+      side: "player",
+      humanSide,
+      identity: boardRuntime.playerIdentities?.player,
+      liveMatch: Boolean(boardRuntime.liveMatchSidebar),
+      localPlayerId: boardRuntime.liveMatchSidebar?.localPlayerId,
+      localVisual: visual,
+      localSubscriptionTier: auth.subscriptionTier,
+      fixturePlaymatId,
+    }),
+    opponent: resolveCyberpunkSeatVisuals({
+      side: "opponent",
+      humanSide,
+      identity: boardRuntime.playerIdentities?.opponent,
+      liveMatch: Boolean(boardRuntime.liveMatchSidebar),
+      localPlayerId: boardRuntime.liveMatchSidebar?.localPlayerId,
+      localVisual: visual,
+      localSubscriptionTier: auth.subscriptionTier,
+      fixturePlaymatId,
+    }),
+  };
   const [clientReady, setClientReady] = useState(false);
   const isNarrow = useMediaQuery(`(max-width: ${CYBERPUNK_MOBILE_BREAKPOINT_PX}px)`);
   const isShortCoarseViewport = useMediaQuery("(pointer: coarse) and (max-height: 520px)");
@@ -67,39 +89,71 @@ export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRender
     clientReady && (forceMobile || Boolean(isNarrow) || Boolean(isShortCoarseViewport));
 
   return (
-    <div className={classes.root} data-field-card-size={fieldCardSize}>
-      <DebugPanelProvider>
-        <GameStateProvider>
-          <AttackSelectionProvider>
-            <MoveSelectionProvider>
-              <DragDropProvider>
-                <CyberpunkCardContextController fixture={fixture}>
-                  <BoardCorrectionStrip />
-                  <DropDispatchBridge />
-                  <SelectionReset side={humanSide} />
-                  {mobile ? (
-                    <MobileBoard
-                      playerIdentities={boardRuntime.playerIdentities}
-                      playerConnections={boardRuntime.playerConnections}
-                      connectionDiagnostic={boardRuntime.connectionDiagnostic}
-                      onClaimRivalDrop={boardRuntime.onClaimRivalDrop}
-                      liveMatchSidebar={boardRuntime.liveMatchSidebar}
-                    />
-                  ) : (
-                    <DesktopBoard
-                      humanSide={humanSide}
-                      rivalSide={rivalSide}
-                      fixture={fixture}
-                      onSubmitInteraction={onSubmitInteraction}
-                    />
-                  )}
-                </CyberpunkCardContextController>
-              </DragDropProvider>
-            </MoveSelectionProvider>
-          </AttackSelectionProvider>
-        </GameStateProvider>
-      </DebugPanelProvider>
-    </div>
+    <CardBackProvider
+      urls={{ player: seatVisuals.player.cardBackUrl, opponent: seatVisuals.opponent.cardBackUrl }}
+    >
+      <div className={classes.root} data-field-card-size={fieldCardSize}>
+        <CyberpunkZoneAnchor
+          zoneId="opp-removedFromGame"
+          ownerId={String(PLAYER_SIDE_TO_ID[rivalSide])}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: 72,
+            height: 100,
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+        />
+        <CyberpunkZoneAnchor
+          zoneId="p-removedFromGame"
+          ownerId={String(PLAYER_SIDE_TO_ID[humanSide])}
+          style={{
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            width: 72,
+            height: 100,
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+        />
+        <DebugPanelProvider>
+          <GameStateProvider>
+            <AttackSelectionProvider>
+              <MoveSelectionProvider>
+                <DragDropProvider>
+                  <CyberpunkCardContextController fixture={fixture}>
+                    <BoardCorrectionStrip />
+                    <DropDispatchBridge />
+                    <SelectionReset side={humanSide} />
+                    {mobile ? (
+                      <MobileBoard
+                        playerIdentities={boardRuntime.playerIdentities}
+                        playerConnections={boardRuntime.playerConnections}
+                        connectionDiagnostic={boardRuntime.connectionDiagnostic}
+                        onClaimRivalDrop={boardRuntime.onClaimRivalDrop}
+                        liveMatchSidebar={boardRuntime.liveMatchSidebar}
+                        seatVisuals={seatVisuals}
+                      />
+                    ) : (
+                      <DesktopBoard
+                        humanSide={humanSide}
+                        rivalSide={rivalSide}
+                        fixture={fixture}
+                        onSubmitInteraction={onSubmitInteraction}
+                        seatVisuals={seatVisuals}
+                      />
+                    )}
+                  </CyberpunkCardContextController>
+                </DragDropProvider>
+              </MoveSelectionProvider>
+            </AttackSelectionProvider>
+          </GameStateProvider>
+        </DebugPanelProvider>
+      </div>
+    </CardBackProvider>
   );
 }
 
@@ -108,9 +162,16 @@ interface DesktopBoardProps {
   rivalSide: Side;
   fixture: SimulatorRendererProps["fixture"];
   onSubmitInteraction: SimulatorRendererProps["onSubmitInteraction"];
+  seatVisuals: Record<Side, CyberpunkSeatVisuals>;
 }
 
-function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: DesktopBoardProps) {
+function DesktopBoard({
+  humanSide,
+  rivalSide,
+  fixture,
+  onSubmitInteraction,
+  seatVisuals,
+}: DesktopBoardProps) {
   const boardRuntime = useCyberpunkBoardRuntime();
   const boardWrapRef = useRef<HTMLDivElement | null>(null);
   const [fixerCollapsed, setFixerCollapsed] = useState(false);
@@ -124,17 +185,18 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
     rivalZones.hand.map((card) => card.cardId),
   );
   const { interactionViews, matchState, activeSide, prioritySide, prompts } = useEngine();
-  const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
+  const clock = useGameClock();
   const promptResetKey = promptIdentityKey(prompts[humanSide], interactionViews[humanSide]);
-  const selfConnectionStatus = connectionUiStatus(boardRuntime.playerConnections?.[humanSide]);
-  const rivalConnectionStatus = connectionUiStatus(boardRuntime.playerConnections?.[rivalSide]);
-  const rivalTimeoutExpired = Boolean(
-    boardRuntime.onClaimRivalDrop &&
-    !matchState.G.gameEnded &&
-    selfConnectionStatus === "connected" &&
-    rivalConnectionStatus === "connected" &&
-    clock[rivalSide].seconds <= 0,
-  );
+  const isRivalTimeoutExpired = rivalTimeoutExpired({
+    humanSide,
+    rivalSide,
+    playerConnections: boardRuntime.playerConnections,
+    onClaimRivalDrop: boardRuntime.onClaimRivalDrop,
+    gameEnded: matchState.G.gameEnded,
+    rivalSeconds: clock[rivalSide].seconds,
+  });
+  const humanPlaymat = seatVisuals[humanSide].playmat;
+  const rivalPlaymat = seatVisuals[rivalSide].playmat;
 
   useEffect(() => {
     setPromptPlacement("player");
@@ -148,7 +210,13 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
           data-side={rivalSide}
           data-priority={prioritySide === rivalSide ? "true" : "false"}
           data-turn={activeSide === rivalSide ? "true" : "false"}
+          data-playmat-id={rivalPlaymat.id}
+          data-playmat-src={rivalPlaymat.src ?? ""}
+          style={cyberpunkPlaymatSeatStyle(rivalPlaymat.src)}
         >
+          {rivalPlaymat.src ? (
+            <div className={`${classes.playmat} ${classes.playmatMirrored}`} aria-hidden="true" />
+          ) : null}
           {prioritySide === rivalSide && !matchState.G.gameEnded ? (
             <div
               className={classes.priorityCue}
@@ -167,7 +235,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
             connection={boardRuntime.playerConnections?.[rivalSide]}
             onClaimDrop={boardRuntime.onClaimRivalDrop}
             claimAvailable={Boolean(boardRuntime.onClaimRivalDrop)}
-            timeoutExpired={rivalTimeoutExpired}
+            timeoutExpired={isRivalTimeoutExpired}
             dropEligibility={boardRuntime.dropEligibility}
           />
         </div>
@@ -179,7 +247,11 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
           data-side={humanSide}
           data-priority={prioritySide === humanSide ? "true" : "false"}
           data-turn={activeSide === humanSide ? "true" : "false"}
+          data-playmat-id={humanPlaymat.id}
+          data-playmat-src={humanPlaymat.src ?? ""}
+          style={cyberpunkPlaymatSeatStyle(humanPlaymat.src)}
         >
+          {humanPlaymat.src ? <div className={classes.playmat} aria-hidden="true" /> : null}
           {prioritySide === humanSide && !matchState.G.gameEnded ? (
             <div
               className={classes.priorityCue}
@@ -367,8 +439,20 @@ function choiceIdentityKey(choice: ChoicePrompt | null): string {
 
 function HumanHand({ side }: { side: Side }) {
   const zones = useSideZones(side);
-  const { viewerCanSeePrivateHand } = useCyberpunkBoardRuntime();
-  const faceDown = viewerCanSeePrivateHand === false && handContainsPrivateCards(zones.hand);
+  const { matchState } = useEngine();
+  const faceDown = handContainsHiddenIdentities(zones.hand);
+  useEffect(() => {
+    if (matchState.G.gamePhase !== "setup") return;
+    logHandDebug("rendered-hand", {
+      renderedSide: side,
+      faceDown,
+      state: summarizeHandState(matchState),
+      renderedHandCount: zones.hand.length,
+      hiddenIdentityCount: zones.hand.filter((card) => card.identityHidden).length,
+      physicalFaceDownCount: zones.hand.filter((card) => card.faceDown).length,
+      knownCostCount: zones.hand.filter((card) => card.cost !== null).length,
+    });
+  }, [side, faceDown, zones.hand, matchState]);
   return (
     <HandZone
       faceDown={faceDown}
@@ -396,144 +480,4 @@ function HumanHand({ side }: { side: Side }) {
       availableEddies={zones.eddies}
     />
   );
-}
-
-function DropDispatchBridge() {
-  const { registerCardDropHandler, programTargets, gearTargets } = useDragDrop();
-  const engine = useEngineOptional();
-  const { dispatchCostedAction } = usePaymentSelection();
-  const moveSelection = useMoveSelection();
-  const humanSide = engine?.humanSide ?? "player";
-  const humanZones = useSideZones(humanSide);
-  const humanInteractionView = useEngineInteractionView(humanSide);
-
-  const engineRef = useRef(engine);
-  const zonesRef = useRef(humanZones);
-  const interactionViewRef = useRef(humanInteractionView);
-  const sideRef = useRef<Side>(humanSide);
-  const selectionRef = useRef(moveSelection);
-  // The drop handler effect does not depend on the gate, so read it through a
-  // ref — a captured dispatchCostedAction would go stale on arm/mode changes.
-  const costedDispatchRef = useRef(dispatchCostedAction);
-  const targetsRef = useRef({ programTargets, gearTargets });
-  targetsRef.current = { programTargets, gearTargets };
-
-  engineRef.current = engine;
-  zonesRef.current = humanZones;
-  interactionViewRef.current = humanInteractionView;
-  sideRef.current = humanSide;
-  selectionRef.current = moveSelection;
-  costedDispatchRef.current = dispatchCostedAction;
-
-  useEffect(() => {
-    const handle = (event: CardDropEvent): DropDisposition => {
-      const e = engineRef.current;
-      if (!e || !event.source.cardId) {
-        return { kind: "rejected" };
-      }
-      const ctx = {
-        humanSide: sideRef.current,
-        humanZones: zonesRef.current,
-        interactionView: interactionViewRef.current,
-      };
-      const sourceCard = ctx.humanZones.hand.find((c) => c.cardId === event.source.cardId);
-      if (
-        sourceCard?.cardType === "program" &&
-        event.source.zone === "p-hand" &&
-        event.target.type === "card" &&
-        event.target.cardId
-      ) {
-        if (targetsRef.current.programTargets.has(event.target.cardId)) {
-          const as = PLAYER_SIDE_TO_ID[ctx.humanSide];
-          const targetId = event.target.cardId;
-          const accepted = costedDispatchRef.current(
-            { type: "playCard", cardId: event.source.cardId, as },
-            (result) => {
-              if (result.success)
-                e.dispatch({ type: "resolveEffectTarget", targetIds: [targetId], as });
-            },
-          );
-          if (accepted) selectionRef.current.clearSelection();
-          return { kind: accepted ? "accepted" : "rejected" };
-        }
-      }
-      if (
-        event.source.zone === "p-hand" &&
-        event.target.type === "zone" &&
-        event.target.zone === "p-field"
-      ) {
-        if (sourceCard?.cardType === "gear" && targetsRef.current.gearTargets.size > 0) {
-          selectionRef.current.setSelection({
-            side: ctx.humanSide,
-            moveId: "playCard",
-            sourceCardId: event.source.cardId,
-            sourceCardType: sourceCard.cardType,
-          });
-          return { kind: "accepted" };
-        }
-        if (sourceCard?.cardType === "program" && targetsRef.current.programTargets.size > 0) {
-          selectionRef.current.setSelection({
-            side: ctx.humanSide,
-            moveId: "playCard",
-            sourceCardId: event.source.cardId,
-            sourceCardType: sourceCard.cardType,
-          });
-          return { kind: "accepted" };
-        }
-      }
-      const action = mapDropToAction(event, ctx);
-      if (!action) {
-        return { kind: "rejected" };
-      }
-      if (action.type === "playCard" || action.type === "callLegend" || action.type === "goSolo") {
-        const accepted = costedDispatchRef.current(action);
-        if (accepted) selectionRef.current.clearSelection();
-        return { kind: accepted ? "accepted" : "rejected" };
-      }
-      const result = e.dispatch(action);
-      if (result.success) selectionRef.current.clearSelection();
-      return { kind: result.success ? "accepted" : "rejected" };
-    };
-    registerCardDropHandler(handle);
-    return () => registerCardDropHandler(null);
-  }, [registerCardDropHandler]);
-
-  return null;
-}
-
-function SelectionReset({ side }: { side: Side }) {
-  const interactionView = useEngineInteractionView(side);
-  const { selection, clearSelection } = useMoveSelection();
-  const attackSelection = useAttackSelection();
-
-  useEffect(() => {
-    if (!selection || selection.side !== side) {
-      return;
-    }
-    if (interactionView.status !== "ready") {
-      clearSelection();
-      return;
-    }
-    const stillAvailable = interactionActionIsAvailable(interactionView, selection.moveId);
-    if (!stillAvailable) {
-      clearSelection();
-    }
-  }, [clearSelection, interactionView, selection, side]);
-
-  useEffect(() => {
-    const pending = attackSelection.selection;
-    if (!pending || pending.side !== side) {
-      return;
-    }
-    if (interactionView.status !== "ready") {
-      attackSelection.clearSelection();
-      return;
-    }
-    const attackerStillAvailable = interactionViewHasAttacker(interactionView, pending.attackerId);
-    if (!attackerStillAvailable) {
-      attackSelection.clearSelection();
-    }
-  }, [attackSelection, interactionView, side]);
-
-  return null;
 }

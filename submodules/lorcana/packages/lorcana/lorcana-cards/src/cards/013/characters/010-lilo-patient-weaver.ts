@@ -31,6 +31,10 @@ export const liloPatientWeaver: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_a337559c9b1a44f6bc982ffe62f56fcb",
+    tcgPlayer: "704546",
+  },
   text: "Support",
   classifications: ["Storyborn", "Hero"],
   abilities: [support],

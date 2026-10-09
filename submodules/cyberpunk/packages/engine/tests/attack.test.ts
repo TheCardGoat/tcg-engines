@@ -480,6 +480,7 @@ describe("Attack Step", () => {
               attackerName: "Minotaur",
               attackerPower: 10,
               count: 2,
+              stolenGigs: "2 Gigs (D6 with value 3; D8 with value 5)",
             }),
           }),
         );
@@ -525,6 +526,10 @@ describe("Attack Step", () => {
               attackerName: "Minotaur",
               attackerPower: 10,
               stolenCount: 2,
+              stolenGigs: [
+                { dieType: "d4", faceValue: 1 },
+                { dieType: "d6", faceValue: 3 },
+              ],
             }),
           );
         }
@@ -710,7 +715,8 @@ describe("Attack Step", () => {
 
       // Now it's a fight, resolve it
       engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
-      engine.resolveAttack({ as: P1 }); // fight -> cleared
+      engine.resolveAttack({ as: P1 }); // fight -> fight result
+      engine.resolveAttack({ as: P1 }); // fight result -> defeat
 
       // Blocker defeated
       const p2Trash = engine.getCardsInZone("trash", P2);

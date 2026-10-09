@@ -80,4 +80,20 @@ describe("OP13-021 Gum-Gum Gatling Gun", () => {
     ).toBe(powerBefore - 2000);
     expect(engine.getView("north").prompts).toHaveLength(0);
   });
+  test("still reduces power when no named Luffy can receive the rested DON!!", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-060", hand: ["OP13-021"], activeDon: 1 },
+      { character: ["EB01-018"] },
+    );
+    const target = engine.findCardInZone("north", "character", "EB01-018");
+    engine.asSouth().play("OP13-021");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    engine.asSouth().chooseTargets(target);
+    expect(
+      engine.getView("south").players.north.characters.find((c) => c?.instanceId === target)?.power,
+    ).toBe(5000);
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(engine.getView("south").players.south.restedDon).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

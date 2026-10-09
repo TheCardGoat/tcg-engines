@@ -23,7 +23,7 @@ export const op03Napoleon117: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "slash",
   effect:
     "[Activate:Main] You may rest this Character: Up to 1 of your [Charlotte Linlin] cards gains +1000 power until the start of your next turn. [Trigger] Play this card.",

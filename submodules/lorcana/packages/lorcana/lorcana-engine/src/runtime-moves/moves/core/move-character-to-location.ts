@@ -15,6 +15,7 @@ import {
   validateNoPendingEffects,
 } from "../../../operations";
 import { getAvailableInk, spendInk } from "../../rules/play-card-rules";
+import { getInkDropCount } from "../../rules/ink-drops";
 import {
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
@@ -213,6 +214,7 @@ function validateMoveCharacterToLocation(
   ctx: MoveReadableContext,
   characterId: CardInstanceId,
   locationId: CardInstanceId,
+  inkDrops = 0,
 ): RuntimeValidationResult {
   const currentPlayer = getCurrentPlayerId(ctx);
   if (!currentPlayer) {
@@ -322,8 +324,12 @@ function validateMoveCharacterToLocation(
     0,
     baseMoveCost - getStaticMoveCostReduction(ctx, characterId, locationId, currentPlayer),
   );
+  // Only the explicitly requested drop count may cover the shortfall; holding
+  // drops without opting in must not make a move appear affordable.
+  const requestedInkDrops = Math.max(0, Math.floor(inkDrops ?? 0) || 0);
+  const heldDrops = requestedInkDrops > 0 ? getInkDropCount(ctx, currentPlayer as PlayerId) : 0;
   const availableInk = getAvailableInk({ framework: ctx.framework }, currentPlayer);
-  if (availableInk < moveCost) {
+  if (availableInk + Math.min(requestedInkDrops, heldDrops) < moveCost) {
     return {
       valid: false,
       error: "Not enough ready ink to pay the move cost",
@@ -350,6 +356,7 @@ export const moveCharacterToLocation: LorcanaMoveDefinition<"moveCharacterToLoca
       ctx,
       characterId as CardInstanceId,
       locationId as CardInstanceId,
+      ctx.args.inkDrops,
     );
   },
 
@@ -376,7 +383,24 @@ export const moveCharacterToLocation: LorcanaMoveDefinition<"moveCharacterToLoca
       ?.atLocationId as CardInstanceId | undefined;
 
     if (moveCost > 0) {
-      spendInk(ctx, currentPlayer, moveCost);
+      // Snapshot the held drops BEFORE spending: getInkDropCount reads the live
+      // balance, and spendInk removes the claimed drops first, so measuring
+      // afterwards would report the post-spend remainder (0 for a fully
+      // drop-funded move) and throw after the drops are already gone.
+      const dropsHeldBefore = getInkDropCount(ctx, currentPlayer as PlayerId);
+      const paidWith = spendInk({ ...ctx, G: ctx.G }, currentPlayer, moveCost, ctx.args.inkDrops);
+      // Mirrors payBasicCost: spendInk caps silently, so assert the payment
+      // (drops actually removed + inkwell cards exerted) covers the move cost
+      // and fail loudly on shortfall instead of moving for free.
+      const dropsSpent = Math.max(
+        0,
+        Math.min(Math.max(0, Math.floor(ctx.args.inkDrops ?? 0) || 0), moveCost, dropsHeldBefore),
+      );
+      if (paidWith.length + dropsSpent < moveCost) {
+        throw new Error(
+          `Failed to pay move cost: exerted ${paidWith.length} ink + ${dropsSpent} ink drops for a cost of ${moveCost}`,
+        );
+      }
     }
 
     ctx.cards.patchMeta(characterId as CardInstanceId, {

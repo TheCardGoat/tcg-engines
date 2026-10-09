@@ -582,9 +582,12 @@ describe("FAB post-game summary", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Watch replay" }));
-    fireEvent.click(screen.getByRole("button", { name: "Save on this device" }));
-    fireEvent.click(screen.getByRole("button", { name: "Download replay" }));
+    fireEvent.click(screen.getByRole("button", { name: "Replay" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: "Watch replay" }));
+    fireEvent.click(screen.getByRole("button", { name: "Replay" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: "Save on this device" }));
+    fireEvent.click(screen.getByRole("button", { name: "Replay" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: "Download replay" }));
     expect(watch).toHaveBeenCalledOnce();
     expect(save).toHaveBeenCalledOnce();
     expect(download).toHaveBeenCalledOnce();

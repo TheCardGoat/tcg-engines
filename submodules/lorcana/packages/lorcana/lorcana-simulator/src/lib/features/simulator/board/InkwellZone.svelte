@@ -20,6 +20,14 @@ import {
 } from "@/features/simulator/context/simulator-dnd-context.svelte.js";
 import * as Tooltip from "$lib/design-system/primitives/tooltip/index.js";
 import { m } from "$lib/i18n/messages.js";
+import { getCdnFallbackUrl } from "$lib/config/public-url-config.js";
+import { INK_DROP_COUNTER_URL } from "./ink-drop-assets.js";
+
+const INK_DROP_IMG_FALLBACK = (e: Event) => {
+  const img = e.currentTarget as HTMLImageElement;
+  const fallback = getCdnFallbackUrl(img.src);
+  if (fallback) img.src = fallback;
+};
 
 interface InkwellZoneProps {
 	isOpponent: boolean;
@@ -95,6 +103,22 @@ const inferredHiddenExertedCount = $derived.by(() =>
 	Math.max(0, hiddenPlaceholderCount - inferredHiddenReadyCount),
 );
 const showZoneCounters = $derived(board.showZoneCounters);
+const inkDrops = $derived(playerSummary?.inkDrops ?? 0);
+const inkDropPaymentArmed = $derived(board.inkDropPaymentArmed);
+const inkDropCountText = $derived(
+	inkDrops === 1
+		? m["sim.inkDropsBadge.countOne"]({ count: inkDrops })
+		: m["sim.inkDropsBadge.countMany"]({ count: inkDrops }),
+);
+const inkDropBadgeTitle = $derived(
+	isOpponent
+		? inkDropCountText
+		: `${inkDropCountText} — ${
+				inkDropPaymentArmed
+					? m["sim.inkDropsBadge.instructionStop"]({})
+					: m["sim.inkDropsBadge.instructionStart"]({})
+			}`,
+);
 const manualMode = getManualModeContext();
 const manualModeEnabled = $derived(manualMode?.enabled ?? false);
 const dropState = $derived(dnd.getZoneDropState("inkwell", playerSide));
@@ -279,6 +303,83 @@ $effect(() => {
     </button>
   {/if}
 
+  <!-- Hyperia City ink drops: official counter tokens trailing the inkwell cards; click toggles
+       drop payment on your own inkwell. Manual mode turns the strip into +/− board-state
+       correction instead. -->
+  {#if inkDrops > 0 || manualModeEnabled}
+    <div
+      class="ink-drop-tokens"
+      class:ink-drop-tokens--armed={inkDropPaymentArmed && !isOpponent && !manualModeEnabled}
+      class:ink-drop-tokens--interactive={!isOpponent && !manualModeEnabled}
+      data-ink-drop-tokens
+      data-ink-drop-count={inkDrops}
+      data-ink-drop-armed={inkDropPaymentArmed && !isOpponent && !manualModeEnabled}
+      title={manualModeEnabled ? inkDropCountText : inkDropBadgeTitle}
+      role={isOpponent || manualModeEnabled ? undefined : "button"}
+      tabindex={isOpponent || manualModeEnabled ? undefined : 0}
+      aria-hidden={isOpponent ? "true" : undefined}
+      aria-pressed={isOpponent || manualModeEnabled ? undefined : inkDropPaymentArmed}
+      onclick={(e) => {
+        if (isOpponent || manualModeEnabled) {
+          return;
+        }
+        e.stopPropagation();
+        board.toggleInkDropPayment();
+      }}
+      onkeydown={(e) => {
+        if (isOpponent || manualModeEnabled || (e.key !== "Enter" && e.key !== " ")) {
+          return;
+        }
+        e.preventDefault();
+        board.toggleInkDropPayment();
+      }}
+    >
+      {#if manualModeEnabled}
+        <button
+          type="button"
+          class="ink-drop-badge__btn"
+          aria-label={`Decrease ink drops for ${playerSide}`}
+          onclick={() => {
+            if (ownerId) manualMode?.setInkDrops(ownerId, Math.max(0, inkDrops - 1));
+          }}
+          disabled={inkDrops <= 0}
+        >−</button>
+      {/if}
+      <span class="ink-drop-token-stack">
+        <img
+          class="ink-drop-token"
+          src={INK_DROP_COUNTER_URL}
+          alt=""
+          draggable="false"
+          onerror={INK_DROP_IMG_FALLBACK}
+        />
+        <span class="ink-drop-token-count">{inkDrops}</span>
+      </span>
+      {#if manualModeEnabled}
+        <button
+          type="button"
+          class="ink-drop-badge__btn"
+          aria-label={`Increase ink drops for ${playerSide}`}
+          onclick={() => {
+            if (ownerId) manualMode?.setInkDrops(ownerId, inkDrops + 1);
+          }}
+        >+</button>
+      {/if}
+    </div>
+    {#if showZoneCounters}
+      <span class="ink-drop-badge" data-ink-drop-badge data-ink-drop-count={inkDrops}>
+        <img
+          class="ink-drop-badge__icon"
+          src={INK_DROP_COUNTER_URL}
+          alt=""
+          draggable="false"
+          onerror={INK_DROP_IMG_FALLBACK}
+        />
+        <span class="ink-drop-badge__count">{inkDrops}</span>
+      </span>
+    {/if}
+  {/if}
+
 </div>
 
 <style>
@@ -307,8 +408,9 @@ $effect(() => {
 
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
+    gap: 6px;
     padding: var(--ink-container-padding);
     background: var(--ink-bg);
     border: 1px solid var(--ink-border);
@@ -408,6 +510,70 @@ $effect(() => {
     font-variant-numeric: tabular-nums;
   }
 
+  /* Hyperia City ink-drop badge (top-right counterpart of the ink counter) */
+  .ink-drop-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px 2px 5px;
+    background: linear-gradient(135deg, #0f3b3a 0%, #14524f 100%);
+    border: 1px solid rgba(56, 189, 139, 0.45);
+    border-radius: 999px;
+    color: #d1fae5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 100ms ease, box-shadow 100ms ease, background 150ms ease;
+  }
+
+  .ink-drop-badge:hover {
+    transform: translate(50%, -50%) scale(1.08);
+    box-shadow: 0 2px 12px rgba(56, 189, 139, 0.5);
+  }
+
+  .ink-drop-badge__btn {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(6, 95, 70, 0.55);
+    color: #d1fae5;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .ink-drop-badge__btn:hover:not(:disabled) {
+    background: rgba(6, 95, 70, 0.9);
+  }
+
+  .ink-drop-badge__btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .ink-drop-badge__icon {
+    width: 8px;
+    height: 11px;
+    fill: rgba(110, 231, 183, 0.95);
+  }
+
+  .ink-drop-badge__count {
+    font-size: 0.68rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
   /* Inline ink label (counters OFF fallback) */
   .ink-inline-label {
     position: absolute;
@@ -432,6 +598,87 @@ $effect(() => {
   .ink-inline-label--top {
     top: auto;
     bottom: -4px;
+  }
+
+  /* Hyperia City ink-drop tokens (official counters trailing the inkwell cards) */
+  .ink-drop-tokens {
+    flex: 0 0 auto;
+    align-self: flex-end;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+  }
+
+  /* The local player's strip is the payment toggle: re-enable pointer events
+     that the display-only base rule turns off, or the click/keyboard handler
+     can never receive mouse or touch input. */
+  .ink-drop-tokens--interactive {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .ink-drop-token-stack {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .ink-drop-token {
+    width: 17px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 2.5px;
+    outline: 1px solid rgba(0, 0, 0, 0.55);
+  }
+
+  .ink-drop-token-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    color: #d1fae5;
+    background: rgba(15, 59, 58, 0.92);
+    border: 1px solid rgba(56, 189, 139, 0.45);
+    border-radius: 999px;
+    padding: 2px 4px;
+  }
+
+  /* Ink-drop count badge (top-right counterpart of the ink counter) */
+  .ink-drop-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px 2px 4px;
+    background: linear-gradient(135deg, #0f3b3a 0%, #14524f 100%);
+    border: 1px solid rgba(56, 189, 139, 0.45);
+    border-radius: 999px;
+    color: #d1fae5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    z-index: 12;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ink-drop-badge__icon {
+    width: 12px;
+    height: 17px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .ink-drop-badge__count {
+    font-size: 0.68rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
   }
 
   /* Ink Cards Stack - Horizontal layout */
@@ -605,6 +852,16 @@ $effect(() => {
     .ink-inline-label {
       font-size: 0.7rem;
       padding: 1px 5px;
+    }
+
+    .ink-drop-token {
+      width: 14px;
+      height: 20px;
+    }
+
+    .ink-drop-badge__icon {
+      width: 10px;
+      height: 14px;
     }
   }
 

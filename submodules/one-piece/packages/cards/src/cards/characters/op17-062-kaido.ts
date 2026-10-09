@@ -50,7 +50,7 @@ export const op17Kaido062: CharacterCard = {
   setId: "OP17",
   cost: 10,
   power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     "[Blocker]\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active.",
@@ -66,6 +66,7 @@ export const op17Kaido062: CharacterCard = {
           },
         ],
         actions: [
+          { action: "addDon", count: { amount: 1, upTo: true }, state: "active" },
           {
             action: "setActive",
             target: {

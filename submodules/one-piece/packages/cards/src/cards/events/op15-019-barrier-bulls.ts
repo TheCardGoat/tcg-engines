@@ -21,7 +21,7 @@ export const op15BarrierBulls019: EventCard = {
   rarity: "UC",
   setId: "OP15",
   cost: 3,
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   effect:
     "[Main] Draw 1 card and your Leader gains +1000 power until the end of your opponent's next End Phase.[Trigger] Give up to 1 of your opponent's Characters -4000 power during this turn.",
   effects: {

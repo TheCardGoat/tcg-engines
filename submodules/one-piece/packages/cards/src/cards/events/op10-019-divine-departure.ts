@@ -29,7 +29,7 @@ export const op10DivineDeparture019: EventCard = {
   rarity: "R",
   setId: "OP10",
   cost: 1,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   effect:
     "[Main] You may rest 5 of your DON!! cards: K.O. up to 1 of your opponent's Characters with 8000 power or less.\n[Counter] Up to 1 of your Leader gains +3000 power during this battle.",
   effects: {

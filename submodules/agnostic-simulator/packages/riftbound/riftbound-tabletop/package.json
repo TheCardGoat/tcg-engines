@@ -1,0 +1,26 @@
+{
+  "name": "@tcg/riftbound-tabletop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": { "types": "./src/index.ts", "default": "./src/index.ts" }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner"
+  },
+  "dependencies": {
+    "@tcg/shared": "link:../../shared",
+    "@tcg/simulator-contract": "link:../../simulator-contract",
+    "@tcg/simulator-runtime": "link:../../simulator-runtime"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

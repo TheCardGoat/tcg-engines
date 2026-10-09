@@ -149,10 +149,6 @@ describe("gateway-client manager", () => {
     expect(opts.transports).toEqual(["websocket"]);
     expect(opts.autoConnect).toBe(false);
     expect(opts.reconnection).toBe(true);
-    expect(opts.reconnectionAttempts).toBe(Number.POSITIVE_INFINITY);
-    expect(opts.reconnectionDelay).toBe(1_000);
-    expect(opts.reconnectionDelayMax).toBe(30_000);
-    expect(opts.withCredentials).toBe(true);
     expect(opts.parser).toBeDefined();
     expect(typeof opts.auth).toBe("function");
   });

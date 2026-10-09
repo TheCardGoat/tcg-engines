@@ -11,6 +11,20 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP14-057 Don't Worry!! I'm Here!!", () => {
+  test("a Fish-Man played after the Event does not receive its resolved group bonus", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11Jinbe021,
+      hand: [op14eb04DonTWorryIMHere057, op14eb04Kuroobi045],
+      activeDon: 5,
+    });
+    const south = engine.asSouth();
+    south.play(op14eb04DonTWorryIMHere057);
+    south.play(op14eb04Kuroobi045);
+    expect(
+      south.view().players.south.characters.find((card) => card?.cardId === "OP14-045")?.power,
+    ).toBe(3000);
+  });
+
   test("Main powers every Fish-Man or Merfolk Leader and Character, but no unrelated card", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op11Jinbe021,

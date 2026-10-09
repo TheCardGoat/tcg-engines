@@ -1,33 +1,34 @@
+import { SimulatorLiveChatProvider } from "../../../simulator/providers/live-chat-context";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Group, Paper, Stack, Text } from "@mantine/core";
 import type { ResolvedMatchViewer } from "@tcg/game-page-contract";
 import {
-  assertNeverInteractionInput,
-  buildInteractionSubmissionForActionId,
+  validateInteractionSubmission,
   EngineInteractionView,
   type DropEligibility,
   type EngineInteractionView as EngineInteractionViewType,
-  type InteractionAction,
-  type InteractionInput,
-  type InteractionSubmissionValue,
+  type InteractionSubmission,
+  type PendingProposal,
 } from "@tcg/protocol";
-import { DropClaimControl, SimulatorRouteStatus } from "@tcg/simulator-ui";
+import { InteractionWorkspace, DropClaimControl, SimulatorRouteStatus } from "@tcg/simulator-ui";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
+import { LiveActionAttention } from "../../../simulator/attention/LiveActionAttention";
+import { LiveMatchChatPanel } from "../../../simulator/chat/LiveMatchChatPanel";
+import { useLiveMatchDocumentTitle } from "../../../simulator/attention/useLiveMatchDocumentTitle";
 import { useSimulatorRoute } from "../../../simulator/providers";
 import {
-  LiveBoard,
   type AcSeat,
   type LiveBoardCard,
   type LiveBoardPlayer,
   type LiveBoardState,
-} from "../components/LiveBoard";
+} from "../components/board-types";
 import classes from "./Practice.module.css";
+import {
+  AlphaClashInteractionPanel,
+  AlphaClashInteractionBoard,
+  labelAlphaClashInteractions,
+} from "../components/AlphaClashInteractions";
 
-/** Entity-selection inputs store ordered string lists until submission time. */
-type ActionValues = Readonly<Record<string, InteractionSubmissionValue>>;
-type SelectionsByAction = Readonly<Record<string, ActionValues>>;
-
-const NO_SELECTIONS: SelectionsByAction = {};
 const LOG_LIMIT = 200;
 
 interface LiveLogLine {
@@ -40,7 +41,7 @@ interface LiveLogLine {
  * exclusively from the adapter's viewer projection; the browser never
  * hydrates a persisted engine snapshot.
  */
-export function AlphaClashLiveMatchPage() {
+function AlphaClashLiveMatchPageContent() {
   const route = useSimulatorRoute();
   const bootstrap = route.matchPageData;
   const gameId = bootstrap?.game.gameId;
@@ -58,32 +59,40 @@ export function AlphaClashLiveMatchPage() {
   const [interactionView, setInteractionView] = useState<EngineInteractionViewType | null>(() =>
     parseInteractionView(bootstrap?.game.interactionView),
   );
+  const [stateVersion, setStateVersion] = useState(bootstrap?.game.stateVersion ?? 0);
+  const [canUndo, setCanUndo] = useState(bootstrap?.game.undoable === true);
+  const [canUndoTurn, setCanUndoTurn] = useState(bootstrap?.game.undoTurnAvailable === true);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
+  useLiveMatchDocumentTitle({
+    game: "Alpha Clash",
+    turn: state && viewerSeat ? (state.activePlayer === viewerSeat ? "self" : "opponent") : null,
+    priority: null,
+    finished: state?.phaseName === "complete" || bootstrap?.game.status === "completed",
+  });
   const [logLines, setLogLines] = useState<readonly LiveLogLine[]>(
     () => logLinesFromEngineLogs(bootstrap?.history.engineLogs ?? [], 0).lines,
   );
-  const [selections, setSelections] = useState<SelectionsByAction>(NO_SELECTIONS);
-  const [activeActionId, setActiveActionId] = useState<string | null>(null);
   const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
     bootstrap?.dropEligibility ?? null,
   );
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [connectionReady, setConnectionReady] = useState(false);
   const logIdCounter = useRef(0);
   const interactionRef = useRef(interactionView);
-  const activeActionRef = useRef(activeActionId);
   useEffect(() => {
     interactionRef.current = interactionView;
   }, [interactionView]);
-  useEffect(() => {
-    activeActionRef.current = activeActionId;
-  }, [activeActionId]);
-
-  // A new server state invalidates every in-flight selection.
-  const viewVersion = interactionView?.stateVersion ?? null;
-  useEffect(() => {
-    setSelections(NO_SELECTIONS);
-    setActiveActionId(null);
-  }, [viewVersion]);
-
   const appendEngineLogs = useCallback((entries: unknown) => {
     const list = Array.isArray(entries) ? entries : [];
     if (list.length === 0) return;
@@ -100,17 +109,29 @@ export function AlphaClashLiveMatchPage() {
       readonly gameId: string;
       readonly state?: unknown;
       readonly interactionView?: unknown;
+      readonly stateVersion?: number;
       readonly engineLogs?: unknown;
+      readonly undoable?: boolean;
+      readonly undoTurnAvailable?: boolean;
+      readonly pendingProposal?: PendingProposal | null;
     }) => {
       if (payload.gameId !== gameId) return;
       const nextState = parseProjectedState(payload.state);
-      if (nextState) setState(nextState);
+      if (nextState) {
+        setState(nextState);
+        if (typeof payload.stateVersion === "number") setStateVersion(payload.stateVersion);
+      }
       if (payload.interactionView === null) setInteractionView(null);
       const view = parseInteractionView(payload.interactionView);
       if (view) setInteractionView(view);
       appendEngineLogs(payload.engineLogs);
+      if (typeof payload.undoable === "boolean") setCanUndo(payload.undoable);
+      if (typeof payload.undoTurnAvailable === "boolean") setCanUndoTurn(payload.undoTurnAvailable);
+      if (payload.pendingProposal?.actionType === "undo") setUndoProposal(payload.pendingProposal);
     };
     const unsubscribers = [
+      handle.onAuthenticated(() => setConnectionReady(true)),
+      handle.onDisconnected(() => setConnectionReady(false)),
       handle.on("game_joined", (payload) => {
         accept(payload);
         if (payload.gameId === gameId && payload.dropEligibility) {
@@ -123,6 +144,30 @@ export function AlphaClashLiveMatchPage() {
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
       handle.on("move_accepted", accept),
+      handle.on("proposal_received", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo")
+          setUndoProposal({ ...payload, actionType: "undo" });
+      }),
+      handle.on("proposal_resolved", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_expired", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_send:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        else if ("resolution" in response.data) setUndoProposal(null);
+        else if (response.data.actionType === "undo")
+          setUndoProposal({ ...response.data, actionType: "undo" });
+      }),
+      handle.on("proposal_accept:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        setUndoProposal(null);
+      }),
+      handle.on("proposal_decline:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        setUndoProposal(null);
+      }),
       handle.on("move_rejected", (payload) => {
         if (payload.gameId !== gameId) return;
         setConnectionError(payload.reason ?? "The server rejected that action.");
@@ -147,22 +192,17 @@ export function AlphaClashLiveMatchPage() {
   }, [appendEngineLogs, gameId]);
 
   const submit = useCallback(
-    (action: InteractionAction, values: ActionValues) => {
+    (submission: InteractionSubmission) => {
       const view = interactionRef.current;
-      if (!gameId || !view) return;
-      const submission = buildInteractionSubmissionForActionId({
-        view,
-        actionId: action.id,
-        values: { ...values },
-      });
-      if (!submission) {
+      if (!gameId || !view || !connectionReady) return false;
+      if (!validateInteractionSubmission(view, submission).ok) {
         setConnectionError("That action is no longer available — the board has moved on.");
-        return;
+        return false;
       }
       const handle = acquireRootGatewayHandle("alpha-clash");
       if (handle.wouldHoldEmit()) {
         handle.release();
-        return;
+        return false;
       }
       handle.emit("submit_interaction", {
         gameId,
@@ -172,86 +212,24 @@ export function AlphaClashLiveMatchPage() {
       });
       handle.release();
       setConnectionError(null);
-      setSelections(NO_SELECTIONS);
+      return true;
     },
-    [gameId],
+    [gameId, connectionReady],
   );
 
-  const selectValue = useCallback(
-    (actionId: string, inputId: string, value: InteractionSubmissionValue) => {
-      setActiveActionId(actionId);
-      setSelections((current) => ({
-        ...current,
-        [actionId]: { ...current[actionId], [inputId]: value },
-      }));
-    },
-    [],
-  );
-
-  const onCardClick = useCallback((instanceId: string) => {
-    const view = interactionRef.current;
-    if (!view) return;
-    const targets = view.actions.flatMap((action) =>
-      action.inputs.flatMap((input) =>
-        input.kind === "entity-selection" && candidatesInclude(input, instanceId)
-          ? [{ actionId: action.id, input }]
-          : [],
-      ),
-    );
-    if (targets.length === 0) return;
-    const chosen =
-      targets.find((target) => target.actionId === activeActionRef.current) ?? targets[0];
-    setActiveActionId(chosen.actionId);
-    setSelections((current) => {
-      const forAction = { ...current[chosen.actionId] };
-      const existing = forAction[chosen.input.id];
-      const list = Array.isArray(existing)
-        ? existing.filter((id): id is string => typeof id === "string")
-        : [];
-      const max = chosen.input.max;
-      const next =
-        max === 1
-          ? list.length === 1 && list[0] === instanceId
-            ? []
-            : [instanceId]
-          : list.includes(instanceId)
-            ? list.filter((id) => id !== instanceId)
-            : [...list, instanceId].slice(-max);
-      forAction[chosen.input.id] = next;
-      return { ...current, [chosen.actionId]: forAction };
+  const sendUndo = (
+    event: "proposal_send" | "proposal_accept" | "proposal_decline",
+    undoScope: "last_move" | "turn_start" = "last_move",
+  ) => {
+    if (!gameId || !connectionReady) return;
+    const handle = acquireRootGatewayHandle("alpha-clash");
+    handle.emit(event, {
+      gameId,
+      actionType: "undo",
+      ...(event === "proposal_send" ? { undoScope } : {}),
     });
-  }, []);
-
-  const selectableInstanceIds = useMemo(() => {
-    const view = interactionView;
-    if (!view) return null;
-    const ids = new Set<string>();
-    for (const action of view.actions) {
-      for (const input of action.inputs) {
-        if (input.kind !== "entity-selection") continue;
-        for (const candidate of input.candidates) {
-          if (candidate.enabled !== false) ids.add(candidate.entity.instanceId);
-        }
-      }
-    }
-    return ids.size > 0 ? ids : null;
-  }, [interactionView]);
-
-  const selectedInstanceIds = useMemo(() => {
-    const active = activeActionId ? selections[activeActionId] : undefined;
-    const ids = new Set<string>();
-    if (!active) return ids;
-    for (const value of Object.values(active)) {
-      if (Array.isArray(value)) {
-        for (const id of value) {
-          if (typeof id === "string") ids.add(id);
-        }
-      } else if (typeof value === "string") {
-        ids.add(value);
-      }
-    }
-    return ids;
-  }, [activeActionId, selections]);
+    handle.release();
+  };
 
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   if (bootstrap?.viewer.role !== "player") {
@@ -262,7 +240,7 @@ export function AlphaClashLiveMatchPage() {
       />
     );
   }
-  if (!bootstrap || !gameId || !state || !viewerSeat) {
+  if (!bootstrap || !gameId || !state || !viewerSeat || !interactionView) {
     return (
       <SimulatorRouteStatus
         title="Loading Alpha Clash match"
@@ -278,8 +256,29 @@ export function AlphaClashLiveMatchPage() {
     return card.name ?? (card.faceDown ? "Set card" : instanceId);
   };
 
+  const view = labelAlphaClashInteractions(interactionView, labelFor);
+  const viewerId = bootstrap.viewer.actorId;
+  const interactionDisabled = ended || !connectionReady;
   return (
-    <>
+    <InteractionWorkspace
+      key={`${gameId}:${viewerId}`}
+      view={view}
+      viewerId={viewerId}
+      onSubmit={submit}
+      disabled={interactionDisabled}
+    >
+      <LiveActionAttention
+        gameId={gameId}
+        view={interactionView}
+        viewerId={bootstrap?.viewer.role === "player" ? bootstrap.viewer.actorId : null}
+        stateVersion={stateVersion}
+        canAct={bootstrap?.viewer.role === "player" && connectionReady && !ended}
+        onShowAction={() => {
+          const target = document.querySelector<HTMLElement>("[data-action-attention-target]");
+          target?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          target?.focus({ preventScroll: true });
+        }}
+      />
       {dropEligibility ? (
         <div className="pointer-events-auto absolute right-4 top-4 z-20">
           <DropClaimControl
@@ -293,20 +292,93 @@ export function AlphaClashLiveMatchPage() {
           />
         </div>
       ) : null}
-      <main className={classes.page}>
+      {undoProposal ? (
+        <div
+          className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-3 rounded-lg bg-slate-950 px-4 py-3 text-sm text-white shadow-xl"
+          role="status"
+        >
+          <span>
+            {undoProposal.senderPlayerId === bootstrap.viewer.actorId
+              ? "Waiting for opponent approval."
+              : undoProposal.undoScope === "turn_start"
+                ? "Opponent requests Undo turn."
+                : "Opponent requests Undo."}
+          </span>
+          {undoProposal.senderPlayerId !== bootstrap.viewer.actorId ? (
+            <>
+              <button type="button" onClick={() => sendUndo("proposal_accept")}>
+                Approve
+              </button>
+              <button type="button" onClick={() => sendUndo("proposal_decline")}>
+                Decline
+              </button>
+            </>
+          ) : null}
+        </div>
+      ) : null}
+      <main className={`${classes.page} ${classes.arenaPage}`}>
         <div className={classes.tableArea}>
           {ended ? (
             <Paper withBorder p="sm" radius="md" className={classes.resultBanner}>
               <Text fw={700}>Match complete</Text>
             </Paper>
           ) : null}
-          <LiveBoard
+          <AlphaClashInteractionBoard
             board={state}
             viewerSeat={viewerSeat}
             participantNames={participantNames}
-            selectableInstanceIds={selectableInstanceIds}
-            selectedInstanceIds={selectedInstanceIds}
-            onCardClick={onCardClick}
+            view={view}
+            disabled={interactionDisabled}
+            controls={
+              <aside className={classes.arenaControls} data-action-attention-target tabIndex={-1}>
+                <Group gap="xs">
+                  <Button
+                    size="xs"
+                    disabled={!connectionReady || !canUndo || Boolean(undoProposal)}
+                    onClick={() => sendUndo("proposal_send")}
+                  >
+                    Undo
+                  </Button>
+                  <Button
+                    size="xs"
+                    disabled={!connectionReady || !canUndoTurn || Boolean(undoProposal)}
+                    onClick={() => sendUndo("proposal_send", "turn_start")}
+                  >
+                    Undo turn
+                  </Button>
+                </Group>
+                <AlphaClashInteractionPanel
+                  view={view}
+                  viewerId={viewerId}
+                  disabled={interactionDisabled}
+                  onSubmit={submit}
+                />
+                <LiveMatchChatPanel canSend={!ended} />
+                <Paper
+                  withBorder
+                  p="sm"
+                  radius="md"
+                  className={classes.logPanel}
+                  data-testid="ac-event-log"
+                >
+                  <Text fw={600} size="sm" mb={4}>
+                    Event log
+                  </Text>
+                  <Stack gap={2}>
+                    {logLines.slice(0, 14).map((line) => (
+                      <Text key={line.id} size="xs" c="dimmed" data-testid="ac-event-log-line">
+                        {line.text}
+                      </Text>
+                    ))}
+                    {logLines.length === 0 ? (
+                      <Text size="xs" c="dimmed">
+                        The match has not started yet.
+                      </Text>
+                    ) : null}
+                  </Stack>
+                </Paper>
+              </aside>
+            }
           />
           {connectionError ? (
             <Paper withBorder p="xs" radius="md" className={classes.errorBanner}>
@@ -316,419 +388,9 @@ export function AlphaClashLiveMatchPage() {
             </Paper>
           ) : null}
         </div>
-        <aside className={classes.sidePanel}>
-          <LiveInteractionPanel
-            view={interactionView}
-            selections={selections}
-            activeActionId={activeActionId}
-            disabled={ended}
-            labelFor={labelFor}
-            onValue={selectValue}
-            onSubmit={submit}
-          />
-          <Paper
-            withBorder
-            p="sm"
-            radius="md"
-            className={classes.logPanel}
-            data-testid="ac-event-log"
-          >
-            <Text fw={600} size="sm" mb={4}>
-              Event log
-            </Text>
-            <Stack gap={2}>
-              {logLines.slice(0, 14).map((line) => (
-                <Text key={line.id} size="xs" c="dimmed" data-testid="ac-event-log-line">
-                  {line.text}
-                </Text>
-              ))}
-              {logLines.length === 0 ? (
-                <Text size="xs" c="dimmed">
-                  The match has not started yet.
-                </Text>
-              ) : null}
-            </Stack>
-          </Paper>
-        </aside>
       </main>
-    </>
+    </InteractionWorkspace>
   );
-}
-
-function LiveInteractionPanel({
-  view,
-  selections,
-  activeActionId,
-  disabled,
-  labelFor,
-  onValue,
-  onSubmit,
-}: {
-  view: EngineInteractionViewType | null;
-  selections: SelectionsByAction;
-  activeActionId: string | null;
-  disabled: boolean;
-  labelFor: (instanceId: string) => string;
-  onValue: (actionId: string, inputId: string, value: InteractionSubmissionValue) => void;
-  onSubmit: (action: InteractionAction, values: ActionValues) => void;
-}) {
-  if (!view) {
-    return (
-      <Paper withBorder p="sm" radius="md" className={classes.actionPanel}>
-        <Text fw={600} size="sm" mb={6}>
-          Available actions
-        </Text>
-        <Text size="sm" c="dimmed">
-          Waiting for the game server…
-        </Text>
-      </Paper>
-    );
-  }
-  const concede = view.actions.find((action) => action.intent === "concede") ?? null;
-  const actions = view.actions.filter((action) => action.intent !== "concede");
-  return (
-    <Paper withBorder p="sm" radius="md" className={classes.actionPanel}>
-      <Text fw={600} size="sm" mb={6}>
-        Available actions
-      </Text>
-      {disabled ? (
-        <Text size="sm" c="dimmed">
-          The match is over.
-        </Text>
-      ) : actions.length === 0 && !concede ? (
-        <Text size="sm" c="dimmed">
-          Waiting for the other player…
-        </Text>
-      ) : (
-        <Stack gap="sm">
-          {actions.map((action) => (
-            <LiveActionCard
-              key={action.id}
-              action={action}
-              armed={action.id === activeActionId}
-              values={selections[action.id] ?? NO_SELECTIONS}
-              labelFor={labelFor}
-              onValue={onValue}
-              onSubmit={onSubmit}
-            />
-          ))}
-          {concede ? (
-            <LiveActionCard
-              key={concede.id}
-              action={concede}
-              armed={false}
-              values={selections[concede.id] ?? NO_SELECTIONS}
-              labelFor={labelFor}
-              onValue={onValue}
-              onSubmit={onSubmit}
-            />
-          ) : null}
-        </Stack>
-      )}
-    </Paper>
-  );
-}
-
-function LiveActionCard({
-  action,
-  armed,
-  values,
-  labelFor,
-  onValue,
-  onSubmit,
-}: {
-  action: InteractionAction;
-  armed: boolean;
-  values: ActionValues;
-  labelFor: (instanceId: string) => string;
-  onValue: (actionId: string, inputId: string, value: InteractionSubmissionValue) => void;
-  onSubmit: (action: InteractionAction, values: ActionValues) => void;
-}) {
-  const setValue = (inputId: string, value: InteractionSubmissionValue) =>
-    onValue(action.id, inputId, value);
-  const readyValues = action.inputs.length === 0 ? {} : collectValues(action, values);
-  const isConcede = action.intent === "concede";
-  const confirmedConcede = isConcede && values.confirm === true;
-  return (
-    <Paper
-      withBorder
-      p="xs"
-      radius="sm"
-      className={classes.actionCard}
-      data-testid={`ac-action-card:${action.id}`}
-      {...(armed ? { "data-armed": "true" } : {})}
-    >
-      <Text size="sm" fw={600}>
-        {action.text.key}
-      </Text>
-      <Stack gap={4} mt={4}>
-        {action.inputs.map((input) => (
-          <LiveInputControl
-            key={input.id}
-            input={input}
-            value={values[input.id]}
-            labelFor={labelFor}
-            onValue={setValue}
-          />
-        ))}
-        <Button
-          size="compact-sm"
-          variant={isConcede ? "outline" : "light"}
-          color={isConcede ? "red" : undefined}
-          disabled={isConcede ? !confirmedConcede : readyValues === null}
-          data-testid={`ac-action-submit:${action.id}`}
-          onClick={() => {
-            if (action.inputs.length === 0) {
-              onSubmit(action, {});
-              return;
-            }
-            if (readyValues !== null) onSubmit(action, readyValues);
-          }}
-        >
-          {action.inputs.length === 0 ? action.text.key : "Confirm"}
-        </Button>
-      </Stack>
-    </Paper>
-  );
-}
-
-function LiveInputControl({
-  input,
-  value,
-  labelFor,
-  onValue,
-}: {
-  input: InteractionInput;
-  value: InteractionSubmissionValue | undefined;
-  labelFor: (instanceId: string) => string;
-  onValue: (inputId: string, value: InteractionSubmissionValue) => void;
-}) {
-  switch (input.kind) {
-    case "boolean":
-      return (
-        <Group gap="xs">
-          <Button
-            size="compact-xs"
-            variant={value === true ? "filled" : "light"}
-            onClick={() => onValue(input.id, true)}
-          >
-            {input.trueText.key}
-          </Button>
-          <Button
-            size="compact-xs"
-            variant={value === false ? "filled" : "light"}
-            onClick={() => onValue(input.id, false)}
-          >
-            {input.falseText.key}
-          </Button>
-        </Group>
-      );
-    case "option-selection":
-      return (
-        <Group gap={4} wrap="wrap">
-          {input.options
-            .filter((option) => option.enabled !== false)
-            .map((option) => (
-              <Button
-                key={option.id}
-                size="compact-xs"
-                variant={value === option.id ? "filled" : "light"}
-                onClick={() => onValue(input.id, option.id)}
-              >
-                {option.text.key}
-              </Button>
-            ))}
-        </Group>
-      );
-    case "number": {
-      const min = input.min ?? 0;
-      const current = typeof value === "number" ? value : min;
-      const step = input.step && input.step > 0 ? input.step : 1;
-      const atMax = input.max !== undefined && current >= input.max;
-      return (
-        <Group gap={4}>
-          <Button
-            size="compact-xs"
-            variant="light"
-            aria-label={`Decrease ${input.text.key}`}
-            disabled={current <= min}
-            onClick={() => onValue(input.id, Math.max(min, current - step))}
-          >
-            −
-          </Button>
-          <Text size="xs" fw={700} miw={16} ta="center">
-            {current}
-          </Text>
-          <Button
-            size="compact-xs"
-            variant="light"
-            aria-label={`Increase ${input.text.key}`}
-            disabled={atMax}
-            onClick={() =>
-              onValue(
-                input.id,
-                input.max !== undefined ? Math.min(input.max, current + step) : current + step,
-              )
-            }
-          >
-            +
-          </Button>
-        </Group>
-      );
-    }
-    case "entity-selection":
-      return (
-        <Group gap={4} wrap="wrap">
-          {input.candidates
-            .filter((candidate) => candidate.enabled !== false)
-            .map((candidate) => {
-              const instanceId = candidate.entity.instanceId;
-              const list = Array.isArray(value)
-                ? value.filter((id): id is string => typeof id === "string")
-                : [];
-              return (
-                <Button
-                  key={instanceId}
-                  size="compact-xs"
-                  variant={list.includes(instanceId) ? "filled" : "light"}
-                  onClick={() => {
-                    if (input.max === 1) {
-                      onValue(
-                        input.id,
-                        list.length === 1 && list[0] === instanceId ? [] : [instanceId],
-                      );
-                      return;
-                    }
-                    const next = list.includes(instanceId)
-                      ? list.filter((id) => id !== instanceId)
-                      : [...list, instanceId].slice(-input.max);
-                    onValue(input.id, next);
-                  }}
-                >
-                  {labelFor(instanceId)}
-                </Button>
-              );
-            })}
-        </Group>
-      );
-    case "entity-allocation": {
-      const allocation = allocationFromValue(value);
-      const total = Object.values(allocation).reduce((sum, amount) => sum + amount, 0);
-      return (
-        <Group gap={4} wrap="wrap">
-          {input.candidates.map((candidate) => {
-            const instanceId = candidate.entity.instanceId;
-            const amount = allocation[instanceId] ?? 0;
-            return (
-              <Button
-                key={instanceId}
-                size="compact-xs"
-                variant={amount > 0 ? "filled" : "light"}
-                disabled={amount >= candidate.max}
-                onClick={() => onValue(input.id, { ...allocation, [instanceId]: amount + 1 })}
-              >
-                {labelFor(instanceId)}
-                {amount > 0 ? ` ×${amount}` : ""}
-              </Button>
-            );
-          })}
-          {total > 0 ? (
-            <Button size="compact-xs" variant="subtle" onClick={() => onValue(input.id, {})}>
-              Clear
-            </Button>
-          ) : null}
-          <Text size="xs" c="dimmed">
-            {total} / {input.totalMin}
-          </Text>
-        </Group>
-      );
-    }
-    // The Alpha Clash adapter never advertises ordering or partition inputs.
-    case "ordering":
-    case "entity-partition":
-      return (
-        <Text size="xs" c="dimmed">
-          This input kind is not supported here.
-        </Text>
-      );
-    default:
-      return assertNeverInteractionInput(input);
-  }
-}
-
-/**
- * Collects the wire values for one action; null when a required input is
- * still missing. Mirrors the adapter's submission vocabulary: every advertised
- * action id submits through `buildInteractionSubmissionForActionId` verbatim.
- */
-function collectValues(
-  action: InteractionAction,
-  values: ActionValues,
-): Record<string, InteractionSubmissionValue> | null {
-  const collected: Record<string, InteractionSubmissionValue> = {};
-  for (const input of action.inputs) {
-    const value = values[input.id];
-    switch (input.kind) {
-      case "boolean":
-        collected[input.id] = value === true;
-        break;
-      case "number":
-        collected[input.id] = typeof value === "number" ? value : (input.min ?? 0);
-        break;
-      case "option-selection":
-        if (typeof value !== "string") return null;
-        collected[input.id] = value;
-        break;
-      case "entity-selection": {
-        const list = Array.isArray(value)
-          ? value.filter((id): id is string => typeof id === "string")
-          : [];
-        if (list.length === 0) {
-          if (input.required === true) return null;
-          break;
-        }
-        collected[input.id] = input.max === 1 ? list[0] : list;
-        break;
-      }
-      case "entity-allocation": {
-        const allocation = allocationFromValue(value);
-        const total = Object.values(allocation).reduce((sum, amount) => sum + amount, 0);
-        if (total !== input.totalMin) return null;
-        collected[input.id] = allocation;
-        break;
-      }
-      case "ordering":
-      case "entity-partition":
-        return null;
-      default:
-        return assertNeverInteractionInput(input);
-    }
-  }
-  return collected;
-}
-
-function candidatesInclude(
-  input: Extract<InteractionInput, { kind: "entity-selection" }>,
-  instanceId: string,
-): boolean {
-  return input.candidates.some(
-    (candidate) => candidate.enabled !== false && candidate.entity.instanceId === instanceId,
-  );
-}
-
-function allocationFromValue(
-  value: InteractionSubmissionValue | undefined,
-): Record<string, number> {
-  if (value === undefined || value === null || typeof value !== "object" || Array.isArray(value)) {
-    return {};
-  }
-  const allocation: Record<string, number> = {};
-  for (const [instanceId, amount] of Object.entries(value)) {
-    if (typeof amount === "number" && Number.isInteger(amount) && amount > 0) {
-      allocation[instanceId] = amount;
-    }
-  }
-  return allocation;
 }
 
 function viewerToSeat(viewer: ResolvedMatchViewer | undefined): AcSeat | null {
@@ -894,4 +556,20 @@ function readLogMessages(value: unknown): string | null {
 function humanizeLogTag(tag: string): string {
   const short = tag.startsWith("alpha-clash:") ? tag.slice("alpha-clash:".length) : tag;
   return short.replace(/[-_]/g, " ");
+}
+
+export function AlphaClashLiveMatchPage() {
+  const { matchPageData: bootstrap } = useSimulatorRoute();
+  if (!bootstrap || bootstrap.viewer.role !== "player") return <AlphaClashLiveMatchPageContent />;
+  return (
+    <SimulatorLiveChatProvider
+      gameSlug="alpha-clash"
+      gameId={bootstrap.game.gameId}
+      viewerId={bootstrap.viewer.actorId}
+      initialMessages={bootstrap.history.chatMessages}
+      initialFreeTextEnabled={bootstrap.history.freeTextEnabled}
+    >
+      <AlphaClashLiveMatchPageContent />
+    </SimulatorLiveChatProvider>
+  );
 }

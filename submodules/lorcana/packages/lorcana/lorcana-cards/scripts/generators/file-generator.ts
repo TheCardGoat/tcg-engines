@@ -475,6 +475,71 @@ export const ${exportName}I18n: Record<Languages, I18nProperties> = ${i18nJson};
 }
 
 /**
+ * Parse the i18n record object literal out of an existing generated i18n file.
+ * Returns undefined when the file is missing, malformed, or the literal does
+ * not evaluate (hand edits).
+ */
+function extractI18nRecordFromExistingFile(
+  content: string | undefined,
+): Record<Languages, I18nProperties> | undefined {
+  if (!content) return undefined;
+  const openIdx = content.indexOf("= {");
+  if (openIdx === -1) return undefined;
+  const start = content.indexOf("{", openIdx);
+  let depth = 0;
+  for (let i = start; i < content.length; i++) {
+    const c = content[i];
+    if (c === "{") depth++;
+    else if (c === "}") {
+      depth--;
+      if (depth === 0) {
+        try {
+          const parsed = new Function(`return (${content.slice(start, i + 1)})`)() as unknown;
+          if (parsed && typeof parsed === "object") {
+            return parsed as Record<Languages, I18nProperties>;
+          }
+        } catch {
+          return undefined;
+        }
+      }
+    }
+  }
+  return undefined;
+}
+
+function i18nEntriesEqual(a: I18nProperties | undefined, b: I18nProperties | undefined): boolean {
+  return JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+}
+
+/**
+ * Preserve an existing Spanish translation across regeneration.
+ *
+ * Spanish is not a pipeline locale (generate-localization.ts only emits de/fr/it);
+ * translations are written directly into .i18n.ts files by
+ * translate-spanish-card-i18n.ts, so the committed file is their only durable
+ * source. Without this, every full regeneration resets `es` to the English
+ * placeholder. The old translation is carried over only when it was a real
+ * translation (not a placeholder) and the English source text is unchanged,
+ * so upstream text edits still fall back to placeholder and get retranslated.
+ */
+export function preserveExistingSpanish(
+  i18n: Record<Languages, I18nProperties>,
+  existingContent?: string,
+): Record<Languages, I18nProperties> {
+  const existing = extractI18nRecordFromExistingFile(existingContent);
+  const existingEs = existing?.es;
+  if (!existingEs) return i18n;
+  // New es entry is the untranslated placeholder when it mirrors en exactly
+  // (embed-card-i18n) or is absent/null (canonical-cards.json before embed).
+  const esIsPlaceholder = i18n.es == null || i18nEntriesEqual(i18n.es, i18n.en);
+  if (!esIsPlaceholder) return i18n;
+  // Old entry was itself a placeholder (or en drifted) → let it regenerate.
+  if (i18nEntriesEqual(existingEs, existing?.en)) return i18n;
+  if (!i18nEntriesEqual(i18n.en, existing?.en)) return i18n;
+  return { ...i18n, es: existingEs };
+}
+
+/**
  * Generate content for an individual card file.
  * When existingAbilities is provided (e.g. from existing file), it is preserved and not overwritten.
  */
@@ -1290,8 +1355,13 @@ export function generateCardFiles(
         );
         existingAbilities ??= sharedAbilitySource?.source;
 
-        // Generate i18n file
-        const i18nContent = generateI18nFileContent(cardInfo.exportName, cardInfo.card.i18n);
+        // Generate i18n file (preserving an existing Spanish translation;
+        // see preserveExistingSpanish)
+        const existingI18nContent = fs.existsSync(i18nFilePath)
+          ? fs.readFileSync(i18nFilePath, "utf-8")
+          : undefined;
+        const i18nWithSpanish = preserveExistingSpanish(cardInfo.card.i18n, existingI18nContent);
+        const i18nContent = generateI18nFileContent(cardInfo.exportName, i18nWithSpanish);
         writeFile(i18nFilePath, i18nContent);
         totalI18nFilesGenerated++;
 

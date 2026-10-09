@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #101918;
+  color: #efece2;
+  font-family: Inter, system-ui, sans-serif;
+}
+.type-motion-page {
+  height: 100vh;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse at 50% 40%, #28332c, #101918 75%);
+}
+.type-motion-page header {
+  min-height: 108px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #9e927538;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2.3px;
+  color: #c0af86;
+}
+.type-motion-page h1 {
+  font:
+    28px Georgia,
+    serif;
+  margin: 8px 0 0;
+}
+.motion-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.motion-controls button,
+.motion-controls select {
+  font: inherit;
+  color: #eee9df;
+  background: #28322f;
+  border: 1px solid #c6b58933;
+  border-radius: 6px;
+  padding: 11px 14px;
+  min-height: 40px;
+}
+.motion-controls button {
+  cursor: pointer;
+}
+.motion-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.motion-controls .primary {
+  background: #e6a253;
+  color: #251a0c;
+  font-weight: 650;
+}
+.motion-controls label {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.motion-stage-frame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.motion-stage {
+  width: 1280px;
+  height: 650px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  overflow: hidden;
+  border: 8px solid #655f4c66;
+  border-radius: 14px;
+  background: radial-gradient(ellipse, #24433755, #0c201a 75%);
+  box-shadow:
+    inset 0 0 50px #0009,
+    0 10px 30px #0006;
+}
+.arena-half {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  border: 1px solid #b7af7930;
+  border-radius: 24px;
+  height: 267px;
+}
+.opponent {
+  top: 24px;
+  background: linear-gradient(#81997309, transparent);
+}
+.local {
+  bottom: 24px;
+  background: linear-gradient(transparent, #a7854b09);
+}
+.arena-line {
+  position: absolute;
+  top: 311px;
+  left: 15px;
+  right: 15px;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, #b7a06c66, transparent);
+}
+.zone-caption {
+  position: absolute;
+  color: #a8afa080;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+}
+.zone-well {
+  position: absolute;
+  border: 1px solid #b0a37750;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 14px #0007;
+}
+.standby-well {
+  position: absolute;
+  left: 538px;
+  top: 142px;
+  width: 204px;
+  height: 238px;
+  border: 1px solid #ac98691a;
+  border-radius: 18px;
+  background: #ad986406;
+}
+.motion-step {
+  position: absolute;
+  left: 30px;
+  top: 25px;
+  width: 440px;
+  z-index: 80;
+  pointer-events: none;
+  animation: step-in 0.35s ease-out;
+}
+.motion-step h2 {
+  font:
+    22px Georgia,
+    serif;
+  margin: 10px 0;
+  color: #efe6ca;
+}
+.motion-step p {
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 345px;
+  color: #b6c0b7;
+}
+.sample-card {
+  height: 100%;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  border: 2px solid #c7af75;
+  background: radial-gradient(ellipse, #566656, #182b27);
+  color: #e8d8a9;
+}
+.sample-card b {
+  font: 20px Georgia;
+}
+.sample-card span {
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.sample-card small {
+  font-size: 9px;
+  line-height: 1.3;
+}
+.type-motion-page footer {
+  padding: 15px 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #8e9c92;
+  font-size: 11px;
+  border-top: 1px solid #a4957120;
+}
+.type-motion-page a {
+  color: #bcaf8e;
+}
+.motion-stage .tcg-card-surface {
+  pointer-events: none;
+}
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+[data-reduced-motion="true"] .motion-step {
+  animation: none;
+}
+@media (max-width: 800px) {
+  .type-motion-page header {
+    padding: 12px;
+    align-items: flex-start;
+  }
+  .type-motion-page h1 {
+    font-size: 21px;
+  }
+  .motion-controls {
+    gap: 6px;
+  }
+  .type-motion-page footer {
+    padding: 10px;
+    flex-wrap: wrap;
+    font-size: 10px;
+  }
+}

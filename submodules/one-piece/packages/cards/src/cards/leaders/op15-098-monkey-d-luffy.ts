@@ -32,7 +32,7 @@ export const op15MonkeyDLuffy098: LeaderCard = {
   setId: "OP15",
   power: 5000,
   life: 5,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If your {Sky Island} type Character with 6000 base power or more would be removed from the field by your opponent, you may add 1 card from the top of your Life cards to your hand instead.",
@@ -40,6 +40,9 @@ export const op15MonkeyDLuffy098: LeaderCard = {
     replacementEffects: [
       {
         replacedEvent: "removeFromField",
+        eventFilter: {
+          causedBy: "opponent",
+        },
         target: {
           player: "self",
           zones: ["character"],
@@ -50,7 +53,7 @@ export const op15MonkeyDLuffy098: LeaderCard = {
             {
               filter: "trait",
               value: "Sky Island",
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "basePower",

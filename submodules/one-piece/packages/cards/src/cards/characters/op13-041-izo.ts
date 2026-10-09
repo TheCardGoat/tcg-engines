@@ -23,7 +23,7 @@ export const op13Izo041: CharacterCard = {
   cost: 6,
   power: 6000,
   counter: 1000,
-  traits: ["Land of Wano Whitebeard Pirates"],
+  traits: ["Land of Wano", "Whitebeard Pirates"],
   attribute: "ranged",
   effect: "[On Play] Draw 2 cards.",
   effects: {

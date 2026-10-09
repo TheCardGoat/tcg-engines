@@ -1,4 +1,4 @@
-import { applyCommand, projectState } from "@tcg/alpha-clash-engine";
+import { applyCommand, projectState, canEnterResource } from "@tcg/alpha-clash-engine";
 import type { AcCommand, MatchState, PlayerId, ProjectedState } from "@tcg/alpha-clash-engine";
 import {
   validateInteractionSubmission,
@@ -6,7 +6,11 @@ import {
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
+import {
+  capUndoCheckpoints,
+  createCanonicalEngineMoveLog,
+  createEngineLogMessage,
+} from "@tcg/shared/game-engine";
 import type {
   AcceptedMoveRecord,
   BotActionOptions,
@@ -21,6 +25,13 @@ import {
   buildAlphaClashInteractionView,
 } from "./interaction-protocol";
 import { alphaClashBotCommandCandidates } from "./bot";
+import {
+  emptyAlphaClashUndoState,
+  hasAlphaClashUndoBarrier,
+  isPlayingTurn,
+  type AlphaClashUndoCheckpoint,
+  type AlphaClashUndoState,
+} from "./undo";
 
 /** The engine's two seats (rule 103.1); platform actor ids map onto them. */
 type Seat = PlayerId;
@@ -33,15 +44,126 @@ export class AlphaClashServerEngine implements ServerGameEngine {
    * the previous version and platform persistence would drop the update.
    */
   private versionCounter: number;
+  private undoState: AlphaClashUndoState;
 
   state: MatchState;
   readonly playerIdToSeat: Record<string, Seat>;
 
-  constructor(state: MatchState, playerIdToSeat: Record<string, Seat>) {
+  constructor(
+    state: MatchState,
+    playerIdToSeat: Record<string, Seat>,
+    undoState?: AlphaClashUndoState,
+  ) {
     this.state = state;
     this.playerIdToSeat = playerIdToSeat;
     this.lastLoggedSequence = state.moveLog.at(-1)?.sequence ?? 0;
     this.versionCounter = state.stateID ?? state.moveLog.length;
+    this.undoState = undoState ?? emptyAlphaClashUndoState(state, this.versionCounter);
+  }
+
+  getUndoState(): AlphaClashUndoState {
+    return structuredClone(this.undoState);
+  }
+
+  canUndo(actorId: string): boolean {
+    const checkpoint = this.undoState.checkpoints.at(-1);
+    return Boolean(
+      checkpoint &&
+      checkpoint.actorId === actorId &&
+      isPlayingTurn(this.state) &&
+      checkpoint.state.turnNumber === this.state.turnNumber &&
+      this.seatToPlayerId[this.state.activePlayer] === actorId,
+    );
+  }
+
+  canUndoToTurnStart(actorId: string): boolean {
+    return (
+      this.canUndo(actorId) &&
+      this.undoState.turnStart?.actorId === actorId &&
+      this.undoState.turnStart.state.turnNumber === this.state.turnNumber
+    );
+  }
+
+  private restoreUndo(
+    actorId: string,
+    context: DispatchContext,
+    scope: "last_move" | "turn_start",
+  ): DispatchResult {
+    const checkpoint =
+      scope === "last_move" ? this.undoState.checkpoints.at(-1) : this.undoState.turnStart;
+    const allowed =
+      scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId);
+    if (!allowed || !checkpoint) {
+      return {
+        success: false,
+        error: "No action is available to undo.",
+        errorCode: "undo_unavailable",
+        stateID: this.getStateID(),
+      };
+    }
+    const previousStateID = this.getStateID();
+    const restoredTurnStart = checkpoint.stateVersion === this.undoState.turnStart?.stateVersion;
+    this.state = structuredClone(checkpoint.state);
+    this.versionCounter += 1;
+    this.state.stateID = this.versionCounter;
+    this.lastLoggedSequence = this.state.moveLog.at(-1)?.sequence ?? 0;
+    if (scope === "turn_start")
+      this.undoState = emptyAlphaClashUndoState(this.state, this.versionCounter);
+    else {
+      this.undoState.checkpoints.pop();
+      if (this.undoState.checkpoints.length === 0) {
+        this.undoState.turnStart = null;
+        this.undoState.turnStartStateVersion = restoredTurnStart ? this.versionCounter : null;
+      }
+    }
+    const moveId = scope === "turn_start" ? "undoToTurnStart" : "undo";
+    const timestamp = Date.now();
+    return {
+      success: true,
+      stateID: this.versionCounter,
+      state: this.state,
+      animations: [],
+      animationPlan: this.nullAnimationPlan(),
+      transition: "move",
+      undoable: this.canUndo(actorId),
+      acceptedMoveRecord: {
+        gameId: context.gameId,
+        stateVersion: this.versionCounter,
+        turnNumber: this.state.turnNumber,
+        actorId,
+        moveId,
+        input: { args: {} },
+        processedCommand: { move: moveId },
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        transitionType: "undo",
+        newStateID: this.versionCounter,
+        undoneStateID: previousStateID,
+        restoredCheckpointStateID: checkpoint.stateVersion,
+        ...(scope === "last_move" ? { undoneMoveId: checkpoint.moveId } : {}),
+      },
+      engineLogRecords: [
+        {
+          gameId: context.gameId,
+          stateVersion: this.versionCounter,
+          timestamp,
+          sourceAuthority: context.sourceAuthority,
+          log: createCanonicalEngineMoveLog({
+            moveType: moveId,
+            playerId: actorId,
+            timestamp,
+            turnNumber: this.state.turnNumber,
+            messages: [
+              createEngineLogMessage({
+                key: "alpha-clash.undo",
+                defaultMessage:
+                  scope === "turn_start" ? "Undid the turn." : "Undid the last action.",
+              }),
+            ],
+          }),
+        },
+      ],
+    };
   }
 
   get seatToPlayerId(): Record<Seat, string> {
@@ -58,6 +180,8 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    if (moveType === "undo") return this.restoreUndo(actorId, context, "last_move");
+    if (moveType === "undoToTurnStart") return this.restoreUndo(actorId, context, "turn_start");
     const seat = this.playerIdToSeat[actorId];
     if (!seat) {
       return {
@@ -78,6 +202,7 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       };
     }
 
+    const before = structuredClone(this.state);
     const result = applyCommand(this.state, command);
     if (!result.success) {
       return {
@@ -92,6 +217,24 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     this.versionCounter += 1;
     this.state.stateID = this.versionCounter;
     const stateVersion = this.getStateID();
+    if (hasAlphaClashUndoBarrier(before, result.state, command) || !isPlayingTurn(result.state)) {
+      this.undoState = emptyAlphaClashUndoState(
+        result.state,
+        stateVersion,
+        before.turnNumber !== result.state.turnNumber || before.phase.name === "setup",
+      );
+    } else {
+      const checkpoint: AlphaClashUndoCheckpoint = {
+        actorId,
+        moveId: moveType,
+        stateVersion: stateVersion - 1,
+        state: before,
+      };
+      if (this.undoState.turnStartStateVersion === stateVersion - 1 && !this.undoState.turnStart) {
+        this.undoState.turnStart = checkpoint;
+      }
+      this.undoState.checkpoints = capUndoCheckpoints([...this.undoState.checkpoints, checkpoint]);
+    }
     const timestamp = Date.now();
     const acceptedMoveRecord: AcceptedMoveRecord = {
       gameId: context.gameId,
@@ -127,6 +270,7 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       animations: [],
       animationPlan: this.nullAnimationPlan(),
       transition: "move",
+      undoable: this.canUndo(actorId),
       acceptedMoveRecord,
       engineLogRecords,
     };
@@ -186,6 +330,14 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       seat,
       stateVersion: this.getStateID(),
       playerView,
+      resourceCandidateIds: playerView.cards
+        .filter(
+          (card) =>
+            card.controller === seat &&
+            card.zone === "hand" &&
+            canEnterResource(this.state, card.instanceId, seat),
+        )
+        .map((card) => card.instanceId),
     });
   }
 
@@ -312,7 +464,11 @@ function buildEngineCommand(
     case "startGame":
       return { type: "startGame" };
     case "mulligan":
-      return { type: "mulligan", playerId: seat };
+      return {
+        type: "mulligan",
+        playerId: seat,
+        ...(Array.isArray(payload.cardIds) ? { cardIds: payload.cardIds as string[] } : {}),
+      };
     case "deployResource":
       return { type: "deployResource", playerId: seat, cardId };
     case "playCard": {
@@ -326,9 +482,9 @@ function buildEngineCommand(
           ? { targetIds: payload.targetIds.filter((id): id is string => typeof id === "string") }
           : {}),
         ...(typeof payload.xValue === "number" ? { xValue: payload.xValue } : {}),
-        ...(Array.isArray(payload.alternateCostSacrificeIds)
+        ...(Array.isArray(payload.alternateCostCardIds)
           ? {
-              alternateCostSacrificeIds: payload.alternateCostSacrificeIds.filter(
+              alternateCostCardIds: payload.alternateCostCardIds.filter(
                 (id): id is string => typeof id === "string",
               ),
             }

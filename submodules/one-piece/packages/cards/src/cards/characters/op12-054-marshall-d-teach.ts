@@ -23,7 +23,7 @@ export const op12MarshallDTeach054: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Blackbeard Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     '[On Play] If your Leader has the "The Seven Warlords of the Sea" type, return up to 1 Character with a cost of 1 or less other than this Character to the owner\'s hand.',
@@ -35,7 +35,7 @@ export const op12MarshallDTeach054: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

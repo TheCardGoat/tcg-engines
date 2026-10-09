@@ -23,7 +23,7 @@ export const op15BobbyFunk050: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Dressrosa Mogaro Kingdom"],
+  traits: ["Dressrosa", "Mogaro Kingdom"],
   attribute: "strike",
   effect: "If you have [Kelly Funk], this Character gains +3000 power.",
   effects: {

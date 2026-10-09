@@ -40,4 +40,20 @@ describe("OP17-053 Barbell", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("On K.O. the opponent chooses two hand cards and their bottom order", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP17-053", rested: true }] },
+      { character: ["OP16-003"], hand: ["EB01-005", "EB01-025", "EB01-018"] },
+      { activeSeat: "north" },
+    );
+    const hand = [...e.getState().players.north.hand];
+    const id = e.findCardInZone("south", "character", "OP17-053");
+    e.asNorth().attack("OP16-003", id);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [hand[2]!, hand[0]!] }, "north");
+
+    expect(e.getState().players.north.deck.slice(-2)).toEqual([hand[2], hand[0]]);
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toEqual([hand[1]]);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

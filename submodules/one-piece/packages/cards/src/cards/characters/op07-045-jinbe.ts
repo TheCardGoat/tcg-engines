@@ -31,7 +31,7 @@ export const op07Jinbe045: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "[On Play] Play up to 1 [The Seven Warlords of the Sea] type Character card with a cost of 4 or less other than [Jinbe] from your hand.",
@@ -63,7 +63,7 @@ export const op07Jinbe045: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

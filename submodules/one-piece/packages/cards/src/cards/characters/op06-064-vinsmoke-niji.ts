@@ -90,7 +90,7 @@ export const op06VinsmokeNiji064: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "GERMA 66",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

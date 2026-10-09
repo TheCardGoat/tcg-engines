@@ -280,6 +280,51 @@ function createBoardSnapshot(
 }
 
 describe("LorcanaSidebarPresenter mobile actions", () => {
+  it("keeps a selected second bag's picker and submission aligned with its candidates", () => {
+    const first = createTargetSelectionContext({
+      origin: "bag",
+      requestId: "first",
+      chooserId: "player-1",
+      cardCandidateIds: ["first-target"],
+    });
+    const second = createTargetSelectionContext({
+      origin: "bag",
+      requestId: "second",
+      chooserId: "player-1",
+      cardCandidateIds: ["second-target"],
+    });
+    const moves = [first, second].map((context) => ({
+      id: `resolveBag:${context.requestId}`,
+      moveId: "resolveBag" as const,
+      params: { bagId: context.requestId },
+    }));
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        ownerSide: () => "playerOne",
+        getOwnerIdForSide: () => "player-1",
+        boardSnapshot: () =>
+          createBoardSnapshot({
+            bagEffects: [first, second].map((context) => ({
+              id: context.requestId,
+              type: "triggered",
+              controllerId: asPlayerId("player-1"),
+              chooserId: context.chooserId,
+              sourceId: asCardId(context.sourceCardId),
+              payload: {},
+              selectionContext: context,
+            })),
+          }),
+        pendingResolutionMoves: () => moves,
+      }),
+    );
+    presenter.handleResolveBag(moves[1]!);
+    expect(presenter.resolutionSelectionSession?.context.requestId).toBe("second");
+    expect(presenter.interactionView?.activePrompt?.requestId).toBe("second");
+    expect(presenter.interactionView?.rawContext).toMatchObject({
+      cardCandidateIds: [asCardId("second-target")],
+    });
+    expect(presenter.interactionView?.submission.requestId).toBe("second");
+  });
   it("derives card highlight state from cheap summaries without expanding action menus", () => {
     let expandCardMovesCalls = 0;
     let expandCardActionCategoryMovesCalls = 0;
@@ -1009,6 +1054,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
         [asPlayerId("player-1")]: {
           lore: 0,
           canAddCardToInkwell: false,
+          inkDrops: 0,
           handCount: 0,
           deckCount: 1,
           hand: [],
@@ -2814,7 +2860,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ]);
   });
 
-  it("emits fixed-subject move-to-location targets from the locked prompt slot", () => {
+  it("chooses a new destination for a fixed subject already at another location", () => {
     const sourceCard = createCardSnapshot({
       cardId: "source-1",
       label: "Colonel Hathi - On the March",
@@ -2823,6 +2869,11 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     const locationCard = createCardSnapshot({
       cardId: "location-1",
       label: "Flotilla - Coconut Armada",
+      cardType: "location",
+    });
+    const currentLocationCard = createCardSnapshot({
+      cardId: "current-location",
+      label: "Current Location",
       cardType: "location",
     });
     const context = createTargetSelectionContext({
@@ -2834,6 +2885,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       maxSelections: 1,
       declaredMaxSelections: 1,
       expectedSlottedKind: "move-to-location",
+      autoResolvedSlots: ["subject"],
       targetDsl: [
         {
           selector: "chosen",
@@ -2857,12 +2909,20 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
               requestID: context.requestId,
             },
             cards: {
+              [currentLocationCard.cardId]: {
+                id: currentLocationCard.cardId,
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "location",
+              },
               [sourceCard.cardId]: {
                 id: sourceCard.cardId,
                 ownerId: asPlayerId("player-1"),
                 controllerId: asPlayerId("player-1"),
                 zone: "play",
                 cardType: "character",
+                atLocationId: asCardId(currentLocationCard.cardId),
               },
               [locationCard.cardId]: {
                 id: locationCard.cardId,
@@ -2885,6 +2945,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
             ],
           }),
         cardSnapshotsById: () => ({
+          [currentLocationCard.cardId]: currentLocationCard,
           [sourceCard.cardId]: sourceCard,
           [locationCard.cardId]: locationCard,
         }),
@@ -2905,7 +2966,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     expect(presenter.activePlayerGuidance).toContainEqual(
       expect.objectContaining({
         id: "resolution-selection-inline",
-        message: "Choose a location to move to for Colonel Hathi - On the March (optional).",
+        message: "Choose a location to move to for Colonel Hathi - On the March.",
         targetSlots: [
           expect.objectContaining({
             label: "Characters",
@@ -3066,6 +3127,154 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     );
     expect(presenter.handleAvailableMovesSelectionCard(subjectCard.cardId)).toBe(true);
     expect(presenter.handleAvailableMovesSelectionCard(locationCard.cardId)).toBe(true);
+    expect(presenter.canConfirmResolutionSelection).toBe(true);
+    expect(presenter.confirmResolutionSelection()).toBe(true);
+
+    expect(executed).toEqual([
+      {
+        moveId: "resolveEffect",
+        params: {
+          effectId: "effect-1",
+          params: {
+            targets: {
+              kind: "move-to-location",
+              subject: [subjectCard.cardId],
+              location: [locationCard.cardId],
+            },
+          },
+        },
+      },
+    ]);
+  });
+
+  it("replaces the single movement subject without retaining hidden extra selections", () => {
+    const sourceCard = createCardSnapshot({
+      cardId: "source-1",
+      label: "Touch the Sky",
+      cardType: "action",
+    });
+    const subjectCard = createCardSnapshot({
+      cardId: "subject-1",
+      label: "Goofy - Set for Adventure",
+      cardType: "character",
+    });
+    const replacementCard = createCardSnapshot({
+      cardId: "replacement-1",
+      label: "Replacement",
+      cardType: "character",
+    });
+    const locationCard = createCardSnapshot({
+      cardId: "location-1",
+      label: "Flotilla - Coconut Armada",
+      cardType: "location",
+    });
+    const context = createTargetSelectionContext({
+      sourceCardId: sourceCard.cardId,
+      cardCandidateIds: [subjectCard.cardId, replacementCard.cardId, locationCard.cardId],
+      minSelections: 2,
+      maxSelections: 3,
+      declaredMaxSelections: 3,
+      expectedSlottedKind: "move-to-location",
+      targetDsl: [
+        {
+          selector: "chosen",
+          count: 1,
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        {
+          selector: "chosen",
+          count: 1,
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
+      ],
+    });
+    const executed: Array<{ moveId: string; params: Record<string, unknown> }> = [];
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        ownerSide: () => "playerOne",
+        getOwnerIdForSide: (side) => (side === "playerOne" ? "player-1" : "player-2"),
+        boardSnapshot: () =>
+          createBoardSnapshot({
+            pendingChoice: {
+              type: "action-effect",
+              playerID: context.chooserId,
+              requestID: context.requestId,
+            },
+            cards: {
+              [sourceCard.cardId]: {
+                id: sourceCard.cardId,
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "discard",
+                cardType: "action",
+              },
+              [subjectCard.cardId]: {
+                id: subjectCard.cardId,
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "character",
+              },
+              [replacementCard.cardId]: {
+                id: replacementCard.cardId,
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "character",
+              },
+              [locationCard.cardId]: {
+                id: locationCard.cardId,
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "location",
+              },
+            },
+            pendingEffects: [
+              {
+                id: context.requestId,
+                type: "action-effect",
+                sourceId: asCardId(sourceCard.cardId),
+                payload: {},
+                selectionContext: context,
+              },
+            ],
+          }),
+        cardSnapshotsById: () => ({
+          [sourceCard.cardId]: sourceCard,
+          [subjectCard.cardId]: subjectCard,
+          [locationCard.cardId]: locationCard,
+          [replacementCard.cardId]: replacementCard,
+        }),
+        executeMove: (moveId, params) => {
+          executed.push({ moveId, params: params as Record<string, unknown> });
+          return true;
+        },
+      }),
+    );
+    presenter.skipActionConfirmation = false;
+
+    expect(presenter.startResolutionSelectionSession(createPendingResolutionMove(), context)).toBe(
+      true,
+    );
+    expect(presenter.handleAvailableMovesSelectionCard(subjectCard.cardId)).toBe(true);
+    expect(presenter.handleAvailableMovesSelectionCard(replacementCard.cardId)).toBe(true);
+    expect(presenter.resolutionSelectionSession?.selectedTargets).toEqual([replacementCard.cardId]);
+    expect(presenter.canConfirmResolutionSelection).toBe(false);
+    expect(presenter.handleAvailableMovesSelectionCard(locationCard.cardId)).toBe(true);
+    expect(presenter.resolutionSelectionSession?.selectedTargets).toEqual([
+      replacementCard.cardId,
+      locationCard.cardId,
+    ]);
+    expect(presenter.handleAvailableMovesSelectionCard(subjectCard.cardId)).toBe(true);
+    expect(presenter.resolutionSelectionSession?.selectedTargets).toEqual([
+      subjectCard.cardId,
+      locationCard.cardId,
+    ]);
     expect(presenter.canConfirmResolutionSelection).toBe(true);
     expect(presenter.confirmResolutionSelection()).toBe(true);
 
@@ -3256,4 +3465,58 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       },
     ]);
   });
+});
+
+it("preserves Singer metadata when assigning a revealed character to hand", () => {
+  const source = createCardSnapshot({ cardId: "abby-source", label: "Abby Park" });
+  const singerCard = createCardSnapshot({
+    cardId: "abby-singer",
+    label: "Singer Character",
+    keywords: ["Singer"],
+    zoneId: "deck",
+  });
+  const context: Extract<
+    import("@tcg/lorcana-engine").ResolutionSelectionContext,
+    { kind: "scry-selection" }
+  > = {
+    kind: "scry-selection",
+    origin: "bag",
+    requestId: "abby-bag",
+    sourceCardId: asCardId(source.cardId),
+    chooserId: asPlayerId("player-1"),
+    currentSelection: {},
+    submitField: "destinations",
+    amount: 1,
+    revealedCardIds: [asCardId(singerCard.cardId)],
+    revealedCards: [
+      { cardId: asCardId(singerCard.cardId), label: singerCard.label, cardType: "character" },
+    ],
+    destinationRules: [
+      {
+        id: "hand",
+        zone: "hand",
+        min: 0,
+        max: 1,
+        remainder: false,
+        filters: [{ type: "has-keyword", keyword: "Singer" }],
+      },
+      { id: "bottom", zone: "deck-bottom", min: 0, max: 1, remainder: true },
+    ],
+  };
+  const presenter = new LorcanaSidebarPresenter(
+    createGameContextStub({
+      cardSnapshotsById: () => ({ [source.cardId]: source, [singerCard.cardId]: singerCard }),
+    }),
+  );
+  expect(
+    presenter.startResolutionSelectionSession(
+      createPendingBagResolutionMove(context.requestId),
+      context,
+    ),
+  ).toBe(true);
+  expect(presenter.assignResolutionScryCard(singerCard.cardId, "hand")).toBe(true);
+  expect(
+    presenter.resolutionSelectionSession?.scryDestinations.find((entry) => entry.zone === "hand")
+      ?.cards,
+  ).toEqual([singerCard.cardId]);
 });

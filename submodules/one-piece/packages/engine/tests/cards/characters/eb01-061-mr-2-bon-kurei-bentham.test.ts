@@ -8,6 +8,41 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB01-061 Mr.2.Bon.Kurei (Bentham)", () => {
+  test.each(["EB01-061", "OP01-084", "OP02-064", "OP04-069"])(
+    "%s is excluded by the same-name restriction on OP14-091's On K.O. play",
+    (cardId) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          hand: [cardId, "EB03-047"],
+          character: [{ cardId: "OP14-091", rested: true }],
+        },
+        { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+        { activeSeat: "north" },
+      );
+      const targetId = engine.findCardInZone("south", "character", "OP14-091");
+      const excludedId = engine.findCardInZone("south", "hand", cardId);
+      const eligibleId = engine.findCardInZone("south", "hand", "EB03-047");
+      engine.declareAttack(
+        engine.findCardInZone("north", "character", eb01MountainGod018),
+        targetId,
+        "north",
+      );
+      engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+      const step = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+      if (step.kind !== "selectEntity") throw new Error("Expected On K.O. play selection.");
+      expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([eligibleId]);
+      engine.resolveDecision("effectPlaySelection", { selectedIds: [eligibleId] }, "south");
+      expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+        excludedId,
+      );
+      expect(
+        engine
+          .getView("south")
+          .players.south.characters.some((card) => card?.instanceId === eligibleId),
+      ).toBe(true);
+    },
+  );
+
   test("adds an active DON!! from the DON!! deck on play", () => {
     const engine = OnePieceTestEngine.create({
       hand: [eb01Mr2BonKureiBentham061],
@@ -66,5 +101,27 @@ describe("EB01-061 Mr.2.Bon.Kurei (Bentham)", () => {
         .players.south.characters.find((card) => card?.instanceId === benthamId)?.power,
     ).toBe(1000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("copies reduced current power instead of printed base power, then adds its own DON bonus", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-061"], hand: ["OP01-006"], activeDon: 2 },
+      { character: ["EB01-025"] },
+    );
+    const source = e.findCardInZone("south", "character", "EB01-061"),
+      target = e.findCardInZone("north", "character", "EB01-025");
+    e.playCard("OP01-006");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(3000);
+    e.attachDon(source, 1, "south");
+    e.declareAttack(source, e.leader("north"), "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === source)?.power,
+    ).toBe(4000);
+    e.endTurn("south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === source)?.power,
+    ).toBe(1000);
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(5000);
   });
 });

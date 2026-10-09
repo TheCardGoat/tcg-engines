@@ -23,7 +23,7 @@ export const op11XDrake017: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Drake Pirates Navy SWORD"],
+  traits: ["Navy", "SWORD", "Drake Pirates"],
   attribute: "slash",
   i18n: op11XDrake017I18n,
 };

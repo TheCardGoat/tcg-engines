@@ -7,7 +7,7 @@ describe("OP03-044 Kaya", () => {
   test("draws two, then lets its controller trash two cards from hand", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op03Kaya044, eb01Doma005],
-      deck: [eb01Fourtricks025, eb01MountainGod018],
+      deck: [eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
       activeDon: op03Kaya044.cost,
     });
     const retainedId = engine.findCardInZone("south", "hand", eb01Doma005);

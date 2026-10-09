@@ -211,6 +211,9 @@ export function FixerZone({
                       id: side === "opponent" ? "opp-fixer" : "p-fixer",
                     }}
                     density="mini"
+                    // The die row re-flows when a die is taken; the projected
+                    // layout slide garbles overlapping dice labels here.
+                    disableLayoutAnimation
                     className={classes.animatedSlot}
                   >
                     {button}

@@ -5,6 +5,25 @@ import { prb02ShanksP083PirateFoil083 } from "../../../../../cards/src/cards/cha
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-083 Shanks - P-083 (Pirate Foil)", () => {
+  test("paying the Character cost still draws after choosing zero power-reduction targets", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [{ cardId: "P-083", attachedDon: 1 }],
+        hand: ["EB01-005"],
+        deck: ["EB01-025", "ST01-002"],
+      },
+      { character: ["EB01-005"] },
+    );
+    e.asSouth().attack("P-083", e.leader("north"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["EB01-025"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual(["EB01-005"]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(3000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("with one DON!! may trash only a Character card to reduce an opposing Character and draw", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -46,6 +65,11 @@ describe("P-083 Shanks - P-083 (Pirate Foil)", () => {
       (eb01Doma005.power ?? 0) - 1000,
     );
     expect(view.prompts).toHaveLength(0);
+    engine.asSouth().endTurn();
+    expect(
+      engine.getView("south").players.north.characters.find((c) => c?.instanceId === targetId)
+        ?.power,
+    ).toBe(eb01Doma005.power);
   });
 
   test("may decline the attack effect without paying, reducing, or drawing", () => {
@@ -77,7 +101,11 @@ describe("P-083 Shanks - P-083 (Pirate Foil)", () => {
 
   test("without attached DON!! does not offer the attack effect", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ card: prb02ShanksP083PirateFoil083, playedOnTurn: 0 }] },
+      {
+        character: [{ card: prb02ShanksP083PirateFoil083, playedOnTurn: 0 }],
+        hand: [eb01Doma005],
+        deck: [eb01Fourtricks025, eb01Doma005],
+      },
       { character: [eb01Doma005] },
       { firstPlayer: "north", activeSeat: "south" },
     );
@@ -90,6 +118,8 @@ describe("P-083 Shanks - P-083 (Pirate Foil)", () => {
     expect(view.players.north.characters.find((card) => card?.instanceId === targetId)?.power).toBe(
       eb01Doma005.power,
     );
+    expect(view.players.south.hand.map((c) => c.cardId)).toEqual([eb01Doma005.id]);
+    expect(view.players.south.deckCount).toBe(2);
     expect(view.prompts).toHaveLength(0);
   });
 });

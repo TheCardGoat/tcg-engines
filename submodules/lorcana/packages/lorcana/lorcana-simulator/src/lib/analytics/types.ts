@@ -155,7 +155,7 @@ export interface ManualModeDisabledParams {
 }
 export interface ManualModeCorrectionParams {
   game_id: string;
-  kind: "lore" | "damage" | "move";
+  kind: "lore" | "ink_drops" | "damage" | "move";
 }
 
 // ── Event Map ────────────────────────────────────────────────

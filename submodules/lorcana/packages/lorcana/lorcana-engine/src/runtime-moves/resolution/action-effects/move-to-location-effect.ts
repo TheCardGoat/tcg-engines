@@ -126,6 +126,8 @@ export function resolveMoveToLocationEffect(
 
     const currentMeta = ctx.cards.require(characterId).meta ?? {};
     const currentLocationId = currentMeta.atLocationId as CardInstanceId | undefined;
+    // CR 4.7.2: remaining at the current location is not a move.
+    if (currentLocationId === locationId) continue;
 
     ctx.cards.patchMeta(characterId, {
       ...currentMeta,

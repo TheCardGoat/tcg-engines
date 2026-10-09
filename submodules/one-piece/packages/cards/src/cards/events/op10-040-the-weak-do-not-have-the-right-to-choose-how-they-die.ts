@@ -21,7 +21,7 @@ export const op10TheWeakDoNotHaveTheRightToChooseHowTheyDie040: EventCard = {
   rarity: "C",
   setId: "OP10",
   cost: 5,
-  traits: ["Heart Pirates The Seven Warlords of the Sea Punk Hazard"],
+  traits: ["Punk Hazard", "The Seven Warlords of the Sea", "Heart Pirates"],
   effect:
     "[Main]/[Counter] K.O. up to 1 of your opponent's rested Characters with a cost of 7 or less.",
   effects: {

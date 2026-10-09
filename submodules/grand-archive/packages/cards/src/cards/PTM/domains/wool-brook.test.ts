@@ -12,3 +12,10 @@ describe("Wool Brook — entry draw", () => {
     destination: "memory",
   });
 });
+
+import { proveSelfEntryCounters } from "../../../testing/self-entry-counters.ts";
+
+/** @covers lcCGyyNGuM-a1 */
+describe("woolBrook — entry counters", () => {
+  proveSelfEntryCounters(woolBrook, "named:refinement", 1);
+});

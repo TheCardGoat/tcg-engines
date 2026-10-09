@@ -12,7 +12,10 @@ import {
   welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../../cyberpunk-simulator-pom";
-import { expectEqual } from "../../fixture-behaviors/cyberpunk-fixture-behavior";
+import {
+  expectEqual,
+  resolveAttackSteps,
+} from "../../fixture-behaviors/cyberpunk-fixture-behavior";
 
 import { ensureJsdomAnimationSupport } from "../../fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 
@@ -110,12 +113,28 @@ describe("attackStep fixture behavior", () => {
             fireEvent.click(target);
             await waitFor(async () => {
               expectEqual(
-                "modal attack defender",
-                (await pom.getAttackState())?.defenderId,
-                defender.instanceId,
+                "modal attack opens the rival react window",
+                (await pom.getAttackState())?.step,
+                "react",
               );
             });
-            await pom.expectFieldCardSpent(CYBERPUNK_P1, attacker.instanceId, true);
+            await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
+            expectEqual(
+              "modal attack finishes without empty priority clicks",
+              await pom.getAttackState(),
+              null,
+            );
+            expectEqual(
+              "attacker defeated after fighting stronger defender",
+              (
+                await pom.getCardInZoneByDefinitionId(
+                  "trash",
+                  CYBERPUNK_P1,
+                  welcomeToNightCityRetailSwordwiseHuscle.id,
+                )
+              ).instanceId,
+              attacker.instanceId,
+            );
             expectEqual(
               "modal closes after attack",
               document.querySelector('[data-testid="choice-modal-sheet"]'),
@@ -207,11 +226,25 @@ describe("attackStep fixture behavior", () => {
       fireEvent.keyDown(defenderElement, { key });
 
       await waitFor(async () => {
-        const attack = await pom.getAttackState();
-        expectEqual("keyboard attack kind", attack?.kind, "fight");
-        expectEqual("keyboard attack attacker", attack?.attackerId, attacker.instanceId);
-        expectEqual("keyboard attack defender", attack?.defenderId, defender.instanceId);
+        expectEqual(
+          "keyboard attack opens the rival react window",
+          (await pom.getAttackState())?.step,
+          "react",
+        );
       });
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
+      expectEqual("keyboard attack finishes", await pom.getAttackState(), null);
+      expectEqual(
+        "attacker defeated after fighting stronger defender",
+        (
+          await pom.getCardInZoneByDefinitionId(
+            "trash",
+            CYBERPUNK_P1,
+            welcomeToNightCityRetailSwordwiseHuscle.id,
+          )
+        ).instanceId,
+        attacker.instanceId,
+      );
     } finally {
       view.unmount();
     }
@@ -247,16 +280,26 @@ describe("attackStep fixture behavior", () => {
 
       await pom.attackUnit(attacker.instanceId, defender.instanceId, CYBERPUNK_P1);
 
-      const attack = await pom.getAttackState();
-      if (!attack) {
-        throw new Error("Expected attack state after attacking a spent unit.");
-      }
-      expectEqual("attack kind", attack.kind, "fight");
-      expectEqual("attack step", attack.step, "attack");
-      expectEqual("attack attacker", attack.attackerId, attacker.instanceId);
-      expectEqual("attack defender", attack.defenderId, defender.instanceId);
-      expectEqual("attack rival", attack.rivalId, CYBERPUNK_P2);
-      await pom.expectFieldCardSpent(CYBERPUNK_P1, attacker.instanceId, true);
+      await waitFor(async () => {
+        expectEqual(
+          "attack opens the rival react window",
+          (await pom.getAttackState())?.step,
+          "react",
+        );
+      });
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
+      expectEqual("empty combat resolves without extra clicks", await pom.getAttackState(), null);
+      expectEqual(
+        "attacker defeated after fighting stronger defender",
+        (
+          await pom.getCardInZoneByDefinitionId(
+            "trash",
+            CYBERPUNK_P1,
+            welcomeToNightCityRetailSwordwiseHuscle.id,
+          )
+        ).instanceId,
+        attacker.instanceId,
+      );
 
       await pom.expectStructuralState();
     } finally {

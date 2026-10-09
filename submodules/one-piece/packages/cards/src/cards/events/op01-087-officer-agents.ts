@@ -48,7 +48,7 @@ export const op01OfficerAgents087: EventCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

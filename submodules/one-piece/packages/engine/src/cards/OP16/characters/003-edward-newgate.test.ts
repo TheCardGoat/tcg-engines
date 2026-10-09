@@ -22,6 +22,31 @@ describe("OP16-003 Edward.Newgate", () => {
     expect(engine.getView("south").players.south.leader?.power).toBe(reference + 2000);
   });
 
+  test("the Leader deals two Life damage through Double Attack, while Newgate does not gain it", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ cardId: "OP16-003", playedOnTurn: 0 }],
+        life: ["EB01-005", "EB01-005", "EB01-005"],
+      },
+      { life: ["EB01-005", "EB01-005", "EB01-005", "EB01-005"] },
+    );
+    engine.asSouth().attack(engine.leader("south"), engine.leader("north"));
+    expect(engine.getView("north").players.north.lifeCount).toBe(2);
+    expect(engine.getView("north").players.north.hand.map((card) => card.cardId)).toEqual([
+      "EB01-005",
+      "EB01-005",
+    ]);
+    engine.asSouth().attack("OP16-003", engine.leader("north"));
+    engine.asNorth().chooseCounter();
+    expect(engine.getView("north").players.north.lifeCount).toBe(1);
+    expect(engine.getView("north").players.north.hand).toHaveLength(3);
+    engine.asSouth().endTurn();
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    expect(engine.getView("south").players.south.lifeCount).toBe(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] revealing two 8000-power Characters may give an opposing Character -6000 this turn", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["OP16-003", "OP16-004", "OP15-036", "OP13-013"], activeDon: 8 },

@@ -23,6 +23,7 @@ import {
 } from "../../rules/state/continuous.ts";
 import {
   grandArchiveCardHasActivationElements,
+  grandArchiveEffectMaterializationIsUnpayable,
   declareGrandArchiveModes,
   declareGrandArchiveTargets,
   grandArchiveChampionLevelUpRequirements,
@@ -1292,6 +1293,7 @@ function materializationFrames(
   effect: Extract<GrandArchiveEffect, { readonly kind: "materialize-card" }>,
   evaluation: GrandArchiveEvaluationContext,
   attemptBinding?: string,
+  mayDecline?: true,
 ): readonly GrandArchiveResolutionFrame[] {
   const materializers = resolveGrandArchivePlayers(effect.materializer ?? "controller", evaluation);
   if (materializers.length !== 1) {
@@ -1303,6 +1305,7 @@ function materializationFrames(
     kind: "announce-materialization" as const,
     playerId: materializers[0]!,
     cardId: object.id,
+    ...(mayDecline ? { mayDecline } : {}),
     payCosts: effect.payCosts !== false,
     ignoreElementRequirements: effect.ignoreElementRequirements === true,
     costModifiers: effect.costModifiers ?? [],
@@ -1313,6 +1316,7 @@ function materializationFrames(
 function activationFrames(
   effect: Extract<GrandArchiveEffect, { readonly kind: "activate-card" }>,
   evaluation: GrandArchiveEvaluationContext,
+  mayDecline?: true,
 ): readonly GrandArchiveResolutionFrame[] {
   const activators = resolveGrandArchivePlayers(effect.activator ?? "controller", evaluation);
   if (activators.length !== 1) {
@@ -1324,6 +1328,7 @@ function activationFrames(
     kind: "announce-activation" as const,
     playerId: activators[0]!,
     cardId: object.id,
+    ...(mayDecline ? { mayDecline } : {}),
     payCosts: effect.payCosts !== false,
     ignoreElementRequirements: effect.ignoreElementRequirements === true,
     ...(effect.speed ? { speed: effect.speed } : {}),
@@ -1334,6 +1339,7 @@ function activationFrames(
 function playFrames(
   effect: Extract<GrandArchiveEffect, { readonly kind: "play-card" }>,
   evaluation: GrandArchiveEvaluationContext,
+  mayDecline?: true,
 ): readonly GrandArchiveResolutionFrame[] {
   const players = resolveGrandArchivePlayers(effect.player ?? "controller", evaluation);
   if (players.length !== 1) {
@@ -1350,6 +1356,7 @@ function playFrames(
           kind: "announce-materialization" as const,
           playerId: players[0]!,
           cardId: object.id,
+          ...(mayDecline ? { mayDecline } : {}),
           payCosts: effect.payCosts !== false,
           ignoreElementRequirements: effect.ignoreElementRequirements === true,
           costModifiers: effect.costModifiers ?? [],
@@ -1358,6 +1365,7 @@ function playFrames(
           kind: "announce-activation" as const,
           playerId: players[0]!,
           cardId: object.id,
+          ...(mayDecline ? { mayDecline } : {}),
           payCosts: effect.payCosts !== false,
           ignoreElementRequirements: effect.ignoreElementRequirements === true,
           ...(effect.speed ? { speed: effect.speed } : {}),
@@ -1863,6 +1871,7 @@ function optionalEffectCannotBeFullyPerformed(
       );
     }
     case "choose":
+    case "reveal":
       return resolutionChoiceCannotMeetMinimum(effect.selection, evaluation);
     case "banish":
     case "discard":
@@ -1981,7 +1990,7 @@ function grandArchiveMultiPlayerChoiceForController(
         ...selection,
         chooser: "controller",
         candidates:
-          candidates.player === participantSet
+          "player" in candidates && candidates.player === participantSet
             ? { ...candidates, player: "controller" }
             : candidates,
       };
@@ -2403,7 +2412,15 @@ function finishResolution(
       });
     }
   }
+  // A resolution can eliminate the turn player before state-based checks run.
+  // Continue with the next surviving player, or leave Opportunity closed if none remain.
+  const turnIndex = state.turnOrder.indexOf(state.turn.playerId);
+  const opportunityHolder = [
+    ...state.turnOrder.slice(turnIndex),
+    ...state.turnOrder.slice(0, turnIndex),
+  ].find((playerId) => !state.players[playerId]?.lost);
   if (
+    opportunityHolder !== undefined &&
     item.kind !== "replacement-follow-up" &&
     !completesTurnBasedMaterialization &&
     !preserveDestinationDecision &&
@@ -2415,12 +2432,7 @@ function finishResolution(
   ) {
     finalEvents.push({
       type: "opportunity-opened",
-      window: openGrandArchiveOpportunity(
-        state,
-        state.turn.playerId,
-        "stack-item-resolved",
-        item.id,
-      ),
+      window: openGrandArchiveOpportunity(state, opportunityHolder, "stack-item-resolved", item.id),
       cause: { kind: "stack-item", stackItemId: item.id },
     });
   }
@@ -3021,12 +3033,27 @@ function advanceResolution(
       continue;
     }
     if (frame.kind === "announce-materialization") {
+      const mayDecline =
+        frame.mayDecline ||
+        grandArchiveEffectMaterializationIsUnpayable(
+          program,
+          current,
+          frame.playerId,
+          frame.cardId,
+          {
+            kind: "effect",
+            payCosts: frame.payCosts,
+            ignoreElementRequirements: frame.ignoreElementRequirements,
+            costModifiers: frame.costModifiers,
+          },
+        );
       const suspended: GrandArchiveEffectResolution = {
         ...resolution,
         frames: remaining,
         pendingMaterialization: {
           playerId: frame.playerId,
           cardId: frame.cardId,
+          ...(mayDecline ? { mayDecline: true as const } : {}),
           payCosts: frame.payCosts,
           ignoreElementRequirements: frame.ignoreElementRequirements,
           costModifiers: frame.costModifiers,
@@ -3047,6 +3074,7 @@ function advanceResolution(
             playerId: frame.playerId,
             stackItemId: item.id,
             cardId: frame.cardId,
+            ...(mayDecline ? { mayDecline: true as const } : {}),
             payCosts: frame.payCosts,
             ignoreElementRequirements: frame.ignoreElementRequirements,
             costModifiers: frame.costModifiers,
@@ -3073,6 +3101,7 @@ function advanceResolution(
         pendingActivation: {
           playerId: frame.playerId,
           cardId: frame.cardId,
+          ...(frame.mayDecline ? { mayDecline: frame.mayDecline } : {}),
           payCosts: frame.payCosts,
           ignoreElementRequirements: frame.ignoreElementRequirements,
           ...(frame.speed ? { speed: frame.speed } : {}),
@@ -3093,6 +3122,7 @@ function advanceResolution(
             playerId: frame.playerId,
             stackItemId: item.id,
             cardId: frame.cardId,
+            ...(frame.mayDecline ? { mayDecline: frame.mayDecline } : {}),
             payCosts: frame.payCosts,
             ignoreElementRequirements: frame.ignoreElementRequirements,
             ...(frame.speed ? { speed: frame.speed } : {}),
@@ -3270,7 +3300,8 @@ function advanceResolution(
     if (frame.kind === "finish-reflexive") {
       const actionEvents = current.eventHistory.slice(frame.startedEventHistoryIndex);
       resolution = { ...resolution, frames: remaining };
-      if (!actionEvents.some(eventRepresentsPerformedAction)) continue;
+      if (!frame.actionAlreadyPerformed && !actionEvents.some(eventRepresentsPerformedAction))
+        continue;
       const sourceId = resolution.sourceId;
       if (!sourceId) {
         throw new GrandArchiveUnsupportedRuleError("reflexive trigger without source object");
@@ -3788,6 +3819,17 @@ function advanceResolution(
         resolution = { ...resolution, frames: remaining };
         continue;
       }
+      // Announcement targets can be omitted or all become illegal. There is no
+      // distribution to make when the retained target binding is empty.
+      if (
+        effect.among.count.kind === "all" &&
+        "binding" in effect.among.candidates &&
+        resolveGrandArchiveCollection({ binding: effect.among.candidates.binding }, evaluation)
+          .length === 0
+      ) {
+        resolution = { ...resolution, frames: remaining };
+        continue;
+      }
       if (effect.among.method === "random" || effect.among.random === true) {
         throw new GrandArchiveUnsupportedRuleError("random distribution recipients");
       }
@@ -3950,6 +3992,17 @@ function advanceResolution(
     }
     if (effect.kind === "pay" || effect.kind === "pay-cost" || effect.kind === "unless-paid") {
       const payingPlayers = resolveGrandArchivePlayers(effect.player, evaluation);
+      if (
+        payingPlayers.length === 0 &&
+        effect.kind === "unless-paid" &&
+        typeof effect.player === "object" &&
+        "controllerOf" in effect.player
+      ) {
+        // An omitted optional target has no controller to offer payment to.
+        // Skip that target-dependent clause and resolve the remaining effects.
+        resolution = { ...resolution, frames: remaining };
+        continue;
+      }
       if (
         payingPlayers.length === 0 ||
         (effect.kind !== "unless-paid" && payingPlayers.length !== 1)
@@ -4246,7 +4299,7 @@ function advanceResolution(
         continue;
       }
       case "materialize-card": {
-        const frames = materializationFrames(effect, evaluation);
+        const frames = materializationFrames(effect, evaluation, undefined, frame.mayDeclinePlay);
         resolution = {
           ...resolution,
           frames: prependFrames(frames, remaining),
@@ -4256,14 +4309,17 @@ function advanceResolution(
       case "activate-card": {
         resolution = {
           ...resolution,
-          frames: prependFrames(activationFrames(effect, evaluation), remaining),
+          frames: prependFrames(
+            activationFrames(effect, evaluation, frame.mayDeclinePlay),
+            remaining,
+          ),
         };
         continue;
       }
       case "play-card": {
         resolution = {
           ...resolution,
-          frames: prependFrames(playFrames(effect, evaluation), remaining),
+          frames: prependFrames(playFrames(effect, evaluation, frame.mayDeclinePlay), remaining),
         };
         continue;
       }
@@ -4504,6 +4560,23 @@ function advanceResolution(
         }
         continue;
       }
+      case "create-reflexive-trigger": {
+        resolution = {
+          ...resolution,
+          frames: prependFrames(
+            [
+              {
+                kind: "finish-reflexive",
+                startedEventHistoryIndex: current.eventHistory.length,
+                actionAlreadyPerformed: true,
+                consequence: effect.effect,
+              },
+            ],
+            remaining,
+          ),
+        };
+        continue;
+      }
       case "reflexive": {
         resolution = {
           ...resolution,
@@ -4632,11 +4705,24 @@ function advanceResolution(
       case "look-at":
       case "search": {
         const mayFailToFind = effect.kind === "search" && grandArchiveSearchMayFailToFind(effect);
-        const operationPlayerIds = resolveGrandArchivePlayers(effect.player, evaluation);
+        const operationPlayerIds = resolveGrandArchivePlayers(effect.player, evaluation).filter(
+          (playerId) => !current.players[playerId]?.lost,
+        );
         if (operationPlayerIds.length === 0) {
-          throw new GrandArchiveUnsupportedRuleError(
-            `${effect.kind} requires at least one affected player`,
-          );
+          // An optional target may be omitted, or an affected player may have lost
+          // during an earlier instruction (for example, an empty-deck draw).
+          // No remaining player performs this operation,
+          // but later instructions still resolve and can inspect the empty result.
+          resolution = {
+            ...resolution,
+            bindings: {
+              ...resolution.bindings,
+              [effect.selection.id]: [],
+              ...(effect.bindResultAs ? { [effect.bindResultAs]: [] } : {}),
+            },
+            frames: remaining,
+          };
+          continue;
         }
         const choosingPlayers = resolveGrandArchivePlayers(effect.selection.chooser, evaluation);
         const affectedPlayerIds =
@@ -4797,7 +4883,19 @@ function advanceResolution(
           };
           continue;
         }
-        const players = resolveGrandArchivePlayers(effect.selection.chooser, evaluation);
+        const players = resolveGrandArchivePlayers(effect.selection.chooser, evaluation).filter(
+          (playerId) => !current.players[playerId]?.lost,
+        );
+        if (players.length === 0) {
+          // An earlier instruction can eliminate the chooser, such as an empty-deck draw.
+          // Do not suspend the remaining resolution on a decision they cannot submit.
+          resolution = {
+            ...resolution,
+            bindings: { ...resolution.bindings, [effect.selection.id]: [] },
+            frames: remaining,
+          };
+          continue;
+        }
         const prepared = prepareGrandArchivePlayerChoices(
           effect.selection,
           players,

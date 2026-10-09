@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, test } from "vite-plus/test";
+import { fireEvent, waitFor } from "@testing-library/react";
 import {
   welcomeToNightCityRetailAdrenalineConverter,
   welcomeToNightCityRetailArasakaEmergencyRadioport,
@@ -27,7 +28,8 @@ import {
   welcomeToNightCityRetailWakakoOkadaPeaceAndHarmony,
   welcomeToNightCityRetailZetatechBerserk,
 } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../cyberpunk-simulator-pom";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../../../../cyberpunk-simulator-pom";
+import { expectEqual } from "../../../../fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "../../../../fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -83,6 +85,89 @@ describe("WTNC 22-card visual QA boards", () => {
         CYBERPUNK_P1,
         welcomeToNightCityRetailPadreManOfTheCross.id,
       );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("Padre guides source and target selection across players", async () => {
+    const { view, pom } = await renderQaBoard("retailWtnc22FixerCallQa");
+    try {
+      const padre = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailPadreManOfTheCross.id,
+      );
+      await pom.callLegend(padre.instanceId, CYBERPUNK_P1);
+
+      const drawOption = await waitFor(() => {
+        const option = document.body.querySelector<HTMLElement>(
+          '[data-testid="choose-effect-option"][data-option-id="draw"]',
+        );
+        if (!option) throw new Error("Padre's Draw 1 option did not render.");
+        return option;
+      });
+      const header = document.body.querySelector<HTMLElement>(
+        '[data-decision-type="resolveChooseEffect"] [data-testid="choice-modal-header"]',
+      );
+      if (!header?.textContent?.includes("Padre: Man of the Cross")) {
+        throw new Error(
+          `Choose effect header did not name Padre: ${header?.textContent ?? "missing"}`,
+        );
+      }
+      const dialog = header.closest('[role="dialog"]');
+      if (dialog?.getAttribute("aria-label") !== "Padre: Man of the Cross — Choose effect") {
+        throw new Error("Choose effect dialog did not expose its source in the accessible title.");
+      }
+      if (
+        !header.querySelector('[aria-label="Required effect — choose one effect to continue."]')
+      ) {
+        throw new Error("Choose effect header did not show its required-choice icon.");
+      }
+      fireEvent.click(drawOption);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+
+      await pom.activateAbility(padre.instanceId, 1, CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+
+      const friendlyGigs = await pom.getGigDice(CYBERPUNK_P1);
+      const rivalGigs = await pom.getGigDice(CYBERPUNK_P2);
+      const source = friendlyGigs.find((die) => die.dieType === "d6");
+      const samePlayerTarget = friendlyGigs.find((die) => die.dieType === "d10");
+      const otherPlayerTarget = rivalGigs.find((die) => die.dieType === "d8");
+      if (!source || !samePlayerTarget || !otherPlayerTarget) {
+        throw new Error("Padre QA board does not contain the required Gig dice.");
+      }
+
+      const sourceButton = gigDieButton(view.container, source.id);
+      const samePlayerButton = gigDieButton(view.container, samePlayerTarget.id);
+      const otherPlayerButton = gigDieButton(view.container, otherPlayerTarget.id);
+      const initialSequence = view.container.querySelector<HTMLElement>(
+        '[data-testid="prompt-banner-sequence"]',
+      );
+      if (!initialSequence?.textContent?.includes("Step 1 of 2 — Source Gig: choose any Gig")) {
+        throw new Error(
+          `Padre prompt did not explain the source step: ${initialSequence?.textContent ?? "missing"}`,
+        );
+      }
+
+      fireEvent.click(sourceButton);
+
+      await waitFor(() => {
+        expectEqual("selected Padre source", sourceButton.dataset.selected, "true");
+        expectEqual("same-player target disabled", samePlayerButton.ariaDisabled, "true");
+        expectEqual("other-player target enabled", otherPlayerButton.ariaDisabled, "false");
+      });
+      const targetSequence = view.container.querySelector<HTMLElement>(
+        '[data-testid="prompt-banner-sequence"]',
+      );
+      if (!targetSequence?.textContent?.includes("other player's Gig")) {
+        throw new Error("Padre prompt did not require a target owned by the other player.");
+      }
+
+      fireEvent.click(samePlayerButton);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      expectEqual("Padre source stays selected", sourceButton.dataset.selected, "true");
     } finally {
       view.unmount();
     }
@@ -217,3 +302,11 @@ describe("WTNC 22-card visual QA boards", () => {
     }
   });
 });
+
+function gigDieButton(container: HTMLElement, dieId: string): HTMLElement {
+  const button = container.querySelector<HTMLElement>(
+    `[data-testid="gig-die"][data-die-id="${dieId}"]`,
+  );
+  if (!button) throw new Error(`No Gig control found for ${dieId}.`);
+  return button;
+}

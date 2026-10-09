@@ -94,4 +94,18 @@ describe("OP13-099 The Empty Throne", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(eligibleId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("gains its Leader power only after the nineteenth card reaches trash", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: op13TheEmptyThrone099,
+      trash: Array.from({ length: 18 }, () => op13Higuma013),
+      hand: ["OP13-020"],
+      activeDon: 3,
+    });
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+    engine.asSouth().play("OP13-020");
+    expect(engine.getView("south").players.south.trash).toHaveLength(19);
+    expect(engine.getView("south").players.south.leader.power).toBe(6000);
+    engine.asSouth().endTurn();
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+  });
 });

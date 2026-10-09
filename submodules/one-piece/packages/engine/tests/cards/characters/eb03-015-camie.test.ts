@@ -91,4 +91,15 @@ describe("EB03-015 Camie", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("with no rested DON the independent rest clause still resolves", () => {
+    const e = OnePieceTestEngine.create({ character: ["EB03-015"] }, { character: ["EB01-005"] });
+    const source = e.findCardInZone("south", "character", "EB03-015"),
+      target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().activateMain(source);
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(true);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+  });
 });

@@ -9,13 +9,13 @@ import {
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP11-023 Arlong", () => {
-  test("has cost 3 in hand only while all three permanent conditions are live", () => {
+  test("has cost 4 in hand only while all three permanent conditions are live", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op14eb04JinbeOp14040040,
         hand: [op11Arlong023],
         life: 3,
-        activeDon: 3,
+        activeDon: 4,
       },
       {
         character: Array.from({ length: 5 }, () => ({ card: eb01Doma005, rested: true })),
@@ -26,12 +26,12 @@ describe("OP11-023 Arlong", () => {
 
     expect(
       engine.getView("south").players.south.hand.find((card) => card.instanceId === arlongId)?.cost,
-    ).toBe(3);
+    ).toBe(4);
     engine.playCard(op11Arlong023, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(arlongId);
-    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 3 });
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 4 });
 
     const boundary = OnePieceTestEngine.create(
       {
@@ -79,5 +79,33 @@ describe("OP11-023 Arlong", () => {
     expect(
       view.players.south.characters.find((card) => card?.instanceId === excludedId)?.rested,
     ).toBe(false);
+  });
+  test("FAQ: current hand cost permits Fisher Tiger to play Arlong using five rested DON", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP03-022",
+        character: ["OP11-035"],
+        hand: ["OP11-023"],
+        life: 3,
+        activeDon: 1,
+      },
+      { hand: ["OP04-094"], activeDon: 4, restedDon: 1, trash: 15 },
+      { activeSeat: "north" },
+    );
+    const tiger = e.findCardInZone("south", "character", "OP11-035");
+    const arlong = e.findCardInZone("south", "hand", "OP11-023");
+    e.asNorth().play("OP04-094");
+    e.asNorth().chooseTargets(tiger);
+    e.asSouth().acceptOptional();
+    const choice = e.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected Fisher Tiger play choice.");
+    expect(choice.candidates.map((c) => c.ref.id)).toContain(arlong);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [arlong] }, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === arlong)?.cost,
+    ).toBe(7);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

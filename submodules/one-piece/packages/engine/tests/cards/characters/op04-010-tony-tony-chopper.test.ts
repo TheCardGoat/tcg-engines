@@ -11,11 +11,13 @@ describe("OP04-010 Tony Tony.Chopper", () => {
         op04Karoo004,
         op04Karoo004,
         eb01Doma005,
+        "OP04-049",
         op04TonyTonyChopper010,
       ],
       activeDon: op04TonyTonyChopper010.cost,
     });
     const nonAnimalId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const animalKingdomOnlyId = engine.findCardInZone("south", "hand", "OP04-049");
 
     engine.playCard(op04TonyTonyChopper010, "south");
 
@@ -25,6 +27,7 @@ describe("OP04-010 Tony Tony.Chopper", () => {
     const eligibleIds = play.candidates.map((candidate) => candidate.ref.id);
     expect(eligibleIds).toHaveLength(2);
     expect(eligibleIds).not.toContain(nonAnimalId);
+    expect(eligibleIds).not.toContain(animalKingdomOnlyId);
     const selectedKarooId = eligibleIds[1]!;
     const preservedKarooId = eligibleIds[0]!;
     engine.resolveDecision("effectPlaySelection", { selectedIds: [selectedKarooId] }, "south");

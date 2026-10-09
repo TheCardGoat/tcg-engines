@@ -1,9 +1,10 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
-  eb01Fourtricks025,
-  eb01Hamlet024,
+  st01Karoo003,
+  op01Komachiyo010,
   eb01JustShutUpAndComeWithUs009,
   eb01MountainGod018,
+  eb01Fourtricks025,
   op13Higuma013,
   op13Otama043,
   op13York094,
@@ -22,10 +23,10 @@ describe("EB01-009 Just Shut Up and Come with Us!!!!", () => {
         hand: [eb01JustShutUpAndComeWithUs009],
         deck: [
           op13York094,
-          eb01Hamlet024,
-          eb01Fourtricks025,
+          op01Komachiyo010,
+          st01Karoo003,
           eb01MountainGod018,
-          op13Higuma013,
+          eb01Fourtricks025,
           op13Otama043,
         ],
         activeDon: 1,
@@ -33,10 +34,10 @@ describe("EB01-009 Just Shut Up and Come with Us!!!!", () => {
     );
     const attackerId = engine.findCardInZone("south", "character", op13Higuma013);
     const eventId = engine.findCardInZone("north", "hand", eb01JustShutUpAndComeWithUs009);
-    const selectedId = engine.findCardInZone("north", "deck", eb01Hamlet024);
-    const otherEligibleId = engine.findCardInZone("north", "deck", eb01Fourtricks025);
+    const selectedId = engine.findCardInZone("north", "deck", op01Komachiyo010);
+    const otherEligibleId = engine.findCardInZone("north", "deck", st01Karoo003);
     const tooExpensiveId = engine.findCardInZone("north", "deck", eb01MountainGod018);
-    const wrongTypeId = engine.findCardInZone("north", "deck", op13Higuma013);
+    const wrongTypeId = engine.findCardInZone("north", "deck", eb01Fourtricks025);
     const otherRemainderId = engine.findCardInZone("north", "deck", op13Otama043);
 
     engine.endTurn("south");
@@ -91,11 +92,12 @@ describe("EB01-009 Just Shut Up and Come with Us!!!!", () => {
       },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(
       view.players.north.characters.find((card) => card?.instanceId === selectedId),
-    ).toMatchObject({ cardId: eb01Hamlet024.id, rested: false });
+    ).toMatchObject({ cardId: op01Komachiyo010.id, rested: false });
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
     expect(view.players.north).toMatchObject({
       activeDon: donBeforeCounter.activeDon - 1,

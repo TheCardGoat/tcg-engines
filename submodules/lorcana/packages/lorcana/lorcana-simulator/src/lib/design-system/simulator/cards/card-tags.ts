@@ -1,5 +1,6 @@
 import type { Component } from "svelte";
 import BanIcon from "@lucide/svelte/icons/ban";
+import CompassIcon from "@lucide/svelte/icons/compass";
 import DropletsIcon from "@lucide/svelte/icons/droplets";
 import FlameIcon from "@lucide/svelte/icons/flame";
 import FootprintsIcon from "@lucide/svelte/icons/footprints";
@@ -24,6 +25,8 @@ import WindIcon from "@lucide/svelte/icons/wind";
 import ZapIcon from "@lucide/svelte/icons/zap";
 import { m } from "$lib/i18n/messages.js";
 import type { LorcanaCardSnapshot } from "@/features/simulator/model/contracts.js";
+
+const ADVENTUROUS_KEYWORD_PATTERN = /^adventurous$/i;
 import { getStatSmallIconUrl, getLoreIconUrl } from "@/features/simulator/model/asset-urls.js";
 
 type TagTone = "default" | "info" | "success" | "warning" | "danger";
@@ -98,6 +101,24 @@ function hasKeyword(card: LorcanaCardSnapshot, keyword: string): boolean {
 
 function hasRestriction(card: LorcanaCardSnapshot, restriction: string): boolean {
   return typeof card.temporaryRestrictions?.[restriction] === "number";
+}
+
+/**
+ * Adventurous (set 14 keyword) = "can't challenge and must quest if able".
+ * Cards carry it either as printed text (e.g. Mickey Mouse - Best in Town) or
+ * as a granted restriction pair (e.g. Nick Wilde - Inquisitive Harbormaster's
+ * Restricted Route), so both shapes must surface the dedicated badge.
+ */
+function isAdventurous(card: LorcanaCardSnapshot): boolean {
+  if (hasKeyword(card, "Adventurous")) {
+    return true;
+  }
+
+  if ((card.textEntries ?? []).some((entry) => ADVENTUROUS_KEYWORD_PATTERN.test(entry.title))) {
+    return true;
+  }
+
+  return hasRestriction(card, "cant-challenge") && hasRestriction(card, "must-quest");
 }
 
 function pushTag(tags: LorcanaCardTag[], tag: LorcanaCardTag | null): void {
@@ -355,15 +376,23 @@ function buildLorcanaCardTagGroups(card: LorcanaCardSnapshot): LorcanaCardTagGro
 
   pushTag(
     postStatTags,
-    hasRestriction(card, "cant-challenge")
+    isAdventurous(card)
       ? {
-          id: "cant-challenge",
-          label: m["sim.card.tags.cantChallenge.label"]({}),
-          tooltip: m["sim.card.tags.cantChallenge.tooltip"]({}),
-          icon: ShieldBanIcon,
+          id: "adventurous",
+          label: m["sim.card.tags.adventurous.label"]({}),
+          tooltip: m["sim.card.tags.adventurous.tooltip"]({}),
+          icon: CompassIcon,
           tone: "warning",
         }
-      : null,
+      : hasRestriction(card, "cant-challenge")
+        ? {
+            id: "cant-challenge",
+            label: m["sim.card.tags.cantChallenge.label"]({}),
+            tooltip: m["sim.card.tags.cantChallenge.tooltip"]({}),
+            icon: ShieldBanIcon,
+            tone: "warning",
+          }
+        : null,
   );
 
   pushTag(

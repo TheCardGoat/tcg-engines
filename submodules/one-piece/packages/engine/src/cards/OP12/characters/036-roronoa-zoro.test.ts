@@ -67,4 +67,24 @@ describe("OP12-036 Roronoa Zoro", () => {
       zoroId,
     );
   });
+  test("can be played by an effect from trash although effect play from hand is prohibited", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["OP06-086"],
+      trash: [op12RoronoaZoro036, eb01Doma005],
+      activeDon: 8,
+    });
+    const zoro = engine.findCardInZone("south", "trash", op12RoronoaZoro036);
+    engine.asSouth().play("OP06-086");
+    const selection = engine.pendingDecision("effectGroupedPlaySelection", "south").steps[0];
+    if (selection?.kind !== "selectEntity") throw new Error("Expected Moria trash selection");
+    expect(selection.candidates.map((c) => c.ref.id)).toContain(zoro);
+    engine.resolveDecision("effectGroupedPlaySelection", { selectedIds: [zoro] }, "south");
+    expect(engine.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(
+      zoro,
+    );
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).not.toContain(
+      zoro,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

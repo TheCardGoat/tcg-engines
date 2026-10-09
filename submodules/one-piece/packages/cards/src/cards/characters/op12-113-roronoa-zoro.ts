@@ -25,7 +25,7 @@ export const op12RoronoaZoro113: CharacterCard = {
   counter: 1000,
   trigger:
     "K.O. up to 1 of your opponent's Characters with a cost of 1 or less and add this card to your hand.",
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[On K.O.] If your Leader has the "Supernovas" type, play up to 1 "Supernovas" type Character card with a cost of 4 or less from your hand rested.',
@@ -37,7 +37,7 @@ export const op12RoronoaZoro113: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -60,7 +60,7 @@ export const op12RoronoaZoro113: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

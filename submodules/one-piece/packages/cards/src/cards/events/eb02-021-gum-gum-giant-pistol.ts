@@ -22,7 +22,7 @@ export const eb02GumGumGiantPistol021: EventCard = {
   setId: "EB02",
   cost: 3,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   effect:
     '[Main] Up to 1 of your "Straw Hat Crew" type Characters gains +6000 power during this turn. Then, the selected Character will not become active in your next Refresh Phase.',
   effects: {
@@ -43,7 +43,7 @@ export const eb02GumGumGiantPistol021: EventCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

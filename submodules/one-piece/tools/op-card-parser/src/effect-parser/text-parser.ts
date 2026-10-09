@@ -66,7 +66,11 @@ function splitIntoLines(text: string): string[] {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
-    if (trimmed.startsWith("•") && joined.length > 0) {
+    if (
+      joined.length > 0 &&
+      (trimmed.startsWith("•") ||
+        (/^-\s/.test(trimmed) && /chooses? one:/i.test(joined[joined.length - 1]!)))
+    ) {
       // Continuation of a "Choose one:" pattern — append to previous line
       joined[joined.length - 1] += "\n" + trimmed;
     } else {
@@ -265,9 +269,19 @@ function parsePrefixChain(segment: string): PrefixParseResult {
     }
 
     // Circled-number DON!! rest costs used in older JP/EN prints: ①–⑩
-    const circledDonMatch = /^([①②③④⑤⑥⑦⑧⑨⑩])\s*/.exec(remaining);
+    const circledDonMatch = /^([①②③④⑤⑥⑦⑧⑨⑩➀➁➂➃➄➅➆➇➈➉])\s*/.exec(remaining);
     if (circledDonMatch) {
       const circledValues: Record<string, number> = {
+        "➀": 1,
+        "➁": 2,
+        "➂": 3,
+        "➃": 4,
+        "➄": 5,
+        "➅": 6,
+        "➆": 7,
+        "➇": 8,
+        "➈": 9,
+        "➉": 10,
         "①": 1,
         "②": 2,
         "③": 3,
@@ -328,30 +342,15 @@ function parsePrefixChain(segment: string): PrefixParseResult {
     }
   }
 
-  // Cost reminder text uses "You may", but is stripped before this point.
-  // Main / Counter Event play already commits the card (rest cost DON!!, trash);
-  // a post-commit optional on returnDon would let the player Skip after spending
-  // the Event for nothing. Keep returnDon non-optional for those direct Event
-  // activations.
-  // Life Trigger windows are also already opted-in via the lifeTrigger prompt:
-  // do not post-activate optionalize their costs (Skip would fire whenTriggerActivates
-  // observers then abandon the Trigger).
-  // Activate: Main and other passive windows still get a confirm step for
-  // returnDon (source remains on the field).
-  const directEventActivations = new Set(["main", "counter", "activateMain"]);
-  const committedEventActivations = new Set(["main", "counter"]);
+  // DON-return reminder text makes that activation cost optional, including
+  // Main/Counter Events whose card-play cost has already been paid.
+  // The separate Life Trigger activation choice retains its existing handling.
   const isLifeTriggerOnly =
     triggers.length > 0 && triggers.every((trigger) => trigger === "trigger");
-  const hasPassiveNonLifeTrigger = triggers.some(
-    (trigger) => !directEventActivations.has(trigger) && trigger !== "trigger",
+  const hasOptionalDonCost = costs.some(
+    (cost) => cost.type === "returnDon" || cost.type === "restDon",
   );
-  const isCommittedEventOnly =
-    triggers.length > 0 && triggers.every((trigger) => committedEventActivations.has(trigger));
-  const hasReturnDon = costs.some((cost) => cost.type === "returnDon");
-  if (hasReturnDon && !isCommittedEventOnly && !isLifeTriggerOnly) {
-    optional = true;
-  }
-  if (costs.length > 0 && hasPassiveNonLifeTrigger) {
+  if (hasOptionalDonCost && !isLifeTriggerOnly) {
     optional = true;
   }
 
@@ -368,6 +367,21 @@ function parsePrefixChain(segment: string): PrefixParseResult {
 function parseTextCosts(text: string): RawCost[] {
   const costs: Array<{ index: number; cost: RawCost }> = [];
 
+  const namedGiveDonMatch =
+    /give\s+(\d+)\s+(?:of\s+your\s+)?active\s+DON!!\s+cards?\s+to\s+1\s+of\s+your\s+\[([^\]]+)\]/i.exec(
+      text,
+    );
+  if (namedGiveDonMatch) {
+    costs.push({
+      index: namedGiveDonMatch.index,
+      cost: {
+        type: "giveDon",
+        amount: parseInt(namedGiveDonMatch[1]!, 10),
+        recipientFilters: [{ filter: "name", value: namedGiveDonMatch[2]! }],
+      },
+    });
+  }
+
   const giveDonMatch =
     /give\s+(\d+)\s+of\s+your\s+active\s+DON!!\s+cards?\s+to\s+\d+\s+of\s+your\s+Leader\s+or\s+Character\s+cards?/i.exec(
       text,
@@ -376,6 +390,36 @@ function parseTextCosts(text: string): RawCost[] {
     costs.push({
       index: giveDonMatch.index,
       cost: { type: "giveDon", amount: parseInt(giveDonMatch[1]!, 10) },
+    });
+  }
+
+  const attachedReturnDonMatch =
+    /return\s+(\d+)\s+total\s+of\s+your\s+currently\s+given\s+DON!!\s+cards?\s+to\s+your\s+cost\s+area\s+rested/i.exec(
+      text,
+    );
+  if (attachedReturnDonMatch)
+    costs.push({
+      index: attachedReturnDonMatch.index,
+      cost: {
+        type: "returnDon",
+        amount: Number(attachedReturnDonMatch[1]),
+        donState: "attached",
+        destination: "costAreaRested",
+      },
+    });
+
+  const stateReturnDonMatch =
+    /return\s+(\d+)\s+of\s+your\s+(active|rested)\s+DON!!\s+cards?\s+to\s+your\s+DON!!\s+deck/i.exec(
+      text,
+    );
+  if (stateReturnDonMatch) {
+    costs.push({
+      index: stateReturnDonMatch.index,
+      cost: {
+        type: "returnDon",
+        amount: parseInt(stateReturnDonMatch[1]!, 10),
+        donState: stateReturnDonMatch[2]!.toLowerCase() === "active" ? "active" : "rested",
+      },
     });
   }
 
@@ -568,19 +612,66 @@ function parseTextCosts(text: string): RawCost[] {
     const position = returnThisAndTrashToDeckMatch[3]!.toLowerCase() as "top" | "bottom";
     costs.push({
       index: returnThisAndTrashToDeckMatch.index,
-      cost: { type: "returnThisToDeck", position },
-    });
-    costs.push({
-      index: returnThisAndTrashToDeckMatch.index,
       cost: {
         type: "returnFromTrashToDeck",
+        includeSelf: true,
         raw: `place ${returnThisAndTrashToDeckMatch[1]} ${returnThisAndTrashToDeckMatch[2]} from your trash at the ${position} of your deck`,
       },
     });
   }
+  const opponentCharacterToLife =
+    /^place\s+(\d+)\s+of\s+your\s+opponent['’]s\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+less\s+at\s+the\s+(top or bottom|top|bottom)\s+of\s+(?:your\s+opponent['’]s|the\s+owner['’]s)\s+Life\s+cards?\s+face-(up|down)$/i.exec(
+      text.trim(),
+    );
+  if (opponentCharacterToLife)
+    costs.push({
+      index: opponentCharacterToLife.index,
+      cost: {
+        type: "addCharacterToLife",
+        player: "opponent",
+        amount: Number(opponentCharacterToLife[1]),
+        filters: [{ filter: "cost", comparison: "lte", value: Number(opponentCharacterToLife[2]) }],
+        position:
+          opponentCharacterToLife[3]!.toLowerCase() === "top or bottom"
+            ? "choice"
+            : (opponentCharacterToLife[3]!.toLowerCase() as "top" | "bottom"),
+        faceUp: opponentCharacterToLife[4]!.toLowerCase() === "up",
+      },
+    });
+  const characterToLife =
+    /add\s+(\d+)\s+of\s+your\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+more\s+and\s+(\d+)\s+power\s+or\s+more\s+to\s+the\s+(top|bottom)\s+of\s+your\s+Life\s+cards\s+face-(up|down)/i.exec(
+      text,
+    );
+  if (characterToLife)
+    costs.push({
+      index: characterToLife.index,
+      cost: {
+        type: "addCharacterToLife",
+        amount: Number(characterToLife[1]),
+        filters: [
+          { filter: "cost", comparison: "gte", value: Number(characterToLife[2]) },
+          { filter: "power", comparison: "gte", value: Number(characterToLife[3]) },
+        ],
+        position: characterToLife[4]!.toLowerCase() as "top" | "bottom",
+        faceUp: characterToLife[5]!.toLowerCase() === "up",
+      },
+    });
+  const anyFaceUpLife = /turn\s+(\d+)\s+of\s+your\s+face-up\s+Life\s+cards?\s+face-down/i.exec(
+    text,
+  );
+  if (anyFaceUpLife)
+    costs.push({
+      index: anyFaceUpLife.index,
+      cost: {
+        type: "turnLifeFaceUp",
+        count: Number(anyFaceUpLife[1]),
+        faceUp: false,
+        position: "any",
+      },
+    });
   // "You may turn N card(s) from the top of your Life cards face-up/face-down"
   const faceUpMatch =
-    /turn\s+(\d+)\s+cards?\s+from\s+the\s+top\s+of\s+your\s+Life\s+cards?\s+face-(up|down)/i.exec(
+    /turn\s+(\d+)\s+cards?\s+from\s+the\s+(top(?:\s+or\s+bottom)?)\s+of\s+your\s+Life\s+cards?\s+face-(up|down)/i.exec(
       text,
     );
   if (faceUpMatch) {
@@ -589,7 +680,8 @@ function parseTextCosts(text: string): RawCost[] {
       cost: {
         type: "turnLifeFaceUp",
         count: parseInt(faceUpMatch[1]!, 10),
-        faceUp: faceUpMatch[2]!.toLowerCase() === "up",
+        faceUp: faceUpMatch[3]!.toLowerCase() === "up",
+        ...(faceUpMatch[2]!.includes("bottom") ? { position: "choice" as const } : {}),
       },
     });
   }

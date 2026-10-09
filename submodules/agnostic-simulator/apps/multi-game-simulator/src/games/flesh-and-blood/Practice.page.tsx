@@ -58,7 +58,7 @@ import {
   projectFabAnalyticsFactsV2,
   type FabAnalyticsPlayerSeedV2,
   type FabAnalyticsTransitionReceiptV2,
-} from "@tcg/flesh-and-blood-server-adapter";
+} from "@tcg/flesh-and-blood-server-adapter/analytics";
 import { fabBoardTransfers } from "./transfers";
 import {
   commandForFabSubmission,
@@ -119,6 +119,7 @@ import {
   SimulatorOpponentParticipantActions,
   SimulatorSelfParticipantActions,
 } from "../../simulator/participant-actions";
+import { FabFirstGameEntry } from "./first-game/FabFirstGameGuide";
 import { useSimulatorAuth } from "../../simulator/providers";
 import { useRegisterSimulatorDebugExportSource } from "../../simulator/debug-export/SimulatorDebugExportContext";
 import { LocalSimulatorDebugHistoryRecorder } from "../../simulator/debug-export/local-debug-history";
@@ -1473,6 +1474,7 @@ function PracticeSetupForm({
               Fixture catalog
             </a>
           </nav>
+          <FabFirstGameEntry surface="setup" />
         </header>
 
         <section
@@ -3220,6 +3222,7 @@ function ReadyLocalEngineMatch({
         interactionView={interactionView}
         onSubmitInteraction={submitInteraction}
       />
+      <FabFirstGameEntry surface="board" />
       {postGameSummary && summaryOpen ? (
         <FabPostGameSummary
           summary={postGameSummary}

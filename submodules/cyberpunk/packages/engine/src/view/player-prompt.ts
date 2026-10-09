@@ -8,9 +8,10 @@ import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import { MOVE_IDS, type MoveId } from "../moves/index.ts";
 import type {
   CardColor,
-  CardClassification,
+  CardTargetDSL,
   CardType,
   Effect,
+  TargetDSL,
   ScryDestination,
   ScrySelectionLimitContext,
   ScryDestinationZone,
@@ -21,13 +22,14 @@ import { getMustAttackCardIds, hasPlayedProgramThisTurn } from "../moves/attack-
 import { getOpponentId } from "../state/initial-state.ts";
 import { defOf } from "../state/lookups.ts";
 import { projectRevealedCardView, type FilteredCardView } from "./filter.ts";
-import { DIE_MAX_VALUES } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES } from "@tcg/cyberpunk-types";
 import { isReactStep } from "../moves/is-react-step.ts";
 import { canActivateAbility, canHostActivatedAbility } from "../moves/activate-ability.ts";
 import { computeEffectiveCost } from "../moves/compute-effective-cost.ts";
 import { goSoloCost } from "../moves/go-solo.ts";
 import { listLegalGearAttachHosts } from "../state/gear-attachment.ts";
-import { availableEddies } from "../moves/eddie-resources.ts";
+import { abilityEddieCost, availableEddies } from "../moves/eddie-resources.ts";
+import { resolveTarget, type ResolutionContext } from "../effects/target-resolver.ts";
 
 const KNOWN_MOVE_IDS: ReadonlySet<MoveId> = new Set(MOVE_IDS);
 
@@ -115,17 +117,6 @@ export type ChoicePrompt =
  * against the card definition. If either side grows, the other should follow
  * — see the cross-reference in `automation/resolvers/search-deck.ts`.
  */
-export interface ScryTargetFilter {
-  cardTypes?: CardType[];
-  classifications?: CardClassification[];
-  minCost?: number;
-  maxCost?: number;
-  minPower?: number;
-  maxPower?: number;
-  /** Concrete Gig values currently accepted by costEqualsGigValueOf. */
-  allowedCosts?: number[];
-}
-
 export interface ScryDestinationPrompt {
   zone: ScryDestinationZone;
   min?: number;
@@ -134,7 +125,10 @@ export interface ScryDestinationPrompt {
   remainder?: boolean;
   order?: ScryDestination["order"];
   selectionLimitContext?: ScrySelectionLimitContext;
-  target: ScryTargetFilter | null;
+  /** Revealed cards accepted by the engine's full target evaluator. */
+  eligibleCardIds: string[];
+  /** Display hint only. `eligibleCardIds` determines legality. */
+  eligibilityLabel: string;
 }
 
 export interface ScryChoicePrompt {
@@ -145,10 +139,7 @@ export interface ScryChoicePrompt {
     amount: number;
     destinations: ScryDestinationPrompt[];
     revealedCardIds: string[];
-    /**
-     * Player-safe projections of the revealed cards. Lets resolvers evaluate
-     * `target` filters without crossing the boundary into raw card definitions.
-     */
+    /** Player-safe projections of the revealed cards. */
     revealedCards: FilteredCardView[];
     source?: EffectSourcePrompt;
   };
@@ -197,11 +188,13 @@ export interface ChooseTargetChoicePrompt {
     };
     min?: number;
     max?: number;
+    /** Ordered legality rule for source/target Gig value-copy choices. */
+    pairConstraint?: "gig-copy" | "gig-copy-between-players";
     canDecline?: boolean;
     effect?: Effect;
     cards?: FilteredCardView[];
     source?: EffectSourcePrompt;
-    targetPurpose?: "attachHost" | "playCard";
+    targetPurpose?: "attachHost" | "gearToPlay" | "playCard";
     availableEddiesAfterCosts?: number;
     effectiveCostsByCardId?: Record<string, number>;
   };
@@ -251,7 +244,7 @@ export interface ChooseTriggerPromptOption {
   triggerId: string;
   sourceCardId: string;
   sourcePlayerId: string;
-  abilityIndex: number;
+  abilityIndex?: number;
   abilityText: string;
   cardName: string;
   optional?: boolean;
@@ -311,7 +304,7 @@ export interface ChooseCardToPlayChoicePrompt {
     /** Player-safe projection of each candidate so resolvers can rank them. */
     cards: FilteredCardView[];
     free?: boolean;
-    attachTo?: unknown;
+    attachTo?: TargetDSL;
     resolvedAttachToId?: string;
     canDecline?: boolean;
   };
@@ -390,7 +383,7 @@ void _choicePromptCovers;
 // ── Build prompt ───────────────────────────────────────────────────────
 
 /** Moves that are always available regardless of game state (not phase-gated). */
-const ALWAYS_AVAILABLE_MOVES = new Set(["concede"]);
+const ALWAYS_AVAILABLE_MOVES = new Set(["concede", "setCombatPriority"]);
 
 /**
  * Compute what the engine wants from a specific player right now.
@@ -534,6 +527,7 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
         inputSpec: { type: "selectAbility", candidates: getActivatableAbilities(state, playerId) },
       };
     case "passPhase":
+    case "setCombatPriority":
     case "concede":
     case "mulligan":
     case "keepHand":
@@ -565,10 +559,15 @@ function getPlayCardCandidates(state: MatchState, playerId: PlayerId): PlayCardC
   if (!player) return [];
   const candidates: PlayCardCandidate[] = [];
   const isDefending = isReactStep(state, playerId);
-  for (const id of player.zones.hand) {
+  for (const id of [...player.zones.hand, ...player.zones.legendArea]) {
     const card = state.G.cardIndex[id as string];
     if (!card) continue;
     const def = defOf(card);
+    if (
+      card.zone === "legendArea" &&
+      (def.type !== "legend" || card.meta.faceDown || def.cost === null)
+    )
+      continue;
     const cost = computeEffectiveCost(state, id, playerId);
     if (cost > availableEddies(state, playerId)) continue;
 
@@ -674,7 +673,9 @@ function getReadyBlockers(state: MatchState, playerId: PlayerId): string[] {
   const player = state.G.players[playerId as string];
   if (!player) return [];
   return player.zones.field
-    .filter((id) => isReadyFieldBlocker(state, id as string))
+    .filter(
+      (id) => id !== state.G.attackState?.defenderId && isReadyFieldBlocker(state, id as string),
+    )
     .map((id) => id as string);
 }
 
@@ -763,11 +764,7 @@ function getActivatableAbilities(state: MatchState, playerId: PlayerId): Ability
           cardId: cardId as string,
           abilityIndex: i,
           effectHints: ability.effects.map((effect) => effect.effect),
-          eddieCost: (ability.costs ?? []).reduce((total, cost) => {
-            if (cost.cost === "payEddies") return total + cost.amount;
-            if (cost.cost === "payCardCost") return total + (def.cost ?? 0);
-            return total;
-          }, 0),
+          eddieCost: abilityEddieCost(ability, state, cardId, playerId),
           spendsCard: (ability.costs ?? []).some((cost) => cost.cost === "spend"),
         });
       }
@@ -828,6 +825,7 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
           adjustGig: choice.payload.adjustGig,
           min: choice.payload.min,
           max: choice.payload.max,
+          pairConstraint: choice.payload.pairConstraint,
           canDecline: choice.payload.canDecline,
           effect: choice.payload.effect,
           cards: (eligibleIds ?? [])
@@ -863,9 +861,10 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
               (trigger) => trigger.id === option.triggerId,
             );
             const sourceCard = state.G.cardIndex[option.sourceCardId as string];
-            const ability = sourceCard
-              ? defOf(sourceCard).abilities?.[option.abilityIndex]
-              : undefined;
+            const ability =
+              sourceCard && option.abilityIndex !== undefined
+                ? defOf(sourceCard).abilities?.[option.abilityIndex]
+                : undefined;
             const context =
               queued?.event.type === "gigDieRolled"
                 ? {
@@ -884,7 +883,11 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
               abilityText: option.abilityText,
               cardName: option.cardName,
               optional: option.optional,
-              containsOptionalEffect: ability?.effects.some((effect) => effect.optional) === true,
+              containsOptionalEffect:
+                ability?.effects.some((effect) => effect.optional) === true ||
+                (queued?.kind === "delayed" &&
+                  queued.resolution.kind === "effects" &&
+                  queued.resolution.effects.some((effect) => effect.optional)),
               context,
             };
           }),
@@ -931,25 +934,37 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
         payload: {
           player: choice.payload.player,
           amount: choice.payload.amount,
-          destinations: choice.payload.destinations.map((destination) => ({
-            zone: destination.zone,
-            min: destination.min,
-            max: destination.max,
-            reveal: destination.reveal,
-            remainder: destination.remainder,
-            order: destination.order,
-            selectionLimitContext: destination.selectionLimitContext,
-            target: projectScryTarget(
-              destination.target,
+          destinations: choice.payload.destinations.map((destination) => {
+            const resolutionContext = {
               state,
-              choice.payload.sourcePlayerId as string,
-            ),
-          })),
+              sourceCardId: choice.payload.sourceCardId,
+              sourcePlayerId: choice.payload.sourcePlayerId,
+              abilityIndex: choice.payload.abilityIndex,
+              contextTargets: choice.payload.contextTargets,
+              boundTargets: choice.payload.boundTargets,
+            };
+            const matchingIds = destination.target
+              ? new Set(resolveTarget(destination.target, resolutionContext))
+              : null;
+            return {
+              zone: destination.zone,
+              min: destination.min,
+              max: destination.max,
+              reveal: destination.reveal,
+              remainder: destination.remainder,
+              order: destination.order,
+              selectionLimitContext: destination.selectionLimitContext,
+              eligibleCardIds: matchingIds
+                ? revealedIds.filter((id) => matchingIds.has(id))
+                : [...revealedIds],
+              eligibilityLabel: scryEligibilityLabel(destination.target, resolutionContext),
+            };
+          }),
           revealedCardIds: revealedIds,
           revealedCards: revealedIds
             .map((id) => projectRevealedCardView(state, id))
             .filter((c): c is FilteredCardView => c !== null),
-          source: projectEffectSource(state, choice.payload.sourceCardId as string | undefined),
+          source: projectEffectSource(state, choice.payload.sourceCardId as string),
         },
       };
     }
@@ -1072,48 +1087,44 @@ function projectEffectSource(
   };
 }
 
-/**
- * Narrow the engine's full {@link import("@tcg/cyberpunk-types").CardTargetDSL}
- * down to the {@link ScryTargetFilter} subset surfaced for resolvers.
- * Returning `null` signals "no filter" so the resolver/UI can skip filtering
- * work entirely.
- */
-function projectScryTarget(
-  raw: unknown,
-  state: MatchState,
-  sourcePlayerId: string,
-): ScryTargetFilter | null {
-  if (!raw || typeof raw !== "object") return null;
-  const t = raw as {
-    cardTypes?: CardType[];
-    classifications?: CardClassification[];
-    minCost?: number;
-    maxCost?: number;
-    minPower?: number;
-    maxPower?: number;
-    costEqualsGigValueOf?: {
-      selector?: unknown;
-      controller?: unknown;
-    };
-  };
-  const filter: ScryTargetFilter = {};
-  if (Array.isArray(t.cardTypes) && t.cardTypes.length > 0) filter.cardTypes = t.cardTypes;
-  if (Array.isArray(t.classifications) && t.classifications.length > 0) {
-    filter.classifications = t.classifications;
+function scryEligibilityLabel(target: CardTargetDSL | undefined, ctx: ResolutionContext): string {
+  if (!target) return "any card";
+  const parts: string[] = [];
+  if (target.cardTypes?.length) {
+    parts.push(
+      target.cardTypes
+        .map((type) => `${type[0]?.toUpperCase() ?? ""}${type.slice(1)}`)
+        .join(" or "),
+    );
   }
-  if (typeof t.minCost === "number") filter.minCost = t.minCost;
-  if (typeof t.maxCost === "number") filter.maxCost = t.maxCost;
-  if (typeof t.minPower === "number") filter.minPower = t.minPower;
-  if (typeof t.maxPower === "number") filter.maxPower = t.maxPower;
-  if (t.costEqualsGigValueOf?.selector === "gig") {
-    const ownerId =
-      t.costEqualsGigValueOf.controller === "rival"
-        ? getOpponentId(state, sourcePlayerId as PlayerId)
-        : (sourcePlayerId as PlayerId);
-    const values = (state.G.players[ownerId as string]?.gigArea ?? [])
-      .map((id) => state.G.gigDice[id as string]?.faceValue)
+  if (target.classifications?.length) parts.push(target.classifications.join(" or "));
+  if (target.costEqualsGigValueOf) {
+    const values = resolveTarget(target.costEqualsGigValueOf, ctx)
+      .map((id) => ctx.state.G.gigDice[id]?.faceValue)
       .filter((value): value is number => typeof value === "number");
-    filter.allowedCosts = [...new Set(values)].sort((a, b) => a - b);
+    const distinctValues = [...new Set(values)].sort((a, b) => a - b);
+    const owner =
+      target.costEqualsGigValueOf.selector === "gig"
+        ? target.costEqualsGigValueOf.controller === "rival"
+          ? "rival"
+          : "friendly"
+        : "selected";
+    parts.push(
+      `cost matching a ${owner} Gig value${distinctValues.length ? ` (${distinctValues.join(", ")})` : ""}`,
+    );
+  } else if (target.minCost !== undefined && target.maxCost !== undefined) {
+    parts.push(`cost ${target.minCost}-${target.maxCost}`);
+  } else if (target.maxCost !== undefined) {
+    parts.push(`cost ${target.maxCost} or less`);
+  } else if (target.minCost !== undefined) {
+    parts.push(`cost ${target.minCost} or more`);
   }
-  return Object.keys(filter).length === 0 ? null : filter;
+  if (target.minPower !== undefined && target.maxPower !== undefined) {
+    parts.push(`power ${target.minPower}-${target.maxPower}`);
+  } else if (target.maxPower !== undefined) {
+    parts.push(`power ${target.maxPower} or less`);
+  } else if (target.minPower !== undefined) {
+    parts.push(`power ${target.minPower} or more`);
+  }
+  return parts.length ? parts.join(" with ") : "eligible card";
 }

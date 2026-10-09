@@ -14,7 +14,7 @@
  */
 
 import type { EngineInteractionView } from "@tcg/protocol";
-import type { CardDropEvent } from "./dropEvent";
+import type { CardDragSource, CardDropEvent } from "./dropEvent";
 import type { EngineAction } from "./EngineProvider";
 import { PLAYER_SIDE_TO_ID, type Side } from "./sides";
 import {
@@ -64,6 +64,38 @@ function isFriendlyAttachHostZone(zone: string): boolean {
   return zone === "p-field" || zone === "p-legendArea";
 }
 
+/**
+ * Structural check, ignoring the live interaction view: could this drag source
+ * ever resolve against a card target in this zone? Collision ranking uses it
+ * so a card that cannot accept the drag falls through to its enclosing zone
+ * (a Gear released "onto the field" then opens the attachment chooser)
+ * instead of silently swallowing the drop while the zone cue is showing.
+ */
+export function dropShapeAcceptsCardTarget(
+  source: Pick<CardDragSource, "zone" | "cardType">,
+  targetZone: string,
+): boolean {
+  if (source.zone !== "p-hand") {
+    return true;
+  }
+  if (source.cardType === "program") {
+    return isProgramCardTargetZone(targetZone);
+  }
+  if (source.cardType === "gear") {
+    return isFriendlyAttachHostZone(targetZone);
+  }
+  return targetZone === "p-field";
+}
+
+function isProgramCardTargetZone(zone: string): boolean {
+  return (
+    zone === "p-field" ||
+    zone === "opp-field" ||
+    zone === "p-legendArea" ||
+    zone === "opp-legendArea"
+  );
+}
+
 export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineAction | null {
   const { source, target } = event;
   if (!source.cardId) {
@@ -75,6 +107,18 @@ export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineA
   if (target.type === "card") {
     if (!target.cardId) {
       return null;
+    }
+
+    // The drop records a preferred effect target in the UI. Playing the
+    // Program remains a separate move; the effect target is legal only after
+    // the engine exposes its later choice.
+    if (source.zone === "p-hand" && isProgramCardTargetZone(target.zone)) {
+      const sourceCard = ctx.humanZones.hand.find((c) => c.cardId === source.cardId);
+      if (sourceCard?.cardType === "program") {
+        return hasLegalMove(ctx, source.cardId, "playCard")
+          ? { type: "playCard", cardId: source.cardId, as }
+          : null;
+      }
     }
 
     // Hand → friendly host card: gear attach. `cardType === "gear"` is the
@@ -118,6 +162,15 @@ export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineA
 
   // Drop onto a zone.
   if (target.type === "zone") {
+    // Legend area → field: GO SOLO. The interaction candidate is the single
+    // legality source: it accounts for the Legend's keyword, the current
+    // phase/turn, and every available resource needed for its effective cost.
+    if (source.zone === "p-legendArea" && target.zone === "p-field") {
+      if (!hasLegalMove(ctx, source.cardId, "goSolo")) {
+        return null;
+      }
+      return { type: "goSolo", cardId: source.cardId, as };
+    }
     // Hand → field: play card.
     if (source.zone === "p-hand" && target.zone === "p-field") {
       if (!hasLegalMove(ctx, source.cardId, "playCard")) {

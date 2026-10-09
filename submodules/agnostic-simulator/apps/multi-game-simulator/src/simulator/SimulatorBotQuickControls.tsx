@@ -70,11 +70,13 @@ export function SimulatorBotQuickControls({
         disabled={disabled || !canTakeover}
         onClick={onToggleTakeover}
       >
-        {takeoverActive
-          ? practiceMode === "self"
-            ? "Switch to your seat"
-            : "Return to bot"
-          : "Control opponent"}
+        <span className={classes.takeoverLabel}>
+          {takeoverActive
+            ? practiceMode === "self"
+              ? "Switch to your seat"
+              : "Return to bot"
+            : "Control opponent"}
+        </span>
       </button>
 
       {practiceMode === "self" ? null : pacing === "auto" ? (

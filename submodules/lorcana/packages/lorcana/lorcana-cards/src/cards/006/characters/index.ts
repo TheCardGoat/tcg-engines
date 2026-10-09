@@ -1,6 +1,7 @@
 export { owlPirateLookout } from "./001-owl-pirate-lookout";
 export { liloEscapeArtist } from "./002-lilo-escape-artist";
 export { winnieThePoohHunnyPirate } from "./003-winnie-the-pooh-hunny-pirate";
+export { jasmineRoyalSeafarerCC1Promo } from "./cc1-003-jasmine-royal-seafarer-promo";
 export { gopherShipsCarpenter } from "./004-gopher-ships-carpenter";
 export { simbaPrideProtectorC2Challenge as simbaPrideProtectorC2ChallengeC2004SimbaPrideProtectorChallenge } from "./c2-004-simba-pride-protector-challenge";
 export { simbaHappygolucky } from "./005-simba-happy-go-lucky";

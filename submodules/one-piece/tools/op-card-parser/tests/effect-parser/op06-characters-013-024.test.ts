@@ -16,7 +16,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
             {
               action: "search",
               lookCount: 3,
-              revealFilters: [{ filter: "trait", value: "FILM", match: "includes" }],
+              revealFilters: [{ filter: "trait", value: "FILM", match: "exact" }],
               revealDestination: "hand",
               remainderPosition: "bottom",
             },
@@ -46,7 +46,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
               player: "self",
               amount: "all",
               upTo: true,
-              filters: [{ filter: "trait", value: "FILM", match: "includes" }],
+              filters: [{ filter: "trait", value: "FILM", match: "exact" }],
             },
             {
               action: "modifyPower",
@@ -65,7 +65,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
     });
   });
 
-  test("OP06-015 keeps its power-qualified trash cost and inclusive play range", () => {
+  test("OP06-015 keeps its power-qualified trash cost and exact play range", () => {
     expect(
       buildCardEffects(
         "[Activate:Main][Once Per Turn] You may trash 1 of your Characters with 6000 power or more: Play up to 1 [FILM] type Character card with 2000 to 5000 power from your trash rested.",
@@ -89,7 +89,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
               source: { player: "self", zone: "trash" },
               count: { amount: 1, upTo: true },
               filters: [
-                { filter: "trait", value: "FILM", match: "includes" },
+                { filter: "trait", value: "FILM", match: "exact" },
                 { filter: "power", comparison: "gte", value: 2000 },
                 { filter: "power", comparison: "lte", value: 5000 },
                 { filter: "cardCategory", value: "character" },
@@ -143,7 +143,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
     });
   });
 
-  test("OP06-024 keeps included traits and mandatory Life removal after the optional play", () => {
+  test("OP06-024 keeps exact traits and mandatory Life removal after the optional play", () => {
     expect(
       buildCardEffects(
         "[On Play] If your Leader has the [New Fish-Man Pirates] type, play up to 1 [Fish-Man] type Character card with a cost of 4 or less from your hand. Then, add 1 card from the top of your Life cards to your hand.",
@@ -152,9 +152,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
       effects: [
         {
           trigger: "onPlay",
-          conditions: [
-            { condition: "leaderTrait", trait: "New Fish-Man Pirates", match: "includes" },
-          ],
+          conditions: [{ condition: "leaderTrait", trait: "New Fish-Man Pirates", match: "exact" }],
           actions: [
             {
               action: "play",
@@ -162,7 +160,7 @@ describe("OP06 Character parser regressions for OP06-013 through OP06-024", () =
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Fish-Man", match: "includes" },
+                { filter: "trait", value: "Fish-Man", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },

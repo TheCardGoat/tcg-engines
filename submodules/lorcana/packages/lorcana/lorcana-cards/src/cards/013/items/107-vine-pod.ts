@@ -27,6 +27,7 @@ export const vinePod: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_96d9326e97cd4c7485c02709e8214e78",
+    tcgPlayer: "704616",
   },
   text: [
     {
@@ -36,7 +37,7 @@ export const vinePod: ItemCard = {
     {
       title: "REGENERATE",
       description:
-        "{E}, 1{I} — Banish chosen character of yours. You may play a character with the same name as that character for free.",
+        "{E}, 1 {I} — Banish chosen character of yours. You may play a character with the same name as that character for free.",
     },
   ],
   abilities: [

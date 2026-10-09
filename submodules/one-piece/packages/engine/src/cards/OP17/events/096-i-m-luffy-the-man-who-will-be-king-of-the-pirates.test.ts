@@ -41,4 +41,33 @@ describe("OP17-096 I'm Luffy! The Man Who Will Be King of the Pirates", () => {
     expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-096");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("opponent-only cost18 Loki enables the Counter", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-096"], activeDon: 1 },
+      { character: ["OP17-119"] },
+      { activeSeat: "north" },
+    );
+    const before = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.asSouth().chooseCounter("OP17-096");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("south")] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(before);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("Life Trigger recovers an Elbaph card without the Counter condition", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP17-096", "EB01-025"], trash: ["OP17-094", "EB01-005"] },
+      {},
+      { activeSeat: "north" },
+    );
+    const target = e.findCardInZone("south", "trash", "OP17-094");
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    const choice = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected recovery");
+    expect(choice.candidates.map((c) => c.ref.id)).toEqual([target]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

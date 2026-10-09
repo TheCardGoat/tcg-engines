@@ -1,17 +1,20 @@
+import { normalizeCardName } from "@tcg/lorcana-engine";
 import type { CardFilter, CardSelectionFilter, ScryCardOrdering } from "@tcg/lorcana-types";
 import type { ResolutionSelectionDestinationRule } from "@tcg/lorcana-engine";
 import type { LorcanaCardSnapshot } from "./contracts.js";
 
 export interface ScryCardMatchInput {
+  nameVariants?: LorcanaCardSnapshot["nameVariants"];
   cardType?: LorcanaCardSnapshot["cardType"];
   actionSubtype?: LorcanaCardSnapshot["actionSubtype"];
   cost?: LorcanaCardSnapshot["cost"];
   classifications?: LorcanaCardSnapshot["classifications"];
+  keywords?: LorcanaCardSnapshot["keywords"];
 }
 
-type TypedCardFilter = Exclude<CardFilter, CardSelectionFilter>;
+type TypedCardFilter = Extract<CardFilter, { type: string }>;
 
-function hasFilterType(filter: CardFilter): filter is TypedCardFilter {
+function hasFilterType(filter: CardFilter | CardSelectionFilter): filter is TypedCardFilter {
   return "type" in filter;
 }
 
@@ -45,7 +48,10 @@ function evaluateNumericComparison(value: number, comparison: string, threshold:
   }
 }
 
-function matchesSingleFilter(card: ScryCardMatchInput, filter: CardFilter): boolean {
+function matchesSingleFilter(
+  card: ScryCardMatchInput,
+  filter: CardFilter | CardSelectionFilter,
+): boolean {
   if (!hasFilterType(filter)) {
     if ("cardType" in filter && typeof filter.cardType === "string") {
       if (filter.cardType === "song") {
@@ -78,7 +84,7 @@ function matchesSingleFilter(card: ScryCardMatchInput, filter: CardFilter): bool
     return card.cardType === typedFilter.cardType;
   }
 
-  if (filterType === "classification") {
+  if (filterType === "classification" || filterType === "has-classification") {
     const typedFilter = filter as { classification?: string };
     return typeof typedFilter.classification === "string"
       ? (card.classifications ?? []).includes(typedFilter.classification)
@@ -86,6 +92,10 @@ function matchesSingleFilter(card: ScryCardMatchInput, filter: CardFilter): bool
   }
 
   switch (filter.type) {
+    case "has-name":
+      return (card.nameVariants ?? []).some(
+        (name) => normalizeCardName(name) === normalizeCardName(filter.name),
+      );
     case "and":
       return filter.filters.every((entry) => matchesSingleFilter(card, entry));
     case "or":
@@ -97,6 +107,9 @@ function matchesSingleFilter(card: ScryCardMatchInput, filter: CardFilter): bool
       return typeof filter.value === "number"
         ? evaluateNumericComparison(card.cost ?? 0, filter.comparison, filter.value)
         : false;
+    case "has-keyword":
+      return (card.keywords ?? []).includes(filter.keyword);
+    case "is-song":
     case "song":
       return card.cardType === "action" && card.actionSubtype === "song";
     default:

@@ -62,4 +62,49 @@ describe("OP09-098 Black Hole", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: external cost reduction survives negation and makes Jack eligible for KO", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-081", hand: ["OP07-096", "OP09-098"], activeDon: 5, trash: 10 },
+      { character: ["OP08-084"] },
+    );
+    const jack = e.findCardInZone("north", "character", "OP08-084");
+    expect(e.getView("north").players.north.characters[0]?.cost).toBe(11);
+    e.asSouth().play("OP07-096");
+    e.asSouth().chooseTargets(jack);
+    expect(e.getView("north").players.north.characters[0]?.cost).toBe(8);
+    e.asSouth().play("OP09-098");
+    e.asSouth().chooseTargets(jack);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(jack);
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
+  test("negates OnKO before KO so Lucky Roux cannot KO an available Character", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-081", hand: ["OP09-098"], character: ["ST02-012"], activeDon: 4 },
+      { leaderCardId: "OP09-001", character: ["OP09-015"] },
+    );
+    const id = e.findCardInZone("north", "character", "OP09-015");
+    const availableTarget = e.findCardInZone("south", "character", "ST02-012");
+    e.asSouth().play("OP09-098");
+    e.asSouth().chooseTargets(id);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(id);
+    expect(
+      e.getView("south").players.south.characters.some((c) => c?.instanceId === availableTarget),
+    ).toBe(true);
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
+  test("FAQ: Life Trigger negates Nami before subsequent empty-deck loss", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP03-040", hand: ["P-096"], deck: ["ST02-012"], activeDon: 2 },
+      { life: ["OP09-098"] },
+    );
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().activateLifeTrigger();
+    e.asNorth().chooseTargets(e.leader("south"));
+    e.asSouth().play("P-096");
+    expect(e.getView("south")).toMatchObject({
+      status: "finished",
+      winner: "north",
+      finishReason: "emptyDeck",
+    });
+  });
 });

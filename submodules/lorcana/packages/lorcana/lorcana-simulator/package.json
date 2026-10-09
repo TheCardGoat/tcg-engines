@@ -48,6 +48,7 @@
     "test:e2e:report": "playwright show-report",
     "test:simulator-jsdom": "vp test run --environment jsdom src/testing/*.vitest.test.ts vitest/*.vitest.test.ts",
     "test:rules": "AGENT=1 bun test --silent src/testing/rules",
+    "test:regressions": "pnpm run i18n:compile && svelte-kit sync && AGENT=1 bun test --silent src/testing/regressions",
     "test:unit": "pnpm run i18n:compile && svelte-kit sync && AGENT=1 bun test --silent src/lib",
     "test:strategy": "AGENT=1 bun test --silent src/testing/ai-strategy/*.test.ts",
     "test:strategy:quick": "RUN_STRATEGY_LAB=1 STRATEGY_PRESET=quick AGENT=1 bun test --silent src/testing/ai-strategy/*.test.ts",
@@ -58,7 +59,7 @@
     "test:strategy:replay": "RUN_STRATEGY_REPLAY=1 AGENT=1 bun test --silent src/testing/ai-strategy/simulate-game.test.ts",
     "test:strategy:benchmark": "RUN_STRATEGY_BENCHMARK=1 STRATEGY_GAME_COUNT=100 AGENT=1 bun test --silent src/testing/ai-strategy/*.test.ts",
     "test:card-log-token": "vp test run --environment jsdom vitest/card-log-token.vitest.test.ts",
-    "test": "bun run test:rules && bun run test:unit && bun run test:card-log-token"
+    "test": "bun run test:regressions && bun run test:rules && bun run test:unit && bun run test:card-log-token"
   },
   "dependencies": {
     "@better-auth/infra": "catalog:",

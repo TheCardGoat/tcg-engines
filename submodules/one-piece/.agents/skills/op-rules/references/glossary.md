@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828="
+  relation: "current_index"
+  copy_version: "1.2.1"
+---
+
 # One Piece Glossary
 
 Load this file before rules-facing One Piece work. Use these terms in player-facing copy, tests, and implementation notes unless the codebase has an established narrower type name.

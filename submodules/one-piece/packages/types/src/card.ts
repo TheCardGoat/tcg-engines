@@ -65,6 +65,14 @@ interface BaseCardProperties extends BaseCardDefinition {
 }
 
 export interface LeaderCard extends BaseCardProperties {
+  /** Printed rules identity; not an ability that effect negation can remove. */
+  rulesIdentity?: {
+    allNames?: true;
+    allTraits?: true;
+    allAttributes?: true;
+  };
+  /** This Leader is legal only in events that explicitly permit it. */
+  designatedEventsOnly?: boolean;
   cardType: "leader";
   power: number;
   life: number;

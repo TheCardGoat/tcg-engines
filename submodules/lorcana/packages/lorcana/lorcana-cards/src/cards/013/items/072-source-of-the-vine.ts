@@ -11,7 +11,7 @@ export const sourceOfTheVine: ItemCard = {
       artId: "set13-072",
       setCode: "set13",
       collectorNumber: "72",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,11 +22,12 @@ export const sourceOfTheVine: ItemCard = {
   franchise: "Lorcana",
   set: "013",
   cardNumber: 72,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   inkable: false,
   externalIds: {
     lorcast: "crd_87d57ff7547647d0a7e44061cb55efd8",
+    tcgPlayer: "704590",
   },
   text: [
     {

@@ -212,6 +212,12 @@ export function parseTrashFromHandAction(text: string): TrashFromHandAction | nu
 export function parseOpponentChosenTrashAction(text: string): TrashFromHandAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
+  const ownHand =
+    /^your\s+opponent\s+chooses\s+(\d+)\s+cards?\s+from\s+their\s+hand\s+and\s+trashes\s+(?:it|them)$/i.exec(
+      trimmed,
+    );
+  if (ownHand) return { action: "trashFromHand", player: "opponent", amount: Number(ownHand[1]) };
+
   // "Your opponent chooses 1 card from your hand; trash that card"
   if (
     /^Your\s+opponent\s+chooses?\s+(\d+)\s+cards?\s+from\s+your\s+hand;\s*trash\s+that\s+card$/i.test(

@@ -57,7 +57,7 @@ export const op05Mr1DazBonez075: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

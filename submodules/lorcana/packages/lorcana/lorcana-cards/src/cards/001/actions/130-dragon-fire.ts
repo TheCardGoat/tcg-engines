@@ -27,6 +27,7 @@ export const dragonFire: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f54b0e3b38d340ffa793953c49e6cb56",
+    tcgPlayer: "492710",
   },
   text: "Banish chosen character.",
   abilities: [

@@ -1,11 +1,12 @@
 import type { CardInstanceId, PlayerId } from "#core";
-import { type CardPlayedPayload } from "../../../types";
+import { createLorcanaLogProjection, type CardPlayedPayload } from "../../../types";
 import type { DealDamageEffect } from "@tcg/lorcana-types";
 import type { DynamicAmountEventSnapshot } from "../../../types/domain-events";
 import { projectLorcanaCardDerived } from "../../../projection/card-derived";
 import { createProjectionState } from "../../../rules/derived-state";
 import { moveCardOutOfPlayWithStack, getCharacterIdsAtLocation } from "../../state/shift-stack";
 import type { PlayCardExecutionContext } from "./types";
+import { preventsDamageWhileChallenging } from "../../rules/challenge-damage-prevention";
 import { effectLogger } from "./effect-logger";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
 import {
@@ -102,7 +103,15 @@ function applyDamage(
         restriction: "cant-be-dealt-damage",
         registry: options.registry!,
       });
-      if (hasDamageRestriction) {
+      if (
+        hasDamageRestriction ||
+        preventsDamageWhileChallenging(
+          ctx.cards.require(targetId).meta ?? {},
+          ctx.framework.state.status.turn ?? 1,
+          ctx.G.challengeState?.attacker,
+          targetId,
+        )
+      ) {
         continue;
       }
     }
@@ -113,6 +122,14 @@ function applyDamage(
       ? Math.max(0, amount - getResistValue(ctx, targetId, options.registry))
       : amount;
     if (appliedDamage <= 0) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.outcome.damagePrevented",
+          { playerId: cardPlayed.playerId, targetId, amount },
+          { mode: "PUBLIC" },
+          "rules",
+        ),
+      );
       effectLogger.debug(`Target ${targetId} took no damage after reduction`);
       continue;
     }

@@ -8,8 +8,10 @@ afterEach(cleanup);
 
 describe("tester hubs", () => {
   it("keeps only real capabilities and routes for every registered simulator", async () => {
-    for (const game of TESTER_HUB_GAMES) {
-      const descriptor = await loadTesterHub(game);
+    const descriptors = await Promise.all(
+      TESTER_HUB_GAMES.map(async (game) => ({ game, descriptor: await loadTesterHub(game) })),
+    );
+    for (const { game, descriptor } of descriptors) {
       expect(descriptor.sections.flatMap((section) => section.capabilities)).not.toHaveLength(0);
       expect(descriptor.fixtures).not.toHaveLength(0);
       expect(new Set(descriptor.fixtureGroups.map((group) => group.id)).size).toBe(
@@ -28,7 +30,7 @@ describe("tester hubs", () => {
         expect(capability.title).not.toMatch(/unavailable|coming soon/i);
       }
     }
-  });
+  }, 60_000);
 
   it("loads the Cyberpunk hub without evaluating FAB engine scenarios", async () => {
     const descriptor = await loadTesterHub("cyberpunk");

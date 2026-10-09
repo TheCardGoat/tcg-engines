@@ -31,7 +31,7 @@ export const op15Sabo046: CharacterCard = {
   setId: "OP15",
   cost: 7,
   power: 9000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[Blocker]\n[On Play] If your Leader has the {Dressrosa} type, activate up to 1 {Dressrosa} type Event from your hand.",
@@ -44,7 +44,7 @@ export const op15Sabo046: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -62,7 +62,7 @@ export const op15Sabo046: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

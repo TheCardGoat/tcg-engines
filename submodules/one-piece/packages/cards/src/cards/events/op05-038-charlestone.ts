@@ -34,38 +34,33 @@ export const op05Charlestone038: EventCard = {
             target: {
               player: "self",
               zones: ["leader", "character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
+              count: { amount: 1, upTo: true },
             },
             value: 4000,
             duration: "thisBattle",
           },
-        ],
-      },
-      {
-        trigger: "counter",
-        costs: [
           {
-            cost: "trashFromHand",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 3,
-                upTo: true,
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromHand",
+                player: "self",
+                amount: 1,
+                thenRequiresFullAmount: true,
+                thenActions: [
+                  {
+                    action: "setActive",
+                    target: {
+                      player: "self",
+                      zones: ["costArea"],
+                      count: { amount: 3, upTo: true },
+                    },
+                  },
+                ],
               },
-            },
+            ],
           },
         ],
-        optional: true,
       },
       {
         trigger: "trigger",

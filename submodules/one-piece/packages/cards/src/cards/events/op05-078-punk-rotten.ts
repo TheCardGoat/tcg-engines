@@ -48,7 +48,7 @@ export const op05PunkRotten078: EventCard = {
                 {
                   filter: "trait",
                   value: "Kid Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

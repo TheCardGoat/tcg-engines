@@ -56,7 +56,7 @@ describe("OP04-090/091/092/098/099/100 transformations", () => {
     });
   });
 
-  test("parses Leo's numbered Leader-rest cost without scoping the mandatory mill", () => {
+  test("gates Leo's K.O. and mill after the numbered Leader-rest cost", () => {
     expect(
       buildCardEffects(
         "[On Play] You may rest your 1 Leader: If your Leader has the [Dressrosa] type, K.O. up to 1 of your opponent's Characters with a cost of 1 or less. Then, trash 2 cards from the top of your deck.",
@@ -74,20 +74,21 @@ describe("OP04-090/091/092/098/099/100 transformations", () => {
           ],
           actions: [
             {
-              action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 1 }],
-              },
-              condition: {
-                condition: "leaderTrait",
-                trait: "Dressrosa",
-                match: "includes",
-              },
+              action: "conditional",
+              predicate: { condition: "leaderTrait", trait: "Dressrosa", match: "exact" },
+              whenTrue: [
+                {
+                  action: "ko",
+                  target: {
+                    player: "opponent",
+                    zones: ["character"],
+                    count: { amount: 1, upTo: true },
+                    filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+                  },
+                },
+                { action: "trashFromDeck", player: "self", amount: 2 },
+              ],
             },
-            { action: "trashFromDeck", player: "self", amount: 2 },
           ],
           optional: true,
         },
@@ -95,7 +96,7 @@ describe("OP04-090/091/092/098/099/100 transformations", () => {
     });
   });
 
-  test("matches Rebecca's inclusive Dressrosa search while excluding Rebecca", () => {
+  test("matches Rebecca's exact Dressrosa search while excluding Rebecca", () => {
     expect(
       buildCardEffects(
         "[On Play] Look at 3 cards from the top of your deck; reveal up to 1 [Dressrosa] type card other than [Rebecca] and add it to your hand. Then, trash the rest.",
@@ -112,7 +113,7 @@ describe("OP04-090/091/092/098/099/100 transformations", () => {
               revealCount: { amount: 1, upTo: true },
               revealFilters: [
                 { filter: "excludeName", value: "Rebecca" },
-                { filter: "trait", value: "Dressrosa", match: "includes" },
+                { filter: "trait", value: "Dressrosa", match: "exact" },
               ],
               revealDestination: "hand",
               remainderPosition: "trash",
@@ -136,7 +137,7 @@ describe("OP04-090/091/092/098/099/100 transformations", () => {
             {
               cost: "trashFromHand",
               amount: 2,
-              filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
+              filters: [{ filter: "trait", value: "Land of Wano", match: "exact" }],
             },
           ],
           actions: [

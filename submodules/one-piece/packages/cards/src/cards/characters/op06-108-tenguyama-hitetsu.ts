@@ -25,7 +25,7 @@ export const op06TenguyamaHitetsu108: CharacterCard = {
   counter: 1000,
   trigger:
     "Up to 1 of your [Land of Wano] type Leader or Character cards gains +2000 power during this turn.",
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "[Trigger] Up to 1 of your [Land of Wano] type Leader or Character cards gains +2000 power during this turn.",
@@ -47,7 +47,7 @@ export const op06TenguyamaHitetsu108: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -156,8 +156,17 @@ export const venousCore: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                   zones: ["effects-stack"],
                   player: "controller",
                   filter: {
-                    kind: "subtype",
-                    oneOf: ["SPELL"],
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "subtype",
+                        oneOf: ["AENEAN"],
+                      },
+                      {
+                        kind: "subtype",
+                        oneOf: ["SPELL"],
+                      },
+                    ],
                   },
                 },
               },

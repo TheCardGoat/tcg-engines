@@ -30,6 +30,11 @@ export function hasGameAdapter(slug: string): boolean {
   return adapters.has(slug);
 }
 
+/** Read the game-owned bot pacing policy from the registered adapter. */
+export function getBotTurnScheduling(slug: string): GameAdapter["botTurnScheduling"] {
+  return getGameAdapter(slug).botTurnScheduling;
+}
+
 export function listGameAdapters(): GameAdapter[] {
   return [...adapters.values()];
 }

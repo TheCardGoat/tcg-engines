@@ -28,6 +28,7 @@ import type {
   LorcanaProjectedPlayerBoard,
 } from "../types";
 import { buildResolutionSelectionContext } from "../runtime-moves/resolution/action-effects/selection-context";
+import { evaluateActionCondition } from "../runtime-moves/resolution/action-effects/action-condition-evaluator";
 import { getLegalOrOptionIndices } from "../runtime-moves/resolution/action-effects/composed-effect-resolver";
 import type { ActionResolutionInput } from "../runtime-moves/resolution/action-effects/types";
 import { getActivePlayFromUnderPermissions } from "../runtime-moves/effects/play-from-under-permissions";
@@ -222,6 +223,7 @@ function buildVisibleCard(args: {
     hasReckless: runtimeCard.hasReckless,
     hasEvasive: runtimeCard.hasEvasive,
     hasQuestRestriction: runtimeCard.hasQuestRestriction,
+    hasChallengeRestriction: runtimeCard.hasChallengeRestriction,
     fullName: runtimeCard.fullName,
     cardType: runtimeCard.definition.cardType,
     keywords: runtimeCard.keywords,
@@ -747,6 +749,7 @@ function projectPlayerBoard(args: {
 
   return {
     lore: state.G.lore[playerId] ?? 0,
+    inkDrops: state.G.inkDrops?.[playerId] ?? 0,
     canAddCardToInkwell:
       actorPlayerId === playerId
         ? canInkThisTurn({
@@ -950,18 +953,29 @@ export function projectLorcanaBoardView(
               entry.resolutionInput as ActionResolutionInput,
             )
           : undefined;
-      const selectionContext = buildResolutionSelectionContext({
-        origin: "bag",
-        requestId: entry.id,
-        sourceCardId: entry.sourceId,
-        chooserId: entry.chooserId,
-        cardPlayed: entry.cardPlayed,
-        effect: entry.effect,
-        condition: entry.condition,
-        resolutionInput: entry.resolutionInput,
-        ctx: selectionRuntimeContext,
-        legalChoiceIndices,
-      });
+      const conditionMet =
+        !entry.condition ||
+        evaluateActionCondition(
+          entry.condition,
+          { ...selectionRuntimeContext, G: state.G },
+          entry.cardPlayed,
+          entry.resolutionInput,
+          entry.eventCardPlayed,
+        );
+      const selectionContext = conditionMet
+        ? buildResolutionSelectionContext({
+            origin: "bag",
+            requestId: entry.id,
+            sourceCardId: entry.sourceId,
+            chooserId: entry.chooserId,
+            cardPlayed: entry.cardPlayed,
+            effect: entry.effect,
+            condition: entry.condition,
+            resolutionInput: entry.resolutionInput,
+            ctx: selectionRuntimeContext,
+            legalChoiceIndices,
+          })
+        : undefined;
       return {
         id: entry.id,
         type: entry.kind,

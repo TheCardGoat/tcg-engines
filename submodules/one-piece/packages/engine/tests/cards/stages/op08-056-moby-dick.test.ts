@@ -24,7 +24,7 @@ describe("OP08-056 Moby Dick", () => {
           { card: op03Namule007, playedOnTurn: 0 },
         ],
         hand: [op13Otama043],
-        deck: [op13Higuma013, op13WindmillVillage022],
+        deck: [op13Higuma013, op13WindmillVillage022, op13York094],
       },
       {},
       { firstPlayer: "north", activeSeat: "south" },
@@ -133,7 +133,6 @@ describe("OP08-056 Moby Dick", () => {
     engine.endTurn("north");
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({

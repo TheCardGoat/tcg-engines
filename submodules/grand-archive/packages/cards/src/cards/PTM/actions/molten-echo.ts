@@ -88,15 +88,9 @@ export const moltenEcho: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
               {
                 kind: "add-counter",
                 subject: {
-                  kind: "each",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "name",
-                      value: "Fractured Memories",
-                    },
-                  },
+                  kind: "mastery",
+                  player: "controller",
+                  name: "Fractured Memories",
                 },
                 counter: {
                   named: "sheen",

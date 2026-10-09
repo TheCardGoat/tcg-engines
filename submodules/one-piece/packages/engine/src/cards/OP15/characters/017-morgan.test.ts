@@ -19,12 +19,6 @@ describe("OP15-017 Morgan", () => {
     );
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
-    const payment = engine.pendingDecision("effectCostGiveDon", "south").steps[0];
-    expect(payment?.kind).toBe("payCost");
-    if (payment?.kind !== "payCost") throw new Error("Expected the clog cost.");
-    expect(payment.candidates.map((candidate) => candidate.ref.id)).toEqual([leaderId, domaId]);
-    engine.resolveDecision("effectCostGiveDon", { selectedIds: [domaId] }, "south");
-
     expect(engine.getView("south").players.north.restedDon).toBe(1);
     expect(
       engine.getView("south").players.north.characters.find((c) => c?.instanceId === domaId)

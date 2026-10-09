@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-objectives"
+  relation: "current_index"
+---
+
 # General Rules - Objectives
 
 Grand Archive is a game that is played between two or more players where the primary objective of the game is to win by defeating each opponent’s champion.

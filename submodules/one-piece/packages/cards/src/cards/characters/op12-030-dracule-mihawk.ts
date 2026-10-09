@@ -38,7 +38,7 @@ export const op12DraculeMihawk030: CharacterCard = {
   setId: "OP12",
   cost: 8,
   power: 8000,
-  traits: ["The Seven Warlords of the Sea Muggy Kingdom"],
+  traits: ["Muggy Kingdom", "The Seven Warlords of the Sea"],
   attribute: "slash",
 
   effect:

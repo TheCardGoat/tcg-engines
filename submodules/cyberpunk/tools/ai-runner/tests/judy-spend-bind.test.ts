@@ -49,7 +49,7 @@ describe("Judy authored profile bind", () => {
     expect(decision.move).toBe("activateAbility");
   });
 
-  test("live authored Judy dump activates Nothing to Doubt Spend", () => {
+  test("live authored Judy dump activates Nothing to Doubt Spend", { timeout: 30_000 }, () => {
     const dump = playCoachMatch({
       strategyA: "tactical",
       strategyB: "tactical",

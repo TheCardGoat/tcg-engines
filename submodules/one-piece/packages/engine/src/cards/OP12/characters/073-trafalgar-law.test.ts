@@ -42,4 +42,20 @@ describe("OP12-073 Trafalgar Law", () => {
         ?.power,
     ).toBe(op01Bepo049.power);
   });
+  test("FAQ: more field DON prevents both ramp and the Character power grants", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        hand: [op12TrafalgarLaw073],
+        character: [op01Bepo049],
+        activeDon: op12TrafalgarLaw073.cost,
+      },
+      { activeDon: op12TrafalgarLaw073.cost - 1 },
+    );
+    e.asSouth().play(op12TrafalgarLaw073);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === op01Bepo049.id)?.power,
+    ).toBe(op01Bepo049.power);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

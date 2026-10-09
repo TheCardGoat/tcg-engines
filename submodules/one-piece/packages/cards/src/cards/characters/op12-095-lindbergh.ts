@@ -23,7 +23,7 @@ export const op12Lindbergh095: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Minks Revolutionary Army"],
+  traits: ["Minks", "Revolutionary Army"],
   attribute: "special",
   effect:
     'If your Leader has the "Revolutionary Army" type, this Character gains +4 cost.\n[On Play] Draw 1 card and trash 1 card from your hand.',
@@ -51,7 +51,7 @@ export const op12Lindbergh095: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

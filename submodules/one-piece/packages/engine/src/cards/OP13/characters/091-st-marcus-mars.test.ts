@@ -77,9 +77,12 @@ describe("OP13-091 St. Marcus Mars", () => {
     engine.playCard(op04GumGumRedRoc056, "north");
     const removal = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (removal?.kind !== "selectEntity") throw new Error("Expected Red Roc's removal target.");
-    expect(removal.candidates.map((candidate) => candidate.ref.id)).not.toContain(marsId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [removableId] }, "north");
+    expect(removal.candidates.map((candidate) => candidate.ref.id)).toContain(marsId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [marsId] }, "north");
 
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).toEqual(expect.arrayContaining([marsId, removableId]));
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     const blocker = engine.pendingDecision("battleBlocker", "south").steps[0];
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Mars's Blocker choice.");

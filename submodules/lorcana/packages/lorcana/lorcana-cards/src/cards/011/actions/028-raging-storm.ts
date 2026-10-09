@@ -11,7 +11,7 @@ export const ragingStorm: ActionCard = {
       artId: "set11-028",
       setCode: "set11",
       collectorNumber: "28",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const ragingStorm: ActionCard = {
   franchise: "Lilo and Stitch",
   set: "011",
   cardNumber: 28,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 8,
   inkable: false,
   externalIds: {

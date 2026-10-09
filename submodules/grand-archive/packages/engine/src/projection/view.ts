@@ -1,3 +1,4 @@
+import { describeGrandArchiveStructuredDecision } from "../commands/legal-commands.ts";
 import { projectGrandArchiveCombatView, type GrandArchiveCombatView } from "./combat.ts";
 import type {
   GrandArchiveActivationState,
@@ -71,6 +72,8 @@ export type GrandArchiveViewerStackItem = GrandArchiveStackItem extends infer It
           readonly name: string;
           readonly definitionId?: string;
           readonly printedText?: string;
+          /** Text of the executable ability/paragraphs, separate from the whole card. */
+          readonly effectText?: string;
         };
       }
     : never
@@ -92,6 +95,22 @@ export interface GrandArchiveViewerState {
   readonly combat: GrandArchiveMatchState["combat"];
   readonly combatView: GrandArchiveCombatView | null;
   readonly stack: readonly GrandArchiveViewerStackItem[];
+  /** Public resolution progress; never includes bindings, candidates, or draft answers. */
+  readonly stackResolution: {
+    readonly stackItemId: string;
+    readonly controllerId: GrandArchivePlayerId;
+    readonly decision: {
+      readonly id: string;
+      readonly playerId: GrandArchivePlayerId;
+      readonly kind: NonNullable<GrandArchiveMatchState["decision"]>["kind"];
+      readonly optionality:
+        | "optional-effect"
+        | "optional-payment"
+        | "optional-selection"
+        | "required"
+        | "unavailable";
+    } | null;
+  } | null;
   readonly players: readonly GrandArchiveViewerPlayer[];
 }
 
@@ -193,12 +212,21 @@ function projectStackItem(
         ? publicSource(item.sourceId)
         : undefined;
   const printedText = "ability" in item ? item.ability?.text : undefined;
+  const effectText =
+    "announcedCardResolutionAbilities" in item
+      ? item.announcedCardResolutionAbilities
+          .filter((paragraph) => paragraph.enabled)
+          .map((paragraph) => paragraph.ability.text)
+          .filter(Boolean)
+          .join("\n") || printedText
+      : printedText;
   return presentation || printedText
     ? {
         ...projected,
         presentation: {
           name: presentation?.name ?? item.masterySource?.name ?? item.gameSource?.name ?? "Effect",
           ...(presentation?.definitionId ? { definitionId: presentation.definitionId } : {}),
+          ...(effectText ? { effectText } : {}),
           ...(printedText || presentation?.printedText
             ? { printedText: printedText || presentation?.printedText }
             : {}),
@@ -260,6 +288,11 @@ function visibleLineagePositions(
         break;
       }
       case "object-created":
+        if (event.separatedChampionBaseId) {
+          const cards = lineages.get(event.separatedChampionBaseId);
+          const index = cards?.indexOf(event.separatedChampionBaseId) ?? -1;
+          if (cards && index >= 0) cards.splice(index, 1);
+        }
         if (event.object.zone === "inner-lineage" && event.object.hostId)
           attach(event.object.id, event.object.hostId, event.placement === "bottom");
         break;
@@ -452,6 +485,38 @@ export function projectGrandArchiveViewerState(
     decision: state.decision?.playerId === viewerId ? projectDecision(state.decision) : null,
     combat: state.combat,
     combatView: projectGrandArchiveCombatView(program, state),
+    stackResolution: state.resolution
+      ? {
+          stackItemId: state.resolution.stackItemId,
+          controllerId: state.resolution.controllerId,
+          decision: state.decision
+            ? (() => {
+                const decision = state.decision;
+                const description = describeGrandArchiveStructuredDecision(
+                  program,
+                  state,
+                  decision,
+                );
+                return {
+                  id: decision.id,
+                  playerId: decision.playerId,
+                  kind: decision.kind,
+                  optionality:
+                    decision.kind === "resolve-optional-effect" ||
+                    (decision.kind === "choose-replacement" && decision.mode === "optional")
+                      ? ("optional-effect" as const)
+                      : decision.kind === "resolve-effect-payment" && decision.mayDecline
+                        ? ("optional-payment" as const)
+                        : "minimum" in description && description.minimum === 0
+                          ? ("optional-selection" as const)
+                          : description.kind === "semantic"
+                            ? ("unavailable" as const)
+                            : ("required" as const),
+                };
+              })()
+            : null,
+        }
+      : null,
     stack: state.stack
       .filter((item) => item.kind !== "replacement-follow-up")
       .map((item) => projectStackItem(program, state, viewerId, item)),

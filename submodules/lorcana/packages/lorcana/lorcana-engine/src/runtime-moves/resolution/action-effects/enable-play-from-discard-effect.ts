@@ -48,10 +48,19 @@ export function resolveEnablePlayFromDiscardEffect(
     effect.duration ?? "this-turn",
   );
 
+  const allCards = effect.scope === "all-cards";
+  // cardId stays the ability source's real instance id even for player-wide
+  // permissions — `allCards` is the discriminator, so consumers can branch on
+  // it instead of matching a "*" sentinel (which no cardId comparison ever
+  // hits).
   addPlayFromDiscardPermission(ctx.G.playFromDiscardPermissions, cardPlayed.playerId, {
     cardId,
     expiresAtTurn,
     cardType: effect.cardType,
     controllerId: cardPlayed.playerId,
+    entersExerted: effect.entersExerted === true ? true : undefined,
+    allCards,
+    uniqueByName: allCards && effect.uniqueByName === true ? true : undefined,
+    playedNames: [],
   });
 }

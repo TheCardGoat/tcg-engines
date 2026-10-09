@@ -32,10 +32,9 @@ export function availableEddies(state: MatchState, playerId: PlayerId): number {
 }
 
 /**
- * A player-selected payment is an exact, public commitment: every submitted
- * card must be a ready Eddie or a Legend that may legally pay 1 €$.  Keep the
- * check next to the automatic resource rules so every move applies the same
- * legality, rather than trusting a particular client or payment UI.
+ * A player-selected payment commits the listed sources. Any remainder must be
+ * paid from the ready Eddie pool. Keep the check next to the automatic resource
+ * rules so every move applies the same legality, rather than trusting a client.
  */
 export function canSpendSelectedEddies(
   state: GameState,
@@ -43,18 +42,27 @@ export function canSpendSelectedEddies(
   amount: number,
   sourceIds: readonly CardInstanceId[],
 ): boolean {
-  if (amount < 0 || sourceIds.length !== amount) return false;
+  if (amount < 0 || sourceIds.length > amount) return false;
   if (new Set(sourceIds.map(String)).size !== sourceIds.length) return false;
 
   const player = state.players[playerId as string];
   if (!player) return false;
 
-  return sourceIds.every((cardId) => {
+  let selectedEddieCount = 0;
+  const selectedSourcesAreLegal = sourceIds.every((cardId) => {
     const card = state.cardIndex[cardId as string];
     if (!card || card.controllerId !== playerId || card.meta.spent) return false;
-    if (card.zone === "eddieArea") return player.eddieCardIds.includes(cardId);
+    if (card.zone === "eddieArea") {
+      if (!player.eddieCardIds.includes(cardId)) return false;
+      selectedEddieCount++;
+      return true;
+    }
     return card.zone === "legendArea" && legendCanPayEddie(card);
   });
+  if (!selectedSourcesAreLegal) return false;
+
+  const remainingEddieCount = amount - sourceIds.length;
+  return player.eddies >= selectedEddieCount + remainingEddieCount;
 }
 
 export function availableEddiesAfterAbilityCosts(
@@ -91,6 +99,17 @@ export function canPayAbilityEddieCosts(
     availableEddies(state, playerId) >=
     summary.eddiesToPay + summary.reservedLegendIds.size + summary.unboundSelectableLegendCount
   );
+}
+
+/** Total Eddie portion of an ability's activation cost after reductions. */
+export function abilityEddieCost(
+  ability: Ability,
+  state: MatchState,
+  cardId: CardInstanceId,
+  playerId: PlayerId,
+  boundTargets: Record<string, string[]> = {},
+): number {
+  return summarizeAbilityEddieCosts(ability, state, cardId, playerId, boundTargets).eddiesToPay;
 }
 
 /** Legends that must remain ready until this ability's spend costs are paid. */

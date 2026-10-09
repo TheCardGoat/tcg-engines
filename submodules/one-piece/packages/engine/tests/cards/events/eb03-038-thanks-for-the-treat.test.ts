@@ -40,6 +40,22 @@ describe("EB03-038 Thanks for the Treat.", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("an empty Character area fails the only-GERMA condition after paying costs (FAQ Q1084)", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [eb03ThanksForTheTreat038], activeDon: 2 },
+      { activeDon: 2 },
+    );
+    const before = engine.getView("south").players.south;
+    engine.playCard(eb03ThanksForTheTreat038);
+    engine.asSouth().acceptOptional();
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon).toBe(0);
+    expect(after.restedDon).toBe(2);
+    expect(after.donDeckCount).toBe(before.donDeckCount);
+    expect(after.trash.map((card) => card.cardId)).toContain("EB03-038");
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("pays the pre-colon costs but adds no DON!! when either post-colon condition fails", () => {
     const nonGermaEngine = OnePieceTestEngine.create(
       {

@@ -12,3 +12,9 @@ describe("Searing Truth — fixed damage", () => {
     targetKind: "unit",
   });
 });
+
+import { proveGuoJiaQuestAction } from "../../../testing/guo-jia-quest-action.ts";
+/** @covers pfstbz0i63-a2 */
+describe("searingTruth Guo Jia quest bonus", () => {
+  proveGuoJiaQuestAction(searingTruth, 2, "damage");
+});

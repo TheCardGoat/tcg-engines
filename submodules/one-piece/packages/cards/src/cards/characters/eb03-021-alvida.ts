@@ -40,40 +40,39 @@ export const eb03Alvida021: CharacterCard = {
         actions: [
           {
             action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "basePower",
-                  comparison: "lte",
-                  value: 4000,
+            target: { player: "any", zones: ["character"], count: { amount: 2, upTo: true } },
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-            position: "bottom",
-          },
-          {
-            action: "returnToDeck",
-            target: {
-              player: "any",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+                filters: [
+                  {
+                    filter: "basePower",
+                    comparison: "lte",
+                    value: 4000,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "baseCost",
-                  comparison: "lte",
-                  value: 3,
+              {
+                player: "any",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
+                filters: [
+                  {
+                    filter: "baseCost",
+                    comparison: "lte",
+                    value: 3,
+                  },
+                ],
+              },
+            ],
             position: "bottom",
           },
         ],

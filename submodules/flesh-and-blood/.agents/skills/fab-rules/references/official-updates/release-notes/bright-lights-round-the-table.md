@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/bright-lights-round-the-table/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Bright Lights + Round the Table"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/bright-lights-round-the-table/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 3eab8ae8b8f8cb7a78944734ae04c788fe5ecf9cbec07fefde481e86f2c978d7
 ---

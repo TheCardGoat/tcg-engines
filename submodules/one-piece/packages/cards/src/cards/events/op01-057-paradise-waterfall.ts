@@ -21,7 +21,7 @@ export const op01ParadiseWaterfall057: EventCard = {
   rarity: "UC",
   setId: "OP01",
   cost: 1,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, set up to 1 of your Characters as active. [Trigger] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.  This card has been officially errata'd.",
   effects: {

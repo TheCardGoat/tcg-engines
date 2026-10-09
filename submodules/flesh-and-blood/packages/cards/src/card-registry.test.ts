@@ -59,11 +59,15 @@ describe("generated canonical FAB card corpus", () => {
     }
   });
 
-  it("hydrates a distinct display name for every activated ability on a card", () => {
+  it("hydrates authored names for cards with several non-attack activations", () => {
     for (const card of STRUCTURED_CARDS_BY_CANONICAL_ID.values()) {
       const activated = presentationAbilities(card).filter(
-        (ability) => ability.kind === "activated",
+        (ability) =>
+          ability.kind === "activated" &&
+          ability.abilityType !== "attack" &&
+          ability.effect.type !== "attack-with",
       );
+      if (activated.length < 2) continue;
       const displayNames = activated.map((ability) => ability.displayName?.trim() ?? "");
 
       expect(displayNames.every(Boolean), card.slug).toBe(true);

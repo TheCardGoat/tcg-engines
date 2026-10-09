@@ -61,11 +61,19 @@ export const unitScenarios: Scenario[] = [
     id: "unitOctantRetail",
     group: "unit-gig-condition",
     label: "Octant (Retail) · 8+ Gig cost reduction",
-    description: "P1 holds Octant with two friendly 8+ Gigs, reducing its 7 €$ cost to 5 €$.",
+    description:
+      "Stat-overlay review: P1 has a powered Unit on the field and holds Octant with two friendly 8+ Gigs, reducing its 7 €$ cost to 5 €$.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailOctant],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailCorpoSecurity,
+              spent: false,
+              hasLag: false,
+            },
+          ],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 5,
           gigArea: [
@@ -75,7 +83,6 @@ export const unitScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
         },
@@ -1458,7 +1465,7 @@ export const unitScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d8", faceValue: 3 }],
@@ -1630,7 +1637,7 @@ export const unitScenarios: Scenario[] = [
     group: "unit-gig-stolen",
     label: "Wraith Marauders (Retail) · steal gig then ready matching-power unit",
     description:
-      "P1 has Wraith Marauders (Retail) (red, cost 4, power 4) on the field with two friendly spent units. When it attacks and steals a gig, may ready a friendly spent unit whose power equals the stolen gig's value.",
+      "P1 has Wraith Marauders (Retail) (green, cost 5, power 4) on the field with two friendly spent units (Swordwise Huscle power 3, Armored Minotaur power 9). When it attacks and steals a gig, may ready a friendly spent unit whose power equals the stolen gig's value.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -1651,7 +1658,9 @@ export const unitScenarios: Scenario[] = [
           field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
-          gigArea: [{ dieType: "d6", faceValue: 5 }],
+          // Stolen gig face 3 matches Swordwise Huscle's power so the ready
+          // trigger has exactly one legal target (Minotaur's 9 must not match).
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("unitWraithMaraudersRetail"), autoGainGig: false },
       ),
@@ -1797,6 +1806,45 @@ export const unitScenarios: Scenario[] = [
       ),
   },
   {
+    id: "unitRogueReadyEddiesAfterSteal",
+    group: "unit-gig-condition",
+    label: "Rogue Amendiares · ready Eddies after steal",
+    description:
+      "P1 has Rogue and a ready attacker, three spent Eddie cards, and a rival Gig below the attacker's power. Steal the Gig to ready two cards and change the counter from 0/3 to 2/3.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailRogueAmendiaresQueenOfTheAfterlife, hasLag: false },
+            { card: c.welcomeToNightCityRetailFieldOperator, hasLag: false },
+          ],
+          hand: [
+            c.welcomeToNightCityRetailOffdutyMalfini,
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailMoxInciters,
+          ],
+          legendArea: [],
+          eddies: 0,
+        },
+        { gigArea: [{ dieType: "d4", faceValue: 1 }], legendArea: [] },
+        { seed: scenarioSeed("unitRogueReadyEddiesAfterSteal"), autoGainGig: false },
+      );
+      const eddieIds = engine.getCardsInZone("hand", P1).map((card) => card.instanceId);
+      for (const cardId of eddieIds) {
+        const moved = engine.executeMove(
+          "manualMoveCard",
+          { args: { cardId, toZone: "eddieArea" } },
+          P1,
+        );
+        const spent = engine.executeMove("manualExertCard", { args: { cardId } }, P1);
+        if (!moved.success || !spent.success) {
+          throw new Error("Rogue ready-Eddies fixture must start with three spent Eddie cards.");
+        }
+      }
+      return engine;
+    },
+  },
+  {
     id: "unitMistyOlszewskiMenderOfBrokenSpiritsRetail",
     group: "unit-gig-condition",
     label: "Misty Olszewski · end-turn card-type reveal",
@@ -1903,7 +1951,8 @@ export const unitScenarios: Scenario[] = [
         {
           field: [
             { card: c.welcomeToNightCityRetailSaulBrightStormrider, spent: false },
-            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+            // Three spent Units so the "ready up to 3" cap is the binding limit.
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true },
             { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
             { card: c.welcomeToNightCityRetailTBugAmateurPhilosopher, spent: true },
           ],

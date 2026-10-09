@@ -68,7 +68,7 @@ export const op06Tashigi050: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

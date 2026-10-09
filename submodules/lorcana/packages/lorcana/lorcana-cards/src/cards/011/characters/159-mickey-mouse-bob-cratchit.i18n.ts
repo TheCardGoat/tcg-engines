@@ -29,7 +29,7 @@ export const mickeyMouseBobCratchitI18n: Record<Languages, I18nProperties> = {
       {
         title: "Ein schenkendes Herz",
         description:
-          "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, unter einen deiner anderen Charaktere oder Orte legen.",
+          "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, verdeckt unter einen deiner anderen Charaktere oder Orte legen.",
       },
     ],
   },
@@ -45,7 +45,7 @@ export const mickeyMouseBobCratchitI18n: Record<Languages, I18nProperties> = {
       {
         title: "Un cœur généreux",
         description:
-          "Lorsque ce personnage est banni via un défi, vous pouvez placer toutes les cartes qui étaient sous lui, sous l'un de vos autres personnages ou de vos lieux.",
+          "Lorsque ce personnage est banni via un défi, vous pouvez placer sous l'un de vos autres personnages ou de vos lieux toutes les cartes qui étaient sous ce personnage-ci, face cachée.",
       },
     ],
   },
@@ -61,7 +61,7 @@ export const mickeyMouseBobCratchitI18n: Record<Languages, I18nProperties> = {
       {
         title: "Un Cuore Generoso",
         description:
-          "Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta.",
+          "Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta, a faccia in giù.",
       },
     ],
   },

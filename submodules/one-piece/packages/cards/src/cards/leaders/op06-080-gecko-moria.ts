@@ -39,7 +39,7 @@ export const op06GeckoMoria080: LeaderCard = {
   setId: "OP06",
   power: 5000,
   life: 5,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
 
   effect:
@@ -89,7 +89,7 @@ export const op06GeckoMoria080: LeaderCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

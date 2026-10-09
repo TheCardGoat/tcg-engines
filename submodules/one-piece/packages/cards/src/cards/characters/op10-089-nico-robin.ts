@@ -23,7 +23,7 @@ export const op10NicoRobin089: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op10NicoRobin089I18n,
 };

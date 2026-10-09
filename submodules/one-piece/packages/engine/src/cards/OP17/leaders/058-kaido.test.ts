@@ -38,4 +38,27 @@ describe("OP17-058 Kaido", () => {
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("declining the first opposing attack preserves the effect for a later attack", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-058", activeDon: 1, hand: [] },
+      {
+        character: [
+          { cardId: "EB01-005", playedOnTurn: 0 },
+          { cardId: "EB01-005", playedOnTurn: 0 },
+        ],
+      },
+      { activeSeat: "north" },
+    );
+    const ids = e
+      .getView("north")
+      .players.north.characters.flatMap((c) => (c ? [c.instanceId] : []));
+    e.asNorth().attack(ids[0]!, e.leader("south"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    e.asNorth().attack(ids[1]!, e.leader("south"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [ids[1]!] }, "south");
+    expect(e.getView("south").players.north.characters[1]?.power).toBe(1000);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+  });
 });

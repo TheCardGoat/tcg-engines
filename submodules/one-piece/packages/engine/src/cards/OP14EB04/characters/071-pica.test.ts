@@ -17,6 +17,12 @@ describe("OP14-071 Pica", () => {
     expect(view.prompts).toHaveLength(0);
 
     engine.endTurn("south");
+    // Resolve Doflamingo before Pica adds a new active DON.
+    const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected ready-effect order");
+    const selected = order.options.find((option) => option.targetId === engine.leader("south"));
+    if (!selected) throw new Error("Expected the intended ready effect");
+    engine.resolveDecision("readyEffectOrder", { optionId: selected.id }, "south");
     const addDon = engine.pendingDecision("effectAddDon", "south").steps[0];
     if (addDon?.kind !== "chooseOption") throw new Error("Expected Pica's active DON!! choice.");
     expect(addDon.options.map((option) => option.id)).toEqual(["0", "1"]);
@@ -35,6 +41,12 @@ describe("OP14-071 Pica", () => {
     });
 
     engine.endTurn("south");
+    // Resolve Doflamingo before Pica adds a new active DON.
+    const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected ready-effect order");
+    const selected = order.options.find((option) => option.targetId === engine.leader("south"));
+    if (!selected) throw new Error("Expected the intended ready effect");
+    engine.resolveDecision("readyEffectOrder", { optionId: selected.id }, "south");
     engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
 
     const view = engine.getView("south");

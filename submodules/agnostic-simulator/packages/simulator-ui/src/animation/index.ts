@@ -28,6 +28,7 @@ export { AnimatedEntityListItem, AnimatedEntityNode } from "./components/Animate
 export { AnimatedZoneSlot, type AnimatedZoneSlotProps } from "./components/AnimatedZoneSlot";
 export { AnimationAnchor } from "./components/AnimationAnchor";
 export { useAnimationNode } from "./hooks/useAnimationNode";
+export { useAnimatedEntityIds } from "./hooks/useAnimatedEntityIds";
 export { simulatorBoardCenterAnimationRef } from "./overlays/overlay-utils";
 export { useAnimationRuntime, useOptionalAnimationRuntime } from "./provider/contexts";
 export {
@@ -35,3 +36,5 @@ export {
   type AnimationNodeRecord,
   type AnimationNodeRegistry,
 } from "./lib/node-registry";
+export { CINEMATIC_INVENTORY, type CinematicInventoryItem } from "./cinematic-inventory";
+export { SceneArtworkContext, type SceneArtworkProps } from "./overlays/SceneEffect";

@@ -2,6 +2,7 @@ import type { PlayerId } from "#core";
 import type { RestrictionEffect } from "@tcg/lorcana-types";
 import { normalizeLorcanaTarget } from "@tcg/lorcana-types/targeting";
 import type { CardPlayedPayload } from "../../../types";
+import { createLorcanaLogProjection } from "../../../types";
 import type { LorcanaCardMeta } from "../../../types";
 import {
   addTemporaryPlayerRestriction,
@@ -97,6 +98,16 @@ export function resolveRestrictionEffect(
   const currentTurn = ctx.framework.state.status.turn ?? 1;
   const currentPlayerId = ctx.framework.state.currentPlayer;
 
+  const restrictionKeys =
+    restriction === "cant-challenge" && effect.defenderPlayers
+      ? resolveTargetPlayerIds(
+          ctx,
+          cardPlayed,
+          effect.defenderPlayers,
+          getEffectTargetSelectionInput(effect.defenderPlayers, resolutionInput),
+        ).map((playerId) => `cant-challenge-player:${playerId}`)
+      : [restriction];
+
   for (const targetId of resolvedTargets) {
     const targetOwnerId = ctx.framework.zones.getCardOwner(targetId) as PlayerId | undefined;
     const { startsAtTurn, expiresAtTurn } = resolveTemporaryEffectWindow(
@@ -105,18 +116,50 @@ export function resolveRestrictionEffect(
       {
         currentPlayerId,
         targetOwnerId,
+        playerIds: ctx.framework.state.playerIds,
       },
     );
     const currentMeta = (ctx.cards.require(targetId).meta ?? {}) as LorcanaCardMeta;
-    ctx.cards.patchMeta(
-      targetId,
-      addTemporaryRestriction(currentMeta, restriction, expiresAtTurn, startsAtTurn, {
+    let nextMeta = currentMeta;
+    for (const restrictionKey of restrictionKeys) {
+      nextMeta = addTemporaryRestriction(nextMeta, restrictionKey, expiresAtTurn, startsAtTurn, {
         type: "restriction",
         sourceId: cardPlayed.cardId,
         activeWhileSourceInPlay: effect.linkedToSource === true,
         duration: String(effect.duration ?? ""),
         condition: effect.condition as { type: string; [key: string]: unknown } | undefined,
-      }),
-    );
+      });
+    }
+    ctx.cards.patchMeta(targetId, nextMeta);
+    if (
+      restriction === "cant-ready-at-start-of-turn" &&
+      effect.duration === "their-next-turn" &&
+      !effect.condition &&
+      !effect.linkedToSource
+    ) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.outcome.nextStartReadyBlocked",
+          { sourceId: cardPlayed.cardId, targetId },
+          { mode: "PUBLIC" },
+          "action",
+        ),
+      );
+    }
+    if (
+      restriction === "cant-sing" &&
+      effect.duration === "until-start-of-next-turn" &&
+      !effect.condition &&
+      !effect.linkedToSource
+    ) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.outcome.singingBlockedUntilNextStart",
+          { sourceId: cardPlayed.cardId, targetId, playerId: cardPlayed.playerId },
+          { mode: "PUBLIC" },
+          "action",
+        ),
+      );
+    }
   }
 }

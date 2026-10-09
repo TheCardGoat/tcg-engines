@@ -23,7 +23,7 @@ export const eb04Pacifista056: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 2000,
-  traits: ["Biological Weapon Navy Egghead"],
+  traits: ["Biological Weapon", "Egghead", "Navy"],
   attribute: "special",
   effect:
     "If you have [Jewelry Bonney] and you have 0 Life cards, this Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

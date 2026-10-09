@@ -66,7 +66,6 @@ export const sellCardMove: MoveDefinition<SellCardInput> = {
     });
     operations.game.markSoldThisTurn(playerId);
 
-    player.eddieCardIds.push(cardId as CardInstanceId);
     operations.game.gainEddies(playerId, 1);
 
     const cardDef = state.G.cardIndex[cardId] ? getDefinitionFor(state.G, cardId) : undefined;

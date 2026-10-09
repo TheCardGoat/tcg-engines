@@ -22,6 +22,7 @@ import type {
   DeckFormatResult,
   GameAdapter,
 } from "@tcg/shared/game-adapter";
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 
 import {
   narutoCreateServerEngine,
@@ -163,6 +164,7 @@ const DECK_ISSUE_MESSAGES: Record<DeckIssue, string> = {
  * its trusted instance map before it creates engine state.
  */
 export const narutoServerAdapter: GameAdapter = {
+  proposalPolicy: hostedUndoProposalPolicy,
   slug: "naruto",
   deckInterchange: narutoDeckInterchangeAdapter,
 

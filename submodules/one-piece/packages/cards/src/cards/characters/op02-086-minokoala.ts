@@ -31,7 +31,7 @@ export const op02Minokoala086: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Impel Down Jailer Beast"],
+  traits: ["Impel Down", "Jailer Beast"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] If your Leader has the [Impel Down] type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -44,7 +44,7 @@ export const op02Minokoala086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

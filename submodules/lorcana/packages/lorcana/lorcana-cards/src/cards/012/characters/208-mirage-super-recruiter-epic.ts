@@ -23,7 +23,7 @@ export const mirageSuperRecruiterEpic: CharacterCard = {
   franchise: "Incredibles",
   set: "012",
   cardNumber: 208,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 3,

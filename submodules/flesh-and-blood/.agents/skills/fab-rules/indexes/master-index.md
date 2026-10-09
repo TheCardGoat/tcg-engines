@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://rules.fabtcg.com/en/cr/"
+  relation: "current_index"
+---
+
 # Flesh and Blood Rules Master Index
 
 Canonical source: official Flesh and Blood Comprehensive Rules, scraped from

@@ -47,7 +47,7 @@ export const op07MonkeyDLuffy109: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Straw Hat Crew The Four Emperors Egghead"],
+  traits: ["The Four Emperors", "Egghead", "Straw Hat Crew"],
   attribute: "strike",
 
   effect:
@@ -56,6 +56,14 @@ export const op07MonkeyDLuffy109: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        postCostConditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 2,
+          },
+        ],
         costs: [
           {
             cost: "trashThisCard",
@@ -78,12 +86,6 @@ export const op07MonkeyDLuffy109: CharacterCard = {
                   value: 4,
                 },
               ],
-            },
-            condition: {
-              condition: "lifeCount",
-              player: "self",
-              comparison: "lte",
-              value: 2,
             },
           },
           {

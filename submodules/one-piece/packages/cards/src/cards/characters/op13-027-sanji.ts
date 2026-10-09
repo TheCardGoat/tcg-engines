@@ -30,7 +30,7 @@ export const op13Sanji027: CharacterCard = {
   setId: "OP13",
   cost: 5,
   power: 7000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[On Play] Set up to 2 of your DON!! cards as active.\n[End of Your Turn] If your Leader has the "FILM" or "Straw Hat Crew" type, set up to 1 of your DON!! cards as active.',
@@ -62,12 +62,12 @@ export const op13Sanji027: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "FILM",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

@@ -23,7 +23,7 @@ export const op12Vergo064: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy", "Donquixote Pirates"],
   attribute: "strike",
   i18n: op12Vergo064I18n,
 };

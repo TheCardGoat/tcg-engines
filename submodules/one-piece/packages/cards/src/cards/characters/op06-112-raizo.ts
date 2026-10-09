@@ -24,7 +24,7 @@ export const op06Raizo112: CharacterCard = {
   power: 4000,
   counter: 1000,
   trigger: "If your opponent has 3 or less Life cards, play this card.",
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[When Attacking] You may trash 1 card from your hand: Rest up to 1 of your opponent's DON!! cards.",

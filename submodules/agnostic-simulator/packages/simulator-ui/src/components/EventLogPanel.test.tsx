@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { act } from "react";
+import { frame } from "motion";
 import { createRoot, hydrateRoot, type Root } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
@@ -297,6 +298,36 @@ describe("EventLogPanel", () => {
     );
     expect(document.body.querySelector('[aria-label="Rival, move"]')).toBeInstanceOf(HTMLElement);
     expect(document.body.querySelectorAll(`.${classes.phaseHeader}`)).toHaveLength(3);
+  });
+
+  test("shows game turn names and counts logs alongside chat", () => {
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          entries={[entry("one", "p1", "First action.", { turn: 3, phase: "main" })]}
+          chatMessages={[
+            {
+              id: "chat-1",
+              senderSide: "player",
+              senderLabel: "V",
+              text: "Hi",
+              timestamp: "2026-07-07T00:00:01.000Z",
+            },
+          ]}
+          turnPlayerLabel={(turn) => (turn === 3 ? "V" : undefined)}
+          countUnit="log"
+        />,
+      ),
+    );
+
+    const turnHeader = document.body.querySelector(`.${classes.turnHeader}`);
+    expect(turnHeader?.textContent).toContain("Turn 3");
+    expect(turnHeader?.textContent).toContain("V");
+    expect(turnHeader?.textContent).toContain("1 log, 1 message");
+    expect(turnHeader?.textContent).not.toContain("main");
   });
 
   test("omits phase metadata when the projection has no meaningful phase", () => {
@@ -844,7 +875,31 @@ describe("EventLogPanel", () => {
       );
     });
 
-    expect(scroller.scrollTop).toBe(240);
+    await vi.waitFor(() => expect(scroller.scrollTop).toBe(240));
+  });
+
+  test("preserves a reader's position when they scroll before a pending append settles", async () => {
+    const first = entry("first", "p1", "First action.");
+    renderPanel([first]);
+    const scroller = document.body.querySelector('[role="log"]') as HTMLDivElement;
+    Object.defineProperties(scroller, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 500 },
+      scrollTop: { configurable: true, value: 400, writable: true },
+    });
+    await act(async () => {
+      await new Promise<void>((resolve) => frame.postRender(() => resolve()));
+    });
+    act(() => {
+      activeRoot?.render(<EventLogPanel entries={[first, entry("second", "p2", "Response.")]} />);
+    });
+    scroller.scrollTop = 24;
+    scroller.dispatchEvent(new Event("scroll", { bubbles: true }));
+    await act(async () => {
+      await new Promise<void>((resolve) => frame.postRender(() => resolve()));
+    });
+    expect(scroller.scrollTop).toBe(24);
+    expect(scroller.textContent).toContain("Response.");
   });
 
   test("does not scroll away when a reader expands a section in an always-scrolling log", async () => {
@@ -870,6 +925,9 @@ describe("EventLogPanel", () => {
       ),
     );
 
+    await act(async () => {
+      await new Promise<void>((resolve) => frame.postRender(() => resolve()));
+    });
     const scroller = document.body.querySelector('[role="log"]') as HTMLDivElement;
     Object.defineProperties(scroller, {
       clientHeight: { configurable: true, value: 100 },

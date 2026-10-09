@@ -1,3 +1,6 @@
+import { resolveStartOfGameStage } from "./setup-effects.ts";
+import { withEffectTriggerEvent } from "../effects/trigger-context.ts";
+import { withReplacementProcess } from "../effects/replacement-process.ts";
 import { emitEvent, emitLog } from "../shared.ts";
 import type { EngineCommand, MatchSeat, MatchState } from "../types.ts";
 import { findPendingPrompt } from "../state.ts";
@@ -24,6 +27,30 @@ export function handlePlayerPromptResolution(
   }
 
   prompt.status = "resolved";
+
+  const accepted = withReplacementProcess(state, prompt.replacementProcess, () =>
+    withEffectTriggerEvent(state, prompt.effectTriggerEvent, () => {
+      if (
+        prompt.resolutionContext?.intent === "startOfGameStage" ||
+        prompt.resolutionContext?.intent === "startOfGameSearch"
+      ) {
+        return resolveStartOfGameStage(state, prompt, command);
+      }
+      if (resolveCharacterReplacementPrompt(state, prompt, command)) {
+        return true;
+      }
+
+      if (resolveEffectChoicePrompt(state, prompt, command)) {
+        return true;
+      }
+
+      return resolveBattlePrompt(state, command);
+    }),
+  );
+  if (!accepted) {
+    prompt.status = "pending";
+    return false;
+  }
   emitEvent(state, "promptResolved", command.seat, {
     sourceCardId: prompt.sourceCardId,
     sourceInstanceId: prompt.sourceInstanceId,
@@ -33,14 +60,5 @@ export function handlePlayerPromptResolution(
       promptId: prompt.id,
     },
   });
-
-  if (resolveCharacterReplacementPrompt(state, prompt, command)) {
-    return true;
-  }
-
-  if (resolveEffectChoicePrompt(state, prompt, command)) {
-    return true;
-  }
-
-  return resolveBattlePrompt(state, command);
+  return true;
 }

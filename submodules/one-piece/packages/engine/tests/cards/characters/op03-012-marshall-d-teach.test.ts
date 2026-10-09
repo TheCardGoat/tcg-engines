@@ -33,7 +33,7 @@ describe("OP03-012 Marshall.D.Teach", () => {
           eb01MountainGod018,
         ],
         hand: [op02Seaquake021],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, "EB01-025"],
       },
       { character: [op03Fossa010] },
       { firstPlayer: "north", activeSeat: "south" },

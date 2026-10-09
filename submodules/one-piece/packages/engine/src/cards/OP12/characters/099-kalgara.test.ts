@@ -42,4 +42,22 @@ describe("OP12-099 Kalgara", () => {
     );
     expect(engine.getView("south").players.south.deckCount).toBe(deckAfterKalgara);
   });
+  test("FAQ: two Kalgara respond to opposing Life removal but draw only one card", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [op12Kalgara099, op12Kalgara099, { card: eb01MountainGod018, playedOnTurn: 0 }],
+        deck: [eb01Doma005, eb01Doma005, eb01Doma005],
+      },
+      { life: [eb01Doma005, eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    e.asSouth().attack(eb01MountainGod018, e.leader("north"));
+    const order = e.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption")
+      throw new Error("Expected ordering of the two fulfilled Kalgara effects");
+    e.asSouth().chooseOption("readyEffectOrder", order.options[0]!.id);
+    expect(e.getView("south").players.south.hand).toHaveLength(1);
+    expect(e.getView("south").players.south.deckCount).toBe(2);
+    expect(e.getView("south").players.north.lifeCount).toBe(1);
+  });
 });

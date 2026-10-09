@@ -23,7 +23,7 @@ export const woodyWaitingForAFriendEpic: CharacterCard = {
   franchise: "Toy Story",
   set: "012",
   cardNumber: 205,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 2,

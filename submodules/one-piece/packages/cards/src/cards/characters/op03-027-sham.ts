@@ -23,7 +23,7 @@ export const op03Sham027: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If your Leader has the {East Blue} type, rest up to 1 of your opponent's Characters with a cost of 2 or less and, if you don't have [Buchi], play up to 1 [Buchi] from your hand.",
@@ -35,7 +35,7 @@ export const op03Sham027: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

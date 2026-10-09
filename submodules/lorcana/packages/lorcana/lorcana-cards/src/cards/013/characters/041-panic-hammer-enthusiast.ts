@@ -33,6 +33,7 @@ export const panicHammerEnthusiast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c40e1577de48469abc89a34509709824",
+    tcgPlayer: "704565",
   },
   text: "Rush",
   classifications: ["Storyborn", "Ally"],

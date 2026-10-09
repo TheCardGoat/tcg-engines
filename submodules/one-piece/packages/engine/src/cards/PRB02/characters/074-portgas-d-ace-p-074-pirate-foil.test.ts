@@ -5,6 +5,30 @@ import { prb02PortgasDAceP074PirateFoil074 } from "../../../../../cards/src/card
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-074 Portgas.D.Ace - P-074 (Pirate Foil)", () => {
+  test("places the whole looked group at the top in its selected physical order", () => {
+    const engine = OnePieceTestEngine.create({
+      character: ["P-074"],
+      deck: [
+        eb01Doma005,
+        eb01Fourtricks025,
+        eb01MountainGod018,
+        eb01Doma005,
+        eb01Fourtricks025,
+        eb01MountainGod018,
+      ],
+    });
+    const source = engine.findCardInZone("south", "character", "P-074");
+    const deck = [...engine.getState().players.south.deck];
+    engine.asSouth().activateMain(source);
+    engine.asSouth().acceptOptional();
+    const order = [deck[2]!, deck[4]!, deck[0]!, deck[3]!, deck[1]!];
+    engine.resolveDecision("effectRearrangeDeckOrder", { selectedIds: order }, "south");
+    engine.resolveDecision("effectRearrangeDeckPosition", { optionId: "top" }, "south");
+    expect(engine.getState().players.south.deck).toEqual([...order, deck[5]!]);
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(source);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("returns its physical card to hand, then orders the looked cards at the chosen deck end", () => {
     const engine = OnePieceTestEngine.create({
       character: [prb02PortgasDAceP074PirateFoil074],

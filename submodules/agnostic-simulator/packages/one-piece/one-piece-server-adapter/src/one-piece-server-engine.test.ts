@@ -1,5 +1,7 @@
+import { getCard } from "@tcg/op-cards";
+import type { Action } from "@tcg/op-types";
 import { describe, expect, it, vi } from "vite-plus/test";
-import { createMatch, createSt01MirrorPracticeConfig } from "@tcg/op-engine";
+import { OnePieceTestEngine, createMatch, createSt01MirrorPracticeConfig } from "@tcg/op-engine";
 import type { EngineAnimation, MatchState, PromptState } from "@tcg/op-engine";
 import type { DispatchContext, DispatchResult } from "@tcg/shared/game-engine";
 import { OnePieceServerEngine, onePiecePacketAnimation } from "./one-piece-server-engine.js";
@@ -34,6 +36,63 @@ describe("onePiecePacketAnimation", () => {
 });
 
 describe("OnePieceServerEngine", () => {
+  it.each(["submission", "automation"] as const)(
+    "resolves loop counts through %s transport",
+    (mode) => {
+      const card = getCard("EB01-005");
+      const original = card.effects;
+      const rest: Action = {
+        action: "rest",
+        target: { player: "self", self: true, zones: ["character"], count: { amount: 1 } },
+      };
+      const active: Action = {
+        action: "setActive",
+        target: { player: "self", self: true, zones: ["character"], count: { amount: 1 } },
+      };
+      try {
+        card.effects = {
+          effects: [
+            { trigger: "activateMain", actions: [rest] },
+            { trigger: "whenBecomesRested", optional: true, actions: [active, rest] },
+          ],
+        };
+        const fixture = OnePieceTestEngine.create({ character: ["EB01-005"] });
+        fixture.activateEffect(
+          fixture.findCardInZone("south", "character", "EB01-005"),
+          "activateMain",
+          "south",
+        );
+        fixture.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+        const prompt = fixture.pendingDecision("loopIterations", "south");
+        const engine = new OnePieceServerEngine(fixture.getState(), {
+          player1: "south",
+          player2: "north",
+        });
+        const result =
+          mode === "submission"
+            ? engine.dispatch(
+                "resolvePrompt",
+                "player1",
+                { promptId: prompt.id, iterations: 7 },
+                context,
+              )
+            : engine.takeAutomatedAction({ strategyId: "value-ranked" }, context).finalResult;
+        expect(result.success).toBe(true);
+        expect(engine.state.promptQueue.filter((entry) => entry.status === "pending")).toHaveLength(
+          0,
+        );
+        expect(
+          engine.state.logHistory.some(
+            (log) => log.message === `The loop repeats ${mode === "submission" ? 7 : 0} times.`,
+          ),
+        ).toBe(true);
+        expect(engine.state.status).toBe("active");
+      } finally {
+        card.effects = original;
+      }
+    },
+  );
+
   it("drives setup through the production automated-action surface", () => {
     const engine = new OnePieceServerEngine(
       createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south", seed: "bot-setup" })),

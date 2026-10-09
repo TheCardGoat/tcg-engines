@@ -25,7 +25,7 @@ export const eb03SSnake059: CharacterCard = {
   counter: 1000,
   trigger:
     "Up to 1 of your opponent's Characters with a cost of 6 or less other than [Monkey.D.Luffy] cannot attack during this turn.",
-  traits: ["Egghead Seraphim"],
+  traits: ["Seraphim", "Egghead"],
   attribute: "special",
   effect:
     "[On Play] If your Leader has the {Egghead} type and you have 2 or more Life cards, add up to 1 Character card with a [Trigger] from your hand to the top of your Life cards face-up.",
@@ -41,7 +41,7 @@ export const eb03SSnake059: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Egghead",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "lifeCount",

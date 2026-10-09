@@ -23,7 +23,7 @@ export const op01KurozumiOrochi098: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Land of Wano Kurozumi Clan"],
+  traits: ["Land of Wano", "Kurozumi Clan"],
   attribute: "wisdom",
   effect:
     "[On Play] Reveal up to 1 [Artificial Devil Fruit SMILE] from your deck and add it to your hand. Then, shuffle your deck.  This card has been officially errata'd.",

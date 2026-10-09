@@ -29,9 +29,13 @@ export const henryJWaternooseIiiChiefExecutiveOfficer: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_ee36794d1eaf4eef92563effd73797e6",
+    tcgPlayer: "704661",
+  },
   text: [
     {
-      title: "The Bottom Line",
+      title: "THE BOTTOM LINE",
       description:
         "While you have more cards in your inkwell than each opposing player, this character gets +2 {L} and gains Ward.",
     },

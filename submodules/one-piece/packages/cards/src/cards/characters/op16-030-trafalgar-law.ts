@@ -23,7 +23,7 @@ export const op16TrafalgarLaw030: CharacterCard = {
   setId: "OP16",
   cost: 8,
   power: 9000,
-  traits: ["Heart Pirates Supernovas"],
+  traits: ["Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase.\n\n[End of Your Turn] Set all of your green Characters with a cost of 5 or less as active.",

@@ -13,7 +13,8 @@ import { allCards, hasCard, legacyPrintingIdAliases } from "../src/index.ts";
 const SUFFIXED_NAME =
   /\((?:Reprint|Pirate Foil|SP|Jolly Roger Foil|Parallel|Alternate Art|Alt Art|SPR|Manga Rare|Wanted Poster|Full Art|Silver|Gold)\)$| - [A-Z0-9]+-[0-9]+/;
 
-function cardNumber(printing: OPCard["printings"][number]): string {
+function cardNumber(printing: OPCard["printings"][number]): string | null {
+  if (!printing.collectorNumber) return null;
   return `${printing.setCode}-${printing.collectorNumber}`;
 }
 
@@ -34,6 +35,7 @@ describe("printings integrity", () => {
     for (const card of allCards) {
       for (const printing of card.printings) {
         const number = cardNumber(printing);
+        if (number === null) continue;
         if (!canonicals.has(number)) canonicals.set(number, new Set());
         canonicals.get(number)!.add(card.canonicalId);
       }
@@ -52,10 +54,14 @@ describe("printings integrity", () => {
     }
   });
 
-  test("every definition prints its canonical number on every printing", () => {
+  test("numbered definitions print their canonical number; unnumbered event prints stay unnumbered", () => {
     for (const card of allCards) {
-      const canonical = /^([A-Z]+\d*)-(.+)$/.exec(card.canonicalId);
-      if (!canonical) continue;
+      const canonical = /^([A-Z]+\d*)-(\d{3})$/.exec(card.canonicalId);
+      if (!canonical) {
+        expect(card.canonicalId).toMatch(/^EVENT-/);
+        for (const printing of card.printings) expect(printing.collectorNumber).toBe("");
+        continue;
+      }
       const expected = `${canonical[1]}-${canonical[2]}`;
       for (const printing of card.printings) {
         expect(

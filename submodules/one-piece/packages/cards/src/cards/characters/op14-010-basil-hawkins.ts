@@ -23,7 +23,7 @@ export const op14eb04BasilHawkins010: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Hawkins Pirates Supernovas"],
+  traits: ["Supernovas", "Hawkins Pirates"],
   attribute: "slash",
   effect:
     "[On K.O.] Look at 5 cards from the top of your deck; play up to 1 {Supernovas} type Character card with 2000 power or less other than [Basil Hawkins]. Then, place the rest at the bottom of your deck in any order.",
@@ -56,7 +56,7 @@ export const op14eb04BasilHawkins010: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -160,6 +160,10 @@ function summarizeMoveLog(log: MoveLog): string {
       return `${log.fromPhase}->${log.toPhase}`;
     case "gainGig":
       return `${log.dieType}=${log.faceValue}`;
+    case "gigValueChanged":
+      return `${log.dieType} ${log.previousValue}->${log.newValue}`;
+    case "gigsSwapped":
+      return `${log.friendlyDieType}=${log.friendlyValue} <-> ${log.rivalDieType}=${log.rivalValue}`;
     case "mulligan":
       return `${log.drawnCount} drawn`;
     case "keepHand":
@@ -226,6 +230,8 @@ function summarizeEvent(event: GameEvent): string {
       return `${String(event.dieId)} stolen`;
     case "gigValueChanged":
       return `${String(event.dieId)} ${event.previousValue}->${event.newValue}`;
+    case "gigsSwapped":
+      return `${String(event.dieIds[0])} <-> ${String(event.dieIds[1])}`;
     case "attackDeclared":
       return `${String(event.attackerId)} ${event.attackKind}`;
     case "attackResolved":
@@ -249,6 +255,10 @@ function summarizeEvent(event: GameEvent): string {
       return `${String(event.sourceCardId)} -> ${event.targets.length} target${event.targets.length === 1 ? "" : "s"}`;
     case "deckShuffled":
       return "deck";
+    case "legendsShuffled":
+      return "Legends";
+    case "deckCardsPlaced":
+      return "cards placed on deck";
     case "statModified":
       return `${String(event.cardId)} ${event.stat} ${event.modifier}`;
     case "ruleGranted":
@@ -259,5 +269,9 @@ function summarizeEvent(event: GameEvent): string {
       return `${event.cardIds.length} revealed`;
     case "actionLog":
       return event.messageKey;
+    default: {
+      const unhandled: never = event;
+      return unhandled;
+    }
   }
 }

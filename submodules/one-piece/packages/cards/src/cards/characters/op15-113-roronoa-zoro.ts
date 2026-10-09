@@ -32,7 +32,7 @@ export const op15RoronoaZoro113: CharacterCard = {
   setId: "OP15",
   cost: 4,
   power: 6000,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[On Play] You may trash 1 card from your hand: Add up to 1 card from the top of your deck to the top of your Life cards.",

@@ -27,6 +27,7 @@ export const youBrokeMySmolder: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5c1ae860c25940a7aac7c8633d58da21",
+    tcgPlayer: "702664",
   },
   text: "Discard your hand. Draw 2 cards.",
   abilities: [

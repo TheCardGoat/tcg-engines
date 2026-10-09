@@ -9,7 +9,6 @@ import type {
 } from "@tcg/flesh-and-blood-engine/simulator";
 import { SimulatorRouteStatus } from "@tcg/simulator-ui";
 import { useMatchSession } from "../../simulator/MatchSessionProvider";
-import { playUrl } from "../../runtime/gameRuntimeApi";
 import { FabPregameSideboard, type FabPregameParticipant } from "./FabPregameSideboard";
 import { FabFirstPlayerChoice } from "./FabFirstPlayerChoice";
 
@@ -47,7 +46,7 @@ export function FabPreparationPage({
 }: {
   session: Extract<MatchSession, { phase: "preparation" }>;
 }) {
-  const { refresh, error: recoveryError } = useMatchSession();
+  const { submitPreparation, error: recoveryError } = useMatchSession();
   const [error, setError] = useState<string | null>(null);
   const pregame = parsePregameProjection(session.preparation);
   if (!pregame)
@@ -57,25 +56,18 @@ export function FabPreparationPage({
         message="The server returned an invalid preparation view."
       />
     );
-  const submit = async (suffix: string, body: object) => {
+  const submit = async (
+    _suffix: string,
+    body: { gameId?: string; firstPlayerId: string } | { gameId?: string; selection: unknown },
+  ) => {
     setError(null);
     try {
-      const response = await fetch(
-        playUrl(
-          "flesh-and-blood",
-          `/matches/${encodeURIComponent(session.match.matchId)}/pregame${suffix}`,
-        ),
-        {
-          method: "PUT",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        },
+      const result = await submitPreparation(
+        "firstPlayerId" in body
+          ? { type: "choose_preparation_first_player", firstPlayerId: body.firstPlayerId }
+          : { type: "confirm_preparation", selection: body.selection },
       );
-      if (!response.ok)
-        throw new Error("Could not save preparation. Synchronize the match and try again.");
-      // Command replies are not a second source of lifecycle truth.
-      await refresh();
+      if (result.status === "rejected") throw new Error(result.message);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Could not save preparation.");
       throw cause;

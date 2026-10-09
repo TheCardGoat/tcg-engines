@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vite-plus/test";
 import { mergeDuplicateCards, structuredCards } from "@tcg/cyberpunk-cards";
 import { cyberpunkServerAdapter } from "./adapter";
 import { listCyberpunkDeckPresets } from "./deck-presets";
@@ -24,7 +24,7 @@ describe("listCyberpunkDeckPresets", () => {
         [...preset.legends, ...preset.mainDeck].every((entry) => catalogIds.has(entry.cardId)),
       ).toBe(true);
 
-      const validation = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+      const validation = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
         ...preset.legends,
         ...preset.mainDeck,
       ]);

@@ -47,7 +47,7 @@ export const op04Tom061: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

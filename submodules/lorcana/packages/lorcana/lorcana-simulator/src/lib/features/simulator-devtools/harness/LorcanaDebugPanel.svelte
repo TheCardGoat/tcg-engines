@@ -1,5 +1,5 @@
 <script lang="ts">
-  import JSONTree from "svelte-json-tree";
+  import JSONTree from "./DebugJsonTree.svelte";
   import * as Sidebar from "$lib/design-system/primitives/sidebar";
   import { LORCANA_SIMULATOR_FIXTURE_MANIFEST } from "@/features/simulator-devtools/fixtures";
   import type { FixtureManifestEntry } from "@/features/simulator-devtools/fixtures/registry";
@@ -364,10 +364,7 @@
     }
 
     for (const [cardId, positionValue] of Object.entries(cardIndex)) {
-      if (!(cardId in cardMeta)) {
-        anomalies.push(`Missing cardMeta entry for ${cardId}`);
-      }
-
+      // Metadata is optional and is cleared when a card leaves play.
       const position = asRecord(positionValue);
       const zoneKey = asString(position.zoneKey);
       const zoneList = Array.isArray(zoneCards[zoneKey]) ? zoneCards[zoneKey] : [];

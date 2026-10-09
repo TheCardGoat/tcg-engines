@@ -31,12 +31,13 @@ export const maximusRelentlessStallion: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7c8493ace81246c7b30a1e0536eea674",
+    tcgPlayer: "702700",
   },
   text: [
     {
       title: "NO ESCAPE",
       description:
-        "If you discarded a card this turn, this character gains Challenger +2 and can challenge ready characters this turn. (They get +2 strength while challenging.)",
+        "If you discarded a card this turn, this character gains Challenger +2 and can challenge ready characters this turn. (They get +2 {S} while challenging.)",
     },
   ],
   classifications: ["Storyborn", "Ally"],

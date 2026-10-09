@@ -102,6 +102,10 @@ export const briarsSpindle: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                   },
                   {
                     kind: "subtype",
+                    oneOf: ["CHESSMAN"],
+                  },
+                  {
+                    kind: "subtype",
                     oneOf: ["KING"],
                   },
                 ],

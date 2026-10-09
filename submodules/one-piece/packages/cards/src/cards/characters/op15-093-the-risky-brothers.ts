@@ -37,7 +37,7 @@ export const op15TheRiskyBrothers093: CharacterCard = {
             cost: "trashThisCard",
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "zoneCount",
             player: "self",
@@ -74,6 +74,7 @@ export const op15TheRiskyBrothers093: CharacterCard = {
             },
             value: "slash",
             duration: "thisTurn",
+            previousActionTargets: true,
           },
         ],
       },

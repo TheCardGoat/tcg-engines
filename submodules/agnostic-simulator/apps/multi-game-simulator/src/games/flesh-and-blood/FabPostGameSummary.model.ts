@@ -126,6 +126,7 @@ export interface FabMatchSummary {
 }
 
 export interface FabPostGameSummaryModel {
+  readonly kind: "analytics";
   readonly combatValue?: FabCombatValueReport | null;
   readonly viewer: FabSummaryParticipant;
   readonly opponent: FabSummaryParticipant;
@@ -144,6 +145,78 @@ export interface FabPostGameSummaryModel {
   readonly hands: readonly FabHandCycleSummary[];
   readonly match: FabMatchSummary;
   readonly hasMockData: boolean;
+}
+
+/** Terminal facts available before (or without) persisted analytics. */
+export interface FabPostGameResultModel {
+  readonly kind: "result";
+  readonly viewer: FabSummaryParticipant;
+  readonly opponent: FabSummaryParticipant;
+  readonly outcome: "victory" | "defeat" | "draw";
+  readonly outcomeTitle: string;
+  readonly outcomeDetail: string;
+  readonly reason: FabSummaryValue<string>;
+  readonly turnNumber: FabSummaryValue<number>;
+  readonly formatLabel: FabSummaryValue<string>;
+  readonly spectator: boolean;
+}
+
+export function createFabPostGameResult({
+  presentation,
+  viewerId,
+  participantLabel,
+  participantSubscriptionTier,
+  sessionFormatLabel,
+  spectator,
+}: Omit<CreateFabPostGameSummaryOptions, "session" | "backend"> & {
+  readonly spectator: boolean;
+}): FabPostGameResultModel {
+  if (!presentation.result) {
+    throw new Error("A post-game result requires a terminal Flesh and Blood result.");
+  }
+  const opponentId = presentation.players.find((playerId) => playerId !== viewerId) ?? viewerId;
+  const participant = (playerId: string): FabSummaryParticipant => ({
+    id: playerId,
+    label: participantLabel(playerId),
+    heroName: heroNameFor(presentation, playerId),
+    ...(participantSubscriptionTier?.(playerId)
+      ? { subscriptionTier: participantSubscriptionTier(playerId) }
+      : {}),
+    life: presentation.life[playerId] ?? 0,
+    result: resultFor(presentation, playerId),
+  });
+  const outcome =
+    presentation.result.kind === "draw"
+      ? "draw"
+      : presentation.result.winnerId === viewerId
+        ? "victory"
+        : "defeat";
+  return {
+    kind: "result",
+    viewer: participant(viewerId),
+    opponent: participant(opponentId),
+    outcome,
+    outcomeTitle: spectator
+      ? presentation.result.kind === "draw"
+        ? "Draw"
+        : `${participantLabel(presentation.result.winnerId)} wins`
+      : outcome === "victory"
+        ? "Victory"
+        : outcome === "defeat"
+          ? "Defeat"
+          : "Draw",
+    outcomeDetail:
+      presentation.result.kind === "draw"
+        ? "The game ended without a winner"
+        : `${heroNameFor(presentation, presentation.result.winnerId)} defeated ${heroNameFor(
+            presentation,
+            presentation.result.loserId,
+          )}`,
+    reason: { value: presentation.result.reason, source: "runtime" },
+    turnNumber: { value: presentation.turnNumber, source: "runtime" },
+    formatLabel: { value: sessionFormatLabel, source: "session" },
+    spectator,
+  };
 }
 
 function analyticsComparison(
@@ -578,6 +651,7 @@ export function createFabPostGameSummary({
     : ({ value: sessionFormatLabel, source: "session" } as const);
 
   return {
+    kind: "analytics",
     viewer,
     opponent,
     outcome,

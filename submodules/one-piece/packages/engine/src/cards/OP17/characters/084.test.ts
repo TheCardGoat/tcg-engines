@@ -1,69 +1,63 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Tony Tony.Chopper (OP17-084) cost=1 power=2000 counter=2000
 describe("OP17-084 Tony Tony.Chopper", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-084"], activeDon: 3 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("without a cost-twelve Character, On Play does not bypass an opposing Blocker", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP04-020",
+        hand: ["OP17-084"],
+        character: [{ cardId: "EB01-018", playedOnTurn: 0 }],
+        activeDon: 1,
+      },
+      { leaderCardId: "ST01-001", character: ["ST01-006"], hand: [] },
     );
-
-    engine.playCard("OP17-084");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-084",
+    e.asSouth().play("OP17-084");
+    expect(e.getView("south").prompts).toHaveLength(0);
+    const life = e.getView("south").players.north.lifeCount;
+    const blocker = e.findCardInZone("north", "character", "ST01-006");
+    e.asSouth().attack("EB01-018", e.leader("north"));
+    e.resolveDecision("battleBlocker", { selectedIds: [blocker] }, "north");
+    expect(e.getView("south").players.north.lifeCount).toBe(life);
+    expect(e.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(
+      blocker,
     );
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-084", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("granted Unblockable bypasses a real opposing Blocker and expires next turn", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP04-020",
+        deck: ["ST06-008", "ST06-004"],
+        hand: ["OP17-084"],
+        character: [{ cardId: "EB01-018", playedOnTurn: 0 }],
+        activeDon: 1,
+      },
+      {
+        leaderCardId: "OP05-001",
+        character: ["OP17-089", "ST01-006"],
+        hand: [],
+        life: ["ST01-004", "ST01-005"],
+        deck: ["ST01-004", "ST01-005"],
+      },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-084",
+    const attacker = e.findCardInZone("south", "character", "EB01-018");
+    e.asSouth().play("OP17-084");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [attacker] }, "south");
+    const life = e.getView("south").players.north.lifeCount;
+    e.asSouth().attack(attacker, e.leader("north"));
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 1);
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.cardId === "ST01-006")?.rested,
+    ).toBe(false);
+    e.endTurn("south");
+    e.endTurn("north");
+    const blocker = e.findCardInZone("north", "character", "ST01-006");
+    e.asSouth().attack(attacker, e.leader("north"));
+    e.resolveDecision("battleBlocker", { selectedIds: [blocker] }, "north");
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 1);
+    expect(e.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(
+      blocker,
     );
-    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -1,7 +1,10 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 
-import { isSimulatorAudioDebugEnabled, simulatorAudioDebug } from "./debug";
+import {
+  isSimulatorAudioDebugEnabled,
+  simulatorAudioDebug,
+} from "@tcg/simulator-presentation/audio/debug";
 
 describe("simulator audio diagnostics", () => {
   afterEach(() => {

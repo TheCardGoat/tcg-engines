@@ -36,6 +36,34 @@ function record(overrides: Partial<FabLiveEngineLogRecord["log"]> = {}, version 
 }
 
 describe("appendFabEngineLogRecords", () => {
+  it("removes reverted actions on undo and ignores their late duplicate deliveries", () => {
+    const before = record({ commandId: "before" }, 1);
+    const activation = record({ commandId: "activate" }, 2);
+    const decline = record({ commandId: "decline" }, 3);
+    const undo = record(
+      {
+        commandId: "undo",
+        moveType: "undo",
+        restoredCheckpointStateID: 1,
+        entries: [
+          {
+            entryId: "undo:1",
+            message: {
+              key: "flesh-and-blood.undo",
+              category: "action",
+              values: { actorId: VIEWER },
+            },
+          },
+        ],
+      },
+      4,
+    );
+    const restored = appendFabEngineLogRecords([], [before, activation, decline, undo]);
+    expect(restored.map((r) => r.log.commandId)).toEqual(["before", "undo"]);
+    expect(
+      appendFabEngineLogRecords(restored, [activation, decline]).map((r) => r.log.commandId),
+    ).toEqual(["before", "undo"]);
+  });
   it("accepts the raw player narrative shape used by bootstrap history", () => {
     const wrapped = record() as FabLiveEngineLogRecord;
     const merged = appendFabEngineLogRecords([], [wrapped.log]);

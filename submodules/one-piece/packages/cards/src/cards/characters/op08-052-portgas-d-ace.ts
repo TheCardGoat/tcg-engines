@@ -50,34 +50,57 @@ export const op08PortgasDAce052: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "search",
-            lookCount: 1,
-            source: {
-              player: "self",
-              zone: "deck",
+            action: "revealTopDeckCard",
+            player: "self",
+            conditional: {
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Whitebeard Pirates",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: {
+                    player: "self",
+                    zone: "deck",
+                  },
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Whitebeard Pirates",
+                      match: "includes",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 4,
+                    },
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                  ],
+                  topOnly: true,
+                },
+              ],
             },
-            revealCount: {
-              amount: 1,
-              upTo: true,
-            },
-            revealFilters: [
-              {
-                filter: "trait",
-                value: "Whitebeard Pirates",
-                match: "includes",
-              },
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-            revealDestination: "character",
-            remainderPosition: "any",
+            finalPosition: "choice",
           },
         ],
       },

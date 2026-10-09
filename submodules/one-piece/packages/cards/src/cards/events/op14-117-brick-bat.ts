@@ -44,7 +44,7 @@ export const op14eb04BrickBat117: EventCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -75,7 +75,7 @@ export const op14eb04BrickBat117: EventCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

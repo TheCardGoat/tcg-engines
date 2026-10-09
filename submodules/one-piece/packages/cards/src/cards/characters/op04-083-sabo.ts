@@ -55,7 +55,7 @@ export const op04Sabo083: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
 
   effect:

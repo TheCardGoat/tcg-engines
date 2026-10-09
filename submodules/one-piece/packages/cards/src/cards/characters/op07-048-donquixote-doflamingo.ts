@@ -22,7 +22,7 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
   setId: "OP07",
   cost: 3,
   power: 4000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Activate:Main] [Once Per Turn] (2) (You may rest the specified number of DON!! cards in your cost area.): Reveal 1 card from the top of your deck. If that card is a [The Seven Warlords of the Sea] type Character card with a cost of 4 or less, you may play that card rested. Then, place the rest at the bottom of your deck.",
@@ -41,6 +41,7 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
             action: "revealTopDeckCard",
             player: "self",
             conditional: {
+              finalPosition: "bottom",
               filters: [
                 {
                   filter: "cost",
@@ -50,7 +51,7 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",
@@ -77,7 +78,7 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
                     {
                       filter: "trait",
                       value: "The Seven Warlords of the Sea",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cardCategory",
@@ -89,7 +90,7 @@ export const op07DonquixoteDoflamingo048: CharacterCard = {
                 },
               ],
             },
-            finalPosition: "bottom",
+            finalPosition: "top",
           },
         ],
         oncePerTurn: true,

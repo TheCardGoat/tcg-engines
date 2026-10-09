@@ -11,7 +11,7 @@ export const rapunzelEscapingTheTower: CharacterCard = {
       artId: "set13-095",
       setCode: "set13",
       collectorNumber: "95",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -23,7 +23,7 @@ export const rapunzelEscapingTheTower: CharacterCard = {
   franchise: "Tangled",
   set: "013",
   cardNumber: 95,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 1,
   strength: 2,
   willpower: 1,
@@ -31,6 +31,7 @@ export const rapunzelEscapingTheTower: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6afa057b946845d1b46725c7603c50bf",
+    tcgPlayer: "702655",
   },
   text: [
     {

@@ -47,7 +47,7 @@ export const op14eb04ScaledNeptunian011: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Neptunian",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -59,7 +59,7 @@ export const prb02Nami012: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

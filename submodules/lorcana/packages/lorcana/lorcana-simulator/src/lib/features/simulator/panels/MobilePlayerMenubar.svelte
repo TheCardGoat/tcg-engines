@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { mergeProps } from "bits-ui";
   import { tick } from "svelte";
   import Activity from "@lucide/svelte/icons/activity";
   import BookOpenText from "@lucide/svelte/icons/book-open-text";
@@ -12,6 +13,7 @@
   import LoaderCircle from "@lucide/svelte/icons/loader-circle";
   import MessageSquare from "@lucide/svelte/icons/message-square";
   import OctagonX from "@lucide/svelte/icons/octagon-x";
+  import Undo2 from "@lucide/svelte/icons/undo-2";
   import PaintBucket from "@lucide/svelte/icons/paint-bucket";
   import Settings from "@lucide/svelte/icons/settings";
   import Sparkles from "@lucide/svelte/icons/sparkles";
@@ -124,6 +126,8 @@
     ownerSide?: import("@/features/simulator/model/contracts.js").LorcanaPlayerSide | null;
     onNextGame?: (() => void) | null;
     onReturnToMatchmaking?: (() => void | Promise<void>) | null;
+    onUndoTurn?: (() => void) | null;
+    canUndoTurn?: boolean;
   }
 
   let {
@@ -168,6 +172,8 @@
     ownerSide = null,
     onNextGame = null,
     onReturnToMatchmaking = null,
+    onUndoTurn = null,
+    canUndoTurn = false,
   }: MobilePlayerMenubarProps = $props();
 
   let detailsOpen = $state(false);
@@ -316,6 +322,15 @@
   function handleSettingsClick(): void {
     detailsOpen = false;
     onOpenSettings?.();
+  }
+
+  function handleUndoTurnClick(): void {
+    if (!canUndoTurn) {
+      return;
+    }
+
+    detailsOpen = false;
+    onUndoTurn?.();
   }
 
   function handleReportClick(): void {
@@ -670,10 +685,9 @@
                 variant="outline"
                 size="icon-sm"
                 class="quick-action quick-action--icon-only"
-                onclick={onOpenSupport}
                 aria-label={m["sim.player.support.openAria"]({})}
                 title={m["sim.player.support.openAria"]({})}
-                {...props}
+                {...mergeProps(props, { onclick: onOpenSupport })}
               >
                 <CircleHelp class="size-4" />
               </Button>
@@ -814,6 +828,26 @@
               </div>
               <Settings class="size-4 shrink-0" />
             </button>
+
+            {#if onUndoTurn}
+              <button
+                type="button"
+                class="sheet-action-button"
+                onclick={handleUndoTurnClick}
+                disabled={!canUndoTurn}
+                data-testid="undo-turn"
+              >
+                <div class="sheet-action-button__copy">
+                  <span class="sheet-action-button__label">Undo turn</span>
+                  <span class="sheet-action-button__meta">
+                    {canUndoTurn
+                      ? "Return play to the start of this turn."
+                      : "Undo turn is not available right now."}
+                  </span>
+                </div>
+                <Undo2 class="size-4 shrink-0" />
+              </button>
+            {/if}
 
             {#if onRequestBoardStateCorrection && (canRequestBoardStateCorrection || isCorrectionActive) && !isPostGame}
               <button

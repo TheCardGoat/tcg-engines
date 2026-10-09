@@ -1,0 +1,196 @@
+.action {
+  position: fixed;
+  z-index: 950;
+  left: max(12px, env(safe-area-inset-left));
+  width: clamp(160px, 23vw, 280px);
+  height: 88px;
+  box-sizing: border-box;
+  font-family: "Cyberpunk Blender Pro", Rajdhani, sans-serif;
+  pointer-events: none;
+}
+.sell {
+  bottom: 0;
+  left: 0;
+  width: clamp(160px, 25vw, 400px);
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding-top: 24px;
+  box-sizing: border-box;
+  color: #f4e2aa;
+  background: radial-gradient(ellipse at 50% 22%, #bba66b38, #1017168f 55%, transparent 85%);
+  text-shadow: 0 2px 3px #000;
+}
+.sell::before {
+  inset: 8px;
+  --drop-corner: #e2c979cc;
+  --drop-glow: #e2c97988;
+}
+.sell::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e2c979ad 25%, #e2c979ad 75%, transparent);
+  box-shadow: 0 0 9px #e2c97966;
+  pointer-events: none;
+}
+.sell strong {
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.sell span {
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: 0.9;
+  letter-spacing: 0.08em;
+}
+.sell[data-over="true"] {
+  color: #f2e5b8;
+  background: radial-gradient(ellipse at center, #ceb77933, transparent 74%);
+}
+.sell[data-enabled="false"] {
+  color: #9a9e9d;
+  background: #1017168f;
+  opacity: 0.85;
+}
+.sell[data-enabled="false"]::before,
+.sell[data-enabled="false"]::after {
+  opacity: 0.35;
+}
+.attack {
+  top: max(64px, calc(env(safe-area-inset-top) + 56px));
+}
+.attack :global([data-testid="pinfo-zone"]) {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: radial-gradient(ellipse at center, #bba66b20, transparent 74%);
+}
+/* The cue floats over deck art, so keep it panel-less but readable: a dark
+   halo under bright steal-gold text instead of the old dim wash. */
+.attack :global([data-drop-hint="attackRival"]) > div {
+  border: 0;
+  background: radial-gradient(ellipse at center, rgb(7 9 12 / 78%), transparent 80%);
+  box-shadow: none;
+  color: #ffe27a;
+  text-shadow: 0 2px 4px #000;
+}
+.attack :global([data-drop-hint="attackRival"]) > div::before,
+.attack :global([data-drop-hint="attackRival"]) > div::after {
+  opacity: 0.25;
+}
+.attack :global([data-drop-hint="attackRival"]) > div > span:first-child {
+  font-size: 11px;
+  color: #7fdce8;
+}
+.attack :global([data-drop-hint="attackRival"]) > div > span:last-child {
+  font-size: clamp(17px, 1.5vw, 27px);
+  line-height: 1.05;
+}
+/* Light falls onto the existing table texture; there is no enclosing panel. */
+.field.field[data-drop-ready] {
+  outline: none;
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  background: radial-gradient(ellipse at 50% 78%, #75bfc334, transparent 68%);
+}
+.sell::before,
+.field[data-drop-ready]::before {
+  content: "";
+  position: absolute;
+  background:
+    linear-gradient(var(--drop-corner), var(--drop-corner)) left top / 34px 2px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) left top / 2px 22px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) right top / 34px 2px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) right top / 2px 22px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) left bottom / 34px 2px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) left bottom / 2px 22px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) right bottom / 34px 2px no-repeat,
+    linear-gradient(var(--drop-corner), var(--drop-corner)) right bottom / 2px 22px no-repeat;
+  filter: drop-shadow(0 0 5px var(--drop-glow));
+  pointer-events: none;
+}
+.field[data-drop-ready]::before {
+  inset: 1%;
+  --drop-corner: #93d9d2b8;
+  --drop-glow: #65c9cb88;
+}
+.field[data-drop-ready]::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 6%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a8e9e0ad 25%, #a8e9e0ad 75%, transparent);
+  box-shadow: 0 0 9px #77c9c272;
+  pointer-events: none;
+}
+.field.field[data-over="true"] {
+  background: radial-gradient(ellipse at 50% 75%, #b6b58a25, transparent 72%);
+}
+.field[data-over="true"]::after {
+  background: linear-gradient(90deg, transparent, #d6c78da6, transparent);
+}
+.field.field[data-drop-ready] > span {
+  top: auto;
+  bottom: 10%;
+  opacity: 1;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #d7f3ed;
+  text-shadow:
+    0 0 8px #68bac9,
+    0 2px 4px #000;
+}
+.field.field[data-over="true"] > span {
+  opacity: 1;
+  color: #e5d9ac;
+}
+@media (max-width: 600px) {
+  .action {
+    width: 160px;
+    height: 80px;
+    left: max(8px, env(safe-area-inset-left));
+  }
+  .sell {
+    left: 0;
+    bottom: 0;
+    width: 160px;
+    height: 120px;
+    padding-top: 15px;
+  }
+  .sell::before {
+    inset: 6px;
+  }
+  .sell strong {
+    font-size: 16px;
+    letter-spacing: 0.1em;
+  }
+  .field.field[data-drop-ready] > span {
+    font-size: 50px;
+    bottom: 5%;
+  }
+}
+.attack :global([data-drop-hint="attackRival"]) > div > span:last-child {
+  color: #ffe27a;
+  text-shadow:
+    0 0 12px rgb(255 61 138 / 65%),
+    0 2px 4px #000;
+}

@@ -89,6 +89,7 @@ export const op03Marco013: CharacterCard = {
             },
             count: {
               amount: 1,
+              upTo: true,
             },
             self: true,
             playState: "rested",

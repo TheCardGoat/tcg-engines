@@ -7,12 +7,14 @@ import type {
   NumericValue,
   RelativePlayer,
 } from "@tcg/cyberpunk-types";
+import { legendsInPlay, unitsAndLegendsInPlay } from "@tcg/cyberpunk-types";
 import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { CardInstance } from "../types/card-instance.ts";
 import { getEffectivePower } from "../active-effects/index.ts";
 import { defOf, hasAnyEffectiveCardType } from "../state/lookups.ts";
 import { assertNever } from "../types/exhaustive.ts";
+import type { DefeatedCardSnapshot } from "../types/game-events.ts";
 
 export interface ResolutionContext {
   readonly state: MatchState;
@@ -109,7 +111,7 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       return [defenderId as string];
     }
     default:
-      return [];
+      return assertNever(target);
   }
 }
 
@@ -168,58 +170,183 @@ function resolveCardTarget(target: CardTargetDSL, ctx: ResolutionContext): strin
   return candidates.map((c) => c.instanceId as string);
 }
 
+function controllerMatches(
+  cardControllerId: PlayerId,
+  controller: RelativePlayer | undefined,
+  sourcePlayerId: PlayerId,
+): boolean {
+  switch (controller) {
+    case undefined:
+      return true;
+    case "friendly":
+    case "owner":
+      return cardControllerId === sourcePlayerId;
+    case "rival":
+      return cardControllerId !== sourcePlayerId;
+    default:
+      return assertNever(controller);
+  }
+}
+
+type CardPredicate = (
+  card: CardInstance,
+  target: CardTargetDSL,
+  ctx: { sourceCardId: CardInstanceId | undefined; sourcePlayerId: PlayerId },
+) => boolean;
+
+/** Every selector field is either checked on one card or evaluated in the selection pass. */
+const CARD_TARGET_CHECKS = {
+  selector: () => true,
+  controller: (card, target, ctx) =>
+    controllerMatches(card.controllerId, target.controller, ctx.sourcePlayerId),
+  zones: (card, target) => !target.zones || target.zones.includes(card.zone),
+  cardTypes: (card, target) => !target.cardTypes || hasAnyEffectiveCardType(card, target.cardTypes),
+  colors: (card, target) => !target.colors || target.colors.includes(defOf(card).color),
+  classifications: (card, target) =>
+    !target.classifications ||
+    defOf(card).classifications.some((classification) =>
+      target.classifications!.includes(classification),
+    ),
+  keywords: (card, target) =>
+    !target.keywords?.length ||
+    defOf(card).keywords.some((keyword) => target.keywords!.includes(keyword)),
+  state: (card, target) => !target.state || card.meta.spent === (target.state === "spent"),
+  face: (card, target) => !target.face || card.meta.faceDown === (target.face === "faceDown"),
+  minCost: (card, target) =>
+    target.minCost === undefined || (defOf(card).cost ?? 0) >= target.minCost,
+  maxCost: (card, target) =>
+    target.maxCost === undefined || (defOf(card).cost ?? 0) <= target.maxCost,
+  maxCostOf: "selection",
+  minPower: "selection",
+  maxPower: "selection",
+  lowestPower: "selection",
+  maxPowerOfGigValueOf: "selection",
+  excludeSelf: (card, target, ctx) => !target.excludeSelf || card.instanceId !== ctx.sourceCardId,
+  excludeOf: "selection",
+  hasAttachedCards: (card, target) =>
+    target.hasAttachedCards === undefined ||
+    card.meta.attachedGearIds.length > 0 === target.hasAttachedCards,
+  hasLag: (card, target) => target.hasLag === undefined || card.meta.hasLag === target.hasLag,
+  playedThisTurn: (card, target) =>
+    target.playedThisTurn === undefined ||
+    (card.meta.playedThisTurn ?? card.meta.hasLag) === target.playedThisTurn,
+  attachedTo: "selection",
+  costEqualsGigValueOf: "selection",
+  powerEqualsGigValueOf: "selection",
+  powerLessThanAnyOf: "selection",
+  selection: "choice",
+} satisfies Record<keyof CardTargetDSL, CardPredicate | "selection" | "choice">;
+
+/** Predicates shared by live selection and event-card matching. */
+export function cardMatchesPerCardPredicates(
+  card: CardInstance,
+  target: CardTargetDSL,
+  ctx: { sourceCardId: CardInstanceId | undefined; sourcePlayerId: PlayerId },
+): boolean {
+  for (const key of Object.keys(CARD_TARGET_CHECKS) as (keyof CardTargetDSL)[]) {
+    const check = CARD_TARGET_CHECKS[key];
+    if (typeof check === "function" && !check(card, target, ctx)) return false;
+  }
+  return true;
+}
+
+export function cardTargetNeedsSelection(target: CardTargetDSL): boolean {
+  return (Object.keys(target) as (keyof CardTargetDSL)[]).some(
+    (key) => CARD_TARGET_CHECKS[key] === "selection",
+  );
+}
+
+/** Keep historical event filters classified when the card target DSL grows. */
+const DEFEATED_EVENT_FIELDS = {
+  selector: "snapshot",
+  controller: "snapshot",
+  zones: "snapshot",
+  cardTypes: "snapshot",
+  colors: "snapshot",
+  classifications: "snapshot",
+  keywords: "snapshot",
+  state: "snapshot",
+  face: "snapshot",
+  minCost: "snapshot",
+  maxCost: "snapshot",
+  maxCostOf: "selection",
+  minPower: "snapshot",
+  maxPower: "snapshot",
+  lowestPower: "selection",
+  maxPowerOfGigValueOf: "selection",
+  excludeSelf: "snapshot",
+  excludeOf: "selection",
+  hasAttachedCards: "snapshot",
+  hasLag: "snapshot",
+  playedThisTurn: "snapshot",
+  attachedTo: "selection",
+  costEqualsGigValueOf: "selection",
+  powerEqualsGigValueOf: "selection",
+  powerLessThanAnyOf: "selection",
+  selection: "selection",
+} satisfies Record<keyof CardTargetDSL, "snapshot" | "selection">;
+
+/** Match only the defeated object's event-time facts, never its moved live card. */
+export function defeatedCardMatchesFilter(
+  snapshot: DefeatedCardSnapshot,
+  target: CardTargetDSL,
+  sourceCardId: CardInstanceId | undefined,
+  sourcePlayerId: PlayerId,
+  defeatedCardId: CardInstanceId,
+): boolean {
+  if (!controllerMatches(snapshot.controllerId, target.controller, sourcePlayerId)) return false;
+  if (target.zones && !target.zones.includes(snapshot.zone)) return false;
+  if (target.cardTypes && !target.cardTypes.some((type) => snapshot.cardTypes.includes(type)))
+    return false;
+  if (target.colors && !target.colors.includes(snapshot.color)) return false;
+  if (
+    target.classifications &&
+    !target.classifications.some((type) => snapshot.classifications.includes(type))
+  )
+    return false;
+  if (
+    target.keywords?.length &&
+    !target.keywords.some((keyword) => snapshot.keywords.includes(keyword))
+  )
+    return false;
+  if (target.state && snapshot.spent !== (target.state === "spent")) return false;
+  if (target.face && snapshot.faceDown !== (target.face === "faceDown")) return false;
+  if (target.minCost !== undefined && snapshot.cost < target.minCost) return false;
+  if (target.maxCost !== undefined && snapshot.cost > target.maxCost) return false;
+  if (target.minPower !== undefined && snapshot.effectivePower < target.minPower) return false;
+  if (target.maxPower !== undefined && snapshot.effectivePower > target.maxPower) return false;
+  if (target.excludeSelf && defeatedCardId === sourceCardId) return false;
+  if (
+    target.hasAttachedCards !== undefined &&
+    snapshot.attachedGearIds.length > 0 !== target.hasAttachedCards
+  )
+    return false;
+  if (target.hasLag !== undefined && snapshot.hasLag !== target.hasLag) return false;
+  if (
+    target.playedThisTurn !== undefined &&
+    (snapshot.playedThisTurn ?? snapshot.hasLag) !== target.playedThisTurn
+  )
+    return false;
+  // These fields need a selection set or another object's historical facts.
+  // They cannot be answered from the defeated object's snapshot alone.
+  for (const key of Object.keys(target) as (keyof CardTargetDSL)[]) {
+    if (DEFEATED_EVENT_FIELDS[key] === "selection") {
+      throw new Error(`Unsupported defeated-card event selection predicate: ${key}`);
+    }
+  }
+  return true;
+}
+
 function getCardCandidates(
   playerId: PlayerId | undefined,
   target: CardTargetDSL,
   ctx: ResolutionContext,
 ): CardInstance[] {
-  const allCards = Object.values(ctx.state.G.cardIndex);
-  let candidates = allCards;
-
-  if (playerId) {
-    candidates = candidates.filter((c) => c.controllerId === playerId);
-  }
-
-  if (target.zones) {
-    candidates = candidates.filter((c) => target.zones!.includes(c.zone));
-  }
-
-  if (target.cardTypes) {
-    candidates = candidates.filter((card) => hasAnyEffectiveCardType(card, target.cardTypes!));
-  }
-
-  if (target.colors) {
-    candidates = candidates.filter((c) => target.colors!.includes(defOf(c).color));
-  }
-
-  if (target.classifications) {
-    candidates = candidates.filter((c) =>
-      defOf(c).classifications.some((cl) => target.classifications!.includes(cl)),
-    );
-  }
-
-  if (target.keywords && target.keywords.length > 0) {
-    candidates = candidates.filter((c) =>
-      defOf(c).keywords.some((keyword) => target.keywords!.includes(keyword)),
-    );
-  }
-
-  if (target.state !== undefined) {
-    const isSpent = target.state === "spent";
-    candidates = candidates.filter((c) => c.meta.spent === isSpent);
-  }
-
-  if (target.face !== undefined) {
-    const isFaceDown = target.face === "faceDown";
-    candidates = candidates.filter((c) => c.meta.faceDown === isFaceDown);
-  }
-
-  if (target.maxCost !== undefined) {
-    candidates = candidates.filter((c) => {
-      const cost = defOf(c).cost ?? 0;
-      return cost <= target.maxCost!;
-    });
-  }
+  let candidates = Object.values(ctx.state.G.cardIndex).filter(
+    (card) =>
+      (playerId === undefined || card.controllerId === playerId) &&
+      cardMatchesPerCardPredicates(card, target, ctx),
+  );
 
   if (target.maxCostOf) {
     const refIds = resolveTarget(target.maxCostOf, ctx);
@@ -231,13 +358,6 @@ function getCardCandidates(
     candidates = candidates.filter((c) => {
       const cost = defOf(c).cost ?? 0;
       return cost <= maxRefCost;
-    });
-  }
-
-  if (target.minCost !== undefined) {
-    candidates = candidates.filter((c) => {
-      const cost = defOf(c).cost ?? 0;
-      return cost >= target.minCost!;
     });
   }
 
@@ -283,25 +403,9 @@ function getCardCandidates(
     );
   }
 
-  if (target.excludeSelf) {
-    candidates = candidates.filter((c) => c.instanceId !== ctx.sourceCardId);
-  }
-
   if (target.excludeOf) {
     const excluded = new Set(resolveTarget(target.excludeOf, ctx));
     candidates = candidates.filter((c) => !excluded.has(c.instanceId as string));
-  }
-
-  if (target.hasAttachedCards !== undefined) {
-    if (target.hasAttachedCards) {
-      candidates = candidates.filter((c) => c.meta.attachedGearIds.length > 0);
-    } else {
-      candidates = candidates.filter((c) => c.meta.attachedGearIds.length === 0);
-    }
-  }
-
-  if (target.hasLag !== undefined) {
-    candidates = candidates.filter((card) => card.meta.hasLag === target.hasLag);
   }
 
   if (target.attachedTo) {
@@ -515,13 +619,9 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
     }
 
     case "allFriendlyLegendsFaceUp": {
-      const playerId = resolveRelativePlayer("friendly", ctx);
-      const player = ctx.state.G.players[playerId as string];
-      if (!player) return false;
-      const legends = player.zones.legendArea
-        .map((id) => ctx.state.G.cardIndex[id as string])
-        .filter(Boolean);
-      return legends.length > 0 && legends.every((card) => !card.meta.faceDown);
+      const legends = resolveTarget(legendsInPlay("friendly"), ctx);
+      const faceUpLegends = resolveTarget(legendsInPlay("friendly", "faceUp"), ctx);
+      return legends.length > 0 && faceUpLegends.length === legends.length;
     }
 
     case "cardState": {
@@ -643,15 +743,10 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
     }
 
     case "hasEquippedUnitsOrLegends": {
-      const playerId = resolveRelativePlayer(condition.controller, ctx);
-      const player = ctx.state.G.players[playerId as string];
-      if (!player) return false;
-      const equippedCount = [...player.zones.field, ...player.zones.legendArea].filter((id) => {
-        const card = ctx.state.G.cardIndex[id as string];
-        if (!card || card.meta.attachedGearIds.length === 0) return false;
-        const def = defOf(card);
-        return def.type === "unit" || def.type === "legend";
-      }).length;
+      const equippedCount = resolveTarget(
+        { ...unitsAndLegendsInPlay(condition.controller), hasAttachedCards: true },
+        ctx,
+      ).length;
       return equippedCount >= condition.minCount;
     }
 
@@ -690,8 +785,7 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       const opponentId =
         (attack.attackerId as string) === targetId ? attack.defenderId : attack.attackerId;
       if (!opponentId) return false;
-      const opponent = ctx.state.G.cardIndex[opponentId as string];
-      return opponent ? cardMatchesTargetFilter(opponent, condition.opponent, ctx) : false;
+      return resolveTarget(condition.opponent, ctx).includes(opponentId as string);
     }
 
     case "costMatchesGig": {
@@ -799,40 +893,6 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
   }
 }
 
-function cardMatchesTargetFilter(
-  card: CardInstance,
-  target: CardTargetDSL,
-  ctx: ResolutionContext,
-): boolean {
-  const playerId = target.controller ? resolveRelativePlayer(target.controller, ctx) : undefined;
-  if (playerId && card.controllerId !== playerId) return false;
-  if (target.zones && !target.zones.includes(card.zone)) return false;
-  const def = defOf(card);
-  if (target.cardTypes && !hasAnyEffectiveCardType(card, target.cardTypes)) return false;
-  if (target.colors && !target.colors.includes(def.color)) return false;
-  if (
-    target.classifications &&
-    !target.classifications.some((classification) => def.classifications.includes(classification))
-  ) {
-    return false;
-  }
-  if (
-    target.keywords &&
-    target.keywords.length > 0 &&
-    !target.keywords.some((keyword) => def.keywords.includes(keyword))
-  ) {
-    return false;
-  }
-  if (target.state !== undefined && card.meta.spent !== (target.state === "spent")) return false;
-  if (target.face !== undefined && card.meta.faceDown !== (target.face === "faceDown"))
-    return false;
-  if (target.hasAttachedCards !== undefined) {
-    if (target.hasAttachedCards !== card.meta.attachedGearIds.length > 0) return false;
-  }
-  if (target.hasLag !== undefined && card.meta.hasLag !== target.hasLag) return false;
-  return true;
-}
-
 function compareValues(left: number, op: Comparison, right: number): boolean {
   switch (op) {
     case "eq":
@@ -846,7 +906,7 @@ function compareValues(left: number, op: Comparison, right: number): boolean {
     case "lte":
       return left <= right;
     default:
-      return false;
+      return assertNever(op);
   }
 }
 
@@ -883,7 +943,7 @@ export function resolveNumericValue(value: NumericValue, ctx: ResolutionContext)
     return value.base + resolveTarget(value.target, ctx).length * value.multiplier;
   }
 
-  return 0;
+  return assertNever(value);
 }
 
-import { DIE_MAX_VALUES } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES } from "@tcg/cyberpunk-types";

@@ -32,6 +32,7 @@ export const plutoSuspiciousSentry: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f867a6b5b4ef468b9a9f073194f98c9d",
+    tcgPlayer: "704659",
   },
   text: "Support",
   classifications: ["Dreamborn", "Ally"],

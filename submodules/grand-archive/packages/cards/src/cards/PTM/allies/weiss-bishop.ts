@@ -95,8 +95,18 @@ export const weissBishop: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                   kind: "source",
                 },
                 otherFilter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "parity",
+                      property: "life",
+                      value: "odd",
+                    },
+                  ],
                 },
               },
               duration: {

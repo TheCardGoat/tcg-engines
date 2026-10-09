@@ -60,7 +60,7 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Thriller Bark Pirates",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cost",
@@ -88,7 +88,7 @@ export const op14eb04GeckoMoriaOp14104104: CharacterCard = {
                       {
                         filter: "trait",
                         value: "Thriller Bark Pirates",
-                        match: "includes",
+                        match: "exact",
                       },
                       {
                         filter: "cost",

@@ -202,7 +202,7 @@ Existing Gundam versions are migrated losslessly. BO3 preserves `side`; V1
 
 ### Cyberpunk TCG
 
-The Alpha format registers exactly 3 Legends and a main deck of 40–50
+The Constructed format registers exactly 3 Legends and a main deck of 40–50
 non-Legend cards. Legend names must be unique, main-deck name/subtitle copies
 are capped at three, and the Legends establish the deck's RAM limits.
 
@@ -212,7 +212,7 @@ V1 declared a fixed global topology including editor workspaces:
 {
   "schemaVersion": 1,
   "game": "cyberpunk",
-  "formatId": "alpha",
+  "formatId": "constructed",
   "sections": [
     {
       "id": "legend",
@@ -237,7 +237,7 @@ of the authoritative document:
 {
   "schemaVersion": 2,
   "game": "cyberpunk",
-  "formatId": "alpha",
+  "formatId": "constructed",
   "sections": {
     "legend": [{ "card": { "canonicalId": "LEGEND-1", "quantity": 1 } }],
     "main": [{ "card": { "canonicalId": "CP-1", "quantity": 3 } }]

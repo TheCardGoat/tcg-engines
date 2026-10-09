@@ -34,12 +34,11 @@ export const aladdinGenieMischievousPalsEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b0820bdd94db41b597a5bafeb75e9e96",
+    tcgPlayer: "704579",
   },
   text: [
     {
-      title: "Shift 3",
-      description:
-        "(You may pay 3 to play this on top of one of your characters named Aladdin or Genie.)",
+      title: "Shift 3 {I}",
     },
     {
       title: "SLEIGHT OF HAND",

@@ -100,6 +100,67 @@ describe("playCard", () => {
       expect(engine.playCard(unit)).toBeSuccessfulCommand();
     });
 
+    it("pays a selected Legend and the remaining cost from ready Eddies", () => {
+      const unit = createMockUnit({ name: "Paid Unit", cost: 4, power: 3 });
+      const legend = createMockLegend({ name: "Chosen Legend" });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [unit],
+        legendArea: [{ card: legend, faceDown: true }],
+        eddies: 3,
+      });
+      const legendId = engine.findCardId(legend, "legendArea", P1);
+
+      expect(engine.playCard(unit, { paymentSourceIds: [legendId] })).toBeSuccessfulCommand();
+      expect(engine.getCard(legend, "legendArea", P1).meta.spent).toBe(true);
+      expect(engine.getState().G.players[P1]!.eddies).toBe(0);
+      expect(engine.getState().G.players[P1]!.spentEddies).toBe(3);
+      expect(engine.getCard(unit, "field", P1)).toBeInZone("field");
+    });
+
+    it("does not use a Field Legend for automatic payment", () => {
+      const cardToPlay = createMockUnit({ name: "Paid Unit", cost: 1 });
+      const fieldLegend = createMockLegend({ name: "Field Legend", hasSellTag: true });
+      const legendAreaResource = createMockLegend({ name: "Legend Area Resource" });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [cardToPlay],
+        field: [{ card: fieldLegend, spent: false }],
+        legendArea: [{ card: legendAreaResource, faceDown: true, spent: false }],
+        eddies: 0,
+      });
+
+      expect(engine.playCard(cardToPlay)).toBeSuccessfulCommand();
+      expect(engine.getCard(fieldLegend, "field", P1).meta.spent).toBe(false);
+      expect(engine.getCard(legendAreaResource, "legendArea", P1).meta.spent).toBe(true);
+    });
+
+    it("rejects a Field Legend as a selected payment source", () => {
+      // CR 5.7.2 and 11.8.1 limit Legend payment to the Legends area. Keep a
+      // valid resource there so this reaches exact-source validation instead
+      // of failing the separate affordability check.
+      const cardToPlay = createMockUnit({ name: "Paid Unit", cost: 1 });
+      const fieldLegend = createMockLegend({ name: "Field Legend", hasSellTag: true });
+      const legendAreaResource = createMockLegend({ name: "Legend Area Resource" });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [cardToPlay],
+        field: [{ card: fieldLegend, spent: false }],
+        legendArea: [{ card: legendAreaResource, faceDown: true, spent: false }],
+        eddies: 0,
+      });
+      const cardId = engine.findCardId(cardToPlay, "hand", P1);
+      const fieldLegendId = engine.findCardId(fieldLegend, "field", P1);
+
+      const result = engine.executeMove(
+        "playCard",
+        { args: { cardId: cardId as string, paymentSourceIds: [fieldLegendId as string] } },
+        P1,
+      );
+
+      expect(result).toMatchObject({ success: false, errorCode: "INVALID_PAYMENT" });
+      expect(engine.getCard(fieldLegend, "field", P1).meta.spent).toBe(false);
+      expect(engine.getCard(legendAreaResource, "legendArea", P1).meta.spent).toBe(false);
+      expect(engine.getCard(cardToPlay, "hand", P1)).toBeInZone("hand");
+    });
+
     it("does not count spent face-down legends toward card costs", () => {
       const unit = createMockUnit({ cost: 3 });
       const legends = [

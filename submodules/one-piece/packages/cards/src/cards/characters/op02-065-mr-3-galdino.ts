@@ -23,7 +23,7 @@ export const op02Mr3Galdino065: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [End of Your Turn] You may trash 1 card from your hand: Set this Character as active.",

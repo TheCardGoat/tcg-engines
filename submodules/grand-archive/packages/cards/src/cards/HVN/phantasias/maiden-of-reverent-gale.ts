@@ -77,6 +77,10 @@ export const maidenOfReverentGale: GrandArchiveCard<GrandArchiveAbilityDefinitio
                       kind: "type",
                       oneOf: ["ACTION"],
                     },
+                    {
+                      kind: "subtype",
+                      oneOf: ["SPELL"],
+                    },
                   ],
                 },
               },

@@ -41,29 +41,6 @@ export const arsenalKeeper: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["WEAPON"],
-                },
-              },
-            },
-          ],
           restrictions: [
             {
               kind: "static",
@@ -103,13 +80,36 @@ export const arsenalKeeper: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                     binding: "optional-action-succeeded",
                   },
                   then: {
-                    kind: "add-counter",
-                    subject: {
-                      kind: "bound",
-                      binding: "target-1",
+                    kind: "choose",
+                    selection: {
+                      id: "chosen-counter-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "type",
+                          oneOf: ["WEAPON"],
+                        },
+                      },
                     },
-                    counter: "durability",
-                    amount: 1,
+                    effect: {
+                      kind: "add-counter",
+                      subject: {
+                        kind: "bound",
+                        binding: "chosen-counter-object",
+                      },
+                      counter: "durability",
+                      amount: 1,
+                    },
                   },
                 },
               ],

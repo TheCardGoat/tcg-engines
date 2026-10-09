@@ -119,4 +119,33 @@ describe("EB02-056 Vegapunk", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(triggerId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("at three opposing Characters no hand card is trashed after choosing zero Scientists", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        hand: [eb02Vegapunk056, eb01Doma005],
+        activeDon: 5,
+        deck: [
+          op13Edison102,
+          eb01Fourtricks025,
+          eb01Fourtricks025,
+          eb01Fourtricks025,
+          eb01Fourtricks025,
+          eb01Doma005,
+        ],
+      },
+      { character: [eb01Doma005, eb01Doma005, eb01Doma005] },
+    );
+    e.playCard(eb02Vegapunk056);
+    e.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const p = e.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (p?.kind !== "orderItems") throw Error("order");
+    e.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: p.candidates.map((c) => c.ref.id) },
+      "south",
+    );
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([eb01Doma005.id]);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
+    expect(e.getView("south").players.south.deckCount).toBe(6);
+  });
 });

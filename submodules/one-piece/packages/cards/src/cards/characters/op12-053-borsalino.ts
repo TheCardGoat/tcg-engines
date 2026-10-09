@@ -38,7 +38,7 @@ export const op12Borsalino053: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -38,7 +38,7 @@ export const op04BadMannersKickCourse016: EventCard = {
   rarity: "R",
   setId: "OP04",
   cost: 0,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   effect:
     "[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle. [Trigger] Give up to 1 of your opponent's Leader or Character cards -3000 power during this turn.",
   effects: {

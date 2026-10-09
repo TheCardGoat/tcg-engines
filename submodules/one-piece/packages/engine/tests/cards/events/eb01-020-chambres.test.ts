@@ -15,6 +15,22 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB01-020 Chambres", () => {
+  test("cannot play a Character if no Character was returned (FAQ Q634)", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op01TrafalgarLaw002,
+      hand: [eb01Chambres020, eb02Sarfunkel014],
+      activeDon: 1,
+    });
+    const candidate = engine.findCardInZone("south", "hand", eb02Sarfunkel014);
+    engine.playCard(eb01Chambres020);
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(candidate);
+    expect(view.players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(view.players.south.trash.map((card) => card.cardId)).toContain(eb01Chambres020.id);
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 1 });
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("returns a chosen Character and maps only low-cost Characters of a different color", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op01TrafalgarLaw002,

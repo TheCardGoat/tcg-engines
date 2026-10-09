@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/articles/errata-bulletin-5/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Errata Bulletin #5"
-source: https://fabtcg.com/articles/errata-bulletin-5/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 55407748270477575c28a382086f85ae5eddb12f31a33cb20b3cceac3a7f5271
 ---

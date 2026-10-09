@@ -31,6 +31,10 @@ export const sheriffOfNottinghamVineSlayer: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_168445ab816f4cd6bd9658330eb6ab31",
+    tcgPlayer: "704676",
+  },
   text: "Challenger +3",
   classifications: ["Storyborn", "Villain"],
   abilities: [challenger(3)],

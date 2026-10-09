@@ -35,4 +35,35 @@ describe("OP10-119 Trafalgar Law", () => {
     expect(engine.getView("south").players.south.leader.attachedDon).toBe(1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("can add the revealed Character to Life with a non-Supernovas Leader", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST04-001",
+      hand: ["OP10-119", "OP10-101"],
+      activeDon: 7,
+      restedDon: 1,
+    });
+    const target = e.findCardInZone("south", "hand", "OP10-101");
+    const life = e.getView("south").players.south.lifeCount;
+    e.asSouth().play("OP10-119");
+    e.resolveDecision("effectRevealFromHandSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life + 1);
+    expect(e.getView("north").players.south.life[0]?.hidden).toBe(true);
+    e.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("skipping the optional reveal still gives rested DON to a Supernovas Leader", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP10-099",
+      hand: ["OP10-119", "OP10-101"],
+      activeDon: 7,
+      restedDon: 1,
+    });
+    const life = e.getView("south").players.south.lifeCount;
+    e.asSouth().play("OP10-119");
+    e.resolveDecision("effectRevealFromHandSelection", { selectedIds: [] }, "south");
+    e.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(1);
+  });
 });

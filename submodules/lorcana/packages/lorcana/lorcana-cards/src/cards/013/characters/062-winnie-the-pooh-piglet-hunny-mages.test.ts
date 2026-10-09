@@ -1,8 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import {
-  LorcanaMultiplayerTestEngine,
-  PLAYER_ONE,
-} from "@tcg/lorcana-engine/testing";
+import { LorcanaMultiplayerTestEngine, PLAYER_ONE } from "@tcg/lorcana-engine/testing";
 import { winnieThePoohHunnyArchmage } from "./040-winnie-the-pooh-hunny-archmage";
 import { pigletHunnyMageApprentice } from "./154-piglet-hunny-mage-apprentice";
 import { winnieThePoohPigletHunnyMages } from "./062-winnie-the-pooh-piglet-hunny-mages";
@@ -15,11 +12,7 @@ describe("Winnie the Pooh & Piglet - Hunny Mages", () => {
       inkwell: 3,
     });
     const player = testEngine.asPlayerOne();
-    const cardId = testEngine.findCardInstanceId(
-      winnieThePoohPigletHunnyMages,
-      "hand",
-      PLAYER_ONE,
-    );
+    const cardId = testEngine.findCardInstanceId(winnieThePoohPigletHunnyMages, "hand", PLAYER_ONE);
     const shiftTarget = testEngine.findCardInstanceId(
       pigletHunnyMageApprentice,
       "play",
@@ -48,11 +41,7 @@ describe("Winnie the Pooh & Piglet - Hunny Mages", () => {
       inkwell: 3,
     });
     const player = testEngine.asPlayerOne();
-    const cardId = testEngine.findCardInstanceId(
-      winnieThePoohPigletHunnyMages,
-      "hand",
-      PLAYER_ONE,
-    );
+    const cardId = testEngine.findCardInstanceId(winnieThePoohPigletHunnyMages, "hand", PLAYER_ONE);
     const shiftTarget = testEngine.findCardInstanceId(
       winnieThePoohHunnyArchmage,
       "play",

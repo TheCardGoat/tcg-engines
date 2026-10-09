@@ -56,8 +56,17 @@ export const advantageousPerch: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                 relationship: "zone-of",
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ACTION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ACTION"],
+                    },
+                    {
+                      kind: "class",
+                      oneOf: ["RANGER"],
+                    },
+                  ],
                 },
               },
             },

@@ -30,7 +30,7 @@ export const op02MonkeyDLuffy041: CharacterCard = {
   setId: "OP02",
   cost: 7,
   power: 7000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["FILM", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Play up to 1 "FILM" or "Straw Hat Crew" type Character card with a cost of 4 or less from your hand.',
@@ -62,12 +62,12 @@ export const op02MonkeyDLuffy041: CharacterCard = {
                   {
                     filter: "trait",
                     value: "FILM",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

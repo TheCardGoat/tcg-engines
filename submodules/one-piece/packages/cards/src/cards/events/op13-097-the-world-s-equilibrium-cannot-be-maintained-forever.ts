@@ -21,7 +21,7 @@ export const op13TheWorldSEquilibriumCannotBeMaintainedForever097: EventCard = {
   rarity: "C",
   setId: "OP13",
   cost: 1,
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   effect:
     '[Main] You may rest 5 of your DON!! cards: If the only Characters on your field are "Celestial Dragons" type Characters, K.O. up to 1 of your opponent\'s Characters with a base cost of 6 or less.\n[Counter] Your Leader gains +3000 power during this battle.',
   effects: {
@@ -53,17 +53,30 @@ export const op13TheWorldSEquilibriumCannotBeMaintainedForever097: EventCard = {
               ],
             },
             condition: {
-              condition: "zoneCount",
-              player: "self",
-              zone: "character",
-              comparison: "eq",
-              value: 0,
-              filters: [
+              condition: "compound",
+              operator: "and",
+              conditions: [
                 {
-                  filter: "trait",
-                  value: "Celestial Dragons",
-                  match: "includes",
-                  negate: true,
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "gte",
+                  value: 1,
+                },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "eq",
+                  value: 0,
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Celestial Dragons",
+                      match: "exact",
+                      negate: true,
+                    },
+                  ],
                 },
               ],
             },

@@ -16,16 +16,20 @@ describe("OP11-040 Monkey.D.Luffy", () => {
           eb01Doma005,
           eb01Doma005,
         ],
-        activeDon: 8,
+        activeDon: 1,
+        restedDon: 7,
       },
       {},
       { firstPlayer: "south", activeSeat: "south" },
     );
+    engine.asSouth().attachDon(engine.leader("south"), 1);
     const selectedId = engine.findCardInZone("south", "deck", op11RoronoaZoro016);
 
     engine.endTurn("south");
     engine.endTurn("north");
 
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(1);
+    expect(engine.getView("south").players.south.restedDon).toBe(7);
     expect(engine.getView("south").players.south.hand).toHaveLength(0);
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectSearchSelection", { selectedIds: [selectedId] }, "south");
@@ -76,5 +80,18 @@ describe("OP11-040 Monkey.D.Luffy", () => {
     expect(after.deckCount).toBe(deckBefore - 1);
     expect(engine.getView("south").phase).toBe("main");
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: seven DON still permits activation but only the normal turn draw occurs", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP11-040", restedDon: 7, deck: ["OP11-016", "EB01-005", "EB01-005"] },
+      { leaderCardId: "ST01-001" },
+    );
+    e.asSouth().endTurn();
+    e.asNorth().endTurn();
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP11-016"]);
+    expect(e.getView("south").players.south.deckCount).toBe(2);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Ravensburger"
+  url: "https://files.disneylorcana.com/Fabled_SetReleaseNotes_EN.pdf"
+  relation: "exact_document"
+---
+
 ![](images/51829077e75028ba465a6586b83ccec2b7fdbc6435403fe2cab89f8113cb134f.jpg)
 
 # LORCANA

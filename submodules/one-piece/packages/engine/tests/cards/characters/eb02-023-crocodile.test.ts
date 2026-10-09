@@ -59,4 +59,30 @@ describe("EB02-023 Crocodile", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("returning an opposing Stage does not trigger the Character-only observer", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP15-002", character: ["EB02-023"], hand: ["OP15-054"], activeDon: 4 },
+      { stage: "ST01-017" },
+    );
+    const stage = e.findCardInZone("north", "stage", "ST01-017");
+    e.asSouth().play("OP15-054");
+    e.resolveDecision("effectActionChoice", { optionId: "1" }, "south");
+    e.asSouth().chooseTargets(stage);
+    expect(e.findCardInZone("north", "hand", "ST01-017")).toBe(stage);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("your Counter effect returning an opposing Character on their turn does not trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-005"] },
+      { character: ["EB02-023"], hand: ["OP01-086"], activeDon: 2 },
+    );
+    const target = e.findCardInZone("south", "character", "EB01-005");
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().chooseCounter("OP01-086");
+    e.asNorth().chooseTargets(e.leader("north"));
+    e.asNorth().chooseTargets(target);
+    expect(e.findCardInZone("south", "hand", "EB01-005")).toBe(target);
+    expect(e.getView("north").prompts).toHaveLength(0);
+    expect(e.getView("north").players.north.deckCount).toBe(10);
+  });
 });

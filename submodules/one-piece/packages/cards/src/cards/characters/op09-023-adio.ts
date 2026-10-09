@@ -42,7 +42,7 @@ export const op09Adio023: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "ODYSSEY",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

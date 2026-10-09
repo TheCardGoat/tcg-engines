@@ -23,7 +23,7 @@ export const op16DonquixoteRosinante070: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker]\n[On Play] You may rest 2 of your DON!! cards: If your Leader has the {Navy} type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -49,7 +49,7 @@ export const op16DonquixoteRosinante070: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Navy",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

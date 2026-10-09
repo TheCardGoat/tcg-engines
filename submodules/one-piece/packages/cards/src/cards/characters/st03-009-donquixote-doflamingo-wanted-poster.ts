@@ -23,7 +23,7 @@ export const op03DonquixoteDoflamingoWantedPoster009: CharacterCard = {
   setId: "ST03",
   cost: 7,
   power: 7000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect: "[On Play] Return up to 1 Character with a cost of 7 or less to the owner's hand.",
   effects: {

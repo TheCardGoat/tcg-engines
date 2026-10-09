@@ -29,9 +29,13 @@ export const fflewddurFflamLucklessBard: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_f2c528299dce49f4b9079342b7dc7ebc",
+    tcgPlayer: "704564",
+  },
   text: [
     {
-      title: "Chasing Adventure",
+      title: "CHASING ADVENTURE",
       description:
         "When you play this character, if a character of yours quested this turn, draw a card.",
     },

@@ -21,15 +21,22 @@ import { resolvePracticeDeckSelection, materializeFabPracticeSeat } from "./reso
 describe("practice automation seeding", () => {
   it("applies the saved automation defaults to the human seat at creation", () => {
     const seat = resolvePracticeDeckSelection(DEFAULT_PLAYER_DECK_ID, "practice-automation");
-    const deckCanonicalId = seat.player.deck?.[0];
-    expect(typeof deckCanonicalId).toBe("string");
+    const deck = seat.player.deck;
+    const firstDeckEntry = Array.isArray(deck) ? deck[0] : undefined;
+    const firstDeckRef =
+      typeof firstDeckEntry === "object" && firstDeckEntry !== null && "card" in firstDeckEntry
+        ? firstDeckEntry.card
+        : firstDeckEntry;
+    const deckCanonicalId =
+      typeof firstDeckRef === "string" ? firstDeckRef : firstDeckRef?.canonicalId;
+    expect(deckCanonicalId, "fixture deck must lead with a specific card").toBeDefined();
 
     const match = createFabLocalPracticeMatch({
       seed: "practice-automation",
       automation: {
         automationPreferences: { "player-1": { priorityMode: "always-hold" } },
         optionalTriggerDeclines: {
-          "player-1": { [deckCanonicalId as string]: true, "unknown-card": true },
+          "player-1": { [deckCanonicalId!]: true, "unknown-card": true },
         },
       },
     });

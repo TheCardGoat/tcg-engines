@@ -163,6 +163,7 @@ describe("attackUnit", () => {
         type: "attackDeclared",
         attackKind: "fight",
         playerId: P1,
+        rivalId: P2,
       });
 
       const log = engine.getLastActionLog();
@@ -178,7 +179,15 @@ describe("attackUnit", () => {
       engine.attackUnit(attacker, defender);
       engine.resolveAttack({ as: P1 }); // attack -> react
       engine.resolveAttack({ as: P2, pass: true }); // react -> fight
-      engine.resolveAttack({ as: P1 }); // fight -> cleared
+      engine.resolveAttack({ as: P1 }); // fight -> fightResult
+      const resolution = engine.resolveAttack({ as: P1 }); // fightResult -> defeated
+      expect(resolution.moveLogs).toContainEqual(
+        expect.objectContaining({
+          type: "cardDefeated",
+          playerId: P2,
+          cardName: defender.displayName,
+        }),
+      );
 
       const log = engine.getLastActionLog();
       expect(log?.messageKey).toBe("move.resolveAttack.fight.attackerWins");

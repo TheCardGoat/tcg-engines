@@ -23,7 +23,7 @@ export const op14eb04StriveToSurpassMeRoronoaZoro036: EventCard = {
   cost: 1,
   trigger:
     "You may rest 1 of your cards: Rest up to 1 of your opponent's Characters with 7000 base power or less.",
-  traits: ["The Seven Warlords of the Sea East Blue"],
+  traits: ["East Blue", "The Seven Warlords of the Sea"],
   effect:
     "[Counter] You may rest 1 of your cards: Up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {

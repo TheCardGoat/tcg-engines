@@ -64,7 +64,7 @@ export const op15PiratesDockingSix088: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -83,7 +83,7 @@ export const op15PiratesDockingSix088: CharacterCard = {
             action: "modifyCost",
             target: {
               player: "self",
-              zones: ["hand", "character"],
+              zones: ["character"],
               count: {
                 amount: 1,
               },

@@ -72,6 +72,7 @@ interface FabAnalyticsFactBaseV2 {
 
 export type FabAnalyticsFactV2 =
   | UnchangedFabAnalyticsFactV2
+  | (FabAnalyticsFactBaseV2 & { readonly kind: "undo"; readonly restoredCheckpointStateID: number })
   | (FabAnalyticsFactBaseV2 & {
       readonly kind: "card-played";
       readonly playerId: string;
@@ -511,6 +512,10 @@ export function parseFabPersistedGameAnalyticsV2(value: unknown): FabPersistedGa
 
 const enrichedFactSchema = z.discriminatedUnion("kind", [
   factBaseSchema.extend({
+    kind: z.literal("undo"),
+    restoredCheckpointStateID: z.number().int().nonnegative(),
+  }),
+  factBaseSchema.extend({
     kind: z.literal("card-played"),
     playerId: z.string(),
     card: analyticsCardRefSchema,
@@ -556,6 +561,7 @@ function asV2LegacyFact(fact: FabAnalyticsFactV1): UnchangedFabAnalyticsFactV2 {
 function parseFabAnalyticsFactV2(value: unknown): FabAnalyticsFactV2 {
   const kind = z.object({ kind: z.string() }).parse(value).kind;
   if (
+    kind === "undo" ||
     kind === "card-played" ||
     kind === "card-pitched" ||
     kind === "card-defended" ||
@@ -736,6 +742,7 @@ export function projectFabAnalyticsFactsV2(
 }
 
 function asLegacyFact(fact: FabAnalyticsFactV2): FabAnalyticsFactV1 | null {
+  if (fact.kind === "undo") return null;
   switch (fact.kind) {
     case "card-drawn":
     case "card-moved":
@@ -1056,10 +1063,25 @@ export function buildFabGameAnalyticsV2(input: {
   readonly transitionReceipts: readonly FabAnalyticsTransitionReceiptV2[];
   readonly openingHandsComplete?: boolean;
 }): FabGameAnalyticsV2 {
+  // Retain every receipt for coverage, but remove reverted consequences from aggregates.
+  const receipts: FabAnalyticsTransitionReceiptV2[] = [];
+  for (const receipt of [...input.transitionReceipts].sort(
+    (a, b) => a.stateVersion - b.stateVersion,
+  )) {
+    const undo = receipt.facts.find((fact) => fact.kind === "undo");
+    if (undo?.kind === "undo") {
+      for (let i = 0; i < receipts.length; i++) {
+        const prior = receipts[i]!;
+        if (prior.stateVersion > undo.restoredCheckpointStateID)
+          receipts[i] = { ...prior, facts: [] };
+      }
+    }
+    receipts.push(receipt);
+  }
   const legacy = buildFabGameAnalytics({
     ...input,
     players: input.players,
-    factBatches: input.transitionReceipts.map((receipt) => ({
+    factBatches: receipts.map((receipt) => ({
       ...receipt,
       schemaVersion: 1,
       facts: receipt.facts.flatMap((fact) => {
@@ -1070,7 +1092,7 @@ export function buildFabGameAnalyticsV2(input: {
   });
   const lifecycle = buildLifecycle({
     players: input.players,
-    receipts: input.transitionReceipts,
+    receipts,
     legacy,
   });
   const baseCoverage = transitionCoverage(input.transitionReceipts);

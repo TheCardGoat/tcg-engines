@@ -126,6 +126,10 @@
   padding: 9px;
 }
 
+.panelEmbedded[data-controls-hosted="true"] .controlsPopover {
+  top: 4px;
+}
+
 .controlsSection {
   display: flex;
   flex-direction: column;
@@ -1064,4 +1068,69 @@
   button.entry {
     min-height: 44px;
   }
+}
+
+.panel[data-appearance="timeline"] .scroll {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: var(--simulator-surface-inset, 0.65rem 0.75rem);
+}
+.panel[data-appearance="timeline"] .turnGroup {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+}
+.panel[data-appearance="timeline"] .turnHeader {
+  padding-inline: 0;
+  border-radius: 0;
+  background: transparent;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.panel[data-appearance="timeline"] .turnTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.panel[data-appearance="timeline"] .turnMeta {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.panel[data-appearance="timeline"] .turnCount {
+  display: block;
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.panel[data-appearance="timeline"] .phaseHeader {
+  color: var(--board-muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding-inline: 0;
+}
+.panel[data-appearance="timeline"] .entry {
+  font-size: 0.8125rem;
+  padding-inline: 0;
+  background: transparent;
+}
+.panel[data-appearance="timeline"] .entryMeta {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.panel[data-appearance="timeline"] .entryMeta::after {
+  width: 4px;
+  height: 4px;
 }

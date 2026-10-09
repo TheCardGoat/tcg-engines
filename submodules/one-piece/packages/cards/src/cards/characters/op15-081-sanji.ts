@@ -36,7 +36,7 @@ export const op15Sanji081: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

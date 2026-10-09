@@ -4,8 +4,8 @@ export {
   loadGeneratedPromoCards,
   loadGeneratedSetCards,
 } from "./load-generated.ts";
-export { generateStructuredCardFiles } from "./generate.ts";
 export { generateEngineTestFiles } from "./generate-engine-tests.ts";
+export type { ParseResult, UnparsedSegment } from "./parser.ts";
 export {
   parseEmbracingPowerRetailStarterDeckCards,
   parsePromoCard,

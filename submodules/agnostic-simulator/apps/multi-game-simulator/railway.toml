@@ -44,6 +44,7 @@ watchPatterns = [
   "submodules/agnostic-simulator/packages/shared/**",
   "submodules/agnostic-simulator/packages/simulator-contract/**",
   "submodules/agnostic-simulator/packages/simulator-runtime/**",
+  "submodules/agnostic-simulator/packages/simulator-presentation/**",
   "submodules/agnostic-simulator/packages/simulator-testing/**",
   "submodules/agnostic-simulator/packages/simulator-ui/**",
   "submodules/agnostic-simulator/package.json",
@@ -117,3 +118,8 @@ numReplicas = 1
 [environments.staging.deploy.limitOverride.containers]
 cpu = 2
 memoryBytes = 2000000000
+
+# Staging starts only on demand. Ordinary source changes do not wake it.
+# The manual Staging Power workflow deploys the reviewed main commit.
+[environments.staging.build]
+watchPatterns = ["/staging-deploy-trigger.txt"]

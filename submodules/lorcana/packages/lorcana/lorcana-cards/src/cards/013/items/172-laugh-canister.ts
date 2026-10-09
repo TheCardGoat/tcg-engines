@@ -25,9 +25,13 @@ export const laughCanister: ItemCard = {
   rarity: "rare",
   cost: 3,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_447c6fd06c5d4f26a6f4a2bf54dbce69",
+    tcgPlayer: "704668",
+  },
   text: [
     {
-      title: "Copycat",
+      title: "COPYCAT",
       description:
         "{E} — Put the top card of your deck into your inkwell facedown and exerted. Chosen opponent may put the top card of their deck into their inkwell facedown and exerted.",
     },

@@ -21,10 +21,10 @@ export const op15Koby009: CharacterCard = {
   color: ["red"],
   rarity: "UC",
   setId: "OP15",
-  cost: 4,
+  cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   attribute: "strike",
   effect:
     "If your Character with 7000 base power or less would be removed from the field by your opponent's effect, you may give your Leader -2000 power during this turn instead.",

@@ -29,6 +29,8 @@ describe("OP14-070 Buffalo", () => {
     restBuffaloByOpponentCharacterEffect(engine, buffaloId);
     expect(engine.pendingDecision("effectOptional", "south").actorId).toBe("south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    // Buffalo is active again in time for the Blocker Step; leave it active.
+    engine.resolveDecision("battleBlocker", { selectedIds: [] }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 0, donDeckCount: 10 });

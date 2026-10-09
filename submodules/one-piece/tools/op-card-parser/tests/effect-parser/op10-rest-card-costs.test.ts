@@ -13,7 +13,7 @@ describe("OP10 rest-card compound costs", () => {
         cost: "restCards",
         amount: 1,
         filters: [
-          { filter: "trait", value: "Dressrosa", match: "includes" },
+          { filter: "trait", value: "Dressrosa", match: "exact" },
           {
             filter: "anyOf",
             groups: [
@@ -27,7 +27,7 @@ describe("OP10 rest-card compound costs", () => {
         cost: "returnCharacter",
         amount: 1,
         filters: [
-          { filter: "trait", value: "Dressrosa", match: "includes" },
+          { filter: "trait", value: "Dressrosa", match: "exact" },
           { filter: "cost", comparison: "gte", value: 4 },
         ],
       },

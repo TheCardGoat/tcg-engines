@@ -62,10 +62,6 @@ export const tinderflarePivot: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                       oneOf: ["ALLY", "CHAMPION"],
                     },
                     {
-                      kind: "object-state",
-                      state: "distant",
-                    },
-                    {
                       kind: "class",
                       oneOf: ["RANGER"],
                     },
@@ -75,26 +71,40 @@ export const tinderflarePivot: GrandArchiveCard<GrandArchiveAbilityDefinition, "
             },
           ],
           effect: {
-            kind: "continuous",
-            subjects: {
-              kind: "bound",
-              binding: "target-1",
-            },
-            affectedSet: "locked",
-            duration: {
-              kind: "this-turn",
-            },
-            layer: {
-              layer: "D",
-              modifies: "ability",
-            },
-            change: {
-              kind: "grant-keyword",
-              keyword: {
-                name: "ranged",
-                value: 1,
+            kind: "sequence",
+            effects: [
+              {
+                kind: "set-object-state",
+                subject: {
+                  kind: "bound",
+                  binding: "target-1",
+                },
+                state: "distant",
+                value: true,
               },
-            },
+              {
+                kind: "continuous",
+                subjects: {
+                  kind: "bound",
+                  binding: "target-1",
+                },
+                affectedSet: "locked",
+                duration: {
+                  kind: "this-turn",
+                },
+                layer: {
+                  layer: "D",
+                  modifies: "ability",
+                },
+                change: {
+                  kind: "grant-keyword",
+                  keyword: {
+                    name: "ranged",
+                    value: 1,
+                  },
+                },
+              },
+            ],
           },
         },
       ],

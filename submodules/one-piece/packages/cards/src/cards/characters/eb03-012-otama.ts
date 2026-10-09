@@ -67,8 +67,8 @@ export const eb03Otama012: CharacterCard = {
                       {
                         filter: "anyOf",
                         groups: [
-                          [{ filter: "trait", value: "Animal", match: "includes" }],
-                          [{ filter: "trait", value: "SMILE", match: "includes" }],
+                          [{ filter: "trait", value: "Animal", match: "exact" }],
+                          [{ filter: "trait", value: "SMILE", match: "exact" }],
                         ],
                       },
                       {

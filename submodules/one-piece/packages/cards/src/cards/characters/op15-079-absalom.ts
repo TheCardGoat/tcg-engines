@@ -45,7 +45,7 @@ export const op15Absalom079: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

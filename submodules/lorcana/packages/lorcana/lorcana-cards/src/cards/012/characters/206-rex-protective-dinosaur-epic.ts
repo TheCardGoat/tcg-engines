@@ -25,7 +25,7 @@ export const rexProtectiveDinosaurEpic: CharacterCard = {
   franchise: "Toy Story",
   set: "012",
   cardNumber: 206,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 3,

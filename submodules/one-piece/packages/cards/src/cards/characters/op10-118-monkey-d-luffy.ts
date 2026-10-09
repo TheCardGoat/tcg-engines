@@ -31,7 +31,7 @@ export const op10MonkeyDLuffy118: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Straw Hat Crew Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "Once per turn, this Character cannot be K.O.'d by your opponent's effects.\n[When Attacking] You may place 3 cards from your trash at the bottom of your deck in any order: If your opponent has 5 or more cards in their hand, your opponent trashes 1 card from their hand.",

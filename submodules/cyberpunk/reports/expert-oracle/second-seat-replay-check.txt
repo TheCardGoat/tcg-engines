@@ -1,0 +1,5 @@
+
+Replay: reports/expert-oracle/second-seat-replay.json
+  tactical vs expert-oracle (seed=expert-comparison/authored-overwatch-recharge-control-vs-authored-overwatch-recharge-control/match-0)
+  steps compared: 123 / 123
+  RESULT: matched ✓ (every step + stateID identical)

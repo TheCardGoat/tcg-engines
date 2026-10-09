@@ -3,7 +3,11 @@ import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
 import { expect, it } from "vitest";
 
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
-import { createClassBonusTestChampion } from "./class-bonus-test-champion.ts";
+import {
+  createClassBonusTestChampion,
+  enableAllTestElements,
+  grandArchiveTestFace,
+} from "./class-bonus-test-champion.ts";
 
 type Card = GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
 
@@ -19,8 +23,13 @@ export function proveBrewPotion({
   readonly wrongIngredients: readonly Card[];
   readonly reserveCost: number;
 }): void {
+  const resolvedZone = grandArchiveTestFace(card).typeLine.types.includes("ACTION")
+    ? "graveyard"
+    : "field";
   function setup(field = ingredients, reserve = false) {
-    const champion = createClassBonusTestChampion(card, false, "activation-discount");
+    const champion = enableAllTestElements(
+      createClassBonusTestChampion(card, false, "activation-discount"),
+    );
     return GrandArchiveTestEngine.startFixture({
       playerOne: {
         champion,
@@ -60,7 +69,7 @@ export function proveBrewPotion({
     expect(player.cards(card, { zone: "field" })).toHaveLength(0);
     player.pass();
     game.player("player-two").pass();
-    expect(player.cards(card, { zone: "field" })).toHaveLength(1);
+    expect(player.cards(card, { zone: resolvedZone })).toHaveLength(1);
   });
 
   it("can instead pay the printed reserve cost without sacrificing or becoming brewed", () => {
@@ -77,7 +86,7 @@ export function proveBrewPotion({
     expect(game.state.stack.at(-1)?.activationStates).not.toContain("brewed");
     player.pass();
     game.player("player-two").pass();
-    expect(player.cards(card, { zone: "field" })).toHaveLength(1);
+    expect(player.cards(card, { zone: resolvedZone })).toHaveLength(1);
   });
 
   it("rejects an incomplete recipe without consuming anything", () => {

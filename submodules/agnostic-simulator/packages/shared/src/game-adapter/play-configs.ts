@@ -114,7 +114,7 @@ const PLAY_GAME_CONFIGS = {
   riftbound: {
     slug: "riftbound" as const,
     isActive: true,
-    runtimeAuthority: "client" as const,
+    runtimeAuthority: "server" as const,
     capabilities: definePlayCapabilities({ lobby: true }),
     timeControl: clocklessTimeControlPolicy(),
   },

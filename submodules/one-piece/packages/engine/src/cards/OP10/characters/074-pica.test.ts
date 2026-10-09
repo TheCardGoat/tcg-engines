@@ -14,7 +14,7 @@ function koPicaWithDrake(engine: OnePieceTestEngine, picaId: string) {
 describe("OP10-074 Pica", () => {
   test("rests two active DON!! instead of the first opponent-effect K.O. only once per turn", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ card: op10Pica074, rested: true }], activeDon: 4 },
+      { character: [{ card: op10Pica074, rested: true }], activeDon: 4, restedDon: 1 },
       { hand: [op01XDrake054, op01XDrake054], activeDon: 10 },
       { firstPlayer: "south", activeSeat: "north" },
     );
@@ -22,22 +22,29 @@ describe("OP10-074 Pica", () => {
 
     koPicaWithDrake(engine, picaId);
     engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
-    const payment = engine.pendingDecision("effectRestDonCount", "south").steps[0];
-    if (payment?.kind !== "chooseOption") {
+    const payment = engine.pendingDecision("effectMixedRestSelection", "south").steps[0];
+    if (payment?.kind !== "payCost") {
       throw new Error("Expected Pica's exact two-DON!! replacement payment.");
     }
-    expect(payment.options.map((option) => option.id)).toEqual(["2"]);
-    engine.resolveDecision("effectRestDonCount", { optionId: "2" }, "south");
+    expect(payment).toMatchObject({ min: 2, max: 2 });
+    expect(
+      payment.candidates.every((candidate) => candidate.ref.id.startsWith("active-don:")),
+    ).toBe(true);
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:south:0", "active-don:south:1"] },
+      "south",
+    );
 
     let view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(picaId);
-    expect(view.players.south).toMatchObject({ activeDon: 2, restedDon: 2 });
+    expect(view.players.south).toMatchObject({ activeDon: 2, restedDon: 3 });
 
     koPicaWithDrake(engine, picaId);
 
     view = engine.getView("south");
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(picaId);
-    expect(view.players.south).toMatchObject({ activeDon: 2, restedDon: 2 });
+    expect(view.players.south).toMatchObject({ activeDon: 2, restedDon: 3 });
     expect(view.prompts).toHaveLength(0);
   });
 

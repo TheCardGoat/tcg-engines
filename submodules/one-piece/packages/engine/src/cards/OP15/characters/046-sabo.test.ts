@@ -8,6 +8,19 @@ import { op15Rebecca039 } from "../../../../../cards/src/cards/leaders/op15-039-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-046 Sabo", () => {
+  test("Blocker redirects an opposing Leader attack away from Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Sabo046], hand: [], life: 3 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const blockerId = engine.findCardInZone("south", "character", op15Sabo046);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [blockerId] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] activates a Dressrosa Event with a Dressrosa Leader", () => {
     const engine = OnePieceTestEngine.create(
       {

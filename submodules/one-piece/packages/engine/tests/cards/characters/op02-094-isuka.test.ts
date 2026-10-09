@@ -53,7 +53,7 @@ describe("OP02-094 Isuka", () => {
 
     engine.declareAttack(isukaId, engine.leader("north"), "south");
     engine.declareAttack(otherAttackerId, targetId, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === isukaId)

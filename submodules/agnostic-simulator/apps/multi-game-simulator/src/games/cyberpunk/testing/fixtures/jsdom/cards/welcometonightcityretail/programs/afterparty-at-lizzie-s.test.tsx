@@ -1,4 +1,5 @@
 import { describe, test } from "vite-plus/test";
+import { fireEvent, waitFor } from "@testing-library/react";
 import { welcomeToNightCityRetailAfterpartyAtLizzieS } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -31,17 +32,19 @@ describe("Afterparty at Lizzie's (Retail) optional gig target — F8 regression"
       await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
 
-      // The optional prompt is submittable with no candidate selected: the
+      // The optional prompt is declinable with no candidate selected: the
       // empty selection IS the decline. (Regression: this submit used to be
-      // disabled, deadlocking the prompt.)
-      const submit = pom.interactionPanel.submitButton("resolveEffectTarget");
-      const disabledBeforeSelection = await submit.getAttribute("disabled");
-      expectEqual(
-        "optional target submit enabled before selection",
-        disabledBeforeSelection === null,
-        true,
-      );
-      await pom.interactionPanel.submitInteraction("resolveEffectTarget");
+      // disabled, deadlocking the prompt.) The decline now lives in the prompt
+      // banner as an explicit pass button.
+      const decline = await waitFor(() => {
+        const button = view.container.querySelector<HTMLButtonElement>(
+          '[data-testid="prompt-target-pass"]',
+        );
+        if (!button) throw new Error("Expected the optional target prompt to offer a decline button.");
+        return button;
+      });
+      expectEqual("optional target decline enabled before selection", decline.disabled, false);
+      fireEvent.click(decline);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.getCardInZoneByDefinitionId(

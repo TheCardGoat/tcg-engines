@@ -33,7 +33,9 @@ export const promiseOfPlenty = definePitchFamily(fabPitchFamilies["promise-of-pl
             condition: {
               type: "zone-count",
               zone: "arsenal",
-              player: "self",
+              // Printed "each hero … their arsenal": the iterated hero, not
+              // the controller (for-each seat resolution).
+              player: "iteration-subject",
               comparison: {
                 op: "eq",
                 value: 0,
@@ -44,6 +46,8 @@ export const promiseOfPlenty = definePitchFamily(fabPitchFamilies["promise-of-pl
               target: {
                 selector: "object",
                 declared: "at-resolution",
+                // Printed "the top card of their deck": the iterated hero.
+                player: "iteration-subject",
                 zones: ["deck"],
                 position: "top",
                 count: 1,

@@ -47,7 +47,7 @@ export const op12MonkeyDDragon094: CharacterCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -77,7 +77,7 @@ export const op12MonkeyDDragon094: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Revolutionary Army",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

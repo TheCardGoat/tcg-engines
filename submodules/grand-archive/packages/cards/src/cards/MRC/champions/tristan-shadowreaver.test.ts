@@ -12,3 +12,9 @@ describe("Tristan, Shadowreaver — Lineage restriction", () => {
     memoryCost: 3,
   });
 });
+
+import { proveSameLevelChampion } from "../../../testing/same-level-champion.ts";
+/** @covers 4upufooz13-a2 */
+describe("Tristan, Shadowreaver — same-base-level permission and draw", () => {
+  proveSameLevelChampion(tristanShadowreaver, "Tristan");
+});

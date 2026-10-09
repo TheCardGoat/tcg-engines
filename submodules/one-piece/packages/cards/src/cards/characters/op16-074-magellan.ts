@@ -34,7 +34,7 @@ export const op16Magellan074: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

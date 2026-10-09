@@ -39,7 +39,7 @@ export const op14eb04Trebol068: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

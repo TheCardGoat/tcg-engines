@@ -54,22 +54,16 @@ export const trickyChimps: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
           effect: {
             kind: "conditional",
             condition: {
-              kind: "compare",
-              comparison: {
-                left: {
-                  kind: "count",
-                  collection: {
-                    zones: ["field"],
-                    player: "each-opponent",
-                    filter: {
-                      kind: "type",
-                      oneOf: ["ALLY"],
-                    },
-                  },
-                },
-                operator: "gte",
-                right: 2,
+              kind: "player-zone-count",
+              players: "each-opponent",
+              quantifier: "any",
+              zone: "field",
+              filter: {
+                kind: "type",
+                oneOf: ["ALLY"],
               },
+              operator: "gte",
+              value: 2,
             },
             then: {
               kind: "continuous",

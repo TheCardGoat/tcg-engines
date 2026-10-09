@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   AI_STRATEGIES,
@@ -14,6 +14,16 @@ import {
 import classes from "./Practice.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
 import { practiceModeFromSearch } from "../../../simulator/practiceMode";
+import {
+  firstGameTutorialMessages,
+  handsOnTutorialMessages,
+  resolveTutorialLocale,
+} from "../components/FirstGameTutorial/firstGameTutorialMessages";
+import {
+  firstGameTutorialSeen,
+  readTutorialLocalePreference,
+  saveFirstGameTutorialResult,
+} from "../components/FirstGameTutorial/storage";
 
 export function PracticePage() {
   const navigate = useNavigate();
@@ -30,6 +40,19 @@ export function PracticePage() {
   const [seed, setSeed] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialLocale, setTutorialLocale] =
+    useState<ReturnType<typeof resolveTutorialLocale>>("en");
+
+  useEffect(() => {
+    setShowTutorial(!firstGameTutorialSeen("v1"));
+    setTutorialLocale(resolveTutorialLocale(readTutorialLocalePreference(), navigator.languages));
+  }, []);
+
+  const dismissTutorial = () => {
+    saveFirstGameTutorialResult("dismissed", "v1");
+    setShowTutorial(false);
+  };
 
   const strategyDescription = useMemo(
     () => getStrategyById(botStrategyId)?.description ?? "Pick how the AI decides each turn.",
@@ -74,6 +97,29 @@ export function PracticePage() {
               : "Test a matchup with a practice bot. Bots help exercise decks and simulator flows; they are not competitive opponents."}
           </p>
         </header>
+
+        {showTutorial ? (
+          <section
+            className={classes.panel}
+            style={{ marginBottom: 20, borderColor: "#f5e642" }}
+            aria-label={firstGameTutorialMessages[tutorialLocale].label}
+          >
+            <h2 style={{ margin: 0 }}>{firstGameTutorialMessages[tutorialLocale].label}</h2>
+            <p style={{ margin: 0 }}>{handsOnTutorialMessages[tutorialLocale].invitation}</p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link
+                className={classes.button}
+                to={cyberpunkSimulatorPath("/tutorial")}
+                onClick={dismissTutorial}
+              >
+                {handsOnTutorialMessages[tutorialLocale].start}
+              </Link>
+              <button className={classes.button} type="button" onClick={dismissTutorial}>
+                {firstGameTutorialMessages[tutorialLocale].skip}
+              </button>
+            </div>
+          </section>
+        ) : null}
 
         <section className={classes.panel} aria-label="Practice match setup">
           <div className={classes.grid}>
@@ -175,7 +221,7 @@ export function PracticePage() {
             data-strategy-id={botStrategyId}
           >
             {practiceMode === "self"
-              ? "Play both sides is manual. Use Opponent controls during the match to switch seats."
+              ? "Play both sides is manual. Use Opponent controls any time, or switch seats when the rival has priority."
               : strategyDescription}
           </p>
 
@@ -213,6 +259,9 @@ export function PracticePage() {
           data-testid="practice-setup-browse-decks"
         >
           Browse public decks
+        </Link>
+        <Link className={classes.backLink} to={cyberpunkSimulatorPath("/tutorial")}>
+          {firstGameTutorialMessages[tutorialLocale].replay}
         </Link>
       </div>
     </main>

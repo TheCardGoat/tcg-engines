@@ -159,7 +159,7 @@ export function defineVariantCards<
           `Layout ${authoredLayout.physicalCanonicalId} does not match variant ${variantIdentity.canonicalId}`,
         );
       }
-      const card = defineCard(variantIdentity, {
+      const card: FleshAndBloodCard = defineCard(variantIdentity, {
         ...(keywords && keywords.length > 0 ? { keywords } : {}),
         ...(abilities ? { abilities } : {}),
         ...(authoredLayout ? { layout: toRuntimeCardLayout(authoredLayout) } : {}),

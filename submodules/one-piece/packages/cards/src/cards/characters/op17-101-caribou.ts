@@ -25,7 +25,7 @@ export const op17Caribou101: CharacterCard = {
   counter: 1000,
   trigger:
     "You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",
-  traits: ["Supernovas Caribou Pirates"],
+  traits: ["Supernovas", "Caribou Pirates"],
   attribute: "special",
   effect:
     "[Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: Give up to 1 of your opponent's Characters -3000 power during this turn.",

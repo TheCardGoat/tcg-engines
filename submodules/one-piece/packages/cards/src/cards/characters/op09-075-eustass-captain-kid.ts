@@ -48,7 +48,7 @@ export const op09EustassCaptainKid075: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Kid Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

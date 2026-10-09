@@ -21,7 +21,7 @@ export const op14eb04FlameDragonTorch040: EventCard = {
   rarity: "R",
   setId: "EB04",
   cost: 1,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   effect:
     "[Main] You may rest 6 of your DON!! cards: Up to 1 of your [Kaido] cards gains +3000 power during this turn. Then, rest up to 1 of your opponent's Characters.\n[Counter] DON!! -1: Your Leader gains +4000 power during this battle.",
   effects: {

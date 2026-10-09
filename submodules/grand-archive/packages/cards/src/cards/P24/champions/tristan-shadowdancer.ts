@@ -75,40 +75,72 @@ export const tristanShadowdancer: GrandArchiveCard<GrandArchiveAbilityDefinition
         },
         {
           id: "he6kd7hocc-a3",
-          kind: "card-resolution",
+          kind: "activated",
           text: "Remove two preparation counters from Tristan: Change the target of an attack that targets Tristan to a phantasia ally you control.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["PHANTASIA"],
-                },
-              },
-            },
-          ],
-          effect: {
+          activation: "ability",
+          cost: {
             kind: "remove-counter",
             subject: {
-              kind: "bound",
-              binding: "target-1",
+              kind: "source",
             },
             counter: "preparation",
             amount: 2,
-            bindResultAs: "removed-counters",
+          },
+          effect: {
+            kind: "conditional",
+            condition: {
+              kind: "current-attack-target-matches",
+              controller: "controller",
+              filter: {
+                kind: "not",
+                filter: {
+                  kind: "not-source",
+                },
+              },
+            },
+            then: {
+              kind: "choose",
+              selection: {
+                id: "target-1",
+                kind: "choice",
+                declared: "resolution",
+                chooser: "controller",
+                count: {
+                  kind: "exactly",
+                  amount: 1,
+                },
+                candidates: {
+                  kind: "object",
+                  zones: ["field"],
+                  relationship: "controlled-by",
+                  player: "controller",
+                  filter: {
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "type",
+                        oneOf: ["PHANTASIA"],
+                      },
+                      {
+                        kind: "type",
+                        oneOf: ["ALLY"],
+                      },
+                    ],
+                  },
+                },
+              },
+              effect: {
+                kind: "retarget",
+                subject: {
+                  kind: "current-attack",
+                },
+                chooser: "controller",
+                newTarget: {
+                  kind: "bound",
+                  binding: "target-1",
+                },
+              },
+            },
           },
         },
       ],

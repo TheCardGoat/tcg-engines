@@ -1,4 +1,7 @@
 import { describe } from "vitest";
+import { proveAdditionalSacrifice } from "../../../testing/additional-sacrifice.ts";
+import { resplendentKiteShield } from "../../ALC/items/resplendent-kite-shield.ts";
+import { rustedWarshield } from "../../ALC/items/rusted-warshield.ts";
 
 import { proveFixedDamageAction } from "../../../testing/fixed-damage-action.ts";
 import { shieldFragmentation } from "./shield-fragmentation.ts";
@@ -12,4 +15,9 @@ describe("Shield Fragmentation — fixed damage", () => {
     targetKind: "unit",
     sacrifice: "shield",
   });
+});
+
+/** @covers CHU96qWwaS-a1 */
+describe("Shield Fragmentation — additional Shield sacrifice", () => {
+  proveAdditionalSacrifice(shieldFragmentation, 2, [resplendentKiteShield, rustedWarshield]);
 });

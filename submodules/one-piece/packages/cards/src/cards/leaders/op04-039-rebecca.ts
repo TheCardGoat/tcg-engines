@@ -60,7 +60,7 @@ export const op04Rebecca039: LeaderCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

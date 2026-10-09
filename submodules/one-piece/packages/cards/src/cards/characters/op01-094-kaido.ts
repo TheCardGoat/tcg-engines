@@ -30,7 +30,7 @@ export const op01Kaido094: CharacterCard = {
   setId: "OP01",
   cost: 10,
   power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     '[On Play] DON!! -6 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the "Animal Kingdom Pirates" type, K.O. all Characters other than this Character.',
@@ -62,7 +62,7 @@ export const op01Kaido094: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Animal Kingdom Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

@@ -23,7 +23,7 @@ export const op03PeepleyLulu067: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "ranged",
   effect:
     "[DON!! x1] [When Attacking] If your Leader has the [Galley-La Company] type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -39,7 +39,7 @@ export const op03PeepleyLulu067: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Galley-La Company",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

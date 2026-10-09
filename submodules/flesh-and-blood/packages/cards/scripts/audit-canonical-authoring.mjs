@@ -241,8 +241,8 @@ export function auditCanonicalAuthoring({ packageRoot = DEFAULT_PACKAGE_ROOT } =
     const executable = isExecutableCardModule(file);
     const directFactoryBindings = new Map();
     const factoryNamespaces = new Set();
-    const familyI18nBindings = new Set();
-    const familyI18nNamespaces = new Set();
+    const typedI18nBindings = new Set();
+    const typedI18nNamespaces = new Set();
     for (const statement of source.statements) {
       if (!ts.isImportDeclaration(statement) || !statement.importClause) continue;
       const moduleSpecifier = ts.isStringLiteral(statement.moduleSpecifier)
@@ -253,9 +253,9 @@ export function auditCanonicalAuthoring({ packageRoot = DEFAULT_PACKAGE_ROOT } =
       if (
         bindings &&
         ts.isNamespaceImport(bindings) &&
-        moduleSpecifier.endsWith("family-i18n.ts")
+        (moduleSpecifier.endsWith("family-i18n.ts") || moduleSpecifier.endsWith("card-i18n.ts"))
       ) {
-        familyI18nNamespaces.add(bindings.name.text);
+        typedI18nNamespaces.add(bindings.name.text);
       }
       if (bindings && ts.isNamedImports(bindings)) {
         for (const element of bindings.elements) {
@@ -263,23 +263,27 @@ export function auditCanonicalAuthoring({ packageRoot = DEFAULT_PACKAGE_ROOT } =
           if (FORBIDDEN_DIRECT_FACTORIES.has(imported)) {
             directFactoryBindings.set(element.name.text, imported);
           }
-          if (moduleSpecifier.endsWith("family-i18n.ts") && imported === "defineFamilyI18n") {
-            familyI18nBindings.add(element.name.text);
+          if (
+            (moduleSpecifier.endsWith("family-i18n.ts") && imported === "defineFamilyI18n") ||
+            (moduleSpecifier.endsWith("card-i18n.ts") && imported === "defineCardI18n")
+          ) {
+            typedI18nBindings.add(element.name.text);
           }
         }
       }
     }
 
-    const isTypedFamilyI18nCall = (node) =>
+    const isTypedI18nCall = (node) =>
       ts.isCallExpression(node) &&
-      ((ts.isIdentifier(node.expression) && familyI18nBindings.has(node.expression.text)) ||
+      ((ts.isIdentifier(node.expression) && typedI18nBindings.has(node.expression.text)) ||
         (ts.isPropertyAccessExpression(node.expression) &&
-          node.expression.name.text === "defineFamilyI18n" &&
+          (node.expression.name.text === "defineFamilyI18n" ||
+            node.expression.name.text === "defineCardI18n") &&
           ts.isIdentifier(node.expression.expression) &&
-          familyI18nNamespaces.has(node.expression.expression.text)));
-    const isWithinTypedFamilyI18n = (node) => {
+          typedI18nNamespaces.has(node.expression.expression.text)));
+    const isWithinTypedI18n = (node) => {
       for (let current = node.parent; current; current = current.parent) {
-        if (isTypedFamilyI18nCall(current)) return true;
+        if (isTypedI18nCall(current)) return true;
       }
       return false;
     };
@@ -341,7 +345,7 @@ export function auditCanonicalAuthoring({ packageRoot = DEFAULT_PACKAGE_ROOT } =
         if (
           file.endsWith(".i18n.ts") &&
           name === "abilities" &&
-          (!isWithinTypedFamilyI18n(node) || !isInlineLocalizationOverrides(node.initializer))
+          (!isWithinTypedI18n(node) || !isInlineLocalizationOverrides(node.initializer))
         ) {
           untypedLocalizationOverrides.push(location(source, node, file));
         }

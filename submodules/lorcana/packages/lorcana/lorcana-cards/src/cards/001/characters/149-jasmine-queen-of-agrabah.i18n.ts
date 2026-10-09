@@ -18,7 +18,17 @@ export const jasmineQueenOfAgrabahI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Jasmin",
     version: "Königin von Agrabah",
-    text: "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)\\Fürsorge\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen.",
+    text: [
+      {
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)",
+      },
+      {
+        title: "Fürsorge",
+        description:
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen.",
+      },
+    ],
   },
   fr: {
     name: "JASMINE",

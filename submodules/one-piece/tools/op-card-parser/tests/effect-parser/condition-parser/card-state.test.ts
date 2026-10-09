@@ -114,7 +114,7 @@ describe("parseInlineCondition", () => {
         player: "self",
         zone: "character",
         filters: [
-          { filter: "trait", value: "Mountain Bandits", match: "includes" },
+          { filter: "trait", value: "Mountain Bandits", match: "exact" },
           { filter: "excludeSelf" },
         ],
       });

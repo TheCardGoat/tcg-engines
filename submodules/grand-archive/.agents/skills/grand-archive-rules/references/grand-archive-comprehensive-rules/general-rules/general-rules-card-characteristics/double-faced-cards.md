@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-card-characteristics/double-faced-cards"
+  relation: "current_index"
+---
+
 # Double-faced Cards
 
 In Grand Archive, some cards exist that have two faces, or two sides, each with separate characteristics as opposed to a single side of information and rules text with an information-less card back. There is only one type of double-faced card in Grand Archive, currently.

@@ -40,7 +40,7 @@ describe("OP09-036 through OP09-089 shared parser regressions", () => {
           {
             filter: "anyOf",
             filters: [
-              { filter: "trait", value: "Land of Wano", match: "includes" },
+              { filter: "trait", value: "Land of Wano", match: "exact" },
               { filter: "trait", value: "Whitebeard Pirates", match: "includes" },
             ],
           },
@@ -66,7 +66,7 @@ describe("OP09-036 through OP09-089 shared parser regressions", () => {
             {
               filter: "allOf",
               filters: [
-                { filter: "trait", value: "Cross Guild", match: "includes" },
+                { filter: "trait", value: "Cross Guild", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -131,7 +131,7 @@ describe("OP09-036 through OP09-089 shared parser regressions", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Cross Guild", match: "includes" },
+            { filter: "trait", value: "Cross Guild", match: "exact" },
             { filter: "trait", value: "Baroque Works", match: "includes" },
           ],
         },
@@ -152,7 +152,7 @@ describe("OP09-036 through OP09-089 shared parser regressions", () => {
             {
               condition: "leaderTrait",
               trait: "Blackbeard Pirates",
-              match: "includes",
+              match: "exact",
             },
           ],
           actions: [
@@ -217,19 +217,20 @@ describe("OP09-036 through OP09-089 shared parser regressions", () => {
       costs: [{ cost: "trashFromHand", amount: 1 }, { cost: "trashThisCard" }],
       actions: [
         {
-          action: "draw",
-          player: "self",
-          amount: 1,
-          condition: {
-            condition: "leaderTrait",
-            trait: "Blackbeard Pirates",
-            match: "includes",
-          },
-        },
-        {
-          action: "modifyCost",
-          value: -2,
-          duration: "thisTurn",
+          action: "conditional",
+          predicate: { condition: "leaderTrait", trait: "Blackbeard Pirates", match: "exact" },
+          whenTrue: [
+            {
+              action: "draw",
+              player: "self",
+              amount: 1,
+            },
+            {
+              action: "modifyCost",
+              value: -2,
+              duration: "thisTurn",
+            },
+          ],
         },
       ],
       optional: true,

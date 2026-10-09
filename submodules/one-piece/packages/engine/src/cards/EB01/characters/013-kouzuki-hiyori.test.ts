@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { eb01KouzukiHiyori013 } from "../../../../../cards/src/cards/characters/eb01-013-kouzuki-hiyori.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("EB01-013 Kouzuki Hiyori", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(eb01KouzukiHiyori013);
-  });
-});

@@ -23,7 +23,7 @@ export const op14eb04Humandrill032: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["Animal Muggy Kingdom"],
+  traits: ["Animal", "Muggy Kingdom"],
   attribute: "slash",
   effect:
     "[Your Turn] When this Character becomes rested, rest up to 1 of your opponent's Characters with a cost of 4 or less.",

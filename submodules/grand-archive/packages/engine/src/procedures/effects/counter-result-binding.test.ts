@@ -197,3 +197,113 @@ describe("Grand Archive counter result bindings", () => {
     expect(runtime.state.objects[scheme.id]?.zone).toBe("graveyard");
   });
 });
+
+import { GrandArchiveTestEngine } from "../../testing/test-engine.ts";
+
+describe("Move-counter quantities", () => {
+  for (const counter of ["damage", "buff"] as const)
+    for (const available of [0, 3])
+      for (const all of [false, true]) {
+        it(`moves ${all ? "all" : "two"} ${counter} counters from ${available} available`, () => {
+          const game = GrandArchiveTestEngine.startFixture({
+            playerOne: { champion },
+            playerTwo: { champion },
+          });
+          const p = game.player("player-one"),
+            q = game.player("player-two");
+          const source = p.card(champion),
+            target = q.card(champion);
+          const kernel = new GrandArchiveTransactionKernel();
+          const prepared = kernel.transact(game.state, [
+            { type: "counter-changed", objectId: source.objectId, counter, delta: available },
+            { type: "counter-changed", objectId: target.objectId, counter, delta: 1 },
+          ]).state;
+          const result = executeGrandArchiveEffect(
+            {
+              kind: "move-counter",
+              from: { kind: "source" },
+              to: { kind: "champion", player: "opponent" },
+              counter,
+              amount: all ? { kind: "all" } : 2,
+            },
+            {
+              program: game.program,
+              state: prepared,
+              controllerId: p.id,
+              sourceId: source.objectId,
+              // An unrelated triggering event must not define the meaning of "all".
+              bindings: { eventAmount: 99 },
+            },
+            (state, events) => {
+              const result = kernel.transact(state, events);
+              return { state: result.state, events: result.result.events };
+            },
+          );
+          const moved = all ? available : Math.min(2, available);
+          const count = (id: typeof source.objectId) =>
+            counter === "damage"
+              ? result.state.objects[id]!.damage
+              : (result.state.objects[id]!.counters.buff ?? 0);
+          expect(count(source.objectId)).toBe(available - moved);
+          expect(count(target.objectId)).toBe(1 + moved);
+        });
+      }
+});
+
+describe("Grand Archive reused effect result bindings", () => {
+  it("replaces prior draw results on every execution, including a zero-result draw", () => {
+    const game = GrandArchiveTestEngine.startFixture({
+      playerOne: { champion, zones: { "main-deck": [filler, filler, filler] } },
+      playerTwo: { champion },
+    });
+    const p = game.player("player-one"),
+      hero = p.card(champion),
+      deck = p.zone("main-deck");
+    const kernel = new GrandArchiveTransactionKernel();
+    const commit = (
+      state: typeof game.state,
+      events: readonly import("../../kernel/events.ts").GrandArchiveProposedEvent[],
+    ) => {
+      const result = kernel.transact(state, events);
+      return { state: result.state, events: result.result.events };
+    };
+    const first = executeGrandArchiveEffect(
+      { kind: "draw", player: "controller", amount: 1, to: "memory", bindResultAs: "drawn" },
+      {
+        program: game.program,
+        state: game.state,
+        controllerId: p.id,
+        sourceId: hero.objectId,
+        bindings: { drawn: [hero.objectId], unrelated: 17 },
+      },
+      commit,
+    );
+    expect(first.bindings.drawn).toEqual([deck[0]!.objectId]);
+    const second = executeGrandArchiveEffect(
+      { kind: "draw", player: "controller", amount: 1, to: "memory", bindResultAs: "drawn" },
+      {
+        program: game.program,
+        state: first.state,
+        controllerId: p.id,
+        sourceId: hero.objectId,
+        bindings: first.bindings,
+      },
+      commit,
+    );
+    expect(second.bindings.drawn).toEqual([deck[1]!.objectId]);
+    const empty = executeGrandArchiveEffect(
+      { kind: "draw", player: "controller", amount: 0, to: "memory", bindResultAs: "drawn" },
+      {
+        program: game.program,
+        state: second.state,
+        controllerId: p.id,
+        sourceId: hero.objectId,
+        bindings: second.bindings,
+      },
+      commit,
+    );
+    expect(empty.bindings.drawn).toEqual([]);
+    expect(empty.bindings.unrelated).toBe(17);
+    expect(empty.state.zones[p.id].memory).toEqual([deck[0]!.objectId, deck[1]!.objectId]);
+  });
+});

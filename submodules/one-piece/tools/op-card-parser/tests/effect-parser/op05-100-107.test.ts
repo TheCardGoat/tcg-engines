@@ -117,7 +117,7 @@ describe("OP05-100 through OP05-107 parser regressions", () => {
     });
   });
 
-  test("OP05-106 uses inclusive Sky Island search and physical Trigger play", () => {
+  test("OP05-106 uses exact Sky Island search and physical Trigger play", () => {
     expect(
       buildCardEffects(
         "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Sky Island] type card other than [Shura] and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Play this card.",
@@ -134,7 +134,7 @@ describe("OP05-100 through OP05-107 parser regressions", () => {
               revealCount: { amount: 1, upTo: true },
               revealFilters: [
                 { filter: "excludeName", value: "Shura" },
-                { filter: "trait", value: "Sky Island", match: "includes" },
+                { filter: "trait", value: "Sky Island", match: "exact" },
               ],
               revealDestination: "hand",
               remainderPosition: "bottom",

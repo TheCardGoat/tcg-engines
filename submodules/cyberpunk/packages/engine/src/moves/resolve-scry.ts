@@ -1,16 +1,13 @@
-import type {
-  CardTargetDSL,
-  CardZone,
-  ScryDestination,
-  ScryDestinationZone,
-} from "@tcg/cyberpunk-types";
-import type { CardInstanceId } from "../types/branded.ts";
+import type { CardZone, ScryDestination, ScryDestinationZone } from "@tcg/cyberpunk-types";
+import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { MatchState, ScryPendingChoice } from "../types/match-state.ts";
 import { defOf } from "../state/lookups.ts";
 import { resumeCurrentTrigger } from "../ability-executor.ts";
 import { createDefaultMetaForZone } from "../types/card-instance.ts";
 import { SeededRNG } from "../state/rng.ts";
+import { resolveTarget } from "../effects/target-resolver.ts";
+import type { Operations } from "../operations/index.ts";
 
 export interface ResolveScryInput extends MoveInput {
   args: {
@@ -36,63 +33,6 @@ function getSubmittedCards(
   return (submitted?.cardIds ?? []) as CardInstanceId[];
 }
 
-function costMatchesGigValueOf(
-  state: MatchState,
-  cardCost: number,
-  target: NonNullable<CardTargetDSL["costEqualsGigValueOf"]>,
-): boolean {
-  if (target.selector === "bound") {
-    const boundIds = state.G.turnMetadata.currentTrigger?.boundTargets[target.id] ?? [];
-    return boundIds.some((id) => state.G.gigDice[id]?.faceValue === cardCost);
-  }
-
-  if (target.selector !== "gig") return false;
-
-  const values = Object.values(state.G.gigDice)
-    .filter((gig) => gig.ownerId !== undefined)
-    .filter((gig) => {
-      if (target.controller === "friendly")
-        return gig.ownerId === state.G.turnMetadata.activePlayerId;
-      if (target.controller === "rival") return gig.ownerId !== state.G.turnMetadata.activePlayerId;
-      return true;
-    })
-    .map((gig) => gig.faceValue);
-  return values.includes(cardCost);
-}
-
-function cardMatchesTarget(
-  state: MatchState,
-  cardId: CardInstanceId,
-  target?: CardTargetDSL,
-): boolean {
-  if (!target) return true;
-  const card = state.G.cardIndex[cardId as string];
-  if (!card) return false;
-  const cardDef = defOf(card);
-
-  if (target.cardTypes && !target.cardTypes.includes(cardDef.type)) return false;
-  if (target.classifications) {
-    const cardClassifications = cardDef.classifications ?? [];
-    if (
-      !target.classifications.some((classification) => cardClassifications.includes(classification))
-    ) {
-      return false;
-    }
-  }
-  if (target.minCost !== undefined && (cardDef.cost ?? 0) < target.minCost) return false;
-  if (target.maxCost !== undefined && (cardDef.cost ?? 0) > target.maxCost) return false;
-  if (target.minPower !== undefined && (cardDef.power ?? 0) < target.minPower) return false;
-  if (target.maxPower !== undefined && (cardDef.power ?? 0) > target.maxPower) return false;
-  if (
-    target.costEqualsGigValueOf &&
-    !costMatchesGigValueOf(state, cardDef.cost ?? 0, target.costEqualsGigValueOf)
-  ) {
-    return false;
-  }
-
-  return true;
-}
-
 function orderedRemainder(
   cardIds: CardInstanceId[],
   destination: ScryDestination,
@@ -106,12 +46,13 @@ function orderedRemainder(
 
 function moveCardToScryDestination(
   state: MatchState,
-  playerId: string,
+  playerId: PlayerId,
   cardId: CardInstanceId,
   zone: ScryDestinationZone,
-): void {
-  const player = state.G.players[playerId];
-  if (!player) return;
+  operations: Operations,
+): boolean {
+  const player = state.G.players[playerId as string];
+  if (!player) return false;
 
   for (const zoneName of ["deck", "hand", "trash", "field"] as const) {
     const index = player.zones[zoneName].indexOf(cardId);
@@ -119,25 +60,38 @@ function moveCardToScryDestination(
   }
 
   const card = state.G.cardIndex[cardId as string];
-  if (!card) return;
+  if (!card) return false;
+  const fromZone = card.zone;
 
   if (zone === "deckBottom") {
     card.zone = "deck";
     card.meta = createDefaultMetaForZone("deck");
     player.zones.deck.push(cardId);
-    return;
-  }
-
-  if (zone === "deckTop") {
+  } else if (zone === "deckTop") {
     card.zone = "deck";
     card.meta = createDefaultMetaForZone("deck");
     player.zones.deck.unshift(cardId);
-    return;
+  } else {
+    card.zone = zone as CardZone;
+    card.meta = createDefaultMetaForZone(zone as CardZone);
+    player.zones[zone].push(cardId);
   }
-
-  card.zone = zone as CardZone;
-  card.meta = createDefaultMetaForZone(zone as CardZone);
-  player.zones[zone].push(cardId);
+  // Reordering a card within the deck is still a visible placement action.
+  if (fromZone !== card.zone || zone === "deckBottom" || zone === "deckTop") {
+    operations.event.emit({
+      type: "cardMoved",
+      cardId,
+      fromZone,
+      toZone: card.zone,
+      playerId,
+      ...(zone === "deckBottom"
+        ? { deckPlacement: "bottom" as const }
+        : zone === "deckTop"
+          ? { deckPlacement: "top" as const }
+          : {}),
+    });
+  }
+  return fromZone === "deck" && card.zone === "deck";
 }
 
 export const resolveScryMove: MoveDefinition<ResolveScryInput> = {
@@ -196,7 +150,17 @@ export const resolveScryMove: MoveDefinition<ResolveScryInput> = {
             errorCode: "DUPLICATE_CHOICE",
           };
         }
-        if (!cardMatchesTarget(state, cardId, destination.target)) {
+        if (
+          destination.target &&
+          !resolveTarget(destination.target, {
+            state,
+            sourceCardId: typedChoice.payload.sourceCardId,
+            sourcePlayerId: typedChoice.payload.sourcePlayerId,
+            abilityIndex: typedChoice.payload.abilityIndex,
+            contextTargets: typedChoice.payload.contextTargets,
+            boundTargets: typedChoice.payload.boundTargets,
+          }).includes(cardId as string)
+        ) {
           return {
             valid: false,
             error: "Card does not match destination filter",
@@ -222,14 +186,33 @@ export const resolveScryMove: MoveDefinition<ResolveScryInput> = {
       ({ zone: "deckBottom", remainder: true } satisfies ScryDestination);
 
     const assigned = new Set<string>();
-    const foundCards: CardInstanceId[] = [];
+    const foundCards: CardInstanceId[] = explicitDestinations.flatMap((destination) =>
+      getSubmittedCards(input, destination),
+    );
+    const foundDestination = explicitDestinations.find((destination) =>
+      getSubmittedCards(input, destination).some((cardId) => foundCards.includes(cardId)),
+    );
+    const shouldRevealFoundCards = foundDestination?.reveal === true;
+    let deckReordered = false;
 
     for (const destination of explicitDestinations) {
       const cardIds = getSubmittedCards(input, destination);
+      if (destination.reveal && cardIds.length > 0) {
+        operations.event.emit({
+          type: "cardsRevealed",
+          cardIds,
+          playerId,
+          audience: "public",
+          fromZone: "deck",
+          ownerId: playerId,
+          sourceCardId: choice.payload.sourceCardId,
+        });
+      }
       for (const cardId of cardIds) {
         assigned.add(cardId as string);
-        foundCards.push(cardId);
-        moveCardToScryDestination(state, playerId as string, cardId, destination.zone);
+        deckReordered =
+          moveCardToScryDestination(state, playerId, cardId, destination.zone, operations) ||
+          deckReordered;
       }
     }
 
@@ -239,26 +222,18 @@ export const resolveScryMove: MoveDefinition<ResolveScryInput> = {
       state,
     );
     for (const cardId of remainder) {
-      moveCardToScryDestination(state, playerId as string, cardId, remainderDestination.zone);
+      deckReordered =
+        moveCardToScryDestination(state, playerId, cardId, remainderDestination.zone, operations) ||
+        deckReordered;
+    }
+    if (deckReordered) {
+      operations.event.emit({ type: "deckCardsPlaced", playerId });
     }
     const selectedCardNames = foundCards
       .map((cardId) => state.G.cardIndex[cardId])
       .filter((card): card is NonNullable<typeof card> => card !== undefined)
       .map((card) => defOf(card).displayName ?? defOf(card).name);
-    const foundDestination = explicitDestinations.find((destination) =>
-      getSubmittedCards(input, destination).some((cardId) => foundCards.includes(cardId)),
-    );
-    const shouldRevealFoundCards = foundDestination?.reveal === true;
-
     operations.game.setPendingChoice(undefined);
-
-    if (foundCards.length > 0 && shouldRevealFoundCards) {
-      operations.event.emit({
-        type: "cardsRevealed",
-        cardIds: foundCards,
-        playerId,
-      });
-    }
 
     operations.event.emit({
       type: "searchPerformed",

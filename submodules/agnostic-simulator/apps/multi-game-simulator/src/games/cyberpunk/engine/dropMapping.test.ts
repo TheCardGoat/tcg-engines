@@ -107,7 +107,72 @@ function buildAttackContext(attackerEnabled = true): DropContext {
   };
 }
 
+function buildGoSoloContext(legendEnabled = true): DropContext {
+  return {
+    humanSide: "player",
+    humanZones: { hand: [] },
+    interactionView: {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "cyberpunk",
+      actorId: "p1",
+      stateVersion: 1,
+      status: "ready",
+      actions: [
+        {
+          id: "goSolo",
+          requestId: "goSolo-1",
+          intent: "play-card",
+          text: { key: "cyberpunk.move.goSolo" },
+          enabled: true,
+          inputs: [
+            {
+              id: "cardId",
+              kind: "entity-selection",
+              role: "source",
+              entityKinds: ["card"],
+              text: { key: "cyberpunk.move.goSolo.card" },
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [
+                {
+                  entity: { kind: "card", instanceId: "legend_1", ownerId: "p1" },
+                  enabled: legendEnabled,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    } satisfies EngineInteractionView,
+  };
+}
+
 describe("mapDropToAction", () => {
+  it("maps a payable GO SOLO Legend from the legend area onto the field", () => {
+    const action = mapDropToAction(
+      {
+        source: { type: "card", zone: "p-legendArea", index: 0, cardId: "legend_1" },
+        target: { type: "zone", zone: "p-field" },
+      },
+      buildGoSoloContext(),
+    );
+
+    expect(action).toEqual({ type: "goSolo", cardId: "legend_1", as: "p1" });
+  });
+
+  it("rejects a GO SOLO drop when the Legend is not a legal payment candidate", () => {
+    const action = mapDropToAction(
+      {
+        source: { type: "card", zone: "p-legendArea", index: 0, cardId: "legend_1" },
+        target: { type: "zone", zone: "p-field" },
+      },
+      buildGoSoloContext(false),
+    );
+
+    expect(action).toBeNull();
+  });
+
   it("maps Gear from hand onto a legal friendly field host", () => {
     const action = mapDropToAction(
       {
@@ -118,6 +183,24 @@ describe("mapDropToAction", () => {
     );
 
     expect(action).toEqual({ type: "playCard", cardId: "gear_1", attachToId: "unit_1", as: "p1" });
+  });
+
+  it("plays a Program dropped on a rival card without submitting its later effect target", () => {
+    const action = mapDropToAction(
+      {
+        source: {
+          type: "card",
+          zone: "p-hand",
+          index: 0,
+          cardId: "program_1",
+          cardType: "program",
+        },
+        target: { type: "card", zone: "opp-field", index: 0, cardId: "rival_1" },
+      },
+      buildContext([], { cardId: "program_1", cardType: "program" }),
+    );
+
+    expect(action).toEqual({ type: "playCard", cardId: "program_1", as: "p1" });
   });
 
   it("maps Gear from hand onto a legal friendly legend-area host", () => {

@@ -16,16 +16,12 @@ const playableCard: GameCardData = {
 describe("CardFace · actionable affordance", () => {
   afterEach(cleanup);
 
-  it("keeps a static shape cue and accessible action state without a pulse class", () => {
+  it("exposes an accessible action state for playable cards", () => {
     const { container } = render(<CardFace card={playableCard} width={72} height={101} />);
     const card = container.querySelector<HTMLElement>("[data-actionable='true']");
-    const aura = container.querySelector<HTMLElement>("[data-card-aura]");
 
     expect(card).not.toBeNull();
-    expect(card!.classList.contains("gd-card-actionable")).toBe(true);
-    expect(card!.querySelector(".gd-card-action-marker")).not.toBeNull();
     expect(card!.getAttribute("aria-label")).toContain("action available");
-    expect(aura?.className).not.toContain("pulse");
   });
 
   it("does not decorate an inert card as actionable", () => {
@@ -35,8 +31,6 @@ describe("CardFace · actionable affordance", () => {
     const card = container.querySelector<HTMLElement>(".gd-card-visual")!;
 
     expect(card.dataset.actionable).toBeUndefined();
-    expect(card.classList.contains("gd-card-actionable")).toBe(false);
-    expect(card.querySelector(".gd-card-action-marker")).toBeNull();
     expect(card.getAttribute("aria-label")).not.toContain("action available");
   });
 
@@ -49,8 +43,6 @@ describe("CardFace · actionable affordance", () => {
     const card = container.querySelector<HTMLElement>(".gd-card-visual")!;
 
     expect(card.dataset.actionable).toBeUndefined();
-    expect(card.classList.contains("gd-card-actionable")).toBe(false);
-    expect(card.querySelector(".gd-card-action-marker")).toBeNull();
     expect(card.getAttribute("aria-label")).not.toContain("action available");
   });
 });

@@ -122,6 +122,7 @@ export const bloomAutumnsFall: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
             ],
           },
+          functionalZones: ["hand"],
         },
       ],
     },

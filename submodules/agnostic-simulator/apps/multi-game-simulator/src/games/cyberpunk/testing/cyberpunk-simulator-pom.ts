@@ -1,4 +1,4 @@
-import type { CyberpunkTestEngine, PlayerId } from "@tcg/cyberpunk-engine";
+import type { AttackState, CyberpunkTestEngine, PlayerId } from "@tcg/cyberpunk-engine";
 import type { SimulatorDomDriver, SimulatorDomElement } from "@tcg/simulator-testing";
 import { cssString, expectDomAttribute, expectDomCount } from "@tcg/simulator-testing";
 
@@ -25,8 +25,8 @@ export interface CyberpunkAttackState {
   readonly attackerId: string;
   readonly defenderId: string | null;
   readonly rivalId: PlayerId;
-  readonly kind: "fight" | "direct";
-  readonly step: "attack" | "react" | "fight" | "steal";
+  readonly kind: AttackState["kind"];
+  readonly step: AttackState["step"];
   readonly redirectedByBlocker?: boolean;
   readonly gigsToSteal?: number;
 }

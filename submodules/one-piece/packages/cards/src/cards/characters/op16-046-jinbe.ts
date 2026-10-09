@@ -24,7 +24,7 @@ export const op16Jinbe046: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Fish-Man The Sun Pirates Impel Down"],
+  traits: ["Fish-Man", "Impel Down", "The Sun Pirates"],
   attribute: "strike",
   i18n: op16Jinbe046I18n,
 };

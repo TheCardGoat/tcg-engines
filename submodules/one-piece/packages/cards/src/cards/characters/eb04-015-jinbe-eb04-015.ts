@@ -23,7 +23,7 @@ export const op14eb04JinbeEb04015015: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 8000,
-  traits: ["Fish-Man The Sun Pirates Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "[Blocker]\n[On K.O.] You may rest 1 of your cards: If your Leader has the {Fish-Man} or {Merfolk} type, play up to 1 green Character card with a cost of 6 or less from your hand.",
@@ -71,12 +71,12 @@ export const op14eb04JinbeEb04015015: CharacterCard = {
                 {
                   condition: "leaderTrait",
                   trait: "Fish-Man",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   condition: "leaderTrait",
                   trait: "Merfolk",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

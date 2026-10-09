@@ -22,7 +22,7 @@ export const op02DonquixoteDoflamingo056: CharacterCard = {
   setId: "OP02",
   cost: 1,
   power: 2000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[On Play] Look at 3 cards from the top of your deck and place them at the top or bottom of the deck in any order. [DON!! x1] [When Attacking] You may trash 1 card from your hand: Place up to 1 of your opponent's Characters with a cost of 1 or less at the bottom of the owner's deck.",

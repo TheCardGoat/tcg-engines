@@ -11,7 +11,7 @@ export const unitRidingNomadBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitRidingNomad",
   label: "Riding Nomad - can attack spent units on played turn",
   references: [
-    "packages/engine/src/cards/welcometonightcityretail/units/riding-nomad.test.ts",
+    "packages/engine/src/cards/units/riding-nomad.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

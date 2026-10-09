@@ -33,7 +33,7 @@ describe("LocalEngine undo history", () => {
     expect(engine.canUndoToTurnStart()).toBe(false);
   });
 
-  it("creates a clean turn-start checkpoint after start-phase draw and gig gain", () => {
+  it("rewinds to the Gig choice after start-phase draw", () => {
     const p2Unit = createMockUnit({ name: "Rival Unit", cost: 0 });
     const engine = CyberpunkTestEngine.createWithFixture(
       { deck: 10 },
@@ -44,21 +44,37 @@ describe("LocalEngine undo history", () => {
     engine.completeTurn({ as: P1 });
     expect(engine.getPhase()).toBe("start");
     expect(engine.canUndo()).toBe(false);
+    const choice = engine.getState().G.turnMetadata.pendingChoice;
+    expect(choice?.type).toBe("gainGig");
+    const fixerAtChoice = [...engine.getState().G.players[P2]!.fixerArea];
+    const handAtChoice = [...engine.getState().G.players[P2]!.zones.hand];
 
     resolvePendingGainGig(engine);
     expect(engine.getPhase()).toBe("main");
-    expect(engine.canUndo()).toBe(false);
-    expect(engine.canUndoToTurnStart()).toBe(false);
-    expect(engine.getLocalEngine().getContinuationSnapshot().undoStack).toHaveLength(0);
-
-    engine.playCard(p2Unit, { as: P2 });
     expect(engine.canUndo()).toBe(true);
     expect(engine.canUndoToTurnStart()).toBe(true);
     expect(engine.getLocalEngine().getContinuationSnapshot().undoStack).toHaveLength(1);
 
+    engine.playCard(p2Unit, { as: P2 });
+    expect(engine.canUndo()).toBe(true);
+    expect(engine.canUndoToTurnStart()).toBe(true);
+    expect(engine.getLocalEngine().getContinuationSnapshot().undoStack).toHaveLength(2);
+
     expect(engine.undoToTurnStart()).toBe(true);
+    expect(engine.getPhase()).toBe("start");
+    expect(engine.getState().G.turnMetadata.pendingChoice).toEqual(choice);
+    expect(engine.getState().G.players[P2]!.fixerArea).toEqual(fixerAtChoice);
+    expect(engine.getState().G.players[P2]!.zones.hand).toEqual(handAtChoice);
     expect(engine.getCardsInZone("hand", P2).map((card) => card.definitionId)).toContain(p2Unit.id);
     expect(engine.getCardsInZone("field", P2)).toHaveLength(0);
+    expect(engine.canUndo()).toBe(false);
+    expect(engine.canUndoToTurnStart()).toBe(false);
+
+    if (!choice || choice.type !== "gainGig") throw new Error("Expected gainGig choice");
+    const otherDie = choice.payload.allowedDieIds[1];
+    expect(otherDie).toBeDefined();
+    engine.gainGig(otherDie!, { as: P2 });
+    expect(engine.getState().G.players[P2]!.gigArea).toContain(otherDie);
   });
 
   it("keeps undo available after a hidden-information reveal", () => {

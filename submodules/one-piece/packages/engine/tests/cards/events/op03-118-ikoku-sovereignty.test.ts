@@ -4,6 +4,7 @@ import {
   eb01Fourtricks025,
   eb01MountainGod018,
   op03IkokuSovereignty118,
+  op03CharlotteCracker108,
 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
@@ -98,6 +99,38 @@ describe("OP03-118 Ikoku Sovereignty", () => {
     );
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("adds Life before the second Double Attack damage even when Cracker loses its keyword", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op03CharlotteCracker108, attachedDon: 1, playedOnTurn: 0 }],
+        life: 0,
+      },
+      {
+        hand: [eb01Doma005, eb01Fourtricks025],
+        life: [op03IkokuSovereignty118],
+        deck: [eb01MountainGod018, eb01Doma005, eb01Fourtricks025],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const recoveredId = engine.findCardInZone("north", "deck", eb01MountainGod018);
+    engine.declareAttack(
+      engine.findCardInZone("south", "character", op03CharlotteCracker108),
+      engine.leader("north"),
+      "south",
+    );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.status).toBe("active");
+    expect(view.players.north.lifeCount).toBe(0);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual([recoveredId]);
+    expect(view.players.north.deckCount).toBe(2);
+    expect(view.prompts).toHaveLength(0);
   });
 
   test("may decline optional so paid effect does not apply", () => {

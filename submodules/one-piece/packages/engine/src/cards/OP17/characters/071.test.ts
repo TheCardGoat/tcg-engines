@@ -1,127 +1,48 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
-
-// Auto-verified: Who's.Who (OP17-071) cost=2 power=3000 counter=1000
 describe("OP17-071 Who's.Who", () => {
-  test("[On Play] resolves its play effects", () => {
-    // subject token bound in the decline test below
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-071"], activeDon: 4 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test.each([0, 1, 2])(
+    "Life Trigger plays itself, then returns DON and K.O.s %i eligible targets",
+    (count) => {
+      const e = OnePieceTestEngine.create(
+        { life: ["OP17-071", "ST02-002"], activeDon: 1 },
+        { character: ["ST01-006", "ST01-003", "EB01-018"] },
+        { activeSeat: "north", firstPlayer: "south" },
+      );
+      const who = e.findCardInZone("south", "life", "OP17-071");
+      const targets = [
+        e.findCardInZone("north", "character", "ST01-006"),
+        e.findCardInZone("north", "character", "ST01-003"),
+      ];
+      const before = e.getView("south").players.south.donDeckCount;
+      e.asNorth().attack(e.leader("north"), e.leader("south"));
+      e.asSouth().activateLifeTrigger();
+      e.asSouth().acceptOptional();
+      const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (step.kind !== "selectEntity") throw new Error("Expected cost-qualified K.O. selection");
+      expect(step.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual(targets);
+      e.asSouth().chooseTargets(...targets.slice(0, count));
+      expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === who)).toBe(
+        true,
+      );
+      expect(e.getView("south").players.south.donDeckCount).toBe(before + 1);
+      expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toEqual(
+        targets.slice(0, count),
+      );
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
+  test("normal play may decline the payable DON return and keep the opposing Character", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-071"], activeDon: 2 },
+      { character: ["ST01-003"] },
     );
-
-    engine.playCard("OP17-071");
-    engine.acceptLeadingOptional("south");
-    // Resolve any give-DON or return-DON cost payments.
-    for (let ci = 0; ci < 3; ci++) {
-      const cv = engine.getView("south");
-      const cd = (cv.decisions ?? [])[0];
-      if (!cd) break;
-      const ci2 = (cd as { extensions?: { resolutionIntent?: string } }).extensions
-        ?.resolutionIntent;
-      if (ci2 === "effectCostGiveDon" || ci2 === "effectCostReturnDon") {
-        const cstep = engine.pendingDecision(ci2, "south").steps[0];
-        if (cstep?.kind === "payCost" && cstep.candidates && cstep.candidates.length > 0) {
-          const amt = (cstep as unknown as { min?: number }).min ?? 1;
-          engine.resolveDecision(
-            ci2,
-            {
-              selectedIds: cstep.candidates
-                .slice(0, amt)
-                .map((c: { ref: { id: string } }) => c.ref.id),
-            },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(ci2, { optionId: "1" }, "south");
-        }
-      } else if (ci2 === "effectOptional") {
-        engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-      } else {
-        break;
-      }
-    }
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-071",
-    );
-  });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-071", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-071",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
-  test("[On Play] decline path (subject-bound)", () => {
-    const who = "OP17-071";
-    const engine = OnePieceTestEngine.create(
-      { hand: [who], activeDon: 4 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const before = engine.getView("south").players.south;
-
-    engine.playCard(who);
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(who);
-    expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const before = e.getView("south").players.south.donDeckCount;
+    e.playCard("OP17-071");
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.restedDon).toBe(2);
+    expect(e.getView("south").players.south.donDeckCount).toBe(before);
+    expect(e.getView("south").players.north.characters[0]?.cardId).toBe("ST01-003");
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

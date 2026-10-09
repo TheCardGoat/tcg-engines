@@ -40,6 +40,13 @@ describe("OP12-079 Luffy Is the Man Who Will Be King of the Pirates!!!", () => {
     );
     expect(engine.getState().players.south.deck.slice(-2)).toEqual([bottomId, topId]);
     expect(engine.getView("south").prompts).toHaveLength(0);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(
+      engine.getView("north").logs.some((entry) => entry.message.includes(eb01MountainGod018.name)),
+    ).toBe(false);
+    expect(
+      engine
+        .getView("north")
+        .players.south.hand.some((card) => card.cardId === eb01MountainGod018.id),
+    ).toBe(false);
   });
 });

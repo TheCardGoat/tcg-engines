@@ -24,7 +24,7 @@ export const op13JewelryBonney109: CharacterCard = {
   power: 6000,
   counter: 1000,
   trigger: "Draw 2 cards and trash 1 card from your hand.",
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "If this Character would be removed from the field by your opponent's effect, you may turn 1 card from the top of your Life cards face-up instead.",

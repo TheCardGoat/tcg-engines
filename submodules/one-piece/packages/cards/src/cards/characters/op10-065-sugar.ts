@@ -64,7 +64,7 @@ export const op10Sugar065: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

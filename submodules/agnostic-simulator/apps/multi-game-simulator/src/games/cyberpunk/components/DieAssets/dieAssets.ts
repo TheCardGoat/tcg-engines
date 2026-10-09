@@ -1,4 +1,5 @@
-import type { DiceImageColor, DicierStyle, DieType } from "../../engine";
+import type { DieType } from "@tcg/cyberpunk-types";
+import type { DiceImageColor, DicierStyle } from "../../engine";
 
 export const DICE_ASSET_CDN = "https://cdn.tcg.online/public/assets";
 

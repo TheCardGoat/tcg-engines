@@ -24,7 +24,7 @@ export const op01Kawamatsu037: CharacterCard = {
   power: 3000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Fish-Man Land of Wano The Akazaya Nine"],
+  traits: ["Fish-Man", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect: "[Trigger] Play this card.",
   effects: {

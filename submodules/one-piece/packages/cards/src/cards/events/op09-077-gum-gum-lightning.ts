@@ -39,7 +39,7 @@ export const op09GumGumLightning077: EventCard = {
   setId: "OP09",
   cost: 2,
   trigger: "Add up to 1 DON!! card from your DON!! deck and set it as active.",
-  traits: ["Straw Hat Crew The Four Emperors"],
+  traits: ["The Four Emperors", "Straw Hat Crew"],
   effect:
     "[Main] DON!! -2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with 6000 power or less.",
   effects: {

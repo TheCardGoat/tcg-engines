@@ -87,7 +87,6 @@ describe("EB01-039 Conquerer of Three Worlds Ragnaraku", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     engine.acceptLeadingOptional("north");
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");

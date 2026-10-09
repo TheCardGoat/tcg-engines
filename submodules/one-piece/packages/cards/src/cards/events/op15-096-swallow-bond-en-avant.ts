@@ -42,7 +42,7 @@ export const op15SwallowBondEnAvant096: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

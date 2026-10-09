@@ -6,6 +6,23 @@ import { op15Oars080 } from "../../../../../cards/src/cards/characters/op15-080-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-080 Oars", () => {
+  test("counts a Leader named Gecko Moria at 10000 power and excludes a second Oars", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP14-080", character: [op15Oars080], hand: [op15Oars080], activeDon: 9 },
+      {},
+    );
+    engine.attachDon(engine.leader("south"), 5);
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(7000);
+    engine.playCard(op15Oars080);
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.filter(Boolean)
+        .map((card) => card?.power),
+    ).toEqual([0, 0]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("gains +7000 power beside a 10000-power Gecko Moria", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op15Oars080, op14eb04GeckoMoriaOp14104104] },
@@ -66,25 +83,50 @@ describe("OP15-080 Oars", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[On K.O.] may be declined", () => {
+  test("declines On K.O. replay with three payable trash cards available", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP15-080", rested: true }], activeDon: 5 },
-      { character: ["OP16-003"], activeDon: 5 },
+      {
+        character: [{ card: op15Oars080, rested: true }],
+        trash: [eb01Doma005, eb01Doma005, eb01Doma005],
+      },
+      { character: ["OP16-003"] },
+      { firstPlayer: "south", activeSeat: "north" },
     );
-    const oarsId = engine.findCardInZone("south", "character", "OP15-080");
-    const donBefore = engine.getView("south").players.south.activeDon;
-
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-003", oarsId);
-    // Oars' [On K.O.] is conditional and may not open a window in this state.
-    try {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } catch {
-      /* no optional window offered */
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(oarsId);
-    expect(engine.getView("south").players.south.activeDon).toBe(donBefore);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const id = engine.findCardInZone("south", "character", op15Oars080);
+    const before = engine.getView("south").players.south.deckCount;
+    engine.asNorth().attack("OP16-003", id);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((c) => c.instanceId)).toContain(id);
+    expect(view.players.south.trash).toHaveLength(4);
+    expect(view.players.south.deckCount).toBe(before);
+    expect(view.prompts).toHaveLength(0);
+  });
+  test("FAQ: selecting Oars itself among the three bottom cards prevents its replay", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op15Oars080, rested: true }],
+        trash: [eb01Doma005, eb01Doma005, eb01Doma005],
+      },
+      { character: ["OP16-003"] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const id = engine.findCardInZone("south", "character", op15Oars080);
+    const before = engine.getView("south").players.south.deckCount;
+    engine.asNorth().attack("OP16-003", id);
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const choice = engine.pendingDecision("effectCostReturnTrashToDeck", "south").steps[0];
+    if (choice?.kind !== "payCost") throw new Error("Expected trash payment");
+    expect(choice.candidates.map((c) => c.ref.id)).toContain(id);
+    const other = choice.candidates
+      .map((c) => c.ref.id)
+      .filter((x) => x !== id)
+      .slice(0, 2);
+    engine.resolveDecision("effectCostReturnTrashToDeck", { selectedIds: [id, ...other] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(view.players.south.trash.map((c) => c.instanceId)).not.toContain(id);
+    expect(view.players.south.deckCount).toBe(before + 3);
+    expect(view.prompts).toHaveLength(0);
   });
 });

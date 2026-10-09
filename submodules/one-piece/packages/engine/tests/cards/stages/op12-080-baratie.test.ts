@@ -107,7 +107,6 @@ describe("OP12-080 Baratie", () => {
     engine.endTurn("north");
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({ actorId: "north", kind: "confirm" });
@@ -145,5 +144,18 @@ describe("OP12-080 Baratie", () => {
     expect(view.players.south.deckCount).toBe(deckBefore);
     expect(view.players.south.hand.length).toBe(handBefore);
     expect(view.prompts).toHaveLength(0);
+  });
+  test("pays its bottom-deck cost but does not search with a non-Sanji Leader", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: "OP12-080",
+      deck: ["EB01-005", "EB01-018", "OP12-079"],
+    });
+    const stage = engine.findCardInZone("south", "stage", "OP12-080");
+    engine.asSouth().activateMain(stage);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south.stage).toBeNull();
+    expect(engine.getView("south").players.south.deckCount).toBe(4);
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

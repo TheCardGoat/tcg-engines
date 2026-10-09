@@ -6,6 +6,12 @@ export function interactionSubmissionToEngineAction(
   as?: NonNullable<Exclude<EngineAction, { type: "undo" | "undoToTurnStart" }>["as"]>,
 ): Exclude<EngineAction, { type: "undo" | "undoToTurnStart" }> | null {
   switch (submission.actionId) {
+    case "setCombatPriority":
+      return {
+        type: "setCombatPriority",
+        mode: optionalBoolean(submission, "hold") ? "hold" : "automatic",
+        as,
+      };
     case "playCard": {
       const attachToId = optionalString(submission, "attachToId");
       const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
@@ -33,11 +39,13 @@ export function interactionSubmissionToEngineAction(
         return { type: "resolveCardToPlay", pass: true, as };
       }
       const attachToId = optionalString(submission, "attachToId");
+      const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
       return {
         type: "resolveCardToPlay",
         cardId: requireString(submission, "cardId"),
         as,
         ...(attachToId === undefined ? {} : { attachToId }),
+        ...(paymentSourceIds === undefined ? {} : { paymentSourceIds }),
       };
     }
     case "resolveChooseEffect":
@@ -57,13 +65,16 @@ export function interactionSubmissionToEngineAction(
       return { type: "attackRival", attackerId: requireString(submission, "attackerId"), as };
     case "useBlocker":
       return { type: "useBlocker", blockerId: requireString(submission, "blockerId"), as };
-    case "activateAbility":
+    case "activateAbility": {
+      const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
       return {
         type: "activateAbility",
         cardId: requireString(submission, "cardId"),
         abilityIndex: requireAbilityIndex(submission),
         as,
+        ...(paymentSourceIds === undefined ? {} : { paymentSourceIds }),
       };
+    }
     case "resolveAttack": {
       const pass = optionalBoolean(submission, "pass");
       return { type: "resolveAttack", as, ...(pass === undefined ? {} : { pass }) };
@@ -93,6 +104,12 @@ export function interactionSubmissionToEngineAction(
             as,
           };
     case "resolveEffectTarget":
+      if (optionalStringArray(submission, "rerollDieIds") !== undefined) {
+        const rerollDieIds = requireStringArray(submission, "rerollDieIds");
+        return rerollDieIds.length === 0
+          ? { type: "resolveEffectTarget", pass: true, as }
+          : { type: "resolveEffectTarget", targetIds: rerollDieIds, as };
+      }
       if (optionalBoolean(submission, "pass")) {
         return { type: "resolveEffectTarget", pass: true, as };
       }
@@ -157,7 +174,13 @@ export function interactionSubmissionToEngineAction(
     }
     case "resolveRedirectDefeat": {
       const pass = optionalBoolean(submission, "pass");
-      return { type: "resolveRedirectDefeat", as, ...(pass === undefined ? {} : { pass }) };
+      const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
+      return {
+        type: "resolveRedirectDefeat",
+        as,
+        ...(pass === undefined ? {} : { pass }),
+        ...(paymentSourceIds === undefined ? {} : { paymentSourceIds }),
+      };
     }
     case "resolveSacrificialGear":
       return {

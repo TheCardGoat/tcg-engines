@@ -30,6 +30,10 @@ export const kuzcoPickyCustomer: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_d09b95d2064147d49d77a02f63c0a011",
+    tcgPlayer: "704621",
+  },
   classifications: ["Storyborn", "King"],
   i18n: kuzcoPickyCustomerI18n,
 };

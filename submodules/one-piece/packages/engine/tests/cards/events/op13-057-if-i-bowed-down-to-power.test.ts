@@ -33,6 +33,24 @@ describe("OP13-057 If I Bowed Down to Power, What's the Point in Living?", () =>
     ).toBe(false);
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
     expect(view.prompts).toHaveLength(0);
+    engine.asSouth().endTurn();
+    engine.asNorth().endTurn();
+    engine.asSouth().attack(engine.leader("south"), engine.leader("north"));
+    engine.asNorth().chooseBlocker(blockerId);
+    expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore - 1);
+  });
+
+  test("Character attacks remain blockable after the Leader restriction is applied", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP13-057"], character: ["EB01-018"], activeDon: 2, life: 1 },
+      { character: ["ST01-006"], life: 3 },
+    );
+    e.asSouth().play("OP13-057");
+    e.asSouth().acceptOptional();
+    e.asSouth().attack("EB01-018", e.leader("north"));
+    e.asNorth().chooseBlocker("ST01-006");
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("north").players.north.trash.map((c) => c.cardId)).toContain("ST01-006");
   });
 
   test("Counter gives the defending Leader +3000 for the battle", () => {

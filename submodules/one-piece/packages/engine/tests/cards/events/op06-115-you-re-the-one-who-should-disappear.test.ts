@@ -29,6 +29,7 @@ describe("OP06-115 You're the One Who Should Disappear", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore - 1);
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(

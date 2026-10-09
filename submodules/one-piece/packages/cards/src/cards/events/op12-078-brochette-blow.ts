@@ -28,15 +28,17 @@ export const op12BrochetteBlow078: EventCard = {
     effects: [
       {
         trigger: "main",
+        conditions: [
+          {
+            condition: "donFieldComparison",
+            selfComparison: "lte",
+          },
+        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "donFieldComparison",
-              selfComparison: "lte",
-            },
           },
           {
             action: "modifyPower",

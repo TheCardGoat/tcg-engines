@@ -11,7 +11,7 @@ export const nanisPayback: ActionCard = {
       artId: "set11-127",
       setCode: "set11",
       collectorNumber: "127",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const nanisPayback: ActionCard = {
   franchise: "Lilo and Stitch",
   set: "011",
   cardNumber: 127,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   inkable: true,
   externalIds: {

@@ -22,7 +22,7 @@ export const op16Crocodile045: CharacterCard = {
   setId: "OP16",
   cost: 4,
   power: 6000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "special",
   effect:
     "[Blocker]\n\n[On Play] You may return 1 of your Characters with a cost of 2 or more to the owner's hand: Play up to 1 {Impel Down} type Character card with a cost of 2 or less from your hand.",
@@ -64,7 +64,7 @@ export const op16Crocodile045: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

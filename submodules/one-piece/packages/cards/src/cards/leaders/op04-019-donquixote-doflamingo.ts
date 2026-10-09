@@ -30,7 +30,7 @@ export const op04DonquixoteDoflamingo019: LeaderCard = {
   setId: "OP04",
   power: 5000,
   life: 4,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect: "[End of Your Turn] Set up to 2 of your DON!! cards as active.",
   effects: {

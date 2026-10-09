@@ -42,7 +42,7 @@ export const eb04Koby044: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "strike",
   effects: {
     replacementEffects: [

@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { shift } from "../../../helpers/abilities/shift";
 import { winnieThePoohPigletHunnyMagesI18n } from "./062-winnie-the-pooh-piglet-hunny-mages.i18n";
+
+import { shift } from "../../../helpers/abilities/shift";
 
 export const winnieThePoohPigletHunnyMages: CharacterCard = {
   id: "NXy",
@@ -12,7 +13,7 @@ export const winnieThePoohPigletHunnyMages: CharacterCard = {
       artId: "set13-062",
       setCode: "set13",
       collectorNumber: "62",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -24,7 +25,7 @@ export const winnieThePoohPigletHunnyMages: CharacterCard = {
   franchise: "Winnie the Pooh",
   set: "013",
   cardNumber: 62,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 3,
   willpower: 4,
@@ -32,6 +33,7 @@ export const winnieThePoohPigletHunnyMages: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e2c9423df7b4642914deccabf922ff5",
+    tcgPlayer: "704580",
   },
   text: [
     {

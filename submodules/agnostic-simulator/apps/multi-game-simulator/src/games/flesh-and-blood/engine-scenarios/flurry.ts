@@ -38,8 +38,6 @@ function bootFlurryDurendalBlockedRemaining() {
   const Dash = game.as(dash);
 
   Dori.activate(durendal);
-  game.advanceToDecision(Dori, "boolean");
-  Dori.chooseBoolean(true);
   game.advanceUntil({ stopAt: "defend" });
   // Durendal is 3 + two +1{p} counters = 5. Snatch d2 + Enlightened Strike d3
   // ties the attack, so it deals no damage and does not hit.

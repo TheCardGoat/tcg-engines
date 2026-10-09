@@ -33,7 +33,7 @@ export const op16Buggy048: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Buggy Pirates Impel Down"],
+  traits: ["Impel Down", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If your Leader has the {Impel Down} type, draw 1 card and play up to 1 [Prisoner of Impel Down] card from your hand. [Once Per Turn] This effect can be activated when your opponent attacks. Up to 1 of your [Prisoner of Impel Down] cards gains [Blocker] during this turn.",
@@ -45,7 +45,7 @@ export const op16Buggy048: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

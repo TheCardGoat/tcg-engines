@@ -65,7 +65,7 @@ export const obelithEscort: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 },
                 then: {
                   kind: "summon",
-                  object: "additional Memorite Obelith",
+                  object: "Memorite Obelith",
                   controller: "controller",
                   bindResultAs: "summoned-token",
                   entersWithCounters: [

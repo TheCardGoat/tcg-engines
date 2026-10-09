@@ -43,7 +43,7 @@ export const op02ImpelDownAllStars066: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Impel Down",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

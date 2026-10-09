@@ -88,6 +88,7 @@ export function resolveRemoveDamageEffect(
     });
 
     if (resolvedHealAmount > 0) {
+      emitTriggeredLorcanaEvent(ctx, "damageRemoved", { targetId, amount: resolvedHealAmount });
       queueTriggeredEvent(ctx, {
         event: "remove-damage",
         playerId: ctx.framework.state.currentPlayer,

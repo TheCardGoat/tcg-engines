@@ -27,12 +27,13 @@ export const powhatansStaff: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dbb2fd549bf5443689674a1c63ffe16c",
+    tcgPlayer: "704562",
   },
   text: [
     {
       title: "STEP FORWARD",
       description:
-        "{E}, 1{I} — The next character you play this turn enters play exerted and gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+        "{E}, 1 {I} — The next character you play this turn enters play exerted and gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
     },
   ],
   abilities: [

@@ -23,7 +23,7 @@ export const op17Rodo094: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Giant Elbaph New Giant Pirates"],
+  traits: ["Giant", "Elbaph", "New Giant Pirates"],
   attribute: "slash",
   effect: "If your Leader has the {Elbaph} type, this Character gains +12 cost.",
   effects: {
@@ -33,7 +33,7 @@ export const op17Rodo094: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Elbaph",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

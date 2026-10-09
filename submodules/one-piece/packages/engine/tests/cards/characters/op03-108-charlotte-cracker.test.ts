@@ -59,13 +59,13 @@ describe("OP03-108 Charlotte Cracker", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("with DON!! x1 and fewer Life, gains +1000 power and Double Attack", () => {
+  test("Double Attack still deals the second damage after the first removes its Life advantage", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: op03CharlotteCracker108, attachedDon: 1, playedOnTurn: 0 }],
         life: [eb01Doma005],
       },
-      { life: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018] },
+      { life: [eb01Doma005, eb01Fourtricks025] },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const crackerId = engine.findCardInZone("south", "character", op03CharlotteCracker108);
@@ -77,6 +77,11 @@ describe("OP03-108 Charlotte Cracker", () => {
     const lifeBefore = engine.getView("south").players.north.lifeCount;
     engine.declareAttack(crackerId, engine.leader("north"), "south");
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 2);
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.find((card) => card?.instanceId === crackerId)?.power,
+    ).toBe(6000);
   });
 
   test("at equal Life, does not gain the permanent power or Double Attack", () => {

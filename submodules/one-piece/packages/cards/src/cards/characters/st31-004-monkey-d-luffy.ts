@@ -23,7 +23,7 @@ export const st31MonkeyDLuffy004: CharacterCard = {
   setId: "ST31",
   cost: 7,
   power: 9000,
-  traits: ["Straw Hat Crew The Four Emperors"],
+  traits: ["The Four Emperors", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If you have a total of 3 or more given DON!! cards, this Character gains [Rush]. (This card can attack on the turn in which it is played.)[On Play] For every {Straw Hat Crew} type card on your field, give up to 1 of your opponent's Characters -1000 power during this turn.",
@@ -44,7 +44,7 @@ export const st31MonkeyDLuffy004: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

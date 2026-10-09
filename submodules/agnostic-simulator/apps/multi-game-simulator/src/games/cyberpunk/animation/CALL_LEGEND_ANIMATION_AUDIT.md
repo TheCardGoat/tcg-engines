@@ -36,6 +36,7 @@ The adapter projects `legendReveal` as a face state change with explicit start a
 - Attached Gear shares the host's zone storage. The Eddie helper accepted any face-down card in `legendArea`, so it could spend Gear instead of the Legend. `legendCanPayEddie` now requires an actual Legend definition.
 - Self-payment previously produced overlapping `cardSpent` and `legendReveal` clones. The builder now coalesces them.
 - `legendReveal` previously omitted orientation and could briefly make a spent Legend upright. It now carries explicit rotations.
+- The reveal transform previously applied its face flip before the board rotation. On a spent/tapped Legend, that composition turned the revealed artwork 180° in-plane. The reveal now applies the existing board orientation first, then performs one face flip.
 - The state-change layer previously hid the entire registered Legend node, including attached Gear. Face changes now hide only the marked host face.
 - Hover preview could remain over the board during the Call. Animation start now dismisses it.
 

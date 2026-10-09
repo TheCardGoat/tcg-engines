@@ -1,3 +1,4 @@
+import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
@@ -46,6 +47,8 @@ import {
 import { buildGatewaySocketIoUrl, type LiveGatewayMessage } from "../engine/live/liveGateway";
 import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
+import { LiveActionAttention } from "../../../simulator/attention/LiveActionAttention";
+import { useLiveMatchDocumentTitle } from "../../../simulator/attention/useLiveMatchDocumentTitle";
 import {
   liveGatewayJoinFromEvent,
   parseGatewayEvent,
@@ -109,12 +112,15 @@ import {
 } from "../engine";
 import { fetchPracticeMatchConfigFromServer } from "../engine/practice/sessionStorage";
 import { P1, P2 } from "../engine/fixtures/scenarios";
+import { playerIdentitiesByActorOrSeat } from "../engine/sides";
 import { BoardSharedPage } from "./BoardShared.page";
 import {
+  interactionViewSyncSignature,
+  markPendingMoveAwaitingRecoverySync,
   matchesPendingCorrelation,
-  readMessageCorrelationId,
+  startPendingMoveStateSyncWatchdog,
+  shouldClearPendingAfterAuthoritativeMoveAccepted,
   shouldClearPendingAfterAuthoritativeState,
-  shouldClearPendingAfterSubmitInteractionOk,
   type PendingOptimisticMove,
 } from "./livePendingMove";
 import {
@@ -127,6 +133,8 @@ import {
   shouldToastClientAuthorityRejection,
 } from "./clientAuthoritySync";
 import classes from "./Practice.module.css";
+import { CyberpunkPreparationPage } from "./CyberpunkPreparation.page";
+import { SimulatorCancelledMatch, SimulatorRouteStatus } from "@tcg/simulator-ui";
 
 interface ClientAuthorityStaleRejection {
   gameId: string;
@@ -245,8 +253,40 @@ interface ClientAuthorityEngineLogRecord {
   log: unknown;
 }
 
+export function liveTitlePriority(
+  status: EngineInteractionView["status"] | undefined,
+  isPlayer: boolean,
+): "self" | "opponent" | null {
+  if (!isPlayer) return null;
+  if (status === "ready" || status === "choosing") return "self";
+  if (status === "waiting") return "opponent";
+  return null;
+}
+
 export function LiveMatchPage() {
+  const { session, error } = useSimulatorRoute();
+  const location = useLocation();
+  if (error) return <SimulatorRouteStatus title="Match unavailable" message={error} />;
+  if (session?.phase === "cancelled") {
+    return (
+      <SimulatorCancelledMatch
+        reason={session.reason}
+        matchmakingHref={getMatchmakingReturnUrl(CYBERPUNK_GAME_SLUG, location.search)}
+      />
+    );
+  }
+  return (
+    <>
+      <LiveGamePage />
+      {session?.phase === "preparation" && <CyberpunkPreparationPage session={session} />}
+    </>
+  );
+}
+
+function LiveGamePage() {
   const simulatorRoute = useSimulatorRoute();
+  const [clientReady, setClientReady] = useState(false);
+  useEffect(() => setClientReady(true), []);
   const params = useParams<{ matchId: string; gameId: string }>();
   const matchId = simulatorRoute.matchId ?? params.matchId ?? "";
   const gameId = simulatorRoute.gameId ?? params.gameId ?? "";
@@ -262,6 +302,7 @@ export function LiveMatchPage() {
   );
   const [gatewayHandle, setGatewayHandle] = useState<GatewayHandle | null>(null);
   const [syncRequestNonce, setSyncRequestNonce] = useState(0);
+  const [seatReconciliationPending, setSeatReconciliationPending] = useState(false);
   const [clientAuthorityStaleRejection, setClientAuthorityStaleRejection] =
     useState<ClientAuthorityStaleRejection | null>(null);
   const [pendingOptimisticMove, setPendingOptimisticMove] = useState<PendingOptimisticMove | null>(
@@ -278,11 +319,13 @@ export function LiveMatchPage() {
   const pendingOptimisticMoveRef = useRef<PendingOptimisticMove | null>(null);
   const submittedInteractionMessagesRef = useRef<Map<string, SubmitInteractionPayload>>(new Map());
   const seenLogKeysRef = useRef<Set<string>>(new Set());
+  const rejectedLogKeysRef = useRef<Set<string>>(new Set());
   const seenAnimationIdsRef = useRef<Set<string>>(new Set());
   const previousConnectionStatusRef = useRef<SimulatorConnectionStatus | null>(null);
   const previousConnectionAuthenticatedRef = useRef(false);
   const previousConnectionLatencyRef = useRef<number | null>(null);
   const reconnectNotificationOpenRef = useRef(false);
+  const seatReconciliationPendingRef = useRef(false);
   const startedAtMsRef = useRef(Date.now());
   const bootstrappedIdentityRef = useRef<string | null>(null);
   const readyContext = loadState.status === "ready" ? loadState.context : null;
@@ -296,6 +339,22 @@ export function LiveMatchPage() {
     () => (readyContext ? resolveLocalPlayerId(readyContext) : undefined),
     [readyContext],
   );
+  const liveState = readyContext?.game.state;
+  const liveInteraction = readyContext?.game.interactionView;
+  useLiveMatchDocumentTitle({
+    game: "Cyberpunk",
+    turn:
+      liveState && simulatorRoute.matchPageData?.viewer.role === "player"
+        ? String(liveState.G.turnMetadata.activePlayerId) === String(P1)
+          ? "self"
+          : "opponent"
+        : null,
+    priority: liveTitlePriority(
+      liveInteraction?.status,
+      simulatorRoute.matchPageData?.viewer.role === "player",
+    ),
+    finished: readyContext?.game.status === "completed" || Boolean(liveState?.G.gameEnded),
+  });
   // sessionStorage is per-tab: a rejoin in a new tab or browser finds no local
   // practice config even for the seated owner. Recover it from the server's
   // stored quick-match setup so the rejoin remounts the client-authority board
@@ -358,6 +417,14 @@ export function LiveMatchPage() {
       contextPlayerId,
     ),
   );
+  const gatewayEligibleGameId =
+    readyGameId &&
+    (hasReadyGameState ||
+      canRunClientAuthorityPractice ||
+      seatReconciliationPending ||
+      handleRef.current !== null)
+      ? readyGameId
+      : null;
   const discordClientId =
     import.meta.env.VITE_DISCORD_ACTIVITY_CLIENT_ID ?? import.meta.env.VITE_DISCORD_CLIENT_ID;
   const connectionDiagnostic = useMemo<SimulatorConnectionDiagnosticInput>(() => {
@@ -407,34 +474,83 @@ export function LiveMatchPage() {
 
   useEffect(() => {
     const matchPageData = simulatorRoute.matchPageData;
-    // MatchSessionProvider refreshes commit a freshly parsed bootstrap object
-    // on every poll (acceptSession returns the incoming session, not the
-    // previous ref). Re-running the full reset on those commits would clear
-    // the gateway join and unmount the board right after game_joined, and no
-    // second join ever fires for the same socket. Only a real match/game
-    // change may re-bootstrap the page.
+    // MatchSessionProvider refreshes commit a freshly parsed bootstrap object.
+    // A same-game refresh must update the viewer seat and projection without
+    // clearing the live gateway join. Matchmaking can navigate with an early
+    // bootstrap and then resolve the authenticated seat on this refresh. If we
+    // ignore it, every later actor-scoped gateway projection is interpreted
+    // through the stale seat and the player sees the rival's hidden hand.
     const identity = matchPageData
       ? `${matchPageData.match.matchId}:${matchPageData.game.gameId}`
       : null;
-    if (!identity || bootstrappedIdentityRef.current === identity) {
+    if (!identity) {
       return;
     }
-    bootstrappedIdentityRef.current = identity;
-    setLoadState({ status: "loading" });
-    setGatewayJoin(null);
-    setPlayerConnections({});
-    setActiveProposal(null);
-    setGatewayDiagnostic(createInitialGatewayDiagnostic());
-    setSyncRequestNonce(0);
-    setClientAuthorityStaleRejection(null);
-    setPendingOptimisticMove(null);
-    submittedInteractionMessagesRef.current.clear();
+    const sameGame =
+      bootstrappedIdentityRef.current === identity && latestContextRef.current !== null;
+    if (!sameGame) {
+      bootstrappedIdentityRef.current = identity;
+    }
+    if (!sameGame) {
+      setLoadState({ status: "loading" });
+      setGatewayJoin(null);
+      setPlayerConnections({});
+      setActiveProposal(null);
+      setGatewayDiagnostic(createInitialGatewayDiagnostic());
+      setSyncRequestNonce(0);
+      setSeatReconciliationPending(false);
+      seatReconciliationPendingRef.current = false;
+      setClientAuthorityStaleRejection(null);
+      setPendingOptimisticMove(null);
+      submittedInteractionMessagesRef.current.clear();
+    }
     try {
       if (!matchPageData) return;
       const context = liveMatchContextFromBootstrap(matchPageData);
+      const preparedContext = prepareLiveContext(context);
+      if (sameGame) {
+        const previousContext = latestContextRef.current;
+        const viewerSeatChanged = !sameActorMapping(
+          previousContext?.game.actorIds,
+          preparedContext.game.actorIds,
+        );
+        setLoadState((previous) => {
+          if (previous.status !== "ready") {
+            return previous;
+          }
+          if (!viewerSeatChanged && preparedContext.game.version < previous.context.game.version) {
+            return previous;
+          }
+          if (viewerSeatChanged) {
+            // A viewer projection is scoped to one seat. Keep the corrected
+            // identity, but discard every field derived from the old seat and
+            // wait for the gateway to supply a fresh authoritative projection.
+            return {
+              ...previous,
+              context: {
+                ...preparedContext,
+                game: {
+                  ...preparedContext.game,
+                  state: null,
+                  viewerProjection: undefined,
+                  interactionView: undefined,
+                  version: Math.max(preparedContext.game.version, previous.context.game.version),
+                },
+              },
+            };
+          }
+          return { ...previous, context: preparedContext };
+        });
+        if (viewerSeatChanged) {
+          seatReconciliationPendingRef.current = true;
+          setSeatReconciliationPending(true);
+          const version = previousContext?.game.version ?? preparedContext.game.version;
+          liveConnectionRef.current?.requestStateSyncIfDue(version);
+        }
+        return;
+      }
       seenLogKeysRef.current = new Set();
       seenAnimationIdsRef.current = new Set();
-      const preparedContext = prepareLiveContext(context);
       setLoadState({
         status: "ready",
         context: preparedContext,
@@ -486,6 +602,29 @@ export function LiveMatchPage() {
     setPendingOptimisticMove(null);
   }, []);
 
+  const recordRejectedMove = useCallback((reason: string, correlationId?: string) => {
+    const context = latestContextRef.current;
+    if (!context?.game.state) return;
+    if (correlationId) {
+      if (rejectedLogKeysRef.current.has(correlationId)) return;
+      rejectedLogKeysRef.current.add(correlationId);
+    }
+    const humanSide = resolveLiveMatchHumanSide(context, resolveLocalPlayerId(context));
+    const log: MoveLog = {
+      type: "action",
+      playerId: humanSide === "player" ? P1 : P2,
+      turnNumber: context.game.state.G.turnMetadata.turnNumber,
+      timestamp: Date.now(),
+      messageKey: "move.rejected",
+      params: { reason },
+    };
+    setLoadState((previous) =>
+      previous.status === "ready"
+        ? { ...previous, moveLogs: [...previous.moveLogs, log].slice(-REMOTE_MOVE_LOG_LIMIT) }
+        : previous,
+    );
+  }, []);
+
   const rejectPendingOptimisticMove = useCallback(
     (reason: string, correlationId?: string, options: { keepPendingUntilSync?: boolean } = {}) => {
       const pending = pendingOptimisticMoveRef.current;
@@ -495,8 +634,13 @@ export function LiveMatchPage() {
       if (!options.keepPendingUntilSync) {
         pendingOptimisticMoveRef.current = null;
         setPendingOptimisticMove(null);
+      } else {
+        const awaitingRecoverySync = markPendingMoveAwaitingRecoverySync(pending);
+        pendingOptimisticMoveRef.current = awaitingRecoverySync;
+        setPendingOptimisticMove(awaitingRecoverySync);
       }
       submittedInteractionMessagesRef.current.delete(pending.correlationId);
+      recordRejectedMove(reason, pending.correlationId);
       notifications.show({
         id: `optimistic-move-rejected:${pending.correlationId}`,
         color: "red",
@@ -512,7 +656,7 @@ export function LiveMatchPage() {
       }
       return true;
     },
-    [],
+    [recordRejectedMove],
   );
 
   const handleRejectedOptimisticMove = useCallback(
@@ -550,6 +694,7 @@ export function LiveMatchPage() {
         keepPendingUntilSync: needsAuthoritativeSync,
       });
       if (!handled) {
+        recordRejectedMove(message.reason, message.correlationId);
         showMoveRejectedNotification(message, context?.game.authority ?? "server");
       }
       if (needsAuthoritativeSync && context) {
@@ -558,7 +703,7 @@ export function LiveMatchPage() {
         liveConnectionRef.current?.requestStateSyncIfDue(context.game.version);
       }
     },
-    [canRunClientAuthorityPractice, rejectPendingOptimisticMove],
+    [canRunClientAuthorityPractice, recordRejectedMove, rejectPendingOptimisticMove],
   );
 
   const handleSubmitInteractionResponse = useCallback(
@@ -575,11 +720,8 @@ export function LiveMatchPage() {
       const correlation =
         typeof response.correlationId === "string" ? response.correlationId : undefined;
       if (status === "ok") {
-        if (
-          shouldClearPendingAfterSubmitInteractionOk(pendingOptimisticMoveRef.current, correlation)
-        ) {
-          clearPendingOptimisticMove(correlation);
-        }
+        // A transport-level OK does not prove that authoritative state reached
+        // this client. Keep the latch and watchdog until state is applied.
         return;
       }
       if (status === "err") {
@@ -591,6 +733,7 @@ export function LiveMatchPage() {
               : "The server rejected the move.";
         const handled = rejectPendingOptimisticMove(reason, correlation);
         if (!handled) {
+          recordRejectedMove(reason, correlation);
           showServerFeedbackNotification({
             id: correlation ? `submit-interaction:${correlation}` : "submit-interaction:rejected",
             severity: "warning",
@@ -600,7 +743,7 @@ export function LiveMatchPage() {
         }
       }
     },
-    [clearPendingOptimisticMove, rejectPendingOptimisticMove],
+    [recordRejectedMove, rejectPendingOptimisticMove],
   );
 
   const recordGatewayDiagnostic = useCallback(
@@ -613,6 +756,18 @@ export function LiveMatchPage() {
   const requestLiveStateSync = useCallback((version: number) => {
     liveConnectionRef.current?.requestStateSyncIfDue(version);
   }, []);
+
+  useEffect(() => {
+    if (!pendingOptimisticMove) {
+      return;
+    }
+    return startPendingMoveStateSyncWatchdog({
+      correlationId: pendingOptimisticMove.correlationId,
+      readPending: () => pendingOptimisticMoveRef.current,
+      readStateVersion: () => latestContextRef.current?.game.version ?? null,
+      requestStateSync: requestLiveStateSync,
+    });
+  }, [pendingOptimisticMove, requestLiveStateSync]);
 
   // Recovery hook for the missed-setup-update affordance: re-request the
   // authoritative snapshot for the currently loaded game.
@@ -627,6 +782,16 @@ export function LiveMatchPage() {
       payload: Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
     ) => {
       const handle = handleRef.current;
+      if (type === "proposal_send:response") {
+        const response = payload as Parameters<ServerToClientEvents["proposal_send:response"]>[0];
+        if (response.status === "err") {
+          setLoadState((previous) =>
+            previous.status === "ready"
+              ? { ...previous, freeTextProposalPending: false }
+              : previous,
+          );
+        }
+      }
       if (type === "drop_eligibility" && payload && typeof payload === "object") {
         const record = payload as { gameId?: string; dropEligibility?: DropEligibility };
         if ((!record.gameId || record.gameId === gameId) && record.dropEligibility) {
@@ -758,12 +923,6 @@ export function LiveMatchPage() {
             acceptedVersion: message.stateVersion,
           });
         }
-        if (shouldClearPendingAfterSubmitInteractionOk(pending, message.correlationId)) {
-          clearPendingOptimisticMove(message.correlationId);
-        }
-      }
-      if (message.type === "state_sync" && message.gameId === gameId) {
-        clearPendingOptimisticMove(undefined);
       }
       if (message.type === "move_rejected") {
         if (typeof message.currentVersion === "number") {
@@ -812,6 +971,19 @@ export function LiveMatchPage() {
       if (message.type === "request_state_sync" && message.gameId === gameId) {
         setSyncRequestNonce((nonce) => nonce + 1);
       }
+      const expectedActorId = latestContextRef.current?.game.actorIds?.player;
+      const completesSeatReconciliation =
+        seatReconciliationPendingRef.current &&
+        message.type === "state_sync" &&
+        message.gameId === gameId &&
+        message.interactionView?.actorId === expectedActorId;
+      if (
+        seatReconciliationPendingRef.current &&
+        (message.type === "state_update" || message.type === "state_sync") &&
+        !completesSeatReconciliation
+      ) {
+        return;
+      }
       setLoadState((previous) => {
         if (previous.status !== "ready") {
           return previous;
@@ -853,15 +1025,7 @@ export function LiveMatchPage() {
             chatMessages: mergeRemoteChatMessage(previous.chatMessages, chatMessage),
           };
         }
-        const effect = reduceLiveGatewayMessage(previous.context, message, {
-          gameId,
-          matchId,
-          search: location.search,
-        });
-        if (effect.type === "redirect") {
-          window.location.replace(effect.href);
-          return previous;
-        }
+        const effect = reduceLiveGatewayMessage(previous.context, message, { gameId });
         if (effect.type !== "state") {
           return isLiveChatPolicyChanged(previous, chatPolicy) ||
             isLiveBoardCorrectionPolicyChanged(previous, boardCorrectionPolicy)
@@ -880,10 +1044,16 @@ export function LiveMatchPage() {
             updateVersion: message.stateVersion,
           });
         }
-        if (message.type === "state_update") {
+        if (message.type === "state_update" || message.type === "state_sync") {
           const pending = pendingOptimisticMoveRef.current;
           if (shouldClearPendingAfterAuthoritativeState(pending, message)) {
-            clearPendingOptimisticMove(readMessageCorrelationId(message) ?? pending?.correlationId);
+            clearPendingOptimisticMove(pending?.correlationId);
+          }
+        }
+        if (message.type === "move_accepted") {
+          const pending = pendingOptimisticMoveRef.current;
+          if (shouldClearPendingAfterAuthoritativeMoveAccepted(pending, message)) {
+            clearPendingOptimisticMove(message.correlationId);
           }
         }
         const nextLogs = appendRemoteMoveLogs(
@@ -908,6 +1078,10 @@ export function LiveMatchPage() {
           ...boardCorrectionPolicy,
         };
       });
+      if (completesSeatReconciliation) {
+        seatReconciliationPendingRef.current = false;
+        setSeatReconciliationPending(false);
+      }
       if (message.type === "move_rejected") {
         const attemptedMessage =
           typeof message.correlationId === "string"
@@ -1048,18 +1222,33 @@ export function LiveMatchPage() {
         );
       }
 
+      const reconnectNotificationId = `live-match:gateway-connection:${gameId}`;
       if (s.status === "reconnecting" && !reconnectNotificationOpenRef.current) {
         reconnectNotificationOpenRef.current = true;
         showServerFeedbackNotification({
-          id: `live-match:gateway-connection:${gameId}`,
+          id: reconnectNotificationId,
           severity: "warning",
           title: "Connection interrupted",
           message: s.error
             ? `${s.error}. Trying to reconnect to the match server.`
             : "Trying to reconnect to the match server.",
         });
-      } else if (s.status === "connected" && previousStatus !== "connected") {
+      } else if (s.status === "connected" && reconnectNotificationOpenRef.current) {
+        notifications.hide(reconnectNotificationId);
         reconnectNotificationOpenRef.current = false;
+        notifications.show({
+          color: "green",
+          title: "Reconnected to match server",
+          message: "Your live match connection is restored.",
+        });
+      } else if (s.status === "disconnected" && reconnectNotificationOpenRef.current) {
+        notifications.hide(reconnectNotificationId);
+        reconnectNotificationOpenRef.current = false;
+        showServerFeedbackNotification({
+          severity: "error",
+          title: "Could not reconnect to match server",
+          message: s.error ?? "The connection attempt ended. Refresh the page to try again.",
+        });
       }
 
       previousConnectionStatusRef.current = s.status;
@@ -1088,7 +1277,7 @@ export function LiveMatchPage() {
   }, [requestLiveStateSync]);
 
   useEffect(() => {
-    if (!readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
+    if (!gatewayEligibleGameId) {
       setGatewayHandle(null);
       return;
     }
@@ -1122,13 +1311,7 @@ export function LiveMatchPage() {
       setKnownServerVersion(null);
       handle.release();
     };
-  }, [
-    canRunClientAuthorityPractice,
-    gameId,
-    hasReadyGameState,
-    readyGameId,
-    recordGatewayDiagnostic,
-  ]);
+  }, [canRunClientAuthorityPractice, gameId, gatewayEligibleGameId, recordGatewayDiagnostic]);
 
   const buildLiveHeartbeatPayload = useCallback(() => {
     const context = latestContextRef.current;
@@ -1198,6 +1381,7 @@ export function LiveMatchPage() {
     (
       state: MatchState,
       side: Side,
+      interactionView: EngineInteractionView,
       submission: InteractionSubmission,
       optimisticResult?: CommandSuccess,
     ): boolean => {
@@ -1251,7 +1435,9 @@ export function LiveMatchPage() {
           startingVersion: expectedVersion,
           localOptimisticStateId: optimisticResult.stateID,
           optimisticApplied: true,
+          awaitingRecoverySync: false,
           actionId: submission.actionId,
+          startingInteractionSignature: interactionViewSyncSignature(interactionView),
           side,
         } satisfies PendingOptimisticMove;
         pendingOptimisticMoveRef.current = pending;
@@ -1263,7 +1449,9 @@ export function LiveMatchPage() {
           startingVersion: expectedVersion,
           localOptimisticStateId: state.ctx.stateID,
           optimisticApplied: false,
+          awaitingRecoverySync: false,
           actionId: submission.actionId,
+          startingInteractionSignature: interactionViewSyncSignature(interactionView),
           side,
         } satisfies PendingOptimisticMove;
         pendingOptimisticMoveRef.current = pending;
@@ -1287,7 +1475,13 @@ export function LiveMatchPage() {
 
   const remoteDispatch = useCallback(
     (_action: EngineAction, state: MatchState, actor: RemoteDispatchActor) => {
-      return submitInteractionForSide(state, actor.side, actor.submission, actor.optimisticResult);
+      return submitInteractionForSide(
+        state,
+        actor.side,
+        actor.interactionView,
+        actor.submission,
+        actor.optimisticResult,
+      );
     },
     [submitInteractionForSide],
   );
@@ -1324,7 +1518,7 @@ export function LiveMatchPage() {
         });
         return false;
       }
-      return submitInteractionForSide(state, input.side, submission);
+      return submitInteractionForSide(state, input.side, input.interactionView, submission);
     },
     [submitInteractionForSide],
   );
@@ -1352,13 +1546,11 @@ export function LiveMatchPage() {
       deadline: Date.now() + 15_000,
     });
     notifications.show({
-      id: `undo-proposal-sent:${context.game.gameId}`,
+      id: undoRequestNotificationId(context.game.gameId),
       color: "blue",
       title: undoScope === "turn_start" ? "Turn undo requested" : "Undo requested",
-      message:
-        undoScope === "turn_start"
-          ? "Waiting for your opponent to approve rewinding to the beginning of the turn."
-          : "Waiting for your opponent to approve the last-action undo.",
+      message: "Waiting for the match to process the undo request.",
+      autoClose: 15_000,
     });
     return true;
   }, []);
@@ -1547,7 +1739,11 @@ export function LiveMatchPage() {
     const actorIds = context.game.actorIds;
     const localPlayerId = contextPlayerId ?? resolveLocalPlayerId(context);
     const canSendHostedChat = Boolean(localPlayerId);
-    const canRequestFreeText = false;
+    const canRequestFreeText = canSendHostedChat && context.game.status === "in_progress";
+    const freeTextProposalPending =
+      loadState.freeTextProposalPending ||
+      (activeProposal?.actionType === "enable_free_text_chat" &&
+        activeProposal.senderPlayerId === localPlayerId);
     const clientAuthorityJoined = sessionJoined && sessionJoinedRole === "player";
     if (
       context.game.authority === "client" &&
@@ -1567,7 +1763,7 @@ export function LiveMatchPage() {
           moveLogs={loadState.moveLogs}
           chatMessages={loadState.chatMessages}
           freeTextEnabled={loadState.freeTextEnabled}
-          freeTextProposalPending={loadState.freeTextProposalPending}
+          freeTextProposalPending={freeTextProposalPending}
           canSendChat={canSendHostedChat}
           canRequestFreeText={canRequestFreeText}
           sendRemoteChatPreset={sendRemoteChatPreset}
@@ -1609,12 +1805,13 @@ export function LiveMatchPage() {
         remoteSubmitInteraction={remoteSubmitInteraction}
         remoteInteractionView={context.game.interactionView}
         remotePrompt={context.game.viewerProjection?.prompt}
+        remoteProjection={context.game.viewerProjection}
         requestRemoteUndo={requestRemoteUndo}
         remoteMoveLogs={loadState.moveLogs}
         remoteEngineEvents={loadState.engineEvents}
         remoteChatMessages={loadState.chatMessages}
         remoteFreeTextEnabled={loadState.freeTextEnabled}
-        remoteFreeTextProposalPending={loadState.freeTextProposalPending}
+        remoteFreeTextProposalPending={freeTextProposalPending}
         canSendChat={canSendHostedChat}
         canRequestFreeText={canRequestFreeText}
         sendRemoteChatPreset={sendRemoteChatPreset}
@@ -1627,6 +1824,7 @@ export function LiveMatchPage() {
         requestRemoteBoardCorrectionExit={requestRemoteBoardCorrectionExit}
         remoteExecuteMove={remoteExecuteMove}
         hasPendingRemoteMove={pendingOptimisticMove !== null}
+        pendingRemoteActionId={pendingOptimisticMove?.actionId ?? null}
         playerIdentities={playerIdentities}
         playerConnections={boardPlayerConnections}
         connectionDiagnostic={connectionDiagnostic}
@@ -1635,6 +1833,8 @@ export function LiveMatchPage() {
         liveMatchSidebar={{
           matchId: context.match.matchId,
           gameId: context.game.gameId,
+          format: context.match.format,
+          gameNumber: context.game.gameNumber,
           localPlayerId: localPlayerId ?? undefined,
           participants: context.match.participants ?? [],
           player1Score: context.match.player1Score,
@@ -1721,7 +1921,42 @@ export function LiveMatchPage() {
   const showLiveSyncing =
     Boolean(simulatorRoute.matchPageData?.viewer.role === "player") &&
     shouldShowLiveBoardSyncing({ knownServerVersion, localVersion });
-  const content = board ?? fallback;
+  // Mount the real Cyberpunk board component during preparation. Its blocked
+  // fixture warms the renderer and card art before the live game exists.
+  const preparing =
+    simulatorRoute.session?.phase === "preparation" || simulatorRoute.session?.phase === "starting";
+  const preparationBoard =
+    preparing && clientReady ? (
+      <div inert aria-hidden="true" className={classes.preparationBoard}>
+        <BoardSharedPage
+          scenarioId="gameStart"
+          initialAi={{ player: null, opponent: null }}
+          initialAiMode="step"
+          initialHumanSide="player"
+        />
+      </div>
+    ) : null;
+  const content = board ?? preparationBoard ?? fallback;
+  const attention = (
+    <LiveActionAttention
+      gameId={gameId}
+      view={readyContext?.game.interactionView}
+      viewerId={contextPlayerId}
+      stateVersion={readyContext?.game.version}
+      canAct={
+        simulatorRoute.matchPageData?.viewer.role === "player" &&
+        gatewayDiagnostic.authenticated === true &&
+        !showLiveSyncing &&
+        !seatReconciliationPending
+      }
+      submitting={pendingOptimisticMove !== null}
+      onShowAction={() => {
+        const target = document.querySelector<HTMLElement>("[data-action-attention-target]");
+        target?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        target?.focus({ preventScroll: true });
+      }}
+    />
+  );
   const proposalBanner =
     loadState.status === "ready" ? (
       <LiveProposalBanner
@@ -1731,17 +1966,36 @@ export function LiveMatchPage() {
         onDecline={() => respondToActiveProposal(false)}
       />
     ) : null;
+  const recoveryBanner = pendingOptimisticMove?.awaitingRecoverySync ? (
+    <div role="alert" className={classes.lead}>
+      <p>Action list out of sync. Waiting for a fresh server response.</p>
+      <button type="button" className={classes.backLink} onClick={handleSetupStallSync}>
+        Retry sync
+      </button>
+    </div>
+  ) : null;
+  const projectionFailureBanner = readyContext?.game.interactionView?.projectionFailure ? (
+    <div role="alert" className={classes.lead}>
+      <p>The server could not build the current action list.</p>
+      <button type="button" className={classes.backLink} onClick={handleSetupStallSync}>
+        Retry sync
+      </button>
+    </div>
+  ) : null;
 
   if (
     !gatewayHandle ||
     !readyGameId ||
     !simulatorRoute.matchPageData ||
-    (!hasReadyGameState && !canRunClientAuthorityPractice)
+    (!hasReadyGameState && !canRunClientAuthorityPractice && !seatReconciliationPending)
   ) {
     return (
       <>
         {proposalBanner}
+        {recoveryBanner}
+        {projectionFailureBanner}
         {content}
+        {attention}
       </>
     );
   }
@@ -1760,12 +2014,15 @@ export function LiveMatchPage() {
     >
       <CyberpunkLiveConnectionBridge onState={handleLiveConnectionState} />
       {proposalBanner}
+      {recoveryBanner}
+      {projectionFailureBanner}
       {showLiveSyncing ? (
-        <p role="status" className={classes.lead}>
+        <p role="status" className={classes.liveSyncStatus}>
           {LIVE_MATCH_SYNCING_BOARD_COPY}
         </p>
       ) : null}
       {content}
+      {attention}
     </SimulatorLiveConnectionProvider>
   );
 }
@@ -1917,17 +2174,11 @@ function ClientAuthorityPracticeBoard({
   }, [pushCurrentState]);
 
   useEffect(() => {
-    if (syncRequestNonce <= 0) {
-      return;
-    }
+    if (syncRequestNonce <= 0) return;
     const engine = engineRef.current;
-    if (!engine) {
-      return;
-    }
+    if (!engine) return;
     const localVersion = engine.getState().ctx.stateID;
-    if (localVersion === lastPushedVersionRef.current) {
-      return;
-    }
+    if (localVersion === lastPushedVersionRef.current) return;
     pushCurrentState("sync", undefined, true);
   }, [pushCurrentState, syncRequestNonce]);
 
@@ -2168,16 +2419,7 @@ function presenceDiagnosticsForContext(
 }
 
 function playerIdentitiesForContext(context: LiveMatchContext): PlayerIdentityBySide | undefined {
-  const actorIds = context.game.actorIds;
-  const participants = context.match.participants ?? [];
-  if (!actorIds || participants.length === 0) {
-    return undefined;
-  }
-  const byId = new Map(participants.map((participant) => [participant.id, participant]));
-  return {
-    player: byId.get(actorIds.player),
-    opponent: byId.get(actorIds.opponent),
-  };
+  return playerIdentitiesByActorOrSeat(context.match.participants ?? [], context.game.actorIds);
 }
 
 function playerConnectionsForBoard(
@@ -2650,9 +2892,11 @@ export function emitGatewayFreeTextRequest(
   handle: Pick<GatewayHandle, "emit"> | null,
   gameId: string,
 ): boolean {
-  void handle;
-  void gameId;
-  return false;
+  if (!handle || !gameId) {
+    return false;
+  }
+  handle.emit("proposal_send", { gameId, actionType: "enable_free_text_chat" });
+  return true;
 }
 
 export function emitGatewayBoardCorrectionRequest(
@@ -3044,59 +3288,6 @@ function LiveProposalBanner({
   );
 }
 
-export function systemChatMessageText(systemEvent: string | undefined): string {
-  if (systemEvent?.startsWith("Drop claimed:")) {
-    return systemEvent.toLowerCase().includes("timed out")
-      ? "Drop approved: opponent timed out."
-      : "Drop approved: opponent disconnected.";
-  }
-
-  switch (systemEvent) {
-    case "undo_proposed":
-      return "Undo requested.";
-    case "undo_accepted":
-      return "Undo request accepted.";
-    case "undo_declined":
-      return "Undo request rejected.";
-    case "undo_expired":
-      return "Undo request expired.";
-    case "free_text_chat_enabled":
-      return "Free text chat enabled.";
-    case "enable_free_text_chat_proposed":
-      return "Free text chat requested.";
-    case "enable_free_text_chat_declined":
-      return "Free text chat request rejected.";
-    case "enable_free_text_chat_expired":
-      return "Free text chat request expired.";
-    case "cancel_match_proposed":
-      return "Match cancellation requested.";
-    case "cancel_match_accepted":
-      return "Match cancellation accepted.";
-    case "cancel_match_declined":
-      return "Match cancellation rejected.";
-    case "cancel_match_expired":
-      return "Match cancellation request expired.";
-    case "enable_manual_mode_proposed":
-      return "Manual mode requested.";
-    case "enable_manual_mode_accepted":
-      return "Manual mode enabled.";
-    case "enable_manual_mode_declined":
-      return "Manual mode request rejected.";
-    case "enable_manual_mode_expired":
-      return "Manual mode request expired.";
-    case "disable_manual_mode_proposed":
-      return "Manual mode disable requested.";
-    case "disable_manual_mode_accepted":
-      return "Manual mode disabled.";
-    case "disable_manual_mode_declined":
-      return "Manual mode disable request rejected.";
-    case "disable_manual_mode_expired":
-      return "Manual mode disable request expired.";
-    default:
-      return systemEvent ?? "System message";
-  }
-}
-
 function handleProposalResolved(
   message: Extract<LiveGatewayMessage, { type: "proposal_resolved" }>,
 ): void {
@@ -3142,14 +3333,16 @@ function handleProposalResolved(
   if (message.actionType !== "undo") {
     return;
   }
+  notifications.hide(undoRequestNotificationId(message.gameId));
   notifications.show({
     id: `undo-proposal-resolved:${message.gameId}:${message.resolution}`,
     color: message.resolution === "accepted" ? "green" : "yellow",
-    title: message.resolution === "accepted" ? "Undo approved" : "Undo declined",
+    title: message.resolution === "accepted" ? "Undo complete" : "Undo declined",
     message:
       message.resolution === "accepted"
         ? "The last move was undone."
         : "The undo request was not approved.",
+    autoClose: 4_000,
   });
 }
 
@@ -3179,12 +3372,18 @@ function handleProposalExpired(
   if (message.actionType !== "undo") {
     return;
   }
+  notifications.hide(undoRequestNotificationId(message.gameId));
   notifications.show({
     id: `undo-proposal-expired:${message.gameId}`,
     color: "yellow",
     title: "Undo request expired",
     message: "Your opponent did not respond in time.",
+    autoClose: 4_000,
   });
+}
+
+function undoRequestNotificationId(gameId: string): string {
+  return `undo-proposal-sent:${gameId}`;
 }
 
 function showServerFeedbackNotification(input: {
@@ -3199,4 +3398,11 @@ function showServerFeedbackNotification(input: {
     title: input.title,
     message: input.message,
   });
+}
+
+function sameActorMapping(
+  left: LiveMatchContext["game"]["actorIds"],
+  right: LiveMatchContext["game"]["actorIds"],
+): boolean {
+  return left?.player === right?.player && left?.opponent === right?.opponent;
 }

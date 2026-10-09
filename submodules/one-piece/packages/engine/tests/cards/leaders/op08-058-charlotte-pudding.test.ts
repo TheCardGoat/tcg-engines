@@ -61,4 +61,40 @@ describe("OP08-058 Charlotte Pudding", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each([0, 1])(
+    "FAQ: face-up top-two position%s cannot be replaced by deeper facedown Life",
+    (index) => {
+      const life = ["ST02-012", "ST02-006", "ST15-002", "ST04-003"].map((cardId, i) => ({
+        cardId,
+        faceUp: i === index,
+        publicKnowledge: i === index,
+      }));
+      const e = OnePieceTestEngine.create({ leaderCardId: "OP08-058", life, donDeckCount: 10 });
+      const before = e.getView("south").players.south.life;
+      e.asSouth().attack(e.leader("south"), e.leader("north"));
+      expect(e.getView("south").players.south.life).toEqual(before);
+      expect(e.getView("south").players.south.restedDon).toBe(0);
+      expect(e.getView("south").players.south.donDeckCount).toBe(10);
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
+  test("paying face-up cost permits zero optional DON addition", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP08-058",
+      life: ["ST02-012", "ST02-006", "ST15-002"],
+      donDeckCount: 10,
+    });
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    expect(
+      e
+        .getView("north")
+        .players.south.life.slice(0, 2)
+        .map((c) => c.cardId),
+    ).toEqual(["ST02-012", "ST02-006"]);
+    expect(e.getView("north").players.south.life[2]?.cardId).toBeNull();
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").players.south.donDeckCount).toBe(10);
+  });
 });

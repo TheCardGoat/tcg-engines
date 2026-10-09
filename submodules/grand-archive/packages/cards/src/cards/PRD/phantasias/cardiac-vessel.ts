@@ -124,17 +124,20 @@ export const cardiacVessel: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
             },
           },
           effect: {
-            kind: "move-counter",
-            from: {
-              kind: "event-subject",
-            },
-            to: {
+            kind: "add-counter",
+            subject: {
               kind: "champion",
               player: "controller",
             },
             counter: "damage",
             amount: {
-              kind: "all",
+              kind: "counter-count",
+              subject: {
+                kind: "source",
+              },
+              counter: "damage",
+              basis: "last-known",
+              missing: "zero",
             },
           },
         },

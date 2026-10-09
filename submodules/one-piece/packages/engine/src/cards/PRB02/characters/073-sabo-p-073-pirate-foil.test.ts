@@ -5,6 +5,25 @@ import { prb02SaboP073PirateFoil073 } from "../../../../../cards/src/cards/chara
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-073 Sabo - P-073 (Pirate Foil)", () => {
+  test("pays the physical top Life card without triggering it and leaves bottom Life intact", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [prb02SaboP073PirateFoil073],
+      life: ["P-014", eb01Fourtricks025],
+    });
+    const source = engine.findCardInZone("south", "character", prb02SaboP073PirateFoil073);
+    const top = engine.findCardInZone("south", "life", "P-014");
+    const bottom = engine.findCardInZone("south", "life", eb01Fourtricks025);
+    engine.asSouth().activateMain(source);
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectCostAddLifeToHand", { optionId: "top" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((c) => c.instanceId)).toContain(top);
+    expect(engine.findCardInZone("south", "life", eb01Fourtricks025)).toBe(bottom);
+    expect(view.players.south.characters.filter(Boolean)).toHaveLength(1);
+    expect(view.players.south.characters.find((c) => c?.instanceId === source)?.power).toBe(6000);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("takes the selected end of Life, gains power for the turn, and cannot activate twice", () => {
     const engine = OnePieceTestEngine.create({
       character: [prb02SaboP073PirateFoil073],

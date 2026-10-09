@@ -17,9 +17,9 @@ export const pegasusSearchingHighAndLowI18n: Record<Languages, I18nProperties> =
     text: "<Insaisissable>",
   },
   it: {
-    name: "Pegaso",
-    version: "Che Cerca in Cielo e in Terra",
-    text: "<Sfuggente>",
+    name: "Pegasus",
+    version: "Searching High and Low",
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
   es: {
     name: "Pegaso",

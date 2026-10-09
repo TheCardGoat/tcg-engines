@@ -71,7 +71,7 @@ export const op09MarshallDTeach093: CharacterCard = {
   setId: "OP09",
   cost: 10,
   power: 12000,
-  traits: ["Blackbeard Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Blackbeard Pirates"],
   attribute: "special",
 
   effect:
@@ -89,7 +89,7 @@ export const op09MarshallDTeach093: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "playedThisTurn",
@@ -120,7 +120,7 @@ export const op09MarshallDTeach093: CharacterCard = {
                 upTo: true,
               },
             },
-            duration: "thisTurn",
+            duration: "untilEndOfOpponentNextTurn",
           },
           {
             action: "cannotAttack",

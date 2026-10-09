@@ -30,7 +30,7 @@ export const op01DonquixoteDoflamingo060: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 5,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     '[DON!! x2] [When Attacking] (1) (You may rest the specified number of DON!! cards in your cost area.): Reveal 1 card from the top of your deck. If that card is a "The Seven Warlords of the Sea" type Character card with a cost of 4 or less, you may play that card rested.',
@@ -63,7 +63,7 @@ export const op01DonquixoteDoflamingo060: LeaderCard = {
                 {
                   filter: "trait",
                   value: "The Seven Warlords of the Sea",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",
@@ -90,7 +90,7 @@ export const op01DonquixoteDoflamingo060: LeaderCard = {
                     {
                       filter: "trait",
                       value: "The Seven Warlords of the Sea",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cost",

@@ -122,47 +122,6 @@ export const anthemOfVitality: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           id: "vbgl6ffqsu-a2",
           kind: "card-resolution",
           text: "Harmonize — If you've activated a Melody card this turn, put two buff counters on an Animal or Beast ally you control.",
-          targets: [
-            {
-              id: "vbgl6ffqsu-a2:target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "all",
-                  filters: [
-                    {
-                      kind: "type",
-                      oneOf: ["ALLY"],
-                    },
-                    {
-                      kind: "any",
-                      filters: [
-                        {
-                          kind: "subtype",
-                          oneOf: ["ANIMAL"],
-                        },
-                        {
-                          kind: "subtype",
-                          oneOf: ["BEAST"],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              },
-            },
-          ],
           effect: {
             kind: "conditional",
             condition: {
@@ -177,13 +136,55 @@ export const anthemOfVitality: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               minimum: 1,
             },
             then: {
-              kind: "add-counter",
-              subject: {
-                kind: "bound",
-                binding: "vbgl6ffqsu-a2:target-1",
+              kind: "choose",
+              selection: {
+                id: "target-1",
+                kind: "choice",
+                declared: "resolution",
+                chooser: "controller",
+                count: {
+                  kind: "exactly",
+                  amount: 1,
+                },
+                unique: true,
+                candidates: {
+                  kind: "object",
+                  zones: ["field"],
+                  relationship: "controlled-by",
+                  player: "controller",
+                  filter: {
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "type",
+                        oneOf: ["ALLY"],
+                      },
+                      {
+                        kind: "any",
+                        filters: [
+                          {
+                            kind: "subtype",
+                            oneOf: ["ANIMAL"],
+                          },
+                          {
+                            kind: "subtype",
+                            oneOf: ["BEAST"],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
               },
-              counter: "buff",
-              amount: 2,
+              effect: {
+                kind: "add-counter",
+                subject: {
+                  kind: "bound",
+                  binding: "target-1",
+                },
+                counter: "buff",
+                amount: 2,
+              },
             },
           },
           label: {

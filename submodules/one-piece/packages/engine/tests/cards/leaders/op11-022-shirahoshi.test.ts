@@ -75,4 +75,25 @@ describe("OP11-022 Shirahoshi", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: an already face-up top Life cannot pay either activation cost", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP11-022",
+      activeDon: 4,
+      hand: ["OP11-112"],
+      life: [{ cardId: "EB01-005", faceUp: true, publicKnowledge: true }, "EB01-025"],
+    });
+    e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(e.getView("south").players.south).toMatchObject({
+      activeDon: 4,
+      restedDon: 0,
+      lifeCount: 2,
+    });
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

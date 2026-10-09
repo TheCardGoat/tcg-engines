@@ -40,7 +40,7 @@ export const op10EdwardNewgateSp002: CharacterCard = {
   setId: "ST15",
   cost: 7,
   power: 8000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[On Play] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.\n[Activate: Main] You may rest this Character: K.O. up to 1 of your opponent's Characters with 5000 power or less.",

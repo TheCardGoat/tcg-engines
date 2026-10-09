@@ -316,6 +316,10 @@ function normalizeBufferedEvent(raw: string | undefined): BufferedTriggeredEvent
       return "lose-lore";
     case "leave-discard":
       return "leave-discard";
+    case "ink-drop-gained":
+      return "ink-drop-gained";
+    case "ink-drop-removed":
+      return "ink-drop-removed";
     default:
       return undefined;
   }
@@ -323,15 +327,11 @@ function normalizeBufferedEvent(raw: string | undefined): BufferedTriggeredEvent
 
 /**
  * "leave-play" is a composite trigger that matches any event where a card
- * exits the play zone: banish, banish-in-challenge, return-to-hand, or ink.
+ * exits the play zone: banish, return-to-hand, or ink.
+ * "banish-in-challenge" observes the banisher, not the card leaving play;
+ * the accompanying "banish" event already represents that zone change.
  */
-const LEAVE_PLAY_EVENTS: BufferedTriggeredEvent[] = [
-  "banish",
-  "banish-in-challenge",
-  "return-to-hand",
-  "ink",
-  "move",
-];
+const LEAVE_PLAY_EVENTS: BufferedTriggeredEvent[] = ["banish", "return-to-hand", "ink", "move"];
 
 function expandTriggerEvent(raw: string | undefined): BufferedTriggeredEvent[] {
   if (raw === "leave-play") {
@@ -690,7 +690,7 @@ function collectTriggeredCandidatesFromCard(args: {
         cardPlayed: sourcePayload,
         ability: {
           id: instanceId !== undefined ? `${baseAbilityId}:${instanceId}` : baseAbilityId,
-          name: payload.name,
+          name: payload.name ?? payload.text,
           trigger: payload.trigger,
           sourceZones: payload.sourceZones,
           condition: payload.condition,
@@ -708,6 +708,7 @@ function collectTriggeredCandidatesFromCard(args: {
 function cloneTriggeredEventCandidate(candidate: TriggeredEventCandidate): TriggeredEventCandidate {
   return {
     abilityId: candidate.abilityId,
+    abilityIndex: candidate.abilityIndex,
     controllerId: candidate.controllerId,
     sourceId: candidate.sourceId,
     cardPlayed: {
@@ -1191,6 +1192,11 @@ function restrictionsMatch(
           typeof event.fromZone === "string" &&
           (event.fromZone === "discard" || event.fromZone.startsWith("discard:"))
         );
+      case "from-deck":
+        return (
+          typeof event.fromZone === "string" &&
+          (event.fromZone === "deck" || event.fromZone.startsWith("deck:"))
+        );
       case "to-hand":
         return typeof event.toZone === "string" && event.toZone === "hand";
       case "in-challenge":
@@ -1213,10 +1219,22 @@ function getUsageKey(
   sourceId: CardInstanceId,
   abilityId: string,
   occurrenceScope?: string,
+  sourceLifetime = 0,
 ): string {
+  const lifetimeKey = sourceLifetime > 0 ? `:lifetime-${sourceLifetime}` : "";
   return occurrenceScope
-    ? `${turn}:${sourceId}:${abilityId}:${occurrenceScope}`
-    : `${turn}:${sourceId}:${abilityId}`;
+    ? `${turn}:${sourceId}:${abilityId}${lifetimeKey}:${occurrenceScope}`
+    : `${turn}:${sourceId}:${abilityId}${lifetimeKey}`;
+}
+
+/** A replayed card is a new source (CR 7.1.6). Keep old bag keys intact. */
+export function beginTriggeredAbilitySourceLifetime(
+  ctx: Pick<TriggerRuntimeContext, "G">,
+  sourceId: CardInstanceId,
+): void {
+  const usage = getTriggeredAbilitiesState(ctx.G).usageLedger;
+  const lifetimes = (usage.sourceLifetimes ??= {});
+  lifetimes[sourceId] = (lifetimes[sourceId] ?? 0) + 1;
 }
 
 function getOccurrenceScope(
@@ -1248,11 +1266,12 @@ function shouldSkipByNTimesPerTurn(
     candidate.sourceId,
     candidate.abilityId,
     getOccurrenceScope(candidate.ability.trigger, event),
+    getTriggeredAbilitiesState(ctx.G).usageLedger.sourceLifetimes?.[candidate.sourceId] ?? 0,
   );
   const occurrences = getTriggeredAbilitiesState(ctx.G).usageLedger.occurrences[abilityKey] ?? 0;
   const resolutions = getTriggeredAbilitiesState(ctx.G).usageLedger.resolutions[abilityKey] ?? 0;
 
-  if (restrictions.some((r) => r.type === "once-per-turn") && occurrences > 0) {
+  if (restrictions.some((r) => r.type === "once-per-turn") && resolutions > 0) {
     return true;
   }
 
@@ -1260,7 +1279,7 @@ function shouldSkipByNTimesPerTurn(
     return true;
   }
 
-  if (restrictions.some((r) => r.type === "once-per-song") && occurrences > 0) {
+  if (restrictions.some((r) => r.type === "once-per-song") && resolutions > 0) {
     return true;
   }
 
@@ -1384,8 +1403,9 @@ function evaluateTriggeredAbilityCondition(args: {
   resolutionInput: PendingActionResolutionInput;
   triggerEvent?: string;
   zoneTypeCache?: PlayZoneCardTypeCache;
+  event?: PendingTriggeredEvent;
 }): boolean {
-  const { ctx, candidate, condition, resolutionInput, triggerEvent, zoneTypeCache } = args;
+  const { ctx, candidate, condition, resolutionInput, triggerEvent, zoneTypeCache, event } = args;
   if (!condition) {
     return true;
   }
@@ -1524,6 +1544,7 @@ function evaluateTriggeredAbilityCondition(args: {
     case "has-another-character":
     case "has-card-under":
     case "played-card-has-keyword":
+    case "played-card-name":
     case "put-card-under-self-this-turn":
     case "at-location":
     case "stat-threshold": {
@@ -1533,6 +1554,9 @@ function evaluateTriggeredAbilityCondition(args: {
         ctx,
         playerId: candidate.controllerId,
         sourceCardId: candidate.sourceId,
+        // The event's played-card payload (e.g. the song that triggered a
+        // "whenever you play a song" ability) — not the ability source card.
+        cardPlayed: event?.cardPlayed ?? candidate.cardPlayed,
         resolutionInput,
         zoneTypeCache,
       });
@@ -1584,6 +1608,21 @@ function triggerMatchesEvent(
     return false;
   }
 
+  // CR 7.3.4: "discard" means from hand. A plain "whenever you discard"
+  // trigger (no from-zone restriction) must not fire on cards put into the
+  // discard from the deck (mills); deck-origin moves only match triggers
+  // that explicitly opt in via the from-deck restriction.
+  const hasFromDeckRestriction =
+    Array.isArray(trigger.restrictions) && trigger.restrictions.some((r) => r.type === "from-deck");
+  if (
+    trigger.event === "discard" &&
+    !hasFromDeckRestriction &&
+    typeof event.fromZone === "string" &&
+    (event.fromZone === "deck" || event.fromZone.startsWith("deck:"))
+  ) {
+    return false;
+  }
+
   if (
     trigger.sourceFilter?.cardType &&
     trigger.sourceFilter.cardType.length > 0 &&
@@ -1609,6 +1648,19 @@ function triggerMatchesEvent(
         return false;
       }
     }
+  }
+
+  // CR 7.3.4: discarding means choosing cards from the hand. Deck-origin
+  // discard events (mills) are only visible to abilities that explicitly
+  // declare a from-deck restriction (e.g. Mamá Coco, The Torn Corner) —
+  // unrestricted "whenever you discard" triggers must not fire on mills.
+  if (
+    event.event === "discard" &&
+    typeof event.fromZone === "string" &&
+    (event.fromZone === "deck" || event.fromZone.startsWith("deck:")) &&
+    !trigger.restrictions?.some((restriction) => restriction.type === "from-deck")
+  ) {
+    return false;
   }
 
   if (!restrictionsMatch(ctx, candidate, trigger, event)) {
@@ -1660,19 +1712,19 @@ function triggerMatchesEvent(
       resolutionInput: resolvedResolutionInput,
       triggerEvent,
       zoneTypeCache,
+      event,
     })
   ) {
     return false;
   }
 
-  // Board-state conditions on ability.condition (e.g. has-character-count,
-  // has-character-with-classification) are also evaluated at trigger time.
-  // evaluateTriggeredAbilityCondition returns true for non-board-state types
-  // (turn-metric, your-turn, used-shift, etc.), so they are not affected here
-  // and continue to be checked only at resolution time per CRD 2.0 Rule 6.2.7.
+  // A played-card-name secondary condition must wait for bag resolution
+  // (CR 2.2.0 6.2.4). Another bag effect can change the matching zone first.
+  // Conditions that define the trigger itself still use triggerCondition above.
   const abilityCondition = candidate.ability.condition;
   if (
     abilityCondition &&
+    abilityCondition.type !== "played-card-name" &&
     !evaluateTriggeredAbilityCondition({
       ctx,
       candidate,
@@ -1680,6 +1732,7 @@ function triggerMatchesEvent(
       resolutionInput: resolvedResolutionInput,
       triggerEvent,
       zoneTypeCache,
+      event,
     })
   ) {
     return false;
@@ -1699,8 +1752,20 @@ function shouldDeduplicateDiscardBatch(trigger: Trigger, event: PendingTriggered
     case "OPPONENT":
     case "ANY_PLAYER":
       return true;
-    default:
+    default: {
+      // Player-scoped object subjects (e.g. { controller: "you" }) also
+      // describe one batch-wide happening for deck-origin batches
+      // ("whenever you put 1 or more cards into your discard from your deck").
+      if (
+        event.fromZone === "deck" &&
+        typeof trigger.on === "object" &&
+        trigger.on !== null &&
+        (trigger.on as { controller?: string }).controller === "you"
+      ) {
+        return true;
+      }
       return false;
+    }
   }
 }
 
@@ -1711,7 +1776,13 @@ function recordOccurrence(
   occurrenceScope?: string,
 ): { abilityKey: string; occurrenceIndex: number } {
   const currentTurn = getCurrentTurn(ctx);
-  const abilityKey = getUsageKey(currentTurn, sourceId, abilityId, occurrenceScope);
+  const abilityKey = getUsageKey(
+    currentTurn,
+    sourceId,
+    abilityId,
+    occurrenceScope,
+    getTriggeredAbilitiesState(ctx.G).usageLedger.sourceLifetimes?.[sourceId] ?? 0,
+  );
   const ledger = getTriggeredAbilitiesState(ctx.G).usageLedger.occurrences;
   const occurrenceIndex = (ledger[abilityKey] ?? 0) + 1;
   ledger[abilityKey] = occurrenceIndex;
@@ -1839,8 +1910,23 @@ function enqueueMatchedTrigger(
   );
 
   const resolutionInput = buildTriggeredResolutionInput(candidate, event);
+  // Conditions like played-card-name read the card whose play triggered this
+  // ability (the event subject, e.g. the song) — overlay its identity on the
+  // source payload while keeping the source controller perspective intact.
   const cardPlayed = {
     ...candidate.cardPlayed,
+    // The registration snapshot predates cost payment, so the payment fact
+    // ("paid with N ink drops") only exists on the event's payload.
+    ...(event.cardPlayed?.paidWithInkDrops !== undefined
+      ? { paidWithInkDrops: event.cardPlayed.paidWithInkDrops }
+      : {}),
+    // Overlay the played card's id only when the trigger's own source is the
+    // played card. Board observers (e.g. "whenever you play an action" on
+    // another character) must keep anchoring their effects to their own
+    // source, or SELF-targeted effects no-op.
+    ...(event.event === "play" && event.cardPlayed && candidate.sourceId === event.cardPlayed.cardId
+      ? { cardId: event.cardPlayed.cardId }
+      : {}),
     singerIds:
       event.event === "sing" && event.cardPlayed?.singerIds
         ? [...event.cardPlayed.singerIds]
@@ -1854,12 +1940,13 @@ function enqueueMatchedTrigger(
     abilityId: candidate.abilityId,
     abilityIndex: candidate.abilityIndex,
     abilityKey,
-    abilityName: candidate.ability.name,
+    abilityName: candidate.ability.name ?? "",
     ...(candidate.ability.autoResolve === true ? { autoResolve: true } : {}),
     controllerId: candidate.controllerId,
     chooserId: candidate.controllerId,
     sourceId: candidate.sourceId,
     cardPlayed,
+    eventCardPlayed: event.cardPlayed,
     trigger: candidate.ability.trigger,
     condition: candidate.ability.condition,
     effect: candidate.ability.effect,
@@ -1941,9 +2028,15 @@ export function recordEvent(
   const entry: PendingTriggeredEvent = {
     id: getPendingTriggeredEventId(ctx, input.event),
     ...input,
-    triggerCandidates: input.triggerCandidates?.map((candidate) =>
-      cloneTriggeredEventCandidate(candidate),
-    ),
+    // Ink-drop changes observe the board at the instant of payment/effect.
+    // A character played after payment cannot observe drops used to play itself
+    // (CR 1.6.1, 4.3.2.4, 4.3.3).
+    triggerCandidates: (
+      input.triggerCandidates ??
+      (input.event === "ink-drop-removed" || input.event === "ink-drop-gained"
+        ? snapshotBoardTriggerCandidates(ctx)
+        : undefined)
+    )?.map((candidate) => cloneTriggeredEventCandidate(candidate)),
   };
 
   state.pendingEvents.push(entry);
@@ -2167,9 +2260,10 @@ export function finalizeResolutionBoundary(
       const eventCandidates: TriggerMatchCandidate[] = (event.triggerCandidates ?? [])
         .map((candidate) => cloneTriggeredEventCandidate(candidate))
         .filter((candidate) => shouldAllowSnapshotCandidate(candidate, event));
-      const filteredBoardCandidates = boardCandidates.filter((candidate) =>
-        shouldAllowSnapshotCandidate(candidate, event),
-      );
+      const filteredBoardCandidates =
+        event.event === "ink-drop-removed" || event.event === "ink-drop-gained"
+          ? []
+          : boardCandidates.filter((candidate) => shouldAllowSnapshotCandidate(candidate, event));
       const seenCandidates = new Set<string>();
       for (const candidate of [...eventCandidates, ...filteredBoardCandidates]) {
         const candidateKey = getTriggerCandidateKey(candidate);
@@ -2183,8 +2277,8 @@ export function finalizeResolutionBoundary(
         }
 
         // Deduplicate across events for composite triggers (e.g., "leave-play"
-        // expands to ["banish", "banish-in-challenge", ...]).  When a challenge
-        // emits both "banish" and "banish-in-challenge", the same candidate
+        // expands to ["banish", "return-to-hand", ...]). A card leaving play
+        // may emit multiple matching zone-change events; the same candidate
         // should only fire once.
         const rawTriggerEvent = candidate.ability.trigger.event;
         if (rawTriggerEvent === "leave-play") {
@@ -2230,6 +2324,14 @@ export function finalizeResolutionBoundary(
             },
           )
         ) {
+          // The ability is suppressed without ever prompting the player; make the
+          // skip visible in the game log so "nothing happened" is explainable.
+          emitTriggeredLorcanaEvent(ctx, "triggeredAbilitySkipped", {
+            playerId: candidate.controllerId,
+            sourceCardId: candidate.sourceId,
+            abilityName: candidate.ability.name ?? "",
+            reason: "no-valid-targets",
+          });
           continue;
         }
 
@@ -2284,7 +2386,9 @@ export function canResolveBagEffectByRestrictions(
   }
 
   if (
-    restrictions.some((restriction) => restriction.type === "once-per-turn") &&
+    restrictions.some(
+      (restriction) => restriction.type === "once-per-turn" || restriction.type === "once-per-song",
+    ) &&
     (getTriggeredAbilitiesState(ctx.G).usageLedger.resolutions[bagEffect.abilityKey] ?? 0) > 0
   ) {
     return false;
@@ -2396,14 +2500,15 @@ export function removeBagEffect(
  */
 export function removeBagItemMatchingPendingSource(
   ctx: Pick<TriggerRuntimeContext, "G">,
-  pending: Pick<PendingActionEffect, "sourceCardId" | "abilityIndex">,
+  pending: Pick<PendingActionEffect, "sourceCardId" | "abilityIndex" | "bagUsage">,
 ): boolean {
   const bag = getTriggeredAbilitiesState(ctx.G).bag;
   const items = bag.items;
-  const index = items.findIndex(
-    (entry) =>
-      entry.sourceId === pending.sourceCardId &&
-      (pending.abilityIndex === undefined || entry.abilityIndex === pending.abilityIndex),
+  const index = items.findIndex((entry) =>
+    pending.bagUsage
+      ? entry.id === pending.bagUsage.id
+      : entry.sourceId === pending.sourceCardId &&
+        (pending.abilityIndex === undefined || entry.abilityIndex === pending.abilityIndex),
   );
   if (index < 0) {
     return false;

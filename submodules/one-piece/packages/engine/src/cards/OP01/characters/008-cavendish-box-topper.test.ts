@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op01CavendishBoxTopper008 } from "../../../../../cards/src/cards/characters/op01-008-cavendish-box-topper.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP01-008 Cavendish (Box Topper)", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op01CavendishBoxTopper008);
-  });
-});

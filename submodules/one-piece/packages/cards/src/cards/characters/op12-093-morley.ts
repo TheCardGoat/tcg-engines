@@ -23,7 +23,7 @@ export const op12Morley093: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Giant Revolutionary Army"],
+  traits: ["Giant", "Revolutionary Army"],
   attribute: "special",
   effect: 'If your Leader has the "Revolutionary Army" type, this Character gains +4 cost.',
   effects: {
@@ -33,7 +33,7 @@ export const op12Morley093: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

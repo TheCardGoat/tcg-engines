@@ -32,7 +32,7 @@ export const op14eb04DonquixoteDoflamingoOp14060060: LeaderCard = {
   setId: "OP14",
   power: 5000,
   life: 5,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[On Your Opponent's Attack] [Once Per Turn] DON!! -1: Select your Leader or 1 of your {Donquixote Pirates} type Characters. Change the attack target to the selected card.",
@@ -64,7 +64,7 @@ export const op14eb04DonquixoteDoflamingoOp14060060: LeaderCard = {
                       {
                         filter: "trait",
                         value: "Donquixote Pirates",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                   ],

@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { CHAT_PRESET_KEYS, MAX_CHAT_TEXT_LENGTH } from "./chat.js";
 import { InteractionSubmission } from "./interactions.js";
+import {
+  RequestPreparationSyncMessage,
+  ConfirmPreparationMessage,
+  ChoosePreparationFirstPlayerMessage,
+} from "./preparation.js";
 
 /**
  * Client -> server Socket.IO gateway message schemas.
@@ -260,6 +265,14 @@ export const DropPlayerMessage = z.object({
   gameId: z.string().min(1),
 });
 
+/** Concede the entire active match through the authoritative game engine. */
+export const ForfeitMatchMessage = z.object({
+  type: z.literal("forfeit_match"),
+  matchId: z.string().min(1),
+  gameId: z.string().min(1),
+  correlationId: z.string().min(1),
+});
+
 /**
  * Client requests a lightweight state sync check after receiving a
  * `game_already_completed` error.
@@ -349,6 +362,9 @@ export const UnsubscribeMatchmakingDashboardMessage = z
   .strict();
 
 export const GatewayClientMessage = z.union([
+  RequestPreparationSyncMessage,
+  ConfirmPreparationMessage,
+  ChoosePreparationFirstPlayerMessage,
   GatewayPingMessage,
   JoinGameMessage,
   ExecuteMoveMessage,
@@ -364,6 +380,7 @@ export const GatewayClientMessage = z.union([
   MatchmakingDeclineMessage,
   SkipOpponentTurnMessage,
   DropPlayerMessage,
+  ForfeitMatchMessage,
   ProposalSendMessage,
   ProposalAcceptMessage,
   ProposalDeclineMessage,
@@ -388,6 +405,7 @@ export type MatchmakingAcceptMsg = z.infer<typeof MatchmakingAcceptMessage>;
 export type MatchmakingDeclineMsg = z.infer<typeof MatchmakingDeclineMessage>;
 export type SkipOpponentTurnMsg = z.infer<typeof SkipOpponentTurnMessage>;
 export type DropPlayerMsg = z.infer<typeof DropPlayerMessage>;
+export type ForfeitMatchMsg = z.infer<typeof ForfeitMatchMessage>;
 export type ProposalActionTypeValue = z.infer<typeof ProposalActionType>;
 export type UndoScopeValue = z.infer<typeof UndoScope>;
 export type ProposalSendMsg = z.infer<typeof ProposalSendMessage>;

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/ordering-and-tracking"
+  relation: "current_index"
+---
+
 # Ordering and Tracking
 
 #### General Rules

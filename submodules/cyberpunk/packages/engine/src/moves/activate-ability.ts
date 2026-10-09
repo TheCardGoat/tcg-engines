@@ -5,7 +5,7 @@ import type { Ability, TargetDSL, TargetSelectionDSL } from "@tcg/cyberpunk-type
 import { continueTriggerResolution, resumeCurrentTrigger } from "../ability-executor.ts";
 import { evaluateCondition, resolveTarget } from "../effects/target-resolver.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
-import { defOf } from "../state/lookups.ts";
+import { defOf, hasEffectiveCardType } from "../state/lookups.ts";
 import { isReactStep } from "./is-react-step.ts";
 import { availableEddiesAfterAbilityCosts, canPayAbilityEddieCosts } from "./eddie-resources.ts";
 import { computeEffectiveCost } from "./compute-effective-cost.ts";
@@ -15,6 +15,7 @@ export interface ActivateAbilityInput extends MoveInput {
   args: {
     cardId: string;
     abilityIndex: number;
+    paymentSourceIds?: string[];
   };
 }
 
@@ -133,7 +134,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
   },
 
   execute({ state, playerId, input, operations }) {
-    const { cardId, abilityIndex } = input.args;
+    const { cardId, abilityIndex, paymentSourceIds } = input.args;
     const card = state.G.cardIndex[cardId];
     if (!card) return;
 
@@ -158,6 +159,7 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
     });
 
     state.G.turnMetadata.currentTrigger = {
+      kind: "authored",
       id: `activated-${cardId}-${abilityIndex}-${state.G.turnMetadata.nextTriggerId++}`,
       sourceCardId: cardId as CardInstanceId,
       sourcePlayerId: playerId,
@@ -174,6 +176,9 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
       boundTargets: {},
       order: state.G.turnMetadata.nextTriggerId,
       nextEffectIndex: 0,
+      ...(paymentSourceIds === undefined
+        ? {}
+        : { paymentSourceIds: paymentSourceIds as CardInstanceId[] }),
     };
     resumeCurrentTrigger(state as MatchState, operations);
     continueTriggerResolution(state as MatchState, operations);
@@ -219,10 +224,13 @@ export function canPayCosts(
       for (const id of targets) {
         const c = state.G.cardIndex[id as string];
         if (c?.meta.spent) return false;
-        if ((id as string) === (cardId as string) && c?.meta.hasLag) {
-          const cardDef = c ? defOf(c) : undefined;
-          // ADRENALINE is attack-scoped; it does not override Lag for self-spend effects.
-          if (cardDef?.type === "unit") return false;
+        const source = state.G.cardIndex[cardId as string];
+        const spendsAbilityHost = id === cardId || source?.meta.attachedToId === id;
+        if (spendsAbilityHost && c?.meta.hasLag) {
+          // A Gear's inherited Spend effect spends its host. Lag prohibits that
+          // Unit from activating the effect just as it prohibits self-spend.
+          // A Legend in the field is also a Unit (CR 4.2.1).
+          if (c && hasEffectiveCardType(c, "unit")) return false;
         }
       }
     }
@@ -253,6 +261,7 @@ export function canResolveActivatedAbility(
   cardId: CardInstanceId,
   playerId: import("../types/branded.ts").PlayerId,
 ): boolean {
+  if (ability.allowEmptyTargets) return true;
   const ctx: ResolutionContext = {
     state,
     sourceCardId: cardId,

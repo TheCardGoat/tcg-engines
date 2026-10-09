@@ -179,6 +179,13 @@ function moveCardIntoInkwell(
       to: `inkwell:${destinationPlayerId}`,
       exerted: state === "exerted",
       private: isPrivateSource,
+      // A blind deck-to-ink move grants no permission to see the card, even to its owner.
+      // Looked-at scry assignments emit their own owner-visible event in scry-effect.ts.
+      identityVisibleTo:
+        publicFaceState === "faceDown" &&
+        (sourceZoneKey === "deck" || sourceZoneKey?.startsWith("deck:"))
+          ? []
+          : undefined,
     },
     {
       event: "ink",
@@ -244,7 +251,7 @@ function getSourceCards(
         zone: "deck",
         playerId: destinationPlayerId,
       }) as CardInstanceId[]
-    ).slice(0, 1);
+    ).slice(-1);
   }
 
   if (source === "deck" || source === "hand" || source === "discard") {
@@ -274,6 +281,12 @@ function getSourceCards(
 }
 
 export function resolvePutIntoInkwellEffect(
+  ...args: Parameters<typeof resolvePutIntoInkwellEffectInner>
+): void {
+  return resolvePutIntoInkwellEffectInner(...args);
+}
+
+function resolvePutIntoInkwellEffectInner(
   ctx: PlayCardExecutionContext,
   cardPlayed: CardPlayedPayload,
   effect: PutIntoInkwellEffect,
@@ -301,6 +314,56 @@ export function resolvePutIntoInkwellEffect(
       moveCardIntoInkwell(ctx, cardId, ownerId, effect);
       consumedSelectedTargets.add(cardId);
       movedAny = true;
+    }
+    markLastEffectPerformed(resolutionInput.eventSnapshot, movedAny);
+    if (movedAny) {
+      runGameStateCheck(ctx, { reasonCardId: cardPlayed.cardId });
+    }
+    return;
+  }
+
+  // Card-reference target (e.g. { ref: "previous-target" }): the destination
+  // players are the owners of the referenced cards, so "its player puts the
+  // top card of their deck into their inkwell" resolves to the item's owner
+  // rather than the effect's controller.
+  const targetRef =
+    effect.target && typeof effect.target === "object" && "ref" in effect.target
+      ? (effect.target as { ref: string }).ref
+      : undefined;
+  if (targetRef) {
+    // "previous-target"/"selected-first" refer to the selection made by an
+    // earlier step of the resolving sequence (e.g. the banished item).
+    const refCards =
+      targetRef === "previous-target" || targetRef === "selected-first"
+        ? [
+            ...normalizeSelectedTargets(resolutionInput.currentTargets),
+            ...normalizeSelectedTargets(resolutionInput.contextTargets),
+            ...normalizeSelectedTargets(resolutionInput.targets),
+          ]
+        : (resolveEffectTargets(
+            ctx,
+            cardPlayed,
+            effect.target,
+            resolutionInput.targets,
+            resolutionInput.eventSnapshot,
+          ) ?? []);
+    const destinationOwners = [
+      ...new Set(refCards.map((cardId) => resolveCardOwnerId(ctx, cardId, cardPlayed.playerId))),
+    ];
+    for (const destinationPlayerId of destinationOwners) {
+      const sourceCards = getSourceCards(
+        ctx,
+        cardPlayed,
+        effect,
+        resolutionInput,
+        destinationPlayerId,
+        consumedSelectedTargets,
+      );
+      for (const cardId of new Set(sourceCards)) {
+        moveCardIntoInkwell(ctx, cardId, destinationPlayerId as PlayerId, effect);
+        consumedSelectedTargets.add(cardId);
+        movedAny = true;
+      }
     }
     markLastEffectPerformed(resolutionInput.eventSnapshot, movedAny);
     if (movedAny) {

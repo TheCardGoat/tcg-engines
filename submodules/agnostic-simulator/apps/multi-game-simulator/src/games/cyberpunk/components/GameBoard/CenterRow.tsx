@@ -1,3 +1,6 @@
+import { usePromptSkin } from "../Prompt/PromptSkin";
+import confirmationSkin from "../Prompt/PromptConfirmationSkin.module.css";
+import { getVisibleAttackStep, visibleAttackStep } from "../../engine/attackPresentation";
 import {
   useCallback,
   useEffect,
@@ -10,22 +13,28 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { IconKeyboard } from "@tabler/icons-react";
+import { Popover } from "@mantine/core";
+import { IconArrowsMaximize, IconKeyboard, IconX } from "@tabler/icons-react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import {
   AnimatedEntityCollection,
   AnimatedEntityNode,
   ClockReadout,
-  MobileMirrorLedger,
-  ResolvingEntityStage,
+  PendingResolutionCards,
+  type PendingResolutionCard,
+  useAnimationNode,
 } from "@tcg/simulator-ui";
 import {
+  bothFixerAreasEmpty,
   defOf,
   getProjectedDirectAttackGigStealCount,
+  isValidGigCopyPair,
+  turnsUntilOvertime,
   type CardInstance,
+  type ChoicePrompt,
   type MatchState,
 } from "@tcg/cyberpunk-engine";
-import type { Ability, CardType } from "@tcg/cyberpunk-types";
+import { DIE_MAX_VALUES, type Ability, type CardType } from "@tcg/cyberpunk-types";
 import {
   buildInteractionSubmissionForActionId,
   type EngineInteractionView,
@@ -55,29 +64,56 @@ import {
   interactionViewHasAttackers,
   interactionViewHasBlockers,
 } from "../../engine/interactionViewHelpers";
-import { CardImage } from "./CardImage";
+import { CARD_BACK, CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { useResolvingProgramVisuals } from "../../animation";
 import { showBlockedPassTurnNotification } from "../blockedPassFeedback";
+import {
+  announceSkipBlockConfirmation,
+  SKIP_BLOCK_CONFIRMATION_EVENT,
+  type SkipBlockConfirmationEventDetail,
+} from "../skipBlockConfirmation";
 import { buildAdjustGigOptions } from "../adjustGigOptions";
 import { compareGigStats, computeGigSideStats, type GigHelperComparison } from "./gigStats";
-import { StreetCredHelperPopover, useStreetCredHelper } from "./StreetCredHelper";
+import {
+  StreetCredHelperPopover,
+  StreetCredStarIcon,
+  useStreetCredHelper,
+} from "./StreetCredHelper";
 import type { Phase } from "./gameStateTypes";
 import classes from "./CenterRow.module.css";
-
-const DIE_MAX_VALUES: Record<GigDieView["dieType"], number> = {
-  d4: 4,
-  d6: 6,
-  d8: 8,
-  d10: 10,
-  d12: 12,
-  d20: 20,
-};
+import { soldCardImageUrl } from "./useLastSoldCard";
 
 const GIG_LOG_HOVER_EVENT = "cyberpunk:gig-log-hover";
 const GIG_COPY_SOURCE_EVENT = "cyberpunk:gig-copy-source";
+
+function OvertimeStatus({ matchState }: { matchState: MatchState }) {
+  if (matchState.G.gamePhase === "setup" || matchState.G.gameEnded) return null;
+
+  const active = matchState.G.overtime;
+  if (!active && !bothFixerAreasEmpty(matchState)) return null;
+  const turns = active ? 0 : turnsUntilOvertime(matchState);
+  return (
+    <div
+      className={classes.overtimeStatus}
+      data-active={active ? "true" : "false"}
+      data-testid="overtime-status"
+      role="status"
+      aria-label={
+        active
+          ? "Overtime active. Seven Gigs win immediately."
+          : `Overtime can start in ${turns} ${turns === 1 ? "turn" : "turns"} if both Fixer areas stay empty.`
+      }
+    >
+      <span className={classes.overtimeStatusLabel}>OVERTIME</span>
+      <strong className={classes.overtimeStatusValue}>
+        {active ? "7 GIGS WIN" : `IN ${turns} ${turns === 1 ? "TURN" : "TURNS"}`}
+      </strong>
+    </div>
+  );
+}
 const PHASE_ADVANCE_HOTKEY = "Space";
 
 export interface LastSoldCard {
@@ -238,6 +274,46 @@ type GigSelectionPrompt = {
   remaining: string;
 };
 
+function MobileLedgerMiniGigs({
+  tone,
+  streetCred,
+  dice,
+  onOpen,
+}: {
+  tone: "rival" | "friendly";
+  streetCred: number;
+  dice: readonly GigDieView[];
+  onOpen: () => void;
+}) {
+  const label = tone === "rival" ? "Rival" : "Your";
+  return (
+    <button
+      type="button"
+      className={classes.mobileLedgerGigMiniRail}
+      data-tone={tone}
+      aria-label={`Show ${label.toLowerCase()} Gigs: ${dice.length} dice, ${streetCred} Street Cred`}
+      onClick={onOpen}
+    >
+      <span className={classes.mobileLedgerGigMiniCred} aria-hidden="true">
+        <StreetCredStarIcon size={14} />
+        <strong>{streetCred}</strong>
+      </span>
+      <span className={classes.mobileLedgerGigMiniDice} aria-hidden="true">
+        {[...dice].sort(compareGigDiceByFaces).map((die) => (
+          <span
+            key={die.id}
+            className={classes.mobileLedgerGigMiniDie}
+            data-die-type={die.dieType}
+            title={`${die.label}, showing ${die.faceValue}`}
+          >
+            {die.faceValue}
+          </span>
+        ))}
+      </span>
+    </button>
+  );
+}
+
 function GigDiePopover({
   state,
   compact,
@@ -370,6 +446,7 @@ function GigLane({
   adjustChoice,
   scoreVariant = "full",
   showScore = true,
+  showSummary = false,
   directAttackDropSurface = false,
   directAttackDropTarget = false,
   selectionHintForDie,
@@ -393,6 +470,7 @@ function GigLane({
   adjustChoice?: AdjustGigControl | null;
   scoreVariant?: "full" | "compact";
   showScore?: boolean;
+  showSummary?: boolean;
   directAttackDropSurface?: boolean;
   directAttackDropTarget?: boolean;
   selectionHintForDie?: (dieId: string) => GigSelectionHint | undefined;
@@ -402,11 +480,25 @@ function GigLane({
   const gigCount = dice.length;
   const hasWinCondition = gigCount >= WIN_GIG_THRESHOLD;
   const ownStats = useMemo(() => computeGigSideStats(dice), [dice]);
+  // Visual order only: smallest die type first, ties keep engine order.
+  const orderedDice = useMemo(() => [...dice].sort(compareGigDiceByFaces), [dice]);
   const credHelper = useStreetCredHelper(side);
   const [diePopover, setDiePopover] = useState<GigDiePopoverState | null>(null);
   const compactScore = scoreVariant === "compact";
   const boardCorrectionEnabled = useEngineOptional()?.boardCorrectionEnabled === true;
   const directAttackDrop = useZoneDroppable(directAttackDropSurface ? "opp-gigArea" : null);
+  const gigZoneId = ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea";
+  const setAnimationZoneRef = useAnimationNode(
+    { kind: "zone", id: gigZoneId, ownerId: String(PLAYER_SIDE_TO_ID[ownerSide]) },
+    { zoneId: gigZoneId, density: "normal", presence: "present" },
+  );
+  const setGigLaneRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      directAttackDrop.setNodeRef(node);
+      setAnimationZoneRef(node);
+    },
+    [directAttackDrop.setNodeRef, setAnimationZoneRef],
+  );
   const handlePopoverClose = useCallback((dieId: string, pinned = false) => {
     setDiePopover((current) =>
       current?.dieId === dieId && current.pinned === pinned ? null : current,
@@ -418,6 +510,38 @@ function GigLane({
       setDiePopover(null);
     }
   }, [boardCorrectionEnabled]);
+
+  // A pinned popover snapshots the die's face and position; close it when the
+  // die it describes changes value or leaves the lane so it never goes stale.
+  // The board-correction menu is exempt — its buttons act on the live die and
+  // are meant to survive consecutive ± clicks.
+  const pinnedPopoverDie = useMemo(
+    () => (diePopover ? (orderedDice.find((die) => die.id === diePopover.dieId) ?? null) : null),
+    [diePopover, orderedDice],
+  );
+  const pinnedPopoverFaceRef = useRef<number | undefined>(undefined);
+  useEffect(() => {
+    if (!diePopover?.pinned) {
+      pinnedPopoverFaceRef.current = undefined;
+      return;
+    }
+    if (!pinnedPopoverDie) {
+      if (!boardCorrectionEnabled) {
+        setDiePopover(null);
+      }
+      return;
+    }
+    if (pinnedPopoverFaceRef.current === undefined) {
+      pinnedPopoverFaceRef.current = pinnedPopoverDie.faceValue;
+      return;
+    }
+    if (pinnedPopoverFaceRef.current !== pinnedPopoverDie.faceValue) {
+      pinnedPopoverFaceRef.current = pinnedPopoverDie.faceValue;
+      if (!boardCorrectionEnabled) {
+        setDiePopover(null);
+      }
+    }
+  }, [boardCorrectionEnabled, diePopover?.pinned, pinnedPopoverDie]);
 
   useEffect(() => {
     if (!diePopover?.pinned) {
@@ -444,7 +568,7 @@ function GigLane({
 
   return (
     <div
-      ref={directAttackDrop.setNodeRef}
+      ref={setGigLaneRef}
       className={`${classes.cell} ${gridClass} ${classes.gigLane} ${
         directAttackDropTarget ? classes.gigLaneDirectAttackTarget : ""
       } ${directAttackDrop.isOver ? classes.gigLaneDirectAttackOver : ""}`}
@@ -505,48 +629,61 @@ function GigLane({
       <div className={classes.gigTrack}>
         <div className={classes.gigInner}>
           <AnimatedEntityCollection>
-            {dice.map((die) => {
+            {orderedDice.map((die) => {
               const showAdjustPanel = adjustChoice?.dieId === die.id;
               return (
-                <div
+                <Popover
                   key={die.id}
-                  className={classes.gigDieAnchor}
-                  data-testid="gig-die-anchor"
-                  data-die-id={die.id}
+                  opened={showAdjustPanel}
+                  position={side === "friendly" ? "bottom" : "top"}
+                  offset={12}
+                  withinPortal
+                  withArrow
+                  arrowSize={8}
+                  zIndex={2400}
+                  middlewares={{ flip: true, shift: { padding: 8 } }}
+                  classNames={{
+                    dropdown: classes.adjustPanel,
+                    arrow: classes.adjustPanelArrow,
+                  }}
                 >
-                  <GigDieCell
-                    die={die}
-                    side={side}
-                    selectionActive={interactive}
-                    interactive={
-                      interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
-                    }
-                    selected={selectedDieIds?.has(die.id)}
-                    selectionHint={
-                      interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
-                        ? selectionHintForDie?.(die.id)
-                        : undefined
-                    }
-                    logHighlighted={logHighlightedDieId === die.id}
-                    onClick={onDieClick}
-                    correctionEnabled={boardCorrectionEnabled}
-                    popoverOpen={diePopover?.dieId === die.id}
-                    onPopoverOpen={(state) =>
-                      setDiePopover({
-                        ...state,
-                        correction: boardCorrectionEnabled && state.pinned,
-                      })
-                    }
-                    onPopoverClose={handlePopoverClose}
-                  />
+                  <Popover.Target>
+                    <div
+                      className={classes.gigDieAnchor}
+                      data-testid="gig-die-anchor"
+                      data-die-id={die.id}
+                    >
+                      <GigDieCell
+                        die={die}
+                        side={side}
+                        selectionActive={interactive}
+                        interactive={
+                          interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
+                        }
+                        selected={selectedDieIds?.has(die.id)}
+                        selectionHint={
+                          interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
+                            ? selectionHintForDie?.(die.id)
+                            : undefined
+                        }
+                        logHighlighted={logHighlightedDieId === die.id}
+                        onClick={onDieClick}
+                        correctionEnabled={boardCorrectionEnabled}
+                        popoverOpen={diePopover?.dieId === die.id}
+                        onPopoverOpen={(state) =>
+                          setDiePopover({
+                            ...state,
+                            correction: boardCorrectionEnabled && state.pinned,
+                          })
+                        }
+                        onPopoverClose={handlePopoverClose}
+                      />
+                    </div>
+                  </Popover.Target>
                   {showAdjustPanel ? (
-                    <GigAdjustPanel
-                      choice={adjustChoice}
-                      placement={side === "friendly" ? "bottom" : "top"}
-                      onAdjustGig={onAdjustGig}
-                    />
+                    <GigAdjustPanel choice={adjustChoice} onAdjustGig={onAdjustGig} />
                   ) : null}
-                </div>
+                </Popover>
               );
             })}
           </AnimatedEntityCollection>
@@ -558,6 +695,31 @@ function GigLane({
         <span className={classes.gigBadgeTotal} data-sim-value={gigCount}>
           {gigCount}
         </span>
+        {showSummary && (
+          <span className={classes.gigSummary} data-testid="gig-summary">
+            <span title="Gigs at their lowest possible value" data-zero={ownStats.minCount === 0}>
+              MIN <strong>{ownStats.minCount}</strong>
+            </span>
+            <span title="Gigs at their highest possible value" data-zero={ownStats.maxCount === 0}>
+              MAX <strong>{ownStats.maxCount}</strong>
+            </span>
+            <span
+              title="Pairs of equal-value Gigs. Each Gig counts in only one pair."
+              data-zero={ownStats.pairs === 0}
+            >
+              PAIRS <strong>{ownStats.pairs}</strong>
+            </span>
+          </span>
+        )}
+        {showSummary && hasWinCondition ? (
+          <span
+            className={classes.gigThreatTag}
+            data-testid="gig-win-threat-tag"
+            title={`${WIN_GIG_THRESHOLD}+ Gigs win at the start of that player's turn — or immediately in overtime.`}
+          >
+            WIN THREAT
+          </span>
+        ) : null}
       </ZoneBadge>
       <GigDiePopover
         state={diePopover}
@@ -572,11 +734,9 @@ function GigLane({
 
 function GigAdjustPanel({
   choice,
-  placement,
   onAdjustGig,
 }: {
   choice: AdjustGigControl;
-  placement: "top" | "bottom";
   onAdjustGig?: (value: number) => void;
 }) {
   const adjustmentOptions = buildAdjustGigOptions(choice);
@@ -585,9 +745,7 @@ function GigAdjustPanel({
   }
 
   return (
-    <div
-      className={classes.adjustPanel}
-      data-placement={placement}
+    <Popover.Dropdown
       data-testid="gig-adjust-panel"
       data-die-id={choice.dieId}
       aria-label={`Adjust ${choice.label}`}
@@ -609,7 +767,7 @@ function GigAdjustPanel({
           </button>
         ))}
       </div>
-    </div>
+    </Popover.Dropdown>
   );
 }
 
@@ -637,11 +795,35 @@ function MobileLedgerRails({
         }}
         {...credHelper.chipHandlers}
       >
-        <span>SC</span>
+        <span className={classes.mobileLedgerRailSymbol} aria-hidden="true">
+          <StreetCredStarIcon size={14} />
+        </span>
         <strong>{streetCred}</strong>
       </button>
       <StreetCredHelperPopover state={credHelper.state} helper={helper} compact />
     </>
+  );
+}
+
+function AttackStepStrip() {
+  const { matchState, moveLogs } = useEngine();
+  const attackSteps = matchState.G.attackState
+    ? buildAttackPhaseSteps(matchState.G.attackState, moveLogs)
+    : [];
+  if (attackSteps.length === 0) return null;
+  return (
+    <div className={classes.phaseStrip} aria-label="Attack step">
+      {attackSteps.map((step) => (
+        <span
+          key={step.label}
+          className={`${classes.phaseStep} ${step.active ? classes.phaseActive : ""}`}
+          aria-current={step.active ? "step" : undefined}
+          data-step={step.id}
+        >
+          {step.label}
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -653,18 +835,35 @@ function MobileLedgerRails({
 export function ClockDisplay({
   compact = false,
   docked = false,
+  combatSteps = false,
+  overtimeBand = false,
 }: {
   compact?: boolean;
   docked?: boolean;
+  combatSteps?: boolean;
+  /**
+   * V2 mounts the clock on the left rail away from the center row, so it — not
+   * the center plaque — carries the overtime state: a "7 GIGS WIN" band while
+   * overtime runs and a turn countdown once both Fixer areas empty.
+   */
+  overtimeBand?: boolean;
 }) {
   const { activeSide, prioritySide, turnNumber, phase, gameEnded, overtimeActive } = useGameState();
-  const clock = useGameClock(prioritySide, { paused: gameEnded });
-  const { humanSide } = useEngine();
+  const clock = useGameClock();
+  const { humanSide, matchState } = useEngine();
   const rivalSide = otherSide(humanSide);
   const humanClock = clock[humanSide];
   const rivalClock = clock[rivalSide];
   const priorityLabel = prioritySide === humanSide ? "Your priority" : "Rival priority";
   const turnLabel = activeSide === humanSide ? "Your turn" : "Rival's turn";
+  const showCombat = combatSteps && Boolean(matchState.G.attackState);
+  const showOvertimeBand = overtimeBand && !gameEnded && matchState.G.gamePhase !== "setup";
+  const overtimeCountdownTurns =
+    showOvertimeBand && !overtimeActive && bothFixerAreasEmpty(matchState)
+      ? turnsUntilOvertime(matchState)
+      : null;
+  const overtimeBandVisible =
+    showOvertimeBand && (overtimeActive || overtimeCountdownTurns !== null);
 
   return (
     <div
@@ -679,21 +878,54 @@ export function ClockDisplay({
       data-clock-side={prioritySide}
       aria-label={`Turn ${turnNumber} ${phase}${overtimeActive ? ", overtime" : ""}. ${turnLabel} ${priorityLabel}. Rival clock ${rivalClock.time}. Your clock ${humanClock.time}.`}
     >
-      <div className={classes.clockMeta}>
+      {overtimeBandVisible ? (
+        <div
+          className={classes.clockOvertimeBand}
+          data-testid="clock-overtime-band"
+          data-state={overtimeActive ? "active" : "countdown"}
+          data-turns={overtimeCountdownTurns ?? undefined}
+          role="status"
+          aria-label={
+            overtimeActive
+              ? "Overtime active. Seven Gigs win immediately."
+              : `Overtime can start in ${overtimeCountdownTurns} ${
+                  overtimeCountdownTurns === 1 ? "turn" : "turns"
+                } if both Fixer areas stay empty.`
+          }
+        >
+          <span className={classes.clockOvertimeBandLabel}>OVERTIME</span>
+          <strong className={classes.clockOvertimeBandValue}>
+            {overtimeActive
+              ? "7 GIGS WIN"
+              : `IN ${overtimeCountdownTurns} ${overtimeCountdownTurns === 1 ? "TURN" : "TURNS"}`}
+          </strong>
+        </div>
+      ) : null}
+      <div className={classes.clockMeta} data-testid="clock-meta">
         <span className={classes.clockLabel} data-testid="phase-turn">
           T{turnNumber}
         </span>
-        <span className={classes.clockPhase} data-testid="phase-name">
-          {phase}
-        </span>
+        {showCombat ? (
+          <span
+            className={classes.priorityChip}
+            data-testid="priority-side-chip"
+            data-tone={prioritySide === humanSide ? "friendly" : "rival"}
+          >
+            {priorityLabel}
+          </span>
+        ) : (
+          <span className={classes.clockPhase} data-testid="phase-name">
+            {phase}
+          </span>
+        )}
         {overtimeActive ? (
           <span className={classes.overtimeChip} data-testid="phase-overtime">
             Overtime
           </span>
         ) : null}
       </div>
-      {!gameEnded ? (
-        <div className={classes.clockChips}>
+      {!gameEnded && !showCombat ? (
+        <div className={classes.clockChips} data-testid="clock-chips">
           <span
             className={classes.turnChip}
             data-testid="turn-side-chip"
@@ -710,6 +942,11 @@ export function ClockDisplay({
               {priorityLabel}
             </span>
           ) : null}
+        </div>
+      ) : null}
+      {showCombat ? (
+        <div data-testid="clock-combat-steps">
+          <AttackStepStrip />
         </div>
       ) : null}
       <div className={classes.clockFaces}>
@@ -782,11 +1019,10 @@ export function PassTurnControl({
   compactLabelStyle?: "short" | "action";
   actionsOnly?: boolean;
 }) {
+  const promptSkin = usePromptSkin();
   const { phase, advancePhase, activeSide, prioritySide, gameEnded, overtimeActive } =
     useGameState();
-  const { humanSide, matchState, moveLogs, aiMode, aiStrategies, stepOnce, dispatch } = useEngine();
-  const aiSide = otherSide(humanSide);
-  const aiInteractionView = useEngineInteractionView(aiSide);
+  const { humanSide, matchState, dispatch, prompts } = useEngine();
   const humanInteractionView = useEngineInteractionView(humanSide);
   const disabledPassReason = disabledPassPhaseReason(humanInteractionView);
   const confirmTitleId = useId();
@@ -802,15 +1038,11 @@ export function PassTurnControl({
     isPlayerTurn && !attackInProgress && interactionViewHasAttackers(humanInteractionView);
   const shouldConfirmSkipBlock =
     matchState.G.attackState?.step === "react" &&
+    matchState.G.attackState.redirectedByBlocker !== true &&
     !isPlayerTurn &&
     interactionViewHasBlockers(humanInteractionView);
   const humanChoiceInProgress = humanInteractionView.status === "choosing";
-  const canStepAi =
-    !gameEnded &&
-    aiMode === "step" &&
-    aiStrategies[aiSide] !== null &&
-    interactionViewIsActionable(aiInteractionView);
-  const isWaitingForRival = prioritySide !== humanSide && !canStepAi;
+  const isWaitingForRival = prioritySide !== humanSide;
   const controlsDisabled =
     phase === "SETUP" ||
     phase === "START" ||
@@ -819,13 +1051,23 @@ export function PassTurnControl({
     disabledPassReason !== undefined ||
     isWaitingForRival ||
     isAttackerDuringReactStep ||
-    (!isPlayerTurn && !canStepAi && !attackInProgress);
+    (!isPlayerTurn && !attackInProgress);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const attackStateRef = useRef(matchState.G.attackState);
   attackStateRef.current = matchState.G.attackState;
-  const attackSteps = attackInProgress
-    ? buildAttackPhaseSteps(matchState.G.attackState, moveLogs)
-    : [];
+
+  useEffect(() => {
+    const syncSkipBlockConfirmation = (event: Event) => {
+      const { armed } = (event as CustomEvent<SkipBlockConfirmationEventDetail>).detail;
+      setPendingConfirmation((current) =>
+        armed && shouldConfirmSkipBlock ? "skip-block" : current === "skip-block" ? null : current,
+      );
+    };
+
+    window.addEventListener(SKIP_BLOCK_CONFIRMATION_EVENT, syncSkipBlockConfirmation);
+    return () =>
+      window.removeEventListener(SKIP_BLOCK_CONFIRMATION_EVENT, syncSkipBlockConfirmation);
+  }, [shouldConfirmSkipBlock]);
 
   useEffect(() => {
     if (
@@ -833,7 +1075,11 @@ export function PassTurnControl({
       (pendingConfirmation === "pass-with-attackers" && !shouldConfirmPass) ||
       (pendingConfirmation === "skip-block" && !shouldConfirmSkipBlock)
     ) {
-      setPendingConfirmation(null);
+      if (pendingConfirmation === "skip-block") {
+        announceSkipBlockConfirmation(false);
+      } else {
+        setPendingConfirmation(null);
+      }
     }
   }, [controlsDisabled, pendingConfirmation, shouldConfirmPass, shouldConfirmSkipBlock]);
 
@@ -864,10 +1110,6 @@ export function PassTurnControl({
       }
       return;
     }
-    if (canStepAi) {
-      stepOnce();
-      return;
-    }
     if (attackInProgress) {
       const attack = attackStateRef.current;
       if (!attack) return;
@@ -880,7 +1122,16 @@ export function PassTurnControl({
           return;
         }
         if (shouldConfirmSkipBlock) {
-          setPendingConfirmation("skip-block");
+          if (pendingConfirmation === "skip-block") {
+            announceSkipBlockConfirmation(false);
+            dispatch({
+              type: "resolveAttack",
+              pass: true,
+              as: PLAYER_SIDE_TO_ID[humanSide],
+            });
+            return;
+          }
+          announceSkipBlockConfirmation(true);
           return;
         }
         dispatch({
@@ -907,15 +1158,14 @@ export function PassTurnControl({
   }, [
     activeSide,
     attackInProgress,
-    canStepAi,
     controlsDisabled,
     disabledPassReason,
     dispatch,
     humanSide,
+    pendingConfirmation,
     performAdvance,
     shouldConfirmPass,
     shouldConfirmSkipBlock,
-    stepOnce,
   ]);
 
   useEffect(() => {
@@ -955,21 +1205,26 @@ export function PassTurnControl({
       if (ev.key === "Escape") {
         ev.preventDefault();
         ev.stopPropagation();
-        setPendingConfirmation(null);
+        if (pendingConfirmation === "skip-block") {
+          announceSkipBlockConfirmation(false);
+        } else {
+          setPendingConfirmation(null);
+        }
         return;
       }
       if (ev.key === " " || ev.code === PHASE_ADVANCE_HOTKEY) {
         ev.preventDefault();
         ev.stopPropagation();
         const confirmation = pendingConfirmation;
-        setPendingConfirmation(null);
         if (confirmation === "skip-block") {
+          announceSkipBlockConfirmation(false);
           dispatch({
             type: "resolveAttack",
             pass: true,
             as: PLAYER_SIDE_TO_ID[humanSide],
           });
         } else {
+          setPendingConfirmation(null);
           performAdvance();
         }
       }
@@ -979,29 +1234,34 @@ export function PassTurnControl({
     return () => window.removeEventListener("keydown", onKeyDown, true);
   }, [dispatch, humanSide, pendingConfirmation, performAdvance]);
 
-  const label = isWaitingForRival
-    ? "WAITING"
-    : phaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const compactLabel = shouldConfirmSkipBlock
-    ? "SKIP"
-    : isWaitingForRival
-      ? "WAITING"
-      : compactPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const compactActionLabel = shouldConfirmSkipBlock
-    ? "Skip block"
-    : isWaitingForRival
-      ? "WAITING"
-      : dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const pendingChoiceLabel = pendingChoiceActionLabel(matchState.G.turnMetadata.pendingChoice);
-  const visibleLabel = shouldConfirmSkipBlock
-    ? compact || docked
+  const label = isWaitingForRival ? "WAITING" : phaseAdvanceLabel(phase, attackInProgress);
+  const confirmingSkipBlock = pendingConfirmation === "skip-block";
+  const compactLabel = confirmingSkipBlock
+    ? "Are you sure?"
+    : shouldConfirmSkipBlock
+      ? "SKIP"
+      : isWaitingForRival
+        ? "WAITING"
+        : compactPhaseAdvanceLabel(phase, attackInProgress);
+  const compactActionLabel = confirmingSkipBlock
+    ? "Are you sure?"
+    : shouldConfirmSkipBlock
       ? "Skip block"
-      : "SKIP BLOCK"
-    : docked && humanChoiceInProgress
-      ? pendingChoiceLabel
-      : docked
-        ? compactActionLabel
-        : label;
+      : isWaitingForRival
+        ? "WAITING"
+        : dockedPhaseAdvanceLabel(phase, attackInProgress);
+  const pendingChoiceLabel = pendingChoiceActionLabel(prompts[humanSide].choice);
+  const visibleLabel = confirmingSkipBlock
+    ? "Are you sure?"
+    : shouldConfirmSkipBlock
+      ? compact || docked
+        ? "Skip block"
+        : "SKIP BLOCK"
+      : docked && humanChoiceInProgress
+        ? pendingChoiceLabel
+        : docked
+          ? compactActionLabel
+          : label;
   const advanceAriaLabel = isWaitingForRival
     ? "Waiting for Rival"
     : (disabledPassReason ?? visibleLabel);
@@ -1058,20 +1318,7 @@ export function PassTurnControl({
           ) : null}
         </span>
       ) : null}
-      {!actionsOnly && attackSteps.length > 0 ? (
-        <div className={classes.phaseStrip} aria-label="Attack step">
-          {attackSteps.map((step) => (
-            <span
-              key={step.label}
-              className={`${classes.phaseStep} ${step.active ? classes.phaseActive : ""}`}
-              aria-current={step.active ? "step" : undefined}
-              data-step={step.id}
-            >
-              {step.label}
-            </span>
-          ))}
-        </div>
-      ) : null}
+      {!actionsOnly ? <AttackStepStrip /> : null}
       <span
         className={`${classes.passActionSlot} ${disabledPassReason ? classes.blockedPassHitTarget : ""}`}
         data-testid={disabledPassReason ? "phase-advance-hit-target" : undefined}
@@ -1085,6 +1332,7 @@ export function PassTurnControl({
           data-testid="phase-advance"
           data-phase={phase}
           data-attack-in-progress={attackInProgress ? "true" : "false"}
+          data-confirming-skip-block={confirmingSkipBlock ? "true" : undefined}
           className={`${classes.passBtn} ${pressed ? classes.active : ""} ${compact ? classes.passBtnCompact : ""} ${docked ? classes.passBtnDocked : ""} ${(compact || docked) && isPlayerTurn && !controlsDisabled ? classes.passBtnReady : ""}`}
           onClick={handleAdvance}
           disabled={controlsDisabled}
@@ -1113,66 +1361,44 @@ export function PassTurnControl({
           )}
         </button>
       </span>
-      {pendingConfirmation
+      {pendingConfirmation === "pass-with-attackers"
         ? createPortal(
             <div
-              className={classes.confirmScrim}
+              className={`${classes.confirmScrim} ${confirmationSkin.skin}`}
+              data-prompt-skin={promptSkin}
               role="dialog"
               aria-modal="true"
               aria-labelledby={confirmTitleId}
             >
               <div className={classes.confirmSheet}>
                 <p id={confirmTitleId} className={classes.confirmTitle}>
-                  {pendingConfirmation === "skip-block"
-                    ? "Skip your chance to block?"
-                    : "Pass with attackers ready?"}
+                  Pass with attackers ready?
                 </p>
                 <p className={classes.confirmText}>
-                  {pendingConfirmation === "skip-block"
-                    ? "You have a ready BLOCKER. To block, choose it and select BLOCK. Continuing lets the attack through."
-                    : "You still have Units that can attack. Passing ends your turn."}
+                  You still have Units that can attack. Passing ends your turn.
                 </p>
                 <div className={classes.confirmActions}>
                   <button
                     type="button"
                     className={classes.confirmSecondary}
-                    data-testid={
-                      pendingConfirmation === "skip-block"
-                        ? "skip-block-confirm-cancel"
-                        : "pass-confirm-cancel"
-                    }
+                    data-testid="pass-confirm-cancel"
                     aria-keyshortcuts="Escape"
                     onClick={() => setPendingConfirmation(null)}
                   >
-                    <span>
-                      {pendingConfirmation === "skip-block" ? "Back to blockers" : "Keep attacking"}
-                    </span>
+                    <span>Keep attacking</span>
                     <DialogHotkeyHint label="Esc" />
                   </button>
                   <button
                     type="button"
                     className={classes.confirmPrimary}
-                    data-testid={
-                      pendingConfirmation === "skip-block"
-                        ? "skip-block-confirm-submit"
-                        : "pass-confirm-submit"
-                    }
+                    data-testid="pass-confirm-submit"
                     aria-keyshortcuts="Space"
                     onClick={() => {
-                      const confirmation = pendingConfirmation;
                       setPendingConfirmation(null);
-                      if (confirmation === "skip-block") {
-                        dispatch({
-                          type: "resolveAttack",
-                          pass: true,
-                          as: PLAYER_SIDE_TO_ID[humanSide],
-                        });
-                      } else {
-                        performAdvance();
-                      }
+                      performAdvance();
                     }}
                   >
-                    <span>{pendingConfirmation === "skip-block" ? "Skip block" : "Pass turn"}</span>
+                    <span>Pass turn</span>
                     <DialogHotkeyHint label="Space" />
                   </button>
                 </div>
@@ -1233,7 +1459,7 @@ export function MobileSellReveal({
       cardName: saleCardName,
       side: saleSide,
     });
-    const timer = window.setTimeout(() => setVisibleSale(null), 1350);
+    const timer = window.setTimeout(() => setVisibleSale(null), 820);
     return () => window.clearTimeout(timer);
   }, [saleCardId, saleCardName, saleId, saleSide]);
 
@@ -1251,11 +1477,11 @@ export function MobileSellReveal({
       aria-label={`${opponent ? "Rival" : "You"} sold ${visibleSale.cardName}`}
     >
       <div className={classes.sellRevealCard}>
-        <CardImage imageUrl={card?.imageUrl} alt={card?.name ?? visibleSale.cardName} />
-      </div>
-      <div className={classes.sellRevealLabel}>
-        <span>{opponent ? "Rival sold" : "Sold"}</span>
-        <strong>{visibleSale.cardName}</strong>
+        <CardImage
+          imageUrl={card?.imageUrl ?? soldCardImageUrl(visibleSale.cardName) ?? CARD_BACK}
+          alt={card?.name ?? visibleSale.cardName}
+          disablePreview
+        />
       </div>
     </div>
   );
@@ -1263,7 +1489,7 @@ export function MobileSellReveal({
 
 export function MobileClockRail() {
   const { prioritySide, turnNumber, phase, gameEnded } = useGameState();
-  const clock = useGameClock(prioritySide, { paused: gameEnded });
+  const clock = useGameClock();
   const { humanSide } = useEngine();
   const rivalSide = otherSide(humanSide);
   const rivalClock = clock[rivalSide];
@@ -1421,13 +1647,6 @@ function formatGigCount(count: number): string {
   return `${count} Gig${count === 1 ? "" : "s"}`;
 }
 
-function interactionViewIsActionable(view: ReturnType<typeof useEngineInteractionView>): boolean {
-  return (
-    view.status === "choosing" ||
-    (view.status === "ready" && view.actions.some((action) => action.enabled))
-  );
-}
-
 function disabledPassPhaseReason(
   view: ReturnType<typeof useEngineInteractionView>,
 ): string | undefined {
@@ -1436,10 +1655,7 @@ function disabledPassPhaseReason(
   return typeof label === "string" ? label : undefined;
 }
 
-function phaseAdvanceLabel(phase: string, attackInProgress: boolean, canStepAi: boolean): string {
-  if (canStepAi) {
-    return "NEXT AI MOVE ›";
-  }
+function phaseAdvanceLabel(phase: string, attackInProgress: boolean): string {
   if (phase === "START") {
     return "START PHASE";
   }
@@ -1452,14 +1668,7 @@ function phaseAdvanceLabel(phase: string, attackInProgress: boolean, canStepAi: 
   return "PASS TURN ›";
 }
 
-function compactPhaseAdvanceLabel(
-  phase: string,
-  attackInProgress: boolean,
-  canStepAi: boolean,
-): string {
-  if (canStepAi) {
-    return "AI";
-  }
+function compactPhaseAdvanceLabel(phase: string, attackInProgress: boolean): string {
   if (phase === "START") {
     return "ST";
   }
@@ -1472,14 +1681,7 @@ function compactPhaseAdvanceLabel(
   return "PASS";
 }
 
-function dockedPhaseAdvanceLabel(
-  phase: string,
-  attackInProgress: boolean,
-  canStepAi: boolean,
-): string {
-  if (canStepAi) {
-    return "AI Move";
-  }
+function dockedPhaseAdvanceLabel(phase: string, attackInProgress: boolean): string {
   if (phase === "START") {
     return "Start";
   }
@@ -1492,7 +1694,7 @@ function dockedPhaseAdvanceLabel(
   return "Pass";
 }
 
-type PendingChoice = NonNullable<MatchState["G"]["turnMetadata"]["pendingChoice"]>;
+type PendingChoice = ChoicePrompt;
 
 function pendingChoiceActionLabel(choice: PendingChoice | null | undefined): string {
   if (!choice) {
@@ -1563,7 +1765,7 @@ function phaseLabel(phase: Phase, attackState: { step?: string } | null = null):
       return "START PHASE";
     case "MAIN": {
       if (!attackState) return "MAIN PHASE";
-      const step = attackState.step;
+      const step = visibleAttackStep(attackState.step);
       const suffix = step ? ` — ${step.toUpperCase()}` : " — ATTACK";
       return `MAIN PHASE${suffix}`;
     }
@@ -1580,7 +1782,7 @@ function dockedPhaseLabel(phase: Phase, attackState: { step?: string } | null = 
   if (phase !== "MAIN" || !attackState?.step) {
     return phaseLabel(phase, null);
   }
-  return attackState.step.toUpperCase();
+  return visibleAttackStep(attackState.step)?.toUpperCase() ?? "ATTACK";
 }
 
 function buildAttackPhaseSteps(
@@ -1612,31 +1814,6 @@ function buildAttackPhaseSteps(
   ];
 }
 
-function getVisibleAttackStep(
-  attack: {
-    attackerId?: unknown;
-    defenderId?: unknown;
-    kind?: string;
-    step?: string;
-  },
-  moveLogs: ReadonlyArray<MoveLogEntry>,
-): string | undefined {
-  if (attack.step !== "attack" || attack.kind !== "fight") {
-    return attack.step;
-  }
-
-  const wasRedirectedByBlocker = moveLogs.some((entry) => {
-    const log = entry.log;
-    return (
-      log.type === "useBlocker" &&
-      String(log.attackerId) === String(attack.attackerId) &&
-      String(log.blockerId) === String(attack.defenderId)
-    );
-  });
-
-  return wasRedirectedByBlocker ? "react" : attack.step;
-}
-
 interface CenterRowProps {
   /**
    * When true, only the rival/friendly gig cells render and they expand to
@@ -1649,15 +1826,20 @@ interface CenterRowProps {
    * compact while letting the full board breathe between rival/friendly gigs.
    */
   spaciousGigs?: boolean;
+  /** Show readable effect labels beside the source art in flat HUD layouts. */
+  effectDetails?: boolean;
+  /**
+   * Portal target for the resolving-program display. Boards with a projected
+   * 3D field plane pass a dedicated flat layer above the field so the card
+   * reads as floating level with the viewer instead of lying on the table.
+   */
+  resolvingCardHost?: HTMLElement | null;
   mobileLedger?: {
     rivalLegends: ReactNode;
     rivalLegendCount?: number;
-    rivalLayout?: "scoreOnly" | "compact" | "singleRow" | "stacked";
-    center?: ReactNode;
     friendlyLegends: ReactNode;
     friendlyLegendCount?: number;
-    friendlyLayout?: "scoreOnly" | "compact" | "singleRow" | "stacked";
-    density?: "scoreOnly" | "singleRow" | "stacked";
+    resolvingCardHost?: HTMLElement | null;
   };
 }
 
@@ -1670,9 +1852,12 @@ interface CenterRowProps {
 export function CenterRow({
   gigsOnly = false,
   spaciousGigs = false,
+  effectDetails = false,
+  resolvingCardHost,
   mobileLedger,
 }: CenterRowProps) {
-  const { activeSide, gameEnded } = useGameState();
+  const { activeSide, gameEnded, overtimeActive } = useGameState();
+  const [legendFocus, setLegendFocus] = useState<"friendly" | "rival" | null>(null);
   const { humanSide, dispatch, interactionViews, matchState } = useEngine();
   const interactionView = useEngineInteractionView(humanSide);
   const { activeSource } = useDragDrop();
@@ -1743,7 +1928,7 @@ export function CenterRow({
     () => new Set<string>(stealChoice?.eligibleDieIds ?? []),
     [stealChoice],
   );
-  const eligibleEffectGigIds = useMemo(
+  const allEligibleEffectGigIds = useMemo(
     () => new Set<string>(effectGigChoice?.eligibleDieIds ?? []),
     [effectGigChoice],
   );
@@ -1760,6 +1945,31 @@ export function CenterRow({
     () => new Set(selectedEffectGigIds),
     [selectedEffectGigIds],
   );
+  const eligibleEffectGigIds = useMemo(() => {
+    if (!effectGigChoice?.pairConstraint) {
+      return allEligibleEffectGigIds;
+    }
+    const sourceId = selectedEffectGigIds[0];
+    if (sourceId) {
+      return new Set([
+        sourceId,
+        ...effectGigChoice.eligibleDieIds.filter((targetId) =>
+          isValidGigCopyPair(matchState, [sourceId, targetId], effectGigChoice.pairConstraint!),
+        ),
+      ]);
+    }
+    return new Set(
+      effectGigChoice.eligibleDieIds.filter((candidateSourceId) =>
+        effectGigChoice.eligibleDieIds.some((candidateTargetId) =>
+          isValidGigCopyPair(
+            matchState,
+            [candidateSourceId, candidateTargetId],
+            effectGigChoice.pairConstraint!,
+          ),
+        ),
+      ),
+    );
+  }, [allEligibleEffectGigIds, effectGigChoice, matchState, selectedEffectGigIds]);
   const gigHelper = useMemo(
     () => compareGigStats(friendly.gigArea, rival.gigArea),
     [friendly.gigArea, rival.gigArea],
@@ -1782,9 +1992,10 @@ export function CenterRow({
     : undefined;
   const effectGigSelectionPrompt = effectGigChoice
     ? buildGigSelectionPrompt({
-        action: "choose",
+        action: effectGigChoice.pairConstraint ? "gig-copy" : "choose",
         required: effectGigChoice.max,
         selected: selectedEffectGigIds.length,
+        source: selectedEffectGigIds[0] ? gigDiceById.get(selectedEffectGigIds[0]!) : undefined,
       })
     : undefined;
 
@@ -1939,6 +2150,15 @@ export function CenterRow({
     selectedAdjustGigId ? gigDiceById.get(selectedAdjustGigId) : undefined,
     adjustGigChoice,
   );
+  const gigChoiceActive = Boolean(stealChoice || effectGigChoice || adjustGigChoice);
+  useEffect(() => {
+    if (gigChoiceActive) setLegendFocus(null);
+  }, [gigChoiceActive]);
+  const persistedCards = persistedResolvingCards({
+    humanSide,
+    resolvingProgramVisuals,
+    cardIndex: matchState.G.cardIndex,
+  }).filter((card) => !isCardPubliclyMounted(matchState, card.cardId));
   const resolvingCard =
     resolvingCardFromCurrentTrigger(
       matchState.G.turnMetadata.currentTrigger,
@@ -1950,213 +2170,233 @@ export function CenterRow({
       cardIndex: matchState.G.cardIndex,
     }) ??
     selectedPlayedCardFromMoveSelection(moveSelection.selection, matchState.G.cardIndex) ??
-    resolvingCardFromPersistedVisuals({
-      humanSide,
-      resolvingProgramVisuals,
-      cardIndex: matchState.G.cardIndex,
-    });
+    persistedCards[0] ??
+    null;
+  const mountedResolvingCard =
+    resolvingCard !== null && isCardPubliclyMounted(matchState, resolvingCard.cardId);
+  const displayResolvingCard = mountedResolvingCard ? null : resolvingCard;
+  // A resolving program's exit flight (resolving anchor → trash) starts on a
+  // later transition than its play, and by then a newer trigger may have taken
+  // over the display slot. Keep every plan-referenced card's anchor mounted as
+  // an invisible overlay so the outgoing flight still finds its source.
+  const ghostResolvingCards = persistedCards.filter(
+    (card) => card.cardId !== displayResolvingCard?.cardId,
+  );
 
   if (mobileLedger) {
-    const friendlyStackedLegendLayout = mobileLedger.friendlyLayout === "stacked";
-    const rivalStackedLegendLayout = mobileLedger.rivalLayout === "stacked";
-    const friendlyShowsLegends = mobileLedger.friendlyLayout !== "scoreOnly";
-    const rivalShowsLegends = mobileLedger.rivalLayout !== "scoreOnly";
-    const mobileLedgerCenter = mobileLedger.center ? (
-      <div className={classes.mobileLedgerPriority}>{mobileLedger.center}</div>
-    ) : null;
-
     return (
-      <div
-        className={classes.mobileLedgerRoot}
-        data-has-resolving={resolvingCard ? "true" : undefined}
-      >
-        <MobileMirrorLedger
-          className={classes.mobileLedger}
-          data-ledger-density={mobileLedger.density}
+      <div className={classes.mobileLedgerRoot} data-overtime={overtimeActive ? "true" : "false"}>
+        <OvertimeStatus matchState={matchState} />
+        <section
+          className={classes.mobileLedgerThreeRows}
+          data-legend-focus={legendFocus ?? "none"}
           aria-label="Mobile Legends, Street Cred, and Gig dice"
-          left={
-            <div
-              className={classes.mobileLedgerSide}
-              data-tone="friendly"
-              data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
-              data-side-layout={mobileLedger.friendlyLayout}
-            >
+        >
+          <div className={classes.mobileLedgerGigRow} data-tone="rival">
+            <MobileLedgerRails tone="rival" streetCred={rival.streetCred} helper={gigHelper} />
+            <GigLane
+              label="Rival Gigs"
+              side="rival"
+              ownerSide={rivalSide}
+              gridClass={classes.mobileLedgerGigLane}
+              badgeClass={classes.gigBadgeRival}
+              badgePosition="top"
+              dice={rival.gigArea}
+              streetCred={rival.streetCred}
+              helper={gigHelper}
+              scoreVariant="compact"
+              showScore
+              interactive={
+                (stealChoice !== null &&
+                  rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+                rivalEffectGigActive ||
+                rivalAdjustGigActive
+              }
+              interactiveDieIds={
+                stealChoice
+                  ? eligibleStealIds
+                  : adjustGigChoice
+                    ? eligibleAdjustGigIds
+                    : eligibleEffectGigIds
+              }
+              selectedDieIds={
+                rivalAdjustGigActive
+                  ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+                  : rivalEffectGigActive
+                    ? selectedEffectGigIdSet
+                    : selectedStealIdSet
+              }
+              selectionPrompt={
+                stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))
+                  ? stealSelectionPrompt
+                  : rivalEffectGigActive
+                    ? effectGigSelectionPrompt
+                    : undefined
+              }
+              logHighlightedDieId={logHighlightedGigId}
+              adjustChoice={rivalAdjustGigActive ? adjustControl : null}
+              selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+              onDieClick={
+                stealChoice
+                  ? handleStealDieClick
+                  : adjustGigChoice
+                    ? handleAdjustGigClick
+                    : effectGigChoice
+                      ? handleEffectGigClick
+                      : undefined
+              }
+              onAdjustGig={handleAdjustGigValue}
+            />
+          </div>
+
+          <div className={classes.mobileLedgerLegendRow} data-focus={legendFocus ?? "none"}>
+            {legendFocus ? (
+              <div className={classes.mobileLedgerFocusControls}>
+                <button
+                  type="button"
+                  className={classes.mobileLedgerFocusClose}
+                  aria-label="Close Legend focus"
+                  onClick={() => setLegendFocus(null)}
+                >
+                  <IconX aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Your Legends"
+                  aria-pressed={legendFocus === "friendly"}
+                  onClick={() => setLegendFocus("friendly")}
+                >
+                  YOU
+                </button>
+                <button
+                  type="button"
+                  aria-label="Rival Legends"
+                  aria-pressed={legendFocus === "rival"}
+                  onClick={() => setLegendFocus("rival")}
+                >
+                  RIVAL
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className={classes.mobileLedgerFocusOpen}
+                aria-label="Focus Legends"
+                onClick={() => setLegendFocus("friendly")}
+              >
+                <IconArrowsMaximize aria-hidden="true" />
+              </button>
+            )}
+            <div className={classes.mobileLedgerLegendSide} data-tone="friendly">
               {friendlyTemporaryEffects.length > 0 ? (
                 <MobileActiveEffectsStack effects={friendlyTemporaryEffects} tone="friendly" />
               ) : null}
-              {friendlyStackedLegendLayout ? (
-                <div className={classes.mobileLedgerLegendCred}>
-                  <div
-                    className={classes.mobileLedgerLegends}
-                    data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
-                    data-testid="mobile-ledger-legends"
-                  >
-                    {mobileLedger.friendlyLegends}
-                  </div>
-                </div>
-              ) : friendlyShowsLegends ? (
-                <div
-                  className={classes.mobileLedgerLegends}
-                  data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
-                  data-testid="mobile-ledger-legends"
-                >
-                  {mobileLedger.friendlyLegends}
-                </div>
-              ) : null}
-              <div className={classes.mobileLedgerGigWell}>
-                <MobileLedgerRails
-                  tone="friendly"
-                  streetCred={friendly.streetCred}
-                  helper={gigHelper}
-                />
-                <GigLane
-                  label="Friendly Gigs"
-                  side="friendly"
-                  ownerSide={humanSide}
-                  gridClass={classes.mobileLedgerGigLane}
-                  badgeClass={classes.gigBadgeFriendly}
-                  badgePosition="bottom"
-                  dice={friendly.gigArea}
-                  streetCred={friendly.streetCred}
-                  helper={gigHelper}
-                  scoreVariant="compact"
-                  showScore
-                  interactive={
-                    (stealChoice !== null &&
-                      friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-                    friendlyEffectGigActive ||
-                    friendlyAdjustGigActive
-                  }
-                  interactiveDieIds={
-                    stealChoice
-                      ? eligibleStealIds
-                      : adjustGigChoice
-                        ? eligibleAdjustGigIds
-                        : eligibleEffectGigIds
-                  }
-                  selectedDieIds={
-                    friendlyAdjustGigActive
-                      ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
-                      : friendlyEffectGigActive
-                        ? selectedEffectGigIdSet
-                        : selectedStealIdSet
-                  }
-                  selectionPrompt={
-                    stealChoice !== null &&
-                    friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
-                      ? stealSelectionPrompt
-                      : friendlyEffectGigActive
-                        ? effectGigSelectionPrompt
-                        : undefined
-                  }
-                  logHighlightedDieId={logHighlightedGigId}
-                  adjustChoice={friendlyAdjustGigActive ? adjustControl : null}
-                  selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-                  onDieClick={
-                    stealChoice
-                      ? handleStealDieClick
-                      : adjustGigChoice
-                        ? handleAdjustGigClick
-                        : effectGigChoice
-                          ? handleEffectGigClick
-                          : undefined
-                  }
-                  onAdjustGig={handleAdjustGigValue}
-                />
+              <div
+                className={classes.mobileLedgerLegends}
+                data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
+                data-testid="mobile-ledger-legends"
+              >
+                {mobileLedger.friendlyLegends}
               </div>
             </div>
-          }
-          center={mobileLedgerCenter}
-          right={
-            <div
-              className={classes.mobileLedgerSide}
-              data-tone="rival"
-              data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
-              data-side-layout={mobileLedger.rivalLayout}
-            >
+            <div className={classes.mobileLedgerLegendSide} data-tone="rival">
               {rivalTemporaryEffects.length > 0 ? (
                 <MobileActiveEffectsStack effects={rivalTemporaryEffects} tone="rival" />
               ) : null}
-              <div className={classes.mobileLedgerGigWell}>
-                <MobileLedgerRails tone="rival" streetCred={rival.streetCred} helper={gigHelper} />
-                <GigLane
-                  label="Rival Gigs"
-                  side="rival"
-                  ownerSide={rivalSide}
-                  gridClass={classes.mobileLedgerGigLane}
-                  badgeClass={classes.gigBadgeRival}
-                  badgePosition="top"
-                  dice={rival.gigArea}
-                  streetCred={rival.streetCred}
-                  helper={gigHelper}
-                  scoreVariant="compact"
-                  showScore
-                  interactive={
-                    (stealChoice !== null &&
-                      rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-                    rivalEffectGigActive ||
-                    rivalAdjustGigActive
-                  }
-                  interactiveDieIds={
-                    stealChoice
-                      ? eligibleStealIds
-                      : adjustGigChoice
-                        ? eligibleAdjustGigIds
-                        : eligibleEffectGigIds
-                  }
-                  selectedDieIds={
-                    rivalAdjustGigActive
-                      ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
-                      : rivalEffectGigActive
-                        ? selectedEffectGigIdSet
-                        : selectedStealIdSet
-                  }
-                  selectionPrompt={
-                    stealChoice !== null &&
-                    rival.gigArea.some((die) => eligibleStealIds.has(die.id))
-                      ? stealSelectionPrompt
-                      : rivalEffectGigActive
-                        ? effectGigSelectionPrompt
-                        : undefined
-                  }
-                  logHighlightedDieId={logHighlightedGigId}
-                  adjustChoice={rivalAdjustGigActive ? adjustControl : null}
-                  selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-                  onDieClick={
-                    stealChoice
-                      ? handleStealDieClick
-                      : adjustGigChoice
-                        ? handleAdjustGigClick
-                        : effectGigChoice
-                          ? handleEffectGigClick
-                          : undefined
-                  }
-                  onAdjustGig={handleAdjustGigValue}
-                />
+              <div
+                className={classes.mobileLedgerLegends}
+                data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
+                data-testid="mobile-ledger-legends"
+              >
+                {mobileLedger.rivalLegends}
               </div>
-              {rivalStackedLegendLayout ? (
-                <div className={classes.mobileLedgerLegendCred}>
-                  <div
-                    className={classes.mobileLedgerLegends}
-                    data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
-                    data-testid="mobile-ledger-legends"
-                  >
-                    {mobileLedger.rivalLegends}
-                  </div>
-                </div>
-              ) : rivalShowsLegends ? (
-                <div
-                  className={classes.mobileLedgerLegends}
-                  data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
-                  data-testid="mobile-ledger-legends"
-                >
-                  {mobileLedger.rivalLegends}
-                </div>
-              ) : null}
             </div>
-          }
-        />
-        {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
+            {legendFocus ? (
+              <MobileLedgerMiniGigs
+                tone={legendFocus}
+                streetCred={legendFocus === "friendly" ? friendly.streetCred : rival.streetCred}
+                dice={legendFocus === "friendly" ? friendly.gigArea : rival.gigArea}
+                onOpen={() => setLegendFocus(null)}
+              />
+            ) : null}
+          </div>
+
+          <div className={classes.mobileLedgerGigRow} data-tone="friendly">
+            <MobileLedgerRails
+              tone="friendly"
+              streetCred={friendly.streetCred}
+              helper={gigHelper}
+            />
+            <GigLane
+              label="Friendly Gigs"
+              side="friendly"
+              ownerSide={humanSide}
+              gridClass={classes.mobileLedgerGigLane}
+              badgeClass={classes.gigBadgeFriendly}
+              badgePosition="bottom"
+              dice={friendly.gigArea}
+              streetCred={friendly.streetCred}
+              helper={gigHelper}
+              scoreVariant="compact"
+              showScore
+              interactive={
+                (stealChoice !== null &&
+                  friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+                friendlyEffectGigActive ||
+                friendlyAdjustGigActive
+              }
+              interactiveDieIds={
+                stealChoice
+                  ? eligibleStealIds
+                  : adjustGigChoice
+                    ? eligibleAdjustGigIds
+                    : eligibleEffectGigIds
+              }
+              selectedDieIds={
+                friendlyAdjustGigActive
+                  ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+                  : friendlyEffectGigActive
+                    ? selectedEffectGigIdSet
+                    : selectedStealIdSet
+              }
+              selectionPrompt={
+                stealChoice !== null && friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
+                  ? stealSelectionPrompt
+                  : friendlyEffectGigActive
+                    ? effectGigSelectionPrompt
+                    : undefined
+              }
+              logHighlightedDieId={logHighlightedGigId}
+              adjustChoice={friendlyAdjustGigActive ? adjustControl : null}
+              selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+              onDieClick={
+                stealChoice
+                  ? handleStealDieClick
+                  : adjustGigChoice
+                    ? handleAdjustGigClick
+                    : effectGigChoice
+                      ? handleEffectGigClick
+                      : undefined
+              }
+              onAdjustGig={handleAdjustGigValue}
+            />
+          </div>
+        </section>
+        {mobileLedger.resolvingCardHost && (
+          <PendingResolutionCards
+            current={
+              displayResolvingCard ? pendingResolutionCard(displayResolvingCard, humanSide) : null
+            }
+            retained={ghostResolvingCards.map((card) => pendingResolutionCard(card, humanSide))}
+            host={mobileLedger.resolvingCardHost}
+            showLabel={false}
+            className={classes.resolvingProgram}
+            ghostClassName={classes.resolvingProgramGhost}
+            entityClassName={classes.resolvingProgramCard}
+            labelClassName={classes.resolvingProgramLabel}
+            testId="resolving-program"
+          />
+        )}
       </div>
     );
   }
@@ -2165,17 +2405,20 @@ export function CenterRow({
     <div
       className={`${classes.row} ${gigsOnly ? classes.gigsOnly : ""} ${spaciousGigs ? classes.spaciousGigs : ""}`}
       data-interactive={canInteract ? "true" : "false"}
+      data-overtime={overtimeActive ? "true" : "false"}
     >
+      <OvertimeStatus matchState={matchState} />
       {!gigsOnly && (
         <div className={`${classes.cell} ${classes.clock}`}>
           <ClockDisplay />
         </div>
       )}
       <div className={`${classes.effectSide} ${classes.rivalEffectSide}`}>
-        {hasRivalEffects ? (
+        {hasRivalEffects && !effectDetails ? (
           <ActiveEffectsRail effects={rivalTemporaryEffects} tone="rival" />
         ) : null}
         <GigLane
+          showSummary={gigsOnly && spaciousGigs}
           label="Rival Gigs"
           side="rival"
           ownerSide={rivalSide}
@@ -2228,9 +2471,23 @@ export function CenterRow({
           onAdjustGig={handleAdjustGigValue}
         />
       </div>
-      {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
+      <PendingResolutionCards
+        current={
+          displayResolvingCard ? pendingResolutionCard(displayResolvingCard, humanSide) : null
+        }
+        retained={ghostResolvingCards.map((card) => pendingResolutionCard(card, humanSide))}
+        host={resolvingCardHost}
+        elevated={Boolean(resolvingCardHost)}
+        showLabel={false}
+        className={resolvingCardHost ? undefined : classes.resolvingProgram}
+        ghostClassName={classes.resolvingProgramGhost}
+        entityClassName={classes.resolvingProgramCard}
+        labelClassName={classes.resolvingProgramLabel}
+        testId="resolving-program"
+      />
       <div className={`${classes.effectSide} ${classes.friendlyEffectSide}`}>
         <GigLane
+          showSummary={gigsOnly && spaciousGigs}
           label="Friendly Gigs"
           side="friendly"
           ownerSide={humanSide}
@@ -2281,10 +2538,13 @@ export function CenterRow({
           }
           onAdjustGig={handleAdjustGigValue}
         />
-        {hasFriendlyEffects ? (
+        {hasFriendlyEffects && !effectDetails ? (
           <ActiveEffectsRail effects={friendlyTemporaryEffects} tone="friendly" />
         ) : null}
       </div>
+      {effectDetails && (hasRivalEffects || hasFriendlyEffects) ? (
+        <ActiveEffectsDock friendly={friendlyTemporaryEffects} rival={rivalTemporaryEffects} />
+      ) : null}
       {!gigsOnly && (
         <div className={`${classes.cell} ${classes.pass}`}>
           <PassTurnControl />
@@ -2295,6 +2555,14 @@ export function CenterRow({
 }
 
 type CenterActiveEffect = CardActiveEffectView & { ownerSide: Side };
+
+/** Gig dice read smallest-first regardless of the order they were gained. */
+function compareGigDiceByFaces(a: GigDieView, b: GigDieView): number {
+  return (
+    (DIE_MAX_VALUES[a.dieType] ?? Number.POSITIVE_INFINITY) -
+    (DIE_MAX_VALUES[b.dieType] ?? Number.POSITIVE_INFINITY)
+  );
+}
 
 export function collectTemporaryEffects(
   sides: ReadonlyArray<{
@@ -2317,6 +2585,7 @@ export function collectTemporaryEffects(
   return [...effects.values()];
 }
 
+/** Compact per-effect chips; the V1 board keeps these in its gig grid cells. */
 function ActiveEffectsRail({
   effects,
   tone,
@@ -2350,6 +2619,154 @@ function ActiveEffectsRail({
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+interface ActiveEffectSourceGroup {
+  key: string;
+  tone: "rival" | "friendly";
+  sourceName: string;
+  sourceImageUrl?: string;
+  sourceCardId?: string;
+  effects: CenterActiveEffect[];
+}
+
+function groupEffectsBySource(
+  effects: readonly CenterActiveEffect[],
+  tone: "rival" | "friendly",
+): ActiveEffectSourceGroup[] {
+  const groups = new Map<string, ActiveEffectSourceGroup>();
+  for (const effect of effects) {
+    const key = effect.sourceCardId ?? effect.id;
+    const group = groups.get(key);
+    if (group) {
+      group.effects.push(effect);
+    } else {
+      groups.set(key, {
+        key,
+        tone,
+        sourceName: effect.sourceName,
+        sourceImageUrl: effect.sourceImageUrl,
+        sourceCardId: effect.sourceCardId,
+        effects: [effect],
+      });
+    }
+  }
+  return [...groups.values()];
+}
+
+/**
+ * V2 combined effects dock: one chip per source card (friendly and rival
+ * alike). Hovering/focusing a chip lists every effect that card grants and
+ * outlines its target cards on the board.
+ */
+function ActiveEffectsDock({
+  friendly,
+  rival,
+}: {
+  friendly: readonly CenterActiveEffect[];
+  rival: readonly CenterActiveEffect[];
+}) {
+  const groups = useMemo(
+    () => [...groupEffectsBySource(friendly, "friendly"), ...groupEffectsBySource(rival, "rival")],
+    [friendly, rival],
+  );
+  const [tip, setTip] = useState<{
+    group: ActiveEffectSourceGroup;
+    left: number;
+    top: number;
+  } | null>(null);
+  const highlightedTargets = useRef<HTMLElement[]>([]);
+  const clearHighlightedTargets = useCallback(() => {
+    for (const el of highlightedTargets.current) el.removeAttribute("data-effect-target");
+    highlightedTargets.current = [];
+  }, []);
+  useEffect(() => clearHighlightedTargets, [clearHighlightedTargets]);
+
+  const showGroup = (group: ActiveEffectSourceGroup, el: HTMLElement) => {
+    clearHighlightedTargets();
+    highlightedTargets.current = group.effects
+      .map((effect) =>
+        effect.targetKind === "card" && effect.targetId
+          ? document.querySelector<HTMLElement>(`[data-instance-id="${String(effect.targetId)}"]`)
+          : null,
+      )
+      .filter((target): target is HTMLElement => Boolean(target));
+    for (const target of highlightedTargets.current)
+      target.setAttribute("data-effect-target", "true");
+    // The dock rides under the rival gigs, so the tip opens below and grows
+    // leftward into the open center.
+    const rect = el.getBoundingClientRect();
+    setTip({ group, left: rect.right, top: rect.bottom + 9 });
+  };
+  const hideGroup = () => {
+    setTip(null);
+    clearHighlightedTargets();
+  };
+
+  if (!groups.length) return null;
+  return (
+    <section
+      className={classes.activeEffectsRail}
+      data-testid="active-effects-dock"
+      aria-label="Active effects"
+    >
+      <span className={classes.activeEffectsRailTitle}>Active effects</span>
+      <div className={classes.activeEffectsRailCards}>
+        {groups.map((group) => {
+          return (
+            <div
+              key={group.key}
+              className={classes.activeEffectCard}
+              data-tone={group.tone}
+              data-source-card-id={group.sourceCardId}
+              tabIndex={0}
+              aria-label={`${group.sourceName}: ${group.effects.map((effect) => effect.label).join(", ")}`}
+              onMouseEnter={(event) => showGroup(group, event.currentTarget)}
+              onFocus={(event) => showGroup(group, event.currentTarget)}
+              onMouseLeave={hideGroup}
+              onBlur={hideGroup}
+            >
+              <CardImage
+                className={classes.activeEffectImage}
+                imageUrl={group.sourceImageUrl}
+                alt={group.sourceName}
+                previewDetails={{ name: group.sourceName }}
+                inspectOnTap
+              />
+              {group.effects.length > 1 ? (
+                <span className={classes.activeEffectCount}>+{group.effects.length - 1}</span>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+      {tip
+        ? createPortal(
+            <div
+              className={classes.activeEffectTip}
+              role="tooltip"
+              style={{ left: tip.left, top: tip.top, transform: "translate(-100%, 0)" }}
+            >
+              <strong className={classes.activeEffectTipSource}>{tip.group.sourceName}</strong>
+              {tip.group.effects.map((effect) => (
+                <div
+                  key={effect.id}
+                  className={classes.activeEffectTipEntry}
+                  data-effect-tone={effect.tone}
+                >
+                  <strong>{effect.label}</strong>
+                  <span>{effect.detail}</span>
+                  <span className={classes.activeEffectTipTarget}>
+                    {effect.targetName ? `Target: ${effect.targetName}` : "Player-wide"}
+                  </span>
+                </div>
+              ))}
+            </div>,
+            document.body,
+          )
+        : null}
     </section>
   );
 }
@@ -2398,6 +2815,7 @@ type ProtocolEffectGigChoice = {
   min: number;
   max: number;
   ordered: boolean;
+  pairConstraint?: "gig-copy" | "gig-copy-between-players";
   eligibleDieIds: string[];
   adjustGig?: {
     direction?: string;
@@ -2437,6 +2855,8 @@ type ProtocolAdjustGigChoice = {
 };
 type ResolvingCard = {
   cardId: string;
+  ownerId: CardInstance["ownerId"];
+  controllerId: CardInstance["controllerId"];
   cardType: CardType;
   faceDown?: boolean;
   label: string;
@@ -2446,13 +2866,13 @@ type ResolvingCard = {
   rulesText: string | null;
 };
 
-function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
+function pendingResolutionCard(card: ResolvingCard, humanSide: Side): PendingResolutionCard {
   const entity: SimulatorEntity = {
     id: card.cardId,
     title: card.name,
     subtitle: card.cardType,
     kind: "card",
-    ownerId: "resolution",
+    ownerId: card.ownerId,
     face: card.faceDown ? "hidden" : "public",
     states: card.faceDown ? ["hidden"] : [],
     stats: [],
@@ -2465,18 +2885,12 @@ function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
     },
   };
 
-  return (
-    <ResolvingEntityStage
-      entity={entity}
-      active
-      anchorId={`resolving-program:${card.cardId}`}
-      label={card.label}
-      className={classes.resolvingProgram}
-      labelClassName={classes.resolvingProgramLabel}
-      entityClassName={classes.resolvingProgramCard}
-      testId="resolving-program"
-    />
-  );
+  return {
+    entity,
+    anchorId: `resolving-program:${card.cardId}`,
+    label: card.label,
+    side: card.controllerId === PLAYER_SIDE_TO_ID[humanSide] ? "left" : "right",
+  };
 }
 
 function resolvingCardFromInteractionViews({
@@ -2533,6 +2947,8 @@ function selectedPlayedCardFromMoveSelection(
   }
   return {
     cardId: selection.sourceCardId,
+    ownerId: card.ownerId,
+    controllerId: card.controllerId,
     cardType: def.type,
     label: def.type === "gear" ? "Playing gear" : "Resolving program",
     name: def.displayName ?? def.name,
@@ -2542,7 +2958,7 @@ function selectedPlayedCardFromMoveSelection(
   };
 }
 
-function resolvingCardFromPersistedVisuals({
+function persistedResolvingCards({
   humanSide,
   resolvingProgramVisuals,
   cardIndex,
@@ -2550,31 +2966,45 @@ function resolvingCardFromPersistedVisuals({
   humanSide: Side;
   resolvingProgramVisuals: ReturnType<typeof useResolvingProgramVisuals>;
   cardIndex: Record<string, CardInstance>;
-}): ResolvingCard | null {
-  const visual =
-    resolvingProgramVisuals.find((candidate) => candidate.side === humanSide) ??
-    resolvingProgramVisuals[0];
-  if (!visual) {
-    return null;
+}): ResolvingCard[] {
+  const ordered = [
+    ...resolvingProgramVisuals.filter((candidate) => candidate.side === humanSide),
+    ...resolvingProgramVisuals.filter((candidate) => candidate.side !== humanSide),
+  ];
+  const seen = new Set<string>();
+  const cards: ResolvingCard[] = [];
+  for (const visual of ordered) {
+    if (seen.has(visual.cardId)) continue;
+    seen.add(visual.cardId);
+    const card = cardIndex[visual.cardId];
+    if (!card) continue;
+    const def = defOf(card);
+    if (!isResolvingCardType(def.type)) continue;
+    cards.push({
+      cardId: visual.cardId,
+      ownerId: card.ownerId,
+      controllerId: card.controllerId,
+      cardType: def.type,
+      faceDown: visual.face === "hidden",
+      label: visual.label ?? resolvingCardLabel(card, { persistedVisual: true }),
+      name: def.displayName ?? def.name,
+      imageUrl: def.imageUrl,
+      color: def.color as ResolvingCard["color"],
+      rulesText: def.rulesText ?? null,
+    });
   }
-  const card = cardIndex[visual.cardId];
-  if (!card) {
-    return null;
-  }
-  const def = defOf(card);
-  if (!isResolvingCardType(def.type)) {
-    return null;
-  }
-  return {
-    cardId: visual.cardId,
-    cardType: def.type,
-    faceDown: visual.face === "hidden",
-    label: visual.label ?? resolvingCardLabel(card, { persistedVisual: true }),
-    name: def.displayName ?? def.name,
-    imageUrl: def.imageUrl,
-    color: def.color as ResolvingCard["color"],
-    rulesText: def.rulesText ?? null,
-  };
+  return cards;
+}
+
+/**
+ * Cards the viewer can already see rendered on the board — field units,
+ * attached gear, and legends in their rack — never stage on the resolving
+ * plane: the display would only duplicate them (and spoil face-down legends).
+ */
+function isCardPubliclyMounted(matchState: MatchState, cardId: string): boolean {
+  const card = matchState.G.cardIndex[cardId];
+  if (!card) return false;
+  return card.zone === "field" || card.zone === "legendArea" || card.meta.attachedToId !== null;
 }
 
 function resolvingCardFromSourceCardId(
@@ -2592,6 +3022,8 @@ function resolvingCardFromSourceCardId(
   }
   return {
     cardId,
+    ownerId: card.ownerId,
+    controllerId: card.controllerId,
     cardType: def.type,
     label: options.label ?? resolvingCardLabel(card),
     name: def.displayName ?? def.name,
@@ -2775,6 +3207,11 @@ function effectGigChoiceFromInteractionView(
   const adjustGigMaxAmount =
     typeof params.adjustGigMaxAmount === "number" ? params.adjustGigMaxAmount : undefined;
   const adjustGigChooseUpTo = action.text.params?.adjustGigChooseUpTo === true;
+  const pairConstraintParam = action.text.params?.gigCopyPairConstraint;
+  const pairConstraint =
+    pairConstraintParam === "gig-copy" || pairConstraintParam === "gig-copy-between-players"
+      ? pairConstraintParam
+      : undefined;
   return {
     side,
     view,
@@ -2782,6 +3219,7 @@ function effectGigChoiceFromInteractionView(
     min: targetInput.min,
     max: targetInput.max,
     ordered: targetInput.ordered,
+    ...(pairConstraint ? { pairConstraint } : {}),
     eligibleDieIds: targetInput.candidates
       .filter((candidate) => candidate.enabled)
       .map((candidate) => candidate.entity.instanceId),
@@ -2813,14 +3251,14 @@ function buildEffectGigSelectionHint(
   if (selectedDieIds[0] === dieId || selectedDieIds.length === 0) {
     return {
       role: "copy-source",
-      ariaLabel: "Copy value from",
-      tooltip: "Step 1: copy value from",
+      ariaLabel: "Source Gig: copy value from",
+      tooltip: "Step 1 — Source Gig: copy value from",
     };
   }
   return {
     role: "copy-target",
-    ariaLabel: "Change",
-    tooltip: "Step 2: change to that value",
+    ariaLabel: "Target Gig: set to source value",
+    tooltip: "Step 2 — Target Gig: set to source value",
   };
 }
 
@@ -2828,13 +3266,29 @@ function buildGigSelectionPrompt({
   action,
   required,
   selected,
+  source,
 }: {
-  action: "choose" | "steal";
+  action: "choose" | "steal" | "gig-copy";
   required: number;
   selected: number;
+  source?: Pick<GigDieView, "label" | "faceValue">;
 }): GigSelectionPrompt | undefined {
   if (required <= 1) {
     return undefined;
+  }
+  if (action === "gig-copy") {
+    if (selected === 0) {
+      return {
+        title: "Step 1 of 2 — Source Gig",
+        progress: "SOURCE",
+        remaining: "Select the Gig whose value you will copy.",
+      };
+    }
+    return {
+      title: "Step 2 of 2 — Target Gig",
+      progress: "TARGET",
+      remaining: `${source?.label ?? "Source Gig"} shows ${source?.faceValue ?? "a value"}; select the Gig that will receive it.`,
+    };
   }
   const remaining = Math.max(required - selected, 0);
   const verb = action === "steal" ? "Steal" : "Select";

@@ -21,7 +21,7 @@ export const op08ClovenRose018: EventCard = {
   rarity: "R",
   setId: "OP08",
   cost: 2,
-  traits: ["Animal Straw Hat Crew Drum Kingdom"],
+  traits: ["Animal", "Drum Kingdom", "Straw Hat Crew"],
   effect:
     "[Main] Up to 3 of your Characters gain +1000 power during this turn. Then, give up to 1 of your opponent's Characters −2000 power during this turn. [Trigger] Give up to 1 of your opponent's Leader or Character cards −3000 power during this turn.",
   effects: {

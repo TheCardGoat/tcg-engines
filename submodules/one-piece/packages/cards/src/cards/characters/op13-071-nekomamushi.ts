@@ -23,7 +23,7 @@ export const op13Nekomamushi071: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 2000,
-  traits: ["Minks Roger Pirates"],
+  traits: ["Minks", "Roger Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If you have 8 or more DON!! cards on your field, K.O. up to 1 of your opponent's Characters with 3000 base power or less.",

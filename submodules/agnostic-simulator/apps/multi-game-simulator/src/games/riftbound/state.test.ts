@@ -3,7 +3,7 @@ import {
   createRiftboundClientMatchStateV1,
   parseRiftboundClientSnapshotV1,
   reduceRiftboundClientMatchStateV1,
-} from "./state";
+} from "@tcg/riftbound-tabletop";
 
 const base = { actorId: "p1", at: 10, actionId: "a1" } as const;
 
@@ -35,6 +35,15 @@ describe("RiftboundClientMatchStateV1 reducer", () => {
     });
     expect(parseRiftboundClientSnapshotV1(JSON.stringify(state))).toEqual({ state });
     expect(parseRiftboundClientSnapshotV1("not-json")).toBeNull();
+    const { turn: _turn, ...legacy } = state;
+    expect(parseRiftboundClientSnapshotV1(legacy)?.state?.turn).toEqual({
+      number: 0, actorId: null, startedAt: null,
+    });
+  });
+
+  it("records a player-declared turn marker", () => {
+    const state = reduceRiftboundClientMatchStateV1(fixture(), { ...base, type: "start_turn" });
+    expect(state.turn).toEqual({ number: 1, actorId: "p1", startedAt: 10 });
   });
 
   it("uses the runtime catalog to classify initial zones", () => {

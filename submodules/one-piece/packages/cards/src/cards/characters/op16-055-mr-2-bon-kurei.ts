@@ -32,7 +32,7 @@ export const op16Mr2BonKurei055: CharacterCard = {
   setId: "OP16",
   cost: 2,
   power: 1000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "strike",
   effect:
     "[On Play] Draw 1 card.\n[DON!! x1] [When Attacking] This Character's base power becomes the same as your opponent's Leader's power during this turn.",
@@ -58,22 +58,8 @@ export const op16Mr2BonKurei055: CharacterCard = {
         ],
         actions: [
           {
-            action: "setBasePowerFrom",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            source: {
-              player: "opponent",
-              zones: ["leader"],
-              count: {
-                amount: 1,
-              },
-            },
+            action: "copyPower",
+            target: { player: "opponent", zones: ["leader"], count: { amount: 1 } },
             duration: "thisTurn",
           },
         ],

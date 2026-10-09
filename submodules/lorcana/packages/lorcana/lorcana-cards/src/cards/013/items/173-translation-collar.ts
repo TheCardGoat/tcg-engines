@@ -27,12 +27,13 @@ export const translationCollar: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_726d6cd31a7f4ced8ca3d502a3a4ceee",
+    tcgPlayer: "704669",
   },
   text: [
     {
       title: "YOU ARE MY FRIEND",
       description:
-        "{E}, 1{I} — Chosen character gets +1 {L} and gains Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+        "{E}, 1 {I} — Chosen character gets +1 {L} and gains Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
     },
   ],
   abilities: [

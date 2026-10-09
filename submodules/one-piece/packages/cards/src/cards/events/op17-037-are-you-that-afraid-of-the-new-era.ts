@@ -5,7 +5,7 @@ export const op17AreYouThatAfraidOfTheNewEra037: EventCard = {
   id: "OP17-037",
   canonicalId: "OP17-037",
   slug: "are-you-that-afraid-of-the-new-era/op17-037",
-  name: "Are You That Afraid of the New Era?!",
+  name: "Are You That Afraid of the New Era?!!",
   printings: [
     {
       id: "OP17-037",
@@ -30,7 +30,7 @@ export const op17AreYouThatAfraidOfTheNewEra037: EventCard = {
   rarity: "R",
   setId: "OP17",
   cost: 1,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including "Red-Haired Pirates" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n[Counter] You may rest 1 of your cards: Up to 1 of your Leader or Characters gains +3000 power during this battle.',
   effects: {

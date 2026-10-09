@@ -33,6 +33,7 @@ export const drBushrootEvilBotanist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d156ffc335d648a88f4ee299595188e3",
+    tcgPlayer: "704606",
   },
   text: [
     {

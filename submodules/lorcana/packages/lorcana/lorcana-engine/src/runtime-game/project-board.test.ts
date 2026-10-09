@@ -19,7 +19,16 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
-    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
     slug: `lorcana-ci_${params.id}`,
     cardType: "action",
@@ -459,6 +468,21 @@ describe("projectLorcanaBoardView", () => {
 
       expect(board.cards[characterId]?.cardType).toBe("character");
       expect(board.cards[locationId]?.cardType).toBe("location");
+    } finally {
+      testEngine.dispose();
+    }
+  });
+
+  it("projects each player's Hyperia City ink-drop counter", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      { inkDrops: 3, deck: 5 },
+      { inkDrops: 1, deck: 5 },
+    );
+
+    try {
+      const board = testEngine.asPlayerOne().getBoard();
+      expect(board.players[CANONICAL_PLAYER_ONE]?.inkDrops).toBe(3);
+      expect(board.players[CANONICAL_PLAYER_TWO]?.inkDrops).toBe(1);
     } finally {
       testEngine.dispose();
     }

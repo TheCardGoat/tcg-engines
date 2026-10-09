@@ -21,7 +21,7 @@ export const op01RoundTable027: EventCard = {
   rarity: "C",
   setId: "OP01",
   cost: 4,
-  traits: ["Beautiful Pirates Supernovas"],
+  traits: ["Supernovas", "Beautiful Pirates"],
   effect:
     "[Main] Give up to 1 of your opponent's Characters -10000 power during this turn.  This card has been officially errata'd.",
   effects: {

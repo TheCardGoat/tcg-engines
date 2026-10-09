@@ -5,7 +5,11 @@ import SimulatorUiFixturesPage from "./SimulatorUiFixturesPage";
 
 describe("SimulatorUiFixturesPage", () => {
   test("renders the requested deterministic disconnected state", async () => {
-    window.history.replaceState({}, "", "/simulator-ui-fixtures?state=disconnected");
+    window.history.replaceState(
+      {},
+      "",
+      "/simulator-ui-fixtures/connection-clocks?state=disconnected",
+    );
     render(<SimulatorUiFixturesPage />);
 
     await waitFor(() => {
@@ -21,6 +25,6 @@ describe("SimulatorUiFixturesPage", () => {
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog", { name: "You connection details" })).toBeNull();
-    expect(document.activeElement).toBe(connectionTriggers[0]);
+    await waitFor(() => expect(document.activeElement).toBe(connectionTriggers[0]));
   });
 });

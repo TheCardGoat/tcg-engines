@@ -52,7 +52,7 @@ export const op09Hongo011: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Red-Haired Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

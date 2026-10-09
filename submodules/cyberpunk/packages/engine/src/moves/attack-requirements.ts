@@ -25,7 +25,31 @@ export function getMustAttackCardIds(state: MatchState, playerId: PlayerId): Car
       return false;
     }
     const def = defOf(card);
-    if (card.meta.hasLag && !rules.includes("adrenaline")) return false;
+    const canAttackGigArea =
+      !rules.includes("cantAttackRival") &&
+      (!card.meta.hasLag ||
+        rules.includes("adrenaline") ||
+        rules.includes("canAttackRivalOnPlayedTurn"));
+    const canAttackUnits =
+      !card.meta.hasLag ||
+      rules.includes("adrenaline") ||
+      rules.includes("canAttackOnPlayedTurnAgainstUnits");
+    const opponentId = state.ctx.playerIds.find((id) => id !== playerId);
+    const hasUnitTarget =
+      canAttackUnits &&
+      opponentId !== undefined &&
+      state.G.players[opponentId]?.zones.field.some((defenderId) => {
+        const defender = state.G.cardIndex[defenderId];
+        if (!defender || (defOf(defender).type !== "unit" && defOf(defender).type !== "legend"))
+          return false;
+        return (
+          defender.meta.spent ||
+          rules.includes("canAttackReadyUnits") ||
+          (rules.includes("canAttackReadyBlockers") &&
+            getEffectiveRules(state, defenderId).includes("blocker"))
+        );
+      });
+    if (!canAttackGigArea && !hasUnitTarget) return false;
     return def.type === "unit" || def.keywords.includes("goSolo");
   });
 }

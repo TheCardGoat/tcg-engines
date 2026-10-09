@@ -35,7 +35,7 @@ export const op05Karasu005: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

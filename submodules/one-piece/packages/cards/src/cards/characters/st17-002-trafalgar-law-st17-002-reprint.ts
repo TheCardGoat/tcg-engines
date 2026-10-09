@@ -32,7 +32,7 @@ export const prb02TrafalgarLawSt17002Reprint002: CharacterCard = {
   setId: "ST17",
   cost: 4,
   power: 5000,
-  traits: ["Heart Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[On Play] You may return 1 of your Characters to the owner's hand: If your Leader has the \"The Seven Warlords of the Sea\" type, return up to 1 Character with a cost of 4 or less to the owner's hand.",
@@ -67,7 +67,7 @@ export const prb02TrafalgarLawSt17002Reprint002: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "The Seven Warlords of the Sea",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

@@ -32,7 +32,7 @@ export const prb02MarshallDTeachSt17005PirateFoil005: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Blackbeard Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "[Activate: Main] [Once Per Turn] You may place 1 card from your hand at the top of your deck: Give up to 2 rested DON!! cards to your Leader or 1 of your Characters.",

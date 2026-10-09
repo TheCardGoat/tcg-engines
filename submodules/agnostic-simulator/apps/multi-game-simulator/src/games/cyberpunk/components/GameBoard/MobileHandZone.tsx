@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { AnimatedZoneSlot } from "@tcg/simulator-ui";
 import { Card } from "./Card";
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import type { CardActiveEffectView, EffectiveRule, EngineCardType, Side } from "../../engine";
+import { PLAYER_SIDE_TO_ID } from "../../engine/sides";
 import classes from "./MobileHandZone.module.css";
 
 interface MobileHandCard {
@@ -192,128 +194,142 @@ export function MobileHandZone({
   }, [faceDown, onMeasure, renderCount, updateOverflow, visibleOpponentCards]);
 
   return (
-    <div
-      ref={drop.setNodeRef}
-      className={`${classes.zone} ${variantClass}`}
-      data-testid="hand-zone"
-      data-zone-id={zoneName}
-      data-sim-zone-id={zoneName}
-      data-active-fan="true"
-      data-side={side}
-      data-face-down={faceDown ? "true" : "false"}
-      data-count={renderCount}
-      data-spread-mode={spreadMode}
-      data-overflow-before={overflow.before ? "true" : "false"}
-      data-overflow-after={overflow.after ? "true" : "false"}
-      data-drop-zone={!faceDown ? zoneName : undefined}
-      data-drop-ready={isReturnDropReady ? "return" : undefined}
-      data-drop-over={drop.isOver ? "true" : "false"}
+    <AnimatedZoneSlot
+      animationRef={{
+        kind: "zone",
+        id: zoneName,
+        ownerId: String(PLAYER_SIDE_TO_ID[side ?? (opponent ? "opponent" : "player")]),
+      }}
+      className={classes.animationZone}
     >
-      {!faceDown && overflow.before ? (
-        <span
-          className={`${classes.edgeFade} ${classes.edgeFadeBefore}`}
-          data-testid="mobile-hand-overflow-before"
-          aria-hidden="true"
-        />
-      ) : null}
-      {!faceDown && overflow.after ? (
-        <span
-          className={`${classes.edgeFade} ${classes.edgeFadeAfter}`}
-          data-testid="mobile-hand-overflow-after"
-          aria-hidden="true"
-        />
-      ) : null}
-      {!faceDown && overflow.before ? (
-        <button
-          type="button"
-          className={`${classes.scrollCue} ${classes.scrollCueBefore}`}
-          aria-label="Show earlier hand cards"
-          onClick={() => scrollHand(-1)}
-        >
-          <IconChevronLeft size={16} stroke={2.2} aria-hidden="true" />
-        </button>
-      ) : null}
-      {!faceDown && overflow.after ? (
-        <button
-          type="button"
-          className={`${classes.scrollCue} ${classes.scrollCueAfter}`}
-          aria-label="Show more hand cards"
-          onClick={() => scrollHand(1)}
-        >
-          <IconChevronRight size={16} stroke={2.2} aria-hidden="true" />
-        </button>
-      ) : null}
-      <div ref={scrollerRef} className={classes.scroller} data-testid="mobile-hand-scroller">
-        {Array.from({ length: visibleOpponentCards }, (_, i) => {
-          const card = cards?.[i];
-          const cardRevealed = faceDown && card?.temporaryRevealed === true;
-          const cardFaceDown = faceDown && !cardRevealed;
-          const affordable =
-            card &&
-            !faceDown &&
-            typeof (card.effectiveCost ?? card.cost) === "number" &&
-            typeof availableEddies === "number"
-              ? availableEddies >= (card.effectiveCost ?? card.cost)!
-              : undefined;
-          const publicCardAttrs =
-            card && !cardFaceDown
-              ? {
-                  "data-card-id": card.cardId,
-                  "data-instance-id": card.cardId,
-                  "data-definition-id": card.definitionId,
-                  "data-card-name": card.name,
-                  "data-card-type": card.cardType,
-                  "data-card-color": card.color,
-                  "data-cost": card.cost ?? undefined,
-                  "data-effective-cost": card.effectiveCost ?? card.cost ?? undefined,
-                  "data-power": card.effectivePower ?? card.power ?? undefined,
-                  "data-affordable":
-                    affordable === undefined ? undefined : affordable ? "true" : "false",
-                }
-              : {};
-          return (
-            <div
-              key={card?.cardId ?? i}
-              className={classes.slot}
-              data-testid="hand-card"
-              data-face-down={cardFaceDown ? "true" : "false"}
-              data-temporary-revealed={cardRevealed ? "true" : undefined}
-              data-ready={card && !cardFaceDown ? "true" : undefined}
-              {...publicCardAttrs}
-              data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
-              style={{ zIndex: i + 1 }}
-            >
-              {cardFaceDown ? (
-                <CardImage faceDown disablePreview alt="Opponent card" />
-              ) : (
-                <Card
-                  imageUrl={card?.imageUrl}
-                  name={card?.name}
-                  definitionId={card?.definitionId}
-                  cardType={card?.cardType}
-                  color={card?.color}
-                  zone={zoneName}
-                  index={i}
-                  cardId={card?.cardId}
-                  side={side}
-                  effectiveRules={card?.effectiveRules}
-                  rulesText={card?.rulesText}
-                  classifications={card?.classifications}
-                  keywords={card?.keywords}
-                  hasSellTag={card?.hasSellTag}
-                  cost={card?.cost}
-                  effectiveCost={card?.effectiveCost}
-                  costEffects={card?.costEffects}
-                  power={card?.power}
-                  effectivePower={card?.effectivePower}
-                  activeEffects={card?.activeEffects}
-                  disablePreview
-                />
-              )}
-            </div>
-          );
-        })}
+      <div
+        ref={drop.setNodeRef}
+        className={`${classes.zone} ${variantClass}`}
+        data-testid="hand-zone"
+        data-zone-id={zoneName}
+        data-sim-zone-id={zoneName}
+        data-active-fan="true"
+        data-side={side}
+        data-face-down={faceDown ? "true" : "false"}
+        data-count={renderCount}
+        data-spread-mode={spreadMode}
+        data-overflow-before={overflow.before ? "true" : "false"}
+        data-overflow-after={overflow.after ? "true" : "false"}
+        data-drop-zone={!faceDown ? zoneName : undefined}
+        data-drop-ready={isReturnDropReady ? "return" : undefined}
+        data-drop-over={drop.isOver ? "true" : "false"}
+      >
+        {!faceDown && overflow.before ? (
+          <span
+            className={`${classes.edgeFade} ${classes.edgeFadeBefore}`}
+            data-testid="mobile-hand-overflow-before"
+            aria-hidden="true"
+          />
+        ) : null}
+        {!faceDown && overflow.after ? (
+          <span
+            className={`${classes.edgeFade} ${classes.edgeFadeAfter}`}
+            data-testid="mobile-hand-overflow-after"
+            aria-hidden="true"
+          />
+        ) : null}
+        {!faceDown && overflow.before ? (
+          <button
+            type="button"
+            className={`${classes.scrollCue} ${classes.scrollCueBefore}`}
+            aria-label="Show earlier hand cards"
+            onClick={() => scrollHand(-1)}
+          >
+            <IconChevronLeft size={16} stroke={2.2} aria-hidden="true" />
+          </button>
+        ) : null}
+        {!faceDown && overflow.after ? (
+          <button
+            type="button"
+            className={`${classes.scrollCue} ${classes.scrollCueAfter}`}
+            aria-label="Show more hand cards"
+            onClick={() => scrollHand(1)}
+          >
+            <IconChevronRight size={16} stroke={2.2} aria-hidden="true" />
+          </button>
+        ) : null}
+        <div ref={scrollerRef} className={classes.scroller} data-testid="mobile-hand-scroller">
+          {Array.from({ length: visibleOpponentCards }, (_, i) => {
+            const card = cards?.[i];
+            const cardRevealed = faceDown && card?.temporaryRevealed === true;
+            const cardFaceDown = faceDown && !cardRevealed;
+            const affordable =
+              card &&
+              !faceDown &&
+              typeof (card.effectiveCost ?? card.cost) === "number" &&
+              typeof availableEddies === "number"
+                ? availableEddies >= (card.effectiveCost ?? card.cost)!
+                : undefined;
+            const publicCardAttrs =
+              card && !cardFaceDown
+                ? {
+                    "data-card-id": card.cardId,
+                    "data-instance-id": card.cardId,
+                    "data-definition-id": card.definitionId,
+                    "data-card-name": card.name,
+                    "data-card-type": card.cardType,
+                    "data-card-color": card.color,
+                    "data-cost": card.cost ?? undefined,
+                    "data-effective-cost": card.effectiveCost ?? card.cost ?? undefined,
+                    "data-power": card.effectivePower ?? card.power ?? undefined,
+                    "data-affordable":
+                      affordable === undefined ? undefined : affordable ? "true" : "false",
+                  }
+                : {};
+            return (
+              <div
+                key={card?.cardId ?? i}
+                className={classes.slot}
+                data-testid="hand-card"
+                data-face-down={cardFaceDown ? "true" : "false"}
+                data-temporary-revealed={cardRevealed ? "true" : undefined}
+                data-ready={card && !cardFaceDown ? "true" : undefined}
+                {...publicCardAttrs}
+                data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
+                style={{ zIndex: i + 1 }}
+              >
+                {cardFaceDown ? (
+                  <CardImage
+                    faceDown
+                    disablePreview
+                    alt="Opponent card"
+                    side={side ?? (opponent ? "opponent" : "player")}
+                  />
+                ) : (
+                  <Card
+                    imageUrl={card?.imageUrl}
+                    name={card?.name}
+                    definitionId={card?.definitionId}
+                    cardType={card?.cardType}
+                    color={card?.color}
+                    zone={zoneName}
+                    index={i}
+                    cardId={card?.cardId}
+                    side={side}
+                    effectiveRules={card?.effectiveRules}
+                    rulesText={card?.rulesText}
+                    classifications={card?.classifications}
+                    keywords={card?.keywords}
+                    hasSellTag={card?.hasSellTag}
+                    cost={card?.cost}
+                    effectiveCost={card?.effectiveCost}
+                    costEffects={card?.costEffects}
+                    power={card?.power}
+                    effectivePower={card?.effectivePower}
+                    activeEffects={card?.activeEffects}
+                    disablePreview
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </AnimatedZoneSlot>
   );
 }

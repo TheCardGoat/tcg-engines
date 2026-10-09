@@ -25,6 +25,10 @@ export const redAlert: ActionCard = {
   rarity: "uncommon",
   cost: 4,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_b774661e34864407ad0f264bb2332333",
+    tcgPlayer: "704636",
+  },
   text: "Banish chosen character with 3 {S} or less. If you have a Monster character in play, chosen opponent loses 1 lore.",
   abilities: [
     {

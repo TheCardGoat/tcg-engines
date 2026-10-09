@@ -31,6 +31,7 @@ export const woodyHelpingAFriend: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1792f6aa4efe42ce93bd680da01f7016",
+    tcgPlayer: "702669",
   },
   text: [
     {

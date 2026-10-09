@@ -1,3 +1,5 @@
+import { getChooseCostStatusMessage } from "../model/cost-copy.js";
+import { getCardNameVariants } from "@tcg/lorcana-engine";
 import { getContext, hasContext, onDestroy, onMount, setContext, untrack } from "svelte";
 import { getLocale, locales, setLocale } from "$lib/paraglide/runtime.js";
 import { m } from "$lib/i18n/messages.js";
@@ -114,6 +116,7 @@ import {
   expandCardMoves,
   expandCategoryMoves,
   getPlayerSummary as getDerivedPlayerSummary,
+  resolveSimulatorInkDropPayment,
 } from "@/features/simulator/model/derived-state.js";
 import {
   buildPendingMoveError,
@@ -376,7 +379,10 @@ export interface LorcanaGameContextValue {
    * can (or doesn't apply — e.g. shift on a non-shift card). The UI maps
    * the reason to a localized tooltip via `formatPlayCardDisabledReason`.
    */
-  getStandardPlayDisabledReason: (cardId: string) => PlayCardDisabledReason | null;
+  getStandardPlayDisabledReason: (
+    cardId: string,
+    options?: { inkDrops?: number },
+  ) => PlayCardDisabledReason | null;
   getShiftPlayDisabledReason: (cardId: string) => PlayCardDisabledReason | null;
   getSingPlayDisabledReason: (cardId: string) => PlayCardDisabledReason | null;
   getInkActionDisabledReason: (cardId: string) => string | null;
@@ -427,6 +433,9 @@ export interface LorcanaGameContextValue {
   ) => boolean;
   refreshFromReadModel: (source?: string) => void;
   playCard: (cardId: string) => boolean;
+  /** Hyperia City ink-drop payment toggle for the local player's next plays. */
+  inkDropPaymentArmed: () => boolean;
+  toggleInkDropPayment: () => boolean;
   ink: (cardId: string) => boolean;
   canMoveCharacterToLocation: (characterId: string, locationId: string) => boolean;
   canDropHandCardIntoZone: (
@@ -780,6 +789,8 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
   #pendingMoveError = $state<SimulatorMoveError | null>(null);
   #statusMessage = $state<string>(m["sim.status.ready"]({}));
   #ownerSide = $state<LorcanaPlayerSide | null>(null);
+  // Hyperia City: when armed, playCard removes ink drops before exerting ink.
+  #inkDropPaymentArmed = $state(false);
   #pendingResolutionAutoOpenStateId = $state<number | null>(null);
   // Perf: Lazy move expansion architecture.
   // #moveCategorySummaries is cheap to compute (no getMoveOptions() calls) and drives
@@ -974,6 +985,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       facePresentation: "faceUp",
       inkType: definition.inkType,
       inkable: definition.inkable,
+      nameVariants: getCardNameVariants(definition),
       cardType: definition.cardType,
       actionSubtype:
         definition.cardType === "action" ? (definition.actionSubtype ?? undefined) : undefined,
@@ -1039,6 +1051,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#cardSnapshotsById,
       this.#currentAvailableMoves,
       this.#currentLegalMoveIds,
+      { inkDrops: this.#resolveInkDropPayment() || undefined },
     );
     if (!areExecutableMovesEqual(this.#cachedExecutableMoves, newMoves)) {
       this.#cachedExecutableMoves = newMoves;
@@ -1068,6 +1081,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#currentAvailableMoves,
       this.#currentLegalMoveIds,
       cardId,
+      { inkDrops: this.#resolveInkDropPayment() || undefined },
     );
     this.#cachedExpandedCardMoves.set(cardId, moves);
     return moves;
@@ -1097,6 +1111,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#currentLegalMoveIds,
       cardId,
       categoryId,
+      { inkDrops: this.#resolveInkDropPayment() || undefined },
     );
     this.#cachedExpandedCardActionCategoryMoves.set(cacheKey, moves);
     return moves;
@@ -1123,16 +1138,32 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#currentAvailableMoves,
       this.#currentLegalMoveIds,
       categoryId,
+      { inkDrops: this.#resolveInkDropPayment() || undefined },
     );
     this.#cachedExpandedCategoryMoves.set(categoryId, moves);
     return moves;
   };
   readonly moveLogEntries = (): MoveLogEntrySnapshot[] => this.#moveLogEntries;
   readonly challengeReadyCardIds = (): string[] => this.#challengeReadyCardIds;
-  readonly getStandardPlayDisabledReason = (cardId: string): PlayCardDisabledReason | null =>
-    this.#engine?.getStandardPlayDisabledReason(cardId) ?? null;
+  readonly getStandardPlayDisabledReason = (
+    cardId: string,
+    options?: { inkDrops?: number },
+  ): PlayCardDisabledReason | null => {
+    const engine = this.#engine;
+    if (!engine) {
+      return null;
+    }
+    // Armed ink-drop payment must participate in the disabled-reason check too:
+    // a card affordable only by combining ready ink with held drops would
+    // otherwise render as disabled even though dispatch would succeed.
+    const armedDrops = this.#resolveInkDropPayment();
+    const inkDrops = options?.inkDrops ?? (armedDrops > 0 ? armedDrops : undefined);
+    return engine.getStandardPlayDisabledReason(cardId, { inkDrops });
+  };
   readonly getShiftPlayDisabledReason = (cardId: string): PlayCardDisabledReason | null =>
-    this.#engine?.getShiftPlayDisabledReason(cardId) ?? null;
+    this.#engine?.getShiftPlayDisabledReason(cardId, {
+      inkDrops: this.#resolveInkDropPayment() || undefined,
+    }) ?? null;
   readonly getSingPlayDisabledReason = (cardId: string): PlayCardDisabledReason | null =>
     this.#engine?.getSingPlayDisabledReason(cardId) ?? null;
   readonly getInkActionDisabledReason = (cardId: string): string | null => {
@@ -1539,9 +1570,27 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       return false;
     }
 
+    // Armed ink-drop payment applies to card plays, movement and activated abilities
+    // through every menu, sidebar and targeted-cost dispatch path.
+    let dispatchParams: LorcanaSimulatorMoveParams[K] = params;
+    if (
+      moveId === "playCard" ||
+      moveId === "activateAbility" ||
+      moveId === "moveCharacterToLocation"
+    ) {
+      const paymentParams = params as
+        | LorcanaSimulatorMoveParams["playCard"]
+        | LorcanaSimulatorMoveParams["activateAbility"]
+        | LorcanaSimulatorMoveParams["moveCharacterToLocation"];
+      const inkDropsToPay = this.#resolveInkDropPayment();
+      if (inkDropsToPay > 0 && paymentParams.inkDrops === undefined) {
+        dispatchParams = { ...paymentParams, inkDrops: inkDropsToPay } as typeof params;
+      }
+    }
+
     const dispatchMove = (): boolean => {
       const executionStartedAt = now();
-      const result = dispatchSimulatorMove(engine, playerId, moveId, params);
+      const result = dispatchSimulatorMove(engine, playerId, moveId, dispatchParams);
 
       if (!result.success) {
         this.#finishRejectedMove(moveId, params, result, options);
@@ -1577,6 +1626,35 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     return true;
   };
 
+  readonly inkDropPaymentArmed = (): boolean => this.#inkDropPaymentArmed;
+
+  readonly toggleInkDropPayment = (): boolean => {
+    this.#inkDropPaymentArmed = !this.#inkDropPaymentArmed;
+    this.#cachedDerivedStateStateID = -1;
+    this.#cachedExpandedCardMovesStateId = -1;
+    this.#cachedExpandedCardActionCategoryMovesStateId = -1;
+    this.#cachedExpandedCategoryMovesStateId = -1;
+    this.#refreshDerivedState();
+    return this.#inkDropPaymentArmed;
+  };
+
+  /**
+   * Hyperia City ink-drop payment for the next play or activation dispatch. Pure rules
+   * live in `resolveSimulatorInkDropPayment` (model/derived-state).
+   */
+  #resolveInkDropPayment(): number {
+    const ownerSide = this.#ownerSide;
+    const snapshot = this.#boardSnapshot;
+    if (!ownerSide || !snapshot) {
+      return 0;
+    }
+    const summary = getDerivedPlayerSummary(ownerSide, snapshot);
+    return resolveSimulatorInkDropPayment({
+      armed: this.#inkDropPaymentArmed,
+      heldDrops: summary?.inkDrops ?? 0,
+    });
+  }
+
   readonly playCard = (cardId: string): boolean => {
     const engine = this.#engine;
     if (!engine || this.#isGameFinished()) {
@@ -1597,8 +1675,12 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       return false;
     }
 
+    const inkDropsToPay = this.#resolveInkDropPayment();
     const cardInput = cardId as CardInput;
-    const result = engine.playCard(playerId, cardInput, { cost: "standard" });
+    const result = engine.playCard(playerId, cardInput, {
+      cost: "standard",
+      ...(inkDropsToPay > 0 ? { inkDrops: inkDropsToPay } : {}),
+    });
     if (!result.success) {
       const nextPendingMoveError = buildPendingMoveError(
         "playCard",
@@ -1676,6 +1758,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       args: {
         characterId: characterId as CardInstanceId,
         locationId: locationId as CardInstanceId,
+        inkDrops: this.#resolveInkDropPayment() || undefined,
       },
     }).valid;
   };
@@ -1866,6 +1949,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
   };
 
   readonly handleLocaleChanged = (): void => {
+    this.#cachedCardSnapshotStateID = -1;
     this.#rebuildPresentationState("locale-change");
   };
 
@@ -2029,8 +2113,6 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
         snapshots: projectedSnapshots,
         staticResources: this.#engine!.staticResources,
         authoritativeState: this.#engine!.getState(),
-        viewerPlayerId:
-          this.#ownerSide && board ? getOwnerIdForSideFromBoard(board, this.#ownerSide) : null,
       });
     });
     this.#cachedCardSnapshotStateID = board.stateID;
@@ -3059,7 +3141,9 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     let availableMoves = this.#currentAvailableMoves;
 
     if (this.#cachedDerivedStateStateID !== stateID) {
-      availableMoves = this.#measure("getAvailableMoves", () => engine.getAvailableMoves());
+      availableMoves = this.#measure("getAvailableMoves", () =>
+        engine.getAvailableMoves({ inkDrops: this.#resolveInkDropPayment() || undefined }),
+      );
       legalMoves = this.#measure("enumerateMoves", () => engine.getCachedLegalMoveIds());
 
       // Perf: buildMoveCategorySummaries() is O(n) over AvailableMove[] with no
@@ -3657,7 +3741,14 @@ type ScryResolutionSelection = {
 
 type ScryCardView = Pick<
   LorcanaCardSnapshot,
-  "cardId" | "label" | "cardType" | "actionSubtype" | "cost" | "classifications"
+  | "cardId"
+  | "label"
+  | "nameVariants"
+  | "cardType"
+  | "actionSubtype"
+  | "cost"
+  | "classifications"
+  | "keywords"
 >;
 
 type ResolutionSelectionPhase = "selecting" | "executing";
@@ -4089,6 +4180,21 @@ function getMoveSelectableCosts(
     : [];
 }
 
+function getSelectableCostCandidateIds(
+  session: ActionSelectionSession,
+  cost: MoveOptionSelectableCost,
+): string[] {
+  const selected = getSelectedCostCardIds(session, cost.kind);
+  if (!cost.candidateGroups || selected.length === 0) return cost.candidateCardIds;
+  return [
+    ...new Set(
+      cost.candidateGroups
+        .filter((group) => selected.every((id) => group.some((candidate) => candidate === id)))
+        .flat(),
+    ),
+  ];
+}
+
 function getSelectedCostCardIds(
   session: ActionSelectionSession,
   costKind: MoveOptionSelectableCostKind,
@@ -4205,6 +4311,9 @@ function applySelectedCostsToMoveParams(
           : {}),
         ...(session.selectedCosts.banishItems
           ? { banishItems: [...session.selectedCosts.banishItems] }
+          : {}),
+        ...(session.selectedCosts.revealCards
+          ? { revealCards: [...session.selectedCosts.revealCards] }
           : {}),
         ...(session.selectedCosts.discardCards
           ? { discardCards: [...session.selectedCosts.discardCards] }
@@ -4626,8 +4735,12 @@ function getFixedMoveToLocationSlotId(
 
 function getFixedMoveToLocationBoardId(
   board: LorcanaProjectedBoardView | null,
-  sourceCardId: CardInstanceId,
+  context: TargetResolutionSelectionContext,
 ): string | null {
+  if (moveToLocationContextSelectsOnlyLocation(context)) {
+    return null;
+  }
+  const sourceCardId = context.sourceCardId;
   const cards = board?.cards as
     | Record<string, { atLocationId?: CardInstanceId; cardType?: string }>
     | undefined;
@@ -4764,10 +4877,12 @@ function getScryCardView(
     return {
       cardId: snapshot.cardId,
       label: snapshot.label,
+      nameVariants: snapshot.nameVariants,
       cardType: snapshot.cardType,
       actionSubtype: snapshot.actionSubtype,
       cost: snapshot.cost,
       classifications: snapshot.classifications,
+      keywords: snapshot.keywords,
     };
   }
 
@@ -5164,66 +5279,39 @@ function getCostSelectionSummary(
   selectedCount: number,
 ): string | undefined {
   const noun =
-    selectableCost.kind === "discardCards"
-      ? selectableCost.count === 1
-        ? "card"
-        : "cards"
-      : selectableCost.kind === "exertCharacters"
+    selectableCost.kind === "revealCards"
+      ? "cards to reveal"
+      : selectableCost.kind === "discardCards"
         ? selectableCost.count === 1
-          ? "character to exert"
-          : "characters to exert"
-        : selectableCost.kind === "exertItems"
+          ? "card"
+          : "cards"
+        : selectableCost.kind === "exertCharacters"
           ? selectableCost.count === 1
-            ? "item to exert"
-            : "items to exert"
-          : selectableCost.kind === "banishCharacters"
+            ? "character to exert"
+            : "characters to exert"
+          : selectableCost.kind === "exertItems"
             ? selectableCost.count === 1
-              ? "character to banish"
-              : "characters to banish"
-            : selectableCost.kind === "putOnDeckBottom"
+              ? "item to exert"
+              : "items to exert"
+            : selectableCost.kind === "banishCharacters"
               ? selectableCost.count === 1
-                ? `${selectableCost.classification ?? selectableCost.cardType ?? "card"} to put on deck bottom`
-                : `${selectableCost.classification ?? selectableCost.cardType ?? "card"}s to put on deck bottom`
-              : selectableCost.count === 1
-                ? "item to banish"
-                : "items to banish";
+                ? "character to banish"
+                : "characters to banish"
+              : selectableCost.kind === "putOnDeckBottom"
+                ? selectableCost.count === 1
+                  ? `${selectableCost.classification ?? selectableCost.cardType ?? "card"} to put on deck bottom`
+                  : `${selectableCost.classification ?? selectableCost.cardType ?? "card"}s to put on deck bottom`
+                : selectableCost.count === 1
+                  ? "item to banish"
+                  : "items to banish";
   return selectedCount > 0
     ? `${selectedCount}/${selectableCost.count} ${noun} selected`
     : undefined;
 }
 
-function getChooseCostStatusMessage(
-  sourceCardLabel: string,
-  selectableCost: MoveOptionSelectableCost,
-): string {
-  const countPrefix = selectableCost.count === 1 ? "a" : `${selectableCost.count}`;
-  const qualifier = selectableCost.cardName
-    ? ` named ${selectableCost.cardName}`
-    : selectableCost.classification
-      ? ` with ${selectableCost.classification}`
-      : selectableCost.cardType
-        ? ` ${selectableCost.cardType}`
-        : "";
-
-  if (selectableCost.kind === "discardCards") {
-    return `Choose ${countPrefix} card${selectableCost.count === 1 ? "" : "s"}${qualifier} to discard for ${sourceCardLabel}.`;
-  }
-
-  if (selectableCost.kind === "exertCharacters" || selectableCost.kind === "exertItems") {
-    return `Choose ${countPrefix} ${selectableCost.kind === "exertCharacters" ? "character" : "item"}${selectableCost.count === 1 ? "" : "s"}${qualifier} to exert for ${sourceCardLabel}.`;
-  }
-
-  if (selectableCost.kind === "putOnDeckBottom") {
-    const costNoun =
-      selectableCost.classification ??
-      (selectableCost.cardType ? `${selectableCost.cardType} card` : "card");
-    return `Choose ${countPrefix} ${costNoun}${selectableCost.count === 1 ? "" : "s"} from your discard to put on bottom of your deck to play ${sourceCardLabel} for free.`;
-  }
-
-  return `Choose ${countPrefix} ${selectableCost.kind === "banishCharacters" ? "character" : "item"}${selectableCost.count === 1 ? "" : "s"}${qualifier} to banish for ${sourceCardLabel}.`;
-}
-
 function getInvalidCostSelectionReason(selectableCost: MoveOptionSelectableCost): string {
+  if (selectableCost.kind === "revealCards")
+    return "This card does not match the required reveal pair.";
   if (selectableCost.kind === "discardCards") {
     return "This card is not a valid discard cost.";
   }
@@ -5796,6 +5884,7 @@ export class LorcanaSidebarPresenter {
         : undefined;
 
     return buildPlayerInteractionView(snapshot, localPlayerId as PlayerId, {
+      pendingRequestId: session?.context.requestId,
       pendingSelectedCardIds,
       pendingSelectedPlayerIds,
       pendingActiveSlotIndex: session?.activeTargetSlotIndex,
@@ -6362,6 +6451,7 @@ export class LorcanaSidebarPresenter {
             sourceCard: bagEffect.sourceId
               ? (this.cardSnapshotsById[bagEffect.sourceId] ?? null)
               : null,
+            effectTitle: payloadMeta.abilityIndex == null ? payloadMeta.abilityName : undefined,
             abilityIndex: payloadMeta.abilityIndex ?? null,
           })
         : null;
@@ -6404,11 +6494,13 @@ export class LorcanaSidebarPresenter {
         getResolutionEffectInstanceReferences(bagEffect.payload),
         this.cardSnapshotsById,
       );
-      const secondaryTitle = getPendingEffectSecondaryTitle({
-        sourceCard: card,
-        abilityIndex: payloadMeta.abilityIndex ?? null,
-        availableAbilityMoves,
-      });
+      const secondaryTitle =
+        (payloadMeta.abilityIndex == null ? payloadMeta.abilityName : undefined) ??
+        getPendingEffectSecondaryTitle({
+          sourceCard: card,
+          abilityIndex: payloadMeta.abilityIndex ?? null,
+          availableAbilityMoves,
+        });
       const summaryTitle = buildPendingEffectSummaryTitle({
         title: card?.label ?? "Queued bag effect",
         secondaryTitle,
@@ -7179,10 +7271,7 @@ export class LorcanaSidebarPresenter {
           fixedSubjectId: getFixedMoveToLocationSubjectId(resolutionContext),
           fixedLocationId:
             getFixedMoveToLocationSlotId(this.interactionView?.activePrompt?.slots) ??
-            getFixedMoveToLocationBoardId(
-              this.#game.boardSnapshot(),
-              resolutionContext.sourceCardId,
-            ),
+            getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), resolutionContext),
         });
         return getUniqueOrderedIds([...subjectIds, ...(locationId ? [locationId] : [])]);
       }
@@ -7230,7 +7319,8 @@ export class LorcanaSidebarPresenter {
     }
 
     if (session.phase === "choose-cost") {
-      return getCurrentSelectableCostForActionSelectionSession(session)?.candidateCardIds ?? [];
+      const cost = getCurrentSelectableCostForActionSelectionSession(session);
+      return cost ? getSelectableCostCandidateIds(session, cost) : [];
     }
 
     if (session.phase === "choose-target" && session.sourceCardId) {
@@ -7583,6 +7673,7 @@ export class LorcanaSidebarPresenter {
           : null;
         return {
           mode: "resolution-choice",
+          abilityIndex,
           categoryId: "unknown",
           categoryLabel,
           title: selectionTitle,
@@ -8598,10 +8689,7 @@ export class LorcanaSidebarPresenter {
       const fixedMoveToLocationId =
         resolutionSession.context.expectedSlottedKind === "move-to-location"
           ? (getFixedMoveToLocationSlotId(activePrompt?.slots) ??
-            getFixedMoveToLocationBoardId(
-              this.#game.boardSnapshot(),
-              resolutionSession.context.sourceCardId,
-            ))
+            getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), resolutionSession.context))
           : null;
       const fixedSelectedCount =
         (fixedMoveToLocationSubjectId &&
@@ -9219,7 +9307,7 @@ export class LorcanaSidebarPresenter {
         const fixedSubjectId = getFixedMoveToLocationSubjectId(context);
         const fixedLocationId =
           getFixedMoveToLocationSlotId(this.interactionView?.activePrompt?.slots) ??
-          getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), context.sourceCardId);
+          getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), context);
         const { subjectIds, locationId } = splitMoveToLocationSessionTargets({
           selectedTargets: session.selectedTargets,
           cardSnapshotsById: this.cardSnapshotsById,
@@ -9566,11 +9654,11 @@ export class LorcanaSidebarPresenter {
         fixedSubjectId,
         fixedLocationId:
           getFixedMoveToLocationSlotId(activePrompt?.slots) ??
-          getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), session.context.sourceCardId),
+          getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), session.context),
       });
       const fixedLocationId =
         getFixedMoveToLocationSlotId(activePrompt?.slots) ??
-        getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), session.context.sourceCardId);
+        getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), session.context);
       const boardCards = this.#game.boardSnapshot()?.cards as
         | Record<string, { cardType?: string }>
         | undefined;
@@ -9596,6 +9684,23 @@ export class LorcanaSidebarPresenter {
         subjectIds.filter((subjectId) => subjectId !== fixedSubjectId).length +
         (locationId && !fixedLocationId ? 1 : 0);
       const userSelectedLocationIds = locationId && !fixedLocationId ? [locationId] : [];
+      const subjectDescriptor = session.context.targetDsl.find(
+        (target) =>
+          typeof target === "object" &&
+          target !== null &&
+          "cardTypes" in target &&
+          Array.isArray(target.cardTypes) &&
+          target.cardTypes.includes("character") &&
+          "count" in target &&
+          typeof target.count === "number",
+      );
+      const subjectCapacity =
+        subjectDescriptor &&
+        typeof subjectDescriptor === "object" &&
+        "count" in subjectDescriptor &&
+        typeof subjectDescriptor.count === "number"
+          ? subjectDescriptor.count
+          : null;
       const nextSelectedTargets = isLocation
         ? [...baseSubjectIds, targetId]
         : subjectIds.includes(targetId)
@@ -9603,9 +9708,11 @@ export class LorcanaSidebarPresenter {
               ...subjectIds.filter((selectedTargetId) => selectedTargetId !== targetId),
               ...userSelectedLocationIds,
             ]
-          : session.context.maxSelections > 0 && selectionCount >= session.context.maxSelections
-            ? session.selectedTargets
-            : [...subjectIds, targetId, ...userSelectedLocationIds];
+          : subjectCapacity !== null && subjectCapacity > 0 && subjectIds.length >= subjectCapacity
+            ? [...subjectIds.slice(1), targetId, ...userSelectedLocationIds]
+            : session.context.maxSelections > 0 && selectionCount >= session.context.maxSelections
+              ? session.selectedTargets
+              : [...subjectIds, targetId, ...userSelectedLocationIds];
 
       const nextSession = this.#normalizeResolutionSelectionSession({
         ...session,
@@ -9872,7 +9979,9 @@ export class LorcanaSidebarPresenter {
     if (
       !session ||
       !isTargetResolutionSelectionContext(session.context) ||
-      (session.context.minSelections !== 0 && !/\(optional\)/i.test(session.promptMessage))
+      (session.context.minSelections !== 0 &&
+        session.context.originatesFromOptional !== true &&
+        !/\(optional\)/i.test(session.promptMessage))
     ) {
       return false;
     }
@@ -10101,10 +10210,7 @@ export class LorcanaSidebarPresenter {
                         fixedSubjectId: getFixedMoveToLocationSubjectId(ctx),
                         fixedLocationId:
                           getFixedMoveToLocationSlotId(this.interactionView?.activePrompt?.slots) ??
-                          getFixedMoveToLocationBoardId(
-                            this.#game.boardSnapshot(),
-                            ctx.sourceCardId,
-                          ),
+                          getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), ctx),
                       });
                       const resolvedSubjectIds =
                         subjectIds.length > 0
@@ -10740,7 +10846,9 @@ export class LorcanaSidebarPresenter {
         return false;
       }
 
-      if (!includesSelectionId(selectableCost.candidateCardIds, card.cardId)) {
+      if (
+        !includesSelectionId(getSelectableCostCandidateIds(session, selectableCost), card.cardId)
+      ) {
         this.#game.setPendingError(getInvalidCostSelectionReason(selectableCost));
         return false;
       }

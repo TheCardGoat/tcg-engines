@@ -42,29 +42,45 @@ export const op10Liberation098: EventCard = {
           {
             action: "ko",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
-                amount: 1,
+                amount: 2,
                 upTo: true,
               },
-              filters: [
-                {
-                  filter: "baseCost",
-                  comparison: "lte",
-                  value: 6,
+            },
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "baseCost", comparison: "lte", value: 4 }],
-            },
+                filters: [
+                  {
+                    filter: "baseCost",
+                    comparison: "lte",
+                    value: 6,
+                  },
+                ],
+              },
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "baseCost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -76,7 +92,10 @@ export const op10Liberation098: EventCard = {
             target: {
               player: "opponent",
               zones: ["leader"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
             duration: "thisTurn",
           },
@@ -85,7 +104,10 @@ export const op10Liberation098: EventCard = {
             target: {
               player: "opponent",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
             duration: "thisTurn",
           },

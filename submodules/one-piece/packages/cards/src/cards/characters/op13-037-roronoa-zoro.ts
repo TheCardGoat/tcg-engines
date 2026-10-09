@@ -23,7 +23,7 @@ export const op13RoronoaZoro037: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew Supernovas"],
+  traits: ["FILM", "Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[On Play] If your Leader has the "FILM" or "Straw Hat Crew" type, set up to 2 of your DON!! cards as active.\n[End of Your Turn] Set this Character as active.',
@@ -39,12 +39,12 @@ export const op13RoronoaZoro037: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "FILM",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

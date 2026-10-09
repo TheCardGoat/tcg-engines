@@ -5,13 +5,14 @@
  * the decision is purely "is this hand good enough" — the stats below are the
  * three signals that answer it: sellable count (rules 3.12.1, 8.11, 11.9 —
  * only Sell-Tag cards can be sold, one Sell action per turn), the Eddie-cost
- * curve, and the unit/non-unit split.
+ * curve, and the card-type mix.
  */
 
 /** Cost bands. The low ceiling matches the automation keep bar
  * (`mulliganCheapCostThreshold` in cyberpunk engine's greedy strategy): under
  * the 1-Eddie/turn pacing, 1–2 cost cards are the plays the first turns run
- * on, 3–5 needs the Sell ramp, 6+ are late payoffs. */
+ * on, 3–5 needs the Sell ramp, 6+ are late payoffs. Zero-cost cards also
+ * belong in the low band. */
 export const MULLIGAN_LOW_COST_MAX = 2;
 export const MULLIGAN_MID_COST_MAX = 5;
 
@@ -42,7 +43,7 @@ export interface MulliganHandStats {
   counted: number;
   /** Hand cards hidden from the viewer — excluded from every other count. */
   hidden: number;
-  /** Cards costing 1–2 Eddies. */
+  /** Cards costing 0–2 Eddies. */
   lowCost: number;
   /** Cards costing 3–5 Eddies. */
   midCost: number;
@@ -51,6 +52,9 @@ export interface MulliganHandStats {
   /** Visible cards with no printed cost (not expected in an opening hand). */
   uncosted: number;
   units: number;
+  gear: number;
+  programs: number;
+  otherTypes: number;
   nonUnits: number;
   /** Cards carrying the Sell Tag. */
   sellable: number;
@@ -69,6 +73,9 @@ export function computeMulliganStats(hand: readonly MulliganStatsCard[]): Mullig
     highCost: 0,
     uncosted: 0,
     units: 0,
+    gear: 0,
+    programs: 0,
+    otherTypes: 0,
     nonUnits: 0,
     sellable: 0,
   };
@@ -93,6 +100,9 @@ export function computeMulliganStats(hand: readonly MulliganStatsCard[]): Mullig
       stats.units += 1;
     } else {
       stats.nonUnits += 1;
+      if (card.cardType === "gear") stats.gear += 1;
+      else if (card.cardType === "program") stats.programs += 1;
+      else stats.otherTypes += 1;
     }
     if (card.hasSellTag) {
       stats.sellable += 1;

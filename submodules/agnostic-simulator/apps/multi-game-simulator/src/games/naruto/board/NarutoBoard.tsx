@@ -11,7 +11,7 @@
  * engine illegally.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -63,6 +63,7 @@ export interface NarutoBoardProps {
   readonly viewer: PlayerId;
   readonly onAction: (action: Action) => void;
   readonly participantNames?: NarutoParticipantNames;
+  readonly chat?: ReactNode;
   /** Fixtures pass false: render-only, no interactions or overlays. */
   readonly interactive?: boolean;
   /** Force the mobile tree (tests); `?mobile` URL param also works. */
@@ -84,6 +85,7 @@ export function NarutoBoard({
   viewer,
   onAction,
   participantNames = {},
+  chat,
   interactive = true,
   forceMobile = false,
   onNewGame,
@@ -363,6 +365,7 @@ export function NarutoBoard({
       inspected={inspected}
       onNewGame={onNewGame}
       onReportBug={bugReportContext ? () => setBugReportOpen(true) : undefined}
+      chat={chat}
     />
   );
 
@@ -377,6 +380,8 @@ export function NarutoBoard({
         className={classes.shell}
         data-game="naruto"
         data-testid="naruto-shell"
+        data-action-attention-target
+        tabIndex={-1}
         data-turn={projection.turn}
         mobileBreakpoint={NARUTO_MOBILE_BREAKPOINT_PX}
         layoutOverride={layoutOverride}

@@ -52,6 +52,12 @@ describe("OP05-043 Ulti", () => {
     // Exact deck order is a narrow hidden-zone identity boundary.
     expect(engine.getState().players.south.deck).toEqual([...orderedRemainder, untouchedId]);
     expect(view.prompts).toHaveLength(0);
+    expect(
+      engine.getView("north").logs.some((entry) => entry.message.includes(eb01Doma005.name)),
+    ).toBe(false);
+    expect(
+      engine.getView("north").players.south.hand.some((card) => card.cardId === eb01Doma005.id),
+    ).toBe(false);
   });
 
   test("without a multicolored Leader does not look at or move the deck", () => {

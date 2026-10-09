@@ -49,7 +49,7 @@ export const op11CharlotteBrulee069: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Big Mom Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

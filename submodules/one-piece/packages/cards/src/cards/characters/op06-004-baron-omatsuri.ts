@@ -23,7 +23,7 @@ export const op06BaronOmatsuri004: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["FILM Omatsuri Island"],
+  traits: ["FILM", "Omatsuri Island"],
   attribute: "ranged",
   effect: "[On Play] Play up to 1 [Lily Carnation] from your hand.",
   effects: {

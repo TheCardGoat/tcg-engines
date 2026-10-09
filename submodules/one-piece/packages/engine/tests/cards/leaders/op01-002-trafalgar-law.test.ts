@@ -12,6 +12,23 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP01-002 Trafalgar Law", () => {
+  test("pays the DON!! cost but does not play with fewer than five Characters", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op01TrafalgarLaw002,
+      hand: [eb01Doma005],
+      character: [eb01Sanji014],
+      activeDon: 2,
+    });
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toContain(
+      eb01Doma005.id,
+    );
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
   test("returns one of exactly five Characters, then offers a different-color cost-5-or-less play", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op01TrafalgarLaw002,

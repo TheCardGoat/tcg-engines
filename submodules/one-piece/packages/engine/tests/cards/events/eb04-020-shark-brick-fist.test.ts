@@ -98,7 +98,6 @@ describe("EB04-020 Shark Brick Fist", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const targetDecision = engine.pendingDecision("effectTargetSelection", "north");

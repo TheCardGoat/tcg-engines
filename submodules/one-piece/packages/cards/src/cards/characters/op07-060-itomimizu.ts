@@ -39,7 +39,7 @@ export const op07Itomimizu060: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Foxy Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "notHasCard",

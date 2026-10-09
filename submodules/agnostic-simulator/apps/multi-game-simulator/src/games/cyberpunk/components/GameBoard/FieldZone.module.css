@@ -95,6 +95,10 @@
   content: "PLAY";
 }
 
+.zone[data-drop-ready="goSolo"]::after {
+  content: "GO SOLO";
+}
+
 .zone[data-drop-ready="attack"]::after {
   content: "ATTACK";
 }
@@ -168,8 +172,9 @@
   place-content: flex-start center;
   align-items: flex-start;
   /* Transformed tapped cards can inflate scrollHeight without extending past
-     the painted field. Vertical scrolling is enabled explicitly only after
-     FieldZone confirms visible overflow. */
+     the painted field. The default layout enables vertical scrolling only
+     after FieldZone confirms visible overflow; the mobile horizontal layout
+     measures its horizontal and vertical overflow independently. */
   overflow: hidden;
   scrollbar-gutter: auto;
   scrollbar-color: rgb(var(--side-accent-rgb, 245 230 66) / 78%)
@@ -193,9 +198,8 @@
   scrollbar-gutter: auto;
 }
 
-.cards[data-scroll-axis="horizontal"][data-scrollable="true"] {
-  overflow-x: auto;
-  overflow-y: hidden;
+.cards[data-scroll-axis="horizontal"][data-vertical-scrollable="true"] {
+  overflow-y: auto;
 }
 
 .cards[data-scrollable="true"]::after {
@@ -217,7 +221,7 @@
   pointer-events: none;
 }
 
-.cards[data-scroll-axis="horizontal"][data-scrollable="true"]::after {
+.cards[data-scroll-axis="horizontal"]::after {
   content: none;
 }
 
@@ -287,6 +291,10 @@
     percentage of the field width and push equipped opponent units away from
     the centre line. Gear peeks 24% of a 5:7 card height, which is 33.6% of
     the card width.
+
+    A tapped Unit rotates its card face inside this portrait slot. The slot
+    itself must not change shape: that would reflow the grid and make the
+    tap/untap animation appear to translate instead of turning in place.
   */
   --attached-gear-count: 0;
   --attached-gear-space: calc(var(--attached-gear-count) * var(--field-card-w) * 0.336);
@@ -308,8 +316,26 @@
 }
 
 .card:hover {
-  box-shadow: 0 4px 14px rgb(245 230 66 / 50%);
   z-index: 2000;
+}
+
+.card:has([data-attached-to-id][data-choice-eligible="true"]) {
+  grid-column: span calc(var(--attached-gear-count) + 1);
+  justify-self: start;
+  margin-block-end: calc(var(--field-unit-card-h) * 0.5);
+  z-index: 2100;
+}
+
+.cards[data-scroll-axis="horizontal"]
+  .card:has([data-attached-to-id][data-choice-eligible="true"]) {
+  margin-inline-end: calc(var(--attached-gear-count) * var(--field-card-w) * 1.18);
+}
+
+/* The field slot remains portrait while a spent card face rotates inside it.
+   Draw the hover glow on that face, rather than on the unrotated slot, so the
+   glow follows the card through its 90-degree orientation. */
+.card:hover :global([data-sim-animation-orientation-target]) {
+  filter: drop-shadow(0 4px 14px rgb(245 230 66 / 50%));
 }
 
 .cards[data-scroll-axis="horizontal"] .card {
@@ -318,23 +344,6 @@
 
 .card:focus-within {
   z-index: 2000;
-}
-
-.card.tapped {
-  width: var(--field-unit-card-h);
-  height: var(--field-card-w);
-  aspect-ratio: 7 / 5;
-  margin-block: 8px;
-  margin-block-end: calc(8px + var(--attached-gear-space));
-}
-
-.card.tapped :global([data-testid="card"]) {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--field-card-w);
-  height: var(--field-unit-card-h);
-  transform: translate(-50%, -50%);
 }
 
 .card img {

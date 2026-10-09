@@ -294,3 +294,12 @@ describe("RecordCardCatalog", () => {
     expect(catalog.ref).toBe("OP01");
   });
 });
+
+test("normalization applies only verified printing aliases for corrected official types", () => {
+  expect(
+    normalize({ ...baseRaw, card_set_id: "EB03-034_p1", sub_types: "Big Mom Pirates" }).traits,
+  ).toEqual(["Rocks Pirates"]);
+  expect(
+    normalize({ ...baseRaw, card_set_id: "EB03-034_unknown", sub_types: "Big Mom Pirates" }).traits,
+  ).toEqual(["Big Mom Pirates"]);
+});

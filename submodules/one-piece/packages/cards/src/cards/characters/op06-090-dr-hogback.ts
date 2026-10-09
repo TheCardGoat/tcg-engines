@@ -40,7 +40,7 @@ export const op06DrHogback090: CharacterCard = {
               zones: ["trash"],
               count: { amount: 1, upTo: true },
               filters: [
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "excludeName", value: "Dr. Hogback" },
               ],
             },

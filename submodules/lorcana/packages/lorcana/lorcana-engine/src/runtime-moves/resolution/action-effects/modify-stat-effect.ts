@@ -1,6 +1,7 @@
 import type { CardInstanceId } from "#core";
 import type { ModifyStatEffect } from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
+import { createLorcanaLogProjection } from "../../../types";
 import {
   addStatModifierEffect,
   cleanupDanglingTargetEffects,
@@ -79,5 +80,25 @@ export function resolveModifyStatEffect(
       currentTurn,
       nonStacking: effect.nonStacking === true,
     });
+    if (stat === "lore" && duration === "this-turn" && !effect.condition && !effect.nonStacking) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.outcome.loreModifiedThisTurn",
+          { sourceId: cardPlayed.cardId, targetId, modifier },
+          { mode: "PUBLIC" },
+          "action",
+        ),
+      );
+    }
+    if (stat === "strength" && !effect.condition && !effect.nonStacking) {
+      ctx.framework.log(
+        createLorcanaLogProjection(
+          "lorcana.outcome.strengthModified",
+          { sourceId: cardPlayed.cardId, targetId, modifier },
+          { mode: "PUBLIC" },
+          "action",
+        ),
+      );
+    }
   }
 }

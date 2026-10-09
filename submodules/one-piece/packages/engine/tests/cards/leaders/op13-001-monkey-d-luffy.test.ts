@@ -34,4 +34,26 @@ describe("OP13-001 Monkey.D.Luffy", () => {
     expect(engine.pendingDecision("battleCounter", "south")).toBeDefined();
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("cannot open its attack reaction after paying a Counter reduces six active DON to five", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op13MonkeyDLuffy001, hand: ["ST01-014"], activeDon: 7 },
+      { character: [{ card: op12Issho082, playedOnTurn: 0 }] },
+    );
+    engine.attachDon(engine.leader("south"), 1, "south");
+    engine.endTurn("south");
+    engine.declareAttack(
+      engine.findCardInZone("north", "character", op12Issho082),
+      engine.leader("south"),
+      "north",
+    );
+    engine.asSouth().chooseCounter("ST01-014");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.activeDon).toBe(5);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+  });
 });

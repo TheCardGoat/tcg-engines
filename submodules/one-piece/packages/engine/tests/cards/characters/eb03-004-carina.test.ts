@@ -62,4 +62,24 @@ describe("EB03-004 Carina", () => {
     ).toBe(2000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: Shuraiya copying 6000 base power removes Carina's opponent-turn bonus", () => {
+    const e = OnePieceTestEngine.create(
+      { activeDon: 1 },
+      { leaderCardId: "EB03-001", character: ["EB03-004", "OP06-009"], hand: ["EB01-005"] },
+    );
+    const carina = e.findCardInZone("north", "character", "EB03-004"),
+      shuraiya = e.findCardInZone("north", "character", "OP06-009");
+    expect(
+      e.getView("north").players.north.characters.find((c) => c?.instanceId === carina)?.power,
+    ).toBe(6000);
+    e.asSouth().attachDon(e.leader("south"), 1);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().chooseBlocker(shuraiya);
+    expect(
+      e.getView("north").players.north.characters.find((c) => c?.instanceId === shuraiya)?.power,
+    ).toBe(6000);
+    expect(
+      e.getView("north").players.north.characters.find((c) => c?.instanceId === carina)?.power,
+    ).toBe(2000);
+  });
 });

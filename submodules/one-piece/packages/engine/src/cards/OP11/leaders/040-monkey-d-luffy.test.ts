@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op11MonkeyDLuffy040 } from "../../../../../cards/src/cards/leaders/op11-040-monkey-d-luffy.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP11-040 Monkey.D.Luffy", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op11MonkeyDLuffy040);
-  });
-});

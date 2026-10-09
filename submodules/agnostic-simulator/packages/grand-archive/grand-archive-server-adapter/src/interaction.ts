@@ -10,6 +10,7 @@ import {
 } from "@tcg/protocol";
 import {
   describeGrandArchiveStructuredDecision,
+  projectGrandArchiveViewerState,
   listGrandArchiveDecisionAnswerCandidates,
   listGrandArchiveLegalCommands,
   readGrandArchiveWaitState,
@@ -1721,6 +1722,13 @@ function buildGrandArchiveInteraction(
   const resolvingSource = activeDecision
     ? publicEntityRefForId(runtime, decisionSourceId(runtime, activeDecision))
     : undefined;
+  const resolvingItem = runtime.state.resolution
+    ? projectGrandArchiveViewerState(
+        runtime.program,
+        runtime.state,
+        grandArchivePlayerId(actorId),
+      ).stack.find((item) => item.id === runtime.state.resolution?.stackItemId)
+    : undefined;
   const activeRequirement = actorMustChoose
     ? decisionRequirement(decisionAction?.inputs[0])
     : undefined;
@@ -1737,9 +1745,12 @@ function buildGrandArchiveInteraction(
               actingPlayerId: wait.playerId,
               pendingCount: 1,
               currentEffect: {
-                id: runtime.state.decision?.id ?? `decision:${stateVersion}`,
+                id: resolvingItem?.id ?? runtime.state.decision?.id ?? `decision:${stateVersion}`,
                 text: {
-                  key: activeDecisionPresentation?.title ?? "Resolve effect",
+                  key:
+                    resolvingItem?.presentation?.effectText ??
+                    activeDecisionPresentation?.title ??
+                    "Resolve effect",
                 },
                 ...(resolvingSource ? { source: resolvingSource } : {}),
               },

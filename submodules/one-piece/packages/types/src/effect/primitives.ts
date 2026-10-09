@@ -55,6 +55,7 @@ export type EffectTrigger =
   | "startOfYourTurn"
   | "endOfYourTurn"
   | "endOfOpponentTurn"
+  | "onYourAttack"
   | "onOpponentAttack"
   | "activateMain"
   | "counter"

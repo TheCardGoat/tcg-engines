@@ -59,7 +59,7 @@ export const op13MonkeyDLuffy118: CharacterCard = {
   setId: "OP13",
   cost: 6,
   power: 7000,
-  traits: ["Straw Hat Crew Supernovas Fish-Man Island"],
+  traits: ["Fish-Man Island", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Double Attack]\n[On Play] If your Leader is multicolored, set up to 4 of your DON!! cards as active. Then, you cannot play Character cards with a base cost of 5 or more during this turn.",

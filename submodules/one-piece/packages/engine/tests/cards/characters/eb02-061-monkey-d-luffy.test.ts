@@ -9,7 +9,7 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB02-061 Monkey.D.Luffy", () => {
-  test("gains conditional Rush, maps DON!! from two sources, restands, and takes top Life once", () => {
+  test("gains conditional Rush, returns only active DON!!, restands, and takes top Life once", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: eb02MonkeyDLuffy010,
@@ -34,26 +34,14 @@ describe("EB02-061 Monkey.D.Luffy", () => {
     engine.declareAttack(luffyId, engine.leader("north"), "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
-    const cost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
-    expect(cost?.kind).toBe("payCost");
-    if (cost?.kind !== "payCost") throw new Error("Expected Luffy's DON!! return choice.");
-    const attachedDonId = `attached-don:${leaderId}:0`;
-    expect(cost.candidates.map((candidate) => candidate.ref.id)).toEqual(
-      expect.arrayContaining(["active-don:0", attachedDonId]),
-    );
-    engine.resolveDecision(
-      "effectCostReturnDon",
-      { selectedIds: ["active-don:0", attachedDonId] },
-      "south",
-    );
-
     let view = engine.getView("south");
     expect(view.players.south.characters.find((card) => card?.instanceId === luffyId)?.rested).toBe(
       false,
     );
     expect(view.players.south.lifeCount).toBe(1);
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(topLifeId);
-    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(view.players.south.leader.attachedDon).toBe(1);
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 6 });
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 2);
     const opposingLifeMove = engine
       .getView("north")
@@ -72,6 +60,29 @@ describe("EB02-061 Monkey.D.Luffy", () => {
       false,
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("cannot substitute rested or attached DON!! when only one active DON!! remains", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb02MonkeyDLuffy061, playedOnTurn: 0 }],
+        activeDon: 2,
+        restedDon: 6,
+        life: 2,
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.attachDon(engine.leader("south"), 1, "south");
+    const id = engine.findCardInZone("south", "character", eb02MonkeyDLuffy061);
+    engine.declareAttack(id, engine.leader("north"), "south");
+    const view = engine.getView("south");
+    expect(view.players.south.characters.find((card) => card?.instanceId === id)?.rested).toBe(
+      true,
+    );
+    expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 6, lifeCount: 2 });
+    expect(view.players.south.leader.attachedDon).toBe(1);
+    expect(view.prompts).toHaveLength(0);
   });
 
   test("does not gain Rush below the opponent five-DON!! boundary", () => {
@@ -132,5 +143,33 @@ describe("EB02-061 Monkey.D.Luffy", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).not.toContain(topLifeId);
     expect(view.players.south.activeDon + view.players.south.restedDon).toBe(donPoolBefore);
     expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+  });
+  test("loses new-turn Rush eligibility when the opponent returns their fifth DON", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: eb02MonkeyDLuffy010, hand: [eb02MonkeyDLuffy061], activeDon: 6 },
+      { hand: ["ST04-016"], activeDon: 5 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    e.playCard(eb02MonkeyDLuffy061);
+    const luffy = e.findCardInZone("south", "character", eb02MonkeyDLuffy061);
+    e.declareAttack(e.leader("south"), e.leader("north"), "south");
+    const event = e.findCardInZone("north", "hand", "ST04-016");
+    e.resolveDecision("battleCounter", { selectedIds: [event] }, "north");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    const pay = e.pendingDecision("effectCostReturnDon", "north").steps[0];
+    if (pay?.kind !== "payCost") throw Error("DON cost");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: [pay.candidates[0]!.ref.id] }, "north");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("north")] }, "north");
+    expect(
+      e.getView("north").players.north.activeDon + e.getView("north").players.north.restedDon,
+    ).toBe(4);
+    expect(
+      e.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: luffy,
+        targetId: e.leader("north"),
+      }).reason,
+    ).toBe("The selected attacker cannot attack.");
   });
 });

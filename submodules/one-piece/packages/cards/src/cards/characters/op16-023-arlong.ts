@@ -23,7 +23,7 @@ export const op16Arlong023: CharacterCard = {
   cost: 1,
   power: 3000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates Impel Down"],
+  traits: ["Fish-Man", "Impel Down", "The Sun Pirates"],
   attribute: "slash",
   i18n: op16Arlong023I18n,
 };

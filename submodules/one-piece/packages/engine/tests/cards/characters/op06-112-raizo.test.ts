@@ -22,12 +22,17 @@ describe("OP06-112 Raizo", () => {
     expect(cost).toMatchObject({ kind: "payCost", min: 1, max: 1 });
     engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [discardId] }, "south");
 
-    const don = engine.pendingDecision("effectRestDonCount", "south").steps[0];
+    const don = engine.pendingDecision("effectMixedRestSelection", "south").steps[0];
     expect(don).toMatchObject({
-      kind: "chooseOption",
-      options: [{ id: "0" }, { id: "1" }],
+      kind: "payCost",
+      min: 0,
+      max: 1,
     });
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "south",
+    );
 
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
       discardId,

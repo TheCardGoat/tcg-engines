@@ -287,7 +287,7 @@ function optionContainsNestedChoice(effect: Effect | undefined): boolean {
     // Walk every step: a nested choice later in the sequence still reuses the
     // outer choiceIndex rather than becoming an independent residual.
     const steps = node.steps ?? node.effects ?? [];
-    return steps.some((step) => optionContainsNestedChoice(step));
+    return steps.some((step: Effect) => optionContainsNestedChoice(step));
   }
   if (node.type === "conditional") {
     return (

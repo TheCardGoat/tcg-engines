@@ -12,6 +12,7 @@ export { mrsBeakleyFormerShushAgent } from "./011-mrs-beakley-former-shush-agent
 export { bagheeraCautiousExplorer } from "./012-bagheera-cautious-explorer";
 export { shantiVillageGirl } from "./013-shanti-village-girl";
 export { flashRecordsSpecialist } from "./014-flash-records-specialist";
+export { judyHoppsUncoveringCluesD23 } from "./d23-014-judy-hopps-uncovering-clues";
 export { taranPigKeeper } from "./015-taran-pig-keeper";
 export { sebastianLoyalCrab } from "./016-sebastian-loyal-crab";
 export { arielEtherealVoice } from "./017-ariel-ethereal-voice";

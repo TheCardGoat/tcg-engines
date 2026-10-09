@@ -22,7 +22,7 @@ export const op15Kalgara101: CharacterCard = {
   setId: "OP15",
   cost: 3,
   power: 5000,
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   attribute: "slash",
   effect:
     "[On Play] You may trash 1 card from your hand: Look at 5 cards from the top of your deck; reveal up to a total of 2 [Mont Blanc Noland] or {Shandian Warrior} type cards and add them to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -60,7 +60,7 @@ export const op15Kalgara101: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Shandian Warrior",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

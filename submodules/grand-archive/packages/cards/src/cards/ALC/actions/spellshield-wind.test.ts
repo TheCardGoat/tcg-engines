@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { proveClassBonusActivationDiscount } from "../../../testing/class-bonus-activation-discount.ts";
 import { createClassBonusTestChampion } from "../../../testing/class-bonus-test-champion.ts";
-import { passEffectsStack } from "../../../testing/decisions.ts";
+import { answerDecision, passEffectsStack } from "../../../testing/decisions.ts";
 import { giantTortoise } from "../../DOA/allies/giant-tortoise.ts";
 import { ferventBeastmaster } from "../../DOA/allies/fervent-beastmaster.ts";
 import { woodlandSquirrels } from "../../DOA/allies/woodland-squirrels.ts";
@@ -44,23 +44,37 @@ describe("Spellshield: Wind — next champion damage", () => {
         reservePayment: player
           .cards(woodlandSquirrels, { zone: "hand" })
           .map((card) => ({ kind: "card", cardId: card.objectId })),
-        targets: { "target-1": [buffTarget.objectId] },
       });
       passEffectsStack(game);
+      const resolveCombat = () => {
+        for (let step = 0; step < 128; step++) {
+          if (!game.state.combat && !game.state.stack.length && !game.state.decision) return;
+          if (game.state.decision?.kind === "resolve-effect-choice")
+            answerDecision(game, "resolve-effect-choice", [buffTarget.objectId]);
+          else if (game.state.decision?.kind === "choose-retaliators")
+            answerDecision(game, "choose-retaliators", []);
+          else {
+            const wait = game.waitState();
+            if (wait.kind !== "opportunity") throw new Error(`Unexpected ${wait.kind}`);
+            game.player(wait.playerId).pass();
+          }
+        }
+        throw new Error("Combat and its counter choice did not finish");
+      };
 
       opponent.declareAttack(opponent.cards(automatedGardener, { zone: "field" })[0]!, buffTarget);
-      game.resolveCombatWithoutRetaliation();
+      resolveCombat();
       expect(game.state.objects[buffTarget.objectId]!.damage).toBe(2);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(0);
 
       const attackers = opponent.cards(damagingAlly, { zone: "field" });
       opponent.declareAttack(attackers[damage === 2 ? 1 : 0]!, protectedChampion);
-      game.resolveCombatWithoutRetaliation();
+      resolveCombat();
       expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(0);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(damage >= 3 ? 1 : 0);
 
       opponent.declareAttack(attackers[damage === 2 ? 2 : 1]!, protectedChampion);
-      game.resolveCombatWithoutRetaliation();
+      resolveCombat();
       expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(damage);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(damage >= 3 ? 1 : 0);
     });

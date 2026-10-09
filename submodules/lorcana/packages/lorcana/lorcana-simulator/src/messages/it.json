@@ -353,6 +353,10 @@
   "sim.inkwell.dialog.summary": "{matchCount} / {totalCount} matches",
   "sim.inkwell.playerOne": "Player One",
   "sim.inkwell.playerTwo": "Player Two",
+  "sim.inkDropsBadge.instructionStart": "clicca per iniziare a pagare con gocce d'inchiostro",
+  "sim.inkDropsBadge.instructionStop": "clicca per smettere di pagare con gocce d'inchiostro",
+  "sim.inkDropsBadge.countOne": "{count} goccia d'inchiostro",
+  "sim.inkDropsBadge.countMany": "{count} gocce d'inchiostro",
   "sim.hand.count": "{count} cards",
   "sim.hand.hide": "Hide hand",
   "sim.hand.returnToHand": "Return to hand",
@@ -582,6 +586,8 @@
   "sim.actions.selectionSummary.singer": "Singer",
   "sim.actions.selectionSummary.source": "Source",
   "sim.actions.selectionSummary.target": "Target",
+  "sim.card.tags.adventurous.label": "Adventurous",
+  "sim.card.tags.adventurous.tooltip": "Adventurous: This character can't challenge and must quest if able.",
   "sim.card.tags.atLocation.label": "At Location",
   "sim.card.tags.atLocation.tooltip": "This character is currently at a location.",
   "sim.card.tags.bodyguard.label": "Bodyguard",
@@ -710,5 +716,8 @@
   "sim.settings.openAccount": "Apri le impostazioni dell’account",
   "practice_mode_self_title": "Gioca entrambi i lati",
   "practice_mode_self_controlling": "Controllo del giocatore {player}",
-  "practice_mode_self_status": "Il tavolo segue il giocatore che deve prendere la prossima decisione."
+  "practice_mode_self_status": "Il tavolo segue il giocatore che deve prendere la prossima decisione.",
+  "sim.effect.canChallengeReady": "Può sfidare personaggi pronti",
+  "sim.support.openTriageLabel": "Visualizza segnalazione del bug",
+  "sim.support.dismissReminderLabel": "Nascondi il promemoria di feedback per una settimana"
 }

@@ -25,7 +25,7 @@ export const gastonFrightfulBullyEpic: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "010",
   cardNumber: 206,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 3,

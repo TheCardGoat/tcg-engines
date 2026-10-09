@@ -1,3 +1,4 @@
+import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
 import { describe, expect, test, vi } from "vite-plus/test";
 import type { GatewayHandle } from "@tcg/gateway-client";
 
@@ -10,7 +11,6 @@ import {
   reduceLiveChatPolicy,
   remoteChatMessageForViewer,
   remoteChatMessagesForViewer,
-  systemChatMessageText,
 } from "./liveChat.ts";
 import { parseRemoteChatMessages } from "./matchContext.ts";
 

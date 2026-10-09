@@ -1,6 +1,35 @@
 import { defOf, type MatchState } from "@tcg/cyberpunk-engine";
 import type { SimulatorDeckReveal, SimulatorDeckRevealCard } from "@tcg/simulator-contract";
 
+/** Card whose ability caused a deck reveal, shown as the reveal's caption. */
+export interface DeckRevealSourceInfo {
+  title: string;
+  imageUrl?: string;
+}
+
+/** Viewer-relative side of the player acting behind a deck reveal. */
+export type DeckRevealActor = "player" | "opponent";
+
+export interface CyberpunkDeckReveal extends SimulatorDeckReveal {
+  source?: DeckRevealSourceInfo;
+  /** Who is looking or choosing; absent when the interaction names nobody. */
+  actor?: DeckRevealActor;
+}
+
+export function deckRevealSourceFromCardId(
+  matchState: MatchState,
+  sourceCardId: string | undefined,
+): DeckRevealSourceInfo | undefined {
+  if (!sourceCardId) return undefined;
+  const card = matchState.G.cardIndex[sourceCardId];
+  if (!card) return undefined;
+  const definition = defOf(card);
+  return {
+    title: definition.displayName ?? definition.name,
+    ...(definition.imageUrl ? { imageUrl: definition.imageUrl } : {}),
+  };
+}
+
 export function buildCyberpunkDeckReveal(input: {
   id: string;
   zoneId: string;
@@ -13,7 +42,9 @@ export function buildCyberpunkDeckReveal(input: {
   count: number;
   matchState: MatchState;
   requireDeckPosition?: boolean;
-}): SimulatorDeckReveal | undefined {
+  source?: DeckRevealSourceInfo;
+  actor?: DeckRevealActor;
+}): CyberpunkDeckReveal | undefined {
   if (input.count <= 0) {
     return undefined;
   }
@@ -40,6 +71,8 @@ export function buildCyberpunkDeckReveal(input: {
     visibility,
     turnNumber: input.turnNumber,
     count: input.count,
+    ...(input.source ? { source: input.source } : {}),
+    ...(input.actor ? { actor: input.actor } : {}),
     cards:
       visibility === "public"
         ? input.cardIds.length > 0

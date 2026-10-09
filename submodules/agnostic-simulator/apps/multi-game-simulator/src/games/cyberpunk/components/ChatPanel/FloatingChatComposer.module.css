@@ -4,8 +4,8 @@
 .dock {
   position: absolute;
   z-index: 2;
-  right: 0.6rem;
-  bottom: 0.6rem;
+  right: 0;
+  bottom: 0;
   left: 0.6rem;
   display: flex;
   min-width: 0;
@@ -27,39 +27,39 @@
   bottom: auto;
   left: auto;
   flex: 0 0 auto;
-  padding: 0.6rem;
+  display: block;
+  padding: var(--simulator-surface-gap, 0.55rem);
 }
 
 .compose {
   display: grid;
   flex: 1 1 auto;
   min-width: 0;
-  gap: 0.45rem;
-  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 30%);
-  border-radius: 4px;
-  padding: 0.45rem 0.5rem;
+  gap: var(--simulator-surface-gap, 0.55rem);
+  border: 1px solid rgb(207 232 246 / 20%);
+  border-radius: var(--simulator-surface-radius, 0.5rem);
+  padding: 0.5rem;
   background: rgb(7 9 12 / 96%);
-  box-shadow:
-    0 0.35rem 0.9rem rgb(0 0 0 / 45%),
-    0 0 14px rgb(var(--simulator-accent-rgb, 245 230 66) / 10%);
+  box-shadow: 0 0.35rem 0.9rem rgb(0 0 0 / 35%);
 }
 
 .presets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
 }
 
 .presetChip {
   font-family: inherit;
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  min-height: 26px;
-  padding: 4px 10px;
-  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 25%);
-  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 4%);
+  font-size: 11px;
+  letter-spacing: normal;
+  min-width: 0;
+  min-height: 28px;
+  padding: 4px 6px;
+  border: 1px solid rgb(207 232 246 / 12%);
+  background: rgb(207 232 246 / 5%);
   color: inherit;
-  border-radius: 999px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background 120ms ease;
 }
@@ -123,8 +123,8 @@
 .freeTextGate {
   display: flex;
   min-width: 0;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.5rem;
 }
 
@@ -229,4 +229,54 @@
   .sendButton {
     width: 42px;
   }
+}
+
+.dock[data-open="true"] .toggle {
+  position: absolute;
+  top: calc(var(--simulator-surface-gap, 0.55rem) + 4px);
+  right: calc(var(--simulator-surface-gap, 0.55rem) + 4px);
+  width: var(--simulator-sidebar-control-size, 2rem);
+  height: var(--simulator-sidebar-control-size, 2rem);
+  border-color: transparent;
+  border-radius: 4px;
+  background: transparent;
+  box-shadow: none;
+  color: rgb(207 232 246 / 75%);
+}
+.dock[data-open="true"] .toggle:hover {
+  background: rgb(207 232 246 / 10%);
+}
+@media (pointer: coarse) {
+  .quickReplies summary {
+    min-height: 44px;
+  }
+  .dock[data-open="true"] .toggle,
+  .presetChip,
+  .input,
+  .sendButton,
+  .requestButton {
+    min-height: 44px;
+  }
+  .dock[data-open="true"] .toggle {
+    width: 44px;
+  }
+}
+
+.quickReplies summary {
+  min-height: var(--simulator-sidebar-control-size, 2rem);
+  padding-right: 44px;
+  align-content: center;
+  color: rgb(207 232 246 / 75%);
+  font-size: 12px;
+  cursor: pointer;
+}
+.quickReplies summary:focus-visible {
+  outline: 2px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 72%);
+  outline-offset: 2px;
+}
+.quickReplies[open] .presets {
+  margin-top: var(--simulator-sidebar-control-gap, 0.25rem);
+}
+.compose:not(:has(.quickReplies)) {
+  padding-top: calc(var(--simulator-sidebar-control-size, 2rem) + 0.5rem);
 }

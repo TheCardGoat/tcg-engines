@@ -62,6 +62,27 @@ export const innervateFury: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           id: "wpbhigka5a-a2",
           kind: "card-resolution",
           text: "Deal 7 damage split among any amount of target allies.",
+          targets: [
+            {
+              id: "damage-targets",
+              kind: "target",
+              declared: "announcement",
+              chooser: "controller",
+              count: {
+                kind: "any-number",
+              },
+              unique: true,
+              distributedAmount: 7,
+              candidates: {
+                kind: "object",
+                zones: ["field"],
+                filter: {
+                  kind: "type",
+                  oneOf: ["ALLY"],
+                },
+              },
+            },
+          ],
           effect: {
             kind: "distribute",
             amount: 7,
@@ -71,16 +92,11 @@ export const innervateFury: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               declared: "resolution",
               chooser: "controller",
               count: {
-                kind: "any-number",
+                kind: "all",
               },
-              unique: true,
               candidates: {
                 kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
-                },
+                binding: "damage-targets",
               },
             },
             payload: {

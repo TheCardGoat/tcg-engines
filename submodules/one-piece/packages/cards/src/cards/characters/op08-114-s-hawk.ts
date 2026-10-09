@@ -23,7 +23,7 @@ export const op08SHawk114: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Egghead Seraphim"],
+  traits: ["Egghead", "Seraphim"],
   attribute: "slash",
   effect:
     "[DON!! x1] If you have less Life cards than your opponent, this Character cannot be K.O.'d in battle by <Slash> attribute cards and gains +2000 power. [Trigger] You may trash 1 card from your hand: If you have 2 or less Life cards, play this card.",

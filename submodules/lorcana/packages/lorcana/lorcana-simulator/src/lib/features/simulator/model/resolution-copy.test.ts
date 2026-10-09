@@ -61,6 +61,58 @@ function createTargetSelectionContext(
 }
 
 describe("resolution-copy", () => {
+  it("uses temporary trigger text instead of the source printed Ward ability", () => {
+    const effectTitle = "Whenever this character challenges another character, draw a card.";
+    const sourceCard = createCardSnapshot({
+      label: "Aladdin",
+      textEntries: [{ title: "Ward", description: "Ward" }],
+    });
+    const copy = buildResolutionCopyBundle({ kind: "choice-selection", sourceCard, effectTitle });
+    expect(copy.referenceLabel).toBe(`Aladdin: ${effectTitle}`);
+    expect(copy.promptMessage).not.toContain("Ward");
+  });
+  it("uses the translated title and description for both branches of Hat Couture", () => {
+    const translated = {
+      title: "Hut-Couture",
+      description: "Lege eine Karte verdeckt und erschöpft in deinen Tintenvorrat.",
+    };
+    const sourceCard = createCardSnapshot({
+      label: "Spyglass Hat",
+      textEntries: [translated],
+      abilityTextEntries: [translated, translated],
+    });
+    for (const abilityIndex of [0, 1]) {
+      const copy = buildResolutionCopyBundle({
+        kind: "target-selection",
+        sourceCard,
+        abilityIndex,
+        targetSelectionContext: createTargetSelectionContext(),
+      });
+      expect(copy.referenceLabel).toBe("Spyglass Hat: Hut-Couture");
+      expect(copy.abilityDescription).toBe(translated.description);
+      expect(copy.promptMessage).toContain("Hut-Couture");
+      expect(copy.promptMessage).not.toContain("HAT COUTURE");
+    }
+  });
+
+  it("uses mapped printed text for a second engine branch of one ability", () => {
+    const entry = { title: "HAT COUTURE", description: "You may ink a hand card." };
+    const sourceCard = createCardSnapshot({
+      label: "Spyglass Hat",
+      textEntries: [entry],
+      abilityTextEntries: [entry, entry],
+    });
+    const copy = buildResolutionCopyBundle({
+      kind: "target-selection",
+      sourceCard,
+      abilityIndex: 1,
+      targetSelectionContext: createTargetSelectionContext(),
+    });
+    expect(copy.referenceLabel).toBe("Spyglass Hat: HAT COUTURE");
+    expect(copy.abilityDescription).toBe(entry.description);
+    expect(copy.promptMessage).toContain("Spyglass Hat: HAT COUTURE");
+  });
+
   it("asks for another character when a move effect already binds its source and location", () => {
     const sourceCard = createCardSnapshot({
       label: "Carl Fredricksen - On the Move",
@@ -91,6 +143,26 @@ describe("resolution-copy", () => {
     expect(copy.promptMessage).toBe(
       "Choose a character to move for Carl Fredricksen - On the Move: MOVING PARTNER (optional).",
     );
+  });
+
+  it("does not label required movement as optional", () => {
+    const copy = buildResolutionCopyBundle({
+      kind: "target-selection",
+      sourceCard: createCardSnapshot({ label: "Hyperia City Express" }),
+      targetSelectionContext: createTargetSelectionContext({
+        expectedSlottedKind: "move-to-location",
+        targetDsl: [
+          { selector: "chosen", count: 1, cardTypes: ["character"] },
+          { selector: "chosen", count: 1, cardTypes: ["location"] },
+        ],
+        minSelections: 2,
+        maxSelections: 2,
+      }),
+    });
+    expect(copy.promptMessage).toBe(
+      "Choose characters to move, then choose a location for Hyperia City Express.",
+    );
+    expect(copy.promptInlineReference?.suffix).toBe(".");
   });
 
   it("builds rich optional-effect copy when title and description are available", () => {
@@ -535,4 +607,20 @@ describe("resolution-copy", () => {
       }),
     ).toBe("Executing...");
   });
+});
+
+it("does not claim that a discard choice always comes from the chooser's own hand", () => {
+  const sourceCard = createCardSnapshot({ label: "This Is Business" });
+  const context = createTargetSelectionContext({
+    kind: "discard-choice",
+    minSelections: 1,
+    maxSelections: 1,
+  });
+  const copy = buildResolutionCopyBundle({
+    kind: "discard-choice",
+    sourceCard,
+    targetSelectionContext: context,
+  });
+  expect(copy.promptMessage).toBe("Choose 1 card to discard for This Is Business.");
+  expect(copy.promptInlineReference?.prefix).toBe("Choose 1 card to discard for ");
 });

@@ -27,6 +27,7 @@ export const petrify: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_19589a8a5ccd45b681e4d75367dd9c9a",
+    tcgPlayer: "704584",
   },
   text: "Exert chosen opposing character.",
   abilities: [

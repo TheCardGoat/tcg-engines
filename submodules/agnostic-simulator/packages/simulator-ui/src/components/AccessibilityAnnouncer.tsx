@@ -1,40 +1,33 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-export function AccessibilityAnnouncer() {
-  const [politeMessage, setPoliteMessage] = useState("");
-  const [assertiveMessage, setAssertiveMessage] = useState("");
-  const queueRef = useRef<{ text: string; assertive: boolean }[]>([]);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+export interface AccessibilityAnnouncerProps {
+  /** Viewer-safe text supplied by the host after a meaningful state change. */
+  message?: string;
+  priority?: "polite" | "assertive";
+  /** Change this value to announce repeated text for a new event. */
+  announcementId?: string | number;
+}
 
-  const processQueue = useCallback(() => {
-    clearTimeout(timerRef.current);
-    const item = queueRef.current.shift();
-    if (!item) return;
-    if (item.assertive) {
-      setAssertiveMessage(item.text);
-      setPoliteMessage("");
-    } else {
-      setPoliteMessage(item.text);
-      setAssertiveMessage("");
-    }
-    timerRef.current = setTimeout(() => {
-      setPoliteMessage("");
-      setAssertiveMessage("");
-      processQueue();
-    }, 150);
-  }, []);
-
+export function AccessibilityAnnouncer({
+  message = "",
+  priority = "polite",
+  announcementId,
+}: AccessibilityAnnouncerProps = {}) {
+  const [announcement, setAnnouncement] = useState({ text: "", priority });
   useEffect(() => {
-    return () => clearTimeout(timerRef.current);
-  }, []);
-
+    // Clear first so identical text from a later event is a new live-region update.
+    setAnnouncement({ text: "", priority });
+    if (!message) return;
+    const timer = setTimeout(() => setAnnouncement({ text: message, priority }), 50);
+    return () => clearTimeout(timer);
+  }, [message, priority, announcementId]);
   return (
     <>
       <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {politeMessage}
+        {announcement.priority === "polite" ? announcement.text : ""}
       </div>
       <div className="sr-only" role="alert" aria-live="assertive" aria-atomic="true">
-        {assertiveMessage}
+        {announcement.priority === "assertive" ? announcement.text : ""}
       </div>
       <style>{`.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}`}</style>
     </>

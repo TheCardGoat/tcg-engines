@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/dynasty/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Dynasty"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/dynasty/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 1d0138a83d6fc6425caa0cb73bdb16a0000e42fa67bd8b27457a606f228e1631
 ---

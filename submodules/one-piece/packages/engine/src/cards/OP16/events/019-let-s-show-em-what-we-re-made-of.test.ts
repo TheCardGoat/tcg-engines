@@ -5,13 +5,20 @@ import { OnePieceTestEngine } from "../../../index.ts";
 describe("OP16-019 Let's Show Em What We're Made Of", () => {
   test("[Main] plays up to 2 Whitebeard 8000-power Characters from hand", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: ["OP16-019", "OP16-004", "OP16-005", "OP13-013"], activeDon: 9 },
+      {
+        hand: ["OP16-019", "OP16-004", "OP16-005", "OP13-013", "EB01-041", "EB01-005", "OP16-020"],
+        activeDon: 9,
+      },
       {},
     );
 
     engine.playCard("OP16-019");
     const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];
     if (play?.kind !== "selectEntity") throw new Error("Expected the play choice.");
+    expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      engine.findCardInZone("south", "hand", "OP16-004"),
+      engine.findCardInZone("south", "hand", "OP16-005"),
+    ]);
     engine.resolveDecision(
       "effectPlaySelection",
       { selectedIds: play.candidates.slice(0, 2).map((candidate) => candidate.ref.id) },

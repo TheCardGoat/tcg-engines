@@ -38,9 +38,9 @@ export const op09GumGumGiant078: EventCard = {
   rarity: "R",
   setId: "OP09",
   cost: 1,
-  traits: ["Straw Hat Crew The Four Emperors"],
+  traits: ["The Four Emperors", "Straw Hat Crew"],
   effect:
-    '[Counter] DON!! 2, You may trash 1 card from your hand: If your Leader has the "Straw Hat Crew" type, up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, draw 2 cards.',
+    '[Counter] DON!! −2, You may trash 1 card from your hand: If your Leader has the "Straw Hat Crew" type, up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, draw 2 cards.',
   effects: {
     effects: [
       {
@@ -71,7 +71,7 @@ export const op09GumGumGiant078: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           },
           {
@@ -81,7 +81,7 @@ export const op09GumGumGiant078: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

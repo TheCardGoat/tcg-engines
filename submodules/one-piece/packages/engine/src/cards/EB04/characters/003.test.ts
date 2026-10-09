@@ -26,10 +26,24 @@ describe("EB04-003", () => {
     );
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
+    expect(engine.getView("south").players.south.leader?.power).toBe(5000);
     engine.endTurn("south");
+    expect(engine.getView("south").players.south.leader?.power).toBe(7000);
     engine.asNorth().attack("EB04-048", engine.asSouth().leader());
 
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("does not change a non-Navy Leader during the opponent's turn", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", character: ["EB04-003"] },
+      { character: ["EB04-048"] },
+    );
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine.endTurn("south");
+    expect(engine.getView("south").players.south.leader?.power).toBe(5000);
+    engine.asNorth().attack("EB04-048", engine.asSouth().leader());
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore - 1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

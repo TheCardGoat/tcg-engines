@@ -17,3 +17,8 @@ describe("Fabled Ruby Fatestone — printed keywords", () => {
     ],
   });
 });
+
+import { proveFatestoneTransformPayment } from "../../../testing/fatestone-transform.ts";
+/** @covers mzf5dmpqbc-a4 */
+describe("fabledRubyFatestone transform payment", () =>
+  proveFatestoneTransformPayment(fabledRubyFatestone, 7));

@@ -23,7 +23,7 @@ export const eb02Buggy018: CharacterCard = {
   cost: 4,
   power: 6000,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Buggy Pirates East Blue"],
+  traits: ["East Blue", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If you have no other [Buggy] Characters, up to 1 of your Leader gains [Double Attack] during this turn.",

@@ -23,7 +23,7 @@ export const op10CaponeGangBege103: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["Firetank Pirates Supernovas"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "ranged",
   effect:
     '[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Add up to 1 "Supernovas" type Character card from your hand to the top of your Life cards face-up.',
@@ -52,7 +52,7 @@ export const op10CaponeGangBege103: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Supernovas",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

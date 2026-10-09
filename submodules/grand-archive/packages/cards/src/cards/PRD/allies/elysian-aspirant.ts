@@ -51,8 +51,17 @@ export const elysianAspirant: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                   kind: "event-object",
                   controller: "controller",
                   filter: {
-                    kind: "subtype",
-                    oneOf: ["SPELL"],
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "subtype",
+                        oneOf: ["AENEAN"],
+                      },
+                      {
+                        kind: "subtype",
+                        oneOf: ["SPELL"],
+                      },
+                    ],
                   },
                 },
               },

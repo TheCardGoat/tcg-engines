@@ -33,7 +33,7 @@ export const op14eb04PeronaOp14033033: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Thriller Bark Pirates Muggy Kingdom"],
+  traits: ["Muggy Kingdom", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[On Play] Up to 2 of your opponent's Characters with a cost of 5 or less cannot be rested until the end of your opponent's next End Phase.\n[On K.O.] You may rest 1 of your cards: Play up to 1 green Character card with a cost of 5 or less from your hand.",

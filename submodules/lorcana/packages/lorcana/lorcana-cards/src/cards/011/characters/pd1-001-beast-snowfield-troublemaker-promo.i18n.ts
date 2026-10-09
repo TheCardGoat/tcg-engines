@@ -44,16 +44,16 @@ export const beastSnowfieldTroublemakerPD1PromoI18n: Record<Languages, I18nPrope
     ],
   },
   it: {
-    name: "Beast",
-    version: "Snowfield Troublemaker",
+    name: "La Bestia",
+    version: "Combinaguai del Campo Innevato",
     text: [
       {
-        title: "<Rush> (This character can challenge the turn they're played.)",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Dynamic Maneuver",
+        title: "Manovra Dinamica",
         description:
-          "Whenever this character challenges, if he's at a location, he takes no damage from the challenge.",
+          "Ogni volta che questo personaggio sfida, se si trova in un luogo, non subisce danno dalla sfida.",
       },
     ],
   },

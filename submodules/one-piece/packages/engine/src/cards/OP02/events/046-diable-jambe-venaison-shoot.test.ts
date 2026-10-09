@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op02DiableJambeVenaisonShoot046 } from "../../../../../cards/src/cards/events/op02-046-diable-jambe-venaison-shoot.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP02-046 Diable Jambe Venaison Shoot", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op02DiableJambeVenaisonShoot046);
-  });
-});

@@ -37,6 +37,7 @@ function emptyBoard(): LorcanaProjectedBoardView {
     players: {
       [PLAYER_ONE]: {
         lore: 0,
+        inkDrops: 0,
         canAddCardToInkwell: true,
         handCount: 0,
         deckCount: 0,
@@ -47,6 +48,7 @@ function emptyBoard(): LorcanaProjectedBoardView {
       },
       [PLAYER_TWO]: {
         lore: 0,
+        inkDrops: 0,
         canAddCardToInkwell: true,
         handCount: 0,
         deckCount: 0,
@@ -498,6 +500,44 @@ describe("buildPlayerInteractionView", () => {
       expect(view.activePrompt?.requestId).toBe("req-a");
     });
 
+    it("uses the chosen bag's candidates and submission without bypassing engine choices", () => {
+      const board = emptyBoard();
+      board.bagEffects = ["req-a", "req-b"].map((id, index) => ({
+        id,
+        type: "trigger",
+        controllerId: PLAYER_ONE,
+        chooserId: PLAYER_ONE,
+        sourceId: SOURCE_CARD,
+        payload: {},
+        selectionContext: targetContext({
+          origin: "bag",
+          requestId: id,
+          cardCandidateIds: [index === 0 ? TARGET_A : TARGET_B],
+        }),
+      }));
+      const selected = buildPlayerInteractionView(board, PLAYER_ONE, {
+        pendingRequestId: "req-b",
+        pendingSelectedCardIds: [TARGET_B],
+      });
+      expect(selected.activeQueueIndex).toBe(1);
+      expect(selected.activePrompt?.requestId).toBe("req-b");
+      expect(selected.rawContext).toMatchObject({ cardCandidateIds: [TARGET_B] });
+      expect(selected.submission).toMatchObject({ requestId: "req-b", canSubmit: true });
+      expect(
+        buildPlayerInteractionView(board, PLAYER_ONE, { pendingRequestId: "stale" })
+          .activeQueueIndex,
+      ).toBe(0);
+      expect(
+        buildPlayerInteractionView(board, PLAYER_TWO, { pendingRequestId: "req-b" })
+          .activeQueueIndex,
+      ).toBe(0);
+      board.pendingChoice = { type: "action-effect", playerID: PLAYER_ONE, requestID: "req-a" };
+      expect(
+        buildPlayerInteractionView(board, PLAYER_ONE, { pendingRequestId: "req-b" })
+          .activeQueueIndex,
+      ).toBe(0);
+    });
+
     it("honors pendingChoice.requestID when the engine explicitly points at a queue entry", () => {
       const base = emptyBoard();
       const ctxA = targetContext({ requestId: "req-a" });
@@ -876,6 +916,39 @@ describe("buildPlayerInteractionView", () => {
       });
     }
 
+    it("keeps a SELF character fixed and submits a chosen destination rather than its current location", () => {
+      const context = moveToLocationContext({
+        autoResolvedSlots: ["subject"],
+        cardCandidateIds: [LOCATION_A],
+        minSelections: 1,
+        maxSelections: 1,
+        declaredMaxSelections: 1,
+        targetDsl: [
+          { selector: "chosen", count: 1, owner: "you", zones: ["play"], cardTypes: ["location"] },
+        ],
+      });
+      const board = withPendingPrompt(context);
+      const currentLocation = "card_current_location" as CardInstanceId;
+      board.cards[currentLocation] = { ...board.cards[LOCATION_A]!, id: currentLocation };
+      board.cards[SOURCE_CARD] = { ...board.cards[SOURCE_CARD], atLocationId: currentLocation };
+      const before = buildPlayerInteractionView(board, PLAYER_ONE);
+      expect(before.activePrompt?.activeSlotIndex).toBe(1);
+      expect(before.activePrompt?.slots?.[0]?.autoResolved).toBe(true);
+      expect(before.activePrompt?.slots?.[1]?.targetCardId).toBeNull();
+      expect(before.submission.canSubmit).toBe(false);
+      const after = buildPlayerInteractionView(board, PLAYER_ONE, {
+        pendingSelectedCardIds: [LOCATION_A],
+      });
+      expect(after.submission.canSubmit).toBe(true);
+      expect(after.submission.submitPayload).toEqual({
+        targets: {
+          kind: "move-to-location",
+          subject: [SOURCE_CARD],
+          location: [LOCATION_A],
+        },
+      });
+    });
+
     it("keeps characters and location in separate buckets while selecting", () => {
       const view = buildPlayerInteractionView(
         withPendingPrompt(moveToLocationContext()),
@@ -917,6 +990,24 @@ describe("buildPlayerInteractionView", () => {
           location: [LOCATION_A],
         },
       });
+    });
+
+    it("keeps the character slot empty when a destination is chosen first", () => {
+      const context = moveToLocationContext({ minSelections: 2, maxSelections: 2 });
+      const view = buildPlayerInteractionView(withPendingPrompt(context), PLAYER_ONE, {
+        pendingSelectedCardIds: [LOCATION_A],
+        pendingActiveSlotIndex: 1,
+      });
+      expect(view.activePrompt?.slots?.[0]?.targetCardId).toBeNull();
+      expect(view.activePrompt?.slots?.[1]?.targetCardId).toBe(LOCATION_A);
+      expect(view.activePrompt?.activeSlotIndex).toBe(0);
+      expect(view.submission.canSubmit).toBe(false);
+      const retry = buildPlayerInteractionView(withPendingPrompt(context), PLAYER_ONE, {
+        pendingSelectedCardIds: [TARGET_A, LOCATION_A],
+        pendingActiveSlotIndex: 1,
+      });
+      expect(retry.activePrompt?.slots?.[0]?.targetCardId).toBe(TARGET_A);
+      expect(retry.submission.canSubmit).toBe(true);
     });
 
     it("enables submit for one character plus one location when both slots are required", () => {
@@ -1199,6 +1290,43 @@ describe("buildPlayerInteractionView", () => {
         ...overrides,
       };
     }
+
+    it("shows mandatory filtered remainder cards once and prevents sending them to a later destination", () => {
+      const view = buildPlayerInteractionView(
+        withPendingPrompt(
+          scryContext({
+            destinationRules: [
+              {
+                id: "hand",
+                zone: "hand",
+                min: 0,
+                max: 3,
+                remainder: true,
+                filters: [{ type: "card-type", cardType: "character" }],
+              },
+              { id: "bottom", zone: "deck-bottom", min: 0, max: null, remainder: true },
+            ],
+          }),
+        ),
+        PLAYER_ONE,
+      );
+      expect(view.activePrompt?.scryDestinations?.map((entry) => entry.currentCardIds)).toEqual([
+        [REVEALED_A],
+        [REVEALED_B, REVEALED_C],
+      ]);
+      expect(view.activePrompt?.scryRevealed?.[0]).toMatchObject({
+        currentDestinationId: "hand",
+        eligibleDestinationIds: ["hand"],
+      });
+      expect(view.activePrompt?.scryRevealed?.[1]?.eligibleDestinationIds).toEqual(["bottom"]);
+      expect(view.submission.canSubmit).toBe(true);
+      expect(view.submission.submitPayload).toEqual({
+        destinations: [
+          { zone: "hand", cards: [REVEALED_A] },
+          { zone: "deck-bottom", cards: [REVEALED_B, REVEALED_C] },
+        ],
+      });
+    });
 
     it("emits scryDestinations and scryRevealed with empty assignments when nothing is selected", () => {
       const board = withPendingPrompt(scryContext());

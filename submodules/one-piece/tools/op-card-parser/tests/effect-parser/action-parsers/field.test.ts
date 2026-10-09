@@ -23,7 +23,7 @@ describe("parseActions — RestAction", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man Island", match: "includes" },
+                  { filter: "trait", value: "Fish-Man Island", match: "exact" },
                   { filter: "name", value: "Shirahoshi" },
                 ],
               },
@@ -144,23 +144,26 @@ describe("parseActions — RestAction", () => {
       );
       expect(result.parsed).toEqual([
         {
-          action: "play",
+          action: "playGrouped",
           source: { player: "self", zone: "trash" },
-          count: { amount: 1, upTo: true },
-          filters: [
-            { filter: "cost", comparison: "lte", value: 4 },
-            { filter: "trait", value: "Baroque Works", match: "includes" },
-            { filter: "cardCategory", value: "character" },
-          ],
-        },
-        {
-          action: "play",
-          source: { player: "self", zone: "trash" },
-          count: { amount: 1, upTo: true },
-          filters: [
-            { filter: "cost", comparison: "eq", value: 1 },
-            { filter: "trait", value: "Baroque Works", match: "includes" },
-            { filter: "cardCategory", value: "character" },
+          playStates: { single: "active", multiple: ["active", "active"] },
+          groups: [
+            {
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "cost", comparison: "lte", value: 4 },
+                { filter: "trait", value: "Baroque Works", match: "includes" },
+                { filter: "cardCategory", value: "character" },
+              ],
+            },
+            {
+              count: { amount: 1, upTo: true },
+              filters: [
+                { filter: "cost", comparison: "eq", value: 1 },
+                { filter: "trait", value: "Baroque Works", match: "includes" },
+                { filter: "cardCategory", value: "character" },
+              ],
+            },
           ],
         },
       ]);
@@ -791,7 +794,7 @@ describe("parseActions — PlayAction", () => {
         action: "play",
         filters: [
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "Baroque Works", match: "includes" },
+          { filter: "trait", value: "Baroque Works", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -808,8 +811,8 @@ describe("parseActions — PlayAction", () => {
       expect(filters).toContainEqual({
         filter: "anyOf",
         filters: [
-          { filter: "trait", value: "FILM", match: "includes" },
-          { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+          { filter: "trait", value: "FILM", match: "exact" },
+          { filter: "trait", value: "Straw Hat Crew", match: "exact" },
         ],
       });
       expect(filters).toContainEqual({ filter: "cardCategory", value: "character" });
@@ -825,8 +828,8 @@ describe("parseActions — PlayAction", () => {
       expect(filters).toContainEqual({
         filter: "anyOf",
         filters: [
-          { filter: "trait", value: "Fish-Man", match: "includes" },
-          { filter: "trait", value: "Merfolk", match: "includes" },
+          { filter: "trait", value: "Fish-Man", match: "exact" },
+          { filter: "trait", value: "Merfolk", match: "exact" },
         ],
       });
     });
@@ -906,7 +909,7 @@ describe("parseActions — PlayAction", () => {
         filters: [
           { filter: "excludeName", value: "Daifugo" },
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "SMILE", match: "includes" },
+          { filter: "trait", value: "SMILE", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -993,7 +996,6 @@ describe("parseActions — PlayAction", () => {
           },
         ],
         playStates: { single: "active", multiple: ["active", "rested"] },
-        chooseOnPlayOrder: true,
       },
     ]);
   });
@@ -1046,7 +1048,7 @@ describe("parseActions — PlayAction", () => {
         action: "play",
         filters: [
           { filter: "cost", comparison: "lte", value: 2 },
-          { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+          { filter: "trait", value: "Donquixote Pirates", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
       });
@@ -1065,7 +1067,7 @@ describe("parseActions — PlayAction", () => {
         filters: [
           { filter: "excludeName", value: "Scarlet" },
           { filter: "cost", comparison: "lte", value: 3 },
-          { filter: "trait", value: "Dressrosa", match: "includes" },
+          { filter: "trait", value: "Dressrosa", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
       });

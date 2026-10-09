@@ -23,7 +23,7 @@ export const op10Franky014: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew Punk Hazard"],
+  traits: ["Animal", "Punk Hazard", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op10Franky014I18n,
 };

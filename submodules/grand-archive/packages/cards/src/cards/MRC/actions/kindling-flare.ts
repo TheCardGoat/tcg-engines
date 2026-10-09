@@ -43,10 +43,9 @@ export const kindlingFlare: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 kind: "select-and-sacrifice",
                 player: "controller",
                 count: {
-                  kind: "exactly",
-                  amount: 1,
+                  kind: "any-number",
                 },
-                bindResultAs: "sacrificed-object",
+                bindResultAs: "sacrificed-objects",
                 filter: {
                   kind: "subtype",
                   oneOf: ["HERB"],
@@ -62,19 +61,44 @@ export const kindlingFlare: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           id: "dcgw05qzza-a2",
           kind: "card-resolution",
           text: "Deal 1+X damage split among any amount of target units where X is the amount of Herbs sacrificed.",
+          targets: [
+            {
+              id: "damage-targets",
+              kind: "target",
+              declared: "announcement",
+              chooser: "controller",
+              count: {
+                kind: "any-number",
+              },
+              unique: true,
+              distributedAmount: {
+                kind: "calculate",
+                operator: "add",
+                operands: [
+                  1,
+                  {
+                    kind: "variable",
+                    symbol: "X",
+                  },
+                ],
+              },
+              candidates: {
+                kind: "object",
+                zones: ["field"],
+                filter: {
+                  kind: "type",
+                  oneOf: ["ALLY", "CHAMPION"],
+                },
+              },
+            },
+          ],
           variables: [
             {
               symbol: "X",
               kind: "derived",
               amount: {
-                kind: "count",
-                collection: {
-                  binding: "sacrificed-objects",
-                  filter: {
-                    kind: "subtype",
-                    oneOf: ["HERB"],
-                  },
-                },
+                kind: "binding-count",
+                binding: "sacrificed-objects",
               },
             },
           ],
@@ -97,16 +121,11 @@ export const kindlingFlare: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               declared: "resolution",
               chooser: "controller",
               count: {
-                kind: "any-number",
+                kind: "all",
               },
-              unique: true,
               candidates: {
                 kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
-                },
+                binding: "damage-targets",
               },
             },
             payload: {

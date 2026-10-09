@@ -96,6 +96,11 @@
   cursor: pointer;
 }
 
+.menuItem > span:last-child {
+  grid-column: 2;
+  min-width: 0;
+}
+
 .menuItem:hover {
   background: #2c191a;
 }
@@ -273,6 +278,23 @@
   padding: 0;
 }
 
+.soundSettings {
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+  margin: 0;
+  border: 1px solid #5b3331;
+  border-radius: 0.5rem;
+  padding: 0.7rem 0.8rem 0.8rem;
+}
+
+.soundSettings legend {
+  padding: 0 0.35rem;
+  color: #f8eeee;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
 .field > span,
 .field legend {
   padding: 0;
@@ -415,4 +437,14 @@
     min-width: 44px;
     min-height: 44px;
   }
+}
+
+.labeledTrigger {
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+  padding-inline: var(--simulator-surface-gap, 0.55rem);
+  font: inherit;
+  font-size: 0.75rem;
 }

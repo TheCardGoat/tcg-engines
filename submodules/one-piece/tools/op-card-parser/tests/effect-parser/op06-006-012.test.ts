@@ -20,7 +20,7 @@ describe("OP06-006 through OP06-012 parser regressions", () => {
                 {
                   action: "trashFromField",
                   target: {
-                    filters: [{ filter: "trait", value: "FILM", match: "includes" }],
+                    filters: [{ filter: "trait", value: "FILM", match: "exact" }],
                   },
                 },
               ],
@@ -51,8 +51,8 @@ describe("OP06-006 through OP06-012 parser regressions", () => {
       }),
     ]);
     expect(generated?.effects?.[0]?.actions?.[0]).toMatchObject({
-      action: "setBasePowerFrom",
-      source: { player: "opponent", zones: ["leader"] },
+      action: "copyPower",
+      target: { player: "opponent", zones: ["leader"] },
       duration: "untilStartOfNextTurn",
     });
   });

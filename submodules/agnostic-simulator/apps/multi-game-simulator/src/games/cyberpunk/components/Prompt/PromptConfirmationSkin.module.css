@@ -1,0 +1,34 @@
+/* Shared by the banner and main turn control; V1 retains its existing skin. */
+.skin[data-prompt-skin="v2"] > div {
+  border: 14px solid transparent;
+  border-image: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/overlay-panel.webp") 72 / 14px stretch;
+  border-radius: 0;
+  background: linear-gradient(145deg, #29353a, #111a1e 65%);
+  background-clip: padding-box;
+  box-shadow: 0 12px 36px #0009;
+  padding: 18px;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+}
+.skin[data-prompt-skin="v2"] p { color: #c0cccf; font-size: 16px; }
+.skin[data-prompt-skin="v2"] p:first-child {
+  color: #e2eae6;
+  font-family: "Cyberpunk Refinery 25", "Arial Narrow", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+.skin[data-prompt-skin="v2"] button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 6px solid transparent;
+  border-image: url("../BoardV2/assets/prompt-control-v2.svg") 12 fill / 6px stretch;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 0 3px 9px #0006;
+  color: #e2edeb;
+  font-family: inherit;
+  font-size: 15px;
+  text-shadow: 0 2px 3px #000;
+}
+.skin[data-prompt-skin="v2"] button[data-testid="pass-confirm-submit"] { color: #f3deb0; }
+.skin[data-prompt-skin="v2"] button:hover { filter: brightness(1.18); }
+.skin[data-prompt-skin="v2"] button:focus-visible { outline: 2px solid #f1d58f; outline-offset: 3px; }

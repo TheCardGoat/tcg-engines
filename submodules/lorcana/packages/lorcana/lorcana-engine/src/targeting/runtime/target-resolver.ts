@@ -68,6 +68,7 @@ export type TargetDescriptor = FilterCarrier & {
   excludeTriggerSubject?: boolean;
   requireDifferentTargets?: boolean;
   requireSameOwner?: true;
+  requireSameName?: boolean;
   /**
    * Optional cap on the sum of selected targets' ink costs.
    *
@@ -87,6 +88,7 @@ export type TargetDescriptor = FilterCarrier & {
 };
 
 export type PlayerTargetDescriptor = FilterCarrier & {
+  excludeSelf?: boolean;
   selector?: string;
   count?: unknown;
 };
@@ -284,6 +286,7 @@ export function normalizeTargetDescriptor(target: unknown): TargetDescriptor | u
         excludeSelf: targetRecord.excludeSelf === true,
         requireDifferentTargets: targetRecord.requireDifferentTargets === true,
         ...(targetRecord.requireSameOwner === true ? { requireSameOwner: true as const } : {}),
+        ...(targetRecord.requireSameName === true ? { requireSameName: true } : {}),
         totalCostBudget:
           typeof targetRecord.totalCostBudget === "number" &&
           Number.isFinite(targetRecord.totalCostBudget)
@@ -323,6 +326,8 @@ export function normalizeTargetDescriptor(target: unknown): TargetDescriptor | u
   return descriptor;
 }
 
+export function isPlayerTargetDescriptor(target: LorcanaTargetDSL): target is LorcanaPlayerTarget;
+export function isPlayerTargetDescriptor(target: unknown): target is PlayerTargetDescriptor;
 export function isPlayerTargetDescriptor(target: unknown): target is PlayerTargetDescriptor {
   if (typeof target !== "object" || target === null || Array.isArray(target)) {
     return false;
@@ -344,6 +349,7 @@ export function isPlayerTargetDescriptor(target: unknown): target is PlayerTarge
 
   return (
     descriptor.reference === undefined &&
+    descriptor.ref === undefined &&
     descriptor.owner === undefined &&
     descriptor.cardType === undefined &&
     descriptor.cardTypes === undefined &&
@@ -624,6 +630,13 @@ export function passesFilter(
     }
   }
 
+  if (filter.inEventSnapshotDiscardedCards === true) {
+    const discardedCardIds = options?.eventSnapshot?.discardedCardIds;
+    if (!Array.isArray(discardedCardIds) || !discardedCardIds.includes(cardId)) {
+      return false;
+    }
+  }
+
   if (filter.excludeChosenCard === true && chosenCardId && cardId === chosenCardId) {
     return false;
   }
@@ -678,6 +691,10 @@ export function passesFilter(
         return cardOwner !== controllerId;
       }
       return true;
+    }
+
+    case "played-this-turn": {
+      return (ctx.G?.turnMetadata?.cardsPlayedThisTurn ?? []).includes(cardId);
     }
 
     case "challenged-this-turn": {
@@ -958,9 +975,12 @@ export function passesFilter(
       const sourceLocationId =
         sourceMetaLocationId ??
         (sourceDefinition?.cardType === "location" ? sourceCardId : undefined);
-      const targetLocationId = ctx.cards.require(cardId).meta?.atLocationId as
+      const targetMetaLocationId = ctx.cards.require(cardId).meta?.atLocationId as
         | CardInstanceId
         | undefined;
+      const targetLocationId =
+        targetMetaLocationId ??
+        (getCardDefinition(ctx, cardId)?.cardType === "location" ? cardId : undefined);
       if (sourceLocationId && targetLocationId && sourceLocationId === targetLocationId) {
         return true;
       }
@@ -1481,6 +1501,9 @@ export function resolvePlayerTargets(
       break;
   }
 
+  if (descriptor.excludeSelf) {
+    candidates = candidates.filter((playerId) => playerId !== controllerId);
+  }
   const strictUnknownFilters = queryContext?.strictUnknownFilters === true;
   const filters = getTargetFilters(descriptor);
   if (filters.length > 0) {
@@ -1788,4 +1811,13 @@ function applyTotalStrengthBudget(
     spent += strength;
   }
   return accepted;
+}
+
+export function isChosenPlayerTarget(target: unknown): boolean {
+  // Card references must not become player selectors if legacy normalization drops the reference.
+  if (typeof target === "object" && target !== null && ("ref" in target || "reference" in target)) {
+    return false;
+  }
+  const normalized = normalizeLorcanaTarget(target);
+  return !!normalized && isPlayerTargetDescriptor(normalized) && normalized.selector === "chosen";
 }

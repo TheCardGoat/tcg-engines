@@ -11,6 +11,32 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB03-020 There You Are, Sore Loser!", () => {
+  test("declining the first recipient does not give the FILM bonus to a different card", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        hand: [eb03ThereYouAreSoreLoser020],
+        character: [eb03Ain002, eb03UtaSp003],
+        activeDon: 1,
+        life: 2,
+      },
+    );
+    engine.endTurn("south");
+    engine.endTurn("north");
+    const attacker = engine.findCardInZone("south", "character", eb01MountainGod018);
+    engine.asSouth().attachDon(attacker, 1);
+    engine.asSouth().attack(attacker, engine.leader("north"));
+    engine.asNorth().chooseCounter(eb03ThereYouAreSoreLoser020);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+    const view = engine.getView("north");
+    expect(view.players.north.lifeCount).toBe(1);
+    expect(view.players.north.trash.map((card) => card.cardId)).toContain(
+      eb03ThereYouAreSoreLoser020.id,
+    );
+    expect(view.players.north.characters.filter(Boolean)).toHaveLength(2);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("reuses the chosen Counter recipient for the conditional FILM bonus", () => {
     const qualifyingEngine = OnePieceTestEngine.create(
       {
@@ -131,7 +157,6 @@ describe("EB03-020 There You Are, Sore Loser!", () => {
         .getView("north")
         .players.north.characters.find((card) => card?.instanceId === selectedId)?.rested,
     ).toBe(true);
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const targetDecision = engine.pendingDecision("effectTargetSelection", "north");

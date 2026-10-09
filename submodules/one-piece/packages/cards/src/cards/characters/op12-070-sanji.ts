@@ -30,7 +30,7 @@ export const op12Sanji070: CharacterCard = {
   setId: "OP12",
   cost: 3,
   power: 5000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "This Character gains +1000 power for every 5 Events in your trash.\nIf this Character would be removed from the field by your opponent's effect, you may return 1 DON!! card from your field to your DON!! deck instead.",

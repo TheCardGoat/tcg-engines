@@ -19,6 +19,7 @@ describe("OP15-028 Meowban Brothers", () => {
     const count = engine.pendingDecision("effectGiveDonCount", "south").steps[0];
     if (count?.kind !== "chooseOption") throw new Error("Expected the give count.");
     engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision("effectGiveDonSource", { optionId: "0" }, "south");
     // Doma is the only opposing Character, so the recipient auto-resolves.
 
     const north = engine.getView("south").players.north;

@@ -28,10 +28,31 @@ describe("OP12-061 Donquixote Rosinante", () => {
 
     expect(
       engine.getView("south").players.south.hand.find((card) => card.instanceId === lawId)?.cost,
-    ).toBe(4);
+    ).toBe(6);
     engine.playCard(op12TrafalgarLaw106, "south");
     expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 4 });
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("retains the discount through an unrelated play and a newly drawn Law", () => {
+    let engine = OnePieceTestEngine.create({
+      leaderCardId: op12DonquixoteRosinante061,
+      hand: ["OP07-096"],
+      deck: [op12TrafalgarLaw106, eb01Doma005],
+      activeDon: 6,
+    });
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    expect(engine.getView("south").players.south.activeDon).toBe(5);
+    engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    engine.playCard("OP07-096");
+    engine.playCard(op12TrafalgarLaw106);
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 5 });
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.some((card) => card?.cardId === op12TrafalgarLaw106.id),
+    ).toBe(true);
   });
 
   test("spends one Life to replace a Trafalgar Law battle K.O.", () => {
@@ -81,5 +102,36 @@ describe("OP12-061 Donquixote Rosinante", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("playing a Law with cost below four retains the next qualifying Law discount", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12DonquixoteRosinante061,
+      hand: ["OP02-035", op12TrafalgarLaw106],
+      activeDon: 7,
+    });
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    engine.playCard("OP02-035", "south");
+    expect(engine.getView("south").players.south.activeDon).toBe(4);
+    engine.playCard(op12TrafalgarLaw106, "south");
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 6 });
+  });
+
+  test("cannot replace a Law battle K.O. with no Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op12Issho082, playedOnTurn: 0 }] },
+      {
+        leaderCardId: op12DonquixoteRosinante061,
+        character: [{ card: op12TrafalgarLaw106, rested: true }],
+        life: [],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const law = engine.findCardInZone("north", "character", op12TrafalgarLaw106);
+    engine.declareAttack(engine.findCardInZone("south", "character", op12Issho082), law, "south");
+    expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
+      law,
+    );
+    expect(engine.getView("north").prompts).toHaveLength(0);
   });
 });

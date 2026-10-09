@@ -65,7 +65,7 @@ export const trumpSet: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
           effect: {
             kind: "choose",
             selection: {
-              id: "chosen-suited-ally",
+              id: "chosen-redirect-ally",
               kind: "choice",
               declared: "resolution",
               chooser: "controller",
@@ -107,7 +107,7 @@ export const trumpSet: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                     chooser: "controller",
                     newTarget: {
                       kind: "bound",
-                      binding: "chosen-suited-ally",
+                      binding: "chosen-redirect-ally",
                     },
                   },
                 },
@@ -124,7 +124,7 @@ export const trumpSet: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                         kind: "continuous",
                         subjects: {
                           kind: "bound",
-                          binding: "chosen-suited-ally",
+                          binding: "chosen-redirect-ally",
                         },
                         affectedSet: "locked",
                         duration: {
@@ -146,7 +146,7 @@ export const trumpSet: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                         kind: "continuous",
                         subjects: {
                           kind: "bound",
-                          binding: "chosen-suited-ally",
+                          binding: "chosen-redirect-ally",
                         },
                         affectedSet: "locked",
                         duration: {

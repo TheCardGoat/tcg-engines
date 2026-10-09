@@ -122,6 +122,39 @@ describe("GQuuuuuuX (Omega Psycommu) (GD02-038)", () => {
     expect(p1.getCardsInZone("battleArea")).toHaveLength(2);
   });
 
+  it("requires trashing an existing Unit after deploying into a full battle area", () => {
+    const board = Array.from({ length: 5 }, (_, i) =>
+      createMockUnit({ name: `Existing Unit ${i}`, cardNumber: `EXCESS-${i}` }),
+    );
+    const clanUnit = createMockUnit({ name: "Revealed Clan Unit", traits: ["clan"], level: 4 });
+    const engine = GundamTestEngine.create({
+      play: board,
+      hand: [gd02GquuuuuuxOmegaPsycommu038],
+      resourceArea: activeResources(7),
+      deck: [clanUnit, createMockUnit(), createMockUnit()],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.deployUnit(gd02GquuuuuuxOmegaPsycommu038));
+    const choice = p1.getBoardView().pendingChoice;
+    if (choice?.kind !== "deckLook") throw new Error("Expected the revealed top cards");
+    expect(choice.legalTutorCardIds).toHaveLength(1);
+    const deployedId = choice.legalTutorCardIds[0]!;
+    expectSuccess(
+      p1.resolveEffect({
+        deckLookAnswers: { [choice.directiveIndex]: { tutorCardId: deployedId } },
+      }),
+    );
+    const excess = p1.getBoardView().pendingChoice;
+    if (excess?.kind !== "targetSelection") throw new Error("Expected battle-area excess choice");
+    expect(excess.legalTargetIds).not.toContain(deployedId);
+    expect(excess.legalTargetIds).toHaveLength(6);
+    p1.must.resolveTargets(board[0]!);
+    expect(p1.getCardZone(p1.cardIn("trash", board[0]!).instanceId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(deployedId)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardsInZone("battleArea")).toHaveLength(6);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
   it("lets the player decline to deploy an eligible revealed Unit", () => {
     const clanUnit = createMockUnit({ name: "Eligible Clan Unit", traits: ["clan"], level: 4 });
     const engine = GundamTestEngine.create({

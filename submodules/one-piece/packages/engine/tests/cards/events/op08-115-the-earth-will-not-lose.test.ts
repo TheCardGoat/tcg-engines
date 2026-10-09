@@ -59,6 +59,7 @@ describe("OP08-115 The Earth Will Not Lose!", () => {
     engine.resolveDecision("effectPlaySelection", { selectedIds: [stageId] }, "north");
     engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "north");
     engine.resolveDecision("effectSearchRemainderOrder", { selectedIds: revealedIds }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.stage?.instanceId).toBe(stageId);
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);

@@ -23,7 +23,7 @@ export const op10RoronoaZoro038: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Straw Hat Crew Supernovas ODYSSEY"],
+  traits: ["ODYSSEY", "Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[Opponent's Turn] If you have 2 or more rested Characters, this Character gains +2000 power.",

@@ -21,7 +21,7 @@ export const eb03InsolentFoolStandDown029: EventCard = {
   rarity: "C",
   setId: "EB03",
   cost: 1,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   effect:
     "[Main] You may rest 4 of your DON!! cards: If your Leader is [Boa Hancock], play up to 1 {Amazon Lily} or {Kuja Pirates} type Character card with a cost of 6 or less from your hand. [Counter] Up to 1 of your [Boa Hancock] cards gains +3000 power during this battle.",
   effects: {
@@ -57,12 +57,12 @@ export const eb03InsolentFoolStandDown029: EventCard = {
                   {
                     filter: "trait",
                     value: "Amazon Lily",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Kuja Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

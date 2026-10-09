@@ -1,3 +1,5 @@
+export { UNDO_CHECKPOINT_LIMIT, capUndoCheckpoints } from "./undo-checkpoints.js";
+
 export type {
   TimeControlChessConfig,
   TimeControlConfig,

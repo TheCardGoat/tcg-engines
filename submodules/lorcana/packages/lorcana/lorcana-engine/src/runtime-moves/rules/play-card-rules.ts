@@ -8,6 +8,7 @@ import { isShiftKeywordAbility, isValueKeywordAbility } from "@tcg/lorcana-types
 import type { LorcanaCardMeta } from "../../types";
 import { cardHasName, hasAdvancedMimicry, hasMimicry } from "../../card-utils";
 import { getActiveStatModifierTotal } from "../effects/continuous-effects";
+import { getInkDropCount, removeInkDrops, resolveInkDropStore } from "./ink-drops";
 import {
   evaluateStaticCondition,
   getStaticPropertyModifierTotal,
@@ -34,6 +35,8 @@ export interface ShiftDiscardCost {
 
 export interface ShiftRules {
   inkCost?: number;
+  /** Ink drops removed to pay the shift cost (Hyperia City). */
+  inkDropsCost?: number;
   discardCost?: ShiftDiscardCost;
   rawLabel?: string;
   targetMode: ShiftTargetMode;
@@ -50,6 +53,8 @@ export interface ShiftRules {
 }
 
 type BasicCostValidationContext = {
+  /** Direct G passthrough — preferred ink-drop source when provided (Hyperia City). */
+  G?: { inkDrops?: Record<string, number> };
   framework: {
     state: object;
     zones: {
@@ -297,6 +302,7 @@ function resolveShiftCostSupport(
   fallbackLabel: string | undefined,
 ): {
   inkCost?: number;
+  inkDropsCost?: number;
   discardCost?: ShiftDiscardCost;
   unsupportedReason?: string;
 } {
@@ -313,8 +319,13 @@ function resolveShiftCostSupport(
       };
     }
 
+    // Ink-drop shift cost (e.g. Baymax - Amped Up "Shift Remove 2 ink drops")
+    if (typeof cost.inkDrops === "number" && cost.inkDrops > 0) {
+      return { inkDropsCost: cost.inkDrops };
+    }
+
     const nonInkCostKeys = Object.keys(cost).filter(
-      (key) => key !== "ink" && cost[key as keyof typeof cost] !== undefined,
+      (key) => key !== "ink" && key !== "inkDrops" && cost[key as keyof typeof cost] !== undefined,
     );
 
     if (nonInkCostKeys.length > 0) {
@@ -466,12 +477,53 @@ export function getAvailableInk(
     .length;
 }
 
-/** Exert ready inkwell cards in zone order to pay ink costs. */
+/** Ink drops held by the player (Hyperia City). Reads through match-state G. */
+export function getAvailableInkDrops(
+  state: BasicCostValidationContext,
+  playerId: PlayerId,
+): number {
+  return getInkDropCount(state as unknown as Parameters<typeof getInkDropCount>[0], playerId);
+}
+
+/**
+ * Spend the player's requested ink drops, capped to the ink cost and bank.
+ * Ink drops are optional payment; ready inkwell cards do not prevent their use.
+ * Official: https://www.disneylorcana.com/en-GB/news/2026/09/ink-drop-deep-dive
+ */
+export function resolveInkDropSpend(args: {
+  inkCost: number;
+  claimedDrops: number;
+  dropsHeld: number;
+}): number {
+  const claimed = Math.max(0, Math.floor(args.claimedDrops) || 0);
+  return Math.min(claimed, Math.max(0, Math.floor(args.inkCost)), Math.max(0, args.dropsHeld));
+}
+
+/**
+ * Pay the requested part of an ink cost with ink drops, then exert ready inkwell cards
+ * in zone order for the rest. Returns the cards exerted.
+ */
 export function spendInk(
   ctx: BasicCostWriteContext,
   playerId: PlayerId,
   amount: number,
+  inkDrops = 0,
 ): CardInstanceId[] {
+  const dropsSpent = resolveInkDropSpend({
+    inkCost: amount,
+    claimedDrops: inkDrops,
+    dropsHeld: getAvailableInkDrops(ctx, playerId),
+  });
+  if (dropsSpent > 0) {
+    // The trigger emitter reads ctx.G directly — minimal cost contexts carry
+    // G only via framework.state, so resolve and attach it here.
+    const inkDropCtx = { ...ctx, G: resolveInkDropStore(ctx) } as unknown as Parameters<
+      typeof removeInkDrops
+    >[0];
+    removeInkDrops(inkDropCtx, playerId, dropsSpent, "ink-payment");
+  }
+
+  const inkFromCards = amount - dropsSpent;
   const cards = ctx.framework.zones.getCards({
     zone: "inkwell",
     playerId,
@@ -479,7 +531,7 @@ export function spendInk(
   const paidWith: CardInstanceId[] = [];
 
   for (const cardId of cards) {
-    if (paidWith.length >= amount) {
+    if (paidWith.length >= inkFromCards) {
       break;
     }
     if (readCostCardMeta(ctx.cards, cardId)?.state === "exerted") {
@@ -506,7 +558,7 @@ export function getSingerThreshold(cardDef: LorcanaCardDefinition | undefined): 
 }
 
 export function getSingerThresholdForInstance(args: {
-  framework: BasicCostValidationContext["framework"];
+  framework: Pick<BasicCostValidationContext["framework"], "state">;
   singerId: CardInstanceId;
   singerDef: LorcanaCardDefinition | undefined;
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined;
@@ -638,7 +690,7 @@ export function getShiftRules(cardDef: LorcanaCardDefinition | undefined): Shift
 
   const shiftKeyword = getShiftKeyword(cardDef);
   const fallbackLabel = inferShiftLabel(cardDef, shiftKeyword);
-  const { inkCost, discardCost, unsupportedReason } = resolveShiftCostSupport(
+  const { inkCost, inkDropsCost, discardCost, unsupportedReason } = resolveShiftCostSupport(
     shiftKeyword,
     fallbackLabel,
   );
@@ -649,6 +701,7 @@ export function getShiftRules(cardDef: LorcanaCardDefinition | undefined): Shift
 
   return {
     inkCost,
+    inkDropsCost,
     discardCost,
     rawLabel: fallbackLabel,
     temporaryShift: shiftKeyword?.temporaryShift === true,
@@ -770,6 +823,8 @@ export interface ExertCostCard {
 
 export interface BasicCost {
   ink?: number;
+  /** Ink drops removed to pay (Hyperia City). Each removed drop pays 1 {I}. */
+  inkDrops?: number;
   exertCards?: readonly ExertCostCard[];
 }
 
@@ -803,21 +858,41 @@ function validateInkCost(
   state: Pick<BasicCostValidationContext, "framework">,
   playerId: PlayerId,
   ink: number,
+  inkDrops = 0,
 ): BasicCostValidationResult {
   const normalizedInk = normalizeInkCost(ink);
   if (normalizedInk === 0) {
     return { valid: true };
   }
 
-  const availableInk = getAvailableInk(state, playerId);
-  if (availableInk < normalizedInk) {
-    return createBasicCostFailure(
-      `Not enough ink (have ${availableInk}, need ${normalizedInk})`,
-      "INSUFFICIENT_INK",
-    );
+  // A claimed ink-drop payment must be backed by drops actually held — even
+  // when ready ink alone could cover the cost — otherwise the claim would
+  // overstate the payment that "when you use an ink drop" abilities react to.
+  const dropsWanted = Math.max(0, Math.floor(inkDrops) || 0);
+  if (dropsWanted > 0) {
+    const dropsHeld = getAvailableInkDrops(state as BasicCostValidationContext, playerId);
+    if (dropsWanted > dropsHeld) {
+      return createBasicCostFailure(
+        `Not enough ink drops (have ${dropsHeld}, want to spend ${dropsWanted})`,
+        "INSUFFICIENT_INK_DROPS",
+      );
+    }
   }
 
-  return { valid: true };
+  const availableInk = getAvailableInk(state, playerId);
+  if (availableInk >= normalizedInk) {
+    return { valid: true };
+  }
+
+  // Ink drops (Hyperia City) can cover the shortfall when the payer opts in.
+  if (dropsWanted > 0 && availableInk + dropsWanted >= normalizedInk) {
+    return { valid: true };
+  }
+
+  return createBasicCostFailure(
+    `Not enough ink (have ${availableInk}, need ${normalizedInk})`,
+    "INSUFFICIENT_INK",
+  );
 }
 
 function validateExertCardCost(
@@ -857,13 +932,29 @@ export interface PayBasicCostContext {
   framework: BasicCostWriteContext["framework"];
   cards: BasicCostWriteContext["cards"];
   playerId: PlayerId;
+  /** Match-state G passthrough — ink drops live on G (Hyperia City). */
+  G?: { inkDrops?: Record<PlayerId, number> };
+}
+
+/**
+ * Ink payment composition: how much of the ink cost the payer offers to cover
+ * with ink drops (Hyperia City) instead of exerting inkwell cards. The engine
+ * spends the requested drops up to the ink cost (see resolveInkDropSpend).
+ */
+export interface InkPaymentOptions {
+  inkDrops?: number;
 }
 
 /**
  * Result of paying basic ability costs
  */
 export type PayBasicCostResult =
-  | { success: true; inkPaid: number }
+  | {
+      success: true;
+      inkPaid: number;
+      /** Ink drops actually removed from G during payment, including mandatory cost drops. */
+      inkDropsSpent: number;
+    }
   | { success: false; error: string; errorCode: string };
 
 /**
@@ -875,6 +966,7 @@ export type PayBasicCostResult =
 export function validateBasicCost(
   ctx: BasicCostValidationContext,
   cost: BasicCost,
+  payment?: InkPaymentOptions,
 ): BasicCostValidationResult {
   for (const exertCard of cost.exertCards ?? []) {
     const exertValidation = validateExertCardCost(ctx, exertCard);
@@ -883,14 +975,34 @@ export function validateBasicCost(
     }
   }
 
-  return validateInkCost({ framework: ctx.framework }, ctx.playerId, cost.ink ?? 0);
+  // Mandatory ink-drop costs (e.g. ink-drop Shift) must be fully payable, and
+  // claimed drops must be validated against the SAME balance — a cost that
+  // sets both ink drops and a claimed payment otherwise lets spendInk consume
+  // the drops the mandatory cost still needs (the phantom-payment shape).
+  const requiredDrops = Math.max(0, Math.floor(cost.inkDrops ?? 0));
+  const claimedDrops = Math.max(0, Math.floor(payment?.inkDrops ?? 0) || 0);
+  if (requiredDrops > 0) {
+    const held = getAvailableInkDrops(ctx, ctx.playerId);
+    if (held < requiredDrops + (claimedDrops > 0 ? claimedDrops : 0)) {
+      return createBasicCostFailure(
+        `Not enough ink drops (have ${held}, need ${requiredDrops}${claimedDrops > 0 ? ` + ${claimedDrops} claimed` : ""})`,
+        "INSUFFICIENT_INK_DROPS",
+      );
+    }
+  }
+
+  return validateInkCost(ctx, ctx.playerId, cost.ink ?? 0, claimedDrops);
 }
 
 /**
  * Pay ink and exert costs after validating that they can be paid.
  */
-export function payBasicCost(ctx: PayBasicCostContext, cost: BasicCost): PayBasicCostResult {
-  const validation = validateBasicCost(ctx, cost);
+export function payBasicCost(
+  ctx: PayBasicCostContext,
+  cost: BasicCost,
+  payment?: InkPaymentOptions,
+): PayBasicCostResult {
+  const validation = validateBasicCost(ctx, cost, payment);
   if (validation.valid === false) {
     return {
       success: false,
@@ -900,13 +1012,30 @@ export function payBasicCost(ctx: PayBasicCostContext, cost: BasicCost): PayBasi
   }
 
   const inkPaid = normalizeInkCost(cost.ink);
+  // Mirror resolveInkDropSpend exactly so callers record the
+  // drops that were genuinely removed instead of the claimed amount.
+  const inkDropsSpent = resolveInkDropSpend({
+    inkCost: inkPaid,
+    claimedDrops: payment?.inkDrops ?? 0,
+    dropsHeld: getAvailableInkDrops(ctx, ctx.playerId),
+  });
   if (inkPaid > 0) {
-    spendInk(ctx, ctx.playerId, inkPaid);
+    spendInk(ctx, ctx.playerId, inkPaid, payment?.inkDrops ?? 0);
+  }
+
+  const mandatoryDrops = Math.max(0, Math.floor(cost.inkDrops ?? 0));
+  if (mandatoryDrops > 0) {
+    removeInkDrops(
+      ctx as unknown as Parameters<typeof removeInkDrops>[0],
+      ctx.playerId,
+      mandatoryDrops,
+      "cost",
+    );
   }
 
   for (const exertCard of cost.exertCards ?? []) {
     ctx.cards.patchMeta(exertCard.cardId, { state: "exerted" });
   }
 
-  return { success: true, inkPaid };
+  return { success: true, inkPaid, inkDropsSpent: inkDropsSpent + mandatoryDrops };
 }

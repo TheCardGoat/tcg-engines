@@ -18,7 +18,16 @@ export const tinkerBellPeterPansAllyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Naseweis",
     version: "Peter Pans Verbündete",
-    text: "<Wendig> \\Loyal und Hingebungsvoll\\ Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
+    text: [
+      {
+        title: "<Wendig>",
+      },
+      {
+        title: "Loyal und Hingebungsvoll",
+        description:
+          "Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
+      },
+    ],
   },
   fr: {
     name: "LA FÉE CLOCHETTE",

@@ -37,7 +37,7 @@ describe("skeptic regression gaps", () => {
               player: "self",
               zones: ["leader", "character"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
             },
             keyword: "unblockable",
             duration: "thisTurn",

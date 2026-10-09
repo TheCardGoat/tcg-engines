@@ -45,7 +45,7 @@ export const op04KouzukiHiyori103: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

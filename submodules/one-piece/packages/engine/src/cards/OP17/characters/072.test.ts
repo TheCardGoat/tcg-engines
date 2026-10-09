@@ -36,4 +36,44 @@ describe("OP17-072 Black Maria", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: declining on the first attack leaves the once-per-turn effect for a later attack", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-072"], hand: ["EB01-005"], life: ["EB01-025", "EB01-025", "EB01-025"] },
+      { character: ["OP13-013"] },
+      { activeSeat: "north" },
+    );
+    const attacker = e.findCardInZone("north", "character", "OP13-013");
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    e.resolveDecision("battleBlocker", { selectedIds: [] }, "south");
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toContain("EB01-005");
+    e.declareAttack(attacker, e.leader("south"), "north");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision(
+      "effectCostTrashFromHand",
+      { selectedIds: [e.findCardInZone("south", "hand", "EB01-005")] },
+      "south",
+    );
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("south")] }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(6000);
+    e.resolveDecision("battleBlocker", { selectedIds: [] }, "south");
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").players.south.lifeCount).toBe(2);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("EB01-005");
+  });
+  test("Blocker redirects the attack away from Life", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-072"], hand: [] },
+      {},
+      { activeSeat: "north" },
+    );
+    const life = e.getView("south").players.south.lifeCount;
+    const id = e.findCardInZone("south", "character", "OP17-072");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.resolveDecision("battleBlocker", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

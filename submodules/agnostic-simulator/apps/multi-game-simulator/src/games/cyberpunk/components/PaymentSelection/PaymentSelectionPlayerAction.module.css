@@ -3,10 +3,70 @@
 }
 
 .shortcut[data-active="true"] {
-  background: color-mix(
-    in srgb,
-    var(--game-friendly, rgb(74 217 255 / 88%)) 20%,
-    transparent
-  );
+  background: color-mix(in srgb, var(--game-friendly, rgb(74 217 255 / 88%)) 20%, transparent);
   color: var(--game-friendly, rgb(74 217 255 / 100%));
+}
+
+/* Optional V2 presentation; the state and click handlers stay shared with V1. */
+.labeled.labeled {
+  width: auto;
+  min-width: 0;
+  min-height: 44px;
+  height: auto;
+  display: inline-flex;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 6px solid transparent;
+  border-image: url("../BoardV2/assets/prompt-control-v2.svg") 12 fill / 6px stretch;
+  border-radius: 0;
+  background: transparent;
+  color: #c4d0d0;
+  font:
+    600 15px/1.1 "Cyberpunk Blender Pro",
+    sans-serif;
+  white-space: nowrap;
+}
+.labeled strong {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #a4afb0;
+}
+.labeled[data-active="true"] {
+  color: #e5eadc;
+  box-shadow: inset 0 -3px #d6bd79;
+}
+.labeled[data-active="true"] strong {
+  color: #f5d88c;
+}
+.labeled:focus-visible {
+  outline: 2px solid #f5d88c;
+  outline-offset: 2px;
+}
+@media (width < 520px) {
+  .labeled.labeled {
+    flex: 1;
+    gap: 5px;
+    padding: 5px;
+    font-size: 13px;
+  }
+  .labeled svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+}
+
+.labeled strong::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: #657477;
+  vertical-align: middle;
+}
+.labeled[data-active="true"] strong::before {
+  background: #f5d88c;
+  box-shadow: 0 0 5px #f5d88c66;
 }

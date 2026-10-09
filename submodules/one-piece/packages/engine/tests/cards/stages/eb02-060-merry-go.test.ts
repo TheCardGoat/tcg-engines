@@ -84,6 +84,16 @@ describe("EB02-060 Merry Go", () => {
     ).toBe(5000);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(view.players.south.stage?.rested).toBe(false);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: stageId,
+        trigger: "activateMain",
+      }).reason,
+    ).toBe("The activation costs cannot be paid.");
+    expect(engine.getView("south").players.south.stage?.rested).toBe(false);
   });
 
   test("may decline optional so paid effect does not apply", () => {
@@ -103,6 +113,7 @@ describe("EB02-060 Merry Go", () => {
     const trashBefore = before.trash.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const after = engine.getView("south").players.south;
+    expect(after.stage?.rested).toBe(false);
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(after.hand.length).toBe(handBefore);

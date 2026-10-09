@@ -23,7 +23,7 @@ export const op08Sheepshead083: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "slash",
   effect: "[DON!! x1] [Your Turn] Give all of your opponent's Characters −1 cost.",
   effects: {

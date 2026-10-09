@@ -166,8 +166,20 @@ function foldAbilityModifiers(
     if (ability.kind !== "ability-modifier" || !last) continue;
     if (ability.modifies.kind !== "preceding-non-modifier-ability") continue;
     if (!staticRestrictionsSatisfied(ability, evaluation)) continue;
-    if (ability.when && !evaluateGrandArchiveCondition(ability.when, evaluation)) continue;
-    last = applyAbilityModifier(last, ability);
+    const modified = applyAbilityModifier(last, ability);
+    // Target bindings and target state are available when the instruction resolves.
+    // Keep the preceding effect as the fallback when this modifier's condition fails.
+    last = ability.when
+      ? {
+          ...modified,
+          effect: {
+            kind: "conditional",
+            condition: ability.when,
+            then: modified.effect,
+            else: last.effect,
+          },
+        }
+      : modified;
     folded[folded.length - 1] = last;
   }
   return folded;

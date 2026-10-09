@@ -33,7 +33,7 @@ export const prb02PeronaPirateFoil005: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Thriller Bark Pirates Muggy Kingdom"],
+  traits: ["Muggy Kingdom", "Thriller Bark Pirates"],
   attribute: "special",
   i18n: prb02PeronaPirateFoil005I18n,
 };

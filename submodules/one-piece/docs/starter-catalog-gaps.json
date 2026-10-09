@@ -1,0 +1,224 @@
+{
+  "checkedOn": "2026-10-08",
+  "scope": "Canonical ST-numbered cards listed under the 36 official English starter products; reprints of other numbered cards are excluded from product totals. Presence is exported runtime catalog membership, not behavior proof.",
+  "officialPrimaryCount": 382,
+  "missingCount": 0,
+  "products": [
+    {
+      "product": "ST01",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569001",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST02",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569002",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST03",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569003",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST04",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569004",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST05",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569005",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST06",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569006",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST07",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569007",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST08",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569008",
+      "officialPrimaryCount": 15,
+      "missingIds": []
+    },
+    {
+      "product": "ST09",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569009",
+      "officialPrimaryCount": 15,
+      "missingIds": []
+    },
+    {
+      "product": "ST10",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569010",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST11",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569011",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST12",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569012",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST13",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569013",
+      "officialPrimaryCount": 19,
+      "missingIds": []
+    },
+    {
+      "product": "ST14",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569014",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST15",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569015",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST16",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569016",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST17",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569017",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST18",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569018",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST19",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569019",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST20",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569020",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST21",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569021",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST22",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569022",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST23",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569023",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST24",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569024",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST25",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569025",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST26",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569026",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST27",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569027",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST28",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569028",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST29",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569029",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST30",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569030",
+      "officialPrimaryCount": 17,
+      "missingIds": []
+    },
+    {
+      "product": "ST31",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569031",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST32",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569032",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST33",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569033",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST34",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569034",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST35",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569035",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    },
+    {
+      "product": "ST36",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569036",
+      "officialPrimaryCount": 5,
+      "missingIds": []
+    }
+  ]
+}

@@ -68,9 +68,8 @@ export type {
   GameEvent,
   MoveLog,
 } from "@tcg/cyberpunk-engine";
-export { getGearAttachTargets } from "./dropMapping";
+export { dropShapeAcceptsCardTarget, getGearAttachTargets } from "./dropMapping";
 export { interactionSubmissionToEngineAction } from "./interactionDispatch";
-export { getProgramSpatialTargets } from "./programTargets";
 export {
   interactionActionIsAvailable,
   interactionViewActionHasCandidate,
@@ -103,6 +102,7 @@ export {
 export type StrategyId =
   | "default"
   | "tactical"
+  | "expert-oracle"
   | "tactical-ability-aware"
   | "greedy"
   | "random"
@@ -221,7 +221,7 @@ export {
   useSideZones,
   useCardView,
   useCardViewByName,
-  handContainsPrivateCards,
+  handContainsHiddenIdentities,
   WIN_GIG_THRESHOLD,
   type ZoneCardView,
   type CardActiveEffectView,
@@ -233,12 +233,14 @@ export {
 export type { CardDragSource, DropTarget, CardDropEvent } from "./dropEvent";
 export { mapDropToAction, type DropContext } from "./dropMapping";
 
-export type { MoveId, DieType, StepResult } from "@tcg/cyberpunk-engine";
+export type { MoveId, StepResult } from "@tcg/cyberpunk-engine";
 
 export {
   UserConfigProvider,
   useUserConfig,
   useSetUserConfig,
+  useCyberpunkVisualSelection,
+  useSetCyberpunkVisualSelection,
   type UserConfig,
   type DiceDisplayMode,
   type DiceImageColor,

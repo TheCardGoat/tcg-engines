@@ -1,6 +1,6 @@
 import { replayStepPosition } from "@tcg/game-page-contract";
 import type { MatchState, MoveLog } from "@tcg/cyberpunk-engine";
-import type { ReplayPlaybackV1 } from "@tcg/game-page-contract";
+import type { ReplayChatMessage, ReplayPlaybackV1 } from "@tcg/game-page-contract";
 import { ReplayPlaybackController } from "@tcg/simulator-runtime";
 
 import {
@@ -24,6 +24,8 @@ export class CyberpunkReplayOrchestrator {
 
   readonly #controller: ReplayPlaybackController;
   readonly #turnNumbers: readonly number[];
+  readonly #stepTimestamps: readonly number[];
+  readonly #chatMessages: readonly ReplayChatMessage[];
   readonly #moveLogsByStep: readonly MoveLog[][];
 
   constructor(playback: ReplayPlaybackV1) {
@@ -45,6 +47,8 @@ export class CyberpunkReplayOrchestrator {
     };
     this.#controller = new ReplayPlaybackController(playback);
     this.#turnNumbers = [0, ...replay.steps.map((step) => replayStepPosition(step).turnNumber)];
+    this.#stepTimestamps = [0, ...replay.steps.map((step) => replayStepPosition(step).timestamp)];
+    this.#chatMessages = playback.chatMessages ?? [];
     this.#moveLogsByStep = this.#buildMoveLogs();
   }
 
@@ -88,6 +92,13 @@ export class CyberpunkReplayOrchestrator {
 
   get currentMoveLogs(): MoveLog[] {
     return this.#moveLogsByStep[this.currentStep] ?? [];
+  }
+
+  /** Chat visible at this cursor. The final step keeps messages sent after the last move. */
+  get currentChatMessages(): ReplayChatMessage[] {
+    if (this.isAtEnd) return this.#chatMessages.slice();
+    const cutoff = this.#stepTimestamps[this.currentStep] ?? 0;
+    return this.#chatMessages.filter((message) => message.timestamp <= cutoff);
   }
 
   goToStep(step: number): void {
@@ -174,7 +185,13 @@ function toPlayer(participant: { id: string; displayName: string }): ReplayPlaye
 function normalizePersistedReplayLog(log: unknown): MoveLog | null {
   const normalized = normalizeRemoteMoveLog(log);
   if (normalized) return normalized;
-  if (isRecord(log) && "log" in log) return normalizeRemoteMoveLog(log.log);
+  if (!isRecord(log)) return null;
+  if ("log" in log) {
+    const nested = normalizeRemoteMoveLog(log.log);
+    if (nested) return nested;
+  }
+  // Persisted steps store GameLogEntry wrappers: { tag: "engine_log", data, ts }.
+  if (log.tag === "engine_log" && "data" in log) return normalizeRemoteMoveLog(log.data);
   return null;
 }
 

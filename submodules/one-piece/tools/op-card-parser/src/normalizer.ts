@@ -1,3 +1,5 @@
+import { parseAlternateNames } from "./alternate-names.ts";
+import { normalizeTraits } from "../../../packages/utils/src/traits.ts";
 import type {
   CardEffects,
   CharacterCard,
@@ -98,12 +100,8 @@ function parseRarity(raw: string, cardId: string): OPRarity {
   return rarity;
 }
 
-function parseTraits(raw: string): string[] {
-  if (!raw.trim()) return [];
-  return raw
-    .split(/[;,/]/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+function parseTraits(raw: string, canonicalId: string): string[] {
+  return normalizeTraits([raw], canonicalId);
 }
 
 function parseSetId(raw: string): string {
@@ -195,10 +193,11 @@ export function normalize(raw: RawOPCard): OPCard {
   const colors = parseColors(raw.card_color, id);
   const rarity = parseRarity(raw.rarity, id);
   const attribute = parseAttribute(raw.attribute, id);
-  const traits = parseTraits(raw.sub_types);
+  const traits = parseTraits(raw.sub_types, id);
   const setId = parseSetId(raw.set_id);
   const imageUrl = raw.card_image ?? undefined;
   const name = raw.card_name.trim();
+  const alternateNames = parseAlternateNames(raw.card_text ?? "");
   const { effect, trigger } = extractTrigger(raw.card_text ?? "");
   const keywords = parseKeywords(raw.card_text ?? "");
   const effects: CardEffects | undefined = keywords.length > 0 ? { keywords } : undefined;
@@ -218,6 +217,7 @@ export function normalize(raw: RawOPCard): OPCard {
     canonicalId: id,
     slug: slugify(name),
     name,
+    ...(alternateNames.length > 0 && { alternateNames }),
     printings: [
       {
         id,

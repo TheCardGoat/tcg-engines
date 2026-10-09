@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
+  getCard,
   eb01Doma005,
   eb01Fourtricks025,
   eb01MountainGod018,
@@ -10,6 +11,7 @@ import {
 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
+import { getKeywords } from "../../../src/shared.ts";
 
 describe("EB03-055 Nico Robin", () => {
   test("trashes top Life, then adds two deck cards to top Life with a Straw Hat Crew Leader", () => {
@@ -103,3 +105,76 @@ describe("EB03-055 Nico Robin", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });
+
+test("FAQ: Robin's effect damage permits a Life Trigger without a Blocker or Counter step", () => {
+  const e = OnePieceTestEngine.create(
+    { character: [{ cardId: "EB03-055", rested: true }] },
+    { character: [{ cardId: "OP01-120", playedOnTurn: 0 }], life: ["ST07-007", "EB01-005"] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const trigger = e.findCardInZone("north", "life", "ST07-007");
+  e.asNorth().attack(
+    e.findCardInZone("north", "character", "OP01-120"),
+    e.findCardInZone("south", "character", "EB03-055"),
+  );
+  e.asSouth().acceptOptional();
+  e.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+  expect(e.getView("north").players.north.characters.some((c) => c?.instanceId === trigger)).toBe(
+    true,
+  );
+  expect(e.getView("north").players.north.lifeCount).toBe(1);
+  expect(e.getView("north").prompts).toHaveLength(0);
+});
+
+test("FAQ: Robin's effect damage wins against an opponent with no Life", () => {
+  const e = OnePieceTestEngine.create(
+    { character: [{ cardId: "EB03-055", rested: true }] },
+    { character: [{ cardId: "OP01-120", playedOnTurn: 0 }], life: [] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  e.asNorth().attack(
+    e.findCardInZone("north", "character", "OP01-120"),
+    e.findCardInZone("south", "character", "EB03-055"),
+  );
+  e.asSouth().acceptOptional();
+  expect(e.getView("south").status).toBe("finished");
+  expect(e.getView("south").winner).toBe("south");
+});
+
+// The FAQ explicitly supposes that Robin has these granted keywords. This
+// isolated keyword fixture tests damage execution through normal commands.
+test.each(["banish", "doubleAttack"] as const)(
+  "FAQ: granted %s does not change Robin's effect damage",
+  (keyword) => {
+    const card = getCard("EB03-055");
+    const original = card.effects;
+    try {
+      card.effects = { ...original, keywords: [keyword] };
+      const e = OnePieceTestEngine.create(
+        { character: [{ cardId: "EB03-055", rested: true }] },
+        { character: [{ cardId: "OP01-120", playedOnTurn: 0 }], life: ["ST07-007", "EB01-005"] },
+        { firstPlayer: "south", activeSeat: "north" },
+      );
+      const trigger = e.findCardInZone("north", "life", "ST07-007");
+      expect(
+        getKeywords(e.getState(), e.findCardInZone("south", "character", "EB03-055")),
+      ).toContain(keyword);
+      e.asNorth().attack(
+        e.findCardInZone("north", "character", "OP01-120"),
+        e.findCardInZone("south", "character", "EB03-055"),
+      );
+      e.asSouth().acceptOptional();
+      e.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+      expect(e.getView("north").players.north.lifeCount).toBe(1);
+      expect(
+        e.getView("north").players.north.characters.some((c) => c?.instanceId === trigger),
+      ).toBe(true);
+      expect(e.getView("north").players.north.trash.some((c) => c.instanceId === trigger)).toBe(
+        false,
+      );
+      expect(e.getView("north").prompts).toHaveLength(0);
+    } finally {
+      card.effects = original;
+    }
+  },
+);

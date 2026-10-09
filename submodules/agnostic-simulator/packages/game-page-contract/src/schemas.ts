@@ -365,6 +365,7 @@ export const ViewerProjectedGameStateSchema = z
     clock: ClockSnapshotSchema.optional(),
     interactionView: z.unknown().optional(),
     undoable: z.boolean().optional(),
+    undoTurnAvailable: z.boolean().optional(),
   })
   .strict();
 
@@ -633,6 +634,19 @@ export const ReplaySummarySchema = z
   })
   .strict();
 
+export const ReplayChatMessageSchema = z
+  .object({
+    id: z.string(),
+    senderPlayerId: z.string(),
+    senderSeat: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+    kind: z.enum(["preset", "text", "system"]),
+    presetKey: z.string().optional(),
+    text: z.string().optional(),
+    systemEvent: z.string().optional(),
+    timestamp: z.number(),
+  })
+  .strict();
+
 export const ReplayTrustSchema = z.enum(["server_authoritative", "player_authored_unverified"]);
 
 export const ReplayAvailabilitySchema = z
@@ -652,19 +666,11 @@ export const ReplayPlaybackV1Schema = z
     resources: z.unknown().optional(),
     presentationBindings: PresentationBindingsSchema.optional(),
     presentation: PresentationBundleSchema.optional(),
+    chatMessages: z.array(ReplayChatMessageSchema).optional(),
     replay: ReplayFileSchema,
   })
   .strict();
 
 export const PREGAME_TURN_ORDER_TIMEOUT_MS = 20_000;
 
-export const PregameTurnOrderSchema = z.discriminatedUnion("stage", [
-  z.object({ stage: z.literal("choosing"), chooserId: z.string() }),
-  z.object({
-    stage: z.literal("chosen"),
-    chooserId: z.string(),
-    firstPlayerId: z.string(),
-    source: z.enum(["player", "bot", "timeout", "random"]),
-  }),
-]);
-export type PregameTurnOrder = z.infer<typeof PregameTurnOrderSchema>;
+export { PregameTurnOrderSchema, type PregameTurnOrder } from "@tcg/protocol/preparation";

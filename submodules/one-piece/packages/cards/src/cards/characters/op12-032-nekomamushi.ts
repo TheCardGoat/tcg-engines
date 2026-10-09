@@ -23,7 +23,7 @@ export const op12Nekomamushi032: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   i18n: op12Nekomamushi032I18n,
 };

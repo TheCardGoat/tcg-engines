@@ -51,4 +51,37 @@ describe("OP15-117 Heso!!", () => {
     expect(south.restedDon).toBe(3);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger draws two cards", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP15-098",
+        life: ["OP15-117", "ST02-002"],
+        deck: ["ST02-002", "ST02-003", "ST02-002"],
+      },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "ST02-002",
+      "ST02-003",
+    ]);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP15-117");
+  });
+
+  test("Life Trigger draws nothing without a Sky Island Leader", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", life: ["OP15-117", "ST02-002"] },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const deckBefore = e.getView("south").players.south.deckCount;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").players.south.deckCount).toBe(deckBefore);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP15-117");
+  });
 });

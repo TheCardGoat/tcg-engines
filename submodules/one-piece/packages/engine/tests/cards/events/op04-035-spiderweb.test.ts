@@ -69,6 +69,37 @@ describe("OP04-035 Spiderweb", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("reactivating the attacked Character does not cancel the battle", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        hand: [op04Spiderweb035],
+        character: [{ card: eb01Fourtricks025, rested: true }],
+        activeDon: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const targetId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    const eventId = engine.findCardInZone("north", "hand", op04Spiderweb035);
+    engine.declareAttack(
+      engine.findCardInZone("south", "character", eb01MountainGod018),
+      targetId,
+      "south",
+    );
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    // The power bonus goes to a different card; the attacked Character remains vulnerable.
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("north")] },
+      "north",
+    );
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "north");
+    expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
+      targetId,
+    );
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+
   test("Life Trigger maps Leader power and expires it at the current turn end", () => {
     const engine = OnePieceTestEngine.create(
       {

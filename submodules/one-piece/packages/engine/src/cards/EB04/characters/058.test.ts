@@ -2,6 +2,22 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-058", () => {
+  test("Blocker intercepts an attack instead of the Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["EB04-058"], life: 2 },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const defender = engine.findCardInZone("south", "character", "EB04-058");
+    engine.asNorth().attack("EB01-018", engine.leader("south"));
+    engine.asSouth().chooseBlocker(defender);
+    expect(engine.getView("south").players.south.lifeCount).toBe(2);
+    expect(engine.getView("south").players.south.trash.some((c) => c.instanceId === defender)).toBe(
+      true,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] with 2 or less Life adds the top deck card to Life", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["EB04-058"], life: ["OP12-013"], deck: ["OP12-017", "OP13-013"], activeDon: 5 },

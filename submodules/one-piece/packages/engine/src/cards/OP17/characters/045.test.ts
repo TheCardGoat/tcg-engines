@@ -66,4 +66,15 @@ describe("OP17-045 Kyo", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("On Play draws the exact next deck card", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-045"], deck: ["EB01-005", "EB01-025"], activeDon: 2 },
+      {},
+    );
+    const next = e.findCardInZone("south", "deck", "EB01-005");
+    e.playCard("OP17-045");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([next]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

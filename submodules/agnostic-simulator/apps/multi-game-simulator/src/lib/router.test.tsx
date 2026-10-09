@@ -6,14 +6,15 @@ import { SimulatorAudioProvider } from "../simulator/audio";
 import { SimulatorAuthContextProvider } from "../simulator/providers/auth-context";
 import type { SimulatorAuthContextValue } from "../simulator/providers";
 import { SimulatorSettingsProvider, useSimulatorSettings } from "../simulator/settings";
-import { initSimulatorSoundService } from "../simulator/audio/sound-service";
+import { initSimulatorSoundService } from "@tcg/simulator-presentation/audio/sound-service";
 import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "./router.tsx";
 
-vi.mock("../simulator/audio/sound-service", () => ({
+vi.mock("@tcg/simulator-presentation/audio/sound-service", () => ({
   disposeSimulatorSoundService: vi.fn(),
   initSimulatorSoundService: vi.fn(() => Promise.resolve()),
   playSimulatorSound: vi.fn(),
   setSimulatorSoundVolume: vi.fn(),
+  setSimulatorSoundPack: vi.fn(() => Promise.resolve()),
 }));
 
 describe("createSimulatorBrowserRouter", () => {
@@ -46,9 +47,9 @@ describe("SimulatorRouterProvider", () => {
         <SimulatorSettingsProvider
           initialSettings={{
             soundVolume: 35,
+            soundPack: "original",
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
-            paymentSelectionMode: "automatic",
           }}
         >
           <SimulatorAudioProvider>

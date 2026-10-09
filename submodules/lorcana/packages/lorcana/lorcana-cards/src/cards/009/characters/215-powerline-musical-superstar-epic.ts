@@ -23,7 +23,7 @@ export const powerlineMusicalSuperstarEpic: CharacterCard = {
   franchise: "Goofy Movie",
   set: "009",
   cardNumber: 215,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 4,

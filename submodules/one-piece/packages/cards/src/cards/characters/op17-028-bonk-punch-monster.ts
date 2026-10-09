@@ -23,7 +23,7 @@ export const op17BonkPunchMonster028: CharacterCard = {
   cost: 4,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Red-Haired Pirates"],
+  traits: ["Animal", "Red-Haired Pirates"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less.",

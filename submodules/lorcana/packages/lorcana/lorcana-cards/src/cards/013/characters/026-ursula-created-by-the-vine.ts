@@ -31,6 +31,7 @@ export const ursulaCreatedByTheVine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b042269adf7940af8ef301f816235f71",
+    tcgPlayer: "702649",
   },
   text: [
     {

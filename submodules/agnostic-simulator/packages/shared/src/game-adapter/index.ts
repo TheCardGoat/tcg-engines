@@ -39,6 +39,7 @@ export {
   buildColorMetadataFacets,
   normalizeMetadataColors,
   sortMetadataFacets,
+  projectDeckIdentityMembers,
 } from "./metadata.js";
 
 export {
@@ -52,6 +53,7 @@ export {
 export {
   registerGameAdapter,
   getGameAdapter,
+  getBotTurnScheduling,
   hasGameAdapter,
   listGameAdapters,
   requireServerGameAdapter,
@@ -72,3 +74,6 @@ export {
 } from "./play-configs.js";
 
 export type { GamePresentationAdapter } from "./types.js";
+export { materializeDeckInstances } from "./materialize-deck.js";
+
+export { hostedUndoProposalPolicy } from "./undo-policy.js";

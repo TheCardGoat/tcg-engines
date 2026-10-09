@@ -31,7 +31,7 @@ export const op02Buggy058: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Buggy Pirates Impel Down"],
+  traits: ["Impel Down", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 blue [Impel Down] type card other than [Buggy] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -63,7 +63,7 @@ export const op02Buggy058: CharacterCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -32,7 +32,7 @@ export const op17Shanks020: LeaderCard = {
   setId: "OP17",
   power: 5000,
   life: 5,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] [Once Per Turn] You may trash 1 card from your hand or rest 1 of your DON!! cards: Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase.",
@@ -40,15 +40,9 @@ export const op17Shanks020: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
-        costs: [
-          {
-            cost: "trashFromHand",
-            amount: 1,
-          },
-          {
-            cost: "restDon",
-            amount: 1,
-          },
+        alternativeCosts: [
+          [{ cost: "trashFromHand", amount: 1 }],
+          [{ cost: "restDon", amount: 1 }],
         ],
         actions: [
           {

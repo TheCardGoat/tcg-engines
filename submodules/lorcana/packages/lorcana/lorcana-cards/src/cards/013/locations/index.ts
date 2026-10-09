@@ -5,3 +5,4 @@ export { beastsCastleOverrunByTheVine } from "./141-beasts-castle-overrun-by-the
 export { carlsHouseFlyingHigh } from "./142-carls-house-flying-high";
 export { hundredAcreWoodHunnyCampsite } from "./175-hundred-acre-wood-hunny-campsite";
 export { vineEntranceOminousPassageway } from "./207-vine-entrance-ominous-passageway";
+export { hundredAcreWoodHunnyCampsiteEpic } from "./222-hundred-acre-wood-hunny-campsite-epic";

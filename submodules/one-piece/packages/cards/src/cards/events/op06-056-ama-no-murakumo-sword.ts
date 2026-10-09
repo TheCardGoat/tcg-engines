@@ -66,48 +66,60 @@ export const op06AmaNoMurakumoSword056: EventCard = {
   traits: ["Navy"],
   effect:
     "[Main] Place up to 1 of your opponent's Characters with a cost of 2 or less and up to 1 of your opponent's Characters with a cost of 1 or less at the bottom of the owner's deck in any order.",
+  trigger: "Activate this card's [Main] effect.",
   effects: {
     effects: [
+      {
+        trigger: "trigger",
+        actions: [{ action: "activateEffect", effectTrigger: "main" }],
+      },
       {
         trigger: "main",
         actions: [
           {
             action: "returnToDeck",
+            position: "bottom",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
-                amount: 1,
+                amount: 2,
                 upTo: true,
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 2,
-                },
-              ],
             },
-            position: "bottom",
-          },
-          {
-            action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 2,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 1,
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-            position: "bottom",
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 1,
+                  },
+                ],
+              },
+            ],
+            order: "any",
           },
         ],
       },

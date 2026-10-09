@@ -23,7 +23,7 @@ export const moanaCuriousExplorerIconic: CharacterCard = {
   franchise: "Moana",
   set: "011",
   cardNumber: 242,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 5,
   strength: 4,

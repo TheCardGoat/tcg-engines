@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-03",
+  "seed": "expert-comparison",
+  "deckSource": "authored-botlab",
+  "deckLimit": 2,
+  "deckPairs": 4,
+  "matchesPerPair": 2,
+  "firstSeat": {
+    "expertWins": 8,
+    "tacticalWins": 0,
+    "winCondition": 8,
+    "illegal": 0,
+    "averageTurns": 11.8,
+    "averageSteps": 88.4
+  },
+  "secondSeat": {
+    "expertWins": 5,
+    "tacticalWins": 3,
+    "winCondition": 8,
+    "illegal": 0,
+    "averageTurns": 11.9,
+    "averageSteps": 90.1
+  },
+  "total": {
+    "matches": 16,
+    "expertWins": 13,
+    "tacticalWins": 3,
+    "cardsCovered": 26,
+    "catalogCards": 124
+  },
+  "limits": [
+    "Small sample of two decks",
+    "Different information policies",
+    "No cross-site strength comparison",
+    "No promotion"
+  ]
+}

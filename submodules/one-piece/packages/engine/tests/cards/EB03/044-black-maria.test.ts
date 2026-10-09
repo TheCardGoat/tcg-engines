@@ -1,30 +1,12 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { StageCard } from "@tcg/op-types";
 import {
   eb01Doma005,
   eb03BlackMaria044,
   eb03NefeltariVivi001,
-  op06ThrillerBark098,
+  st04OnigashimaIsland017,
 } from "@tcg/op-cards";
 
-import { registerCards } from "../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
-
-const onigashimaIsland: StageCard = {
-  ...op06ThrillerBark098,
-  id: "TEST-EB03-044-ONIGASHIMA-ISLAND",
-  canonicalId: "TEST-EB03-044-ONIGASHIMA-ISLAND",
-  name: "Onigashima Island",
-  i18n: {
-    ...op06ThrillerBark098.i18n,
-    en: {
-      ...op06ThrillerBark098.i18n.en,
-      name: "Onigashima Island",
-    },
-  },
-};
-
-registerCards([onigashimaIsland]);
 
 describe("EB03-044 Black Maria", () => {
   test("gains Blocker with a multicolored Leader", () => {
@@ -50,10 +32,17 @@ describe("EB03-044 Black Maria", () => {
   test("searches, orders the remainder, and plays Onigashima Island from hand", () => {
     const engine = OnePieceTestEngine.create({
       hand: [eb03BlackMaria044],
-      deck: [onigashimaIsland, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
+      deck: [
+        st04OnigashimaIsland017,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+      ],
       activeDon: eb03BlackMaria044.cost,
     });
-    const islandId = engine.findCardInZone("south", "deck", onigashimaIsland);
+    const islandId = engine.findCardInZone("south", "deck", st04OnigashimaIsland017);
 
     engine.playCard(eb03BlackMaria044, "south");
     const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
@@ -84,4 +73,19 @@ describe("EB03-044 Black Maria", () => {
     expect(view.players.south.deckCount).toBe(5);
     expect(view.prompts).toHaveLength(0);
   });
+});
+
+test("Black Maria cannot block with a single-color Leader", () => {
+  const e = OnePieceTestEngine.create(
+    { leaderCardId: "ST01-001", character: ["EB03-044"] },
+    { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const life = e.getView("south").players.south.lifeCount;
+  e.asNorth().attack(e.findCardInZone("north", "character", "EB01-018"), e.leader("south"));
+  expect(e.getView("south").players.south.lifeCount).toBe(life - 1);
+  expect(e.getView("south").players.south.characters.some((c) => c?.cardId === "EB03-044")).toBe(
+    true,
+  );
+  expect(e.getView("south").prompts).toHaveLength(0);
 });

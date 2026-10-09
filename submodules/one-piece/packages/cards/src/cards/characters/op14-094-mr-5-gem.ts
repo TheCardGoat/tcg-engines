@@ -24,7 +24,7 @@ export const op14eb04Mr5Gem094: CharacterCard = {
   power: 6000,
   counter: 1000,
   traits: ["Baroque Works"],
-  attribute: "strike",
+  attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] If there is a Character with a cost of 0 or with a cost of 8 or more, draw 2 cards and trash 1 card from your hand.",
   effects: {

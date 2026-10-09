@@ -31,10 +31,11 @@ export const eeyoreHunnyScholar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2a13da4cb1ca43558f1781ec7613e1aa",
+    tcgPlayer: "704662",
   },
   text: [
     {
-      title: "HUNNYTACTICS",
+      title: "HUNNY TACTICS",
       description:
         "Whenever this character quests, chosen Hunny character of yours gets +1 {L} and gains Ward until the start of your next turn.",
     },

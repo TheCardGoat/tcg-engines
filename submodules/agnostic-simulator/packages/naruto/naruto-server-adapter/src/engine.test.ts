@@ -96,6 +96,78 @@ function resolveMulligan(engine: NarutoServerEngine, keep = true): string {
 }
 
 describe("naruto engine lifecycle", () => {
+  it("undoes a face-down support action and preserves the window after restore", async () => {
+    let engine: NarutoServerEngine | null = null;
+    let supportUid: string | null = null;
+    for (let seed = 0; seed < 24 && supportUid === null; seed += 1) {
+      const candidate = await createEngine(`naruto-undo-${seed}`);
+      resolveMulligan(candidate);
+      const state = candidate.getRawState();
+      supportUid = state.players[state.activePlayer].hand.find((card) =>
+        Boolean(getCardById(card.cardId)?.support)
+      )?.uid ?? null;
+      if (supportUid) engine = candidate;
+    }
+    if (!engine || !supportUid) throw new Error("No opening support found in seeded decks.");
+    const actor = engine.getActivePlayerId();
+    if (!actor) throw new Error("Expected active player.");
+    const before = structuredClone(engine.getRawState());
+    const set = engine.dispatch("SET_SUPPORT", actor, { handUid: supportUid }, CONTEXT);
+    expect(set.success).toBe(true);
+    expect(engine.canUndo(actor)).toBe(true);
+    expect(engine.canUndoToTurnStart(actor)).toBe(true);
+    const snapshot = narutoSerializeEngine(engine, testCardsMaps());
+    const restored = await narutoRestoreEngine(snapshot, {
+      gameSlug: "naruto", player1Id: PLAYER_1, player2Id: PLAYER_2,
+    });
+    if (!(restored instanceof NarutoServerEngine)) throw new Error("wrong restored engine type");
+    const version = restored.getStateID();
+    expect(restored.canUndo(actor)).toBe(true);
+    expect(restored.dispatch("undo", PLAYER_1 === actor ? PLAYER_2 : PLAYER_1, {}, CONTEXT).success).toBe(false);
+    expect(restored.dispatch("undo", actor, {}, CONTEXT).success).toBe(true);
+    expect(restored.getRawState()).toEqual(before);
+    expect(restored.getStateID()).toBe(version + 1);
+    expect(restored.canUndo(actor)).toBe(false);
+  });
+
+  it("bars undo after Jugo reveals a deck card that stays in the deck", async () => {
+    const engine = await createEngine("jugo-reveal-miss");
+    resolveMulligan(engine);
+    const state = engine.getRawState();
+    const seat = state.activePlayer;
+    state.turn = 3;
+    state.phase = "main";
+    state.step = "normal";
+    state.awaitingMulligan = null;
+    state.pendingChoice = null;
+    state.winner = null;
+    const actor = engine.getActivePlayerId();
+    if (!actor) throw new Error("Expected an active player.");
+    const support = state.players[seat].hand.find((card) => Boolean(getCardById(card.cardId)?.support));
+    if (!support) throw new Error("Expected a support card in the active hand.");
+    const set = engine.dispatch("SET_SUPPORT", actor, { handUid: support.uid }, CONTEXT);
+    expect(set.success).toBe(true);
+    expect(engine.canUndo(actor)).toBe(true);
+
+    const live = engine.getRawState();
+    live.players[seat].characters[0] = newCharacter("jugo-1", "N-019", 0);
+    live.players[seat].deck.unshift({ uid: "top-miss", cardId: "NOT-A-JUGO-MATCH" });
+    const deckSize = live.players[seat].deck.length;
+    const opponent = seat === "p1" ? "p2" : "p1";
+    const attack = engine.dispatch("DECLARE_ATTACK", actor, {
+      attackerKind: "character",
+      attackerUid: "jugo-1",
+      targetKind: "leader",
+      targetUid: `leader:${opponent}`,
+    }, CONTEXT);
+    expect(attack.success).toBe(true);
+    expect(engine.getRawState().players[seat].deck).toHaveLength(deckSize);
+    expect(engine.getRawState().log.some((entry) => entry.key === "log.reveal")).toBe(true);
+    expect(engine.getRawState().log.some((entry) => entry.key === "log.revealNoMatch")).toBe(true);
+    expect(engine.canUndo(actor)).toBe(false);
+    expect(engine.canUndoToTurnStart(actor)).toBe(false);
+  });
+
   it("creates an engine from deck lists at version 0 with a mulligan window", async () => {
     const engine = await createEngine();
     expect(engine.getStateID()).toBe(0);

@@ -196,6 +196,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.turn.started": ["turnNumber"],
   "flesh-and-blood.game.ended": ["playerId", "reason"],
   "flesh-and-blood.decision.awaiting": ["actorId"],
+  "flesh-and-blood.undo": ["actorId"],
   "flesh-and-blood.decision.chosen": ["actorId", "choice"],
   "flesh-and-blood.decision.private": ["label"],
   "flesh-and-blood.phase.start": ["turnPlayerId", "phase"],

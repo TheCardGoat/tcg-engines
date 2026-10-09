@@ -59,7 +59,7 @@ export const st26MonkeyDLuffy005: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -100,7 +100,7 @@ export const st26MonkeyDLuffy005: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

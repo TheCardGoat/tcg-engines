@@ -1,9 +1,47 @@
 import { describe, expect, test } from "vite-plus/test";
 import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
+import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
+import type { PlayerId, PlayerPrompt } from "@tcg/cyberpunk-engine";
 
 import { actionToInteractionSubmission } from "./actionToInteraction";
 
 describe("actionToInteractionSubmission", () => {
+  test("sends a pass for an optional MaxTac AV trigger", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTrigger",
+        chooserId: "p1",
+        payload: {
+          canPass: true,
+          options: [
+            {
+              triggerId: "maxtac-play",
+              sourceCardId: "maxtac-1",
+              sourcePlayerId: "p1",
+              abilityIndex: 0,
+              abilityText: "You may swap a friendly Gig with a rival Gig.",
+              cardName: "MaxTac AV",
+              optional: true,
+            },
+          ],
+        },
+      },
+    };
+    const view = buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 7, prompt });
+
+    expect(
+      actionToInteractionSubmission(
+        { type: "resolveTrigger", pass: true, as: "p1" as PlayerId },
+        view,
+      ),
+    ).toMatchObject({
+      actionId: "resolveTrigger",
+      values: { pass: true },
+    });
+  });
+
   test("serializes resolveScry with protocol input ids", () => {
     const view: EngineInteractionView = {
       protocolVersion: INTERACTION_PROTOCOL_VERSION,
@@ -112,6 +150,57 @@ describe("actionToInteractionSubmission", () => {
     ).toMatchObject({
       actionId: "activateAbility",
       values: { cardId: "legend-1", abilityIndex: "0" },
+    });
+  });
+
+  test("serializes declining an optional target prompt", () => {
+    const view: EngineInteractionView = {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "cyberpunk",
+      actorId: "p1",
+      stateVersion: 8,
+      status: "choosing",
+      actions: [
+        {
+          id: "resolveEffectTarget",
+          requestId: "cyberpunk:8:resolveEffectTarget",
+          intent: "choose-targets",
+          text: { key: "cyberpunk.choice.effectTarget" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "entity-selection",
+              id: "targetIds",
+              text: { key: "cyberpunk.input.targets" },
+              role: "target",
+              entityKinds: ["card"],
+              required: false,
+              min: 0,
+              max: 1,
+              ordered: false,
+              candidates: [{ entity: { kind: "card", instanceId: "legend-1" }, enabled: true }],
+            },
+            {
+              kind: "boolean",
+              id: "pass",
+              text: { key: "cyberpunk.input.pass" },
+              required: false,
+              trueText: { key: "cyberpunk.choice.pass" },
+              falseText: { key: "cyberpunk.choice.continue" },
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      actionToInteractionSubmission(
+        { type: "resolveEffectTarget", pass: true, as: "p1" as PlayerId },
+        view,
+      ),
+    ).toMatchObject({
+      actionId: "resolveEffectTarget",
+      values: { pass: true, targetIds: [] },
     });
   });
 });

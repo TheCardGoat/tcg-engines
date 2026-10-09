@@ -27,14 +27,13 @@ describe("OP08-041 Aphelandra", () => {
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(targetId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(expensiveId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
-    // Returning Aphelandra as a cost may open Boa Hancock's optional leave reaction.
-    while (engine.hasPendingChoice("south")) {
-      try {
-        engine.decline("south");
-      } catch {
-        break;
-      }
-    }
+    // Both field exits ready Boa's effect after Aphelandra finishes resolving.
+    const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected Boa reaction order.");
+    expect(order.options).toHaveLength(2);
+    engine.resolveDecision("readyEffectOrder", { optionId: order.options[0]!.id }, "south");
+    engine.asSouth().declineOptional();
+    engine.asSouth().declineOptional();
 
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(sourceId);

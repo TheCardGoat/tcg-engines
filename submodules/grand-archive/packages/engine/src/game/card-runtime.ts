@@ -31,10 +31,41 @@ export function grandArchiveObjectHasConcealedCharacteristics(
 export function grandArchiveObjectPrintedAbilities(
   program: GrandArchiveMatchProgram,
   object: GrandArchiveCardInstance,
+  state: GrandArchiveMatchState,
 ): readonly FlatGrandArchiveAbility[] {
-  return grandArchiveObjectHasConcealedCharacteristics(program, object)
-    ? []
-    : flattenGrandArchiveAbilities(grandArchiveObjectFace(program, object).abilities);
+  if (grandArchiveObjectHasConcealedCharacteristics(program, object)) return [];
+  const face = grandArchiveObjectFace(program, object);
+  const abilities = flattenGrandArchiveAbilities(face.abilities);
+  // The original champion card is stored on the field object, while level-up
+  // cards are separate inner-lineage objects. Expose the original card's
+  // inherited and release abilities until it becomes a separate lineage object.
+  if (
+    object.zone !== "field" ||
+    object.baseLineageCardId ||
+    !object.activeDefinitionId ||
+    object.activeDefinitionId === object.definitionId ||
+    !face.typeLine.types.includes("CHAMPION") ||
+    !Object.values(state.objects).some(
+      (card) => card.zone === "inner-lineage" && card.hostId === object.id,
+    )
+  )
+    return abilities;
+  const base = requireGrandArchiveCard(program, object.definitionId);
+  const baseFace = base.layout.kind === "single-faced" ? base.layout.face : base.layout.defaultFace;
+  if (!baseFace.typeLine.types.includes("CHAMPION")) return abilities;
+  const inherited = flattenGrandArchiveAbilities(baseFace.abilities)
+    .filter(
+      (ability) =>
+        ability.executionSource === "lineage-host" ||
+        (ability.kind === "activated" && ability.keyword?.name === "lineage-release"),
+    )
+    .map(
+      ({ executionSource: _executionSource, ...ability }): FlatGrandArchiveAbility => ({
+        ...ability,
+        functionalZones: ["field"],
+      }),
+    );
+  return inherited.length ? [...abilities, ...inherited] : abilities;
 }
 
 /** Immutable definition arrays can share one flattened view for their lifetime. */

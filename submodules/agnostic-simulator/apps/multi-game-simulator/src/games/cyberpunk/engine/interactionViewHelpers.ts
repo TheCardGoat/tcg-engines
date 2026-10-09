@@ -134,7 +134,8 @@ export function interactionViewAbilityIndexForCard(
   view: EngineInteractionView,
   cardId: string,
 ): number | null {
-  return interactionViewAbilityIndexesForCard(view, cardId)[0] ?? null;
+  const indexes = interactionViewAbilityIndexesForCard(view, cardId);
+  return indexes.length === 1 ? indexes[0]! : null;
 }
 
 function hasEnabledPair(

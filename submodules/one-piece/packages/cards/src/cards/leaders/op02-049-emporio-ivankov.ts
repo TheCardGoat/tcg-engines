@@ -30,7 +30,7 @@ export const op02EmporioIvankov049: LeaderCard = {
   setId: "OP02",
   power: 5000,
   life: 5,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "special",
   effect: "[End of Your Turn] If you have 0 cards in your hand, draw 2 cards.",
   effects: {

@@ -32,6 +32,7 @@ export const maleficentExultantSpellcaster: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_136f0a550e5f4588bbd9fd5285e4cb83",
+    tcgPlayer: "702677",
   },
   classifications: ["Storyborn", "Villain", "Sorcerer"],
   i18n: maleficentExultantSpellcasterI18n,

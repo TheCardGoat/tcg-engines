@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/glossary/keywords-and-abilities"
+  relation: "current_index"
+---
+
 # Keywords and Abilities
 
 In this section, \[CARDNAME] refers to the implied name of the card itself.

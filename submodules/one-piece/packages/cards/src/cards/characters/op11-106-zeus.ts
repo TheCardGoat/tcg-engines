@@ -31,7 +31,7 @@ export const op11Zeus106: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Homies", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",

@@ -30,6 +30,10 @@ export const theIrateChefMeatHutCook: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_8ef94388f42542539af72202a9c305aa",
+    tcgPlayer: "704685",
+  },
   classifications: ["Storyborn"],
   i18n: theIrateChefMeatHutCookI18n,
 };

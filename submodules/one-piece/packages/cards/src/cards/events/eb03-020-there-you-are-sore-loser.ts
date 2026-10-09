@@ -66,7 +66,7 @@ export const eb03ThereYouAreSoreLoser020: EventCard = {
                 {
                   filter: "trait",
                   value: "FILM",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -31,10 +31,19 @@ export const floralArrangement: GrandArchiveCard<GrandArchiveAbilityDefinition, 
           kind: "card-resolution",
           text: "Summon a Silvershine and a Fraysia token.",
           effect: {
-            kind: "summon",
-            object: "Silvershine and a Fraysia",
-            controller: "controller",
-            bindResultAs: "summoned-token",
+            kind: "sequence",
+            effects: [
+              {
+                kind: "summon",
+                object: "Silvershine",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Fraysia",
+                controller: "controller",
+              },
+            ],
           },
         },
         {

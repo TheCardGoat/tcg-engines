@@ -603,7 +603,7 @@
   "sim.support.submitError": "Failed to submit bug report. Please try again.",
   "sim.support.submitLabel": "Submit",
   "sim.support.submitSuccess": "Thank you for your report!",
-  "sim.support.openTriageLabel": "Open triage request",
+  "sim.support.openTriageLabel": "Fehlerbericht ansehen",
   "sim.target.cards": "Cards",
   "sim.target.players": "Players",
   "sim.target.selectedCount": "{selectedCount} selected",
@@ -638,5 +638,11 @@
   "sim.postGame.sidebar.goToNextGame": "Go to Next Game →",
   "sim.player.report.openAria": "Spieler melden",
   "sim.itemZone.showEarlierAria": "Zeige {count, plural, one {# früheres Item} other {# frühere Items}}",
-  "sim.itemZone.showLaterAria": "Zeige {count, plural, one {# späteres Item} other {# spätere Items}}"
+  "sim.itemZone.showLaterAria": "Zeige {count, plural, one {# späteres Item} other {# spätere Items}}",
+  "sim.inkDropsBadge.instructionStart": "klicken, um das Bezahlen mit Tintetropfen zu starten",
+  "sim.inkDropsBadge.instructionStop": "klicken, um das Bezahlen mit Tintetropfen zu beenden",
+  "sim.inkDropsBadge.countOne": "{count} Tintetropfen",
+  "sim.inkDropsBadge.countMany": "{count} Tintetropfen",
+  "sim.effect.canChallengeReady": "Kann bereite Charaktere herausfordern",
+  "sim.support.dismissReminderLabel": "Feedback-Erinnerung für eine Woche ausblenden"
 }

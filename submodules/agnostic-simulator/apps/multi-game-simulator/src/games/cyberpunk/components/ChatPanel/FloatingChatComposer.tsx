@@ -44,20 +44,23 @@ export function FloatingChatComposer() {
       {open ? (
         <div className={classes.compose} data-testid="chat-composer">
           {canSendChat ? (
-            <div className={classes.presets} data-testid="chat-presets">
-              {CHAT_PRESET_KEYS.map((key) => (
-                <button
-                  key={key}
-                  type="button"
-                  className={classes.presetChip}
-                  data-testid="chat-quick"
-                  data-quick-id={key}
-                  onClick={() => sendChatPreset(key)}
-                >
-                  {CHAT_PRESETS[key]}
-                </button>
-              ))}
-            </div>
+            <details className={classes.quickReplies} open={!freeTextEnabled}>
+              <summary>Quick replies</summary>
+              <div className={classes.presets} data-testid="chat-presets">
+                {CHAT_PRESET_KEYS.map((key) => (
+                  <button
+                    key={key}
+                    type="button"
+                    className={classes.presetChip}
+                    data-testid="chat-quick"
+                    data-quick-id={key}
+                    onClick={() => sendChatPreset(key)}
+                  >
+                    {CHAT_PRESETS[key]}
+                  </button>
+                ))}
+              </div>
+            </details>
           ) : null}
           {freeTextEnabled && canSendChat ? (
             <form className={classes.inputRow} onSubmit={submit}>

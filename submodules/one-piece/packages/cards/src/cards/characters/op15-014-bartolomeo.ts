@@ -31,7 +31,7 @@ export const op15Bartolomeo014: CharacterCard = {
   setId: "OP15",
   cost: 4,
   power: 6000,
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   attribute: "special",
   effect:
     "If this Character would be K.O.'d, you may trash 1 Event from your hand instead.\n[On Play] Activate up to 1 {Dressrosa} type Event with a base cost of 3 or less from your hand.",
@@ -54,7 +54,7 @@ export const op15Bartolomeo014: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "baseCost",

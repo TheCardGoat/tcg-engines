@@ -30,7 +30,7 @@ export const op13GolDRoger064: CharacterCard = {
   setId: "OP13",
   cost: 10,
   power: 13000,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   attribute: "slash",
   effect:
     "Your Leader and all of your Characters that do not have a type including \"Roger Pirates\" have their effects negated.\n[On Play] DON!! -3: Your Leader gains +2000 power until the end of your opponent's next End Phase. Then, give all of your opponent's Characters -2000 power until the end of your opponent's next End Phase.",

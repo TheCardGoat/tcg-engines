@@ -25,6 +25,10 @@ export const narrowEscape: ActionCard = {
   rarity: "common",
   cost: 4,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_aa53ad0917d3427e91f3571662645e6a",
+    tcgPlayer: "704587",
+  },
   text: "Return up to 2 chosen characters, items, or locations with cost 2 or less each to their player's hand.",
   abilities: [
     {
@@ -34,7 +38,9 @@ export const narrowEscape: ActionCard = {
         type: "return-to-hand",
         target: {
           selector: "chosen",
-          count: { upTo: 2 },
+          count: {
+            upTo: 2,
+          },
           owner: "any",
           zones: ["play"],
           cardTypes: ["character", "item", "location"],

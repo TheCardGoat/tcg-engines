@@ -528,7 +528,7 @@ describe("Gameplay guide specification coverage", () => {
     expect(failure.errorCode).toBe("CARD_SPENT");
   });
 
-  it("moves Gear with an attached Legend when that Legend moves to hand", () => {
+  it("leaves Gear in hand unattached when its Legend is removed from play", () => {
     const legend = createMockLegend({
       id: "guide-equipped-legend",
       name: "Guide Equipped Legend",
@@ -573,13 +573,13 @@ describe("Gameplay guide specification coverage", () => {
     engine.playCard(returnLegendProgram, { as: P1 });
     engine.resolveEffectTarget(legend, { as: P1 });
 
-    const returnedLegend = engine.getCard(legend, "hand", P1);
+    const returnedLegend = engine.getCard(legend, "removedFromGame", P1);
     const returnedGear = engine.getCard(gear, "hand", P1);
-    expect(returnedLegend.meta.attachedGearIds).toContain(returnedGear.instanceId);
-    expect(returnedGear.meta.attachedToId).toBe(returnedLegend.instanceId);
+    expect(returnedLegend.zone).toBe("removedFromGame");
+    expect(returnedGear.meta.attachedToId).toBeNull();
   });
 
-  it("moves attached Gear back to the field when a bounced Unit is replayed", () => {
+  it("leaves bounced Gear in hand after the Unit is replayed", () => {
     const unit = createMockUnit({
       id: "guide-bounced-equipped-unit",
       name: "Guide Bounced Equipped Unit",
@@ -626,17 +626,14 @@ describe("Gameplay guide specification coverage", () => {
 
     engine.playCard(returnUnitProgram, { as: P1 });
     engine.resolveEffectTarget(unit, { as: P1 });
-    expect(engine.getCard(gear, "hand", P1).meta.attachedToId).toBe(
-      engine.getCard(unit, "hand", P1).instanceId,
-    );
+    expect(engine.getCard(gear, "hand", P1).meta.attachedToId).toBeNull();
 
     engine.playCard(unit, { as: P1 });
 
     const replayedUnit = engine.getCard(unit, "field", P1);
-    const replayedGear = engine.getCard(gear, "field", P1);
-    expect(replayedUnit.meta.attachedGearIds).toContain(replayedGear.instanceId);
-    expect(replayedGear.meta.attachedToId).toBe(replayedUnit.instanceId);
-    expect(getEffectivePower(engine.getState(), replayedUnit.instanceId)).toBe(5);
+    expect(engine.getCard(gear, "hand", P1).meta.attachedToId).toBeNull();
+    expect(replayedUnit.meta.attachedGearIds).toHaveLength(0);
+    expect(getEffectivePower(engine.getState(), replayedUnit.instanceId)).toBe(3);
   });
 
   it("removes a GO SOLO Legend from the game when it leaves the field", () => {

@@ -21,7 +21,7 @@ export const op03ToothAttack037: EventCard = {
   rarity: "C",
   setId: "OP03",
   cost: 1,
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   effect:
     "[Main] You may rest 1 of your [East Blue] type Characters: K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less. [Trigger] Play up to 1 Character card with a cost of 4 or less and a [Trigger] from your hand.",
   effects: {
@@ -36,7 +36,7 @@ export const op03ToothAttack037: EventCard = {
               {
                 filter: "trait",
                 value: "East Blue",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

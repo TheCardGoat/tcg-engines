@@ -33,6 +33,7 @@ export const meilinLeeLeadVocalist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7fafc72db65c4609a156954510ee3dbc",
+    tcgPlayer: "702648",
   },
   text: [
     {

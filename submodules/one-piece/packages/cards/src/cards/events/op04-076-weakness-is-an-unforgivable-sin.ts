@@ -21,7 +21,7 @@ export const op04WeaknessIsAnUnforgivableSin076: EventCard = {
   rarity: "C",
   setId: "OP04",
   cost: 1,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   effect:
     "[Counter] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Up to 1 of your Leader or Character cards gains +1000 power during this turn. [Trigger] Add up to 1 DON!! card from your DON!! deck and set it as active.",
   effects: {

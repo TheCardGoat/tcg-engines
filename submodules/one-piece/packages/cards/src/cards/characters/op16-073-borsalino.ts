@@ -40,7 +40,7 @@ export const op16Borsalino073: CharacterCard = {
   setId: "OP16",
   cost: 7,
   power: 8000,
-  traits: ["Navy Admiral"],
+  traits: ["Admiral", "Navy"],
   attribute: "special",
   effect:
     "[On Play] Add up to 1 DON!! card from your DON!! deck and set it as active, and add up to 1 additional DON!! card and rest it.\n[End of Your Turn] DON!! -2: Set this Character as active. Then, this Character gains [Blocker] until the end of your opponent's next End Phase.",

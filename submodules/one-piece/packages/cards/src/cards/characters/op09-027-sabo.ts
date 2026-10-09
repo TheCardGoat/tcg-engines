@@ -40,7 +40,7 @@ export const op09Sabo027: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Revolutionary Army ODYSSEY"],
+  traits: ["ODYSSEY", "Revolutionary Army"],
   attribute: "special",
   effect: "[When Attacking] [Once Per Turn] If you have 3 or more rested Characters, draw 1 card.",
   effects: {

@@ -8,7 +8,7 @@ vi.mock("../live/runtimeHeaders", () => ({
 vi.mock("../../../../runtime/gameRuntimeApi", () => ({
   playUrl: (slug: string, suffix: string) => `http://api.test/v1/games/${slug}/play${suffix}`,
 }));
-vi.mock("../index", () => ({ DEFAULT_AUTOMATED_ACTION_STRATEGY_ID: "default" }));
+vi.mock("../index", () => ({ DEFAULT_AUTOMATED_ACTION_STRATEGY_ID: "expert-oracle" }));
 vi.mock("./deckFixtures", () => ({
   DEFAULT_BOT_PRACTICE_DECK_ID: "bot-default",
   DEFAULT_PLAYER_PRACTICE_DECK_ID: "player-default",
@@ -65,7 +65,7 @@ describe("fetchPracticeMatchConfigFromServer", () => {
 
     const config = await fetchPracticeMatchConfigFromServer("game-1", fetcher);
 
-    expect(config?.botStrategyId).toBe("default");
+    expect(config?.botStrategyId).toBe("expert-oracle");
   });
 
   test("returns null on 404 without throwing", async () => {

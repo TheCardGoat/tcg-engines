@@ -12,3 +12,13 @@ describe("Angel Attendant — Imbue keyword", () => {
     requirement: "advanced",
   });
 });
+
+import { proveDeathDraw } from "../../../testing/death-draw.ts";
+import { ferventBeastmaster } from "../../DOA/allies/fervent-beastmaster.ts";
+/** @covers 92mnQJPfR8-a3 */
+describe("angelAttendant death draw", () =>
+  proveDeathDraw({
+    card: angelAttendant,
+    abilityId: "92mnQJPfR8-a3",
+    attacker: ferventBeastmaster,
+  }));

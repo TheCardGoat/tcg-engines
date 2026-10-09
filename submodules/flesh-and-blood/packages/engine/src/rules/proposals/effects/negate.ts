@@ -2,6 +2,7 @@ import type { FabEffect } from "@tcg/flesh-and-blood-types";
 import type { FabEffectProposalResult, ProposalContext } from "../shared.ts";
 import { baseEvent, conditionHolds, objectTargets, unsupported } from "../shared.ts";
 import { nextFabDestinationRef, snapshotPlayerId } from "../../snapshots.ts";
+import { objectControllerSeat } from "../../../runtime-helpers.ts";
 
 export function proposeNegate(
   ctx: ProposalContext,
@@ -17,7 +18,10 @@ export function proposeNegate(
   );
   if (!objects) return unsupported(effect, "negate target is unresolved");
   const events = objects.flatMap((object, index) => {
-    const recipient = snapshotPlayerId(object);
+    const recipient =
+      objectControllerSeat(ctx.state, object.instanceId) ??
+      object.controllerId ??
+      snapshotPlayerId(object);
     const bindings = {
       ...ctx.layer.bindings,
       ...(effect.outputBinding ? { [effect.outputBinding]: object } : {}),

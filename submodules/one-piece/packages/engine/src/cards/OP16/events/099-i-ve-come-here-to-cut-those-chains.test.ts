@@ -7,7 +7,8 @@ describe("OP16-099 I've Come Here to Cut Those Chains", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: ["OP16-099"],
-        deck: ["OP13-013", "OP13-013", "OP13-013", "OP13-013", "OP13-013"],
+        // Keep a bottom card so deck-empty defeat does not end this effect test.
+        deck: ["OP13-013", "OP13-013", "OP13-013", "OP13-013", "OP13-013", "EB01-025"],
         trash: ["OP16-091"],
         activeDon: 7,
       },
@@ -27,7 +28,7 @@ describe("OP16-099 I've Come Here to Cut Those Chains", () => {
     );
 
     const south = engine.getView("south").players.south;
-    expect(south.deckCount).toBe(0);
+    expect(south.deckCount).toBe(1);
     expect(south.trash).toHaveLength(6);
     expect(south.characters.map((card) => card?.cardId)).toContain("OP16-091");
     expect(engine.getView("south").prompts).toHaveLength(0);
@@ -47,29 +48,6 @@ describe("OP16-099 I've Come Here to Cut Those Chains", () => {
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
 
-  test("[Optional] declined leaves the board unchanged", () => {
-    const engine = OnePieceTestEngine.create({ hand: ["OP16-099"], activeDon: 3 }, {});
-
-    engine.playCard("OP16-099");
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-099");
-    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
-    expect(engine.getView("south").prompts).toHaveLength(0);
-  });
   test("[On Play] decline path (subject-bound)", () => {
     const here = "OP16-099";
     const engine = OnePieceTestEngine.create({ hand: [here], activeDon: 3 }, {});

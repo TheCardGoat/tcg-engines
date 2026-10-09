@@ -6,10 +6,10 @@ import type {
   GrandArchiveZone,
 } from "@tcg/grand-archive-types";
 import {
-  flattenGrandArchiveAbilities,
   grandArchiveAbilityExecutionObject,
   grandArchiveAbilityIsFunctional,
   grandArchiveObjectFace,
+  grandArchiveObjectPrintedAbilities,
 } from "../../game/card-runtime.ts";
 import { grandArchiveObjectTimestamp } from "./continuous.ts";
 import { grandArchiveDurationStatus, type GrandArchiveDurationStatus } from "./durations.ts";
@@ -447,8 +447,9 @@ function staticRestrictionsAreSatisfied(
 
 /**
  * Collects every active rule that changes or adds a cost for one concrete game action.
- * Self-referential printed activation rules are checked on the card before it enters the
- * Effects Stack; other static sources must be in their normal functional zone.
+ * Self-referential activation rules retain access to the zone from which the card was
+ * announced. Cost conditions still use the state after announcement; other static sources
+ * must be in their normal functional zone.
  */
 function collectGrandArchiveRules(
   request: GrandArchiveRuleRequest,
@@ -484,7 +485,7 @@ function collectGrandArchiveRules(
   for (const source of Object.values(evaluation.state.objects)) {
     const face = grandArchiveObjectFace(evaluation.program, source);
     const abilities = evaluation.skipCrossObjectKeywordDerivation
-      ? flattenGrandArchiveAbilities(face.abilities)
+      ? grandArchiveObjectPrintedAbilities(evaluation.program, source, evaluation.state)
       : grandArchiveObjectActiveAbilities(
           evaluation.program,
           evaluation.state,
@@ -510,10 +511,17 @@ function collectGrandArchiveRules(
         candidateId: request.destinationId ?? candidate.id,
         bindings: actionBindings,
       });
-      const selfRuleBeforeStackEntry =
-        source.id === candidate.id && ability.functionalZones === undefined;
+      const selfActivationRule =
+        source.id === candidate.id &&
+        (ability.functionalZones === undefined ||
+          (request.activationKind === "card" &&
+            source.zone === "effects-stack" &&
+            (request.action === "activate" ||
+              request.action === "play" ||
+              request.action === "pay-cost") &&
+            ability.functionalZones.includes(request.fromZone)));
       if (
-        (!selfRuleBeforeStackEntry && !grandArchiveAbilityIsFunctional(face, ability, source)) ||
+        (!selfActivationRule && !grandArchiveAbilityIsFunctional(face, ability, source)) ||
         !staticRestrictionsAreSatisfied(ability, sourceEvaluation) ||
         (ability.condition && !evaluateGrandArchiveCondition(ability.condition, sourceEvaluation))
       ) {
@@ -636,7 +644,7 @@ function collectGrandArchivePlayerRules(
   for (const source of Object.values(evaluation.state.objects)) {
     const face = grandArchiveObjectFace(evaluation.program, source);
     const abilities = evaluation.skipCrossObjectKeywordDerivation
-      ? flattenGrandArchiveAbilities(face.abilities)
+      ? grandArchiveObjectPrintedAbilities(evaluation.program, source, evaluation.state)
       : grandArchiveObjectActiveAbilities(
           evaluation.program,
           evaluation.state,

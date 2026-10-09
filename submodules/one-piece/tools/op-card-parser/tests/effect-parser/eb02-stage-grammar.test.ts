@@ -19,7 +19,7 @@ describe("EB02 Stage parser grammar", () => {
               player: "self",
               zones: ["character"],
               count: { amount: 1 },
-              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
             },
           },
         ],

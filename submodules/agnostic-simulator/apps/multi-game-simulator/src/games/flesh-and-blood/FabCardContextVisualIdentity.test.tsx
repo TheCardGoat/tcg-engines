@@ -46,6 +46,7 @@ describe("FAB card context symbol text", () => {
     const identity = FAB_CARD_CONTEXT_VISUAL_IDENTITY.renderIdentity?.({
       entity,
       mode: "quick",
+      onInspect: () => undefined,
     });
     const html = renderToStaticMarkup(<>{identity}</>);
 

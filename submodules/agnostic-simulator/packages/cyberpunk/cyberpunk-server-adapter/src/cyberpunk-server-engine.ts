@@ -15,6 +15,7 @@ import { resolveDeckProfile } from "@tcg/cyberpunk-utils";
 import {
   evaluateReserveTimeoutDrop,
   validateInteractionSubmission,
+  type AnimationPlanV2,
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
@@ -33,7 +34,7 @@ import type {
   PublicGameEndSummary,
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
-import { cyberpunkAnimationPlan } from "./animation";
+import { cyberpunkAnimationPlan, projectCyberpunkAuthoritativeAnimationPlan } from "./animation";
 import {
   buildCyberpunkInteractionView,
   cyberpunkSubmissionToPayload,
@@ -99,6 +100,19 @@ export class CyberpunkServerEngine implements ServerGameEngine {
   ): unknown {
     const viewerId = viewer.role === "player" ? viewer.actorId : "__public_spectator__";
     return this.engine.getFilteredView(viewerId as never);
+  }
+
+  getViewerAnimationPlan(
+    plan: AnimationPlanV2 | null,
+    viewer: { role: "player"; actorId: string } | { role: "spectator" },
+  ): AnimationPlanV2 | null {
+    return plan
+      ? projectCyberpunkAuthoritativeAnimationPlan(
+          plan,
+          viewer.role === "player" ? viewer.actorId : null,
+          this.engine.getState(),
+        )
+      : null;
   }
 
   getActivePlayerId(): string | undefined {
@@ -203,7 +217,17 @@ export class CyberpunkServerEngine implements ServerGameEngine {
     context: DispatchContext,
   ): DispatchResult {
     const currentStateID = this.getStateID();
-    const view = this.getInteractionView(actorId);
+    let view: EngineInteractionView;
+    try {
+      view = this.getInteractionView(actorId);
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Interaction view unavailable.",
+        errorCode: "invalid_interaction_view",
+        stateID: currentStateID,
+      };
+    }
     const validation = validateInteractionSubmission(view, submission);
     if (!validation.ok) {
       return {
@@ -465,6 +489,9 @@ export class CyberpunkServerEngine implements ServerGameEngine {
         };
       }
       case "idle":
+        if (step.reason === "noMoves") {
+          return this.#recoverBlockedAutomation(actorId as string, context, strategyOption.id);
+        }
         return {
           finalResult: {
             success: false,
@@ -476,31 +503,56 @@ export class CyberpunkServerEngine implements ServerGameEngine {
           blocked: { reason: step.reason },
         };
       case "stuck":
-        return {
-          finalResult: {
-            success: false,
-            error: step.reason,
-            errorCode: "bot_stuck",
-            stateID: this.getStateID(),
-          },
-          strategyId: strategyOption.id,
-          blocked: { reason: step.pendingType ?? "strategy-stuck" },
-        };
+        return this.#recoverBlockedAutomation(actorId as string, context, strategyOption.id);
       case "illegal":
-        return {
-          finalResult: {
-            success: false,
-            error: step.error,
-            errorCode: step.errorCode,
-            stateID: this.getStateID(),
-          },
-          strategyId: strategyOption.id,
-          selectedCandidate: { family: step.decision.move },
-          decisionDiagnostics: toBotDecisionDiagnostics(step.decision.diagnostics),
-          decisionDurationMs: step.decisionDurationMs,
-          blocked: { reason: "illegal-command" },
-        };
+        return this.#recoverBlockedAutomation(actorId as string, context, strategyOption.id);
     }
+  }
+
+  /**
+   * Keep an automated match moving after a strategy/resolver failure. Normal
+   * legal exits come first. Engine-native board corrections are only used
+   * when no normal exit exists, and concession remains the final fallback.
+   */
+  #recoverBlockedAutomation(
+    actorId: string,
+    context: DispatchContext,
+    strategyId: string,
+  ): BotActionResult {
+    const prompt = this.engine.getPrompt(actorId as never);
+    const available = new Set(prompt.availableMoves.map((move) => move.moveId));
+    const state = this.engine.getState();
+    const recovery = available.has("cancelPendingResolution")
+      ? { move: "cancelPendingResolution", args: {} }
+      : available.has("keepHand")
+        ? { move: "keepHand", args: {} }
+        : available.has("passPhase")
+          ? { move: "passPhase", args: {} }
+          : available.has("resolveAttack")
+            ? { move: "resolveAttack", args: { pass: true } }
+            : state.G.attackState
+              ? { move: "manualResetCombat", args: {} }
+              : state.G.turnMetadata.currentTrigger || state.G.turnMetadata.triggerQueue.length > 0
+                ? { move: "manualClearPendingResolution", args: { scope: "all" } }
+                : state.G.gamePhase === "main"
+                  ? { move: "manualForcePassTurn", args: {} }
+                  : { move: "concede", args: {} };
+    const result = this.engine.processCommand(
+      {
+        commandID: `${context.gameId}:${actorId}:bot-recovery:${this.getStateID()}`,
+        move: recovery.move,
+        input: { args: recovery.args } as never,
+      },
+      actorId as never,
+    );
+    const dispatch = this.#toDispatchResult(result, context, actorId, recovery.move, recovery.args);
+    return {
+      finalResult: dispatch,
+      strategyId,
+      selectedCandidate: { family: recovery.move },
+      fallbackTaken: `automation-recovery:${recovery.move}`,
+      ...(dispatch.success ? {} : { blocked: { reason: "automation-recovery-failed" } }),
+    };
   }
 
   /**
@@ -532,6 +584,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       turnNumber: result.state.G.turnMetadata.turnNumber ?? 0,
       actorId,
       moveId: moveType,
+      ...(moveType === "setCombatPriority" ? { visibility: "actor" as const } : {}),
       input: { args: payload },
       processedCommand: {
         commandID: `${context.gameId}:${actorId}:${stateVersion}`,
@@ -569,6 +622,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       ),
       transition: "move",
       acceptedMoveRecord,
+      ...(moveType === "setCombatPriority" ? { commandVisibility: "actor" as const } : {}),
       engineLogRecords,
       undoable: result.undoable ?? false,
       processedCommand: {
@@ -688,7 +742,7 @@ function animationPacketsFromResult(params: {
       kind: "cyberpunk.animationScript",
       payload: {
         actorId: params.actorId,
-        moveType: params.moveType,
+        moveType: params.moveType === "setCombatPriority" ? "resolveAttack" : params.moveType,
         stateID: params.stateVersion,
         animationScript: params.result.animationScript,
       },

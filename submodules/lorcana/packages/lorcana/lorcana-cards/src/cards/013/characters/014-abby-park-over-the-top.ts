@@ -31,6 +31,7 @@ export const abbyParkOverTheTop: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_693ca1dddf28469fb0ca4cb673c42157",
+    tcgPlayer: "704550",
   },
   text: [
     {

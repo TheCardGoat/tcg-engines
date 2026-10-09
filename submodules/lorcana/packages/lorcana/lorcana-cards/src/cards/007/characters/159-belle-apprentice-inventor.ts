@@ -31,6 +31,7 @@ export const belleApprenticeInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fcb0a2f9a4044b86bba8e0ff3ade2988",
+    tcgPlayer: "619497",
   },
   text: [
     {

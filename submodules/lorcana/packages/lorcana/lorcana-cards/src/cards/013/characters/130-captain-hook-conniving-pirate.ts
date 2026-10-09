@@ -29,9 +29,13 @@ export const captainHookConnivingPirate: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_7f8f0154c2d04c4796e65ebb5a15f82e",
+    tcgPlayer: "704632",
+  },
   text: [
     {
-      title: "Have At You",
+      title: "HAVE AT YOU",
       description: "Whenever this character challenges another character, gain 1 lore.",
     },
   ],

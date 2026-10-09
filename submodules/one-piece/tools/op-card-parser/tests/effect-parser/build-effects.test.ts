@@ -61,14 +61,14 @@ describe("buildCardEffects — inline conditions", () => {
                 value: 3,
                 filters: [
                   { filter: "color", value: "blue" },
-                  { filter: "trait", value: "Cross Guild", match: "includes" },
+                  { filter: "trait", value: "Cross Guild", match: "exact" },
                 ],
               },
               source: { player: "self", zone: "hand" },
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "eq", value: 5 },
-                { filter: "trait", value: "Cross Guild", match: "includes" },
+                { filter: "trait", value: "Cross Guild", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -89,9 +89,9 @@ describe("buildCardEffects — inline conditions", () => {
         {
           trigger: "activateMain",
           costs: [
-            { cost: "returnThisToDeck", position: "bottom" },
             {
               cost: "returnTrashToDeck",
+              includeSelf: true,
               amount: 1,
               position: "bottom",
               filters: [
@@ -148,6 +148,7 @@ describe("buildCardEffects — inline conditions", () => {
       effects: [
         {
           trigger: "whenBlockerActivated",
+          eventFilter: { player: "opponent" },
           conditions: [
             {
               condition: "compound",
@@ -404,7 +405,7 @@ describe("buildCardEffects — inline conditions", () => {
     });
   });
 
-  test("treats quoted type alternatives in reveal costs as inclusive traits", () => {
+  test("treats quoted type alternatives in reveal costs as exact traits", () => {
     expect(
       buildCardEffects(
         '[On Play] You may reveal 1 "Music" or "FILM" type card from your hand: Set up to 2 of your DON!! cards as active at the end of this turn.',
@@ -420,8 +421,8 @@ describe("buildCardEffects — inline conditions", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Music", match: "includes" },
-                    { filter: "trait", value: "FILM", match: "includes" },
+                    { filter: "trait", value: "Music", match: "exact" },
+                    { filter: "trait", value: "FILM", match: "exact" },
                   ],
                 },
               ],
@@ -519,7 +520,7 @@ describe("buildCardEffects — inline conditions", () => {
     });
   });
 
-  test("preserves an inclusive trait on a return-Character activation cost", () => {
+  test("preserves an exact trait on a return-Character activation cost", () => {
     expect(
       buildCardEffects(
         '[When Attacking] You may return 1 of your "Revolutionary Army" type Characters with a cost of 3 or more to the owner\'s hand: This Character gains +3000 power during this turn.',
@@ -532,7 +533,7 @@ describe("buildCardEffects — inline conditions", () => {
               cost: "returnCharacter",
               amount: 1,
               filters: [
-                { filter: "trait", value: "Revolutionary Army", match: "includes" },
+                { filter: "trait", value: "Revolutionary Army", match: "exact" },
                 { filter: "cost", comparison: "gte", value: 3 },
               ],
             },
@@ -645,17 +646,30 @@ describe("buildCardEffects — inline conditions", () => {
             {
               action: "ko",
               condition: {
-                condition: "zoneCount",
-                player: "self",
-                zone: "character",
-                comparison: "eq",
-                value: 0,
-                filters: [
+                condition: "compound",
+                operator: "and",
+                conditions: [
                   {
-                    filter: "trait",
-                    value: "Celestial Dragons",
-                    match: "includes",
-                    negate: true,
+                    condition: "zoneCount",
+                    player: "self",
+                    zone: "character",
+                    comparison: "gte",
+                    value: 1,
+                  },
+                  {
+                    condition: "zoneCount",
+                    player: "self",
+                    zone: "character",
+                    comparison: "eq",
+                    value: 0,
+                    filters: [
+                      {
+                        filter: "trait",
+                        value: "Celestial Dragons",
+                        match: "exact",
+                        negate: true,
+                      },
+                    ],
                   },
                 ],
               },
@@ -676,9 +690,14 @@ describe("buildCardEffects — inline conditions", () => {
       effects: [
         {
           trigger: "activateMain",
-          conditions: [{ condition: "lifeComparison", selfComparison: "lte" }],
           costs: [{ cost: "trashThisCard" }],
-          actions: [{ action: "draw" }, { action: "rest" }],
+          actions: [
+            {
+              action: "conditional",
+              predicate: { condition: "lifeComparison", selfComparison: "lte" },
+              whenTrue: [{ action: "draw" }, { action: "rest" }],
+            },
+          ],
           optional: true,
         },
       ],
@@ -756,7 +775,7 @@ describe("buildCardEffects — inline conditions", () => {
               amount: 1,
               filters: [
                 { filter: "excludeSelf" },
-                { filter: "trait", value: "Homies", match: "includes" },
+                { filter: "trait", value: "Homies", match: "exact" },
               ],
             },
             { cost: "restThisCard" },
@@ -804,7 +823,7 @@ describe("buildCardEffects — inline conditions", () => {
               cost: "restCards",
               amount: 1,
               filters: [
-                { filter: "trait", value: "Dressrosa", match: "includes" },
+                { filter: "trait", value: "Dressrosa", match: "exact" },
                 {
                   filter: "anyOf",
                   groups: [
@@ -855,7 +874,7 @@ describe("buildCardEffects — inline conditions", () => {
       cost: "restCards",
       amount: 1,
       filters: [
-        { filter: "trait", value: "Dressrosa", match: "includes" },
+        { filter: "trait", value: "Dressrosa", match: "exact" },
         {
           filter: "anyOf",
           groups: [
@@ -878,7 +897,7 @@ describe("buildCardEffects — inline conditions", () => {
         cost: "restCards",
         amount: 1,
         filters: [
-          { filter: "trait", value: "Dressrosa", match: "includes" },
+          { filter: "trait", value: "Dressrosa", match: "exact" },
           {
             filter: "anyOf",
             groups: [
@@ -891,7 +910,7 @@ describe("buildCardEffects — inline conditions", () => {
     ]);
   });
 
-  test("uses included trait matching for quoted type cards returned from trash", () => {
+  test("uses exact trait matching for quoted type cards returned from trash", () => {
     expect(
       buildCardEffects(
         '[Activate: Main] You may place 2 "Thriller Bark Pirates" type cards from your trash at the bottom of your deck in any order: Draw 1 card.',
@@ -901,7 +920,7 @@ describe("buildCardEffects — inline conditions", () => {
         cost: "returnTrashToDeck",
         amount: 2,
         position: "bottom",
-        filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
+        filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "exact" }],
       },
     ]);
   });
@@ -960,8 +979,8 @@ describe("buildCardEffects — inline conditions", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Fish-Man", match: "includes" },
-                    { filter: "trait", value: "Merfolk", match: "includes" },
+                    { filter: "trait", value: "Fish-Man", match: "exact" },
+                    { filter: "trait", value: "Merfolk", match: "exact" },
                   ],
                 },
                 { filter: "cardCategory", value: "character" },
@@ -994,8 +1013,8 @@ describe("buildCardEffects — inline conditions", () => {
                   {
                     filter: "anyOf",
                     filters: [
-                      { filter: "trait", value: "Fish-Man", match: "includes" },
-                      { filter: "trait", value: "Merfolk", match: "includes" },
+                      { filter: "trait", value: "Fish-Man", match: "exact" },
+                      { filter: "trait", value: "Merfolk", match: "exact" },
                     ],
                   },
                 ],
@@ -1088,8 +1107,8 @@ describe("buildCardEffects — inline conditions", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man", match: "includes" },
-                  { filter: "trait", value: "Merfolk", match: "includes" },
+                  { filter: "trait", value: "Fish-Man", match: "exact" },
+                  { filter: "trait", value: "Merfolk", match: "exact" },
                 ],
               },
               { filter: "cardCategory", value: "character" },
@@ -1112,7 +1131,7 @@ describe("buildCardEffects — inline conditions", () => {
     expect(result?.effects).toEqual([
       {
         trigger: "onPlay",
-        conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "includes" }],
+        conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "exact" }],
         actions: [
           {
             action: "search",
@@ -1168,7 +1187,7 @@ describe("buildCardEffects — inline conditions", () => {
           player: "self",
           zones: ["character"],
           count: { amount: 1 },
-          filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+          filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
         },
         source: "opponentEffect",
         replacementAction: {
@@ -1510,7 +1529,7 @@ describe("buildCardEffects — inline conditions", () => {
             {
               condition: "leaderTrait",
               trait: "The Seven Warlords of the Sea",
-              match: "includes",
+              match: "exact",
             },
           ],
           actions: [
@@ -1529,7 +1548,7 @@ describe("buildCardEffects — inline conditions", () => {
     });
   });
 
-  test("OP01-096 preserves both independently bounded K.O. actions", () => {
+  test("OP01-096 preserves both independently bounded groups within one K.O.", () => {
     expect(
       buildCardEffects(
         "[On Play] DON!! -2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 3 or less and up to 1 of your opponent's Characters with a cost of 2 or less.",
@@ -1543,21 +1562,21 @@ describe("buildCardEffects — inline conditions", () => {
           actions: [
             {
               action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 3 }],
-              },
-            },
-            {
-              action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 2 }],
-              },
+              target: { player: "any", zones: ["character"], count: { amount: 2, upTo: true } },
+              targetGroups: [
+                {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "cost", comparison: "lte", value: 3 }],
+                },
+                {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+                },
+              ],
             },
           ],
         },
@@ -1591,7 +1610,7 @@ describe("buildCardEffects — inline conditions", () => {
     expect(block.trigger).toBe("whenAttacking");
     expect(block.conditions).toEqual([
       { condition: "donAttached", amount: 2 },
-      { condition: "leaderTrait", trait: "Navy", match: "includes" },
+      { condition: "leaderTrait", trait: "Navy", match: "exact" },
     ]);
     expect(block.actions).toEqual([{ action: "draw", player: "self", amount: 1 }]);
   });
@@ -1604,7 +1623,7 @@ describe("buildCardEffects — inline conditions", () => {
     const block = result!.effects![0]!;
     expect(block.trigger).toBe("onKo");
     expect(block.conditions).toEqual([
-      { condition: "leaderTrait", trait: "Revolutionary Army", match: "includes" },
+      { condition: "leaderTrait", trait: "Revolutionary Army", match: "exact" },
     ]);
     expect(block.actions[0]).toMatchObject({
       action: "ko",
@@ -1656,7 +1675,7 @@ describe("buildCardEffects — OP02 blue Event and Stage regressions", () => {
               condition: {
                 condition: "leaderTrait",
                 trait: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
             },
           ],
@@ -1716,7 +1735,7 @@ describe("buildCardEffects — OP02 blue Event and Stage regressions", () => {
     });
   });
 
-  test("scopes New Kama Land's Leader condition before its unconditional trailing trash", () => {
+  test("gates all New Kama Land actions after paying its Stage cost", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] You may rest this Stage: If your Leader is [Emporio.Ivankov], draw 1 card and trash 1 card from your hand. Then, trash up to 3 cards from your hand.",
@@ -1728,28 +1747,26 @@ describe("buildCardEffects — OP02 blue Event and Stage regressions", () => {
           costs: [{ cost: "restThisCard" }],
           actions: [
             {
-              action: "draw",
-              player: "self",
-              amount: 1,
-              condition: {
-                condition: "leaderName",
-                name: "Emporio.Ivankov",
-              },
-            },
-            {
-              action: "trashFromHand",
-              player: "self",
-              amount: 1,
-              condition: {
-                condition: "leaderName",
-                name: "Emporio.Ivankov",
-              },
-            },
-            {
-              action: "trashFromHand",
-              player: "self",
-              amount: 3,
-              upTo: true,
+              action: "conditional",
+              predicate: { condition: "leaderName", name: "Emporio.Ivankov" },
+              whenTrue: [
+                {
+                  action: "draw",
+                  player: "self",
+                  amount: 1,
+                },
+                {
+                  action: "trashFromHand",
+                  player: "self",
+                  amount: 1,
+                },
+                {
+                  action: "trashFromHand",
+                  player: "self",
+                  amount: 3,
+                  upTo: true,
+                },
+              ],
             },
           ],
           optional: true,
@@ -1993,7 +2010,7 @@ describe("buildCardEffects — OP02 blue Event and Stage regressions", () => {
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
                 filters: [
-                  { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                  { filter: "trait", value: "Straw Hat Crew", match: "exact" },
                   { filter: "power", comparison: "gte", value: 6000 },
                 ],
               },
@@ -2057,7 +2074,7 @@ describe("buildCardEffects — Choose one", () => {
                 zones: ["leader", "character"],
                 count: { amount: 1, upTo: true },
                 filters: [
-                  { filter: "trait", value: "East Blue", match: "includes" },
+                  { filter: "trait", value: "East Blue", match: "exact" },
                   { filter: "cost", comparison: "lte", value: 6 },
                 ],
               },
@@ -2177,7 +2194,7 @@ describe("buildCardEffects — OP14-054 Fisher Tiger", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "exact" }],
           actions: [{ action: "draw", player: "self", amount: 3 }],
         },
         {
@@ -2266,7 +2283,7 @@ describe("buildCardEffects — OP14-061 Vergo", () => {
             player: "self",
             zones: ["character"],
             count: { amount: 1 },
-            filters: [{ filter: "trait", value: "Donquixote Pirates", match: "includes" }],
+            filters: [{ filter: "trait", value: "Donquixote Pirates", match: "exact" }],
           },
           source: "opponentEffect",
           replacementAction: { action: "returnDon", player: "self", amount: 1 },
@@ -2353,7 +2370,7 @@ describe("buildCardEffects — OP14-063 Sugar", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 5 },
-                { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+                { filter: "trait", value: "Donquixote Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -2430,7 +2447,7 @@ describe("buildCardEffects — OP14-067 Dellinger", () => {
                 {
                   filter: "trait",
                   value: "Donquixote Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
               revealDestination: "hand",
@@ -2455,7 +2472,7 @@ describe("buildCardEffects — OP14-068 Trebol", () => {
           trigger: "whenDonReturned",
           conditions: [
             { condition: "turn", value: "opponent" },
-            { condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" },
+            { condition: "leaderTrait", trait: "Donquixote Pirates", match: "exact" },
           ],
           actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "rested" }],
           oncePerTurn: true,
@@ -2493,7 +2510,7 @@ describe("buildCardEffects — OP14-069 Donquixote Doflamingo", () => {
                     condition: {
                       condition: "leaderTrait",
                       trait: "Donquixote Pirates",
-                      match: "includes",
+                      match: "exact",
                     },
                   },
                 ],
@@ -2541,7 +2558,7 @@ describe("buildCardEffects — optional top-Life costs", () => {
               condition: {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             },
           ],
@@ -2588,7 +2605,7 @@ describe("buildCardEffects — optional top-Life costs", () => {
 });
 
 describe("buildCardEffects — mandatory cost postconditions", () => {
-  test("keeps a Counter Leader condition on the action after its mandatory DON!! cost", () => {
+  test("keeps a Counter Leader condition on the action after its optional DON!! cost", () => {
     expect(
       buildCardEffects(
         '[Counter] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader\'s type includes "Baroque Works", select 1 of your Characters. Change the attack target to the selected Character.',
@@ -2597,6 +2614,7 @@ describe("buildCardEffects — mandatory cost postconditions", () => {
       effects: [
         {
           trigger: "counter",
+          optional: true,
           costs: [{ cost: "returnDon", amount: 1 }],
           actions: [
             {
@@ -2667,9 +2685,7 @@ describe("buildCardEffects — OP14-071 Pica", () => {
       effects: [
         {
           trigger: "endOfYourTurn",
-          conditions: [
-            { condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" },
-          ],
+          conditions: [{ condition: "leaderTrait", trait: "Donquixote Pirates", match: "exact" }],
           actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "active" }],
         },
       ],
@@ -2720,9 +2736,7 @@ describe("buildCardEffects — OP14-074 Monet", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [
-            { condition: "leaderTrait", trait: "Donquixote Pirates", match: "includes" },
-          ],
+          conditions: [{ condition: "leaderTrait", trait: "Donquixote Pirates", match: "exact" }],
           actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "active" }],
         },
         {
@@ -2815,7 +2829,7 @@ describe("buildCardEffects — OP14-082 Oinkchuck", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: "all" },
-                filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
+                filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "exact" }],
               },
               value: 4,
               duration: "untilEndOfOpponentNextEndPhase",
@@ -2831,7 +2845,7 @@ describe("buildCardEffects — OP14-082 Oinkchuck", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 2 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -2873,7 +2887,7 @@ describe("buildCardEffects — OP11-023 Arlong", () => {
               condition: "compound",
               operator: "and",
               conditions: [
-                { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
+                { condition: "leaderTrait", trait: "Fish-Man", match: "exact" },
                 { condition: "lifeCount", player: "self", comparison: "lte", value: 3 },
                 {
                   condition: "restedCardCount",
@@ -2927,8 +2941,8 @@ describe("buildCardEffects — OP11-024 Aladine", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Fish-Man", match: "includes" },
-                    { filter: "trait", value: "Merfolk", match: "includes" },
+                    { filter: "trait", value: "Fish-Man", match: "exact" },
+                    { filter: "trait", value: "Merfolk", match: "exact" },
                   ],
                 },
                 { filter: "cardCategory", value: "character" },
@@ -2986,23 +3000,26 @@ describe("buildCardEffects — OP14-084 Ms. All Sunday", () => {
           conditions: [{ condition: "leaderTrait", trait: "Baroque Works", match: "includes" }],
           actions: [
             {
-              action: "play",
+              action: "playGrouped",
               source: { player: "self", zone: "trash" },
-              count: { amount: 1, upTo: true },
-              filters: [
-                { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Baroque Works", match: "includes" },
-                { filter: "cardCategory", value: "character" },
-              ],
-            },
-            {
-              action: "play",
-              source: { player: "self", zone: "trash" },
-              count: { amount: 1, upTo: true },
-              filters: [
-                { filter: "cost", comparison: "eq", value: 1 },
-                { filter: "trait", value: "Baroque Works", match: "includes" },
-                { filter: "cardCategory", value: "character" },
+              playStates: { single: "active", multiple: ["active", "active"] },
+              groups: [
+                {
+                  count: { amount: 1, upTo: true },
+                  filters: [
+                    { filter: "cost", comparison: "lte", value: 4 },
+                    { filter: "trait", value: "Baroque Works", match: "includes" },
+                    { filter: "cardCategory", value: "character" },
+                  ],
+                },
+                {
+                  count: { amount: 1, upTo: true },
+                  filters: [
+                    { filter: "cost", comparison: "eq", value: 1 },
+                    { filter: "trait", value: "Baroque Works", match: "includes" },
+                    { filter: "cardCategory", value: "character" },
+                  ],
+                },
               ],
             },
           ],
@@ -3160,7 +3177,7 @@ describe("buildCardEffects — OP14-089 Ryuma", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -3405,7 +3422,7 @@ describe("buildCardEffects — OP14-100 Absalom", () => {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
               revealDestination: "hand",
@@ -3422,7 +3439,7 @@ describe("buildCardEffects — OP14-100 Absalom", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -3451,7 +3468,7 @@ describe("buildCardEffects — OP14-102 Kumacy", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -3673,7 +3690,7 @@ describe("buildCardEffects — OP14-104 Gecko Moria", () => {
       {
         filter: "trait" as const,
         value: "Thriller Bark Pirates",
-        match: "includes" as const,
+        match: "exact" as const,
       },
       { filter: "cost" as const, comparison: "lte" as const, value: 4 },
       { filter: "cardCategory" as const, value: "character" as const },
@@ -3752,8 +3769,8 @@ describe("buildCardEffects — OP14-105 Gorgon Sisters", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Amazon Lily", match: "includes" },
-                    { filter: "trait", value: "Kuja Pirates", match: "includes" },
+                    { filter: "trait", value: "Amazon Lily", match: "exact" },
+                    { filter: "trait", value: "Kuja Pirates", match: "exact" },
                   ],
                 },
               ],
@@ -3777,7 +3794,7 @@ describe("buildCardEffects — OP14-105 Gorgon Sisters", () => {
         },
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "exact" }],
           actions: [{ action: "playThisCard" }],
         },
       ],
@@ -3821,7 +3838,7 @@ describe("buildCardEffects — OP14-107 Shakuyaku", () => {
         },
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "exact" }],
           actions: [{ action: "playThisCard" }],
         },
       ],
@@ -3888,7 +3905,7 @@ describe("buildCardEffects — OP14-109 Victoria Cindry", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -3933,7 +3950,7 @@ describe("buildCardEffects — OP14-110 Dr. Hogback", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -3974,7 +3991,7 @@ describe("buildCardEffects — OP14-111 Perona", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 4 },
-                { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
               playState: "rested",
@@ -4000,7 +4017,7 @@ describe("buildCardEffects — OP14-112 Boa Hancock", () => {
             {
               condition: "leaderTrait",
               trait: "The Seven Warlords of the Sea",
-              match: "includes",
+              match: "exact",
             },
           ],
           actions: [
@@ -4057,8 +4074,8 @@ describe("buildCardEffects — OP14-113 Marguerite", () => {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Amazon Lily", match: "includes" },
-                    { filter: "trait", value: "Kuja Pirates", match: "includes" },
+                    { filter: "trait", value: "Amazon Lily", match: "exact" },
+                    { filter: "trait", value: "Kuja Pirates", match: "exact" },
                   ],
                 },
               ],
@@ -4070,7 +4087,7 @@ describe("buildCardEffects — OP14-113 Marguerite", () => {
         },
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "exact" }],
           actions: [{ action: "playThisCard" }],
         },
       ],
@@ -4095,7 +4112,7 @@ describe("buildCardEffects — OP14-114 Ran", () => {
                 player: "self",
                 zones: ["leader", "character"],
                 count: { amount: 1 },
-                filters: [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
+                filters: [{ filter: "trait", value: "Kuja Pirates", match: "exact" }],
               },
               count: { amount: 1, upTo: true },
               donState: "rested",
@@ -4105,7 +4122,7 @@ describe("buildCardEffects — OP14-114 Ran", () => {
         },
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "exact" }],
           actions: [{ action: "playThisCard" }],
         },
       ],
@@ -4135,7 +4152,7 @@ describe("buildCardEffects — OP14-115 Rindo", () => {
         },
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Kuja Pirates", match: "exact" }],
           actions: [{ action: "playThisCard" }],
         },
       ],
@@ -4351,7 +4368,7 @@ describe("buildCardEffects — OP14-052 Hannyabal", () => {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cost", comparison: "lte", value: 6 },
-                { filter: "trait", value: "Impel Down", match: "includes" },
+                { filter: "trait", value: "Impel Down", match: "exact" },
                 { filter: "cardCategory", value: "character" },
               ],
             },
@@ -4385,7 +4402,7 @@ describe("buildCardEffects — OP14-050 Chew", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Fish-Man", match: "exact" }],
           actions: [{ action: "draw", player: "self", amount: 1 }],
         },
       ],
@@ -4497,8 +4514,8 @@ describe("buildCardEffects — Jinbe EB04-015 integration", () => {
         condition: "compound",
         operator: "or",
         conditions: [
-          { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
-          { condition: "leaderTrait", trait: "Merfolk", match: "includes" },
+          { condition: "leaderTrait", trait: "Fish-Man", match: "exact" },
+          { condition: "leaderTrait", trait: "Merfolk", match: "exact" },
         ],
       },
     });
@@ -4519,29 +4536,34 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
           optional: true,
           actions: [
             {
-              action: "grantKeyword",
-              target: {
-                player: "self",
-                zones: ["character"],
-                count: { amount: 1 },
-                self: true,
-              },
-              keyword: "rush",
-              duration: "thisTurn",
-              condition: {
+              action: "conditional",
+              predicate: {
                 condition: "leaderTrait",
                 trait: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
-            },
-            {
-              action: "rest",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 7 }],
-              },
+              whenTrue: [
+                {
+                  action: "grantKeyword",
+                  target: {
+                    player: "self",
+                    zones: ["character"],
+                    count: { amount: 1 },
+                    self: true,
+                  },
+                  keyword: "rush",
+                  duration: "thisTurn",
+                },
+                {
+                  action: "rest",
+                  target: {
+                    player: "opponent",
+                    zones: ["character"],
+                    count: { amount: 1, upTo: true },
+                    filters: [{ filter: "cost", comparison: "lte", value: 7 }],
+                  },
+                },
+              ],
             },
           ],
         },
@@ -4563,7 +4585,7 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
           count: { amount: 1 },
           filters: [
             { filter: "color", value: "blue" },
-            { filter: "trait", value: "Navy", match: "includes" },
+            { filter: "trait", value: "Navy", match: "exact" },
           ],
         },
         source: "opponentEffect",
@@ -4601,12 +4623,12 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
         cost: "returnTrashToDeck",
         amount: 3,
         position: "bottom",
-        filters: [{ filter: "trait", value: "Revolutionary Army", match: "includes" }],
+        filters: [{ filter: "trait", value: "Revolutionary Army", match: "exact" }],
       },
     ]);
   });
 
-  test("uses included-trait matching for a bracketed trash-to-deck cost", () => {
+  test("uses exact-trait matching for a bracketed trash-to-deck cost", () => {
     const result = buildCardEffects(
       "[Activate: Main] You may place 4 [Thriller Bark Pirates] type cards from your trash at the bottom of your deck in any order: This Character gains [Banish] during this turn.",
     );
@@ -4616,7 +4638,7 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
         cost: "returnTrashToDeck",
         amount: 4,
         position: "bottom",
-        filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
+        filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "exact" }],
       },
     ]);
   });
@@ -4671,7 +4693,7 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
                 {
                   filter: "trait",
                   value: "Animal Kingdom Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -4780,12 +4802,12 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
               {
                 filter: "trait",
                 value: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -4811,7 +4833,7 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
     expect(result?.effects?.[1]).toMatchObject({ trigger: "trigger", actions: [{ action: "ko" }] });
   });
 
-  test("maps Fire Fist's Event-only hand cost and both ordered K.O. actions", () => {
+  test("maps Fire Fist's Event-only hand cost and both target groups in one K.O.", () => {
     const result = buildCardEffects(
       "[Main] You may trash 1 Event from your hand: K.O. up to 1 of your opponent's Characters with 5000 power or less and up to 1 of your opponent's Characters with 4000 power or less. [Trigger] K.O. up to 1 of your opponent's Characters with 5000 power or less.",
     );
@@ -4826,8 +4848,11 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
         },
       ],
       actions: [
-        { action: "ko", target: { filters: [{ value: 5000 }] } },
-        { action: "ko", target: { filters: [{ value: 4000 }] } },
+        {
+          action: "ko",
+          target: { player: "any", zones: ["character"], count: { amount: 2, upTo: true } },
+          targetGroups: [{ filters: [{ value: 5000 }] }, { filters: [{ value: 4000 }] }],
+        },
       ],
       optional: true,
     });
@@ -4836,7 +4861,7 @@ describe("buildCardEffects — EB04 Animal Kingdom Pirates regressions", () => {
 });
 
 describe("buildCardEffects — OP03 early Character regressions", () => {
-  test("preserves Curiel's Character-only attack permission and DON!!-gated full Rush", () => {
+  test("preserves Curiel's independent played-turn Leader restriction and DON!!-gated Rush", () => {
     expect(
       buildCardEffects(
         "This Character cannot attack a Leader on the turn in which it is played. [DON!! x1] This Character gains [Rush]. (This card can attack on the turn in which it is played.)",
@@ -4846,14 +4871,15 @@ describe("buildCardEffects — OP03 early Character regressions", () => {
         {
           actions: [
             {
-              action: "grantKeyword",
-              target: {
+              action: "cannotAttackTargets",
+              attacker: {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1 },
                 self: true,
               },
-              keyword: "rushCharacter",
+              filters: [{ filter: "cardCategory", value: "leader" }],
+              condition: { condition: "playedThisTurn" },
               duration: "permanent",
             },
           ],
@@ -5004,7 +5030,7 @@ describe("buildCardEffects — OP03 early Character regressions", () => {
     });
   });
 
-  test("preserves OP04 Igaram's ordered activation costs and inclusive search", () => {
+  test("preserves OP04 Igaram's ordered activation costs and exact search", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] You may rest this Character and give your 1 active Leader -5000 power during this turn: Look at 5 cards from the top of your deck; reveal up to 1 [Alabasta] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -5025,7 +5051,7 @@ describe("buildCardEffects — OP03 early Character regressions", () => {
           actions: [
             {
               action: "search",
-              revealFilters: [{ filter: "trait", value: "Alabasta", match: "includes" }],
+              revealFilters: [{ filter: "trait", value: "Alabasta", match: "exact" }],
             },
           ],
           optional: true,
@@ -5112,37 +5138,37 @@ describe("buildCardEffects — OP04-026 Senor Pink", () => {
           costs: [{ cost: "restDon", amount: 1 }],
           actions: [
             {
-              action: "rest",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 4 }],
-              },
-              condition: {
+              action: "conditional",
+              predicate: {
                 condition: "leaderTrait",
                 trait: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
-            },
-            {
-              action: "delayed",
-              timing: "endOfThisTurn",
-              actions: [
+              whenTrue: [
                 {
-                  action: "setActive",
+                  action: "rest",
                   target: {
-                    player: "self",
-                    zones: ["costArea"],
+                    player: "opponent",
+                    zones: ["character"],
                     count: { amount: 1, upTo: true },
+                    filters: [{ filter: "cost", comparison: "lte", value: 4 }],
                   },
                 },
+                {
+                  action: "delayed",
+                  timing: "endOfThisTurn",
+                  actions: [
+                    {
+                      action: "setActive",
+                      target: {
+                        player: "self",
+                        zones: ["costArea"],
+                        count: { amount: 1, upTo: true },
+                      },
+                    },
+                  ],
+                },
               ],
-              condition: {
-                condition: "leaderTrait",
-                trait: "Donquixote Pirates",
-                match: "includes",
-              },
             },
           ],
           optional: true,
@@ -5288,21 +5314,23 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
     ]);
   });
 
-  test("keeps a leading draw condition scoped before revealing and playing exact hand cards", () => {
+  test("gates the full draw and reveal-play sequence on the leading condition", () => {
     const effects = buildCardEffects(
       '[On Play] If there is a Character with a cost of 8 or more, draw 1 card. Then, reveal up to 2 "Dressrosa" type Character cards with a cost of 7 or less other than [Rebecca] from your hand. Play 1 of the revealed cards and play the other card rested if it has a cost of 4 or less.',
     );
 
+    expect(effects?.effects?.[0]?.conditions).toEqual([
+      {
+        condition: "existsOnField",
+        zone: "character",
+        filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+      },
+    ]);
     expect(effects?.effects?.[0]?.actions).toEqual([
       {
         action: "draw",
         player: "self",
         amount: 1,
-        condition: {
-          condition: "existsOnField",
-          zone: "character",
-          filters: [{ filter: "cost", comparison: "gte", value: 8 }],
-        },
       },
       expect.objectContaining({
         action: "revealFromHand",
@@ -5311,7 +5339,7 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
         upTo: true,
         filters: expect.arrayContaining([
           { filter: "excludeName", value: "Rebecca" },
-          { filter: "trait", value: "Dressrosa", match: "includes" },
+          { filter: "trait", value: "Dressrosa", match: "exact" },
           { filter: "cardCategory", value: "character" },
           { filter: "cost", comparison: "lte", value: 7 },
         ]),
@@ -5335,12 +5363,16 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
           expect.objectContaining({
             action: "modifyPower",
             value: 5000,
+            condition: {
+              condition: "triggerEventCard",
+              filters: [{ filter: "attribute", value: "slash" }],
+            },
           }),
         ],
         conditions: [
           {
             condition: "triggerEventCard",
-            filters: [{ filter: "attribute", value: "slash" }],
+            filters: [{ filter: "cardCategory", value: "character" }],
           },
         ],
         oncePerTurn: true,
@@ -5358,11 +5390,13 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
         trigger: "whenOpponentActivatesEvent",
         optional: true,
         oncePerTurnKey: "opponentEventOrTrigger",
-        conditions: expect.arrayContaining([
-          { condition: "turn", value: "your" },
-          { condition: "lifeCount", player: "opponent", comparison: "gte", value: 2 },
-        ]),
-        actions: [expect.objectContaining({ action: "sequence" })],
+        conditions: expect.arrayContaining([{ condition: "turn", value: "your" }]),
+        actions: [
+          expect.objectContaining({
+            action: "sequence",
+            condition: { condition: "lifeCount", player: "opponent", comparison: "gte", value: 2 },
+          }),
+        ],
         oncePerTurn: true,
       }),
       expect.objectContaining({
@@ -5370,7 +5404,12 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
         optional: true,
         oncePerTurnKey: "opponentEventOrTrigger",
         eventFilter: expect.objectContaining({ causedBy: "opponent" }),
-        actions: [expect.objectContaining({ action: "sequence" })],
+        actions: [
+          expect.objectContaining({
+            action: "sequence",
+            condition: { condition: "lifeCount", player: "opponent", comparison: "gte", value: 2 },
+          }),
+        ],
         oncePerTurn: true,
       }),
     ]);
@@ -5390,7 +5429,7 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
           zones: ["character"],
           count: { amount: 1 },
           filters: [
-            { filter: "trait", value: "Supernovas", match: "includes" },
+            { filter: "trait", value: "Supernovas", match: "exact" },
             { filter: "excludeName", value: 'Capone"Gang"Bege' },
           ],
         },
@@ -5428,7 +5467,7 @@ describe("buildCardEffects — EB01 Event and Stage grammar", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man Island", match: "includes" },
+                  { filter: "trait", value: "Fish-Man Island", match: "exact" },
                   { filter: "name", value: "Shirahoshi" },
                 ],
               },

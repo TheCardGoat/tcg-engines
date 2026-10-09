@@ -62,7 +62,7 @@ export const op09CrossGuild057: EventCard = {
               {
                 filter: "trait",
                 value: "Cross Guild",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

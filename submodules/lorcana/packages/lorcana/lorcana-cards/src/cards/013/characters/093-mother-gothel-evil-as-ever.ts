@@ -31,6 +31,7 @@ export const motherGothelEvilAsEver: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a132f96da79f44ada3f1ceffe29bf543",
+    tcgPlayer: "702654",
   },
   text: [
     {

@@ -72,3 +72,21 @@ describe("EB03-042 Koala", () => {
     expect(view.prompts).toHaveLength(0);
   });
 });
+
+test("Koala actually plays a Revolutionary Army Character from hand after opponent-turn KO", () => {
+  const e = OnePieceTestEngine.create(
+    { character: [{ cardId: "EB03-042", rested: true }], hand: ["OP05-004"] },
+    { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const source = e.findCardInZone("south", "character", "EB03-042");
+  const played = e.findCardInZone("south", "hand", "OP05-004");
+  e.asNorth().attack(e.findCardInZone("north", "character", "EB01-018"), source);
+  e.asSouth().chooseCounter();
+  e.resolveDecision("effectPlaySelection", { selectedIds: [played] }, "south");
+  expect(e.getView("south").players.south.characters.some((c) => c?.instanceId === played)).toBe(
+    true,
+  );
+  expect(e.getView("south").players.south.handCount).toBe(0);
+  expect(e.getView("south").players.south.trash.some((c) => c.instanceId === source)).toBe(true);
+});

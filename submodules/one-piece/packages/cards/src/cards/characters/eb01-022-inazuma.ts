@@ -31,7 +31,7 @@ export const eb01Inazuma022: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "slash",
   effect: "[End of Your Turn] If you have 2 or less cards in your hand, draw 2 cards.",
   effects: {

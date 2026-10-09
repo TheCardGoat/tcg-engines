@@ -32,6 +32,7 @@ export const randallBoggsScarySmartP4Challenge: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f5a95305c84042fab5a5ccb06da4f464",
+    tcgPlayer: "702695",
   },
   text: [
     {

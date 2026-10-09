@@ -23,7 +23,7 @@ export const op04Sanji007: CharacterCard = {
   cost: 1,
   power: 3000,
   counter: 1000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op04Sanji007I18n,
 };

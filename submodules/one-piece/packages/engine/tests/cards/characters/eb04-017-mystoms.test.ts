@@ -30,6 +30,12 @@ describe("EB04-017 Mystoms", () => {
     expect(play?.kind).toBe("selectEntity");
     if (play?.kind !== "selectEntity") throw new Error("Expected Mystoms's Minks selection.");
     expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([playableId]);
+    // Two Minks (including Mystoms) do not meet the continuous three-card gate.
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.find((card) => card?.instanceId === opponentId)?.cost,
+    ).toBe(eb01MountainGod018.cost);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [playableId] }, "south");
 
     let view = engine.getView("south");

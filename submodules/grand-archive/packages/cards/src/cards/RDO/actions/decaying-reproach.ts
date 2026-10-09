@@ -41,7 +41,8 @@ export const decayingReproach: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
               cost: {
                 kind: "select-and-remove-counters",
-                player: "each-player",
+                player: "each-opponent",
+                bindResultAs: "removed-wither-counters",
                 counter: "wither",
                 count: {
                   kind: "up-to",
@@ -76,6 +77,23 @@ export const decayingReproach: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                   kind: "type",
                   oneOf: ["ALLY", "CHAMPION"],
                 },
+              },
+            },
+          ],
+          variables: [
+            {
+              symbol: "X",
+              kind: "derived",
+              amount: {
+                kind: "calculate",
+                operator: "multiply",
+                operands: [
+                  {
+                    kind: "binding-count",
+                    binding: "removed-wither-counters",
+                  },
+                  2,
+                ],
               },
             },
           ],
@@ -144,6 +162,7 @@ export const decayingReproach: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
             ],
           },
+          functionalZones: ["hand"],
         },
       ],
     },

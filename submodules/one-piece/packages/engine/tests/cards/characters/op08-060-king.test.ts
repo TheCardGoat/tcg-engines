@@ -60,4 +60,27 @@ describe("OP08-060 King", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: Rush remains after opponent DON drops below five before attack", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST04-001",
+        character: ["OP08-059"],
+        hand: ["OP08-060", "OP02-085"],
+        activeDon: 10,
+        donDeckCount: 0,
+      },
+      { restedDon: 5 },
+    );
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "OP08-059"));
+    e.asSouth().acceptOptional();
+    e.asSouth().choosePlay(e.findCardInZone("south", "hand", "OP08-060"));
+    e.asSouth().acceptOptional();
+    const king = e.findCardInZone("south", "character", "OP08-060");
+    e.asSouth().play("OP02-085");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
+    expect(e.getView("north").players.north.restedDon).toBe(4);
+    e.asSouth().attack(king, e.leader("north"));
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+  });
 });

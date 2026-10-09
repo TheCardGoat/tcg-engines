@@ -25,6 +25,32 @@ function parseDeckBuildingRules(effectText: string): NonNullable<CardEffects["de
     rules.push({ rule: "unlimitedCopies" });
   }
 
+  const onlyTrait = /you can only include [[{]([^\]}]+)[\]}] type cards in your deck/i.exec(
+    effectText,
+  );
+  if (onlyTrait)
+    rules.push({
+      rule: "cannotInclude",
+      filters: [{ filter: "trait", value: onlyTrait[1]!, match: "exact", negate: true }],
+    });
+  const forbiddenCost =
+    /you cannot include (Events|cards) with a cost of (\d+) or (more|less) in your deck/i.exec(
+      effectText,
+    );
+  if (forbiddenCost)
+    rules.push({
+      rule: "cannotInclude",
+      filters: [
+        ...(forbiddenCost[1]!.toLowerCase() === "events"
+          ? [{ filter: "cardCategory" as const, value: "event" as const }]
+          : []),
+        {
+          filter: "cost",
+          comparison: forbiddenCost[3]!.toLowerCase() === "more" ? "gte" : "lte",
+          value: Number(forbiddenCost[2]),
+        },
+      ],
+    });
   return rules;
 }
 
@@ -50,7 +76,7 @@ function alignSearchAlternativesWithLeaderTraits(
 
   const alignFilter = (filter: TargetFilter): TargetFilter => {
     if (filter.filter === "name" && traits.has(filter.value)) {
-      return { filter: "trait", value: filter.value, match: "includes" };
+      return { filter: "trait", value: filter.value, match: "exact" };
     }
     if (filter.filter === "anyOf" && "groups" in filter) {
       return { ...filter, groups: filter.groups.map((group) => group.map(alignFilter)) };
@@ -75,11 +101,26 @@ function mapRawCost(raw: RawCost): Cost | null {
     case "restDon":
       return { cost: "restDon", amount: raw.amount };
     case "giveDon":
-      return { cost: "giveDon", amount: raw.amount };
+      return {
+        cost: "giveDon",
+        amount: raw.amount,
+        ...(raw.recipientFilters && { recipientFilters: raw.recipientFilters }),
+      };
     case "returnDon":
+      if ("donState" in raw && raw.donState === "attached")
+        return {
+          cost: "returnDon",
+          amount: raw.amount,
+          donState: "attached",
+          destination: "costAreaRested",
+        };
       return "minimumAmount" in raw && raw.minimumAmount !== undefined
         ? { cost: "returnDon", minimumAmount: raw.minimumAmount }
-        : { cost: "returnDon", amount: raw.amount };
+        : {
+            cost: "returnDon",
+            amount: raw.amount,
+            ...(raw.donState && { donState: raw.donState }),
+          };
     case "restThisCard":
       return { cost: "restThisCard" };
     case "trashThisCard":
@@ -101,7 +142,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         );
       if (!match) return null;
       const filters: TargetFilter[] = [];
-      if (match[2]) filters.push({ filter: "trait", value: match[2], match: "includes" });
+      if (match[2]) filters.push({ filter: "trait", value: match[2], match: "exact" });
       if (match[3]) filters.push({ filter: "excludeSelf" });
       return {
         cost: "koCharacter",
@@ -131,7 +172,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         options: [
           {
             zones: ["hand"],
-            filters: [{ filter: "trait", value: match[2]!, match: "includes" }],
+            filters: [{ filter: "trait", value: match[2]!, match: "exact" }],
           },
           {
             zones: ["hand", "stage"],
@@ -140,12 +181,26 @@ function mapRawCost(raw: RawCost): Cost | null {
         ],
       };
     }
+    case "addCharacterToLife":
+      return {
+        cost: "addCharacterToLife",
+        ...(raw.player && { player: raw.player }),
+        amount: raw.amount,
+        filters: raw.filters,
+        position: raw.position,
+        faceUp: raw.faceUp,
+      };
     case "trashLife":
       return { cost: "trashLife", amount: raw.amount, position: raw.position };
     case "trashFromDeck":
       return null;
     case "turnLifeFaceUp":
-      return { cost: "turnLifeFaceUp", count: raw.count, faceUp: raw.faceUp };
+      return {
+        cost: "turnLifeFaceUp",
+        count: raw.count,
+        faceUp: raw.faceUp,
+        ...(raw.position && { position: raw.position }),
+      };
     case "returnCharacter": {
       const match =
         /return\s+(\d+)\s+(?:of\s+your\s+)?(?:(.*?)\s+)?Characters?(?:\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?)?\s+to\s+(?:the\s+owner[''\u2019]s|your)\s+hand/i.exec(
@@ -160,7 +215,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         match[2]?.trim() ?? "",
       );
       if (traitMatch) {
-        filters.push({ filter: "trait", value: traitMatch[1]!, match: "includes" });
+        filters.push({ filter: "trait", value: traitMatch[1]!, match: "exact" });
       }
       if (match[3]) {
         filters.push({
@@ -220,7 +275,7 @@ function mapRawCost(raw: RawCost): Cost | null {
     }
     case "returnFromTrashToDeck": {
       const match =
-        /(?:place|return)\s+(\d+)\s+(.+?)\s+from\s+your\s+trash\s+(?:(?:at|to)\s+the\s+bottom\s+of\s+your\s+deck|to\s+your\s+deck\s+and\s+shuffle\s+it)/i.exec(
+        /(?:place|return)\s+(\d+)\s+(.+?)\s+from\s+your\s+trash\s+(?:(?:at|to)\s+the\s+(top|bottom)\s+of\s+your\s+deck|to\s+your\s+deck\s+and\s+shuffle\s+it)/i.exec(
           raw.raw,
         );
       if (!match) return null;
@@ -239,7 +294,7 @@ function mapRawCost(raw: RawCost): Cost | null {
         filters.push({
           filter: "trait",
           value: trait[2]!,
-          match: "includes",
+          match: "exact",
         });
       }
       const inclusiveTrait = /^cards?\s+with\s+a\s+type\s+including\s+["“]([^"”]+)["”]$/i.exec(
@@ -262,7 +317,8 @@ function mapRawCost(raw: RawCost): Cost | null {
       return {
         cost: "returnTrashToDeck",
         amount: parseInt(match[1]!, 10),
-        position: "bottom",
+        position: match[3]?.toLowerCase() === "top" ? "top" : "bottom",
+        ...(raw.includeSelf && { includeSelf: true }),
         ...(filters.length > 0 && { filters }),
       };
     }
@@ -278,6 +334,16 @@ function mapRawCost(raw: RawCost): Cost | null {
       const match = /reveal\s+(\d+)\s+(.+?)\s+from\s+your\s+hand/i.exec(raw.raw);
       if (!match) return null;
       const description = match[2]!.trim();
+      const characterPower = /^Character\s+cards?\s+with\s+(\d+)\s+power$/i.exec(description);
+      if (characterPower)
+        return {
+          cost: "revealFromHand",
+          amount: Number(match[1]),
+          filters: [
+            { filter: "cardCategory", value: "character" },
+            { filter: "power", comparison: "eq", value: Number(characterPower[1]) },
+          ],
+        };
       const categoryMatch = /^(Character|Event|Stage)s?$/i.exec(description);
       const inclusiveTraitMatch = /^cards?\s+with\s+a\s+type\s+including\s+["“]([^"”]+)["”]$/i.exec(
         description,
@@ -297,10 +363,10 @@ function mapRawCost(raw: RawCost): Cost | null {
           .map((trait) => trait.replace(/^[[{"\u201c]|[\]}"\u201d]$/g, "").trim());
         filters.push(
           traits.length === 1
-            ? { filter: "trait", value: traits[0]!, match: "includes" }
+            ? { filter: "trait", value: traits[0]!, match: "exact" }
             : {
                 filter: "anyOf",
-                filters: traits.map((value) => ({ filter: "trait", value, match: "includes" })),
+                filters: traits.map((value) => ({ filter: "trait", value, match: "exact" })),
               },
         );
       } else {
@@ -325,7 +391,7 @@ function mapRawCost(raw: RawCost): Cost | null {
             {
               filter: "trait",
               value: qualifiedTraitCardMatch[2]!.replace(/^[[{"“]|[\]}"”]$/g, "").trim(),
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "cardCategory",
@@ -381,7 +447,7 @@ function mapRawCost(raw: RawCost): Cost | null {
           {
             filter: "trait",
             value: coloredTraitMatch[2]!,
-            match: "includes",
+            match: "exact",
           },
         );
       }
@@ -399,13 +465,17 @@ function mapRawCost(raw: RawCost): Cost | null {
           .map((trait) => trait.replace(/^[[{"\u201c]|[\]}"\u201d]$/g, "").trim());
         filters.push(
           traits.length === 1
-            ? { filter: "trait", value: traits[0]!, match: "includes" }
+            ? {
+                filter: "trait",
+                value: traits[0]!,
+                match: inclusiveTraitMatch ? "includes" : "exact",
+              }
             : {
                 filter: "anyOf",
                 filters: traits.map((value) => ({
                   filter: "trait",
                   value,
-                  match: "includes",
+                  match: inclusiveTraitMatch ? "includes" : "exact",
                 })),
               },
         );
@@ -482,7 +552,7 @@ function mapRawCost(raw: RawCost): Cost | null {
           amount: parseInt(namedTraitMatch[1]!, 10),
           filters: [
             ...(namedTraitMatch[3] ? ([{ filter: "excludeSelf" }] as const) : []),
-            { filter: "trait", value: namedTraitMatch[2]!, match: "includes" },
+            { filter: "trait", value: namedTraitMatch[2]!, match: "exact" },
           ],
         };
       }
@@ -585,7 +655,7 @@ function mapRawCost(raw: RawCost): Cost | null {
       // Extract trait: "Dressrosa" or {Trait} or [Trait]
       const traitMatch = /[""[{]([^""\]}]+)[""\]}]\s+type/i.exec(desc);
       if (traitMatch) {
-        filters.push({ filter: "trait", value: traitMatch[1]!, match: "includes" });
+        filters.push({ filter: "trait", value: traitMatch[1]!, match: "exact" });
       }
 
       // A bracketed name without the printed "type" qualifier is a card-name
@@ -704,6 +774,11 @@ function actionAsDependentCost(action: Action): Cost | null {
  */
 export function buildCardEffects(effectText: string): CardEffects | undefined {
   if (!effectText) return undefined;
+  // Official card text uses angle brackets for attributes, not HTML tags.
+  effectText = effectText
+    .replace(/[<＜](Slash|Strike|Ranged|Special|Wisdom)[>＞]/gi, "($1)")
+    .replace(/^\s*[-−]\s*(?=\[Trigger\])/i, "")
+    .replace(/－/g, "-");
 
   const deckBuildingRules = parseDeckBuildingRules(effectText);
   const keywords = parseKeywords(effectText);
@@ -712,6 +787,11 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
   const effectBlocks: EffectBlock[] = [];
   const permanentEffects: PermanentEffect[] = [];
   const replacementEffects: ReplacementEffect[] = [];
+  if (/when your deck is reduced to 0, you win the game instead of losing/i.test(effectText))
+    replacementEffects.push({
+      replacedEvent: "loseGame",
+      replacementAction: { action: "winGame" },
+    });
 
   const segments: RawEffectSegment[] = [
     ...parsed.plainStatements.map((rawActionText) => ({
@@ -726,6 +806,40 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
   ];
 
   for (const [segmentIndex, seg] of segments.entries()) {
+    const alternativeRest =
+      /^You may rest your \((Slash|Strike|Ranged|Special|Wisdom)\) attribute Leader or (\d+) of your DON!! cards:\s*(.+)$/i.exec(
+        seg.rawActionText,
+      );
+    if (alternativeRest) {
+      const actions = parseActions(alternativeRest[3]!);
+      if (actions.parsed.length && !actions.unparsed) {
+        for (const trigger of seg.triggers)
+          effectBlocks.push({
+            trigger,
+            optional: true,
+            alternativeCosts: [
+              [
+                {
+                  cost: "restCards",
+                  amount: 1,
+                  filters: [
+                    { filter: "cardCategory", value: "leader" },
+                    {
+                      filter: "attribute",
+                      value:
+                        alternativeRest[1]!.toLowerCase() as import("@tcg/op-types").OPAttribute,
+                    },
+                  ],
+                },
+              ],
+              [{ cost: "restDon", amount: Number(alternativeRest[2]) }],
+            ],
+            actions: actions.parsed,
+          });
+        continue;
+      }
+    }
+
     if (
       /^Once\s+per\s+turn,\s+this\s+Character\s+cannot\s+be\s+K\.O\.[’']?d\s+by\s+your\s+opponent['’]s\s+effects\.?$/i.test(
         seg.rawActionText.trim(),
@@ -740,6 +854,51 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
         mandatory: true,
       });
       continue;
+    }
+
+    // An in-play observer of its controller's Leader, rather than the Leader itself.
+    const observedLeaderAttackMatch =
+      /^When\s+your\s+(?:Leader\s+with\s+a\s+type\s+including\s+["“]([^"”]+)["”]|["“{]([^"”}]+)["”}]\s+type\s+Leader|Leader\s+with\s+the\s+["“{]([^"”}]+)["”}]\s+type)\s+attacks\s+or\s+is\s+attacked,\s*you\s+may\s+trash\s+(\d+)\s+cards?\s+from\s+your\s+hand\s+to\s+activate\s+this\s+effect\.\s*(.+)$/is.exec(
+        seg.rawActionText.trim(),
+      );
+    if (observedLeaderAttackMatch && seg.triggers.length === 0) {
+      const actions = parseActions(observedLeaderAttackMatch[5]!);
+      if (actions.unparsed === "" && actions.parsed.length > 0) {
+        const trait =
+          observedLeaderAttackMatch[1] ??
+          observedLeaderAttackMatch[2] ??
+          observedLeaderAttackMatch[3]!;
+        const shared: Omit<EffectBlock, "trigger" | "eventFilter"> = {
+          conditions: [
+            ...seg.conditions,
+            {
+              condition: "leaderTrait",
+              trait,
+              match: observedLeaderAttackMatch[1] ? "includes" : "exact",
+            },
+          ],
+          costs: [{ cost: "trashFromHand", amount: Number(observedLeaderAttackMatch[4]) }],
+          optional: true,
+          actions: actions.parsed,
+          ...(seg.oncePerTurn && {
+            oncePerTurn: true,
+            oncePerTurnKey: `shared:onYourAttack|onOpponentAttack:${seg.rawActionText.trim().toLowerCase()}`,
+          }),
+        };
+        effectBlocks.push(
+          {
+            ...shared,
+            trigger: "onYourAttack",
+            eventFilter: { filters: [{ filter: "cardCategory", value: "leader" }] },
+          },
+          {
+            ...shared,
+            trigger: "onOpponentAttack",
+            eventFilter: { targetFilters: [{ filter: "cardCategory", value: "leader" }] },
+          },
+        );
+        continue;
+      }
     }
 
     // "When this Leader attacks or is attacked, <actions>"
@@ -782,7 +941,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
             {
               filter: "trait",
               value: handTrashByTraitMatch[1]!,
-              match: "includes",
+              match: "exact",
             },
           ],
           minimumAmount: 1,
@@ -801,7 +960,12 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
 
     const dependentOptionalThenMatch =
       /^(.+?)\.\s*Then,\s*you\s+may\s+(.+?)\.\s*If\s+you\s+do,\s*(.+)$/is.exec(seg.rawActionText);
-    if (dependentOptionalThenMatch && seg.triggers.length === 1) {
+    if (
+      dependentOptionalThenMatch &&
+      seg.triggers.length === 1 &&
+      !/^rest \d+ of your DON!! cards?$/i.test(dependentOptionalThenMatch[2]!) &&
+      !/^trash \d+ cards? from your hand$/i.test(dependentOptionalThenMatch[2]!)
+    ) {
       const leadingActions = parseActions(dependentOptionalThenMatch[1]!);
       const dependentCostActions = parseActions(dependentOptionalThenMatch[2]!);
       const dependentActions = parseActions(dependentOptionalThenMatch[3]!);
@@ -867,6 +1031,76 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       }
     }
 
+    // The battled Character is an event identity, not a fresh selectable target.
+    const battleOpponentKo =
+      /^At\s+the\s+end\s+of\s+a\s+battle\s+in\s+which\s+this\s+Character\s+battles\s+your\s+opponent['’]s\s+Character,\s*you\s+may\s+K\.O\.\s+the\s+opponent['’]s\s+Character\s+you\s+battled\s+with\.\s*If\s+you\s+do,\s*(.+)$/is.exec(
+        seg.rawActionText,
+      );
+    if (battleOpponentKo && seg.triggers.length === 0) {
+      const following = parseActions(battleOpponentKo[1]!);
+      if (!following.unparsed && following.parsed.length > 0) {
+        const filters: TargetFilter[] = [{ filter: "cardCategory", value: "character" }];
+        effectBlocks.push({
+          trigger: "endOfBattle",
+          ...(seg.conditions.length > 0 && { conditions: seg.conditions }),
+          ...(seg.oncePerTurn && { oncePerTurn: true }),
+          optional: true,
+          eventFilter: {
+            battlePowerCompared: true,
+            anyOf: [
+              { sourceSelf: true, targetFilters: filters },
+              { targetSelf: true, sourceFilters: filters },
+            ],
+          },
+          actions: [
+            {
+              action: "ko",
+              battleOpponent: true,
+              target: { player: "opponent", zones: ["character"], count: { amount: 1 } },
+              thenActions: following.parsed,
+            },
+          ],
+        });
+        continue;
+      }
+    }
+
+    // A Character that "battles" resolves this automatic effect at battle end.
+    const attributeBattleMatch =
+      /^When\s+this\s+Character\s+battles\s+[<＜(](Strike|Slash|Special|Wisdom|Ranged)[>＞)]\s+attribute\s+Characters?,\s*(.+)$/i.exec(
+        seg.rawActionText,
+      );
+    if (attributeBattleMatch && seg.triggers.length === 0) {
+      const attributes = {
+        strike: "strike",
+        slash: "slash",
+        special: "special",
+        wisdom: "wisdom",
+        ranged: "ranged",
+      } as const;
+      const attribute =
+        attributes[attributeBattleMatch[1]!.toLowerCase() as keyof typeof attributes];
+      const parsed = parseActions(attributeBattleMatch[2]!);
+      if (!parsed.unparsed && parsed.parsed.length > 0) {
+        const filters: TargetFilter[] = [
+          { filter: "cardCategory", value: "character" },
+          { filter: "attribute", value: attribute },
+        ];
+        effectBlocks.push({
+          trigger: "endOfBattle",
+          eventFilter: {
+            battlePowerCompared: true,
+            anyOf: [
+              { sourceSelf: true, targetFilters: filters },
+              { targetSelf: true, sourceFilters: filters },
+            ],
+          },
+          actions: parsed.parsed,
+        });
+        continue;
+      }
+    }
+
     // Extract inline "If <condition>, ..." from the start of action text
     const canBeActivatedTiming =
       /^This\s+effect\s+can\s+be\s+activated\s+when\b/i.test(seg.rawActionText) ||
@@ -874,12 +1108,18 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
         seg.rawActionText,
       );
     let actionText = seg.rawActionText;
+    const sourceSelfEffectKo =
+      /^When\s+this\s+Character\s+is\s+K\.O\.['’]?d\s+by\s+an?\s+effect,/i.test(actionText);
     const sourceSelfBattleKo =
       /^When\s+this\s+Character\s+battles\s+and\s+K\.O\.\u2019?'?s\s+your\s+opponent[''\u2019]s\s+Character,/i.test(
         actionText,
       );
     const sourceSelfBattleEndMatch =
       /^At\s+the\s+end\s+of\s+a\s+battle\s+in\s+which\s+this\s+Character\s+battles\s+your\s+opponent[''\u2019]s\s+Character\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?,/i.exec(
+        actionText,
+      );
+    const opponentCharacterKo =
+      /^When\s+(?:your\s+opponent['’]s\s+Character|(?:a\s+)?Character\s+on\s+your\s+opponent['’]s\s+field)\s+is\s+K\.O\.['’]?d,/i.test(
         actionText,
       );
     const opponentLifeRemoved =
@@ -894,23 +1134,50 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       /^When\s+your\s+["\u201c]([^"\u201d]+)["\u201d]\s+type\s+Character\s+is\s+removed\s+from\s+the\s+field\s+by\s+(an|your\s+opponent[''\u2019]s)\s+effect,/i.exec(
         actionText,
       );
+    const unqualifiedLeavingTraitMatch =
+      /^(?:This\s+effect\s+can\s+be\s+activated\s+when|When)\s+your\s+["“{]([^"”}]+)["”}]\s+type\s+Character(?:\s+card)?\s+is\s+removed\s+from\s+the\s+field[.,]/i.exec(
+        actionText,
+      );
     const leavingTraitMatch = leavingIncludedTraitMatch ?? leavingPrefixTraitMatch;
-    const leavingEventFilter = leavingTraitMatch
+    const leavingEventFilter = unqualifiedLeavingTraitMatch
       ? {
           player: "self" as const,
-          causedBy: /^your\s+opponent/i.test(leavingTraitMatch[2]!)
-            ? ("opponent" as const)
-            : ("any" as const),
           filters: [
+            { filter: "cardCategory" as const, value: "character" as const },
             {
               filter: "trait" as const,
-              value: leavingTraitMatch[1]!,
-              match: "includes" as const,
+              value: unqualifiedLeavingTraitMatch[1]!,
+              match: "exact" as const,
             },
           ],
         }
-      : undefined;
+      : leavingTraitMatch
+        ? {
+            player: "self" as const,
+            causedBy: /^your\s+opponent/i.test(leavingTraitMatch[2]!)
+              ? ("opponent" as const)
+              : ("any" as const),
+            filters: [
+              {
+                filter: "trait" as const,
+                value: leavingTraitMatch[1]!,
+                match: leavingIncludedTraitMatch ? ("includes" as const) : ("exact" as const),
+              },
+            ],
+          }
+        : undefined;
     const inlineConditions: Condition[] = [];
+    const activationConditions: Condition[] = [];
+    if (
+      /^This\s+effect\s+can\s+be\s+activated\s+when\s+your\s+opponent['’]s\s+Character\s+attacks\./i.test(
+        actionText,
+      )
+    ) {
+      activationConditions.push({
+        condition: "triggerEventCard",
+        filters: [{ filter: "cardCategory", value: "character" }],
+      });
+    }
     const replacementEffectConditions: Condition[] = [];
 
     const replacementNegation =
@@ -942,7 +1209,9 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
 
     let inlineCond = parseInlineCondition(actionText);
     while (inlineCond) {
-      inlineConditions.push(inlineCond.condition);
+      if (canBeActivatedTiming && !/^If\s+/i.test(actionText))
+        activationConditions.push(inlineCond.condition);
+      else inlineConditions.push(inlineCond.condition);
       if (inlineCond.remainingText === actionText) break;
       actionText = inlineCond.remainingText;
       inlineCond = parseInlineCondition(actionText);
@@ -954,12 +1223,16 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     const optional =
       seg.optional ||
       canBeActivatedTiming ||
-      (!optionalPrefixScopesFirstAction && /^you\s+may\b/i.test(actionText));
+      (!optionalPrefixScopesFirstAction &&
+        !/^you\s+may\s+(?:trash\s+any\s+number\s+of\s+cards|return\s+any\s+number\s+of\s+Characters)\b/i.test(
+          actionText,
+        ) &&
+        /^you\s+may\b/i.test(actionText));
     const dependentCosts: Cost[] = [];
     const selfTrashJoinedAction = /^you\s+may\s+trash\s+this\s+Character\s+and\s+(.+)$/is.exec(
       actionText,
     );
-    if (selfTrashJoinedAction) {
+    if (selfTrashJoinedAction && findReplacementConditions(inlineConditions).length === 0) {
       dependentCosts.push({ cost: "trashThisCard" });
       actionText = selfTrashJoinedAction[1]!;
     }
@@ -977,130 +1250,31 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       }
     }
 
-    const scopedThenConditions = inlineConditions.filter(
-      (condition) => condition.condition !== "triggerEvent",
+    // Rules 4-10-1/2: Then does not bypass an unmet preceding If.
+    // Parse the full sequence, then apply the leading condition once at its
+    // printed boundary below (after any cost before the colon).
+    const actionsResult = parseActions(
+      optional &&
+        !optionalPrefixScopesFirstAction &&
+        seg.costs.length === 0 &&
+        dependentCosts.length === 0
+        ? actionText.replace(/^you\s+may\s+/i, "")
+        : actionText,
     );
-    const conditionScopesOnlyLeadingDraw = /^draw\s+(?:\d+\s+cards?|a\s+card)\.\s*Then,/i.test(
-      actionText,
-    );
-    const potentialScopedThenMatch =
-      scopedThenConditions.length > 0 ? /^(.+?)\.\s*Then,\s*(.+)$/is.exec(actionText) : null;
-    const potentialTrailingThenActions = potentialScopedThenMatch
-      ? parseActions(potentialScopedThenMatch[2]!)
-      : null;
-    const potentialLeadingThenActions = potentialScopedThenMatch
-      ? parseActions(potentialScopedThenMatch[1]!)
-      : null;
-    const conditionScopesWholeDelayedSequence = Boolean(
-      potentialTrailingThenActions?.parsed.length &&
-      potentialTrailingThenActions.unparsed === "" &&
-      potentialTrailingThenActions.parsed.every((action) => action.action === "delayed"),
-    );
-    const conditionScopesWholeImmediateSequence = Boolean(
-      potentialLeadingThenActions?.parsed.length &&
-      potentialLeadingThenActions.unparsed === "" &&
-      potentialTrailingThenActions?.parsed.length &&
-      potentialTrailingThenActions.unparsed === "" &&
-      ((seg.triggers[0] === "activateMain" &&
-        scopedThenConditions.some((condition) => condition.condition === "lifeComparison") &&
-        potentialLeadingThenActions.parsed.every((action) => action.action === "draw") &&
-        potentialTrailingThenActions.parsed.every((action) => action.action === "rest")) ||
-        (seg.triggers[0] === "onPlay" &&
-          scopedThenConditions.some((condition) => condition.condition === "lifeCount") &&
-          potentialLeadingThenActions.parsed.every((action) => action.action === "draw") &&
-          potentialTrailingThenActions.parsed.every((action) => action.action === "giveDon"))),
-    );
-    const scopedThenMatch =
-      seg.costs.length > 0 ||
-      conditionScopesOnlyLeadingDraw ||
-      conditionScopesWholeDelayedSequence ||
-      conditionScopesWholeImmediateSequence
-        ? potentialScopedThenMatch
-        : null;
-    const scopedThenCondition =
-      scopedThenConditions.length === 1
-        ? scopedThenConditions[0]!
-        : {
-            condition: "compound" as const,
-            operator: "and" as const,
-            conditions: scopedThenConditions,
-          };
-    const firstScopedActions = scopedThenMatch ? potentialLeadingThenActions : null;
-    const trailingThenActions = scopedThenMatch ? potentialTrailingThenActions : null;
-    const gatesWholeDelayedSequence = Boolean(
-      scopedThenMatch &&
-      trailingThenActions?.parsed.length &&
-      trailingThenActions.unparsed === "" &&
-      trailingThenActions.parsed.every((action) => action.action === "delayed"),
-    );
-    const gatesWholeThenSequence =
-      gatesWholeDelayedSequence || conditionScopesWholeImmediateSequence;
-    const hasScopedThenActions = Boolean(
-      !gatesWholeThenSequence &&
-      firstScopedActions?.parsed.length &&
-      firstScopedActions.unparsed === "" &&
-      trailingThenActions?.parsed.length &&
-      trailingThenActions.unparsed === "",
-    );
-    const blockGatesWholeThenSequence =
-      conditionScopesWholeImmediateSequence ||
-      (gatesWholeDelayedSequence && seg.costs.length === 0);
-    const actionsResult = gatesWholeThenSequence
-      ? {
-          parsed: blockGatesWholeThenSequence
-            ? [...firstScopedActions!.parsed, ...trailingThenActions!.parsed]
-            : [...firstScopedActions!.parsed, ...trailingThenActions!.parsed].map((action) => ({
-                ...action,
-                condition:
-                  "condition" in action && action.condition
-                    ? {
-                        condition: "compound" as const,
-                        operator: "and" as const,
-                        conditions: [scopedThenCondition, action.condition],
-                      }
-                    : scopedThenCondition,
-              })),
-          unparsed: "",
-        }
-      : hasScopedThenActions
-        ? {
-            parsed: [
-              ...firstScopedActions!.parsed.map((action) => ({
-                ...action,
-                condition:
-                  "condition" in action && action.condition
-                    ? {
-                        condition: "compound" as const,
-                        operator: "and" as const,
-                        conditions: [scopedThenCondition, action.condition],
-                      }
-                    : scopedThenCondition,
-              })),
-              ...trailingThenActions!.parsed,
-            ],
-            unparsed: "",
-          }
-        : parseActions(actionText);
+    const thenSequence =
+      inlineConditions.length > 0 ? /^(.+?)\.\s*Then,\s*(.+)$/is.exec(actionText) : null;
+    if (actionsResult.unparsed && thenSequence) {
+      const first = parseActions(thenSequence[1]!);
+      const rest = parseActions(thenSequence[2]!);
+      if (!first.unparsed && !rest.unparsed && first.parsed.length && rest.parsed.length) {
+        actionsResult.parsed = [...first.parsed, ...rest.parsed];
+        actionsResult.unparsed = "";
+      }
+    }
 
     const deckTrashPayments = seg.costs.filter(
       (cost): cost is Extract<RawCost, { type: "trashFromDeck" }> => cost.type === "trashFromDeck",
     );
-    for (const payment of [...deckTrashPayments].reverse()) {
-      actionsResult.parsed.unshift({
-        action: "trashFromDeck",
-        player: "self",
-        amount: payment.amount,
-      });
-    }
-
-    if (
-      seg.costs.some(
-        (cost) => cost.type === "returnFromTrashToDeck" && /and\s+shuffle\s+it/i.test(cost.raw),
-      )
-    ) {
-      actionsResult.parsed.unshift({ action: "shuffleDeck", player: "self" });
-    }
-
     if (/trash\s+\d+\s+cards?\s+from\s+your\s+opponent['\u2019]s\s+hand/i.test(actionText)) {
       actionsResult.parsed = actionsResult.parsed.map((action) => {
         if (action.action === "trashFromHand" && action.player === "opponent") {
@@ -1111,45 +1285,50 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       });
     }
 
-    // Handle "Choose one:" segments — parse each choice item independently
+    // Preserve the continuation classified as shared by the splitter.
+    // A failed If in the chosen option also gates that continuation (4-10-2).
     if (seg.choiceItems && seg.choiceItems.length > 0) {
+      const parsedOptions = seg.choiceItems.map((item) => {
+        const inline = parseInlineCondition(item);
+        return {
+          predicate: inline?.condition,
+          parsed: parseActions(inline?.remainingText ?? item).parsed,
+        };
+      });
+      const postChoiceResult = seg.postChoiceActionText
+        ? parseActions(seg.postChoiceActionText)
+        : undefined;
+      const sharedThen = postChoiceResult?.unparsed === "" ? postChoiceResult.parsed : [];
+      const thenDependsOnOption =
+        sharedThen.length > 0 && parsedOptions.some((option) => option.predicate);
       const options: Action[][] = [];
-      for (const item of seg.choiceItems) {
-        // Try inline condition on each choice item
-        let itemText = item;
-        const itemCond = parseInlineCondition(itemText);
-        if (itemCond) itemText = itemCond.remainingText;
-
-        const itemResult = parseActions(itemText);
-        if (itemResult.parsed.length > 0) {
+      for (const option of parsedOptions) {
+        if (option.parsed.length === 0) continue;
+        const optionActions = [...option.parsed, ...(thenDependsOnOption ? sharedThen : [])];
+        if (option.predicate && optionActions.length > 1) {
+          // Evaluate once: an earlier action can change the condition's state.
+          options.push([
+            { action: "conditional", predicate: option.predicate, whenTrue: optionActions },
+          ]);
+        } else {
           options.push(
-            itemResult.parsed.map((action) => {
-              if (!itemCond) return action;
+            optionActions.map((action) => {
+              if (!option.predicate) return action;
               const condition =
                 "condition" in action && action.condition
                   ? {
                       condition: "compound" as const,
                       operator: "and" as const,
-                      conditions: [itemCond.condition, action.condition],
+                      conditions: [option.predicate, action.condition],
                     }
-                  : itemCond.condition;
+                  : option.predicate;
               return { ...action, condition };
             }),
           );
         }
       }
-      if (options.length > 0) {
-        actionsResult.parsed.push({
-          action: "choice",
-          options,
-        });
-      }
-      if (seg.postChoiceActionText) {
-        const postChoiceResult = parseActions(seg.postChoiceActionText);
-        if (postChoiceResult.unparsed === "") {
-          actionsResult.parsed.push(...postChoiceResult.parsed);
-        }
-      }
+      if (options.length > 0) actionsResult.parsed.push({ action: "choice", options });
+      if (!thenDependsOnOption) actionsResult.parsed.push(...sharedThen);
     }
 
     if (actionsResult.parsed.length === 0) continue;
@@ -1162,20 +1341,18 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     costs.push(...dependentCosts);
 
     const postCostConditions = inlineConditions.filter(
-      (condition) =>
-        condition.condition !== "triggerEvent" &&
-        (!gatesWholeThenSequence || !scopedThenConditions.includes(condition)) &&
-        (!hasScopedThenActions || !scopedThenConditions.includes(condition)),
+      (condition) => condition.condition !== "triggerEvent",
     );
     const blockInlineConditions = inlineConditions.filter(
-      (condition) =>
-        condition.condition === "triggerEvent" ||
-        (blockGatesWholeThenSequence && scopedThenConditions.includes(condition)),
+      (condition) => condition.condition === "triggerEvent",
     );
     // A condition parsed after a printed cost remains post-cost regardless of
     // whether that cost is optional. The player first pays the text before the
     // colon; only the resulting action is conditional.
-    const hasPostCostCondition = costs.length > 0 || deckTrashPayments.length > 0;
+    // Explicit "can be activated" timing permits activation before the later
+    // conditional result is checked (OP11-102 Camie FAQ).
+    const hasPostCostCondition =
+      costs.length > 0 || deckTrashPayments.length > 0 || canBeActivatedTiming;
     const postCostCondition =
       hasPostCostCondition && postCostConditions.length > 0
         ? postCostConditions.length === 1
@@ -1210,8 +1387,27 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       }
     }
 
+    // These actions implement printed payment processing. They must execute
+    // before the post-cost gate, including when that gate fails.
+    for (const payment of [...deckTrashPayments].reverse()) {
+      actionsResult.parsed.unshift({
+        action: "trashFromDeck",
+        player: "self",
+        amount: payment.amount,
+      });
+    }
+
+    if (
+      seg.costs.some(
+        (cost) => cost.type === "returnFromTrashToDeck" && /and\s+shuffle\s+it/i.test(cost.raw),
+      )
+    ) {
+      actionsResult.parsed.unshift({ action: "shuffleDeck", player: "self" });
+    }
+
     const allConditions: Condition[] = [
       ...seg.conditions,
+      ...activationConditions,
       ...deckTrashPayments.map(
         (payment): Condition => ({
           condition: "zoneCount",
@@ -1342,40 +1538,58 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       // "When X, Y" pattern → EffectBlock with X as trigger
       effectBlocks.push({
         trigger: triggerEventCond.event,
+        ...(triggerEventCond.event === "whenDonReturned" &&
+        /When (\d+) or more DON!! cards/i.test(seg.rawActionText)
+          ? {
+              eventFilter: {
+                minimumAmount: Number(
+                  /When (\d+) or more DON!! cards/i.exec(seg.rawActionText)![1],
+                ),
+              },
+            }
+          : {}),
         ...(triggerEventCond.source && !leavingEventFilter && { source: triggerEventCond.source }),
-        ...(leavingEventFilter
-          ? { eventFilter: leavingEventFilter }
-          : triggerEventCond.event === "whenBecomesRested"
-            ? { eventFilter: { targetSelf: true } }
-            : opponentLifeRemoved
-              ? { eventFilter: { player: "opponent" as const } }
-              : sourceSelfBattleEndMatch
-                ? {
-                    eventFilter: {
-                      sourceSelf: true,
-                      targetFilters: [
-                        {
-                          filter: "cost" as const,
-                          comparison:
-                            sourceSelfBattleEndMatch[2]?.toLowerCase() === "less"
-                              ? ("lte" as const)
-                              : sourceSelfBattleEndMatch[2]?.toLowerCase() === "more"
-                                ? ("gte" as const)
-                                : ("eq" as const),
-                          value: parseInt(sourceSelfBattleEndMatch[1]!, 10),
-                        },
-                      ],
-                    },
-                  }
-                : sourceSelfBattleKo
+        ...(/^When\s+your\s+number\s+of\s+Life\s+cards\s+becomes\s+0,/i.test(
+          seg.rawActionText.trim(),
+        )
+          ? { eventFilter: { player: "self" as const, lifeCountAfterRemoval: 0 } }
+          : leavingEventFilter
+            ? { eventFilter: leavingEventFilter }
+            : triggerEventCond.event === "whenBecomesRested"
+              ? { eventFilter: { targetSelf: true } }
+              : opponentLifeRemoved ||
+                  opponentCharacterKo ||
+                  (triggerEventCond.event === "whenBlockerActivated" &&
+                    /^When\s+your\s+opponent\s+activates/i.test(seg.rawActionText.trim()))
+                ? { eventFilter: { player: "opponent" as const } }
+                : sourceSelfBattleEndMatch
                   ? {
                       eventFilter: {
-                        player: "opponent" as const,
-                        koCause: "battle" as const,
                         sourceSelf: true,
+                        targetFilters: [
+                          {
+                            filter: "cost" as const,
+                            comparison:
+                              sourceSelfBattleEndMatch[2]?.toLowerCase() === "less"
+                                ? ("lte" as const)
+                                : sourceSelfBattleEndMatch[2]?.toLowerCase() === "more"
+                                  ? ("gte" as const)
+                                  : ("eq" as const),
+                            value: parseInt(sourceSelfBattleEndMatch[1]!, 10),
+                          },
+                        ],
                       },
                     }
-                  : {}),
+                  : sourceSelfBattleKo
+                    ? {
+                        eventFilter: {
+                          player: "opponent" as const,
+                          koCause: "battle" as const,
+                          sourceSelf: true,
+                        },
+                      }
+                    : {}),
+        ...(sourceSelfEffectKo && { eventFilter: { koCause: "effect" as const } }),
         ...(remainingConditions.length > 0 && { conditions: remainingConditions }),
         ...(costs.length > 0 && { costs }),
         actions: actionsResult.parsed,
@@ -1384,6 +1598,9 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       });
     } else if (seg.triggers.length === 0) {
       const permanentActions = actionsResult.parsed.map((action) => {
+        if (action.action === "addActivationCosts") {
+          throw new Error("Permanent added activation costs require an ordering contract.");
+        }
         if (
           action.action === "modifyPower" &&
           action.target.player === "self" &&
@@ -1456,7 +1673,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
         player: "self",
         amount: "all",
         upTo: true,
-        filters: [{ filter: "trait", value: trait, match: "includes" }],
+        filters: [{ filter: "trait", value: trait, match: "exact" }],
       },
       {
         action: "modifyPower",
@@ -1478,7 +1695,7 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     const play = firstBlock.actions.find((action) => action.action === "play");
     if (play?.action === "play") {
       play.filters = [
-        { filter: "trait", value: "FILM", match: "includes" },
+        { filter: "trait", value: "FILM", match: "exact" },
         { filter: "power", comparison: "gte", value: 2000 },
         { filter: "power", comparison: "lte", value: 5000 },
         { filter: "cardCategory", value: "character" },
@@ -1550,6 +1767,15 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
   }
 
   const result: CardEffects = {};
+  const startStage =
+    /at the start of the game, play up to 1 [[{]([^\]}]+)[\]}] type Stage card from your deck/i.exec(
+      effectText,
+    );
+  if (startStage)
+    result.startOfGame = {
+      playStageFromDeck: { filters: [{ filter: "trait", value: startStage[1]!, match: "exact" }] },
+    };
+
   if (deckBuildingRules.length > 0) result.deckBuildingRules = deckBuildingRules;
   if (keywords.length > 0) result.keywords = keywords;
   if (effectBlocks.length > 0) result.effects = effectBlocks;

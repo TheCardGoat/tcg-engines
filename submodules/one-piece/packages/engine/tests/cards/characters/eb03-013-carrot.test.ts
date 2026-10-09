@@ -56,4 +56,33 @@ describe("EB03-013 Carrot", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: declining KO still permits playing Zou", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB03-013", "OP08-039"], activeDon: 6 },
+      { character: [{ cardId: "EB01-005", rested: true }] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005"),
+      zou = e.findCardInZone("south", "hand", "OP08-039");
+    e.asSouth().play("EB03-013");
+    e.asSouth().activateMain(e.findCardInZone("south", "character", "EB03-013"));
+    e.asSouth().chooseTargets();
+    e.resolveDecision("effectPlaySelection", { selectedIds: [zou] }, "south");
+    expect(e.getView("south").players.south.stage?.instanceId).toBe(zou);
+    expect(e.findCardInZone("north", "character", "EB01-005")).toBe(target);
+  });
+  test("an older Character cannot activate even with both printed targets available", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "EB03-013", playedOnTurn: 0 }], hand: ["OP08-039"] },
+      { character: [{ cardId: "EB01-005", rested: true }] },
+    );
+    const f = e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.findCardInZone("south", "character", "EB03-013"),
+      trigger: "activateMain",
+    });
+    const after = OnePieceTestEngine.fromState(f.state).getView("south");
+    expect(after.players.south.handCount).toBe(1);
+    expect(after.players.north.characters.filter(Boolean)).toHaveLength(1);
+  });
 });

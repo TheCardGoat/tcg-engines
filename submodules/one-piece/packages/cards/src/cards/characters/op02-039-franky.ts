@@ -23,7 +23,7 @@ export const op02Franky039: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Film Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "special",
   i18n: op02Franky039I18n,
 };

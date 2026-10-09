@@ -77,8 +77,26 @@ export const demolition: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["DOMAIN"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["SIEGEABLE"],
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
             },

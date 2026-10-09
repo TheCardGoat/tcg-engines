@@ -2,10 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { GameSlug } from "@tcg/simulator-contract";
 import { getGameDefaultIndexPath, isGameSlug } from "./simulator/games";
-import { normalizeRouterBasename } from "./routes/router-paths.ts";
+import { buildMountedHref, normalizeRouterBasename } from "./routes/router-paths.ts";
 import GameIndex from "./components/GameIndex";
 import AnimationFixturesPage from "./components/AnimationFixturesPage";
 import SimulatorUiFixturesPage from "./components/SimulatorUiFixturesPage";
+import FixtureIndexPage from "./components/FixtureIndexPage";
+import ComponentCatalogPage from "./components/ComponentCatalogPage";
 
 function getPath(): string {
   if (typeof window === "undefined") {
@@ -122,7 +124,18 @@ export default function App({ initialPath }: AppProps) {
   }
 
   if (isSimulatorUiFixturePath(path)) {
+    return <FixtureIndexPage />;
+  }
+  if (path === buildMountedHref("/simulator-ui-fixtures/connection-clocks")) {
     return <SimulatorUiFixturesPage />;
+  }
+
+  if (
+    trimTrailingSlash(path) === "/component-catalog" ||
+    trimTrailingSlash(path) ===
+      `${normalizeRouterBasename(import.meta.env.BASE_URL)}/component-catalog`
+  ) {
+    return <ComponentCatalogPage />;
   }
 
   if (gameSlug) {

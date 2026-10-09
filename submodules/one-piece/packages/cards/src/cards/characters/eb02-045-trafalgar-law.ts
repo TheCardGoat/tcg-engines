@@ -32,7 +32,7 @@ export const eb02TrafalgarLaw045: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Heart Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Blocker]\n[On Play] You may place 2 cards from your trash at the bottom of your deck in any order: Choose one:\n• Draw 1 card.\n• If your opponent has 5 or more cards in their hand, your opponent trashes 1 card from their hand.",

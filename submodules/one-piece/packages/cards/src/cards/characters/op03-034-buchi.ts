@@ -23,7 +23,7 @@ export const op03Buchi034: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   attribute: "slash",
   effect: "[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 2 or less.",
   effects: {

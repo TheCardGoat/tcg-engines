@@ -13,8 +13,9 @@ import {
   cardInteractionStateFromFlags,
   type CardInteractionStateResolver,
 } from "../interactions/card-interaction";
-import { CardFace } from "./CardFace";
+import { CardFace, type CardFaceProps } from "./CardFace";
 import { CardGrid } from "./CardGrid";
+import styles from "./TargetFilterModal.module.css";
 
 const TARGET_FILTER_COLUMN_OPTIONS = [3, 4, 5] as const;
 
@@ -36,6 +37,7 @@ export interface TargetFilterModalClassNames {
 }
 
 interface TargetFilterModalCommonProps {
+  crossOrigin?: CardFaceProps["crossOrigin"];
   opened: boolean;
   title: string;
   description?: string;
@@ -85,6 +87,7 @@ export type TargetFilterModalProps = TargetFilterModalCommonProps &
   );
 
 export function TargetFilterModal({
+  crossOrigin,
   opened,
   title,
   description,
@@ -293,6 +296,7 @@ export function TargetFilterModal({
           modalPresentation
             ? "max-h-[86vh] max-w-[760px]"
             : "pointer-events-auto max-h-[calc(100dvh-1.5rem)] max-w-[36rem]",
+          styles.sheet,
           classNames?.sheet,
         )}
         data-presentation={modalPresentation ? "modal" : "nonmodal"}
@@ -476,6 +480,7 @@ export function TargetFilterModal({
                           renderPreview(displayedPreviewEntity)
                         ) : (
                           <CardFace
+                            crossOrigin={crossOrigin}
                             entity={displayedPreviewEntity}
                             density="full"
                             fill

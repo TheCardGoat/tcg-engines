@@ -37,6 +37,7 @@ export const op15Mamaragan078: EventCard = {
     effects: [
       {
         trigger: "main",
+        optional: true,
         costs: [
           {
             cost: "returnDon",

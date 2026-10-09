@@ -39,7 +39,7 @@ export const op07JewelryBonney019: LeaderCard = {
   setId: "OP07",
   power: 5000,
   life: 5,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
 
   effect:

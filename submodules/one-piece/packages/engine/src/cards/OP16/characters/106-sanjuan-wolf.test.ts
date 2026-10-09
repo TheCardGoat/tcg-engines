@@ -43,4 +43,32 @@ describe("OP16-106 Sanjuan Wolf", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+
+  test.each(["OP09-081", "OP01-001"])(
+    "Life Trigger applies On K.O. only for a Blackbeard Leader (%s)",
+    (leaderCardId) => {
+      const engine = OnePieceTestEngine.create(
+        { leaderCardId, life: ["OP16-106"], deck: ["EB01-005", "EB01-018"] },
+        { leaderCardId: "OP01-001", activeDon: 2 },
+        { activeSeat: "north" },
+      );
+      engine.asNorth().attachDon(engine.asNorth().leader(), 2);
+      engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+      engine.asSouth().activateLifeTrigger();
+      if (leaderCardId === "OP09-081") {
+        engine.asSouth().chooseTargets(engine.asSouth().leader());
+        expect(engine.asSouth().view().players.south.handCount).toBe(1);
+        expect(engine.asSouth().view().players.south.leader.power).toBe(7000);
+      } else {
+        expect(engine.asSouth().view().players.south.handCount).toBe(0);
+        expect(engine.asSouth().view().players.south.leader.power).toBe(5000);
+      }
+      expect(
+        engine
+          .asSouth()
+          .view()
+          .players.south.trash.map((card) => card.cardId),
+      ).toContain("OP16-106");
+    },
+  );
 });

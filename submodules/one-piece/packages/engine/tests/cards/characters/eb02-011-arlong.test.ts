@@ -98,36 +98,59 @@ describe("EB02-011 Arlong", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("removes the protected Character from later effect-rest candidates", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        leaderCardId: op03Arlong022,
-        hand: [eb02Arlong011, op02ParadiseTotsuka047],
-        activeDon: 4,
-      },
-      { character: [eb02Sabo002, eb01TonyTonyChopper006] },
+  test.each(["protected", "unprotected"])(
+    "allows selecting the %s Character but prevents only the protected rest",
+    (state) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          leaderCardId: op03Arlong022,
+          hand: [eb02Arlong011, op02ParadiseTotsuka047],
+          activeDon: 4,
+        },
+        { character: [eb02Sabo002, eb01TonyTonyChopper006] },
+      );
+      const protectedId = engine.findCardInZone("north", "character", eb02Sabo002);
+      const restableId = engine.findCardInZone("north", "character", eb01TonyTonyChopper006);
+
+      engine.playCard(eb02Arlong011, "south");
+      engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+      engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
+      engine.playCard(op02ParadiseTotsuka047, "south");
+
+      const rest = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+      expect(rest?.kind).toBe("selectEntity");
+      if (rest?.kind !== "selectEntity") throw new Error("Expected an effect-rest choice.");
+      expect(rest.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        protectedId,
+        restableId,
+      ]);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [state === "protected" ? protectedId : restableId] },
+        "south",
+      );
+
+      const view = engine.getView("south");
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === protectedId)?.rested,
+      ).toBe(false);
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === restableId)?.rested,
+      ).toBe(state === "unprotected");
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+    },
+  );
+  test("wrong Leader prevents both DON transfer and rest prohibition", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST02-001", hand: ["EB02-011"], activeDon: 4 },
+      { character: ["EB01-005"] },
     );
-    const protectedId = engine.findCardInZone("north", "character", eb02Sabo002);
-    const restableId = engine.findCardInZone("north", "character", eb01TonyTonyChopper006);
-
-    engine.playCard(eb02Arlong011, "south");
-    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
-    engine.playCard(op02ParadiseTotsuka047, "south");
-
-    const rest = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    expect(rest?.kind).toBe("selectEntity");
-    if (rest?.kind !== "selectEntity") throw new Error("Expected an effect-rest choice.");
-    expect(rest.candidates.map((candidate) => candidate.ref.id)).toEqual([restableId]);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [restableId] }, "south");
-
-    const view = engine.getView("south");
-    expect(
-      view.players.north.characters.find((card) => card?.instanceId === protectedId)?.rested,
-    ).toBe(false);
-    expect(
-      view.players.north.characters.find((card) => card?.instanceId === restableId)?.rested,
-    ).toBe(true);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    e.asSouth().play("EB02-011");
+    expect(e.getView("south").prompts).toHaveLength(0);
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+    e.asSouth().endTurn();
+    const id = e.findCardInZone("north", "character", "EB01-005");
+    e.asNorth().attack(id, e.leader("south"));
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(true);
   });
 });

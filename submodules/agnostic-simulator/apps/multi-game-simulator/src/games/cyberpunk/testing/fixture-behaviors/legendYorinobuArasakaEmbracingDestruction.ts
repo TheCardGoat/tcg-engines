@@ -9,9 +9,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendYorinobuArasakaEmbracingDestructionBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendYorinobuArasakaEmbracingDestruction",
   label: "Yorinobu - first Arasaka attack draw/discard",
-  references: [
-    "packages/engine/src/cards/embracingpowerretailstarterdeck/legends/yorinobu-arasaka-embracing-destruction.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/yorinobu-arasaka-embracing-destruction.test.ts"],
   async run(pom) {
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",

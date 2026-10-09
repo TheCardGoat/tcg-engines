@@ -59,7 +59,6 @@ export const seasonsEnd: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                     kind: "sum-counters",
                     collection: {
                       zones: ["field"],
-                      player: "controller",
                     },
                     counter: "wither",
                   },

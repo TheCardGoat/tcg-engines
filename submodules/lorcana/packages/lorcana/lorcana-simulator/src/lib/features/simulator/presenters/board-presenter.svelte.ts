@@ -329,6 +329,18 @@ export class LorcanaBoardPresenter {
     return this.getPlayerSummary(playerSide)?.availableInk ?? null;
   }
 
+  getInkDrops(playerSide: LorcanaPlayerSide): number {
+    return this.getPlayerSummary(playerSide)?.inkDrops ?? 0;
+  }
+
+  get inkDropPaymentArmed(): boolean {
+    return this.#game.inkDropPaymentArmed();
+  }
+
+  toggleInkDropPayment(): boolean {
+    return this.#game.toggleInkDropPayment();
+  }
+
   getPlayerVisualSettings(playerSide: LorcanaPlayerSide): LorcanaResolvedPlayerVisualSettings {
     return this.#game.getPlayerVisualSettings(playerSide);
   }

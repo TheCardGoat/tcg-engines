@@ -13,3 +13,10 @@ describe("GustTech Shield — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveLinkedVigor } from "../../../testing/linked-vigor.ts";
+
+/** @covers MTm7r2KOSS-a3 */
+describe("gusttechShield — linked Vigor", () => {
+  proveLinkedVigor(gusttechShield, {});
+});

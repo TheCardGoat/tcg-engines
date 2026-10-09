@@ -1,3 +1,4 @@
+import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
 import type { GatewayHandle } from "@tcg/gateway-client";
 import { CHAT_PRESETS, type ChatPresetKey } from "@tcg/simulator-runtime/chat";
 
@@ -120,21 +121,6 @@ export function mergeRemoteChatMessage(
     return current;
   }
   return current.concat(message).slice(-REMOTE_CHAT_LOG_LIMIT);
-}
-
-export function systemChatMessageText(systemEvent: string | undefined): string {
-  switch (systemEvent) {
-    case "free_text_chat_enabled":
-      return "Free text chat enabled.";
-    case "enable_free_text_chat_proposed":
-      return "Free text chat requested.";
-    case "enable_free_text_chat_declined":
-      return "Free text chat request rejected.";
-    case "enable_free_text_chat_expired":
-      return "Free text chat request expired.";
-    default:
-      return systemEvent ?? "System message.";
-  }
 }
 
 function remoteChatMessageToLocal(

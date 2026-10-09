@@ -23,7 +23,7 @@ export const op02JaguarDSaul109: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Giant Navy"],
+  traits: ["Giant", "Navy"],
   attribute: "strike",
   i18n: op02JaguarDSaul109I18n,
 };

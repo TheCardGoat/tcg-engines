@@ -30,6 +30,10 @@ export const meekoLuckyRaccoon: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_360f7631b450475a94af2279d0ea143d",
+    tcgPlayer: "704570",
+  },
   classifications: ["Storyborn", "Ally"],
   i18n: meekoLuckyRaccoonI18n,
 };

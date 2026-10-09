@@ -78,4 +78,26 @@ describe("OP13-075 Guess We'll Have Another Scrap", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["wrong Leader", "no given DON!!"])(
+    "pays the optional rest cost but does not ramp with %s",
+    (boundary) => {
+      const engine = OnePieceTestEngine.create({
+        leaderCardId: boundary === "wrong Leader" ? "OP01-001" : op13GolDRoger003,
+        hand: [op13GuessWeLlHaveAnotherScrapYouCanOnlyRiskDeathWhileYouReStillAlive075],
+        character: [{ card: eb01Doma005, attachedDon: boundary === "wrong Leader" ? 1 : 0 }],
+        activeDon: 2,
+        donDeckCount: 5,
+      });
+      engine
+        .asSouth()
+        .play(op13GuessWeLlHaveAnotherScrapYouCanOnlyRiskDeathWhileYouReStillAlive075);
+      engine.asSouth().acceptOptional();
+      expect(engine.getView("south").players.south).toMatchObject({
+        activeDon: 0,
+        restedDon: 2,
+        donDeckCount: 5,
+      });
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

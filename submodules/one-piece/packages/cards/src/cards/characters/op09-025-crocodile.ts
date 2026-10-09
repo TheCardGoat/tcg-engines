@@ -23,7 +23,7 @@ export const op09Crocodile025: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Baroque Works The Seven Warlords of the Sea ODYSSEY"],
+  traits: ["ODYSSEY", "The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "If your Leader has the {ODYSSEY} type, this Character cannot be K.O.'d in battle by Leaders.",
@@ -34,7 +34,7 @@ export const op09Crocodile025: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "ODYSSEY",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -21,7 +21,7 @@ export const op01CrescentCutlass089: EventCard = {
   rarity: "C",
   setId: "OP01",
   cost: 3,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   effect:
     "[Counter] If your Leader has the \"The Seven Warlords of the Sea\" type, return up to 1 Character with a cost of 5 or less to the owner's hand.  This card has been officially errata'd.",
   effects: {
@@ -32,7 +32,7 @@ export const op01CrescentCutlass089: EventCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

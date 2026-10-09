@@ -52,6 +52,7 @@ describe("OP01-086 Overheat", () => {
     expect(returnStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(ownCostlyId);
     expect(returnStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(attackerId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [ownSelectedId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBeforeAttack);

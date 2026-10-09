@@ -10,12 +10,15 @@ test.describe("timer device clock skew", () => {
       await page.goto(buildRegressionFixturePath("timer-device-clock-skew", { view: "playerTwo" }));
       const activeTimer = page.getByRole("timer").first();
       await expect(activeTimer).toBeVisible();
-      await expect(activeTimer).toHaveAttribute("aria-label", /Player time remaining: 2:[23]\d/);
+      await expect(activeTimer).toHaveAttribute(
+        "aria-label",
+        /Player time remaining: (3:00|2:5\d)/,
+      );
 
       await page.clock.setSystemTime(new Date(now.getTime() + offsetHours * 3_600_000));
       await page.clock.runFor(2_000);
 
-      await expect(activeTimer).toHaveAttribute("aria-label", /Player time remaining: 2:2\d/);
+      await expect(activeTimer).toHaveAttribute("aria-label", /Player time remaining: 2:5\d/);
       await expect(page.getByRole("button", { name: /drop opponent/i })).toHaveCount(0);
       await expect(page.getByRole("button", { name: "Skip Their Turn" })).toHaveCount(0);
       await testInfo.attach("healthy-clock-after-skew", {
@@ -24,10 +27,10 @@ test.describe("timer device clock skew", () => {
       });
 
       // Reserve expiry alone is not droppable during the server-configured grace.
-      await page.clock.fastForward(158_000);
-      await expect(activeTimer).toHaveAttribute("aria-label", /Player time remaining: -0:/);
+      await page.clock.fastForward(180_000);
+      await expect(activeTimer).toHaveAttribute("aria-label", "Player time remaining: 0:00");
       await expect(page.getByRole("button", { name: /drop opponent/i })).toHaveCount(0);
-      await testInfo.attach("negative-clock-during-grace", {
+      await testInfo.attach("expired-clock-during-grace", {
         body: await page.screenshot(),
         contentType: "image/png",
       });

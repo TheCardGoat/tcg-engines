@@ -23,7 +23,7 @@ export const op08MontBlancNoland109: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Jaya Botanist"],
+  traits: ["Jaya", "Botanist"],
   attribute: "slash",
   effect:
     "[On Play] If your Leader has the [Shandian Warrior] type and you have a [Kalgara] Character, add up to 1 card from the top of your deck to the top of your Life cards.",
@@ -39,7 +39,7 @@ export const op08MontBlancNoland109: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Shandian Warrior",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "hasCard",

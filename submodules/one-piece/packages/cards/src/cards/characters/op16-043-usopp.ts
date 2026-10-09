@@ -23,7 +23,7 @@ export const op16Usopp043: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "[Blocker]\n\n[On K.O.] You may rest 1 of your {Dressrosa} type Leader or Stage cards: Return up to 1 of your opponent's Characters with a cost of 5 or less to the owner's hand.",
@@ -40,7 +40,7 @@ export const op16Usopp043: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

@@ -1,7 +1,7 @@
 import { getCard } from "../../cards/src/runtime-catalog.ts";
 import type { Action, Target, TargetFilter } from "@tcg/op-types";
 import { getLegalCommands } from "./engine/legal.ts";
-import { getCardAttribute, getCardCost, getCardPower } from "./shared.ts";
+import { getCardAttribute, getCardCost, getCardPower, getLeaderLifeValue } from "./shared.ts";
 import type { OPCard } from "@tcg/op-types";
 import type {
   CardInstance,
@@ -98,6 +98,8 @@ function projectCard(
     zone: instance.zone,
     rested: instance.rested,
     attachedDon: instance.attachedDon,
+    lifeValue:
+      visible && card.cardType === "leader" ? getLeaderLifeValue(state, instance.instanceId) : null,
     power: visible && basePower(card) !== null ? getCardPower(state, instance.instanceId) : null,
     attribute: visible ? getCardAttribute(state, instance.instanceId) : null,
     cost: visible && baseCost(card) !== null ? getCardCost(state, instance.instanceId) : null,
@@ -126,6 +128,7 @@ function projectZone(
         zone: instance.zone,
         rested: instance.rested,
         attachedDon: instance.attachedDon,
+        lifeValue: null,
         power: null,
         cost: null,
         hidden: true,
@@ -229,7 +232,7 @@ function candidateForPromptOption(
         zone: instance?.zone ?? null,
         rested: instance?.rested ?? null,
         attachedDon: instance?.attachedDon ?? null,
-        cost: card ? baseCost(card) : null,
+        cost: card && baseCost(card) !== null ? getCardCost(state, option.targetId) : null,
         power: card ? basePower(card) : null,
       },
     };
@@ -446,6 +449,7 @@ function targetFromPrompt(prompt: PromptState): Target | null {
         : [context.action.source.zone],
       count: context.action.count,
       filters: context.action.filters,
+      totalConstraint: context.action.totalConstraint,
     };
   }
   if (
@@ -464,6 +468,8 @@ function decisionKindForPrompt(prompt: PromptState): ProjectedDecisionKind {
   }
 
   switch (prompt.choiceKind) {
+    case "chooseNumber":
+      return "chooseNumber";
     case "selectTargets":
       return "selectTargets";
     case "selectCards":
@@ -496,6 +502,17 @@ function stepForPrompt(state: MatchState, prompt: PromptState): ProjectedDecisio
   const candidates = prompt.options.map((option) => candidateForPromptOption(state, option));
   const target = targetFromPrompt(prompt);
 
+  if (prompt.choiceKind === "chooseNumber") {
+    return {
+      id: `${prompt.id}:iterations`,
+      kind: "chooseNumber",
+      label: prompt.details || prompt.label,
+      min: 0,
+      max: Number.MAX_SAFE_INTEGER,
+      integer: true,
+      field: "iterations",
+    };
+  }
   if (prompt.choiceKind === "confirm") {
     return {
       id: `${prompt.id}:confirm`,

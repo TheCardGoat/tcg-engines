@@ -31,10 +31,11 @@ export const peterPanCreatedByTheVine: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_25b0c2af6a7e482687ccdf1c28972104",
+    tcgPlayer: "704603",
   },
   text: [
     {
-      title: "Clever Trick",
+      title: "CLEVER TRICK",
       description:
         "Whenever one of your Floodborn characters is challenged, the challenging player chooses and discards a card.",
     },

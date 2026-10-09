@@ -42,7 +42,7 @@ export const op01Mr1DazBonez083: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Baroque Works",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

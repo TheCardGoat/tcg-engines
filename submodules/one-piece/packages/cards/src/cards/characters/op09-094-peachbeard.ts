@@ -23,7 +23,7 @@ export const op09Peachbeard094: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Peachbeard Pirates Blackbeard Pirates Allies"],
+  traits: ["Peachbeard Pirates", "Blackbeard Pirates Allies"],
   attribute: "slash",
   i18n: op09Peachbeard094I18n,
 };

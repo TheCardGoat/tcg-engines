@@ -3,6 +3,28 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-034 Monkey.D.Luffy", () => {
+  test.each([
+    { allies: [], expected: 2000 },
+    { allies: ["EB04-038"], expected: 3000 },
+    { allies: ["EB04-038", "EB04-038"], expected: 3000 },
+    { allies: ["EB04-038", "OP13-031"], expected: 4000 },
+  ])(
+    "FAQ distinct-name count for $allies yields $expected with one attached DON!!",
+    ({ allies, expected }) => {
+      const engine = OnePieceTestEngine.create({
+        character: ["OP16-034", ...allies],
+        activeDon: 1,
+      });
+      const luffyId = engine.findCardInZone("south", "character", "OP16-034");
+      engine.attachDon(luffyId, 1, "south");
+      expect(
+        engine
+          .getView("south")
+          .players.south.characters.find((card) => card?.instanceId === luffyId)?.power,
+      ).toBe(expected);
+    },
+  );
+
   test("[DON!! x1] [Your Turn] gains +1000 power per differently-named own Character", () => {
     const engine = OnePieceTestEngine.create(
       {

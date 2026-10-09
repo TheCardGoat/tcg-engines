@@ -11,7 +11,7 @@ export const closetDoorPortal: ItemCard = {
       artId: "set13-170",
       setCode: "set13",
       collectorNumber: "170",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,16 +22,20 @@ export const closetDoorPortal: ItemCard = {
   franchise: "Monsters, Inc.",
   set: "013",
   cardNumber: 170,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_80f5bc5637bc4423aa91ad350d440b32",
+    tcgPlayer: "704666",
+  },
   text: [
     {
-      title: "Knock, Knock",
+      title: "KNOCK, KNOCK",
       description: "This item enters play exerted.",
     },
     {
-      title: "Who's There?",
+      title: "WHO'S THERE?",
       description:
         "{E}, 2 {I} — Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order. Put this card into your inkwell facedown and exerted.",
     },

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/simultaneous-selections"
+  relation: "current_index"
+---
+
 # Simultaneous Selections
 
 Whenever players are instructed to make a choice regarding choosing or selecting a card, sometimes the players must make a choice at the same time. While this is possible when cards are face down, selection for public cards must follow a specific order.&#x20;

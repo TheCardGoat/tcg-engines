@@ -1,6 +1,7 @@
 import type { Action, Target, TargetFilter, Zone } from "@tcg/op-types";
 import { mapZoneNoun, parseComparison } from "../helpers.ts";
 import {
+  combineTargetGroups,
   parseTarget,
   parseTargetWithoutPlayer,
   traitAlternativesFilter,
@@ -131,7 +132,7 @@ export function parseRestAction(text: string): RestAction | null {
               {
                 filter: "trait",
                 value: traitOrNamedLeaderMatch[1]!,
-                match: "includes",
+                match: "exact",
               },
               { filter: "name", value: traitOrNamedLeaderMatch[2]! },
             ],
@@ -356,6 +357,30 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
     .replace(/^of\s+your\s+/i, "")
     .trim();
 
+  const trailingExactTrait = /\s+and the [{]([^}]+)[}] type$/i.exec(rest);
+  if (trailingExactTrait) {
+    filters.push({ filter: "trait", value: trailingExactTrait[1]!, match: "exact" });
+    rest = rest.slice(0, trailingExactTrait.index).trim();
+  }
+
+  const eitherNameOrAttribute =
+    /\s+that is either \[([^\]]+)\] or has the \((Slash|Strike|Ranged|Special|Wisdom)\) attribute$/i.exec(
+      rest,
+    );
+  if (eitherNameOrAttribute) {
+    filters.push({
+      filter: "anyOf",
+      filters: [
+        { filter: "name", value: eitherNameOrAttribute[1]! },
+        {
+          filter: "attribute",
+          value: eitherNameOrAttribute[2]!.toLowerCase() as import("@tcg/op-types").OPAttribute,
+        },
+      ],
+    });
+    rest = rest.slice(0, eitherNameOrAttribute.index).trim();
+  }
+
   // Extract "other than [Name]"
   const excludeMatch = /\s+other than\s+\[([^\]]+)\]/i.exec(rest);
   if (excludeMatch) {
@@ -452,6 +477,26 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
     rest = rest.slice(0, powerMatch.index).trim();
   }
 
+  const nameOrAttribute =
+    /^\[([^\]]+)\] or (?:a |an )?\((Slash|Strike|Ranged|Special|Wisdom)\) attribute Character cards?$/i.exec(
+      rest,
+    );
+  if (nameOrAttribute)
+    return [
+      ...filters,
+      { filter: "cardCategory", value: "character" },
+      {
+        filter: "anyOf",
+        filters: [
+          { filter: "name", value: nameOrAttribute[1]! },
+          {
+            filter: "attribute",
+            value: nameOrAttribute[2]!.toLowerCase() as import("@tcg/op-types").OPAttribute,
+          },
+        ],
+      },
+    ];
+
   const qualifiedTraitOrNameMatch =
     /^(?:of\s+your\s+)?(?:(red|green|blue|purple|black|yellow)\s+)?["“]([^"”]+)["”]\s+type\s+(Character|Event|Stage)\s+cards?\s+or\s+\[([^\]]+)\]$/i.exec(
       rest,
@@ -460,28 +505,28 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
     const category = qualifiedTraitOrNameMatch[3]!.toLowerCase() as "character" | "event" | "stage";
     filters.push(
       { filter: "cardCategory", value: category },
+      ...(qualifiedTraitOrNameMatch[1]
+        ? [
+            {
+              filter: "color" as const,
+              value: qualifiedTraitOrNameMatch[1].toLowerCase() as
+                | "red"
+                | "green"
+                | "blue"
+                | "purple"
+                | "black"
+                | "yellow",
+            },
+          ]
+        : []),
       {
         filter: "anyOf",
         groups: [
           [
-            ...(qualifiedTraitOrNameMatch[1]
-              ? [
-                  {
-                    filter: "color" as const,
-                    value: qualifiedTraitOrNameMatch[1].toLowerCase() as
-                      | "red"
-                      | "green"
-                      | "blue"
-                      | "purple"
-                      | "black"
-                      | "yellow",
-                  },
-                ]
-              : []),
             {
               filter: "trait",
               value: qualifiedTraitOrNameMatch[2]!,
-              match: "includes",
+              match: "exact",
             },
           ],
           [{ filter: "name", value: qualifiedTraitOrNameMatch[4]! }],
@@ -509,13 +554,34 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
   }
 
   // Extract suffix trait wording: `Character card with a type including
-  // "Baroque Works"`. This is equivalent to the prefix `{Trait} type`
-  // wording, but appears after the card category.
+  // "Baroque Works"`. Unlike a named type, this permits substring matches.
   const includesTraitMatch =
     /\s+with\s+a\s+type\s+including\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])$/i.exec(rest);
   if (includesTraitMatch) {
     filters.push({ filter: "trait", value: includesTraitMatch[1]!, match: "includes" });
     rest = rest.slice(0, includesTraitMatch.index).trim();
+  }
+
+  const traitOrAttribute =
+    /^(?:[[{"“])([^\]}"”]+)(?:[\]}"”])\s+type\s+or\s+[<(]([^>)]+)[>)]\s+attribute\s+/i.exec(rest);
+  if (traitOrAttribute) {
+    const attribute = traitOrAttribute[2]!.toLowerCase();
+    if (
+      attribute === "slash" ||
+      attribute === "strike" ||
+      attribute === "ranged" ||
+      attribute === "special" ||
+      attribute === "wisdom"
+    ) {
+      filters.push({
+        filter: "anyOf",
+        filters: [
+          { filter: "trait", value: traitOrAttribute[1]!, match: "exact" },
+          { filter: "attribute", value: attribute },
+        ],
+      });
+      rest = rest.slice(traitOrAttribute[0].length);
+    }
   }
 
   // Extract attribute prefix: "(Special) attribute Character card" → AttributeFilter
@@ -558,7 +624,7 @@ export function parsePlayDescription(text: string): TargetFilter[] | null {
         .replace(/[[\]{}"\u201c\u201d]$/g, "")
         .trim(),
     );
-    const traitFilter = traitAlternativesFilter(traits, "includes");
+    const traitFilter = traitAlternativesFilter(traits, "ordinary");
     if (traitFilter) filters.push(traitFilter);
     rest = rest.slice(traitMatch[0].length);
   }
@@ -680,7 +746,7 @@ export function parseSetActiveAction(text: string): SetActiveAction | ChoiceActi
     if (leaderMatch[1]) {
       const traitMatch = /^[{[["\u201c]([^}\]"\u201d]+)[}\]"\u201d]\s+type$/i.exec(leaderMatch[1]);
       if (traitMatch) {
-        target.filters = [{ filter: "trait", value: traitMatch[1]!, match: "includes" }];
+        target.filters = [{ filter: "trait", value: traitMatch[1]!, match: "exact" }];
       }
     }
     return { action: "setActive", target };
@@ -689,7 +755,11 @@ export function parseSetActiveAction(text: string): SetActiveAction | ChoiceActi
   const explicitTarget = parseTarget(targetText);
   const target = explicitTarget ?? parseTargetWithoutPlayer(targetText);
   if (!target) return null;
-  const ownedTarget = explicitTarget ? target : { ...target, player: "self" as const };
+  // Unqualified Characters can be selected on either field; explicit ownership wins.
+  const ownedTarget =
+    explicitTarget || target.zones.every((zone) => zone === "character")
+      ? target
+      : { ...target, player: "self" as const };
 
   // A named generic "card" can refer to a Leader or Character with that name,
   // but not to a Stage or DON!! card. OP03-036's official Q&A confirms this
@@ -712,6 +782,25 @@ export function parseSetActiveAction(text: string): SetActiveAction | ChoiceActi
  */
 export function parseFreezeAction(text: string): FreezeAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const unqualifiedFreeze =
+    /^Up to (\d+) rested Characters? with (\d+) or more DON!! cards given will not become active in your opponent's next Refresh Phase$/i.exec(
+      trimmed,
+    );
+  if (unqualifiedFreeze)
+    return {
+      action: "freeze",
+      refreshPlayer: "opponent",
+      target: {
+        player: "any",
+        zones: ["character"],
+        count: { amount: Number(unqualifiedFreeze[1]), upTo: true },
+        filters: [
+          { filter: "state", value: "rested" },
+          { filter: "attachedDon", comparison: "gte", value: Number(unqualifiedFreeze[2]) },
+        ],
+      },
+    };
 
   const bothPlayersRefreshMatch =
     /^all\s+Characters\s+with\s+a\s+cost\s+of\s+(\d+)\s+or\s+(less|more)\s+do\s+not\s+become\s+active\s+in\s+your\s+and\s+your\s+opponent's\s+Refresh\s+Phases$/i.exec(
@@ -870,6 +959,17 @@ export function parseCompoundKoAction(text: string): Action | null {
   const m = /^K\.O\.\s+(.+)$/i.exec(trimmed);
   if (!m) return null;
 
+  const joinedTargets = m[1]!.split(/\s+and\s+(?=up\s+to\s+\d+\s+)/i);
+  if (joinedTargets.length === 2) {
+    const groups = joinedTargets.map((part) => parseTarget(part) ?? parseTargetWithoutPlayer(part));
+    if (groups[0] && groups[1]) {
+      const targetGroups = [groups[0], groups[1]];
+      const target = combineTargetGroups(targetGroups);
+      if (target) return { action: "ko", target, targetGroups };
+    }
+    return null;
+  }
+
   // Try splitting on " or your opponent's " — the common pattern for compound K.O. targets
   const parts = m[1]!.split(/\s+or\s+(?=your\s+opponent's\s+)/i);
   if (parts.length !== 2) return null;
@@ -895,6 +995,19 @@ export function parseCompoundKoAction(text: string): Action | null {
  */
 export function parseCompoundPlayAction(text: string): Action[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const namedGroups =
+    /^play\s+(up to 1\s+\[[^\]]+\](?:,\s*(?:and\s+)?up to 1\s+\[[^\]]+\])+),?\s+(with a cost of \d+ or less from your (?:hand(?: or trash)?|trash(?: or hand)?))$/i.exec(
+      trimmed,
+    );
+  if (namedGroups) {
+    const plays = [...namedGroups[1]!.matchAll(/up to 1\s+\[[^\]]+\]/gi)].map((match) =>
+      parsePlayAction(`play ${match[0]} ${namedGroups[2]}`),
+    );
+    if (plays.every((play): play is GenericPlayAction => play?.action === "play")) {
+      return groupedActivePlay(plays);
+    }
+    return null;
+  }
   // "play up to 1 {Trait} type Character card with a cost of N or less and [play] up to 1 {Trait} type Character card with a cost of M or less [from your hand/trash]"
   const m = /^play\s+(up to \d+\s+.+?)\s+and\s+(?:play\s+)?(up to \d+\s+.+?)$/i.exec(trimmed);
   if (!m) return null;
@@ -913,5 +1026,44 @@ export function parseCompoundPlayAction(text: string): Action[] | null {
   }
 
   if (!play1 || !play2) return null;
+  if (
+    !/\band\s+play\s+up to/i.test(trimmed) &&
+    play1.action === "play" &&
+    play2.action === "play"
+  ) {
+    const grouped = groupedActivePlay([play1, play2]);
+    if (grouped) return grouped;
+  }
   return [play1, play2];
+}
+
+function groupedActivePlay(plays: GenericPlayAction[]): Action[] | null {
+  const first = plays[0];
+  const supportedFields = new Set(["action", "source", "count", "filters", "playState"]);
+  if (
+    !first ||
+    plays.some(
+      (play) =>
+        Object.entries(play).some(
+          ([key, value]) => value !== undefined && !supportedFields.has(key),
+        ) ||
+        play.count.amount !== 1 ||
+        !play.count.upTo ||
+        (play.playState !== undefined && play.playState !== "active") ||
+        play.source.player !== first.source.player ||
+        JSON.stringify(play.source.zone) !== JSON.stringify(first.source.zone),
+    )
+  )
+    return null;
+  return [
+    {
+      action: "playGrouped",
+      source: first.source,
+      groups: plays.map((play) => ({ count: { amount: 1, upTo: true }, filters: play.filters })),
+      playStates: {
+        single: "active",
+        multiple: ["active", ...plays.slice(1).map(() => "active" as const)],
+      },
+    },
+  ];
 }

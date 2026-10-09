@@ -56,7 +56,7 @@ export const op06Ryuma036: CharacterCard = {
   setId: "OP06",
   cost: 4,
   power: 6000,
-  traits: ["Land of Wano Thriller Bark Pirates"],
+  traits: ["Land of Wano", "Thriller Bark Pirates"],
   attribute: "slash",
   effect:
     "[On Play] / [On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.",

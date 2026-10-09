@@ -7,3 +7,9 @@ import { spellshieldExia } from "./spellshield-exia.ts";
 describe("Spellshield: Exia — Class Bonus activation discount", () => {
   proveClassBonusActivationDiscount({ card: spellshieldExia, discount: 2 });
 });
+
+import { provePreventionFollowUp } from "../../../testing/prevention-follow-up.ts";
+/** @covers CSVtYQIz7h-a2 */
+describe("spellshield-exia — prevention follow-up", () => {
+  provePreventionFollowUp({ card: spellshieldExia, baseCost: 4, recover: true });
+});

@@ -2,8 +2,8 @@ import {
   attackUnitOnlyStrategy,
   attackRivalOnlyStrategy,
   callLegendOnlyStrategy,
-  createGreedyStrategy,
   defaultStrategy,
+  createGreedyStrategy,
   type GreedyWeights,
   firstLegalStrategy,
   greedyStrategy,
@@ -11,12 +11,13 @@ import {
   randomStrategy,
 } from "./strategies/index.ts";
 import { abilityAwareTacticalStrategy, tacticalStrategy } from "./search/tactical.ts";
+import { expertOracleStrategy } from "./search/expert-oracle.ts";
 import type { AIStrategy } from "./types.ts";
 import type { BotInformationPolicy, BotStrategyDescriptorV1 } from "@tcg/bot-core";
 import currentPromotion from "./promotions/current.json" with { type: "json" };
 
 /** Bump whenever shipped decision behavior changes in a promotion-relevant way. */
-export const CYBERPUNK_AUTOMATION_REVISION = "cyberpunk-automation-v6";
+export const CYBERPUNK_AUTOMATION_REVISION = "cyberpunk-automation-v16";
 
 export interface AutomatedActionStrategyOption extends Omit<
   BotStrategyDescriptorV1,
@@ -39,11 +40,11 @@ interface AutomatedActionPromotion {
 const STATIC_AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption[] = [
   {
     id: "default",
-    label: "Default",
+    label: "Recommended",
     description:
-      "Production-like battle heuristic that develops the board and avoids attacks that spend Units into losing fights.",
+      "Runs Expert (full information). Plans action sequences and opponent replies. Sees both hands, both decks in order, and face-down Legends.",
     strategy: defaultStrategy,
-    informationPolicy: "public",
+    informationPolicy: "oracle",
   },
   {
     id: "greedy",
@@ -55,19 +56,27 @@ const STATIC_AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
   },
   {
     id: "tactical",
-    label: "Tactical search",
+    label: "Sharp",
     description:
-      "Bounded public-information search that scores the board and models public opponent replies.",
+      "Looks ahead before committing: scores the board and plans around the replies the opponent is likely to have.",
     strategy: tacticalStrategy,
     informationPolicy: "public",
   },
   {
     id: "tactical-ability-aware",
-    label: "Ability-aware tactical search",
+    label: "Masterful",
     description:
-      "Bounded public-information search that values card roles, timing windows, and visible board requirements.",
+      "Uses public information to read card roles, timing windows, and visible board requirements when planning.",
     strategy: abilityAwareTacticalStrategy,
     informationPolicy: "public",
+  },
+  {
+    id: "expert-oracle",
+    label: "Expert (full information)",
+    description:
+      "Plans action sequences and opponent replies. Sees both hands, both decks in order, and face-down Legends.",
+    strategy: expertOracleStrategy,
+    informationPolicy: "oracle",
   },
   {
     id: "first-legal",
@@ -86,10 +95,11 @@ const STATIC_AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
     testOnly: true,
   },
   {
-    id: "pass-only",
-    label: "Pass only",
-    description: "Test strategy that advances phases without making proactive plays.",
-    strategy: passOnlyStrategy,
+    id: "attack-rival-only",
+    label: "Always attack",
+    description:
+      "A sparring partner that attacks the rival Gig area whenever it can and never fights Units.",
+    strategy: attackRivalOnlyStrategy,
     informationPolicy: "public",
     testOnly: true,
   },
@@ -102,19 +112,19 @@ const STATIC_AUTOMATED_ACTION_STRATEGIES: readonly AutomatedActionStrategyOption
     testOnly: true,
   },
   {
-    id: "attack-rival-only",
-    label: "Attack rival only",
-    description:
-      "Test strategy that forces direct rival attacks and passes instead of fighting Units.",
-    strategy: attackRivalOnlyStrategy,
-    informationPolicy: "public",
-    testOnly: true,
-  },
-  {
     id: "call-legend-only",
     label: "Call legend only",
     description: "Test strategy that calls a Legend when possible, then falls back to passing.",
     strategy: callLegendOnlyStrategy,
+    informationPolicy: "public",
+    testOnly: true,
+  },
+  {
+    id: "pass-only",
+    label: "Only passes",
+    description:
+      "A practice dummy that never plays cards — it advances phases so you can develop freely.",
+    strategy: passOnlyStrategy,
     informationPolicy: "public",
     testOnly: true,
   },
@@ -139,45 +149,21 @@ export function isGreedyWeights(value: unknown): value is GreedyWeights {
   );
 }
 
-/**
- * When a promotion is active, "Default" silently follows the promoted
- * strategy. Surface that in the label and description so players and
- * operators can see what "Default" actually runs.
- */
-function withPromotedDefaultLabel(
-  promotion: AutomatedActionPromotion,
-  options: readonly AutomatedActionStrategyOption[],
-): readonly AutomatedActionStrategyOption[] {
-  const promotedId = promotion.promotedStrategyId;
-  if (promotedId === "default") return options;
-  const promoted = options.find((option) => option.id === promotedId);
-  if (!promoted) return options;
-  return options.map((option) =>
-    option.id === "default"
-      ? {
-          ...option,
-          label: `Default (promoted: ${promoted.label})`,
-          description: `Production default that currently runs the promoted bot-lab strategy (${promoted.label}).`,
-        }
-      : option,
-  );
-}
-
 export function buildAutomatedActionStrategyOptions(
   promotion: AutomatedActionPromotion,
 ): readonly AutomatedActionStrategyOption[] {
   if (
     STATIC_AUTOMATED_ACTION_STRATEGIES.some((option) => option.id === promotion.promotedStrategyId)
   ) {
-    return withPromotedDefaultLabel(promotion, STATIC_AUTOMATED_ACTION_STRATEGIES);
+    return STATIC_AUTOMATED_ACTION_STRATEGIES;
   }
 
   const weights = promotion.strategyConfig?.greedyWeights;
   if (!isGreedyWeights(weights)) {
-    return withPromotedDefaultLabel(promotion, STATIC_AUTOMATED_ACTION_STRATEGIES);
+    return STATIC_AUTOMATED_ACTION_STRATEGIES;
   }
 
-  return withPromotedDefaultLabel(promotion, [
+  return [
     {
       id: promotion.promotedStrategyId,
       label: `${promotion.promotedStrategyId} (promoted)`,
@@ -186,18 +172,16 @@ export function buildAutomatedActionStrategyOptions(
       informationPolicy: promotion.informationPolicy,
     },
     ...STATIC_AUTOMATED_ACTION_STRATEGIES,
-  ]);
+  ];
 }
 
 export const AUTOMATED_ACTION_STRATEGIES = buildAutomatedActionStrategyOptions(
   currentPromotion as AutomatedActionPromotion,
 );
 
-export const DEFAULT_AUTOMATED_ACTION_STRATEGY_ID = AUTOMATED_ACTION_STRATEGIES.some(
-  (option) => option.id === currentPromotion.promotedStrategyId,
-)
-  ? currentPromotion.promotedStrategyId
-  : "default";
+// Bot games explicitly permit hidden information. Keep this choice separate
+// from currentPromotion, which records the older public-information lab audit.
+export const DEFAULT_AUTOMATED_ACTION_STRATEGY_ID = "expert-oracle";
 
 export function getAutomatedActionStrategyOption(
   strategyId: string,
@@ -209,9 +193,7 @@ export function getSafeAutomatedActionStrategyOption(
   strategyId?: string | null,
 ): AutomatedActionStrategyOption {
   const requestedId =
-    !strategyId || (strategyId === "default" && DEFAULT_AUTOMATED_ACTION_STRATEGY_ID !== "default")
-      ? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID
-      : strategyId;
+    !strategyId || strategyId === "default" ? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID : strategyId;
   const requestedOption = getAutomatedActionStrategyOption(requestedId);
   if (requestedOption) return requestedOption;
 

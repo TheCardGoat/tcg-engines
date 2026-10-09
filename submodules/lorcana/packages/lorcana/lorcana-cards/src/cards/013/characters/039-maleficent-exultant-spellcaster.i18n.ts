@@ -6,16 +6,16 @@ export const maleficentExultantSpellcasterI18n: Record<Languages, I18nProperties
     version: "Exultant Spellcaster",
   },
   de: {
-    name: "Malefiz",
-    version: "Hochmütige Zauberin",
+    name: "Maleficent",
+    version: "Exultant Spellcaster",
   },
   fr: {
-    name: "Maléfique",
-    version: "Lanceuse de sorts exultante",
+    name: "Maleficent",
+    version: "Exultant Spellcaster",
   },
   it: {
-    name: "Malefica",
-    version: "Incantatrice Entusiasta",
+    name: "Maleficent",
+    version: "Exultant Spellcaster",
   },
   es: {
     name: "Pernicioso",

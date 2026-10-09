@@ -31,6 +31,7 @@ export const op14eb04Nami031: CharacterCard = {
   setId: "OP14",
   cost: 4,
   power: 2000,
+  counter: 1000,
   traits: ["FILM", "Straw Hat Crew"],
   attribute: "special",
   effect:

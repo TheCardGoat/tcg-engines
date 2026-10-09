@@ -338,6 +338,8 @@ describe("CR real-card: play restrictions, prevent-defeat, cost min, start of tu
       { as: P1 },
     );
     engine.resolveFullFight({ as: P1 });
+    // Jackie can replace his own defeat; decline to test the normal GO SOLO exit.
+    engine.declineRedirectDefeat({ as: P1 });
     expect(
       engine
         .getCardsInZone("field", P1)

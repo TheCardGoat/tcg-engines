@@ -4,11 +4,8 @@
   --mobile-portrait-bottom-rail-h: var(--mobile-portrait-rail-h);
   --mobile-portrait-opponent-hand-h: clamp(34px, 5.8dvh, 48px);
   --mobile-portrait-hand-h: clamp(62px, 10.5dvh, 78px);
-  --mobile-portrait-ledger-base-h: clamp(104px, 15.5dvh, 124px);
-  --mobile-portrait-resolving-strip-h: 0px;
-  --mobile-portrait-ledger-h: calc(
-    var(--mobile-portrait-ledger-base-h) + var(--mobile-portrait-resolving-strip-h)
-  );
+  --mobile-portrait-ledger-base-h: clamp(132px, 15dvh, 140px);
+  --mobile-portrait-ledger-h: var(--mobile-portrait-ledger-base-h);
   --mobile-zone-summary-bar-h: clamp(22px, 3dvh, 26px);
   --mobile-portrait-border: rgb(245 230 66 / 42%);
   --mobile-portrait-surface: rgb(7 9 12 / 98%);
@@ -33,36 +30,6 @@
   overflow: hidden;
   overscroll-behavior: contain;
   touch-action: manipulation;
-}
-
-.root[data-ledger-density="scoreOnly"] {
-  --mobile-portrait-ledger-base-h: 54px;
-}
-
-.root[data-ledger-density="singleRow"] {
-  --mobile-portrait-ledger-base-h: 76px;
-}
-
-.root[data-ledger-density="twoLegend"] {
-  --mobile-portrait-ledger-base-h: 92px;
-}
-
-.root[data-ledger-density="stacked"] {
-  --mobile-portrait-ledger-base-h: 148px;
-}
-
-.root:has([data-testid="resolving-program"]) {
-  --mobile-portrait-resolving-strip-h: 48px;
-}
-
-@media (max-width: 389px) {
-  .root[data-ledger-density="twoLegend"] {
-    --mobile-portrait-ledger-base-h: 96px;
-  }
-
-  .root[data-ledger-density="stacked"] {
-    --mobile-portrait-ledger-base-h: 152px;
-  }
 }
 
 .root[data-field-card-size="compact"] {
@@ -441,6 +408,22 @@
   --priority-color: 255 61 138;
 }
 
+.playmat {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg, rgb(7 9 12 / 16%), rgb(7 9 12 / 28%)), var(--cp-playmat-image);
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: contain;
+}
+
+.playmatMirrored {
+  transform: scaleX(-1);
+}
+
 .fieldBand[data-priority="true"] {
   background:
     linear-gradient(
@@ -476,7 +459,8 @@
   border-color: rgb(var(--priority-color) / 44%);
   background:
     radial-gradient(ellipse at 18% 82%, rgb(var(--priority-color) / 5%), transparent 46%),
-    linear-gradient(90deg, rgb(var(--priority-color) / 4%), rgb(9 11 15 / 96%) 38%), #090b0f;
+    linear-gradient(90deg, rgb(var(--priority-color) / 8%), transparent 55%),
+    var(--board-zone, #090b0f);
   box-shadow:
     inset 0 0 0 1px rgb(var(--priority-color) / 10%),
     inset 0 0 22px rgb(var(--priority-color) / 6%),
@@ -486,7 +470,8 @@
 .opponentFieldBand[data-priority="true"] > [class*="zone"] {
   background:
     radial-gradient(ellipse at 82% 18%, rgb(var(--priority-color) / 6%), transparent 46%),
-    linear-gradient(270deg, rgb(var(--priority-color) / 5%), rgb(9 11 15 / 96%) 42%), #090b0f;
+    linear-gradient(270deg, rgb(var(--priority-color) / 8%), transparent 55%),
+    var(--board-zone, #090b0f);
   box-shadow:
     inset 0 2px 0 rgb(var(--priority-color) / 58%),
     inset 0 0 0 1px rgb(var(--priority-color) / 10%),
@@ -1050,6 +1035,7 @@
 
 .mobileTopRail .gameControls {
   justify-content: flex-start;
+  overflow: visible;
 }
 
 .topControls > * {
@@ -1101,6 +1087,17 @@
   display: grid;
   gap: 3px;
   min-width: 0;
+}
+
+.opponentIdentityText strong {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 3px;
+}
+
+.opponentIdentityText strong svg {
+  flex: 0 0 auto;
 }
 
 .opponentIdentityText span {
@@ -1425,6 +1422,45 @@
   white-space: nowrap;
 }
 
+/* The three game-native shortcuts arrive from different components. Normalize
+   them at their shared mobile command rail so their hit areas and chrome read
+   as one control group rather than a row of unrelated buttons. */
+.mobileTopRail .gameControls > :global(button) {
+  display: inline-flex;
+  width: var(--mobile-command-bar-h);
+  min-width: var(--mobile-command-bar-h);
+  height: var(--mobile-command-bar-h);
+  min-height: var(--mobile-command-bar-h);
+  flex: 0 0 var(--mobile-command-bar-h);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  border-left: 1px solid rgb(74 217 255 / 28%);
+  border-radius: 0;
+  padding: 0;
+  background: rgb(7 9 12 / 22%);
+  color: rgb(207 232 246 / 92%);
+  box-shadow: none;
+}
+
+.mobileTopRail .gameControls > :global(button):first-child {
+  border-left: 0;
+}
+
+.mobileTopRail .gameControls > :global(button):hover:not(:disabled),
+.mobileTopRail .gameControls > :global(button):focus-visible {
+  background: rgb(74 217 255 / 10%);
+  color: #f5e642;
+}
+
+.mobileTopRail .gameControls > :global(button):focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid #f5e642;
+  outline-offset: -3px;
+}
+
 .gameControlButton svg,
 .settingsControl > :global(button svg) {
   width: 15px;
@@ -1556,6 +1592,34 @@
   background: rgb(7 9 12 / 96%);
 }
 
+.mobileActivityUtilityAction {
+  min-height: 44px;
+  border: 1px solid rgb(74 217 255 / 34%);
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: rgb(74 217 255 / 7%);
+  color: rgb(207 232 246 / 92%);
+  font:
+    800 11px/1.15 Rajdhani,
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-align: start;
+  text-transform: uppercase;
+}
+
+.mobileActivityUtilityAction:hover:not(:disabled),
+.mobileActivityUtilityAction:focus-visible {
+  border-color: rgb(245 230 66 / 66%);
+  background: rgb(245 230 66 / 10%);
+  color: #f5e642;
+  outline: none;
+}
+
+.mobileActivityUtilityAction:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* Unified activity feed: merged log+chat panel with the floating chat
    composer docked over its lower edge. */
 .activityFeed {
@@ -1603,11 +1667,12 @@
   place-items: center;
   grid-auto-rows: auto;
   align-content: center;
-  gap: 2px;
+  gap: 1px;
   width: 100%;
   min-width: 0;
   height: 100%;
-  padding: 3px 5px;
+  padding: 2px 4px;
+  overflow: hidden;
   border-inline: 1px solid rgb(245 230 66 / 28%);
   background:
     linear-gradient(90deg, rgb(255 61 138 / 9%), transparent 42%),
@@ -1655,8 +1720,8 @@
 
 .mobileClockChip .clockPill {
   width: min(100%, 64px);
-  min-height: 28px;
-  padding: 3px 5px;
+  min-height: 24px;
+  padding: 2px 4px;
   border-color: rgb(207 232 246 / 18%);
   background: rgb(4 7 10 / 62%);
 }
@@ -1666,7 +1731,7 @@
 }
 
 .mobileClockChip .clockPill[data-active="true"] {
-  min-height: 32px;
+  min-height: 28px;
 }
 
 .mobileClockChip .clockPill[data-active="true"] strong {
@@ -1979,6 +2044,16 @@
   border-top-color: rgb(245 230 66 / 22%);
 }
 
+.resolvingProgramHost {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  bottom: 2px;
+  z-index: 24;
+  width: 34px;
+  pointer-events: none;
+}
+
 .bottomHandBand {
   border-top: 0;
 }
@@ -2011,18 +2086,23 @@
 }
 
 .mobilePhaseControls {
+  display: grid;
+  grid-template-columns: 58px 58px minmax(88px, 1fr);
   flex: 1 1 auto;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: stretch;
+  justify-content: stretch;
+  height: 100%;
   padding: 0;
 }
 
-.mobileConcedeAction {
-  flex: 0 0 58px;
-  min-width: 58px;
-  min-height: 44px;
+.mobileConcedeAction,
+.mobileUndoAction {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
   border: 1px solid rgb(255 61 104 / 48%);
-  border-radius: 2px;
+  border-radius: 0;
   background: rgb(255 61 104 / 8%);
   color: rgb(255 140 165);
   font-family: Rajdhani, sans-serif;
@@ -2032,7 +2112,18 @@
   text-transform: uppercase;
 }
 
-.mobileConcedeAction:disabled {
+.mobileUndoAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-color: rgb(74 217 255 / 36%);
+  background: rgb(74 217 255 / 7%);
+  color: rgb(186 242 255 / 92%);
+}
+
+.mobileConcedeAction:disabled,
+.mobileUndoAction:disabled {
   opacity: 0.4;
 }
 
@@ -2042,9 +2133,11 @@
 }
 
 .mobilePhaseControls :global([data-testid="phase-hud"]) {
-  align-items: flex-end;
-  justify-content: flex-end;
-  margin-left: auto;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  justify-content: stretch;
+  margin: 0;
 }
 
 .mobilePhaseControls :global([data-testid="phase-hud-label"]) {
@@ -2057,8 +2150,10 @@
 }
 
 .mobilePhaseControls :global([data-testid="phase-advance"]) {
-  min-height: 44px;
-  height: 44px;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  border-radius: 0;
   gap: 1px 4px;
   padding-block: 4px;
 }
@@ -2170,28 +2265,38 @@
   left: 6px;
   z-index: 12;
   display: none;
-  align-items: stretch;
+  align-items: flex-start;
   justify-content: center;
-  min-height: clamp(56px, 10dvh, 86px);
-  max-height: min(176px, 36dvh);
+  min-height: 0;
+  max-height: min(96px, 14dvh);
   padding: 3px 4px;
   background: rgb(7 9 12 / 74%);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: rgb(245 230 66 / 62%) rgb(7 9 12 / 74%);
+  scrollbar-width: thin;
   pointer-events: auto;
 }
 
 .promptBand:not(:empty) {
   display: flex;
-  min-height: clamp(96px, 16dvh, 140px);
+  min-height: clamp(48px, 7dvh, 60px);
   border-bottom: 1px solid rgb(74 217 255 / 36%);
   background:
     linear-gradient(90deg, rgb(74 217 255 / 9%), transparent 36%),
     linear-gradient(180deg, rgb(7 9 12 / 94%), rgb(4 6 9 / 98%));
 }
 
+/* The opening-hand breakdown needs its full height above the hand fan. */
+.promptBand:has([data-state="mulligan"]) {
+  max-height: min(180px, 28dvh);
+  overflow-y: visible;
+}
+
 .root[data-prompt-mode="select-target"] .promptBand {
   display: flex;
-  min-height: clamp(108px, 18dvh, 156px);
+  min-height: clamp(52px, 8dvh, 68px);
   padding: 5px;
   border-bottom: 1px solid rgb(245 230 66 / 42%);
   background:
@@ -2221,9 +2326,19 @@
 }
 
 .promptBand > * {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  width: 100%;
   max-width: 100%;
   min-width: 0;
+}
+
+.promptBand::-webkit-scrollbar {
+  width: 5px;
+}
+
+.promptBand::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(245 230 66 / 62%);
 }
 
 .fieldHelpers {
@@ -3149,7 +3264,7 @@
   width: min(116px, 26dvw);
   pointer-events: none;
   transform: translate(-50%, -50%);
-  animation: sell-flight 1320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sell-flight 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .sellRevealTrack[data-side="player"] {
@@ -3161,7 +3276,7 @@
 }
 
 .sellRevealCard {
-  width: clamp(40px, 10dvw, 56px);
+  width: clamp(52px, 18dvw, 72px);
   aspect-ratio: 5 / 7;
   border: 1px solid rgb(var(--sell-tone) / 86%);
   background: rgb(7 9 12 / 88%);
@@ -3174,37 +3289,6 @@
 .sellRevealCard > * {
   width: 100%;
   height: 100%;
-}
-
-.sellRevealLabel {
-  display: grid;
-  justify-items: center;
-  max-width: min(150px, 38dvw);
-  padding: 3px 6px;
-  border: 1px solid rgb(var(--sell-tone) / 52%);
-  background: rgb(7 9 12 / 92%);
-  box-shadow: 0 0 14px rgb(var(--sell-tone) / 18%);
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.sellRevealLabel span {
-  color: rgb(245 230 66 / 78%);
-  font-size: 6px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.sellRevealLabel strong {
-  max-width: 100%;
-  overflow: hidden;
-  color: #fff7c2;
-  font-size: 8px;
-  letter-spacing: 0;
-  line-height: 1.05;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 @keyframes sell-flight {
@@ -3236,19 +3320,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .sellRevealTrack {
-    animation: sell-hold 1200ms ease-out both;
-  }
-
-  @keyframes sell-hold {
-    0%,
-    100% {
-      opacity: 0;
-    }
-
-    15%,
-    85% {
-      opacity: 1;
-    }
+    animation: none;
+    opacity: 1;
   }
 }
 

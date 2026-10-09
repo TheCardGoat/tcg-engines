@@ -1,3 +1,4 @@
+import { getRevealCardCostCandidateGroups } from "./reveal-card-cost-candidates";
 import type { CardInstanceId, PlayerId, RuntimeValidationResult } from "#core";
 import type {
   ActivatedAbilityDefinition,
@@ -317,10 +318,15 @@ function getRequestedDiscardCardCosts(ctx: ActivatedAbilityReadableContext): Car
 function getEligibleBanishItemCostCards(
   ctx: ActivatedAbilityReadableContext,
   currentPlayer: PlayerId,
+  ability: ActivatedAbilityDefinition,
+  sourceCardId?: CardInstanceId,
 ): CardInstanceId[] {
   return getControlledCardsInPlay(ctx, currentPlayer).filter((cardId) => {
     const definition = getCardDefinition(ctx, cardId);
-    return definition?.cardType === "item";
+    return (
+      definition?.cardType === "item" &&
+      !(ability.cost?.banishItemTarget === "another" && cardId === sourceCardId)
+    );
   }) as CardInstanceId[];
 }
 
@@ -337,6 +343,7 @@ function resolveBanishItemCostCards(
   ctx: ActivatedAbilityReadableContext,
   currentPlayer: PlayerId,
   ability: ActivatedAbilityDefinition,
+  sourceCardId?: CardInstanceId,
 ): CardInstanceId[] {
   const requestedCosts = getRequestedBanishItemCosts(ctx);
   if (requestedCosts.length > 0) {
@@ -348,7 +355,10 @@ function resolveBanishItemCostCards(
     return [];
   }
 
-  return getEligibleBanishItemCostCards(ctx, currentPlayer).slice(0, requiredCount);
+  return getEligibleBanishItemCostCards(ctx, currentPlayer, ability, sourceCardId).slice(
+    0,
+    requiredCount,
+  );
 }
 
 function resolveBanishCharacterCostCards(
@@ -481,6 +491,7 @@ function validateBanishItemCostSelections(
   ctx: ActivatedAbilityValidationContext,
   currentPlayer: PlayerId,
   ability: ActivatedAbilityDefinition,
+  sourceCardId?: CardInstanceId,
 ): RuntimeValidationResult {
   const requiredCount = getRequiredBanishItemCostCount(ability);
   const requestedCosts = getRequestedBanishItemCosts(ctx);
@@ -496,7 +507,7 @@ function validateBanishItemCostSelections(
     return { valid: true };
   }
 
-  const eligibleCosts = getEligibleBanishItemCostCards(ctx, currentPlayer);
+  const eligibleCosts = getEligibleBanishItemCostCards(ctx, currentPlayer, ability, sourceCardId);
   if (eligibleCosts.length < requiredCount) {
     return createFailure(
       "Not enough eligible items in play to pay the banish cost",
@@ -795,6 +806,43 @@ function buildExertItemCostCards(
   return resolveExertItemCostCards(ctx, currentPlayer, ability);
 }
 
+function validateRevealCardCostSelections(
+  ctx: ActivatedAbilityValidationContext,
+  currentPlayer: PlayerId,
+  ability: ActivatedAbilityDefinition,
+): RuntimeValidationResult {
+  const count = Math.max(0, Math.floor(ability.cost?.revealCards ?? 0));
+  const selected = ctx.args.costs?.revealCards ?? [];
+  if (count === 0)
+    return selected.length === 0
+      ? { valid: true }
+      : createFailure("Ability does not use a reveal cost", "ABILITY_COST_SELECTION_UNEXPECTED");
+  const handCards = ctx.framework.zones.getCards({ zone: "hand", playerId: currentPlayer });
+  const groups = getRevealCardCostCandidateGroups(
+    handCards,
+    count,
+    ability.cost?.revealSameName === true,
+    (id) => getCardDefinition(ctx, id)?.name,
+  );
+  if (groups.length === 0)
+    return createFailure(
+      "Not enough eligible hand cards to pay the reveal cost",
+      "ABILITY_COST_UNPAYABLE",
+    );
+  if (selected.length === 0)
+    return createFailure("Choose cards to reveal", "ABILITY_COST_SELECTION_MISSING");
+  if (selected.length !== count)
+    return createFailure(`Reveal exactly ${count} hand cards`, "ABILITY_COST_SELECTION_MISMATCH");
+  if (new Set(selected).size !== count)
+    return createFailure("Revealed cost cards must be unique", "ABILITY_COST_SELECTION_DUPLICATE");
+  if (!groups.some((group) => selected.every((id) => group.includes(id))))
+    return createFailure(
+      "Revealed cards must be eligible own hand cards with the required name",
+      "ABILITY_COST_SELECTION_INVALID",
+    );
+  return { valid: true };
+}
+
 function validateAbilityTargeting(
   ctx: ActivatedAbilityValidationContext,
   cardId: CardInstanceId,
@@ -925,7 +973,12 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
       return exertItemCostValidation;
     }
 
-    const banishItemCostValidation = validateBanishItemCostSelections(ctx, currentPlayer, ability);
+    const banishItemCostValidation = validateBanishItemCostSelections(
+      ctx,
+      currentPlayer,
+      ability,
+      cardId as CardInstanceId,
+    );
     if (!banishItemCostValidation.valid) {
       return banishItemCostValidation;
     }
@@ -949,16 +1002,21 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
       return discardCardCostValidation;
     }
 
+    const revealCostValidation = validateRevealCardCostSelections(ctx, currentPlayer, ability);
+    if (!revealCostValidation.valid) return revealCostValidation;
+
     const costValidation = validateBasicCost(
       {
         framework: ctx.framework,
         cards: ctx.cards,
         playerId: currentPlayer,
+        G: ctx.G as { inkDrops?: Record<string, number> },
       },
       {
         ink: cost.ink,
         exertCards: buildExertCostCards(ctx, cardId as CardInstanceId, cardDef, ability),
       },
+      { inkDrops: ctx.args.inkDrops },
     );
     if (!costValidation.valid) {
       return costValidation;
@@ -1037,7 +1095,12 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     const cost = ability.cost ?? {};
     const currentMeta = (ctx.cards.require(cardId).meta ?? {}) as LorcanaCardMeta;
     const { registry, projectionState } = buildStaticContexts(ctx);
-    const banishItemCostCards = resolveBanishItemCostCards(ctx, currentPlayer, ability);
+    const banishItemCostCards = resolveBanishItemCostCards(
+      ctx,
+      currentPlayer,
+      ability,
+      cardId as CardInstanceId,
+    );
     const banishCharacterCostCards = resolveBanishCharacterCostCards(
       ctx,
       currentPlayer,
@@ -1062,14 +1125,33 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
         framework: ctx.framework,
         cards: ctx.cards,
         playerId: currentPlayer,
+        G: ctx.G as { inkDrops?: Record<string, number> },
       },
       {
         ink: cost.ink,
         exertCards: allExertCards,
       },
+      { inkDrops: ctx.args.inkDrops },
     );
     if (!payResult.success) {
       throw new Error(`Failed to pay ability cost: ${payResult.error} (${payResult.errorCode})`);
+    }
+
+    const revealedCostCards = ctx.args.costs?.revealCards ?? [];
+    if (revealedCostCards.length > 0) {
+      ctx.framework.zones.reveal([...revealedCostCards], "all", {
+        stateID: ctx.framework.state.stateID + 1,
+      });
+      for (const revealedCardId of revealedCostCards) {
+        ctx.framework.log(
+          createLorcanaLogProjection(
+            "lorcana.outcome.revealedCard",
+            { playerId: currentPlayer, revealedCardId },
+            { mode: "PUBLIC" },
+            "action",
+          ),
+        );
+      }
     }
 
     const exertedCostCardIds = [...new Set(allExertCards.map((entry) => entry.cardId))];
@@ -1298,6 +1380,12 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     if (isSlottedTargetInput(ctx.args.targets)) {
       resolutionInput.slottedTargets = ctx.args.targets as SlottedTargetInput;
     }
+    if (revealedCostCards.length > 0) {
+      resolutionInput.eventSnapshot = {
+        chosenCardId: revealedCostCards[0],
+        revealedCardIds: [...revealedCostCards],
+      };
+    }
     if (banishCharacterCostCards.length > 0) {
       resolutionInput.eventSnapshot = {
         ...resolutionInput.eventSnapshot,
@@ -1317,7 +1405,9 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     // Emit be-chosen events for targets of this activated ability
     emitBeChosenEvents(ctx, source, resolutionInput);
 
+    const printedAbilityIndex = cardDef.abilities?.indexOf(ability) ?? -1;
     const result = resolveActionEffect(ctx, source, ability.effect, resolutionInput, {
+      sourceAbilityIndex: printedAbilityIndex >= 0 ? printedAbilityIndex : undefined,
       allowPromptForExistingChosenTargets: true,
       allowSuspendWithZeroTargetCandidates: true,
     });

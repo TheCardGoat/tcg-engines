@@ -23,7 +23,7 @@ export const theQueenMirrorSeekerEpic: CharacterCard = {
   franchise: "Snow White",
   set: "009",
   cardNumber: 219,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 2,

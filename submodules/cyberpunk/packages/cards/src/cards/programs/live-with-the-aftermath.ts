@@ -1,0 +1,76 @@
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { welcomeToNightCityRetailLiveWithTheAftermathI18n } from "./live-with-the-aftermath.i18n.ts";
+
+export const welcomeToNightCityRetailLiveWithTheAftermath = defineCyberpunkCard(
+  {
+    id: "793d9650-0a59-4c89-9d85-05a9d6873d2e",
+    canonicalId: "live-with-the-aftermath",
+    slug: "live-with-the-aftermath",
+    color: "yellow",
+    classifications: ["Plan"],
+    set: {
+      code: "welcometonightcityretail",
+      name: "Welcome to Night City — Retail",
+    },
+    printNumber: "068",
+    artist: "DOFRESH",
+    imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/068.webp",
+    rarity: "Common",
+    legality: "legal",
+    hasSellTag: true,
+    ram: 3,
+    timingTriggers: ["play"],
+    abilities: [
+      {
+        kind: "triggered",
+        text: "Each player defeats one of their Units.",
+        trigger: { trigger: "play" },
+        source: { selector: "self" },
+        bindings: [
+          {
+            id: "friendlyUnit",
+            target: {
+              selector: "card",
+              controller: "friendly",
+              zones: ["field"],
+              cardTypes: ["unit"],
+              selection: { mode: "choose", min: 1, max: 1 },
+            },
+          },
+          {
+            id: "rivalUnit",
+            target: {
+              selector: "card",
+              controller: "rival",
+              zones: ["field"],
+              cardTypes: ["unit"],
+              selection: { mode: "choose", min: 1, max: 1, chooser: "rival" },
+            },
+          },
+        ],
+        effects: [
+          {
+            effect: "defeat",
+            target: {
+              selector: "bound",
+              id: "friendlyUnit",
+            },
+          },
+          {
+            effect: "defeat",
+            target: {
+              selector: "bound",
+              id: "rivalUnit",
+            },
+          },
+        ],
+      },
+    ],
+    reminderText: ["Discard programs after they resolve."],
+    type: "program",
+    cost: 3,
+    power: null,
+  },
+  welcomeToNightCityRetailLiveWithTheAftermathI18n,
+) satisfies ProgramCardDefinition;
