@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "fixture": "optional-restore",
+  "flow": "Fresh native board attack against Torque, counter/no obstruction/buff/first Before damage passes before capture. Recording includes final Before damage Pass, one damage, automatic owner handoff, Use by Enter and return to Primary with deck 41 and Oblivion one.",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "restore-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 78,
+      "captureAudioMs": 2940,
+      "audioAlignmentSeconds": 0.033154964447021484,
+      "decodedAudioSeconds": 2.898,
+      "masterGain": 0.5625,
+      "peak": 0.1398688405752182,
+      "rms": 0.006855988200747716,
+      "peakDbfs": -17.0855805026543,
+      "rmsDbfs": -43.278598770222736
+    },
+    {
+      "variant": "muted-reduced",
+      "file": "restore-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 44,
+      "captureAudioMs": 3089,
+      "audioAlignmentSeconds": 0.007838964462280273,
+      "decodedAudioSeconds": 3.0509375,
+      "masterGain": 0,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "capture": "Application-output Howler branch only, no microphone or replacement audio; temporary branch disconnected and tracks stopped. Audio packet gaps retain silence. Change frames encoded at 30 FPS.",
+  "limits": [
+    "Only final damage and accepted Restore branch recorded; not full attack or Decline.",
+    "Audio presence/silence does not establish perceptual mix, separate Restore cue or cue synchronization.",
+    "Frame count/encoding FPS do not measure renderer performance.",
+    "Matched viewport/commands; different input pacing cannot establish individual motion duration."
+  ]
+}

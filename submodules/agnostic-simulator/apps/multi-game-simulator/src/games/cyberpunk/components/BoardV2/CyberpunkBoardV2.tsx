@@ -1105,7 +1105,12 @@ export function SeatStatus({
   // Eddie cards with a receipt already render as their revealed face, so they
   // are not duplicated as a second, face-down copy.
   const saleIds = new Set(sales.map((sale) => sale.cardId));
+  const eddiesById = new Map(zones.eddieCards.map((card) => [card.cardId, card]));
   const eddieMiniCount = Math.max(0, zones.eddieCardCount - zones.eddieCards.length);
+  const hiddenSpentCount = Math.max(
+    0,
+    zones.spentEddies - zones.eddieCards.filter((card) => card.spent).length,
+  );
   return (
     <div
       className={`${classes.status} ${rival ? classes.rivalStatus : classes.localStatus}`}
@@ -1145,6 +1150,7 @@ export function SeatStatus({
         {[...sales].reverse().map((sale) => {
           const eligible = paymentEligible(sale.cardId);
           const picked = paymentPicked(sale.cardId);
+          const spent = eddiesById.get(sale.cardId)?.spent ?? false;
           return (
             <button
               key={sale.cardId}
@@ -1153,11 +1159,12 @@ export function SeatStatus({
               aria-label={
                 eligible
                   ? `${picked ? "Remove" : "Select"} ${sale.cardName} for payment`
-                  : `Sold ${sale.cardName}. Preview card.`
+                  : `Sold ${sale.cardName}. ${spent ? "Spent" : "Ready"} Eddie. Preview card.`
               }
               aria-pressed={eligible ? picked : undefined}
               title={sale.cardName}
               data-sold-card-id={sale.cardId}
+              data-resource-state={spent ? "spent" : "ready"}
               data-payment-source={eligible || undefined}
               data-payment-selected={picked || undefined}
               data-sale-moving={movingIds.has(sale.cardId) ? "true" : undefined}
@@ -1183,6 +1190,7 @@ export function SeatStatus({
                 className={classes.eddieMini}
                 aria-label={`${picked ? "Remove" : "Select"} Eddie for payment`}
                 aria-pressed={picked}
+                data-resource-state={card.spent ? "spent" : "ready"}
                 data-payment-source="true"
                 data-payment-selected={picked || undefined}
                 data-sale-moving={movingIds.has(card.cardId) ? "true" : undefined}
@@ -1194,6 +1202,8 @@ export function SeatStatus({
               <span
                 key={card.cardId}
                 className={classes.eddieMini}
+                data-resource-state={card.spent ? "spent" : "ready"}
+                title={card.spent ? "Spent Eddie" : "Ready Eddie"}
                 data-sale-moving={movingIds.has(card.cardId) ? "true" : undefined}
               >
                 {mini}
@@ -1201,7 +1211,12 @@ export function SeatStatus({
             );
           })}
         {Array.from({ length: eddieMiniCount }, (_, index) => (
-          <span key={`eddie-hidden-${index}`} className={classes.eddieMini}>
+          <span
+            key={`eddie-hidden-${index}`}
+            className={classes.eddieMini}
+            data-resource-state={index < hiddenSpentCount ? "spent" : "ready"}
+            title={index < hiddenSpentCount ? "Spent Eddie" : "Ready Eddie"}
+          >
             <CardImage faceDown side={side} alt="Eddie" />
           </span>
         ))}

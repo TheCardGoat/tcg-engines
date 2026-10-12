@@ -23,6 +23,8 @@
     "./pack-simulator": "./src/pack-simulator/index.ts",
     "./cyberpunk": "./src/cyberpunk/index.ts",
     "./discord-rich-presence": "./src/discord-rich-presence.ts",
+    "./match-intro": "./src/match-intro/index.ts",
+    "./match-intro/styles.css": "./src/match-intro/styles.css",
     "./cyberpunk/deck-validation": "./src/cyberpunk/deck-validation.ts",
     "./cyberpunk/six-pack-deck-validation": "./src/cyberpunk/six-pack-deck-validation.ts",
     "./deck-list-normalize": "./src/deck-list-normalize.ts",

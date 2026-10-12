@@ -23,6 +23,7 @@ import {
   type GrandArchiveAnnouncementModes,
   type GrandArchiveDeclaredModes,
   isGrandArchiveTargetCandidate,
+  grandArchiveSelectionCountBounds,
 } from "../procedures/activation/activation.ts";
 import {
   flattenGrandArchiveAbilities,
@@ -46,6 +47,7 @@ import {
   evaluateGrandArchiveAmount,
   evaluateGrandArchiveCondition,
   matchesGrandArchiveCardFilter,
+  grandArchiveDefinitionMatchesCardFilter,
   resolveGrandArchivePlayers,
   type GrandArchiveEvaluationContext,
 } from "../procedures/effects/evaluation.ts";
@@ -614,6 +616,12 @@ export type GrandArchiveStructuredDecision =
       readonly kind: "boolean";
     }
   | {
+      readonly kind: "repeated-selection";
+      readonly candidateIds: readonly string[];
+      readonly minimum: number;
+      readonly maximum: number;
+    }
+  | {
       readonly kind: "identity-selection";
       readonly candidateIds: readonly string[];
       readonly minimum: number;
@@ -773,7 +781,6 @@ export function describeGrandArchiveStructuredDecision(
     case "resolve-effect-choice": {
       const selection = decision.selection;
       if (
-        selection.allowRepeated ||
         selection.aggregateConstraint ||
         selection.extreme ||
         selection.allShareCharacteristic ||
@@ -784,6 +791,37 @@ export function describeGrandArchiveStructuredDecision(
       const evaluation = resolutionEvaluation(program, state);
       if (!evaluation) return { kind: "semantic" };
       const choice = selection.candidates;
+      if (selection.allowRepeated) {
+        const declaration: GrandArchiveTargetDeclaration = {
+          ...selection,
+          kind: "target",
+          declared: "announcement",
+        };
+        const candidateIds =
+          choice.kind === "catalog-card"
+            ? Object.keys(program.cardsById).filter(
+                (id) =>
+                  program.cardsById[id]?.definitionKind === "card" &&
+                  grandArchiveDefinitionMatchesCardFilter(id, choice.filter, evaluation),
+              )
+            : choice.kind === "card" ||
+                choice.kind === "object" ||
+                choice.kind === "union" ||
+                choice.kind === "stack-item" ||
+                choice.kind === "player"
+              ? potentialTargetIds(state).filter((id) =>
+                  isGrandArchiveTargetCandidate(id, declaration, evaluation),
+                )
+              : undefined;
+        if (!candidateIds || selection.count.kind === "all") return { kind: "semantic" };
+        const bounds = grandArchiveSelectionCountBounds(selection, evaluation);
+        return {
+          kind: "repeated-selection",
+          candidateIds,
+          minimum: decision.mayFailToFind ? 0 : bounds.minimum,
+          maximum: bounds.maximum,
+        };
+      }
       if (
         choice.kind === "card" ||
         choice.kind === "object" ||

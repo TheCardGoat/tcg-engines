@@ -242,6 +242,44 @@ export const coreScenarios: Scenario[] = [
     },
   },
   {
+    id: "paymentLegendSpendAbilityQa",
+    group: "core",
+    label: "Payment · Legend spend-cost ability",
+    description:
+      "Manual-payment QA: Hanako (with Netwatch Netdriver attached) activates her SPEND swap ability and Alt Cunningham has a 1 €$ trash-play ability, with zero pool Eddies so every cost must be paid by a Legend. With 'Choose payment sources' on, Hanako's spend-only ability first asks for confirmation that she will be spent (Netwatch draws when confirmed), and Alt's ability opens payment selection between Hanako and the face-down V.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          deck: 5,
+          field: [
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, spent: false },
+          ],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
+              faceDown: false,
+              attachedGears: [c.welcomeToNightCityRetailNetwatchNetdriver],
+            },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
+          ],
+          trash: [
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailCorporateSurveillance,
+          ],
+          eddies: 0,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 0,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("paymentLegendSpendAbilityQa"), autoGainGig: false },
+      ),
+  },
+  {
     id: "boardTappedResourcesQa",
     group: "core",
     label: "Setup · tapped (spent) legends and eddies",

@@ -1,0 +1,81 @@
+.layout {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.artwork {
+  min-width: 0;
+  align-self: start;
+}
+
+.details {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  white-space: pre-line;
+}
+
+.details button {
+  min-height: 44px;
+}
+
+.details:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: -2px;
+}
+
+@media (min-width: 640px) {
+  .layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .landscape :global(.mantine-Modal-inner) {
+    padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+
+  .landscape :global(.mantine-Modal-content) {
+    flex-basis: min(960px, 100%);
+    height: calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .landscape :global(.mantine-Modal-header) {
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 2px 8px 2px 12px;
+  }
+
+  .landscape :global(.mantine-Modal-close) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .landscape :global(.mantine-Modal-body) {
+    flex: 1;
+    min-height: 0;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .landscape .layout {
+    height: 100%;
+    grid-template-columns: min(36%, calc((100dvh - 96px) * 5 / 7)) minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .landscape .details {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding: 0 4px 8px;
+    font-size: 14px;
+  }
+}

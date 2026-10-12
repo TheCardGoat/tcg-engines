@@ -99,6 +99,9 @@ export async function alphaClashCreateServerEngine(
   };
 
   const state = createInitialState(options);
+  // Opening draw logs are not accepted commands. New hosted games begin at
+  // the platform's version zero, then advance once per accepted command.
+  state.stateID = 0;
   return new AlphaClashServerEngine(state, {
     [input.player1Id]: "player-one",
     [input.player2Id]: "player-two",
@@ -134,11 +137,20 @@ export async function alphaClashRestoreEngine(
   const { stateVersion: _persistedVersion, ...rawState } = snapshot.state as MatchState & {
     stateVersion?: number;
   };
-  return new AlphaClashServerEngine(rawState as MatchState, {
-    [context.player1Id]: "player-one",
-    [context.player2Id]: "player-two",
-  }, readAlphaClashUndoState(snapshot.metadata, rawState as MatchState,
-    typeof _persistedVersion === "number" ? _persistedVersion : rawState.stateID ?? rawState.moveLog.length));
+  return new AlphaClashServerEngine(
+    rawState as MatchState,
+    {
+      [context.player1Id]: "player-one",
+      [context.player2Id]: "player-two",
+    },
+    readAlphaClashUndoState(
+      snapshot.metadata,
+      rawState as MatchState,
+      typeof _persistedVersion === "number"
+        ? _persistedVersion
+        : (rawState.stateID ?? rawState.moveLog.length),
+    ),
+  );
 }
 
 export function alphaClashExtractCardsMapsFromSnapshot(snapshot: EngineSnapshot): CardsMaps {

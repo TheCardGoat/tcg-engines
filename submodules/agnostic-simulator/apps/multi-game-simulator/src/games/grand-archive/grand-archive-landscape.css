@@ -1,0 +1,354 @@
+/* One landscape scene at every size. DOM text and touch controls keep their
+   own minimum sizes while the camera fits the shared board coordinates. */
+.ga-landscape-session {
+  width: 100%;
+  height: 100dvh;
+}
+.ga-field-overflow {
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+.ga-field-overflow .ga-zone-inspector {
+  font:
+    12px/1.2 system-ui,
+    sans-serif;
+  min-height: 44px;
+}
+.ga-zone-browser .mantine-Modal-close {
+  min-width: 44px;
+  min-height: 44px;
+}
+.ga-zone-browser .ga-zone-inspector-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+.ga-zone-browser .ga-role-card__art-caption {
+  display: none;
+}
+.ga-zone-browser__card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.ga-zone-browser__card > span {
+  width: 100%;
+  text-align: center;
+  font:
+    12px/1.3 system-ui,
+    sans-serif;
+  white-space: normal;
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .ga-zone-browser .mantine-Modal-inner {
+    padding: 8px;
+  }
+  .ga-zone-browser .mantine-Modal-content {
+    max-height: calc(100dvh - 16px);
+  }
+  .ga-zone-browser .mantine-Modal-header {
+    padding: 2px 8px 2px 16px;
+  }
+}
+.ga-landscape-guard {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: #0d1b22;
+  color: #f3e8d2;
+}
+.ga-landscape-session .ga-viewport-shell[data-layout="desktop"][data-sidebar-open="false"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ga-landscape-session
+  .ga-viewport-shell[data-layout="desktop"]
+  > button[aria-label="Expand sidebar"],
+.ga-landscape-session
+  .ga-viewport-shell[data-layout="desktop"]
+  > aside
+  > button[aria-label="Collapse sidebar"] {
+  display: inline-flex;
+  z-index: 20;
+}
+.ga-landscape-session .ga-mobile-rail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: #101c24ef;
+}
+.ga-landscape-session .ga-mobile-rail > div {
+  padding-left: 10px;
+}
+.ga-landscape-session .ga-mobile-rail button {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+}
+.ga-landscape-session .ga-board {
+  aspect-ratio: auto;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-caption {
+  min-width: 0;
+  padding: 3px 2px;
+  min-height: 22px;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-caption
+  strong {
+  font-size: 12px;
+  white-space: normal;
+  overflow-wrap: normal;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-stats {
+  gap: 4px;
+  margin-top: 2px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-stats small {
+  font-size: 11px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-stats b {
+  font-size: 13px;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-board-controls
+  button.ga-table-control--turn {
+  min-height: 44px;
+  padding: 6px;
+  font-size: 14px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-board-controls__status {
+  font-size: 13px;
+  line-height: 1.3;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-memory small,
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-deck small {
+  font-size: 11px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-deck > span {
+  font-size: 16px;
+}
+.ga-landscape-session .ga-scene-inventory {
+  font:
+    12px/1.2 system-ui,
+    sans-serif;
+}
+.ga-landscape-session .ga-scene-inventory summary {
+  min-height: 44px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-picker select {
+  min-height: 44px;
+  font-size: 12px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-prompt-host {
+  left: 12px;
+  right: auto;
+  top: 50%;
+  width: min(340px, 42%);
+  max-height: calc(100% - 24px);
+  transform: translateY(-50%);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  > [data-testid="interaction-resolution-prompt"] {
+  max-height: calc(100dvh - 48px);
+  width: 100%;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  [data-slot="interaction-rail"] {
+  grid-template-areas: "identity controls" "actions actions";
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 8px;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  [data-slot="interaction-signal"] {
+  display: none;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  [data-slot="interaction-instruction"] {
+  font-size: 14px;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  [data-slot="interaction-source"] {
+  font-size: 12px;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  button {
+  min-height: 44px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-combat-flow {
+  left: 50%;
+  top: 50%;
+  width: max-content;
+  max-width: 52%;
+  transform: translate(-50%, -50%);
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-combat-flow ol {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+@media (max-height: 520px) {
+  .ga-landscape-session .ga-viewport-shell[data-layout="desktop"] {
+    padding: 0;
+    gap: 0;
+  }
+  .ga-landscape-session .ga-three-board {
+    border-radius: 0;
+  }
+  .ga-landscape-session
+    .ga-three-board.ga-themed-board[data-composition]
+    .ga-portrait-feedback-panel {
+    display: none;
+  }
+}
+
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-memory > span {
+  width: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 3px 6px;
+  background: #101c24e8;
+  border-radius: 4px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-memory small {
+  position: static;
+  font-size: 12px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-deck small {
+  display: inline;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-deck > span {
+  padding: 3px 6px;
+  background: #101c24e8;
+  border-radius: 4px;
+}
+
+/* Spatial targeting keeps every field card visible on both sides of the rail. */
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host:has(> [data-presentation="spatial"]) {
+  left: 1.5%;
+  width: 78%;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host
+  > [data-presentation="spatial"]
+  [data-slot="interaction-rail"] {
+  grid-template-areas: "identity actions controls";
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-scene-seat-choices {
+  display: contents;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-scene-seat-choices
+  > button {
+  position: absolute;
+  left: 145px;
+  top: 8px;
+  min-height: 44px;
+  font-size: 14px;
+  pointer-events: auto;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-scene-seat-choices
+  > button[data-side="bottom"] {
+  top: auto;
+  bottom: 8px;
+}
+
+.ga-landscape-session .ga-scene-inventory[data-side="bottom"] {
+  top: calc(50% + 4px);
+  bottom: auto;
+}
+.ga-landscape-session .ga-scene-inventory[data-side="bottom"][open] {
+  top: auto;
+  bottom: 8px;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-theme-picker {
+  position: static;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-scene-lineage {
+  left: 100%;
+  top: 0;
+  transform: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.ga-landscape-session .ga-three-board.ga-themed-board[data-composition] .ga-portrait-hud {
+  z-index: 20;
+}
+.ga-landscape-session
+  .ga-three-board.ga-themed-board[data-composition]
+  .ga-portrait-prompt-host:not(:has(> [data-presentation="spatial"])) {
+  left: 50%;
+  width: min(520px, 76%);
+  transform: translate(-50%, -50%);
+  font:
+    14px/1.4 system-ui,
+    sans-serif;
+}
+
+/* Fit the same landscape surface inside the available shell. This also keeps
+   DOM edge controls attached to the frame when a desktop window is tall. */
+.ga-landscape-session .ga-tabletop {
+  container-type: size;
+}
+.ga-landscape-session .ga-viewport-shell .ga-board {
+  width: min(100cqw, 220cqh);
+  height: min(100cqh, 45.454545cqw);
+  aspect-ratio: 22 / 10;
+}
+
+@media (max-width: 740px) {
+  .ga-landscape-session
+    .ga-three-board.ga-themed-board[data-composition]
+    .ga-portrait-prompt-host:has(> [data-presentation="spatial"]) {
+    top: calc(50% + 8px);
+  }
+}

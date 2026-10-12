@@ -1,4 +1,4 @@
-import type { OPCard, TargetFilter } from "@tcg/op-types";
+import type { DeckBuildingRule, OPCard, TargetFilter } from "@tcg/op-types";
 import { getAllCards, getCard, hasCard } from "./index.ts";
 
 /**
@@ -95,6 +95,19 @@ function matchesDeckFilter(card: OPCard, filter: TargetFilter): boolean | null {
   }
 }
 
+/** Printed Leader restrictions apply during construction (CR 5-1-2-4). */
+export function isOnePieceCardAllowedByDeckRules(
+  card: OPCard,
+  rules: readonly DeckBuildingRule[],
+): boolean {
+  if (!MAIN_DECK_CARD_TYPES.has(card.cardType)) return true;
+  return !rules.some(
+    (rule) =>
+      rule.rule === "cannotInclude" &&
+      rule.filters.every((filter) => matchesDeckFilter(card, filter) !== false),
+  );
+}
+
 /**
  * Validate a deck against a format. Returns the per-rule breakdown; throws
  * when the format id is unknown.
@@ -154,12 +167,7 @@ export function validateDeckForFormat(
   const restrictedCards = canonicalDeck.filter((entry) => {
     if (!hasCard(entry.cardId)) return false;
     const card = getCard(entry.cardId);
-    if (!MAIN_DECK_CARD_TYPES.has(card.cardType)) return false;
-    return leaderRules.some(
-      (rule) =>
-        rule.rule === "cannotInclude" &&
-        rule.filters.every((filter) => matchesDeckFilter(card, filter) !== false),
-    );
+    return !isOnePieceCardAllowedByDeckRules(card, leaderRules);
   });
   const unsupportedRestrictions = leaderRules.some(
     (rule) =>

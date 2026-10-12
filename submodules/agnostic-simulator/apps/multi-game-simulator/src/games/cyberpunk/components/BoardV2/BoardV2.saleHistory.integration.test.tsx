@@ -6,8 +6,10 @@ import type { ReactNode } from "react";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { CardPreviewProvider } from "../CardPreview/CardPreviewContext";
 import { UserConfigProvider } from "../../engine";
+import type { SideZoneViews } from "../../engine/zoneViews";
 import { BoardSharedPage } from "../../pages/BoardShared.page";
 import { theme } from "../../theme";
+import { SeatStatus } from "./CyberpunkBoardV2";
 
 vi.mock("./Scene", () => ({ default: () => null }));
 vi.mock("../../animation", async () => {
@@ -86,8 +88,16 @@ test("V2 shows banked sales as their revealed faces instead of hidden miniatures
     await waitFor(() => expect(within(rail).getAllByRole("button")).toHaveLength(count));
   }
 
-  expect(within(rail).getByRole("button", { name: /Sold Corpo Security/ })).toBeTruthy();
-  expect(within(rail).getByRole("button", { name: /Sold Field Operator/ })).toBeTruthy();
+  expect(
+    within(rail)
+      .getByRole("button", { name: /Sold Corpo Security/ })
+      .getAttribute("data-resource-state"),
+  ).toBe("spent");
+  expect(
+    within(rail)
+      .getByRole("button", { name: /Sold Field Operator/ })
+      .getAttribute("data-resource-state"),
+  ).toBe("ready");
   // The Sell slot only exists while the action is unused; after selling it is
   // gone. Each banked Eddie renders once, as its revealed face — no
   // face-down miniature is duplicated next to the receipt.
@@ -100,4 +110,51 @@ test("V2 shows banked sales as their revealed faces instead of hidden miniatures
   // (Comprehensive Rules 11.9.1); afterwards they hide again.
   expect(within(dialog).getByRole("img", { name: "Corpo Security" })).toBeTruthy();
   expect(within(dialog).getByRole("img", { name: "Field Operator" })).toBeTruthy();
+});
+
+test.each([false, true])("V2 shows hidden Eddie spend and refresh (rival=%s)", (rival) => {
+  // Hosted projections can omit physical card identities. Use the aggregate
+  // spent count without revealing identities or changing the miniature order.
+  const zones: SideZoneViews = {
+    hand: [],
+    field: [],
+    legendArea: [],
+    trash: [],
+    trashTop: null,
+    fixerArea: [],
+    gigArea: [],
+    deckCount: 0,
+    trashCount: 0,
+    eddies: 3,
+    spentEddies: 2,
+    eddieCards: [],
+    eddieCardCount: 5,
+    soldThisTurn: true,
+    streetCred: 0,
+    gigCount: 0,
+    activeEffects: [],
+  };
+  const status = (view: SideZoneViews) => (
+    <MantineProvider theme={theme} env="test">
+      <CardPreviewProvider>
+        <SeatStatus
+          rival={rival}
+          side={rival ? "opponent" : "player"}
+          zones={view}
+          sales={[]}
+          movingIds={new Set()}
+          onResources={() => {}}
+        />
+      </CardPreviewProvider>
+    </MantineProvider>
+  );
+  const { rerender } = render(status(zones));
+  const rail = screen.getByTestId(rival ? "rival-sale-rail" : "local-sale-rail");
+  expect(rail.querySelectorAll('[data-resource-state="spent"]')).toHaveLength(2);
+  expect(rail.querySelectorAll('[data-resource-state="ready"]')).toHaveLength(3);
+  expect(within(rail).getAllByAltText("Hidden card")).toHaveLength(5);
+
+  rerender(status({ ...zones, eddies: 5, spentEddies: 0 }));
+  expect(rail.querySelectorAll('[data-resource-state="spent"]')).toHaveLength(0);
+  expect(rail.querySelectorAll('[data-resource-state="ready"]')).toHaveLength(5);
 });

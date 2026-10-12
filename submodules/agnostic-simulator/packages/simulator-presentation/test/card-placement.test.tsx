@@ -47,7 +47,7 @@ test("placement keeps the release pose, settles before turning, and lands once",
   expect(object.rotation.z).toBeCloseTo(-0.1);
   expect(object.scale.x).toBeLessThan(180);
   expect(onComplete).not.toHaveBeenCalled();
-  renderState.frame({}, 0.28);
+  for (let frame = 0; frame < 24; frame++) renderState.frame({}, 1 / 60);
   expect(object.position.x).toBe(150);
   expect(object.rotation.z).toBeCloseTo(Math.PI);
   expect(object.scale.x).toBe(42);

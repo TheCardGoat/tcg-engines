@@ -1,5 +1,12 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
 import { useEffect } from "react";
+import {
+  MATCH_INTRO_CRITICAL_CSS,
+  MATCH_INTRO_BOOTSTRAP,
+  MATCH_INTRO_SHELL,
+  resumeMatchIntro,
+} from "@tcg/shared/match-intro";
+import "@tcg/shared/match-intro/styles.css";
 import type { ClientLoaderFunctionArgs, LoaderFunctionArgs } from "react-router";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
@@ -48,18 +55,25 @@ export type SimulatorAuthBootstrapResult = {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    resumeMatchIntro();
+  }, []);
   const { pathname } = useLocation();
-  const cyberpunkMatch = /^\/cyberpunk\/simulator\/matches\/[^/]+\/games\/[^/]+\/?$/.test(pathname);
-  const matchBackground = cyberpunkMatch ? { backgroundColor: "#08090d" } : undefined;
+  const darkMatch =
+    /^\/(?:cyberpunk|alpha-clash)\/simulator\/matches\/[^/]+\/games\/[^/]+\/?$/.test(pathname);
+  const matchBackground = darkMatch ? { backgroundColor: "#08090d" } : undefined;
   return (
-    <html lang="en" style={matchBackground}>
+    <html lang="en" style={matchBackground} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Meta />
         <Links />
+        <style dangerouslySetInnerHTML={{ __html: MATCH_INTRO_CRITICAL_CSS }} />
+        <script dangerouslySetInnerHTML={{ __html: MATCH_INTRO_BOOTSTRAP }} />
       </head>
       <body style={matchBackground}>
+        <div dangerouslySetInnerHTML={{ __html: MATCH_INTRO_SHELL }} />
         <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
         <ScrollRestoration />
         <Scripts />

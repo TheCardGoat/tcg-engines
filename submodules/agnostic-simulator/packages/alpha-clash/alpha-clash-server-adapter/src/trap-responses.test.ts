@@ -67,7 +67,8 @@ it("offers an older set Missile Trap, only the attacker as target, and dispatche
       sourceAuthority: "server",
     }).success,
   ).toBe(true);
-  expect(server.state.standby.at(-1)?.cardId).toBe(trap.instanceId);
+  expect(server.state.cards[trap.instanceId].zone).toBe("oblivion");
+  expect(server.state.responseWindow).toBeNull();
 });
 it.each([
   { card: getCard("ac-ac1-005"), allowed: [spiritual, energy] },
@@ -141,7 +142,9 @@ it("projects current public attack for Destructive Arrival and excludes a buffed
     playerTwo: { hand: [destructive], resource: [destructive] },
   });
   game.playerOne.play(plus, game.playerOne.at(attacker, "clash"));
-  game.playerTwo.pass();
+  for (let n = 0; game.state.responseWindow && n < 10; n++) {
+    (game.state.responseWindow.openFor === "player-one" ? game.playerOne : game.playerTwo).pass();
+  }
   game.playerOne.attack(attacker, game.playerTwo.contender());
   const projected = projectState(game.state, "player-two");
   expect(
@@ -180,4 +183,31 @@ it("hidden cards do not expose their current stats or set turn", () => {
     expect(card.setOnTurn).toBeUndefined();
     expect(card.definitionId).toBeNull();
   }
+});
+
+it("Erupting Force projects a player target, not a Contender card target", () => {
+  const erupting = getCard("ac-ac4-140");
+  const game = Spec.fromFixture({
+    turnNumber: 5,
+    playerOne: { clash: [attacker] },
+    playerTwo: {
+      accessory: [{ card: erupting, faceDown: true, setOnTurn: 1 }],
+      resource: [erupting, erupting, erupting],
+    },
+  });
+  game.playerOne.attack(attacker, game.playerTwo.contender());
+  const trap = game.playerTwo.at(erupting, "accessory");
+  const response = view(game, "player-two").actions.find(
+    (a) => a.id === `respond:${trap.instanceId}`,
+  )!;
+  const target = response.inputs.find((i) => i.id === "targetId");
+  if (target?.kind !== "entity-selection") throw new Error("Player selector missing");
+  expect(target.entityKinds).toEqual(["player"]);
+  expect(target.candidates).toEqual([
+    {
+      entity: { kind: "player", instanceId: "player-one" },
+      text: { key: "Opponent" },
+      enabled: true,
+    },
+  ]);
 });

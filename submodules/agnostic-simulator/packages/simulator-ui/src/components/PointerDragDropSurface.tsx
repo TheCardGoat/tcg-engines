@@ -250,7 +250,10 @@ function cssTransform(transform: {
 function MotionCapture<T>({ motion, source }: { motion: DragMotion<T>; source: T | null }) {
   const { activeNodeRect } = useDndContext();
   useLayoutEffect(() => {
-    if (!source || !activeNodeRect || motion.getSnapshot()?.source === source) return;
+    if (!source || !activeNodeRect) return;
+    const session = motion.getSnapshot();
+    // A new grab interrupts the return animation, including for the same card.
+    if (session?.source === source && session.phase === "dragging") return;
     const { left, top, width, height } = activeNodeRect;
     motion.begin(source, { left, top, width, height });
   }, [motion, source, activeNodeRect]);

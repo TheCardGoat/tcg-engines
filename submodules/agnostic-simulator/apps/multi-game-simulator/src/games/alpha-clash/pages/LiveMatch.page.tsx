@@ -1,4 +1,11 @@
+import { useMatchIntroReady } from "../../../simulator/useMatchIntroReady";
+import { AlphaClashPostGameSummary } from "../AlphaClashPostGameSummary";
+import { parseAlphaClashResult } from "../post-game-result";
+import { matchReturnUrl } from "../../../routes/match-return-url";
 import { SimulatorLiveChatProvider } from "../../../simulator/providers/live-chat-context";
+import { useGameStateCorrection } from "../../../simulator/correction/useGameStateCorrection";
+import { logLinesFromEngineLogs, mergeLiveLogLines, type LiveLogLine } from "./live-log";
+import { CorrectionBanner, GameStateCorrection } from "../components/GameStateCorrection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Group, Paper, Stack, Text } from "@mantine/core";
 import type { ResolvedMatchViewer } from "@tcg/game-page-contract";
@@ -26,15 +33,11 @@ import classes from "./Practice.module.css";
 import {
   AlphaClashInteractionPanel,
   AlphaClashInteractionBoard,
+  deferAlphaClashOptionalCosts,
   labelAlphaClashInteractions,
 } from "../components/AlphaClashInteractions";
 
 const LOG_LIMIT = 200;
-
-interface LiveLogLine {
-  readonly id: number;
-  readonly text: string;
-}
 
 /**
  * Server-authoritative Alpha Clash match surface. State is consumed
@@ -60,6 +63,7 @@ function AlphaClashLiveMatchPageContent() {
     parseInteractionView(bootstrap?.game.interactionView),
   );
   const [stateVersion, setStateVersion] = useState(bootstrap?.game.stateVersion ?? 0);
+  const acceptedVersion = useRef(bootstrap?.game.stateVersion ?? 0);
   const [canUndo, setCanUndo] = useState(bootstrap?.game.undoable === true);
   const [canUndoTurn, setCanUndoTurn] = useState(bootstrap?.game.undoTurnAvailable === true);
   const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
@@ -80,26 +84,33 @@ function AlphaClashLiveMatchPageContent() {
     priority: null,
     finished: state?.phaseName === "complete" || bootstrap?.game.status === "completed",
   });
-  const [logLines, setLogLines] = useState<readonly LiveLogLine[]>(
-    () => logLinesFromEngineLogs(bootstrap?.history.engineLogs ?? [], 0).lines,
+  const [logLines, setLogLines] = useState<readonly LiveLogLine[]>(() =>
+    logLinesFromEngineLogs(bootstrap?.history.engineLogs ?? [], 0).lines.reverse(),
   );
   const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
     bootstrap?.dropEligibility ?? null,
   );
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [connectionReady, setConnectionReady] = useState(false);
-  const logIdCounter = useRef(0);
+  const [transientBusy, setTransientBusy] = useState(false);
+  const [openingResetKey, setOpeningResetKey] = useState(0);
+  const correction = useGameStateCorrection({
+    gameSlug: "alpha-clash",
+    gameId,
+    viewerId: bootstrap?.viewer.role === "player" ? bootstrap.viewer.actorId : undefined,
+    stateVersion,
+    connected: connectionReady,
+    onError: setConnectionError,
+  });
+  const logIdCounter = useRef(logLines.reduce((max, line) => Math.max(max, line.id), 0));
   const interactionRef = useRef(interactionView);
-  useEffect(() => {
-    interactionRef.current = interactionView;
-  }, [interactionView]);
   const appendEngineLogs = useCallback((entries: unknown) => {
     const list = Array.isArray(entries) ? entries : [];
     if (list.length === 0) return;
     const { lines, nextId } = logLinesFromEngineLogs(list, logIdCounter.current);
     logIdCounter.current = nextId;
     if (lines.length === 0) return;
-    setLogLines((current) => [...lines.slice().reverse(), ...current].slice(0, LOG_LIMIT));
+    setLogLines((current) => mergeLiveLogLines(current, lines, LOG_LIMIT));
   }, []);
 
   useEffect(() => {
@@ -116,14 +127,30 @@ function AlphaClashLiveMatchPageContent() {
       readonly pendingProposal?: PendingProposal | null;
     }) => {
       if (payload.gameId !== gameId) return;
+      if (
+        typeof payload.stateVersion === "number" &&
+        payload.stateVersion < acceptedVersion.current
+      )
+        return;
       const nextState = parseProjectedState(payload.state);
       if (nextState) {
         setState(nextState);
-        if (typeof payload.stateVersion === "number") setStateVersion(payload.stateVersion);
+        if (typeof payload.stateVersion === "number") {
+          acceptedVersion.current = payload.stateVersion;
+          setStateVersion(payload.stateVersion);
+        }
       }
-      if (payload.interactionView === null) setInteractionView(null);
+      if (payload.interactionView === null) {
+        interactionRef.current = null;
+        setInteractionView(null);
+      }
       const view = parseInteractionView(payload.interactionView);
-      if (view) setInteractionView(view);
+      if (view) {
+        // Opening actions can submit from a child layout effect. Publish the
+        // accepted view before rendering so validation uses the same version.
+        interactionRef.current = view;
+        setInteractionView(view);
+      }
       appendEngineLogs(payload.engineLogs);
       if (typeof payload.undoable === "boolean") setCanUndo(payload.undoable);
       if (typeof payload.undoTurnAvailable === "boolean") setCanUndoTurn(payload.undoTurnAvailable);
@@ -131,7 +158,10 @@ function AlphaClashLiveMatchPageContent() {
     };
     const unsubscribers = [
       handle.onAuthenticated(() => setConnectionReady(true)),
-      handle.onDisconnected(() => setConnectionReady(false)),
+      handle.onDisconnected(() => {
+        setConnectionReady(false);
+        setOpeningResetKey((key) => key + 1);
+      }),
       handle.on("game_joined", (payload) => {
         accept(payload);
         if (payload.gameId === gameId && payload.dropEligibility) {
@@ -141,7 +171,10 @@ function AlphaClashLiveMatchPageContent() {
       handle.on("drop_eligibility", (payload) => {
         if (payload.gameId === gameId) setDropEligibility(payload.dropEligibility);
       }),
-      handle.on("state_sync", accept),
+      handle.on("state_sync", (payload) => {
+        accept(payload);
+        if (payload.gameId === gameId) setOpeningResetKey((key) => key + 1);
+      }),
       handle.on("state_update", accept),
       handle.on("move_accepted", accept),
       handle.on("proposal_received", (payload) => {
@@ -170,11 +203,13 @@ function AlphaClashLiveMatchPageContent() {
       }),
       handle.on("move_rejected", (payload) => {
         if (payload.gameId !== gameId) return;
+        setOpeningResetKey((key) => key + 1);
         setConnectionError(payload.reason ?? "The server rejected that action.");
         handle.emit("request_game_state_sync", { gameId });
       }),
       handle.on("submit_interaction:response", (payload) => {
         if (payload.status !== "err") return;
+        setOpeningResetKey((key) => key + 1);
         const reason =
           typeof payload.data?.reason === "string"
             ? payload.data.reason
@@ -194,7 +229,15 @@ function AlphaClashLiveMatchPageContent() {
   const submit = useCallback(
     (submission: InteractionSubmission) => {
       const view = interactionRef.current;
-      if (!gameId || !view || !connectionReady) return false;
+      if (
+        !gameId ||
+        !view ||
+        !connectionReady ||
+        correction.enabled ||
+        state?.phaseName === "complete" ||
+        bootstrap?.game.status === "completed"
+      )
+        return false;
       if (!validateInteractionSubmission(view, submission).ok) {
         setConnectionError("That action is no longer available — the board has moved on.");
         return false;
@@ -214,7 +257,7 @@ function AlphaClashLiveMatchPageContent() {
       setConnectionError(null);
       return true;
     },
-    [gameId, connectionReady],
+    [gameId, connectionReady, correction.enabled, state?.phaseName, bootstrap?.game.status],
   );
 
   const sendUndo = (
@@ -230,6 +273,8 @@ function AlphaClashLiveMatchPageContent() {
     });
     handle.release();
   };
+
+  useMatchIntroReady(Boolean(route.error || connectionError));
 
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   if (bootstrap?.viewer.role !== "player") {
@@ -249,7 +294,7 @@ function AlphaClashLiveMatchPageContent() {
     );
   }
 
-  const ended = state.phaseName === "complete";
+  const ended = state.phaseName === "complete" || bootstrap.game.status === "completed";
   const labelFor = (instanceId: string): string => {
     const card = state.cards.find((entry) => entry.instanceId === instanceId);
     if (!card) return instanceId;
@@ -258,28 +303,31 @@ function AlphaClashLiveMatchPageContent() {
 
   const view = labelAlphaClashInteractions(interactionView, labelFor);
   const viewerId = bootstrap.viewer.actorId;
-  const interactionDisabled = ended || !connectionReady;
+  const interactionDisabled = ended || !connectionReady || correction.enabled;
   return (
     <InteractionWorkspace
       key={`${gameId}:${viewerId}`}
       view={view}
       viewerId={viewerId}
       onSubmit={submit}
-      disabled={interactionDisabled}
+      disabled={interactionDisabled || state.phaseName === "setup"}
+      deferInitialSubmission={deferAlphaClashOptionalCosts}
     >
       <LiveActionAttention
         gameId={gameId}
         view={interactionView}
         viewerId={bootstrap?.viewer.role === "player" ? bootstrap.viewer.actorId : null}
         stateVersion={stateVersion}
-        canAct={bootstrap?.viewer.role === "player" && connectionReady && !ended}
+        canAct={
+          bootstrap?.viewer.role === "player" && connectionReady && !ended && !correction.enabled
+        }
         onShowAction={() => {
           const target = document.querySelector<HTMLElement>("[data-action-attention-target]");
           target?.scrollIntoView({ block: "nearest", behavior: "smooth" });
           target?.focus({ preventScroll: true });
         }}
       />
-      {dropEligibility ? (
+      {!ended && dropEligibility ? (
         <div className="pointer-events-auto absolute right-4 top-4 z-20">
           <DropClaimControl
             eligibility={dropEligibility}
@@ -292,6 +340,7 @@ function AlphaClashLiveMatchPageContent() {
           />
         </div>
       ) : null}
+      <CorrectionBanner session={correction} viewerId={viewerId} disabled={!connectionReady} />
       {undoProposal ? (
         <div
           className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-3 rounded-lg bg-slate-950 px-4 py-3 text-sm text-white shadow-xl"
@@ -318,12 +367,11 @@ function AlphaClashLiveMatchPageContent() {
       ) : null}
       <main className={`${classes.page} ${classes.arenaPage}`}>
         <div className={classes.tableArea}>
-          {ended ? (
-            <Paper withBorder p="sm" radius="md" className={classes.resultBanner}>
-              <Text fw={700}>Match complete</Text>
-            </Paper>
-          ) : null}
           <AlphaClashInteractionBoard
+            matchId={gameId}
+            onTransientBusyChange={setTransientBusy}
+            onSubmit={submit}
+            openingResetKey={openingResetKey}
             board={state}
             viewerSeat={viewerSeat}
             participantNames={participantNames}
@@ -334,25 +382,33 @@ function AlphaClashLiveMatchPageContent() {
                 <Group gap="xs">
                   <Button
                     size="xs"
-                    disabled={!connectionReady || !canUndo || Boolean(undoProposal)}
+                    disabled={interactionDisabled || !canUndo || Boolean(undoProposal)}
                     onClick={() => sendUndo("proposal_send")}
                   >
                     Undo
                   </Button>
                   <Button
                     size="xs"
-                    disabled={!connectionReady || !canUndoTurn || Boolean(undoProposal)}
+                    disabled={interactionDisabled || !canUndoTurn || Boolean(undoProposal)}
                     onClick={() => sendUndo("proposal_send", "turn_start")}
                   >
                     Undo turn
                   </Button>
                 </Group>
-                <AlphaClashInteractionPanel
-                  view={view}
-                  viewerId={viewerId}
-                  disabled={interactionDisabled}
-                  onSubmit={submit}
+                <GameStateCorrection
+                  board={state}
+                  viewerSeat={viewerSeat}
+                  session={correction}
+                  disabled={ended || !connectionReady || Boolean(undoProposal)}
                 />
+                {state.phaseName !== "setup" && (
+                  <AlphaClashInteractionPanel
+                    view={view}
+                    viewerId={viewerId}
+                    disabled={interactionDisabled}
+                    onSubmit={submit}
+                  />
+                )}
                 <LiveMatchChatPanel canSend={!ended} />
                 <Paper
                   withBorder
@@ -389,6 +445,44 @@ function AlphaClashLiveMatchPageContent() {
           ) : null}
         </div>
       </main>
+      {ended && (
+        <AlphaClashPostGameSummary
+          key={gameId}
+          gameId={gameId}
+          result={state.result}
+          board={state}
+          viewer={viewerSeat}
+          busy={transientBusy}
+          remote
+          names={{
+            "player-one": participantNames.p1 ?? "Player 1",
+            "player-two": participantNames.p2 ?? "Player 2",
+          }}
+          meta={
+            bootstrap.match.gameIds?.includes(gameId) ? (
+              <span>Game {bootstrap.match.gameIds.indexOf(gameId) + 1}</span>
+            ) : undefined
+          }
+          actions={
+            <>
+              <a href={matchReturnUrl("alpha-clash", window.location.search)}>Back to lobby</a>
+              {route.session?.phase === "finished" &&
+              route.session.match.currentGameId &&
+              route.session.match.currentGameId !== gameId ? (
+                <a
+                  data-primary
+                  href={`/alpha-clash/simulator/matches/${encodeURIComponent(bootstrap.match.matchId)}/games/${encodeURIComponent(route.session.match.currentGameId)}?returnTo=${encodeURIComponent(matchReturnUrl("alpha-clash", window.location.search))}`}
+                >
+                  Continue to next game
+                </a>
+              ) : bootstrap.match.status === "completed" ||
+                bootstrap.match.status === "abandoned" ? null : (
+                <button disabled>Finalizing match</button>
+              )}
+            </>
+          }
+        />
+      )}
     </InteractionWorkspace>
   );
 }
@@ -423,6 +517,8 @@ export function parseProjectedState(raw: unknown): LiveBoardState | null {
   if (!isRecord(raw.phase) || typeof raw.phase.name !== "string") return null;
   if (raw.standby !== undefined && !Array.isArray(raw.standby)) return null;
 
+  const result = parseAlphaClashResult(raw.phase);
+
   const players = parsePlayers(raw.players);
   if (!players) return null;
 
@@ -450,12 +546,90 @@ export function parseProjectedState(raw: unknown): LiveBoardState | null {
     };
   }
 
+  let responseWindow: LiveBoardState["responseWindow"] = null;
+  if (raw.responseWindow !== null && raw.responseWindow !== undefined) {
+    const window = raw.responseWindow;
+    if (!isRecord(window) || !isSeat(window.openFor)) return null;
+    const passedSeats = window.passedPlayers ?? [];
+    if (!Array.isArray(passedSeats) || !passedSeats.every(isSeat)) return null;
+    responseWindow = { openFor: window.openFor, passedSeats };
+  }
+
   return {
     cards,
+    damageEvents: Array.isArray(raw.damageEvents)
+      ? raw.damageEvents.flatMap((entry) => {
+          if (
+            !isRecord(entry) ||
+            !Number.isSafeInteger(entry.sequence) ||
+            typeof entry.sequence !== "number" ||
+            typeof entry.targetId !== "string" ||
+            typeof entry.amount !== "number" ||
+            !Number.isSafeInteger(entry.amount) ||
+            entry.amount <= 0
+          )
+            return [];
+          return [{ sequence: entry.sequence, targetId: entry.targetId, amount: entry.amount }];
+        })
+      : undefined,
+    counterMoves: Array.isArray(raw.counterMoves)
+      ? raw.counterMoves.flatMap((entry) => {
+          if (
+            !isRecord(entry) ||
+            typeof entry.sequence !== "number" ||
+            !Number.isSafeInteger(entry.sequence) ||
+            typeof entry.kind !== "string" ||
+            typeof entry.amount !== "number" ||
+            !Number.isSafeInteger(entry.amount) ||
+            entry.amount <= 0 ||
+            typeof entry.fromId !== "string" ||
+            typeof entry.toId !== "string"
+          )
+            return [];
+          return [
+            {
+              sequence: entry.sequence,
+              kind: entry.kind,
+              amount: entry.amount,
+              fromId: entry.fromId,
+              toId: entry.toId,
+            },
+          ];
+        })
+      : [],
     players,
     activePlayer: raw.activePlayer,
+    decisionSeat:
+      raw.decisionSeat === "player-one" || raw.decisionSeat === "player-two"
+        ? raw.decisionSeat
+        : undefined,
     turnNumber: raw.turnNumber,
     phaseName: raw.phase.name,
+    ...(result ? { result } : {}),
+    phaseStep: typeof raw.phase.step === "string" ? raw.phase.step : undefined,
+    responseWindow,
+    openingHandsReady:
+      isRecord(raw.mulligan) && typeof raw.mulligan.resolved === "boolean"
+        ? raw.mulligan.resolved
+        : undefined,
+    openingState:
+      isRecord(raw.mulligan) && isRecord(raw.mulligan.declarations)
+        ? {
+            declarations: {
+              ...(typeof raw.mulligan.declarations["player-one"] === "boolean"
+                ? { "player-one": raw.mulligan.declarations["player-one"] }
+                : {}),
+              ...(typeof raw.mulligan.declarations["player-two"] === "boolean"
+                ? { "player-two": raw.mulligan.declarations["player-two"] }
+                : {}),
+            },
+            selectedCardIds:
+              Array.isArray(raw.mulligan.selectedCardIds) &&
+              raw.mulligan.selectedCardIds.every((id) => typeof id === "string")
+                ? raw.mulligan.selectedCardIds
+                : null,
+          }
+        : undefined,
     portalOpen: raw.portalOpen,
     clash,
     standbyCount: Array.isArray(raw.standby) ? raw.standby.length : 0,
@@ -512,52 +686,21 @@ function parseCard(raw: unknown): LiveBoardCard | null {
     faceDown: raw.faceDown,
     definitionId: raw.definitionId,
     name: raw.name,
+    attack: typeof raw.attack === "number" ? raw.attack : undefined,
+    defense: typeof raw.defense === "number" ? raw.defense : undefined,
     clashDamage: raw.clashDamage,
     phaseDamage: raw.phaseDamage,
+    counters: isRecord(raw.counters)
+      ? Object.fromEntries(
+          Object.entries(raw.counters).filter(
+            (entry): entry is [string, number] => typeof entry[1] === "number" && entry[1] > 0,
+          ),
+        )
+      : undefined,
   };
 }
 
 /** Extracts concise player-facing lines from the engine log stream. */
-function logLinesFromEngineLogs(
-  entries: readonly unknown[],
-  startId: number,
-): { lines: LiveLogLine[]; nextId: number } {
-  const lines: LiveLogLine[] = [];
-  let nextId = startId;
-  for (const entry of entries) {
-    const text = logTextFromEngineLog(entry);
-    if (!text) continue;
-    nextId += 1;
-    lines.push({ id: nextId, text });
-  }
-  return { lines, nextId };
-}
-
-function logTextFromEngineLog(entry: unknown): string | null {
-  if (typeof entry === "string") {
-    return entry.trim().length > 0 ? entry : null;
-  }
-  if (!isRecord(entry)) return null;
-  const payload = "data" in entry ? entry.data : entry;
-  const messages = readLogMessages(payload);
-  if (messages) return messages;
-  if (typeof entry.tag === "string") return humanizeLogTag(entry.tag);
-  return null;
-}
-
-function readLogMessages(value: unknown): string | null {
-  if (!isRecord(value) || !isRecord(value.log) || !Array.isArray(value.log.messages)) return null;
-  const parts = value.log.messages
-    .map((message) => (isRecord(message) ? message.defaultMessage : undefined))
-    .filter((text): text is string => typeof text === "string" && text.length > 0);
-  return parts.length > 0 ? parts.join(" ") : null;
-}
-
-function humanizeLogTag(tag: string): string {
-  const short = tag.startsWith("alpha-clash:") ? tag.slice("alpha-clash:".length) : tag;
-  return short.replace(/[-_]/g, " ");
-}
-
 export function AlphaClashLiveMatchPage() {
   const { matchPageData: bootstrap } = useSimulatorRoute();
   if (!bootstrap || bootstrap.viewer.role !== "player") return <AlphaClashLiveMatchPageContent />;
@@ -569,7 +712,9 @@ export function AlphaClashLiveMatchPage() {
       initialMessages={bootstrap.history.chatMessages}
       initialFreeTextEnabled={bootstrap.history.freeTextEnabled}
     >
-      <AlphaClashLiveMatchPageContent />
+      <AlphaClashLiveMatchPageContent
+        key={`${bootstrap.game.gameId}:${bootstrap.viewer.actorId}`}
+      />
     </SimulatorLiveChatProvider>
   );
 }

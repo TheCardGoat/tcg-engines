@@ -8,6 +8,17 @@ import type {
 
 export type RiftboundDeckCatalog = Pick<RiftboundCatalog, "cards">;
 
+/** Core Rules 103.2.b.3–103.2.b.5: every domain on a card must belong
+ * to the Legend's identity; domainless cards fit any identity. Legends stay
+ * available for changing identity, and missing selection leaves the pool open. */
+export function matchesRiftboundLegendDomains(
+  card: Pick<RiftboundCardDefinition, "cardType" | "domains">,
+  legend: Pick<RiftboundCardDefinition, "domains"> | null | undefined,
+): boolean {
+  if (!legend || card.cardType.toLocaleLowerCase().includes("legend")) return true;
+  return card.domains.every((domain) => legend.domains.includes(domain));
+}
+
 export const RIFTBOUND_DECK_STRUCTURE = {
   legend: 1,
   mainDeck: 40,

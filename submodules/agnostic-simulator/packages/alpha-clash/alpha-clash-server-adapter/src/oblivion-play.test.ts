@@ -52,10 +52,7 @@ it("offers Dread Titan from its owner's Oblivion, excludes hand play, and dispat
       sourceAuthority: "server",
     }).success,
   ).toBe(true);
-  expect(engine.state.cards[source.instanceId].zone).toBe("standby");
-  expect(
-    engine.dispatch("pass", "p2", {}, { gameId: "titan-test", sourceAuthority: "server" }).success,
-  ).toBe(true);
+  expect(engine.state.responseWindow).toBeNull();
   expect(engine.state.cards[source.instanceId].zone).toBe("clash");
 });
 it("does not offer ordinary Oblivion cards as playable", () => {

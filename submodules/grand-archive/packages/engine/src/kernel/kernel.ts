@@ -1958,11 +1958,13 @@ export class GrandArchiveTransactionKernel {
     continuation: GrandArchiveReplacementContinuation,
     answer: GrandArchiveReplacementDecisionAnswer,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
-      event: entry.event,
-      depth: entry.depth,
-      appliedReplacementIds: new Set(entry.appliedReplacementIds),
-    }));
+    const queue = continuation.queue.map(
+      (entry): GrandArchiveRuntimeQueuedEvent => ({
+        event: entry.event,
+        depth: entry.depth,
+        appliedReplacementIds: new Set(entry.appliedReplacementIds),
+      }),
+    );
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex, answer);
   }
 
@@ -1970,11 +1972,13 @@ export class GrandArchiveTransactionKernel {
     state: GrandArchiveMatchState,
     continuation: GrandArchiveReplacementContinuation,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
-      event: entry.event,
-      depth: entry.depth,
-      appliedReplacementIds: new Set(entry.appliedReplacementIds),
-    }));
+    const queue = continuation.queue.map(
+      (entry): GrandArchiveRuntimeQueuedEvent => ({
+        event: entry.event,
+        depth: entry.depth,
+        appliedReplacementIds: new Set(entry.appliedReplacementIds),
+      }),
+    );
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex);
   }
 

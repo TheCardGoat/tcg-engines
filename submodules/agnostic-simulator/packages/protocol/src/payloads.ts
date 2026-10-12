@@ -78,6 +78,8 @@ export interface GameJoinedPayload {
   players: { id: string; connected: boolean; disconnectedAt?: string }[];
   playerVisualSettings?: Record<string, PlayerVisualSettings>;
   pendingProposal?: PendingProposal;
+  /** Authoritative correction permission restored when a player rejoins. */
+  manualModeEnabled?: boolean;
   interactionView?: EngineInteractionView;
   /** Whether the seated recipient may undo the latest authoritative move. */
   undoable?: boolean;

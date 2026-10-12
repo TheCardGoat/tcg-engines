@@ -364,6 +364,8 @@ export interface ServerGameEngine {
  * accepted-move and engine-log records they build.
  */
 export interface DispatchContext {
+  /** Authoritative session permission, supplied by the server command processor. */
+  readonly correctionModeEnabled?: boolean;
   gameId: string;
   sourceAuthority: MoveHistorySourceAuthority;
 }

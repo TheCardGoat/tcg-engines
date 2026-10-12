@@ -474,6 +474,11 @@ export interface GamePresentationAdapter {
 }
 
 export interface GameAdapter {
+  /** Player-approved correction capabilities; rules and commands remain game-owned. */
+  readonly correctionModePolicy?: {
+    readonly moveTypes: readonly string[];
+    readonly pauseNormalPlay: boolean;
+  };
   presentation?: GamePresentationAdapter;
   /** Schedule each bot decision after the preceding committed animation. */
   readonly botTurnScheduling?: {

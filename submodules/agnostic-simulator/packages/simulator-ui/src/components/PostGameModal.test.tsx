@@ -60,7 +60,9 @@ describe("PostGameModal", () => {
     );
     expect(view.container.querySelector("details")).toBeNull();
     expect(view.container.querySelector("summary")).toBeNull();
-    expect(view.container.querySelector('section[aria-label="Match details"]')?.textContent).toContain("Match overview");
+    expect(
+      view.container.querySelector('section[aria-label="Match details"]')?.textContent,
+    ).toContain("Match overview");
     const turns = Array.from(view.container.querySelectorAll("button")).find(
       (button) => button.textContent === "Turns",
     );
@@ -69,6 +71,42 @@ describe("PostGameModal", () => {
     expect(view.container.textContent).not.toContain("Match overview");
     expect(view.container.querySelector("summary")).toBeNull();
     view.unmount();
+  });
+
+  test("supports a game title without confetti and handles Escape inside the dialog", async () => {
+    const onClose = vi.fn();
+    const view = await renderClient(
+      <PostGameModal
+        open
+        outcome="win"
+        title="Player 1 wins"
+        celebrate={false}
+        onClose={onClose}
+      />,
+    );
+    expect(view.container.textContent).toContain("Player 1 wins");
+    expect(confetti).not.toHaveBeenCalled();
+    const dialog = view.container.querySelector('[role="dialog"]');
+    await act(async () =>
+      dialog?.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })),
+    );
+    expect(onClose).toHaveBeenCalledTimes(1);
+    view.unmount();
+  });
+
+  test("returns focus to a stable target after dismissal", async () => {
+    const launcher = document.createElement("button");
+    document.body.append(launcher);
+    const returnFocusRef = { current: launcher };
+    const view = await renderClient(
+      <PostGameModal open outcome="loss" returnFocusRef={returnFocusRef} />,
+    );
+    await view.render(
+      <PostGameModal open={false} outcome="loss" returnFocusRef={returnFocusRef} />,
+    );
+    expect(document.activeElement).toBe(launcher);
+    view.unmount();
+    launcher.remove();
   });
 
   test("keeps win confetti running after the celebration key is recorded", async () => {

@@ -13,21 +13,19 @@ const card = (
   owner: GrandArchiveBoardCard["owner"] = "self",
 ): GrandArchiveBoardCard => ({ id, owner, zone, faceDown: false });
 
-describe("portrait board projection", () => {
+describe("landscape board projection", () => {
   it("shows five readable field cards in one row and exposes deliberate overflow", () => {
     const cards = Array.from({ length: 12 }, (_, i) => card(`field-${i}`, "field"));
     const poses = grandArchiveLayout(cards);
     expect(poses.size).toBe(5);
     expect(new Set([...poses.values()].map((pose) => pose.z)).size).toBe(1);
     for (const pose of poses.values()) {
-      expect(pose.scale).toBe(1.62);
-      expect(pose.z - pose.scale / (2 * (2.5 / 3.5))).toBeGreaterThan(0.5);
+      expect(pose.scale).toBe(1.8);
+      expect(pose.z - pose.scale / (2 * (2.5 / 3.5))).toBeGreaterThan(0.2);
       const champion = grandArchiveLayout([{ ...card("champion", "field"), role: "champion" }]).get(
         "champion",
       )!;
-      expect(pose.z + pose.scale / (2 * (2.5 / 3.5))).toBeLessThan(
-        champion.z - champion.scale / (2 * (2.5 / 3.5)),
-      );
+      expect(pose.x - pose.scale / 2).toBeGreaterThan(champion.x + champion.scale / 2);
     }
     expect(grandArchiveFieldOverflow(cards)).toEqual({ self: 7, opponent: 0 });
     expect(poses.has("field-5")).toBe(false);
@@ -47,9 +45,9 @@ describe("portrait board projection", () => {
       card("opponent", "field", "opponent"),
       { ...card("champion", "field"), role: "champion" },
     ]);
-    expect(poses.get("self")).toMatchObject({ x: 0, z: 1.65 });
-    expect(poses.get("opponent")!.z).toBe(-1.65);
-    expect(poses.get("champion")!.z).toBe(4.45);
+    expect(poses.get("self")).toMatchObject({ x: -1.2, z: 2.35 });
+    expect(poses.get("opponent")!.z).toBe(-2.35);
+    expect(poses.get("champion")).toMatchObject({ x: -8, z: 2.35 });
   });
   it("caps crowded field display explicitly while preserving a large hand", () => {
     const cards = [
@@ -98,7 +96,7 @@ describe("portrait board projection", () => {
       ),
     ).toBe("authorized-face");
   });
-  it("fits the same portrait world across narrow and wide hosts", () => {
+  it("fits the same landscape world across narrow and wide hosts", () => {
     const pose = grandArchiveLayout([card("card", "main-deck")]).get("card")!;
     for (const aspect of [390 / 844, 10 / 16, 1440 / 900]) {
       const screen = grandArchiveScreenPosition(pose, aspect);
@@ -106,7 +104,7 @@ describe("portrait board projection", () => {
       expect(screen.top + screen.height / 2).toBeLessThan(100);
     }
   });
-  it("aligns overlay bounds to rotated card silhouettes in desktop and portrait viewports", () => {
+  it("aligns overlay bounds to rotated card silhouettes in desktop and mobile viewports", () => {
     const pose = grandArchiveLayout([card("card", "field")]).get("card")!;
     for (const aspect of [1280 / 720, 390 / 844, 10 / 16]) {
       const normal = grandArchiveScreenPosition({ ...pose, turn: 0 }, aspect);
@@ -132,7 +130,7 @@ describe("portrait board projection", () => {
     expect(poses.get("revealed")!.y).toBeGreaterThan(poses.get("back-8")!.y);
     expect(poses.get("back-8")!.y).toBeGreaterThan(poses.get("back-7")!.y);
   });
-  it("separates discard piles and mirrors intent inside the playfield", () => {
+  it("separates discard piles and keeps both intents beside the playfield", () => {
     const poses = grandArchiveLayout([
       card("trash", "graveyard"),
       card("banished", "banished"),
@@ -142,8 +140,59 @@ describe("portrait board projection", () => {
     expect(Math.abs(poses.get("trash")!.x - poses.get("banished")!.x)).toBeGreaterThan(
       poses.get("trash")!.scale,
     );
-    expect(poses.get("intent")!.x).toBe(-poses.get("rival-intent")!.x);
-    expect(Math.abs(poses.get("intent")!.x)).toBeLessThan(4);
+    expect(poses.get("intent")!.x).toBe(poses.get("rival-intent")!.x);
+    expect(Math.abs(poses.get("intent")!.x)).toBeLessThan(6);
+  });
+  it("keeps field cards readable on phones without changing the desktop composition", () => {
+    const pose = grandArchiveLayout([card("field", "field")]).get("field")!;
+    for (const [width, height] of [
+      [667, 375],
+      [844, 390],
+      [932, 430],
+    ]) {
+      const position = grandArchiveScreenPosition(pose, width! / height!);
+      expect((position.width / 100) * width!).toBeGreaterThan(54);
+      expect(position.top - position.height / 2).toBeGreaterThan(50);
+    }
+    const desktop = grandArchiveComposition(1440, 900, "cambria-table-v1");
+    const phone = grandArchiveComposition(844, 390, "cambria-table-v1");
+    expect(phone.slots).toEqual(desktop.slots);
+    const desktopFrame = cambriaGeometry(desktop.width, desktop.height, desktop.mode);
+    expect(cambriaGeometry(phone.width, phone.height, phone.mode)).toEqual(desktopFrame);
+  });
+  it("reserves a central decision strip clear of both champions and field cards", () => {
+    const cards = [
+      card("self", "field"),
+      card("opponent", "field", "opponent"),
+      { ...card("champion", "field"), role: "champion" as const },
+      { ...card("rival-champion", "field", "opponent"), role: "champion" as const },
+    ];
+    for (const pose of grandArchiveLayout(cards).values()) {
+      const screen = grandArchiveScreenPosition(pose, 844 / 390);
+      const innerEdge = Math.abs(screen.top - 50) - screen.height / 2;
+      expect((innerEdge / 100) * 390).toBeGreaterThan(38);
+    }
+  });
+  it("keeps hand targets inside the viewport with a usable visible card area", () => {
+    const cards = ["self", "opponent"].flatMap((owner) =>
+      Array.from({ length: 7 }, (_, index) =>
+        card(`${owner}-${index}`, "hand", owner === "self" ? "self" : "opponent"),
+      ),
+    );
+    for (const pose of grandArchiveLayout(cards).values()) {
+      for (const [width, height] of [
+        [844, 390],
+        [932, 430],
+      ]) {
+        const screen = grandArchiveScreenPosition(pose, width! / height!);
+        expect(screen.top).toBeGreaterThan(0);
+        expect(screen.top).toBeLessThan(100);
+        const visibleTop = Math.max(0, screen.top - screen.height / 2);
+        const visibleBottom = Math.min(100, screen.top + screen.height / 2);
+        expect(((visibleBottom - visibleTop) / 100) * height!).toBeGreaterThan(44);
+        expect((screen.width / 100) * width!).toBeGreaterThan(44);
+      }
+    }
   });
   it("produces finite controls for zero-sized hosts and keeps the entire rail inside", () => {
     for (const [width, height] of [

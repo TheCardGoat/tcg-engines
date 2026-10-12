@@ -12,7 +12,7 @@ import {
 import { ArenaScene, type CardAnchor } from "./components/Arena3D/Scene";
 import { arenaLayout } from "./components/Arena3D/layout";
 import { arenaZones } from "./components/Arena3D/zones";
-import { cardArtwork } from "./components/Arena3D/card-artwork";
+import { cardArtwork, alphaClashCardImageUrl } from "./components/Arena3D/card-artwork";
 import {
   buildBoardChoice,
   choiceBoard,
@@ -56,7 +56,7 @@ function Case({ kind, variant }: { kind: BoardChoiceCase; variant: string }) {
           {
             instanceId: "acting-card",
             definitionId: source.id,
-            imageUrl: `https://tcgplayer-cdn.tcgplayer.com/product/${source.printings[0]?.productId}_400w.jpg`,
+            imageUrl: alphaClashCardImageUrl(source.id),
             name: source.name,
             zone:
               kind === "costs" || kind === "resources"
@@ -254,10 +254,11 @@ function Case({ kind, variant }: { kind: BoardChoiceCase; variant: string }) {
             reducedMotion={reduced}
             onAnchors={setAnchors}
             onZoneAnchors={noop}
-            onTurnPosition={noop}
             onFailure={() => setFailure(true)}
             onAssets={onAssets}
             retryKey={0}
+            counterFlights={[]}
+            onCounterFlightComplete={noop}
           />
           {!inspect &&
             anchors.map((anchor) => {
@@ -347,7 +348,7 @@ function Case({ kind, variant }: { kind: BoardChoiceCase; variant: string }) {
               className="choice-lab__source"
               src={cardArtwork({
                 instanceId: "source",
-                imageUrl: `https://tcgplayer-cdn.tcgplayer.com/product/${source.printings[0]?.productId}_400w.jpg`,
+                imageUrl: alphaClashCardImageUrl(source.id),
                 definitionId: source.id,
                 name: source.name,
                 zone: "hand",

@@ -9,7 +9,7 @@ import {
   type AcCommand,
   type MatchState,
 } from "../../../../alpha-clash/packages/engine/src/index.ts";
-import { resolveAlphaClashLabDeck } from "../src/adapters/alpha-clash/decks.ts";
+import { resolveAlphaClashLabDeck } from "@tcg/alpha-clash-server-adapter/practice";
 import { runAlphaClashPracticeMatch } from "../src/adapters/alpha-clash/runner.ts";
 import { createAlphaClashRulesAudit } from "./alpha-clash-audit-checks.ts";
 import { alphaClashBotLabAdapter } from "../src/adapters/alpha-clash.ts";

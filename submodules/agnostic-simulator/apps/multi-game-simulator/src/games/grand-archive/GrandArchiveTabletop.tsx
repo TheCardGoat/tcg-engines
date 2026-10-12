@@ -1,6 +1,9 @@
 import type { InteractionSubmission } from "@tcg/protocol";
 import type { SimulatorSeat } from "@tcg/simulator-contract";
+import { grandArchivePlayerLabel } from "./player-label";
 import {
+  LandscapeNotice,
+  isolateModal,
   SimulatorMatchSidebar,
   SimulatorViewportShell,
   type SimulatorActivityTab,
@@ -9,10 +12,17 @@ import {
   type SimulatorMatchParticipant,
 } from "@tcg/simulator-ui";
 import { Button, Tooltip } from "@mantine/core";
-import { Flag, History, Menu } from "lucide-react";
+import { useMediaQuery } from "@mantine/hooks";
+import { Flag, Menu } from "lucide-react";
 import { useState, useEffect, useRef, type ReactNode } from "react";
+import { PresentationSettingsProvider } from "@tcg/simulator-presentation/settings";
+import {
+  GrandArchivePresentationControls,
+  GrandArchivePresentationFeedback,
+} from "./GrandArchivePresentation";
 
 import "./grand-archive.css";
+import "./grand-archive-landscape.css";
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 import { createGrandArchiveSidebarActivity } from "./GrandArchiveSidebarActivity";
 import { useGrandArchiveDialogFocus } from "./dialog-focus";
@@ -88,6 +98,7 @@ function GrandArchiveSidebar({
         className: "ga-match-action-dock",
         controls: (
           <div className="ga-match-dock-controls">
+            <GrandArchivePresentationControls />
             {onUndoTurn ? (
               <GrandArchiveActionSlot
                 label="Undo turn"
@@ -154,18 +165,12 @@ function toGrandArchiveParticipant(
 ): SimulatorMatchParticipant {
   const actingPlayerId = "playerId" in fixture.waitState ? fixture.waitState.playerId : undefined;
   const active = actingPlayerId === seat.id;
+  const field = fixture.table.zones.find((zone) => zone.id === `${seat.id}:field`);
   const champion = fixture.entities.find(
-    (entity) => entity.kind === "leader" && entity.ownerId === seat.id && entity.face === "public",
+    (entity) =>
+      entity.kind === "leader" && entity.face === "public" && field?.entityIds.includes(entity.id),
   );
-  const technicalSeatLabel = /^p\d+$/i.test(seat.label);
-  const playerName =
-    seat.role === "agent"
-      ? "Practice opponent"
-      : technicalSeatLabel
-        ? role === "self"
-          ? "You"
-          : "Opponent"
-        : seat.label;
+  const playerName = seat.role === "agent" ? "Practice opponent" : grandArchivePlayerLabel(seat);
   return {
     id: seat.id,
     role,
@@ -207,18 +212,51 @@ function formatGrandArchiveTimer(timerMs: number): string {
 
 export function GrandArchiveTabletop(props: GrandArchiveTabletopProps) {
   return (
-    <GrandArchiveInteractionLayer
-      fixture={props.fixture}
-      onSubmit={props.onSubmitProtocolInteraction}
-      errorMessage={props.errorMessage}
-    >
-      <GrandArchiveTabletopContent {...props} />
-    </GrandArchiveInteractionLayer>
+    <PresentationSettingsProvider>
+      <GrandArchiveInteractionLayer
+        fixture={props.fixture}
+        onSubmit={props.onSubmitProtocolInteraction}
+        errorMessage={props.errorMessage}
+      >
+        <GrandArchiveTabletopContent {...props} />
+      </GrandArchiveInteractionLayer>
+    </PresentationSettingsProvider>
   );
 }
 
 function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
   const workspace = useGrandArchiveInteractionWorkspace();
+  const portrait = useMediaQuery(
+    "(orientation: portrait) and (max-width: 900px), (orientation: portrait) and (pointer: coarse)",
+    false,
+  );
+  const rotationGuard = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!portrait) return;
+    const previousFocus = document.activeElement;
+    const restoreBackground = rotationGuard.current
+      ? isolateModal(rotationGuard.current)
+      : undefined;
+    rotationGuard.current?.focus();
+    // Portalled dialogs and window shortcuts must not remain usable behind the guard.
+    const blockKeys = (event: KeyboardEvent) => {
+      if (!event.metaKey && !event.ctrlKey && [" ", "Enter"].includes(event.key))
+        event.preventDefault();
+      event.stopImmediatePropagation();
+    };
+    const retainFocus = (event: FocusEvent) => {
+      if (event.target instanceof Node && !rotationGuard.current?.contains(event.target))
+        rotationGuard.current?.focus();
+    };
+    window.addEventListener("focusin", retainFocus);
+    window.addEventListener("keydown", blockKeys, true);
+    return () => {
+      window.removeEventListener("keydown", blockKeys, true);
+      window.removeEventListener("focusin", retainFocus);
+      restoreBackground?.();
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
+    };
+  }, [portrait]);
   const { fixture } = props;
   const [actionSerial, setActionSerial] = useState(0);
   const [activeTab, setActiveTab] = useState<SimulatorActivityTab>("combined");
@@ -271,7 +309,7 @@ function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
       <div className="ga-board">
         <GrandArchiveBoard
           fixture={fixture}
-          canAct={Boolean(props.onSubmitProtocolInteraction)}
+          canAct={!portrait && Boolean(props.onSubmitProtocolInteraction)}
           canUndo={props.canUndo}
           onUndo={props.onUndo}
           feedbackResetKey={props.feedbackResetKey}
@@ -282,73 +320,84 @@ function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
 
   return (
     <>
-      <SimulatorViewportShell
-        className="ga-viewport-shell"
-        data-game="grand-archive"
-        data-theme="dark"
-        sidebar={sidebar}
-        defaultSidebarOpen
-        mobilePanel={sidebar}
-        sidebarLabel="Grand Archive match activity"
-        mobilePanelLabel="Grand Archive match activity"
-        mobileTopRail={({ openSidebar, closeSidebar }) => (
-          <div className="ga-mobile-rail ga-mobile-rail-top">
-            <GrandArchiveMobileActionFocus serial={actionSerial} closeSidebar={closeSidebar} />
-            <div>
-              <strong>
-                {fixture.combatView?.active ? "Combat" : fixture.table.status.phase.split(" · ")[0]}
-              </strong>
-              <span>Turn {fixture.table.status.turn}</span>
+      <div
+        className="ga-landscape-session"
+        inert={portrait}
+        aria-hidden={portrait || undefined}
+        style={portrait ? { visibility: "hidden" } : undefined}
+      >
+        <GrandArchivePresentationFeedback fixture={fixture} resetKey={props.feedbackResetKey} />
+        <SimulatorViewportShell
+          className="ga-viewport-shell"
+          data-game="grand-archive"
+          data-theme="dark"
+          sidebar={sidebar}
+          defaultSidebarOpen
+          mobileChrome="overlay"
+          mobilePanel={sidebar}
+          sidebarLabel="Grand Archive match activity"
+          mobilePanelLabel="Grand Archive match activity"
+          mobileTopRail={({ openSidebar, closeSidebar }) => (
+            <div className="ga-mobile-rail ga-mobile-rail-top">
+              <GrandArchiveMobileActionFocus serial={actionSerial} closeSidebar={closeSidebar} />
+              <div>
+                <strong>
+                  {fixture.combatView?.active
+                    ? "Combat"
+                    : fixture.table.status.phase.split(" · ")[0]}
+                </strong>
+                <span>Turn {fixture.table.status.turn}</span>
+              </div>
+              <button type="button" onClick={openSidebar} aria-label="Open match activity">
+                <Menu aria-hidden="true" size={20} />
+              </button>
             </div>
-            <button type="button" onClick={openSidebar} aria-label="Open match activity">
-              <Menu aria-hidden="true" size={20} />
-            </button>
-          </div>
-        )}
-        mobileBottomRail={({ openSidebar }) => (
-          <div className="ga-mobile-rail ga-mobile-rail-bottom">
-            <button
-              type="button"
-              onClick={openSidebar}
-              aria-label="Actions & history"
-              title="Actions & history"
+          )}
+          tabletop={board}
+        />
+        {pendingConcede ? (
+          <div className="ga-concede-backdrop" role="presentation">
+            <section
+              ref={concedeDialogRef}
+              className="ga-concede-dialog"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="ga-concede-title"
+              tabIndex={-1}
             >
-              <History aria-hidden="true" size={17} />
-            </button>
+              <p>Irreversible action</p>
+              <h2 id="ga-concede-title">Concede this match?</h2>
+              <span>This immediately ends the game as a loss and cannot be undone.</span>
+              <div>
+                <button type="button" onClick={() => setPendingConcede(null)} data-dialog-autofocus>
+                  Keep playing
+                </button>
+                <button
+                  type="button"
+                  data-danger="true"
+                  data-testid="ga-concede-confirm"
+                  onClick={() => {
+                    workspace.beginAction(pendingConcede);
+                    setPendingConcede(null);
+                  }}
+                >
+                  Concede match
+                </button>
+              </div>
+            </section>
           </div>
-        )}
-        tabletop={board}
-      />
-      {pendingConcede ? (
-        <div className="ga-concede-backdrop" role="presentation">
-          <section
-            ref={concedeDialogRef}
-            className="ga-concede-dialog"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="ga-concede-title"
-            tabIndex={-1}
-          >
-            <p>Irreversible action</p>
-            <h2 id="ga-concede-title">Concede this match?</h2>
-            <span>This immediately ends the game as a loss and cannot be undone.</span>
-            <div>
-              <button type="button" onClick={() => setPendingConcede(null)} data-dialog-autofocus>
-                Keep playing
-              </button>
-              <button
-                type="button"
-                data-danger="true"
-                data-testid="ga-concede-confirm"
-                onClick={() => {
-                  workspace.beginAction(pendingConcede);
-                  setPendingConcede(null);
-                }}
-              >
-                Concede match
-              </button>
-            </div>
-          </section>
+        ) : null}
+      </div>
+      {portrait ? (
+        <div
+          className="ga-landscape-guard"
+          ref={rotationGuard}
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Turn to landscape"
+        >
+          <LandscapeNotice body="Turn your device sideways to play Grand Archive." />
         </div>
       ) : null}
     </>

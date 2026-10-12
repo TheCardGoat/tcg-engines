@@ -193,8 +193,20 @@ const InteractionInputBase = z
       .min(1)
       .optional(),
     validationText: InteractionText.optional(),
+    /** Keep a draft available for board retargeting until explicit confirmation. */
+    confirmBeforeSubmit: z.boolean().optional(),
   })
   .strict();
+
+/** A presentation hint only; the native command remains authoritative. */
+export const CardDestinationPresentation = z
+  .object({
+    label: InteractionText,
+    confirmText: InteractionText,
+    staysInZone: z.boolean().optional(),
+  })
+  .strict();
+export type CardDestinationPresentation = z.infer<typeof CardDestinationPresentation>;
 
 export const EntitySelectionInput = InteractionInputBase.extend({
   kind: z.literal("entity-selection"),
@@ -204,6 +216,7 @@ export const EntitySelectionInput = InteractionInputBase.extend({
   max: z.number().int().min(0),
   ordered: z.boolean(),
   candidates: z.array(EntityCandidate),
+  cardDestination: CardDestinationPresentation.optional(),
 })
   .strict()
   .refine(hasOrderedBounds, {
@@ -219,6 +232,7 @@ export type EntitySelectionInput = z.infer<typeof EntitySelectionInput>;
 
 export const InteractionOption = z
   .object({
+    entity: EntityRef.optional(),
     id: z.string().min(1),
     text: InteractionText,
     enabled: z.boolean().default(true),
@@ -261,9 +275,28 @@ export const OptionDirectPresentation = z
 
 export type OptionDirectPresentation = z.infer<typeof OptionDirectPresentation>;
 
+export const CostSlotsPresentation = z
+  .object({
+    kind: z.literal("cost-slots"),
+    slots: z.array(
+      z
+        .object({
+          text: InteractionText,
+          optionIds: z.array(z.string()),
+          /** The specific color this slot must declare; absent for generic slots. */
+          color: z.string().optional(),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+
+export type CostSlotsPresentation = z.infer<typeof CostSlotsPresentation>;
+
 export const OptionSelectionPresentation = z.discriminatedUnion("kind", [
   OptionSearchPresentation,
   OptionDirectPresentation,
+  CostSlotsPresentation,
 ]);
 
 export const OptionSelectionInput = InteractionInputBase.extend({
@@ -273,12 +306,28 @@ export const OptionSelectionInput = InteractionInputBase.extend({
   max: z.number().int().min(0),
   options: z.array(InteractionOption).min(1),
   presentation: OptionSelectionPresentation.optional(),
+  cardDestination: CardDestinationPresentation.optional(),
 })
   .strict()
   .refine(hasOrderedBounds, {
     message: "max must be greater than or equal to min",
     path: ["max"],
   })
+  .refine(
+    (input) =>
+      input.presentation?.kind !== "cost-slots" ||
+      (input.min === input.presentation.slots.length &&
+        input.max === input.min &&
+        input.presentation.slots.every((slot) =>
+          slot.optionIds.every((id) =>
+            input.options.some((option) => option.id === id && option.entity),
+          ),
+        )),
+    {
+      message: "Cost slots require fixed bounds and entity options.",
+      path: ["presentation"],
+    },
+  )
   .refine((input) => hasAvailableBounds(input, input.options), {
     message: "min and max must fit enabled options",
     path: ["options"],
@@ -296,6 +345,29 @@ export type BooleanInput = z.infer<typeof BooleanInput>;
 
 export const NumberInput = InteractionInputBase.extend({
   kind: z.literal("number"),
+  presentation: z
+    .object({
+      contextText: InteractionText.optional(),
+      contextParts: z
+        .array(
+          z.discriminatedUnion("kind", [
+            z.object({ kind: z.literal("text"), text: InteractionText }).strict(),
+            z.object({ kind: z.literal("card"), entity: EntityRef }).strict(),
+          ]),
+        )
+        .optional(),
+      confirmText: InteractionText.optional(),
+      cancel: z
+        .object({
+          value: z.number(),
+          text: InteractionText,
+          description: InteractionText.optional(),
+        })
+        .strict()
+        .optional(),
+    })
+    .strict()
+    .optional(),
   min: z.number().optional(),
   max: z.number().optional(),
   step: z.number().positive().optional(),
@@ -304,7 +376,26 @@ export const NumberInput = InteractionInputBase.extend({
   .refine((input) => input.min === undefined || input.max === undefined || input.max >= input.min, {
     message: "max must be greater than or equal to min",
     path: ["max"],
-  });
+  })
+  .refine(
+    (input) => {
+      const value = input.presentation?.cancel?.value;
+      if (value === undefined) return true;
+      if (
+        !Number.isFinite(value) ||
+        (input.min !== undefined && value < input.min) ||
+        (input.max !== undefined && value > input.max)
+      )
+        return false;
+      if (input.step === undefined) return true;
+      const steps = (value - (input.min ?? 0)) / input.step;
+      return Math.abs(steps - Math.round(steps)) < 1e-9;
+    },
+    {
+      message: "cancel value must meet the amount bounds and step",
+      path: ["presentation", "cancel", "value"],
+    },
+  );
 
 export type NumberInput = z.infer<typeof NumberInput>;
 
@@ -429,6 +520,10 @@ export const EntityAllocationInput = InteractionInputBase.extend({
   entityKinds: z.array(EntityKind).min(1),
   totalMin: z.number().int().min(0),
   totalMax: z.number().int().min(0),
+  /** Optional effects can explicitly resolve with an empty allocation. */
+  allowEmpty: z.boolean().optional(),
+  /** Maximum number of recipients with a positive amount. */
+  maxRecipients: z.number().int().min(1).optional(),
   candidates: z.array(EntityAllocationCandidate).min(1),
 })
   .strict()
@@ -900,6 +995,21 @@ function validateOptionSelectionInput(
   validateSelectionCount(input.id, ids, input, issues);
   validateNoDuplicateSelections(input.id, ids, issues);
   const options = new Map(input.options.map((option) => [option.id, option]));
+  if (input.presentation?.kind === "cost-slots") {
+    const slots = input.presentation.slots;
+    const entities = ids.map((id) => options.get(id)?.entity?.instanceId);
+    if (
+      ids.length !== input.presentation.slots.length ||
+      new Set(entities).size !== entities.length ||
+      ids.some((id, index) => !slots[index]?.optionIds.includes(id))
+    ) {
+      issues.push({
+        code: "option_unavailable",
+        path: ["values", input.id],
+        message: "Assign one distinct resource to each cost slot.",
+      });
+    }
+  }
   for (const id of ids) {
     const option = options.get(id);
     if (!option || option.enabled === false) {
@@ -1099,6 +1209,15 @@ function validateEntityAllocationInput(
   const candidates = new Map(
     input.candidates.map((candidate) => [candidate.entity.instanceId, candidate]),
   );
+  if (input.allowEmpty && Object.keys(parsed.data).length === 0) return;
+  const recipients = Object.values(parsed.data).filter((amount) => amount > 0).length;
+  if (input.maxRecipients !== undefined && recipients > input.maxRecipients) {
+    issues.push({
+      code: "selection_count_out_of_bounds",
+      path: ["values", input.id],
+      message: `Choose at most ${input.maxRecipients} recipients.`,
+    });
+  }
   let total = 0;
   for (const [id, amount] of Object.entries(parsed.data)) {
     const candidate = candidates.get(id);
@@ -1223,4 +1342,14 @@ function invalidSubmission(
     issues,
     error: issues.map((issue) => issue.message).join(" "),
   };
+}
+
+/** One allocation validator for submission and draft confirmation. */
+export function isEntityAllocationComplete(
+  input: EntityAllocationInput,
+  value: InteractionSubmissionValue,
+): boolean {
+  const issues: InteractionSubmissionValidationIssue[] = [];
+  validateEntityAllocationInput(input, value, issues);
+  return issues.length === 0;
 }

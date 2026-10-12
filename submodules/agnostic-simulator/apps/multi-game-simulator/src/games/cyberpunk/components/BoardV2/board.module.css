@@ -2285,6 +2285,8 @@
   :global([data-interaction-appearance])
   > :global([data-sim-animation-face-target])::after {
   content: "";
+  /* Gear targets do not inherit V1's positioned ::after action rim. */
+  position: absolute;
   inset: -2px;
   border: 2px solid var(--interaction-rim, transparent);
   border-radius: var(--rim-radius, 4px);
@@ -2540,7 +2542,6 @@
   overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: #8b9da877 transparent;
-  border-bottom: 1px solid #8b9da866;
 }
 /* The local strip reads right-to-left, so its rail mirrors too: the row's
    first child stays the card nearest the counters on both seats. */
@@ -2599,9 +2600,16 @@
 .root .flatOverlay .status .eddieMini[data-payment-source="true"]:focus-visible {
   filter: brightness(1.22);
 }
+.root .flatOverlay .status .saleCard[data-resource-state="spent"],
+.root .flatOverlay .status .eddieMini[data-resource-state="spent"],
 .root .flatOverlay .status .saleCard[data-payment-selected="true"],
 .root .flatOverlay .status .eddieMini[data-payment-selected="true"] {
   transform: rotate(90deg);
+  /* Reserve the landscape width, keeping adjacent card art clear. */
+  margin-inline: 0.5cqw;
+}
+.root .flatOverlay .status .saleCard[data-payment-selected="true"],
+.root .flatOverlay .status .eddieMini[data-payment-selected="true"] {
   border-color: #f5e642;
   box-shadow:
     0 0 10px rgb(245 230 66 / 75%),

@@ -2,6 +2,7 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { execFileSync } from "node:child_process";
 
 import { afterAll, describe, expect, it } from "vite-plus/test";
 
@@ -49,12 +50,8 @@ describe("catalogRevision", () => {
 
   it("changes when a card is added or removed", () => {
     expect(catalogRevision(cards.slice(1))).not.toBe(catalogRevision(cards));
-    expect(
-      catalogRevision([
-        ...cards,
-        { id: "OP01-003", canonicalId: "OP01-003", cardType: "event", cost: 1 },
-      ]),
-    ).not.toBe(catalogRevision(cards));
+    const added = { id: "OP01-003", canonicalId: "OP01-003", cardType: "event", cost: 1 };
+    expect(catalogRevision([...cards, added])).not.toBe(catalogRevision(cards));
   });
 
   it("changes when a card identity changes", () => {
@@ -66,6 +63,16 @@ describe("catalogRevision", () => {
 });
 
 describe("sourceTreeRevision", () => {
+  it("hashes the working tree after a tracked source file is moved", () => {
+    const root = makeTree({ "old.ts": "export {};\n" });
+    execFileSync("git", ["init", "--quiet"], { cwd: root });
+    execFileSync("git", ["add", "old.ts"], { cwd: root });
+    rmSync(join(root, "old.ts"));
+    writeFileSync(join(root, "new.ts"), "export {};\n");
+    expect(sourceTreeRevision(root)).toBe(
+      sourceTreeRevision(makeTree({ "new.ts": "export {};\n" })),
+    );
+  });
   it("is deterministic for identical content", () => {
     const files = { "src/index.ts": "export const a = 1;\n", "src/lib/util.ts": "export {};\n" };
     const first = sourceTreeRevision(makeTree(files));

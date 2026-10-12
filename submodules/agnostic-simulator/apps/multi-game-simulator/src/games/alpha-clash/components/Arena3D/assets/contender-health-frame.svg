@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1114" viewBox="0 0 400 557">
+  <defs><linearGradient id="health-fill" x2="0" y2="1"><stop stop-color="#479465"/><stop offset="0.6" stop-color="#24583f"/><stop offset="1" stop-color="#102c21"/></linearGradient></defs>
+  <path d="M316 38H374V96Q337 93 316 73Z" fill="url(#health-fill)" stroke="#19241c" stroke-width="1"/>
+  <path d="M319 40H371M320 76Q341 91 372 93" fill="none" stroke="#a4b794" stroke-opacity="0.4"/>
+  <text x="346" y="72" fill="#f7f5e9" stroke="#254532" stroke-width="2" paint-order="stroke" font-family="Arial,sans-serif" font-size="36" font-weight="900" text-anchor="middle" data-value="health">0</text>
+</svg>

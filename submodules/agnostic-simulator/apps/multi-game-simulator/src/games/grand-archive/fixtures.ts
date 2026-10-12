@@ -28,6 +28,12 @@ import { grandArchiveHarnessFixture, type GrandArchiveHarnessFixture } from "./f
 import { createGrandArchivePracticeEngineFromSetup } from "./practice-setup";
 import { grandArchivePracticeDecks } from "@tcg/grand-archive-server-adapter/practice";
 
+import {
+  GRAND_ARCHIVE_NATIVE_FIXTURES,
+  findGrandArchiveNativeFixture,
+  type GrandArchiveNativeFixtureId,
+} from "./native-fixtures";
+
 export type GrandArchiveFixtureGroupId = "turn-flow" | "combat" | "decision" | "terminal";
 
 export interface GrandArchiveVisualFixture extends GrandArchiveHarnessFixture {
@@ -142,11 +148,33 @@ export function createAttackTargetingFixtureServer(fullArtOpponent = false) {
       zones: { field: [portSmuggler, woodlandSquirrels] },
     },
   });
-  return new GrandArchiveServerEngine(
+  const server = new GrandArchiveServerEngine(
     game.program,
     new GrandArchiveMatchRuntime(game.program, game.state),
   );
+  if (fullArtOpponent) pinFullArtOpponent(server);
+  return server;
 }
+function pinFullArtOpponent(server: GrandArchiveServerEngine) {
+  // Pin one visible opponent champion to its real full-art edition.
+  const record = Object.values(server.art.records.records).find(
+    (card) => card.canonicalId === spiritOfFortuitousFire.canonicalId,
+  );
+  const fullArt =
+    record &&
+    Object.entries(record.printings).find(
+      ([, printing]) => printing.boardImageUrl === printing.printedImageUrl,
+    );
+  const object =
+    record &&
+    Object.values(server.runtime.state.objects).find(
+      (candidate) =>
+        candidate.ownerId === "p2" &&
+        getGrandArchiveCard(candidate.definitionId)?.canonicalId === record.canonicalId,
+    );
+  if (object && fullArt) server.art.printingIdByObjectId[object.id] = fullArt[0];
+}
+
 const terminal = new GrandArchiveMatchRuntime(program, initialState);
 terminal.execute(
   { move: "concede" },
@@ -508,100 +536,110 @@ const PROJECTIONS = {
 } as const;
 
 // Catalog metadata stays cheap; construct and cache the projection on first state access.
-export const GRAND_ARCHIVE_VISUAL_FIXTURES: readonly GrandArchiveVisualFixture[] =
-  WAIT_FIXTURES.map(([id, name, summary, group, tags]) => {
-    let cached: GrandArchiveHarnessFixture | undefined;
-    const resolve = () => {
-      if (!cached) {
-        const projection =
-          id === "art-only" || id === "materialization-hand" || id === "attack-targeting"
-            ? (() => {
-                const server =
-                  id === "art-only" || id === "attack-targeting"
-                    ? createAttackTargetingFixtureServer(id === "art-only")
-                    : createMaterialHandFixtureServer();
-                if (id === "art-only") {
-                  // Pin one visible opponent champion to its real full-art edition.
-                  const record = Object.values(server.art.records.records).find(
-                    (card) => card.canonicalId === spiritOfFortuitousFire.canonicalId,
-                  );
-                  const fullArt =
-                    record &&
-                    Object.entries(record.printings).find(
-                      ([, printing]) => printing.boardImageUrl === printing.printedImageUrl,
-                    );
-                  const object =
-                    record &&
-                    Object.values(server.runtime.state.objects).find(
-                      (candidate) =>
-                        candidate.ownerId === "p2" &&
-                        getGrandArchiveCard(candidate.definitionId)?.canonicalId ===
-                          record.canonicalId,
-                    );
-                  if (object && fullArt) server.art.printingIdByObjectId[object.id] = fullArt[0];
-                }
-                return projectGrandArchiveSimulator(
-                  server.program,
-                  server.runtime.state,
-                  p1,
-                  id === "art-only"
-                    ? server.getViewerResources({ role: "player", actorId: p1 })
-                    : {},
-                );
-              })()
-            : PROJECTIONS[id];
-        cached = grandArchiveHarnessFixture(id, name, summary, projection);
-      }
-      return cached;
-    };
-    return {
-      id,
-      name,
-      summary,
-      group,
-      tags,
-      gameSlug: "grand-archive",
-      get adapterGoal() {
-        return resolve().adapterGoal;
-      },
-      get table() {
-        return resolve().table;
-      },
-      get boardLayout() {
-        return resolve().boardLayout;
-      },
-      get entities() {
-        return resolve().entities;
-      },
-      get interactions() {
-        return resolve().interactions;
-      },
-      get eventLog() {
-        return resolve().eventLog;
-      },
-      get guideSteps() {
-        return resolve().guideSteps;
-      },
-      get agentChecks() {
-        return resolve().agentChecks;
-      },
-      get coreComponents() {
-        return resolve().coreComponents;
-      },
-      get turnPlayerId() {
-        return resolve().turnPlayerId;
-      },
-      get stackView() {
-        return resolve().stackView;
-      },
-      get combatView() {
-        return resolve().combatView;
-      },
-      get waitState() {
-        return resolve().waitState;
-      },
-      get interactionView() {
-        return resolve().interactionView;
-      },
-    };
-  });
+export const GRAND_ARCHIVE_VISUAL_FIXTURES: readonly GrandArchiveVisualFixture[] = [
+  ...WAIT_FIXTURES,
+  ...GRAND_ARCHIVE_NATIVE_FIXTURES.map(
+    (entry) => [entry.id, entry.name, entry.summary, entry.group, entry.tags] as const,
+  ),
+].map(([id, name, summary, group, tags]) => {
+  let cached: GrandArchiveHarnessFixture | undefined;
+  const resolve = () => {
+    if (!cached) {
+      const native = GRAND_ARCHIVE_NATIVE_FIXTURES.find((entry) => entry.id === id);
+      const nativeServer = native?.createServer();
+      const projection = nativeServer
+        ? projectGrandArchiveSimulator(nativeServer.program, nativeServer.runtime.state, p1)
+        : id === "art-only" || id === "materialization-hand" || id === "attack-targeting"
+          ? (() => {
+              const server =
+                id === "art-only" || id === "attack-targeting"
+                  ? createAttackTargetingFixtureServer(id === "art-only")
+                  : createMaterialHandFixtureServer();
+
+              return projectGrandArchiveSimulator(
+                server.program,
+                server.runtime.state,
+                p1,
+                id === "art-only" ? server.getViewerResources({ role: "player", actorId: p1 }) : {},
+              );
+            })()
+          : id in PROJECTIONS
+            ? PROJECTIONS[id as keyof typeof PROJECTIONS]
+            : (() => {
+                throw new Error(`Missing fixture: ${id}`);
+              })();
+      cached = grandArchiveHarnessFixture(id, name, summary, projection);
+    }
+    return cached;
+  };
+  return {
+    id,
+    name,
+    summary,
+    group,
+    tags,
+    gameSlug: "grand-archive",
+    get adapterGoal() {
+      return resolve().adapterGoal;
+    },
+    get table() {
+      return resolve().table;
+    },
+    get boardLayout() {
+      return resolve().boardLayout;
+    },
+    get entities() {
+      return resolve().entities;
+    },
+    get interactions() {
+      return resolve().interactions;
+    },
+    get eventLog() {
+      return resolve().eventLog;
+    },
+    get guideSteps() {
+      return resolve().guideSteps;
+    },
+    get agentChecks() {
+      return resolve().agentChecks;
+    },
+    get coreComponents() {
+      return resolve().coreComponents;
+    },
+    get turnPlayerId() {
+      return resolve().turnPlayerId;
+    },
+    get stackView() {
+      return resolve().stackView;
+    },
+    get combatView() {
+      return resolve().combatView;
+    },
+    get waitState() {
+      return resolve().waitState;
+    },
+    get interactionView() {
+      return resolve().interactionView;
+    },
+  };
+});
+
+export type GrandArchivePlayableFixtureId =
+  | GrandArchiveNativeFixtureId
+  | "materialization-hand"
+  | "attack-targeting"
+  | "art-only";
+export function isGrandArchivePlayableFixtureId(id: string): id is GrandArchivePlayableFixtureId {
+  return (
+    id === "materialization-hand" ||
+    id === "attack-targeting" ||
+    id === "art-only" ||
+    !!findGrandArchiveNativeFixture(id)
+  );
+}
+export function createGrandArchivePlayableFixtureServer(id: GrandArchivePlayableFixtureId) {
+  const native = findGrandArchiveNativeFixture(id);
+  if (native) return native.createServer();
+  if (id === "materialization-hand") return createMaterialHandFixtureServer();
+  return createAttackTargetingFixtureServer(id === "art-only");
+}

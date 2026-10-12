@@ -38,6 +38,8 @@ export interface EventLogPanelProps {
   rawCopyText?: string;
   embedded?: boolean;
   appearance?: "grouped" | "timeline";
+  /** "compact" tightens row and heading spacing for sidebars with tight vertical budgets. */
+  density?: "comfortable" | "compact";
   /** Parent activity tabs already name this panel, so the redundant title bar can be removed. */
   showHeader?: boolean;
   /** Optional host for the options control when a product shell owns the visible header. */
@@ -279,6 +281,7 @@ export function EventLogPanel({
   rawCopyText,
   embedded = false,
   appearance = "grouped",
+  density = "comfortable",
   showHeader = true,
   controlsContainer,
   turnExpansion = "all",
@@ -685,6 +688,7 @@ export function EventLogPanel({
       className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""}`}
       aria-label="Event log"
       data-appearance={appearance}
+      data-density={density === "compact" ? "compact" : undefined}
       data-testid="event-log"
       data-count={entries.length}
       data-controls-hosted={controlsContainer ? "true" : undefined}

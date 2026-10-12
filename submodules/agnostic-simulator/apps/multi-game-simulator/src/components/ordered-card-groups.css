@@ -1,0 +1,142 @@
+.tcg-ordered-groups {
+  --order-gold: #e6c688;
+  --order-ink: #071017;
+  --order-muted: #a9b5ba;
+  --order-card-width: clamp(100px, 12.8vw, 174px);
+  color: #ecedeb;
+  font: 13px/1.45 system-ui, sans-serif;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 4px 8px;
+}
+.tcg-ordered-groups__instruction { text-align: center; color: #c6ced0; margin: 0 0 38px; }
+.tcg-ordered-groups__stage { display: flex; align-items: stretch; justify-content: center; gap: 24px; min-height: 330px; }
+.tcg-ordered-groups__stage > section,
+.tcg-ordered-groups__routes > section { min-width: 0; flex: 1 1 0; position: relative; }
+.tcg-ordered-groups__pool { order: 2; }
+.tcg-ordered-groups__routes { display: contents; }
+.tcg-ordered-groups__routes > section:first-child { order: 3; }
+.tcg-ordered-groups__routes > section:last-child { order: 1; }
+.tcg-ordered-groups__stage[data-route-count="1"] .tcg-ordered-groups__pool { order: 0; }
+.tcg-ordered-groups header { text-align: center; margin-bottom: 20px; }
+.tcg-ordered-groups h3 { color: var(--order-gold); text-transform: uppercase; font-size: 14px; font-weight: 500; letter-spacing: .22em; margin: 0 0 4px; }
+.tcg-ordered-groups header > span { color: var(--order-muted); font-size: 11px; letter-spacing: .06em; }
+.tcg-ordered-groups__pool h3 { color: #c5d4d9; }
+.tcg-ordered-groups__hand { display: flex; justify-content: center; align-items: center; min-height: 250px; gap: 12px; padding: 12px 5px 25px; overflow-x: auto; }
+.tcg-ordered-groups__hand > div { min-width: 0; flex: 0 1 var(--order-card-width); }
+/* Destination labels stay inside their own card, including three-route choices. */
+.tcg-ordered-groups__quick-place { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin-top: 12px; min-width: 0; }
+.tcg-ordered-groups .tcg-ordered-groups__quick-place .choice-slot { box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; padding: 6px; white-space: normal; overflow-wrap: anywhere; border: 1px solid #cab98c66; background: #15232b; cursor: pointer; font: inherit; }
+.tcg-ordered-groups__quick-place .choice-slot:hover:not(:disabled) { background: #cbb87920; }
+.tcg-ordered-groups__quick-place .choice-slot:focus-visible { outline: 2px solid #80ddd9; outline-offset: 2px; }
+.tcg-ordered-groups .choice-token { display: block; position: relative; width: var(--order-card-width); max-width: 100%; aspect-ratio: 5/7; padding: 0; border: 1px solid #becdd344; border-radius: 9px; background: #111d24; box-shadow: 0 18px 24px #0009; transition: transform 160ms ease, box-shadow 160ms ease; }
+.tcg-ordered-groups .choice-token img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: inherit; }
+.tcg-ordered-groups .choice-token > span { display: grid; place-items: center; height: 100%; padding: 12px; }
+.tcg-ordered-groups .choice-token:hover { transform: translateY(-7px); box-shadow: 0 20px 28px #000b, 0 0 16px #c5e2e328; z-index: 3; }
+.tcg-ordered-groups .choice-token[aria-pressed="true"] { transform: translateY(-10px) scale(1.025); border-color: #b7ffff; box-shadow: 0 0 0 2px #80ddd9, 0 0 30px #58ced752, 0 22px 28px #000b; z-index: 4; }
+.tcg-ordered-groups__destination { display: flex; align-items: flex-start; justify-content: center; min-height: 285px; padding: 16px 12px 8px; border-top: 1px solid #cab98c44; border-bottom: 1px solid #cab98c44; background: linear-gradient(180deg, #dcc08a07, transparent 75%); border-radius: 50% 50% 12px 12px / 8px 8px 12px 12px; overflow-x: auto; }
+.tcg-ordered-groups__destination:has(.choice-slot[data-eligible="true"]) { background: radial-gradient(ellipse at center, #6cddd419, transparent 75%); border-color: #80ddd980; }
+.tcg-ordered-groups ol { display: flex; list-style: none; padding: 0; margin: 0; gap: 14px; min-width: 0; }
+.tcg-ordered-groups li { position: relative; flex: 0 1 var(--order-card-width); min-width: 76px; }
+.tcg-ordered-groups__card { position: relative; }
+.tcg-ordered-groups__card b { position: absolute; pointer-events: none; bottom: -10px; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid #bc9f68; border-radius: 50%; background: #15232b; color: #f4d69c; font: 600 12px system-ui; box-shadow: 0 4px 10px #000b; }
+.tcg-ordered-groups .choice-slot { color: var(--order-gold); background: transparent; border: 0; border-radius: 4px; padding: 0; }
+.tcg-ordered-groups .tcg-ordered-groups__insert { position: absolute; z-index: 5; left: -15px; top: 0; width: 24px; height: calc(100% - 44px); opacity: 0; display: grid; place-items: center; border-left: 2px solid #e6c688; }
+.tcg-ordered-groups .tcg-ordered-groups__insert[data-eligible="true"],
+.tcg-ordered-groups .tcg-ordered-groups__insert:focus-visible { opacity: 1; background: #e6c68818; }
+.tcg-ordered-groups .tcg-ordered-groups__end { flex: 0 0 38px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-height: 180px; color: #acb6b9; }
+.tcg-ordered-groups__end > span:first-child { font: 32px Georgia, serif; color: #c8b380; }
+.tcg-ordered-groups__end > span:last-child { font-size: 10px; }
+.tcg-ordered-groups__destination[data-empty="true"] .tcg-ordered-groups__end { flex-basis: 100%; }
+.tcg-ordered-groups__destination[data-empty="true"] .tcg-ordered-groups__end > span:first-child { display: grid; place-items: center; width: 72px; height: 100px; border: 1px solid #b2a58133; border-radius: 8px; box-shadow: 5px 5px 0 -1px #0a151b, 5px 5px 0 0 #b2a58122; }
+.tcg-ordered-groups__reorder { display: flex; justify-content: center; gap: 4px; margin-top: 14px; }
+.tcg-ordered-groups__reorder button { width: 40px; height: 32px; border: 0; color: #d4c399; background: transparent; font-size: 20px; cursor: pointer; opacity: .65; }
+.tcg-ordered-groups__reorder button:hover { opacity: 1; background: #cbb87912; }
+.tcg-ordered-groups button:disabled { opacity: .25; cursor: default; }
+.tcg-ordered-groups__complete { display: flex; align-items: center; flex-direction: column; gap: 14px; color: #afbcbd; font-size: 12px; text-align: center; }
+.tcg-ordered-groups__complete > span { font-size: 38px; color: #b1dbce; font-weight: 200; }
+.tcg-ordered-groups__tools { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 20px; min-height: 40px; color: #a9b5ba; font-size: 11px; }
+.tcg-ordered-groups__tools p { margin: 0; text-align: center; }
+.tcg-ordered-groups__reset { background: none; color: #c5c7bc; border: 0; border-bottom: 1px solid #c5c7bc44; padding: 10px 0; cursor: pointer; font: inherit; }
+.tcg-ordered-groups__keyboard { color: #819499; }
+.tcg-order-ghost { max-width: 170px; padding: 0; border: 1px solid #a1e7e4; background: #071017; font-size: 0; border-radius: 8px; box-shadow: 0 25px 40px #000b, 0 0 25px #65ccc938; }
+.tcg-order-ghost img { width: 145px; border-radius: inherit; }
+.tcg-ordered-groups[data-reduced-motion="true"] .choice-token { transform: none !important; transition: none; }
+@media (max-width: 900px) {
+  .tcg-ordered-groups { --order-card-width: 120px; }
+  .tcg-ordered-groups__stage { gap: 10px; }
+  .tcg-ordered-groups__destination { padding: 12px 7px 4px; }
+  .tcg-ordered-groups__keyboard { display: none; }
+}
+@media (max-height: 550px) and (min-width: 601px) {
+  .tcg-ordered-groups {
+    --order-card-width: 82px;
+    flex: 1 1 auto;
+    overscroll-behavior: contain;
+    scrollbar-width: auto;
+    scrollbar-color: #a99a79 #101c25;
+    scrollbar-gutter: stable;
+  }
+  .tcg-ordered-groups__instruction { display: none; }
+  .tcg-ordered-groups__stage { min-height: 0; }
+  .tcg-ordered-groups header { margin-bottom: 4px; }
+  .tcg-ordered-groups h3 { font-size: 12px; letter-spacing: .08em; }
+  .tcg-ordered-groups header > span { font-size: 12px; letter-spacing: 0; }
+  .tcg-ordered-groups__hand {
+    min-height: 0;
+    padding: 6px 4px;
+    justify-content: safe center;
+    align-items: start;
+    scrollbar-width: auto;
+    scrollbar-color: #a99a79 #101c25;
+  }
+  /* Place touch actions beside the artwork rather than below the visible body. */
+  .tcg-ordered-groups__hand > div:not(.tcg-ordered-groups__complete) {
+    display: grid;
+    grid-template-columns: var(--order-card-width) minmax(96px, 1fr);
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 186px;
+  }
+  .tcg-ordered-groups__quick-place { margin-top: 0; }
+  .tcg-ordered-groups .tcg-ordered-groups__quick-place .choice-slot {
+    min-width: 0;
+    min-height: 44px;
+    padding: 4px 6px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .tcg-ordered-groups__destination {
+    min-height: 166px;
+    padding: 6px 4px;
+    justify-content: safe center;
+    scrollbar-width: auto;
+    scrollbar-color: #a99a79 #101c25;
+  }
+  .tcg-ordered-groups li { flex-shrink: 0; min-width: 92px; }
+  .tcg-ordered-groups__card .choice-token { margin-inline: auto; }
+  .tcg-ordered-groups .choice-token:hover,
+  .tcg-ordered-groups .choice-token[aria-pressed="true"] { transform: none; }
+  .tcg-ordered-groups .tcg-ordered-groups__end { min-width: 44px; min-height: 130px; }
+  .tcg-ordered-groups__end > span:last-child { font-size: 12px; }
+  .tcg-ordered-groups__tools { margin-top: 4px; min-height: 44px; font-size: 12px; }
+  .tcg-ordered-groups__reset { min-height: 44px; }
+  .tcg-ordered-groups__reorder { margin-top: 12px; }
+  .tcg-ordered-groups__reorder button { flex: 0 0 44px; width: 44px; height: 44px; }
+}
+@media (max-width: 600px) {
+  .tcg-ordered-groups { --order-card-width: 120px; }
+  .tcg-ordered-groups__instruction { margin-bottom: 18px; font-size: 12px; }
+  .tcg-ordered-groups__stage { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 12px; }
+  .tcg-ordered-groups__pool { grid-column: 1 / -1; order: 0; }
+  .tcg-ordered-groups__stage[data-route-count="1"] .tcg-ordered-groups__routes > section { grid-column: 1 / -1; }
+  .tcg-ordered-groups__pool:has(.tcg-ordered-groups__complete) { display: none; }
+  .tcg-ordered-groups__hand { min-height: 0; padding: 6px; }
+  .tcg-ordered-groups header { margin-bottom: 10px; }
+  .tcg-ordered-groups__destination { min-height: 225px; }
+  .tcg-ordered-groups h3 { font-size: 12px; }
+  .tcg-ordered-groups__tools { align-items: start; margin-top: 12px; }
+  .tcg-ordered-groups .tcg-ordered-groups__end { flex-basis: 24px; }
+  .tcg-ordered-groups__end > span:last-child { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .tcg-ordered-groups .choice-token { transition: none; } }

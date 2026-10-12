@@ -82,7 +82,9 @@ for (const compact of [false, true]) {
   test(`five-card fan preserves readable spacing within available width (${compact ? "compact" : "desktop"})`, () => {
     const board = resourceBoard(createResourceStepFixture());
     const width = compact ? 700 : 1120;
-    const hand = arenaLayout(board, "player-one", compact, 0, width).filter((p) => p.hand);
+    const hand = arenaLayout(board, "player-one", compact, 0, width).filter(
+      (p) => p.hand && p.card.controller === "player-one",
+    );
     expect(hand).toHaveLength(5);
     for (let i = 1; i < hand.length; i++)
       expect(hand[i].x - hand[i - 1].x).toBeGreaterThan(((hand[i].height * 5) / 7) * 0.85);

@@ -4770,15 +4770,12 @@ export function processEffectAction(
       if (!returnToDeckContinuation) {
         const ownerOrder = [state.activeSeat, otherSeat(state.activeSeat)];
         const ownerGroups = ownerOrder
-          .map(
-            (owner): ReturnToDeckOwnerGroup => ({
-              owner,
-              targetIds: targetIds.filter(
-                (targetId) =>
-                  returnToDeckDestination(state, controller, targetId, action) === owner,
-              ),
-            }),
-          )
+          .map((owner): ReturnToDeckOwnerGroup => ({
+            owner,
+            targetIds: targetIds.filter(
+              (targetId) => returnToDeckDestination(state, controller, targetId, action) === owner,
+            ),
+          }))
           .filter((group) => group.targetIds.length > 0);
         const [firstGroup, ...remainingOwnerGroups] = ownerGroups;
         const targetChooser =

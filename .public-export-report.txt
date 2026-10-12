@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /private/tmp/tcg-sync-w41.cpkFO0/private-main
-  private commit: 2081d71d65cb301111749374f2d8055fa9f14b57
-  export branch: public-sync/2026-W41
-  generated at: 2026-10-09T08:36:50Z
+  private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
+  private commit: 688173cd76461a89f910d988544ab4f2c35c4c5c
+  export branch: public-sync/2026-W42
+  generated at: 2026-10-12T00:40:11Z
 
 Allowlisted source:
   - submodules/agnostic-simulator

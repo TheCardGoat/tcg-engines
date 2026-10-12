@@ -1,5 +1,6 @@
 import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../../simulator/useMatchIntroReady";
 import { useLocation, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import {
@@ -265,6 +266,9 @@ export function liveTitlePriority(
 
 export function LiveMatchPage() {
   const { session, error } = useSimulatorRoute();
+  useMatchIntroReady(
+    Boolean(error) || session?.phase === "preparation" || session?.phase === "cancelled",
+  );
   const location = useLocation();
   if (error) return <SimulatorRouteStatus title="Match unavailable" message={error} />;
   if (session?.phase === "cancelled") {
@@ -292,6 +296,7 @@ function LiveGamePage() {
   const gameId = simulatorRoute.gameId ?? params.gameId ?? "";
   const location = useLocation();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
+  useMatchIntroReady(clientReady && (loadState.status === "ready" || loadState.status === "error"));
   const [gatewayJoin, setGatewayJoin] = useState<GatewayJoinState | null>(null);
   const [playerConnections, setPlayerConnections] = useState<PlayerConnectionBySide>({});
   const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(

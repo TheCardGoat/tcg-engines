@@ -27,7 +27,7 @@ it("offers only white Shadowlight cards in the Clash Zone for the return cost an
   });
   const action = view.actions.find((action) => action.id === `playCard:${hand.instanceId}`);
   expect(action).toBeDefined();
-  const input = action?.inputs?.find((input) => input.id === "alternateCostCardIds");
+  const input = action?.inputs?.find((input) => input.id === "alternatePayment:0");
   if (!input || input.kind !== "entity-selection" || !action)
     throw new Error("Missing alternate cost input");
   expect(input.candidates?.map((candidate) => candidate.entity.instanceId)).toEqual([
@@ -38,7 +38,11 @@ it("offers only white Shadowlight cards in the Clash Zone for the return cost an
     stateVersion: 0,
     requestId: action.requestId,
     actionId: action.id,
-    values: { alternateCostCardIds: [target.instanceId] },
+    values: {
+      costRoute: ["alternative"],
+      "alternatePayment:0": [target.instanceId],
+      costResources: [],
+    },
   });
   const engine = new AlphaClashServerEngine(game.state, { p1: "player-one", p2: "player-two" });
   expect(
@@ -66,11 +70,13 @@ it("offers both named groups for Blink and excludes other Clash cards", () => {
   const action = view.actions.find(
     (action) => action.id === `playCard:${game.playerOne.hand(blink).instanceId}`,
   );
-  const input = action?.inputs?.find((input) => input.id === "alternateCostCardIds");
+  const input = action?.inputs?.find((input) => input.id === "alternatePayment:0");
   if (!input || input.kind !== "entity-selection") throw new Error("Missing alternate cost input");
-  expect(input.min).toBe(2);
-  expect(input.max).toBe(2);
-  expect(input.candidates?.map((candidate) => candidate.entity.instanceId)).toEqual([
+  expect(input.min).toBe(1);
+  expect(input.max).toBe(1);
+  const second = action?.inputs.find((input) => input.id === "alternatePayment:1");
+  if (second?.kind !== "entity-selection") throw new Error("Missing second payment");
+  expect([...input.candidates, ...second.candidates].map((c) => c.entity.instanceId)).toEqual([
     game.playerOne.at(bone, "clash").instanceId,
     game.playerOne.at(streak, "clash").instanceId,
   ]);

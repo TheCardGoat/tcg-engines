@@ -1,5 +1,6 @@
 import { SimulatorLiveChatProvider } from "../../../simulator/providers/live-chat-context";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../../simulator/useMatchIntroReady";
 import { useParams } from "react-router-dom";
 import type { Action, GameState, LogEntry, PlayerId } from "@tcg-engines/naruto-engine";
 import {
@@ -41,6 +42,12 @@ function NarutoLiveMatchPageContent() {
   }, [bootstrap?.match?.participants]);
   const viewer = bootstrap?.viewer.role === "player" ? playerSeat(bootstrap.game.view) : null;
   const [state, setState] = useState<GameState | null>(() => projectedState(bootstrap?.game.view));
+  useMatchIntroReady(
+    Boolean(
+      route.error ||
+        (bootstrap && (bootstrap.viewer.role !== "player" || (gameId && state && viewer))),
+    ),
+  );
   const [interactionView, setInteractionView] = useState<EngineInteractionView | null>(() =>
     parseInteractionView(bootstrap?.game.interactionView),
   );

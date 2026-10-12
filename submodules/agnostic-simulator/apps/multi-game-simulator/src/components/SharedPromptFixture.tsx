@@ -28,6 +28,8 @@ const scenarios = [
   ["spatial", "2 · Board targeting"],
   ["disabled-target", "3 · Unavailable targets"],
   ["options", "4 · Effect choices"],
+  ["colors", "4a · Color choices"],
+  ["search-many", "4b · Long choice search"],
   ["boolean", "5 · Optional effect"],
   ["ordering", "6 · Card order"],
   ["partition", "7 · Destinations"],
@@ -253,6 +255,7 @@ function FixtureBoard({
           viewerId="player"
           cards={cards}
           source={source}
+          reducedMotion={reduced}
           onInspect={(card) => {
             surface.minimize();
             inspection.inspect(card);

@@ -374,10 +374,8 @@ export const grandArchiveEffectDeclarationDecisionResolvers = {
   "announce-effect-activation": resolveGrandArchiveEffectActivationAnnouncementDecision,
   "announce-effect-attack": resolveGrandArchiveEffectAttackAnnouncementDecision,
 } satisfies {
-  readonly [
-    Kind in
-      | "announce-effect-materialization"
-      | "announce-effect-activation"
-      | "announce-effect-attack"
-  ]: GrandArchiveDecisionResolver<Kind>;
+  readonly [Kind in
+    | "announce-effect-materialization"
+    | "announce-effect-activation"
+    | "announce-effect-attack"]: GrandArchiveDecisionResolver<Kind>;
 };

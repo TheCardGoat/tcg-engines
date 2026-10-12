@@ -1151,9 +1151,9 @@ describe("Grand Archive shared hands", () => {
     fireEvent.click(cardButton(ids[0]!));
     expect(submit).not.toHaveBeenCalled();
     fireEvent.click(cardButton(ids[1]!));
-    await screen.findByRole("radio", { name: "Second mode" });
+    await screen.findByRole("button", { name: "Second mode" });
     expect(submit).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("radio", { name: "Second mode" }));
+    fireEvent.click(screen.getByRole("button", { name: "Second mode" }));
     await waitFor(() =>
       expect(submit).toHaveBeenCalledWith(
         buildInteractionSubmission({

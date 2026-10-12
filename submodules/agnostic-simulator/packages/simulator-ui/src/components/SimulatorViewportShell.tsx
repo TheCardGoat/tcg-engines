@@ -30,6 +30,8 @@ export interface SimulatorViewportShellProps extends Omit<HTMLAttributes<HTMLEle
   readonly mobileTopRail?: ReactNode | ((controls: SimulatorViewportShellControls) => ReactNode);
   readonly mobileBottomRail?: ReactNode | ((controls: SimulatorViewportShellControls) => ReactNode);
   readonly defaultSidebarOpen?: boolean;
+  /** Float supplied rails over a full-height board on compact landscape screens. */
+  readonly mobileChrome?: "rails" | "overlay";
   readonly mobileBreakpoint?: number;
   readonly shortViewportBreakpoint?: number;
   /** Explicitly chooses a layout for deterministic visual fixtures and tests. */
@@ -109,6 +111,7 @@ export function SimulatorViewportShell({
   mobileTopRail,
   mobileBottomRail,
   defaultSidebarOpen = true,
+  mobileChrome = "rails",
   mobileBreakpoint = 767,
   shortViewportBreakpoint = 520,
   layoutOverride,
@@ -121,6 +124,7 @@ export function SimulatorViewportShell({
 }: SimulatorViewportShellProps) {
   const responsiveLayout = useActiveLayout(mobileBreakpoint, {
     shortViewportBreakpoint,
+    shortViewportWidthBreakpoint: 1024,
     coarsePointerShortViewport: true,
   });
   const layout = layoutOverride ?? responsiveLayout;
@@ -225,7 +229,12 @@ export function SimulatorViewportShell({
         <ViewportRailContext.Provider value={railHosts}>
           <main
             {...rootProps}
-            className={cx(classes.root, classes.mobile, className)}
+            className={cx(
+              classes.root,
+              classes.mobile,
+              mobileChrome === "overlay" && classes.mobileOverlay,
+              className,
+            )}
             data-active-shell="true"
             data-layout="mobile"
           >

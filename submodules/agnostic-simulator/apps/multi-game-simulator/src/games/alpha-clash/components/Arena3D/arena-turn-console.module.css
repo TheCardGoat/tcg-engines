@@ -1,0 +1,311 @@
+.console {
+  --signal: #9aeeff;
+  --gold: #f3d298;
+  --muted: #bbcad2;
+  position: relative;
+  isolation: isolate;
+  width: 248px;
+  max-width: 100%;
+  color: #eef5f7;
+  font-family: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  filter: drop-shadow(0 2px 3px #000c);
+}
+.console *,
+.console *::before,
+.console *::after {
+  box-sizing: border-box;
+}
+.track {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(5, 44px);
+  justify-content: end;
+  width: 220px;
+  margin-left: auto;
+  height: 58px;
+}
+.track::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, #6f8a9a30, #6f8a9a80 50%, #6f8a9a30);
+  box-shadow: 0 1px #0009;
+  pointer-events: none;
+}
+.phaseNode {
+  pointer-events: auto;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+  min-width: 44px;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  border-radius: 5px;
+  cursor: help;
+}
+.socket {
+  display: grid;
+  position: relative;
+  flex-shrink: 0;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background:
+    radial-gradient(ellipse at 45% 0%, #2b3e4c, #101d28 75%) padding-box,
+    linear-gradient(150deg, #8a9fab, #314551 50%, #637886) border-box;
+  box-shadow:
+    inset 0 0 0 2px #09121bcc,
+    0 2px 3px #000a;
+  transition:
+    width 200ms ease-out,
+    height 200ms ease-out,
+    box-shadow 200ms ease-out,
+    filter 140ms;
+}
+.socket::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  border-top-color: var(--signal);
+  border-bottom-color: #8bd9e580;
+  transform: rotate(-35deg);
+  opacity: 0;
+  transition: opacity 200ms;
+  pointer-events: none;
+}
+.socket img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.82;
+  filter: drop-shadow(0 1px 1px #000b);
+  transition:
+    width 200ms ease-out,
+    height 200ms ease-out,
+    opacity 140ms;
+}
+.phaseNode:hover .socket {
+  filter: brightness(1.3);
+}
+.phaseNode[data-current] .socket {
+  width: 48px;
+  height: 48px;
+  background:
+    radial-gradient(ellipse at 45% 0%, #275267, #102735 70%) padding-box,
+    linear-gradient(155deg, #e1fbff, #62bbd1 40%, #2d6173 70%, #97e6f3) border-box;
+  box-shadow:
+    inset 0 0 0 3px #0c1d29,
+    inset 0 0 0 4px #689eb54d,
+    0 0 13px #67dffc30;
+  animation: phase-arrival 360ms ease-out;
+}
+.phaseNode[data-current] .socket::after {
+  opacity: 1;
+}
+.phaseNode[data-current] img {
+  width: 28px;
+  height: 28px;
+  opacity: 1;
+}
+@keyframes phase-arrival {
+  from {
+    filter: brightness(1.65);
+  }
+  to {
+    filter: brightness(1);
+  }
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 2px;
+  min-height: 46px;
+}
+.action {
+  pointer-events: auto;
+  display: flex;
+  position: relative;
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 0;
+  background: none;
+  color: #f6e3be;
+  font:
+    600 13px/1.2 system-ui,
+    sans-serif;
+  cursor: pointer;
+  transition:
+    filter 120ms,
+    transform 120ms;
+}
+.action::before,
+.action::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
+}
+.action::before {
+  inset: 0;
+  background: linear-gradient(170deg, #fae5a6, #8e7341 35%, #544329 60%, #d5b46c);
+}
+.action::after {
+  inset: 1px;
+  background: linear-gradient(175deg, #34434e, #182731 45%, #101b24);
+  box-shadow:
+    inset 0 1px #ffffff47,
+    inset 0 -1px #ffffff21;
+}
+.action[data-kind="clash"] {
+  color: #d7eef5;
+}
+.action[data-kind="clash"]::before {
+  background: linear-gradient(170deg, #afc7d1, #465e6d 40%, #21333d 65%, #8198a3);
+}
+.action:hover:not([aria-disabled="true"]) {
+  filter: brightness(1.2);
+}
+.action:active:not([aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+.action[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.console button:focus-visible {
+  outline: 2px solid #f2db99;
+  outline-offset: 3px;
+}
+.waiting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b7c7cf;
+  font:
+    12px/1.4 system-ui,
+    sans-serif;
+}
+.help {
+  color: #edf5f7;
+  background: #13212c;
+  border-color: #526877;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+}
+.help strong {
+  color: #c5f3ff;
+  font-size: 13px;
+}
+.help p {
+  margin: 5px 0 8px;
+}
+.help small {
+  color: #a6b8c3;
+  font-size: 11px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.console[data-reduced-motion] .phaseNode .socket,
+.console[data-reduced-motion] *,
+.console[data-reduced-motion] *::before,
+.console[data-reduced-motion] *::after {
+  animation: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .console .phaseNode .socket,
+  .console *,
+  .console *::before,
+  .console *::after {
+    animation: none;
+    transition: none;
+  }
+}
+@media (max-width: 420px) {
+  .action {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+}
+
+.tooltip {
+  max-width: min(260px, calc(100vw - 24px));
+  background: #13212c;
+  border: 1px solid #526877;
+  color: #e4f3f8;
+  font:
+    11px/1.45 system-ui,
+    sans-serif;
+  white-space: normal;
+  box-shadow: 0 3px 12px #0009;
+}
+
+/* The compact board's deck and Oblivion targets occupy the band above actions. */
+@media (max-height: 550px) {
+  .track {
+    margin-bottom: 32px;
+  }
+}
+
+.combatMessage {
+  margin: 2px 0 8px;
+  padding: 9px 11px;
+  border-left: 2px solid #ef9867;
+  border-radius: 3px 7px 7px 3px;
+  background: linear-gradient(110deg, #231c18f5, #101a22ef);
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: left;
+}
+.combatMessage strong {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  color: #ffe0b4;
+  font-weight: 600;
+}
+.combatMessage svg {
+  flex: none;
+  margin-top: 2px;
+}
+.combatMessage span {
+  display: block;
+  margin-top: 4px;
+  color: #c2cbd0;
+}

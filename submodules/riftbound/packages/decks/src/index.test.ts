@@ -7,6 +7,7 @@ import type {
   RiftboundDeckDocument,
 } from "@tcg/riftbound-types";
 import {
+  matchesRiftboundLegendDomains,
   flattenRiftboundDeckBoards,
   inspectRiftboundDeckStructure,
   inspectRiftboundDeckRegistration,
@@ -20,6 +21,33 @@ import {
   serializeRiftboundDeckJson,
   serializeRiftboundDeckText,
 } from "./index.ts";
+
+describe("Legend domain catalog filtering", () => {
+  const legend = { domains: ["fury", "body"] };
+  it("shows all cards before a Legend is selected and keeps replacement Legends visible", () => {
+    expect(matchesRiftboundLegendDomains({ cardType: "Unit", domains: ["mind"] }, null)).toBe(true);
+    expect(
+      matchesRiftboundLegendDomains({ cardType: "Champion Legend", domains: ["mind"] }, legend),
+    ).toBe(true);
+  });
+  it("allows domainless and matching cards but requires every domain on a multicolor card", () => {
+    expect(matchesRiftboundLegendDomains({ cardType: "Battlefield", domains: [] }, legend)).toBe(
+      true,
+    );
+    expect(matchesRiftboundLegendDomains({ cardType: "Rune", domains: ["fury"] }, legend)).toBe(
+      true,
+    );
+    expect(
+      matchesRiftboundLegendDomains({ cardType: "Spell", domains: ["fury", "body"] }, legend),
+    ).toBe(true);
+    expect(
+      matchesRiftboundLegendDomains({ cardType: "Spell", domains: ["fury", "mind"] }, legend),
+    ).toBe(false);
+    expect(matchesRiftboundLegendDomains({ cardType: "Rune", domains: ["mind"] }, legend)).toBe(
+      false,
+    );
+  });
+});
 
 function card(
   canonicalId: string,

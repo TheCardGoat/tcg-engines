@@ -3,7 +3,7 @@
 import { act, type ReactElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, test } from "vite-plus/test";
+import { describe, expect, test, vi } from "vite-plus/test";
 
 import {
   MobileBattlefieldLane,
@@ -13,6 +13,18 @@ import {
   MobilePortraitBoard,
   MobileZoneInventoryPopover,
 } from "./MobilePortraitBoard";
+
+// jsdom does not implement matchMedia; scroll-cue clicks read the
+// reduced-motion preference when they scroll the lane.
+Object.defineProperty(window, "matchMedia", {
+  configurable: true,
+  value: vi.fn((query: string) => ({
+    matches: false,
+    media: query,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  })),
+});
 
 describe("mobile portrait board primitives", () => {
   test("renders the portrait board slots in rail-to-hand order", () => {

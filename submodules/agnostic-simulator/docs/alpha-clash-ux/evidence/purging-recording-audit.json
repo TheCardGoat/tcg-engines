@@ -1,0 +1,36 @@
+{
+  "normal": {
+    "file": "purging-native-audio.mp4",
+    "capturedFrames": 156,
+    "audioDurationSeconds": 11.1,
+    "peak": 0.19363091886043549,
+    "rms": 0.00629801270104024,
+    "peakDbFS": -14.260505872542343,
+    "rmsDbFS": -44.015929357361586,
+    "audioOffsetSeconds": 0.019824981689453125,
+    "masterGain": 0.5625,
+    "viewport": "1366x768",
+    "limitations": [
+      "CDP screencast is not a 60 FPS measurement",
+      "Signal metrics do not prove perceptual mix quality",
+      "Capture begins at opponent target confirmation after selecting the activation discard"
+    ]
+  },
+  "mutedReduced": {
+    "file": "purging-native-muted-reduced.mp4",
+    "capturedFrames": 50,
+    "audioDurationSeconds": 8.22,
+    "peak": 0.0,
+    "rms": 0.0,
+    "peakDbFS": null,
+    "rmsDbFS": null,
+    "audioOffsetSeconds": 0.028056859970092773,
+    "masterGain": 0,
+    "viewport": "1366x768",
+    "limitations": [
+      "CDP screencast is not a 60 FPS measurement",
+      "Signal metrics do not prove perceptual mix quality",
+      "Capture begins at opponent target confirmation after selecting the activation discard"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 import { omitUnmountedEntityStateChanges, projectV2CardOrientation } from "./v2-card-orientation";
 import { EffectConnectionsContext } from "@tcg/simulator-ui";
-import { useSearchParams } from "react-router";
+import { useCyberpunkUiV2 } from "../components/BoardV2/uiVersion";
 import { ProgramDataStreams } from "./DataStreamTargeting";
 import type { AnimationPlanV2, SimulatorAudioCueId } from "@tcg/protocol";
 import type { DieType } from "@tcg/cyberpunk-types";
@@ -89,8 +89,7 @@ export function CyberpunkSharedAnimationLayer({
   commandGate: SimulatorExternalCommandGate;
 }) {
   const { humanSide, matchState } = useEngine();
-  const [params] = useSearchParams();
-  const isV2 = params.get("ui") === "v2";
+  const isV2 = useCyberpunkUiV2();
   const visual = useCyberpunkVisualSelection();
   const auth = useSimulatorAuth();
   const boardRuntime = useCyberpunkBoardRuntime();

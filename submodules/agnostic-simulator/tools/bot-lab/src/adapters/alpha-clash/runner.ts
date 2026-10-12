@@ -12,12 +12,12 @@ import {
   type MatchState,
 } from "../../../../../../alpha-clash/packages/engine/src/index.ts";
 import { alphaClashBotCommandCandidates } from "../../../../../packages/alpha-clash/alpha-clash-server-adapter/src/bot.ts";
-import { clashStepSeat } from "../../../../../packages/alpha-clash/alpha-clash-server-adapter/src/alpha-clash-server-engine.ts";
+import { alphaClashDecisionSeat } from "@tcg/alpha-clash-server-adapter";
 import {
   alphaClashHeuristicCommand,
   ALPHA_CLASH_HEURISTICS,
   type AlphaClashHeuristics,
-} from "./policy.ts";
+} from "@tcg/alpha-clash-server-adapter/practice";
 import { candidateWinner } from "../shared.ts";
 
 export interface AlphaClashRunInput {
@@ -68,7 +68,11 @@ export function runAlphaClashPracticeMatch(input: AlphaClashRunInput): BotMatchR
       termination = "repeated-state";
       break;
     }
-    const seat = clashStepSeat(state) ?? state.activePlayer;
+    const seat = alphaClashDecisionSeat(state);
+    if (!seat) {
+      termination = "illegal-command";
+      break;
+    }
     const isCandidate = (seat === "player-one") === candidateIsP1;
     const strategyId =
       (isCandidate ? input.candidateStrategyId : input.baselineStrategyId) ?? "practice-v1";

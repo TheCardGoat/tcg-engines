@@ -31,8 +31,7 @@ it("offers a discard selection only to the affected player and dispatches the ch
     playerOne: { hand: [spell] },
     playerTwo: { hand: [cheap, other] },
   });
-  const played = game.playerOne.play(spell);
-  game.playerTwo.pass();
+  const played = game.playerOne.playAndResolve(spell);
   const engine = new AlphaClashServerEngine(game.state, { p1: "player-one", p2: "player-two" });
   const choice = game.state.pendingChoices[0];
   const ownView = buildAlphaClashInteractionView({

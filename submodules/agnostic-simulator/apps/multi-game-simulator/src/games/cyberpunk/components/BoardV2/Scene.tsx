@@ -380,8 +380,9 @@ function CardMesh({
             roughness={0.62}
           />
         </mesh>
-        <mesh position={[0, 0, 2]} receiveShadow geometry={faceGeometry}>
-          <meshStandardMaterial map={texture} roughness={0.86} metalness={0.03} color="#dedede" />
+        <mesh position={[0, 0, 2]} geometry={faceGeometry}>
+          {/* Printed art keeps its source colors, like the DOM cards in hand. */}
+          <meshBasicMaterial map={texture} toneMapped={false} />
         </mesh>
         {placed.lane === "field" && placed.card.spent && (
           <mesh position={[0, 0, 2.1]} geometry={faceGeometry}>

@@ -1175,15 +1175,17 @@ export function proposeGrandArchiveAttackDeclaration(
     ...weaponActionResultEvents(
       weaponParticipations.flatMap((participation) => participation.useWeaponRules),
     ),
-    ...loadedCards.map((loadedCard): GrandArchiveProposedEvent => ({
-      type: "object-moved",
-      objectId: loadedCard.id,
-      from: "loaded",
-      to: "intent",
-      hostId: attacker.id,
-      actorId: playerId,
-      cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
-    })),
+    ...loadedCards.map(
+      (loadedCard): GrandArchiveProposedEvent => ({
+        type: "object-moved",
+        objectId: loadedCard.id,
+        from: "loaded",
+        to: "intent",
+        hostId: attacker.id,
+        actorId: playerId,
+        cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
+      }),
+    ),
     ...(options.resolvedAttack || effectGranted
       ? []
       : [
@@ -1196,14 +1198,16 @@ export function proposeGrandArchiveAttackDeclaration(
             cause: declarationCause,
           },
         ]),
-    ...weapons.map((weapon): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: weapon.id,
-      state: "wielded",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...weapons.map(
+      (weapon): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: weapon.id,
+        state: "wielded",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "object-state-changed",
       objectId: attacker.id,
@@ -1212,14 +1216,16 @@ export function proposeGrandArchiveAttackDeclaration(
       actorId: playerId,
       cause: declarationCause,
     },
-    ...targets.map((target): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: target.id,
-      state: "defending",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...targets.map(
+      (target): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: target.id,
+        state: "defending",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "combat-started",
       combat,
@@ -1593,14 +1599,16 @@ export function proposeGrandArchiveCombatDamage(
     ...damageEvents
       .filter((pending) => pending.amount > 0)
       .map((pending) => proposedDamageEvent(pending, pending.amount)),
-    ...spentWeaponIds.map((objectId): GrandArchiveProposedEvent => ({
-      type: "counter-changed",
-      objectId,
-      counter: "durability",
-      delta: -1,
-      actorId: combat.attackingPlayerId,
-      cause: { kind: "rule", rule: "wielded-weapon-durability" },
-    })),
+    ...spentWeaponIds.map(
+      (objectId): GrandArchiveProposedEvent => ({
+        type: "counter-changed",
+        objectId,
+        counter: "durability",
+        delta: -1,
+        actorId: combat.attackingPlayerId,
+        cause: { kind: "rule", rule: "wielded-weapon-durability" },
+      }),
+    ),
     {
       type: "combat-step-changed",
       step: "end",

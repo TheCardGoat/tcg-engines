@@ -15,9 +15,12 @@ import {
   containsUnparsed,
   resolveAlphaClashLabDeck,
   type AlphaClashLabDeck,
-} from "./alpha-clash/decks.ts";
+} from "@tcg/alpha-clash-server-adapter/practice";
 import { runAlphaClashPracticeMatch } from "./alpha-clash/runner.ts";
-import { alphaClashHeuristicCommand, ALPHA_CLASH_HEURISTICS } from "./alpha-clash/policy.ts";
+import {
+  alphaClashHeuristicCommand,
+  ALPHA_CLASH_HEURISTICS,
+} from "@tcg/alpha-clash-server-adapter/practice";
 import { Spec } from "../../../../../alpha-clash/packages/engine/src/testing/index.ts";
 import { applyCommand } from "../../../../../alpha-clash/packages/engine/src/index.ts";
 
@@ -81,7 +84,7 @@ describe("Alpha Clash BotLab", () => {
     expect(containsUnparsed({ text: "The word unparsed in printed text is inert." })).toBe(false);
     const fixture = previewFixture();
     const catalog = allCards().map((card) =>
-      card.id === titan.id
+      card.cardType === "contender" && card.id === titan.id
         ? { ...card, abilities: [{ kind: "unparsed" as const, text: "missing behavior" }] }
         : card,
     );

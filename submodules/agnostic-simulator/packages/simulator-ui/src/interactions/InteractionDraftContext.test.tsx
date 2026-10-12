@@ -682,3 +682,100 @@ describe("InteractionDraftProvider", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 });
+
+it("resets private selections on actor change without remounting the board subtree", () => {
+  const mounted = vi.fn();
+  const onSubmit = vi.fn(() => true);
+  function PersistentBoard() {
+    const draft = useInteractionDraft();
+    useEffect(() => {
+      mounted();
+    }, []);
+    return (
+      <>
+        <button
+          onClick={() => {
+            draft.begin("activateAbility");
+          }}
+        >
+          Begin
+        </button>
+        <button
+          onClick={() => {
+            draft.change("effectIndex", ["0"]);
+            draft.change("targets", ["command-1"]);
+          }}
+        >
+          Select
+        </button>
+        <output>{JSON.stringify(draft.values)}</output>
+      </>
+    );
+  }
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  const element = (actorId: string) => (
+    <InteractionDraftProvider view={{ ...view, actorId }} onSubmit={onSubmit}>
+      <PersistentBoard />
+    </InteractionDraftProvider>
+  );
+  act(() => {
+    root?.render(element("p1"));
+  });
+  act(() => {
+    container!.querySelectorAll("button")[0]!.click();
+  });
+  act(() => {
+    container!.querySelectorAll("button")[1]!.click();
+  });
+  expect(container.querySelector("output")?.textContent).toContain("command-1");
+  act(() => {
+    root?.render(element("p2"));
+  });
+  expect(container.querySelector("output")?.textContent).toBe("{}");
+  expect(mounted).toHaveBeenCalledOnce();
+  expect(onSubmit).not.toHaveBeenCalled();
+});
+
+it("retains a forced trailing option while earlier player input changes", () => {
+  const action = partitionView.actions[0]!;
+  const fixedOption = view.actions[0]!.inputs[0]!;
+  if (fixedOption.kind !== "option-selection") throw new Error("Expected fixed option");
+  const state = {
+    ...partitionView,
+    actions: [{ ...action, inputs: [...action.inputs, { ...fixedOption, implicit: true }] }],
+  };
+  const submit = vi.fn(() => true);
+  function Choice() {
+    const draft = useInteractionDraft();
+    return (
+      <>
+        <button onClick={() => draft.begin(action.id)}>Begin</button>
+        <button onClick={() => draft.change("partition", { discard: ["card-a"], keep: [] })}>
+          Choose
+        </button>
+        <button onClick={draft.confirmCurrent}>Confirm</button>
+      </>
+    );
+  }
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  act(() =>
+    root!.render(
+      <InteractionDraftProvider view={state} onSubmit={submit}>
+        <Choice />
+      </InteractionDraftProvider>,
+    ),
+  );
+  for (const button of container.querySelectorAll("button")) act(() => button.click());
+  expect(submit).toHaveBeenCalledExactlyOnceWith(
+    expect.objectContaining({
+      values: {
+        partition: { discard: ["card-a"], keep: [] },
+        effectIndex: ["0"],
+      },
+    }),
+  );
+});
