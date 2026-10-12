@@ -5,22 +5,28 @@ import type { SimulatorRendererProps } from "@tcg/simulator-contract";
 import { CyberpunkBoard } from "../CyberpunkBoard";
 import { MatchViewportV2 } from "./MatchViewportV2";
 import classes from "./version.module.css";
+import {
+  readCyberpunkUiPreference,
+  saveCyberpunkUiPreference,
+  useCyberpunkUiV2,
+} from "./uiVersion";
+export { useCyberpunkUiV2 } from "./uiVersion";
 const V2 = lazy(() => import("./CyberpunkBoardV2"));
-export function useCyberpunkUiV2() {
-  const [params] = useSearchParams();
-  return params.get("ui") === "v2";
-}
 export function useCyberpunkUiVersion() {
   const [params] = useSearchParams();
+  const isV2 = useCyberpunkUiV2();
   const navigate = useNavigate();
   const { hash } = useLocation();
   return {
-    isV2: params.get("ui") === "v2",
+    isV2,
     setVersion: (version: "v1" | "v2") => {
+      saveCyberpunkUiPreference(version);
       const next = new URLSearchParams(params);
       if (version === "v2") next.set("ui", "v2");
+      // If saving V1 fails, override an existing V2 preference for this game.
+      else if (readCyberpunkUiPreference() === "v2") next.set("ui", "v1");
       else next.delete("ui");
-      navigate(
+      void navigate(
         { search: next.toString() ? `?${next}` : "", hash },
         { replace: true, preventScrollReset: true },
       );
@@ -63,7 +69,7 @@ class V2Boundary extends Component<{ children: ReactNode }, { failed: boolean }>
     );
   }
 }
-/** V1 is the default. Changing presentation does not remount EngineProvider. */
+/** Use the saved preference. Changing presentation does not remount EngineProvider. */
 function RoutedBoard(props: SimulatorRendererProps) {
   const v2 = useCyberpunkUiV2();
   if (!v2) return <CyberpunkBoard {...props} />;
@@ -82,7 +88,7 @@ function RoutedBoard(props: SimulatorRendererProps) {
   );
 }
 
-/** Standalone boards (tests and embeds) keep V1. V2 is an explicit route option. */
+/** Standalone boards (tests and embeds) keep V1. Routed boards use the preference. */
 export function CyberpunkVersionedBoard(props: SimulatorRendererProps) {
   return useInRouterContext() ? <RoutedBoard {...props} /> : <CyberpunkBoard {...props} />;
 }

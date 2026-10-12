@@ -54,7 +54,11 @@ describe("Grand Archive counter projection", () => {
       { label: "charge", value: "12" },
       { label: "Preparation", value: "2" },
     ]);
-    expect(direct.decorations?.map((entry) => entry.id)).toEqual([
+    expect(
+      direct.decorations
+        ?.filter((entry) => entry.id.startsWith("ga:counter:"))
+        .map((entry) => entry.id),
+    ).toEqual([
       "ga:counter:damage",
       "ga:counter:buff",
       "ga:counter:durability",
@@ -66,7 +70,9 @@ describe("Grand Archive counter projection", () => {
     expect(
       direct.decorations?.find((entry) => entry.id === "ga:counter:named:charge")?.ariaLabel,
     ).toBe("charge: 12. Card-defined counter.");
-    expect(direct.decorations?.at(-1)?.ariaLabel).toBe(
+    expect(
+      direct.decorations?.find((entry) => entry.id === "ga:counter:preparation")?.ariaLabel,
+    ).toBe(
       "Preparation: 2. May be paid as an additional cost when activating a card with Prepare; distinct from the Prepared state.",
     );
     expect(

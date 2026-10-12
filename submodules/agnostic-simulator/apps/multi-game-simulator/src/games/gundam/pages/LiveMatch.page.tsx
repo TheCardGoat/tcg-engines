@@ -7,6 +7,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
+import { useMatchIntroReady } from "../../../simulator/useMatchIntroReady";
 import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 import type { PendingProposal, ServerToClientEvents } from "@tcg/protocol";
@@ -181,6 +182,7 @@ export function LiveMatchPage() {
   const searchString = useMemo(() => `?${search.toString()}`, [search]);
 
   const [loadState, setLoadState] = useState<LoadState>({ status: "idle" });
+  useMatchIntroReady(loadState.status === "ready" || loadState.status === "error");
   const liveView = loadState.status === "ready" ? loadState.view : null;
   const control =
     liveView?.state && simulatorRoute.matchPageData?.viewer.role === "player"

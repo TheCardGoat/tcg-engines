@@ -1,3 +1,4 @@
+import { CardReference, type CardIdentityMarker } from "./CardReference";
 import { Modal } from "@mantine/core";
 import { useEffect, useState, type ReactNode } from "react";
 import { selectionVariables } from "./card-selection";
@@ -7,15 +8,55 @@ export interface TargetCard {
   id: string;
   label: string;
   imageUrl?: string;
+  identity?: readonly CardIdentityMarker[];
   detail?: string;
   aspectRatio?: number;
   group?: string;
   enabled?: boolean;
   disabledReason?: string;
+  /** Cards sharing a stackKey are fungible copies; the modal shows one tile with a count. */
+  stackKey?: string;
+}
+
+type StackedCard<T extends TargetCard> = T & {
+  stackCount: number;
+  stackSelected: boolean;
+};
+
+/** Collapse fungible copies into representative tiles while preserving first-seen order. */
+function stackTargetCards<T extends TargetCard>(
+  cards: readonly T[],
+  selectedIds?: ReadonlySet<string>,
+): Array<StackedCard<T>> {
+  const byKey = new Map<string, StackedCard<T>>();
+  const out: Array<StackedCard<T>> = [];
+  for (const card of cards) {
+    const selected = selectedIds?.has(card.id) === true;
+    if (!card.stackKey) {
+      out.push({ ...card, stackCount: 1, stackSelected: selected });
+      continue;
+    }
+    const key = `${card.group ?? ""}|${card.stackKey}`;
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.stackCount += 1;
+      existing.stackSelected ||= selected;
+      continue;
+    }
+    const stacked = { ...card, stackCount: 1, stackSelected: selected };
+    byKey.set(key, stacked);
+    out.push(stacked);
+  }
+  return out;
 }
 /** Only pass viewer-safe cards. The caller owns eligibility and selection state. */
 export interface TargetModalProps<T extends TargetCard> {
   opened: boolean;
+  returnFocus?: boolean;
+  /** Optional game theme for this modal only. */
+  className?: string;
+  fullScreen?: boolean;
+  presentation?: "dialog" | "tray" | "focus";
   title: string;
   cards: readonly T[];
   filter?: (card: T) => boolean;
@@ -32,6 +73,7 @@ export interface TargetModalProps<T extends TargetCard> {
   summary?: string;
   closeLabel?: string;
   locked?: boolean;
+  reducedMotion?: boolean;
   onInspect?: (card: T) => void;
 }
 export function filterTargetCards<T extends TargetCard>(
@@ -42,6 +84,10 @@ export function filterTargetCards<T extends TargetCard>(
 }
 export function TargetModal<T extends TargetCard>({
   opened,
+  returnFocus = true,
+  className,
+  fullScreen = false,
+  presentation = "dialog",
   title,
   cards,
   filter,
@@ -58,10 +104,12 @@ export function TargetModal<T extends TargetCard>({
   summary,
   closeLabel,
   locked = false,
+  reducedMotion = false,
   onInspect,
 }: TargetModalProps<T>) {
   const results = filterTargetCards(cards, filter);
   const [query, setQuery] = useState("");
+  const [grouped, setGrouped] = useState(true);
   useEffect(() => {
     setQuery("");
   }, [opened, title]);
@@ -70,18 +118,48 @@ export function TargetModal<T extends TargetCard>({
       .toLocaleLowerCase()
       .includes(query.trim().toLocaleLowerCase()),
   );
+  const hasStacks = visible.some((card) => card.stackKey);
+  const stacked = stackTargetCards(
+    grouped ? visible : visible.map((card) => ({ ...card, stackKey: undefined })),
+    selectedIds,
+  );
   return (
     <Modal
       opened={opened}
+      returnFocus={returnFocus}
+      fullScreen={fullScreen}
       onClose={onClose}
       title={title}
-      centered
-      size={results.length || content ? "min(1100px, 94vw)" : 440}
+      centered={presentation !== "tray"}
+      withOverlay={presentation !== "tray"}
+      trapFocus={presentation !== "tray"}
+      closeOnClickOutside={presentation === "dialog"}
+      lockScroll={presentation !== "tray"}
+      size={
+        presentation === "focus" ? "100%" : results.length || content ? "min(1100px, 94vw)" : 440
+      }
       closeButtonProps={{ "aria-label": closeLabel ?? "Close cards and targets" }}
-      overlayProps={{ backgroundOpacity: 0.55, color: "#040a10" }}
-      transitionProps={{ transition: "fade", duration: 160 }}
+      overlayProps={{
+        backgroundOpacity: presentation === "focus" ? 0.8 : 0.55,
+        color: "#040a10",
+        blur: presentation === "focus" ? 3 : 0,
+      }}
+      transitionProps={{ transition: "fade", duration: reducedMotion ? 0 : 160 }}
       classNames={{
-        content: "tcg-target",
+        inner:
+          presentation === "tray"
+            ? "tcg-target-tray__inner"
+            : presentation === "focus"
+              ? "tcg-target-focus__inner"
+              : undefined,
+        content: [
+          "tcg-target",
+          presentation === "tray" && "tcg-target-tray",
+          presentation === "focus" && "tcg-target-focus",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" "),
         header: "tcg-target__header",
         title: "tcg-target__title",
         close: "tcg-target__close",
@@ -89,14 +167,20 @@ export function TargetModal<T extends TargetCard>({
       }}
     >
       {source && (
-        <div className="tcg-target__source">
-          {source.imageUrl && <img src={source.imageUrl} alt="" />}
-          <div>
+        <figure className="tcg-target__source">
+          {source.imageUrl && (
+            <span className="tcg-target__source-frame">
+              <img src={source.imageUrl} alt="" />
+            </span>
+          )}
+          <figcaption>
             <small>Resolving</small>
-            <strong>{source.label}</strong>
+            <strong>
+              <CardReference card={source} />
+            </strong>
             {source.detail && <p>{source.detail}</p>}
-          </div>
-        </div>
+          </figcaption>
+        </figure>
       )}
       <div className="tcg-target__summary">
         <span>
@@ -108,52 +192,59 @@ export function TargetModal<T extends TargetCard>({
             </>
           )}
         </span>
+        {hasStacks && (
+          <div className="tcg-target__stack-toggle" role="group" aria-label="Group identical cards">
+            <button type="button" aria-pressed={grouped} onClick={() => setGrouped(true)}>
+              Grouped
+            </button>
+            <button type="button" aria-pressed={!grouped} onClick={() => setGrouped(false)}>
+              All copies
+            </button>
+          </div>
+        )}
         {description && <p>{description}</p>}
       </div>
-      {results.length > 8 && (
-        <input
-          className="tcg-target__search"
-          aria-label="Find a card"
-          placeholder="Find a card…"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      )}
       {content ??
         (visible.length ? (
           <div className="tcg-target__groups" style={selectionVariables}>
-            {[...new Set(visible.map((card) => card.group ?? ""))].map((group) => (
-              <section
-                key={group}
-                aria-label={group || "Candidates"}
-                style={{
-                  flexBasis:
-                    Math.min(5, visible.filter((card) => (card.group ?? "") === group).length) *
-                      176 +
-                    32,
-                }}
-              >
-                {group && <h3>{group}</h3>}
-                <div className="tcg-target__cards">
-                  {visible
-                    .filter((card) => (card.group ?? "") === group)
-                    .map((card) => (
+            {[...new Set(stacked.map((card) => card.group ?? ""))].map((group) => {
+              const tiles = stacked.filter((card) => (card.group ?? "") === group);
+              const copies = visible.filter((card) => (card.group ?? "") === group).length;
+              return (
+                <section
+                  key={group}
+                  aria-label={group || "Candidates"}
+                  style={{ flexBasis: Math.min(5, tiles.length) * 176 + 32 }}
+                >
+                  {group && (
+                    <h3>
+                      {group}
+                      {copies > tiles.length ? ` · ${copies} cards` : ""}
+                    </h3>
+                  )}
+                  <div className="tcg-target__cards">
+                    {tiles.map((card) => (
                       <div className="tcg-target__candidate" key={card.id}>
                         <button
                           type="button"
                           className="tcg-target__card"
-                          aria-label={`${mode === "select" ? "Select" : "Inspect"} ${card.label}${card.disabledReason ? `. ${card.disabledReason}` : ""}`}
-                          aria-pressed={
-                            mode === "select" ? selectedIds?.has(card.id) === true : undefined
-                          }
+                          aria-label={`${mode === "select" ? "Select" : "Inspect"} ${card.label}${
+                            card.stackCount > 1 ? ` (1 of ${card.stackCount} copies)` : ""
+                          }${card.disabledReason ? `. ${card.disabledReason}` : ""}`}
+                          aria-pressed={mode === "select" ? card.stackSelected : undefined}
                           aria-disabled={locked || card.enabled === false || undefined}
-                          data-selected={selectedIds?.has(card.id) || undefined}
+                          data-selected={card.stackSelected || undefined}
                           onClick={() => {
                             if (!locked && card.enabled !== false) onCard(card);
                           }}
                           style={{ aspectRatio: card.aspectRatio ?? 5 / 7 }}
                         >
                           <TargetArtwork card={card} />
+                          {card.stackCount > 1 && (
+                            <span className="tcg-target__stack-count" aria-hidden="true">
+                              ×{card.stackCount}
+                            </span>
+                          )}
                           {selectionOrder?.includes(card.id) && (
                             <span
                               className="tcg-target__order"
@@ -163,6 +254,9 @@ export function TargetModal<T extends TargetCard>({
                             </span>
                           )}
                         </button>
+                        <span className="tcg-target__candidate-label" aria-hidden="true">
+                          {card.label}
+                        </span>
                         {card.enabled === false && (
                           <small className="tcg-target__reason">
                             {card.disabledReason ?? "Unavailable"}
@@ -180,9 +274,10 @@ export function TargetModal<T extends TargetCard>({
                         )}
                       </div>
                     ))}
-                </div>
-              </section>
-            ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         ) : (
           <div className="tcg-target__empty" role="status">
@@ -192,6 +287,15 @@ export function TargetModal<T extends TargetCard>({
         ))}
       <footer className="tcg-target__footer">
         {footer}
+        {results.length > 8 && (
+          <input
+            className="tcg-target__search"
+            aria-label="Find a card"
+            placeholder="Find a card…"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        )}
         <button type="button" onClick={onClose}>
           {closeLabel ?? (mode === "select" ? "Done" : "Return to board")} <kbd>Esc</kbd>
         </button>
@@ -237,7 +341,11 @@ export function PromptBanner({
     <section className="tcg-prompt-banner" aria-label="Current game prompt">
       {source?.imageUrl && <img src={source.imageUrl} alt="" />}
       <div className="tcg-prompt-banner__copy">
-        {source && <small>{source.label}</small>}
+        {source && (
+          <small>
+            <CardReference card={source} />
+          </small>
+        )}
         <strong>{title}</strong>
         {detail && <span>{detail}</span>}
         {status && <span role="status">{status}</span>}

@@ -1,5 +1,7 @@
 import type { AcCommand, MatchState, PlayerId } from "@tcg/alpha-clash-engine";
+import { projectState } from "@tcg/alpha-clash-engine";
 import { getCard } from "@tcg/alpha-clash-cards";
+import { openingActionFor } from "./opening";
 
 /**
  * Deterministic practice-bot policy for Alpha Clash. This is simulator
@@ -15,6 +17,12 @@ import { getCard } from "@tcg/alpha-clash-cards";
  *    start the clash when a ready attacker exists.
  */
 export function alphaClashBotCommand(state: MatchState, seat: PlayerId): AcCommand | null {
+  const firstChoice = state.pendingChoices[0];
+  const orderedByOther =
+    firstChoice?.playerId !== undefined &&
+    firstChoice.playerId !== seat &&
+    (firstChoice.kind === "ordering" || (firstChoice.kind === "modal" && firstChoice.triggerOrder));
+  if (orderedByOther) return null;
   const choice = state.pendingChoices.find((entry) => entry.playerId === seat);
   if (choice) return resolveChoiceCommand(choice);
 
@@ -26,7 +34,16 @@ export function alphaClashBotCommand(state: MatchState, seat: PlayerId): AcComma
 
   const phase = state.phase;
   if (phase.name === "setup") {
-    return { type: "startGame" };
+    switch (openingActionFor(projectState(state, seat), seat)) {
+      case "declare":
+        return { type: "declareMulligan", playerId: seat, take: false };
+      case "select":
+        return { type: "mulligan", playerId: seat, cardIds: [] };
+      case "start":
+        return { type: "startGame" };
+      case "wait":
+        return null;
+    }
   }
 
   if (state.clash) {
@@ -74,11 +91,26 @@ export function alphaClashBotCommand(state: MatchState, seat: PlayerId): AcComma
 function resolveChoiceCommand(choice: MatchState["pendingChoices"][number]): AcCommand {
   const base = { type: "resolveChoice" as const, playerId: choice.playerId, choiceId: choice.id };
   switch (choice.kind) {
+    case "ordering":
+      return { ...base, orderedIds: choice.candidates.map((candidate) => candidate.id) };
     case "option":
       // Declining is always safe for optional triggers.
       return { ...base, optionId: "no" };
-    case "modal":
+    case "modal": {
+      // A trigger order submits the controller's whole remaining order at once.
+      const order = choice.triggerOrder;
+      if (order)
+        return {
+          ...base,
+          orderedIds: order.batch
+            .filter(
+              (trigger) =>
+                trigger.controller === choice.playerId && !order.orderedIds.includes(trigger.id),
+            )
+            .map((trigger) => trigger.id),
+        };
       return { ...base, optionId: choice.options[0]?.id ?? "0" };
+    }
     case "target":
       return { ...base, optionId: choice.candidates[0] };
     case "count":
@@ -197,6 +229,10 @@ function other(seat: PlayerId): PlayerId {
 
 export function alphaClashBotCommandCandidates(state: MatchState, seat: PlayerId): AcCommand[] {
   const primary = alphaClashBotCommand(state, seat);
+  const firstChoice = state.pendingChoices[0];
+  const orderingPending =
+    firstChoice?.kind === "ordering" || (firstChoice?.kind === "modal" && firstChoice.triggerOrder);
+  if (orderingPending || state.phase.name === "setup") return primary ? [primary] : [];
   const fallbacks: AcCommand[] = [];
   if (state.phase.name === "primary" && !state.pendingChoices.length) {
     fallbacks.push({ type: "endTurn", playerId: seat });

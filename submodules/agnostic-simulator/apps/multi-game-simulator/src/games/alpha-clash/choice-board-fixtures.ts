@@ -5,7 +5,7 @@ import type {
   ChoiceAssignments,
 } from "@tcg/simulator-presentation/choice-drag";
 import type { LiveBoardCard, LiveBoardState } from "./components/board-types";
-import { cardArtwork } from "./components/Arena3D/card-artwork";
+import { cardArtwork, alphaClashCardImageUrl } from "./components/Arena3D/card-artwork";
 export const boardChoiceCases = [
   ["resources", "01 · Resources and colors"],
   ["costs", "02 · Cost routes"],
@@ -34,7 +34,7 @@ function card(
   return {
     instanceId: id,
     definitionId,
-    imageUrl: `https://tcgplayer-cdn.tcgplayer.com/product/${definition.printings[0]?.productId}_400w.jpg`,
+    imageUrl: alphaClashCardImageUrl(definitionId),
     name: definition.name,
     zone,
     controller,
@@ -47,20 +47,17 @@ function card(
 export function choiceBoard(): LiveBoardState {
   return {
     cards: [
-      ...Array.from(
-        { length: 5 },
-        (_, index): LiveBoardCard => ({
-          instanceId: `opponent-hand-${index}`,
-          definitionId: null,
-          name: null,
-          zone: "hand",
-          controller: "player-two",
-          ready: true,
-          faceDown: true,
-          clashDamage: 0,
-          phaseDamage: 0,
-        }),
-      ),
+      ...Array.from({ length: 5 }, (_, index): LiveBoardCard => ({
+        instanceId: `opponent-hand-${index}`,
+        definitionId: null,
+        name: null,
+        zone: "hand",
+        controller: "player-two",
+        ready: true,
+        faceDown: true,
+        clashDamage: 0,
+        phaseDamage: 0,
+      })),
       ...["ac-ac1-027", "ac-ac1-051", "ac-ac1-108", "ac-ac7-004"].map((id, index) =>
         card(`opponent-resource-${index}`, id, "resource", "player-two"),
       ),

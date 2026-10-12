@@ -9,6 +9,7 @@ import {
 } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
+import { isolateModal } from "../modal-isolation";
 import {
   cardInteractionStateFromFlags,
   type CardInteractionStateResolver,
@@ -187,24 +188,12 @@ export function TargetFilterModal({
     const activeElement = document.activeElement;
     previouslyFocusedRef.current = activeElement instanceof HTMLElement ? activeElement : null;
     const backdrop = backdropRef.current;
-    const backgroundStates = modalPresentation
-      ? [...document.body.children]
-          .filter(
-            (element): element is HTMLElement =>
-              element instanceof HTMLElement && element !== backdrop,
-          )
-          .map((element) => ({
-            element,
-            ariaHidden: element.getAttribute("aria-hidden"),
-            inert: element.inert,
-          }))
-      : [];
+    const restoreBackground =
+      modalPresentation && backdrop
+        ? isolateModal(backdrop, "[data-card-context-menu], [data-card-context-preview-dialog]")
+        : undefined;
 
     if (modalPresentation) {
-      for (const { element } of backgroundStates) {
-        element.inert = true;
-        element.setAttribute("aria-hidden", "true");
-      }
       dialogRef.current?.focus({ preventScroll: true });
     }
 
@@ -224,11 +213,7 @@ export function TargetFilterModal({
 
     return () => {
       if (modalPresentation) document.removeEventListener("focusin", containFocus);
-      for (const { element, ariaHidden, inert } of backgroundStates) {
-        element.inert = inert;
-        if (ariaHidden === null) element.removeAttribute("aria-hidden");
-        else element.setAttribute("aria-hidden", ariaHidden);
-      }
+      restoreBackground?.();
       const previouslyFocused = previouslyFocusedRef.current;
       if (previouslyFocused?.isConnected) previouslyFocused.focus({ preventScroll: true });
     };

@@ -1,4 +1,9 @@
-import { inputAllowsOmission } from "@tcg/protocol";
+import { isLegalNumber } from "./number-value";
+import {
+  EntityPartitionValue,
+  inputAllowsOmission,
+  isEntityAllocationComplete,
+} from "@tcg/protocol";
 import type {
   InteractionAction,
   InteractionInput,
@@ -36,7 +41,9 @@ export function resolveInteractionText(text: InteractionText): string {
 }
 
 function humanizeInteractionKey(key: string): string {
-  if (!key.includes(".")) return key;
+  // Only dotted identifiers are translation keys. Literal instructions can
+  // contain several sentences; dropping their first clauses changes meaning.
+  if (!/^[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)+$/.test(key)) return key;
   const segment = key.split(".").filter(Boolean).at(-1) ?? key;
   const words = segment
     .replace(/([a-z\d])([A-Z])/g, "$1 $2")
@@ -108,7 +115,9 @@ export function interactionCommitMode(
   input: InteractionInput,
   policy?: InteractionCommitPolicy,
 ): InteractionCommitMode {
-  if (input.kind !== "entity-selection" || input.ordered) return "confirm";
+  if ("cardDestination" in input && input.cardDestination) return "confirm";
+  if (input.confirmBeforeSubmit || input.kind !== "entity-selection" || input.ordered)
+    return "confirm";
   if (input.min === 1 && input.max === 1) return "immediate";
   if (policy?.immediateOptionalSingletons === true && input.min === 0 && input.max === 1) {
     return "immediate";
@@ -120,6 +129,16 @@ export function interactionTargetPresentation(
   input: InteractionInput | undefined,
   visibleEntityIds: ReadonlySet<string>,
 ): InteractionTargetPresentation {
+  if (input?.kind === "option-selection") {
+    const options = input.options.filter((option) => option.enabled !== false);
+    return options.length > 0 &&
+      options.every(
+        (option) =>
+          option.entity?.kind === "card" && visibleEntityIds.has(option.entity.instanceId),
+      )
+      ? "spatial"
+      : "none";
+  }
   if (
     input?.kind !== "entity-selection" &&
     input?.kind !== "ordering" &&
@@ -184,37 +203,76 @@ export function interactionInputComplete(
   if (value === undefined || value === null) return false;
   switch (input.kind) {
     case "entity-selection":
+      return Array.isArray(value) && value.length >= input.min && value.length <= input.max;
     case "option-selection":
+      if (input.presentation?.kind === "cost-slots") {
+        const slots = input.presentation.slots;
+        if (!Array.isArray(value) || value.length !== slots.length) return false;
+        const entities = value.map(
+          (id) => input.options.find((o) => o.id === id && o.enabled)?.entity?.instanceId,
+        );
+        return (
+          entities.every(Boolean) &&
+          new Set(entities).size === entities.length &&
+          value.every((id, index) => slots[index]!.optionIds.includes(id))
+        );
+      }
+      return Array.isArray(value) && value.length >= input.min && value.length <= input.max;
     case "ordering":
       return Array.isArray(value) && value.length >= input.min && value.length <= input.max;
     case "boolean":
       return typeof value === "boolean";
     case "number":
-      return typeof value === "number";
-    case "entity-partition":
-      if (typeof value !== "object" || Array.isArray(value)) return false;
-      const partition = value as Record<string, unknown>;
-      return input.routes.every((route) => {
-        const selection = partition[route.id];
-        return (
-          Array.isArray(selection) && selection.length >= route.min && selection.length <= route.max
-        );
-      });
-    case "entity-allocation": {
-      if (typeof value !== "object" || Array.isArray(value)) return false;
-      const allocation = value as Record<string, unknown>;
-      const total = input.candidates.reduce((sum, candidate) => {
-        const amount = allocation[candidate.entity.instanceId];
-        return sum + (typeof amount === "number" ? amount : 0);
-      }, 0);
-      return total >= input.totalMin && total <= input.totalMax;
+      return typeof value === "number" && isLegalNumber(value, input);
+    case "entity-partition": {
+      const parsed = EntityPartitionValue.safeParse(value);
+      if (!parsed.success) return false;
+      const partition = parsed.data;
+      const enabled = new Set(
+        input.candidates
+          .filter((candidate) => candidate.enabled !== false)
+          .map((candidate) => candidate.entity.instanceId),
+      );
+      const assigned = new Set<string>();
+      if (Object.keys(partition).some((id) => !input.routes.some((route) => route.id === id)))
+        return false;
+      let extracted = 0;
+      for (const route of input.routes) {
+        const selection = partition[route.id] ?? [];
+        if (selection.length < route.min || selection.length > route.max) return false;
+        for (const id of selection) {
+          if (
+            !enabled.has(id) ||
+            assigned.has(id) ||
+            (route.candidateIds && !route.candidateIds.includes(id))
+          )
+            return false;
+          assigned.add(id);
+        }
+        if (route.kind === "extract") extracted += selection.length;
+      }
+      if (
+        input.routes.some(
+          (route) =>
+            route.minWhenRemainingAtLeast &&
+            enabled.size - extracted >= route.minWhenRemainingAtLeast.count &&
+            (partition[route.id]?.length ?? 0) < route.minWhenRemainingAtLeast.min,
+        )
+      )
+        return false;
+      return input.assignment !== "exhaustive" || assigned.size === enabled.size;
     }
+    case "entity-allocation":
+      return isEntityAllocationComplete(input, value);
   }
 }
 
 export function interactionInputAdvancesImmediately(input: InteractionInput): boolean {
+  if ("cardDestination" in input && input.cardDestination) return false;
+  if (input.confirmBeforeSubmit) return false;
   if (input.kind === "boolean") return true;
-  if (input.kind === "option-selection") return input.min === 1 && input.max === 1;
+  if (input.kind === "option-selection")
+    return input.presentation?.kind !== "cost-slots" && input.min === 1 && input.max === 1;
   return input.kind === "entity-selection" && input.min === 1 && input.max === 1 && !input.ordered;
 }
 

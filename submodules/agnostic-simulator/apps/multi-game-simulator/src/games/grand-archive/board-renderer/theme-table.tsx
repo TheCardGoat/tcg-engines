@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from "react";
 import * as THREE from "three";
 import { cambriaGeometry } from "./composition";
+import { GRAND_ARCHIVE_ARENA } from "./layout";
 import type { BoardRect, GrandArchiveComposition, GrandArchiveTheme } from "./composition";
 
 interface Tile {
@@ -190,6 +191,15 @@ export function ThemeTable({
           roughness={0.97}
         />
       </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-1.55, 0.008, 0]}>
+        <planeGeometry args={[16.9, 0.025]} />
+        <meshBasicMaterial
+          color={theme.palette.accent}
+          transparent
+          opacity={0.28}
+          depthWrite={false}
+        />
+      </mesh>
       {theme.contract === "cambria-table-v1" ? (
         <CambriaFrame composition={composition} frame={frame} rail={housing} ornament={ornament} />
       ) : (
@@ -198,8 +208,13 @@ export function ThemeTable({
             <>
               <Frame
                 texture={frame}
-                rect={{ x: 0, y: 0, width: width - 0.12, height: height - 0.12 }}
-                cap={variant.rim}
+                rect={{
+                  x: 0,
+                  y: 0,
+                  width: GRAND_ARCHIVE_ARENA.width - 0.12,
+                  height: GRAND_ARCHIVE_ARENA.height - 0.12,
+                }}
+                cap={Math.min(variant.rim, 0.65)}
                 cut={theme.frameCut}
               />
             </>
@@ -281,39 +296,6 @@ function CambriaFrame({
 }) {
   const { width, height, mode } = composition;
   const g = cambriaGeometry(width, height, mode);
-  const parts: Tile[] = [];
-  const fw = g.frameWidth;
-  for (const bottom of [false, true])
-    parts.push({
-      x: 0,
-      z: bottom ? g.frameBottom - fw * 0.09 : -height / 2 + fw * 0.09,
-      w: fw,
-      h: fw * 0.18,
-      u: 0,
-      v: bottom ? 0.82 : 0,
-      uw: 1,
-      vh: 0.18,
-    });
-  const sideTop = -height / 2 + fw * 0.18;
-  const sideBottom = g.frameBottom - fw * 0.18;
-  const leftPart = (v: number, length: number, top: number) =>
-    parts.push({
-      x: -fw / 2 + fw * 0.09,
-      z: top + length / 2,
-      w: fw * 0.18,
-      h: length,
-      u: 0,
-      v,
-      uw: 0.18,
-      vh: length / fw,
-    });
-  leftPart(0.18, fw * 0.08, sideTop);
-  leftPart(0.74, fw * 0.08, sideBottom - fw * 0.08);
-  for (let z = sideTop + fw * 0.08; z < sideBottom - fw * 0.08 - 0.001; ) {
-    const length = Math.min(fw * 0.35, sideBottom - fw * 0.08 - z);
-    leftPart(0.3, length, z);
-    z += length;
-  }
   const railParts: Tile[] = [];
   const add = (v: number, vh: number, top: number) =>
     railParts.push({
@@ -343,11 +325,14 @@ function CambriaFrame({
   well(g.railScale * 0.125, g.bottom - g.railScale * 0.15, 0.6, 0.85);
   return (
     <group>
-      {frame
-        ? parts.map((tile, i) => (
-            <Artwork key={`frame-${i}`} texture={frame} tile={tile} y={0.04} />
-          ))
-        : null}
+      {frame ? (
+        <Frame
+          texture={frame}
+          rect={{ x: 0, y: 0, width: g.frameWidth, height: g.frameHeight }}
+          cap={0.65}
+          cut={0.18}
+        />
+      ) : null}
       {rail
         ? railParts.map((tile, i) => (
             <Artwork key={`rail-${i}`} texture={rail} tile={tile} y={0.045} />
@@ -357,15 +342,15 @@ function CambriaFrame({
         ? [0, 1, 2, 3].map((corner) => {
             const right = corner % 2 === 1;
             const bottom = corner > 1;
-            const size = mode === "compact" ? (right ? 2.1 : 3.0) : right ? 3.5 : 4.8;
+            const size = mode === "compact" ? 1 : 1.3;
             return (
               <Artwork
                 key={corner}
                 texture={ornament}
                 y={0.055}
                 tile={{
-                  x: (right ? 1 : -1) * (width / 2 - size * 0.5),
-                  z: bottom ? g.frameBottom - size * 0.5 : -height / 2 + size * 0.5,
+                  x: (right ? 1 : -1) * (g.frameWidth / 2 - size * 0.5),
+                  z: (bottom ? 1 : -1) * (g.frameHeight / 2 - size * 0.5),
                   w: size,
                   h: size,
                   u: right ? 0.5 : 0,

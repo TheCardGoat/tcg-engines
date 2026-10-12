@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { stableBotHash } from "@tcg/bot-core";
@@ -33,7 +33,7 @@ function listSourceFiles(root: string): readonly string[] {
     );
     return output
       .split("\0")
-      .filter((entry) => entry.length > 0)
+      .filter((entry) => entry.length > 0 && existsSync(join(root, entry)))
       .sort();
   } catch {
     return walkSourceFiles(root);

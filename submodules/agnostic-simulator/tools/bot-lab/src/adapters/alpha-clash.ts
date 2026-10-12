@@ -15,8 +15,9 @@ import {
   ALPHA_CLASH_META_DECKS,
   auditAlphaClashDeck,
   resolveAlphaClashLabDeck,
-} from "./alpha-clash/decks.ts";
-import { validateAlphaClashOverrides } from "./alpha-clash/policy.ts";
+  ALPHA_CLASH_RECOMMENDED_PRACTICE_STRATEGY,
+} from "@tcg/alpha-clash-server-adapter/practice";
+import { validateAlphaClashOverrides } from "@tcg/alpha-clash-server-adapter/practice";
 import { runAlphaClashPracticeMatch } from "./alpha-clash/runner.ts";
 
 const ENGINE_ROOT = fileURLToPath(
@@ -26,7 +27,7 @@ const POLICY_ROOT = fileURLToPath(
   new URL("../../../../packages/alpha-clash/alpha-clash-server-adapter/src", import.meta.url),
 );
 const STRATEGY_ID = "practice-v1";
-const DEFAULT_STRATEGY_ID = "meta-v1";
+const DEFAULT_STRATEGY_ID = ALPHA_CLASH_RECOMMENDED_PRACTICE_STRATEGY;
 const descriptor = (id: string): BotStrategyDescriptorV1 | undefined =>
   [STRATEGY_ID, "meta-v1", "meta-v2", "meta-v3"].includes(id)
     ? strategyDescriptor({
@@ -69,7 +70,7 @@ function verifyCandidate(manifest: BotCandidateManifestV1): BotStrategyDescripto
 
 export const alphaClashBotLabAdapter: BotLabAdapter = {
   game: "alpha-clash",
-  adapterVersion: "2",
+  adapterVersion: "3",
   getEngineRevision: () =>
     stableBotHash({
       engine: sourceTreeRevision(ENGINE_ROOT),

@@ -179,7 +179,13 @@ The `meta` suite preserves two published winning lists: Clarity Hyper Aggro
 both mirrors and the cross match; the shared scheduler swaps strategy seats
 and deck assignments. Sideboards are stored and audited but are not used in
 matches. Source links and exact quantities are in
-`src/adapters/alpha-clash/decks.ts`.
+`../../packages/alpha-clash/alpha-clash-server-adapter/src/practice-decks.ts`.
+
+Local Alpha Clash practice imports the same decks and heuristic through
+`@tcg/alpha-clash-server-adapter/practice`. Open
+`/alpha-clash/simulator/play/practice` to select decks and use the retained
+`meta-v1` baseline. See [local practice](../../docs/alpha-clash-local-practice.md)
+for launch parameters and validation limits.
 
 ```sh
 pnpm bot-lab doctor --game alpha-clash

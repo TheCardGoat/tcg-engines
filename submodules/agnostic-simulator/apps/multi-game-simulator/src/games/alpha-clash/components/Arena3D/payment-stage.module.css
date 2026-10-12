@@ -1,0 +1,221 @@
+/* Payment-specific controls rendered inside the shared ResolutionFocusCard
+   panel. Chrome reuses the arena's visual language: the ornate action-frame
+   asset for the primary button (--ac-action, set on the arena root) and dark
+   glass panels with gold hairlines. */
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(24, 44, 58, 0.94), rgba(7, 14, 22, 0.97));
+  border: 1px solid #d9b36a66;
+  border-radius: 4px;
+  box-shadow:
+    0 18px 44px #000c,
+    inset 0 1px 0 #ffffff14;
+  backdrop-filter: blur(6px);
+  width: max-content;
+  max-width: min(430px, 64vw);
+}
+
+/* Angled corner accents, matching the frame cut of the action buttons. */
+.panel::before,
+.panel::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #e0c37c99;
+  pointer-events: none;
+}
+
+.panel::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.panel[data-ready] {
+  border-color: #e0c37caa;
+  box-shadow:
+    0 18px 44px #000c,
+    0 0 18px #e0c37c2e,
+    inset 0 1px 0 #ffffff14;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .panel {
+    animation: panelIn 170ms ease-out;
+  }
+
+  @keyframes panelIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+}
+
+.panel[data-reduced-motion] {
+  animation: none;
+}
+
+.slots {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid #3a4a55;
+  background: radial-gradient(120% 130% at 50% 0%, #142430, #0a141d);
+  color: #cdd8dc;
+  cursor: pointer;
+}
+
+.slotEmpty {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.slotFilled {
+  border-color: #e0c37c;
+  background: radial-gradient(120% 130% at 50% 0%, #1d2a1a, #0a141d);
+  box-shadow:
+    0 0 12px #e0c37c2b,
+    inset 0 0 10px #e0c37c1c;
+}
+
+.slot:hover:not(:disabled) {
+  border-color: #65deed;
+}
+
+.slot:disabled {
+  cursor: default;
+}
+
+.slotGem {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, #1e3140, #0a141d);
+  box-shadow: inset 0 0 0 1px #ffffff10;
+}
+
+.rejected {
+  color: #f2a3ad;
+  font-size: 12px;
+  margin: 0;
+}
+
+.context {
+  display: grid;
+  gap: 5px;
+  max-width: 270px;
+}
+
+.context strong {
+  color: #f3e1bd;
+  font-size: 14px;
+}
+
+.context span,
+.progress {
+  color: #becbd0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.progress {
+  flex-basis: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+}
+
+.frameButton {
+  background: transparent var(--ac-action) center/100% 100% no-repeat;
+  border: 0;
+  color: #f3e1bd;
+  min-height: 28px;
+  padding: 4px 11px;
+  cursor: pointer;
+  font: 600 12px system-ui;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 3px #000;
+  transition:
+    filter 0.12s,
+    transform 0.12s;
+}
+
+.frameButton:hover:not(:disabled) {
+  filter: brightness(1.35);
+  transform: translateY(-1px);
+}
+
+.frameButton:focus-visible {
+  outline: 2px solid #9fe6fa;
+  outline-offset: 1px;
+}
+
+.frameButton:disabled {
+  filter: grayscale(1);
+  opacity: 0.65;
+  cursor: default;
+}
+
+.frameButton[data-secondary] {
+  filter: saturate(0.55) brightness(0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frameButton {
+    transition: none;
+  }
+
+  .frameButton:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Keep the compact resource row and hand clear while paying. */
+.compactStage {
+  position: absolute;
+  z-index: 45;
+  left: 16px;
+  top: 64px;
+  max-height: calc(100% - 156px);
+  overflow-y: auto;
+}
+
+.panel[data-compact] {
+  max-width: min(270px, 38vw);
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.panel[data-compact] .frameButton {
+  min-height: 34px;
+}

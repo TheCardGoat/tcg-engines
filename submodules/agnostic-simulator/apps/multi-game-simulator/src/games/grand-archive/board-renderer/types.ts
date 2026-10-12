@@ -29,8 +29,15 @@ export interface GrandArchiveBoardCard {
 /** A viewer projection, never an engine or match-state input. */
 export interface GrandArchiveBoardProjection {
   readonly cards: readonly GrandArchiveBoardCard[];
+  /** Native opening metadata; absent for presentation-only snapshots. */
+  readonly opening?: {
+    readonly pregame: boolean;
+    readonly turn: number;
+    readonly stateVersion: number;
+  };
   readonly candidateCardIds?: readonly string[];
   readonly selectedCardId?: string;
+  readonly selectedCardIds?: readonly string[];
   readonly feedbackCardIds?: readonly string[];
   readonly feedbackKey?: string;
   readonly targetLinks?: readonly {

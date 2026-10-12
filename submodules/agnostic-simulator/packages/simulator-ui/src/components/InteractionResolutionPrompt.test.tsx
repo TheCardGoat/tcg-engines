@@ -16,6 +16,7 @@ import {
   useInteractionDraft,
 } from "../interactions/InteractionDraftContext";
 import {
+  resolveInteractionText,
   interactionBoundsCopy,
   interactionCommitMode,
   interactionTargetPresentation,
@@ -111,6 +112,19 @@ describe("InteractionResolutionPrompt", () => {
     expect(markup).toContain(">— When Linked<");
     expect(markup).not.toContain("Resolving:");
     expect(markup).not.toContain("gundam.move.resolveEffect");
+  });
+
+  test("preserves complete literal instructions while humanizing dotted identifiers", () => {
+    const instruction =
+      "Action: Banish a card to return a target to hand. You may set a returned card.";
+    expect(resolveInteractionText({ key: instruction })).toBe(instruction);
+    expect(resolveInteractionText({ key: "Pay 1.5 resources." })).toBe("Pay 1.5 resources.");
+    expect(resolveInteractionText({ key: "Choose a card." })).toBe("Choose a card.");
+    expect(resolveInteractionText({ key: "game.action.chooseTarget" })).toBe("Choose Target");
+    expect(resolveInteractionText({ key: "game.action.choose_target" })).toBe("Choose target");
+    expect(
+      resolveInteractionText({ key: "game.action.chooseTarget", params: { label: instruction } }),
+    ).toBe(instruction);
   });
 
   test("keeps registered exact-one candidates spatial without a confirm action", () => {
@@ -427,25 +441,42 @@ describe("InteractionResolutionPrompt", () => {
     if (!amount) throw new Error("Expected amount input.");
     const confirm = button(container, "Confirm amount");
 
-    expect(amount.value).toBe("3");
-    expect(confirm.disabled).toBe(false);
-    expect(container.querySelector('[aria-label="Choose an amount from 0 to 3."]')).not.toBeNull();
-    expect(container.querySelector('[aria-label="Decrease amount"]')).not.toBeNull();
-    expect(container.querySelector('[aria-label="Increase amount"]')).not.toBeNull();
-    expect(container.textContent).not.toContain("target");
-    expect(container.textContent).not.toContain("Choose none");
-
-    act(() =>
-      container.querySelector<HTMLButtonElement>('[aria-label="Decrease amount"]')!.click(),
-    );
-    expect(amount.value).toBe("2");
+    expect(amount.value).toBe("");
+    expect(confirm.disabled).toBe(true);
+    expect(container.textContent).toContain("Allowed: 0–3");
+    act(() => confirm.click());
+    expect(submit).not.toHaveBeenCalled();
     act(() =>
       container.querySelector<HTMLButtonElement>('[aria-label="Increase amount"]')!.click(),
     );
-    expect(amount.value).toBe("3");
-
+    expect(amount.value).toBe("0");
+    act(() =>
+      container.querySelector<HTMLButtonElement>('[aria-label="Increase amount"]')!.click(),
+    );
+    expect(amount.value).toBe("1");
+    act(() =>
+      container.querySelector<HTMLButtonElement>('[aria-label="Decrease amount"]')!.click(),
+    );
+    expect(amount.value).toBe("0");
+    for (const invalid of ["-1", "0.5", "4"]) {
+      act(() => {
+        Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(
+          amount,
+          invalid,
+        );
+        amount.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      expect(confirm.disabled).toBe(true);
+      expect(amount.getAttribute("aria-invalid")).toBe("true");
+      act(() => confirm.click());
+      expect(submit).not.toHaveBeenCalled();
+    }
+    act(() => {
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(amount, "0");
+      amount.dispatchEvent(new Event("input", { bubbles: true }));
+    });
     act(() => confirm.click());
-    expect(submit).toHaveBeenLastCalledWith(expect.objectContaining({ values: { answer: 3 } }));
+    expect(submit).toHaveBeenLastCalledWith(expect.objectContaining({ values: { answer: 0 } }));
 
     act(() => {
       const valueDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
@@ -551,14 +582,19 @@ describe("InteractionResolutionPrompt", () => {
     expect(container.textContent).toContain("Confirm amount");
     expect(container.textContent).not.toContain("Use effect");
     expect(container.textContent).not.toContain("Decline");
-    expect(amount.value).toBe("3");
-    expect(button(container, "Confirm amount").disabled).toBe(false);
+    expect(amount.value).toBe("");
+    expect(button(container, "Confirm amount").disabled).toBe(true);
 
     act(() => button(container, "Skip effect").click());
     expect(submit).toHaveBeenLastCalledWith(
       expect.objectContaining({ values: { optional: false } }),
     );
 
+    act(() => {
+      const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
+      setter.call(amount, "3");
+      amount.dispatchEvent(new Event("input", { bubbles: true }));
+    });
     act(() => button(container, "Confirm amount").click());
     expect(submit).toHaveBeenLastCalledWith(
       expect.objectContaining({ values: { optional: true, answer: 3 } }),
@@ -1220,6 +1256,40 @@ describe("InteractionResolutionPrompt", () => {
     expect(markup).toContain('aria-label="Optional — you can skip this effect."');
     expect(markup).toContain(">Resolve<");
     expect(markup).toContain(">Skip<");
+  });
+
+  test("uses compact presentation titles for resolving choices and keeps full effect text in details", () => {
+    const view = targetView({ min: 1, max: 1 });
+    const effectText =
+      "Draw two cards, then discard a card. You may discard another card to repeat this effect.";
+    const container = renderClient(
+      <InteractionResolutionPrompt
+        view={{
+          ...view,
+          resolution: {
+            ...view.resolution!,
+            currentEffect: {
+              ...view.resolution!.currentEffect,
+              text: { key: effectText },
+            },
+          },
+        }}
+        viewerId="p1"
+        actionPresentation={{ title: "Choose cards", body: "Tap a highlighted card." }}
+      />,
+    );
+
+    expect(container.querySelector('[data-slot="interaction-source"]')?.textContent).toBe(
+      "Choose cards",
+    );
+    expect(container.textContent).not.toContain(effectText);
+
+    openPromptControls(container);
+    act(() => utilityAction("Show details").click());
+    expect(container.textContent).toContain(effectText);
+    expect(container.querySelector('[data-slot="interaction-source"]')?.textContent).toBe(
+      "Choose cards",
+    );
   });
 
   test("lets a game separate a source heading from repeated instruction copy", () => {

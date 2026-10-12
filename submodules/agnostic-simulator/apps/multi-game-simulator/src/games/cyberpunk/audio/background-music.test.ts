@@ -14,14 +14,16 @@ function backend() {
   const audio = {
     now: 0,
     unlock: vi.fn(async () => {}),
-    load: vi.fn(async (): Promise<MusicClip> => ({
-      duration: 10,
-      start: () => {
-        const voice = { fadeIn: vi.fn(), fadeOutAndStop: vi.fn() };
-        voices.push(voice);
-        return voice;
-      },
-    })),
+    load: vi.fn(
+      async (): Promise<MusicClip> => ({
+        duration: 10,
+        start: () => {
+          const voice = { fadeIn: vi.fn(), fadeOutAndStop: vi.fn() };
+          voices.push(voice);
+          return voice;
+        },
+      }),
+    ),
     setVolume: vi.fn(),
     dispose: vi.fn(),
   } satisfies MusicBackend;

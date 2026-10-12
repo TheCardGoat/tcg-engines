@@ -724,14 +724,12 @@ export const grandArchiveEffectDecisionResolvers = {
   "remode-stack-item": resolveGrandArchiveRemodeDecision,
   "resolve-effect-payment": resolveGrandArchiveEffectPaymentDecision,
 } satisfies {
-  readonly [
-    Kind in
-      | "resolve-optional-effect"
-      | "resolve-level-up"
-      | "resolve-direction-choice"
-      | "resolve-effect-choice"
-      | "retarget-stack-item"
-      | "remode-stack-item"
-      | "resolve-effect-payment"
-  ]: GrandArchiveDecisionResolver<Kind>;
+  readonly [Kind in
+    | "resolve-optional-effect"
+    | "resolve-level-up"
+    | "resolve-direction-choice"
+    | "resolve-effect-choice"
+    | "retarget-stack-item"
+    | "remode-stack-item"
+    | "resolve-effect-payment"]: GrandArchiveDecisionResolver<Kind>;
 };

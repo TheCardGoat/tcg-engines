@@ -21,96 +21,7 @@
 }
 
 .sharedSidebar {
-  --simulator-participant-height: 4.5rem;
-
   height: 100%;
-}
-
-.sharedSidebar [data-layout="stacked"] {
-  gap: 6px;
-  padding: 8px 10px;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] {
-  grid-template-columns: 2.5rem minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  align-items: stretch;
-  gap: 8px;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > div:first-child {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl {
-  display: block;
-  grid-column: 1;
-  grid-row: 1;
-  align-self: center;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl > div:only-child {
-  display: grid;
-  width: 2.5rem;
-  height: 2.25rem;
-  min-height: 0;
-  box-sizing: border-box;
-  grid-template-rows: auto auto;
-  place-content: center;
-  gap: 1px;
-  border-color: color-mix(in srgb, var(--participant-accent) 42%, transparent);
-  padding: 0;
-  background: color-mix(in srgb, var(--participant-accent) 8%, transparent);
-  text-align: center;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl dt {
-  font-size: 0.4375rem;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl dd {
-  margin: 0;
-  color: var(--participant-accent);
-  font-size: 0.875rem;
-  line-height: 1;
-}
-
-.sharedSidebar [data-layout="stacked"] > div:first-child {
-  position: relative;
-  height: 100%;
-  align-items: stretch;
-  gap: 7px;
-}
-
-.sharedSidebar
-  [data-layout="stacked"][data-has-visible-name="false"]
-  [data-participant-state-line="true"] {
-  height: 100%;
-  align-items: flex-start;
-}
-
-.sharedSidebar [data-layout="stacked"] [data-participant-clock="true"] {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.sharedSidebar [data-layout="stacked"] [data-participant-actions="true"] {
-  position: absolute;
-  display: flex;
-  top: 0;
-  right: 0;
-  width: auto;
-  min-width: var(--simulator-sidebar-control-size, 2rem);
-  height: var(--simulator-sidebar-control-size, 2rem);
-  min-height: var(--simulator-sidebar-control-size, 2rem);
-}
-
-.sharedSidebar [data-layout="stacked"]:has([data-participant-actions="true"]) > div:first-child {
-  padding-right: calc(var(--simulator-sidebar-control-size, 2rem) + 7px);
 }
 
 .participantQuickActions {
@@ -120,82 +31,26 @@
   gap: var(--simulator-sidebar-control-gap, 0.25rem);
 }
 
-.sharedSidebar [data-layout="stacked"]:has(.participantQuickActions) > div:first-child {
-  padding-right: calc(
-    var(--simulator-sidebar-control-size, 2rem) + var(--simulator-sidebar-control-size, 2rem) +
-      var(--simulator-sidebar-control-gap, 0.25rem) + 7px
-  );
+/* Dense sidebar brand row: the TCG mark plus the match controls that used to
+   live inside the participant rows. The shared layer reserves room for the
+   viewport shell's collapse control on the row's right edge. */
+.brandMark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  border: 1px solid rgb(245 230 66 / 26%);
+  border-radius: 0.375rem;
+  background: rgb(2 4 8 / 92%);
+  object-fit: cover;
 }
 
-/* Name and optional metadata sit above one aligned status and action row. */
-.humanSidebar {
-  --simulator-participant-compact-height: 5.5rem;
-}
-
-.humanSidebar [data-layout="stacked"] > div:first-child,
-.humanSidebar [data-layout="stacked"]:has([data-participant-actions="true"]) > div:first-child {
-  display: grid;
-  grid-template-columns: var(--connection-indicator-size, 24px) minmax(0, 1fr) auto;
-  grid-template-rows: minmax(1.5rem, 1fr) auto var(--simulator-sidebar-control-size, 2rem);
+.brandActions {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
   align-items: center;
-  gap: 3px 6px;
-  padding-right: 0;
-}
-
-.humanSidebar [data-layout="stacked"] > div:first-child > div:first-child {
-  display: contents;
-}
-
-.humanSidebar [data-layout="stacked"] > div:first-child > div:first-child > div:first-child {
-  grid-column: 1 / -1;
-  grid-row: 1;
-}
-
-.humanSidebar
-  [data-layout="stacked"]
-  > div:first-child
-  > div:first-child
-  > div:last-child:not([data-participant-state-line]) {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  font-size: 0.5625rem;
-}
-
-.humanSidebar [data-layout="stacked"] > div:first-child > div:nth-child(2) {
-  grid-column: 1;
-  grid-row: 3;
-  justify-self: start;
-}
-
-.humanSidebar [data-layout="stacked"] [data-participant-state-line="true"] {
-  grid-column: 2;
-  grid-row: 3;
-  padding-left: 0;
-}
-
-.humanSidebar [data-layout="stacked"] [data-participant-clock="true"] {
-  position: static;
-}
-
-.humanSidebar [data-layout="stacked"] [data-participant-actions="true"] {
-  position: static;
-  grid-column: 3;
-  grid-row: 3;
-  justify-self: end;
-}
-
-.humanSidebar [data-role="opponent"] > div:first-child > div:first-child > div:first-child {
-  padding-right: var(--simulator-sidebar-collapse-inset, 2.75rem);
-}
-
-.humanSidebar [data-layout="stacked"] {
-  --connection-indicator-size: 24px;
-}
-
-@media (pointer: coarse) {
-  .humanSidebar [data-layout="stacked"] {
-    --connection-indicator-size: 44px;
-  }
+  justify-content: flex-end;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
 }
 
 .matchScore {

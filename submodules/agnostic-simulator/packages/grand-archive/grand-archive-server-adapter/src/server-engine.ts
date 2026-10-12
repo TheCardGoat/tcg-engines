@@ -6,7 +6,6 @@ import {
 } from "./presentation.ts";
 import {
   decodeGrandArchiveCommand,
-  describeGrandArchiveStructuredDecision,
   GrandArchiveMatchRuntime,
   isGrandArchiveMoveName,
   projectGrandArchiveViewerState,
@@ -141,29 +140,37 @@ function authorizedDecisionCardInstances(
   if (!decision || decision.playerId !== grandArchivePlayerId(viewerId)) {
     return { definitionIds: {}, ownerIds: {}, names: {} };
   }
-  const description = describeGrandArchiveStructuredDecision(program, state, decision);
-  if (
-    !description ||
-    description.kind === "option-selection" ||
-    description.kind === "boolean" ||
-    description.kind === "semantic"
-  ) {
-    return { definitionIds: {}, ownerIds: {}, names: {} };
-  }
-  const candidateIds =
-    description.kind === "allocation"
-      ? description.candidates.map((candidate) => candidate.id)
-      : description.candidateIds;
+  // The canonical interaction also covers semantic decisions such as Glimpse.
+  // Its candidates are already scoped to this viewer and native decision.
+  const view = projectGrandArchiveInteraction(
+    new GrandArchiveMatchRuntime(program, state),
+    viewerId,
+  ).view;
+  const candidateIds = [
+    ...new Set(
+      view.actions.flatMap((action) =>
+        action.inputs.flatMap((input) =>
+          "candidates" in input
+            ? input.candidates.map((candidate) => candidate.entity.instanceId)
+            : [],
+        ),
+      ),
+    ),
+  ];
   const candidates = candidateIds.flatMap((candidateId) => {
     const object = state.objects[grandArchiveObjectId(candidateId)];
     return !object || (object.facing === "face-down" && object.zone === "banishment")
       ? []
       : [object];
   });
+  const catalogCandidates = candidateIds.filter((id) =>
+    !state.objects[grandArchiveObjectId(id)] && program.cardsById[id]?.definitionKind === "card",
+  );
   return {
-    definitionIds: Object.fromEntries(
-      candidates.map((object) => [object.id, object.activeDefinitionId ?? object.definitionId]),
-    ),
+    definitionIds: Object.fromEntries([
+      ...candidates.map((object) => [object.id, object.activeDefinitionId ?? object.definitionId]),
+      ...catalogCandidates.map((id) => [id, id]),
+    ]),
     ownerIds: Object.fromEntries(candidates.map((object) => [object.id, object.ownerId])),
     names: Object.fromEntries(
       candidates.flatMap((object) =>

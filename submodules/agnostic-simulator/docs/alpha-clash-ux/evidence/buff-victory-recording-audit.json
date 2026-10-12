@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-10",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "buff-victory-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 420,
+      "captureAudioMs": 28720,
+      "masterGain": 0.5625,
+      "videoIdleTrimSeconds": 17.616710901260376,
+      "audioAlignmentSeconds": 0.020792007446289062,
+      "audioTimestampGapHandling": "aresample async=1000 first_pts=0 preserves packet timing with silence",
+      "decodedAudioSeconds": 11.029916666666667,
+      "peak": 0.17236748337745667,
+      "rms": 0.00832285716621452,
+      "peakDbfs": -15.270893183413376,
+      "rmsDbfs": -41.59455117007597
+    },
+    {
+      "variant": "muted",
+      "file": "buff-victory-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 152,
+      "captureAudioMs": 7891,
+      "masterGain": 0,
+      "videoIdleTrimSeconds": 0,
+      "audioAlignmentSeconds": 0.017135143280029297,
+      "audioTimestampGapHandling": "aresample async=1000 first_pts=0 preserves packet timing with silence",
+      "decodedAudioSeconds": 7.841145833333333,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "flow": "Fresh native combat-buffs-victory, Set and obstruction arranged through UI before recording. Recording starts at attacker buff; source inspection, native target selection, payment, both response passes, skip defender buff, before-damage passes, automatic Victory handoff and own accessory target. Both reach Primary.",
+  "capture": "Application-output Howler branch, no microphone or replacement audio. Temporary branch disconnected, tracks stopped, capture state removed. Change-frame screencast encoded at 30 FPS; not renderer FPS evidence.",
+  "limits": [
+    "Normal clip trims the initial idle interval, retaining one second before the first UI change. Original capture metadata remains in the temporary capture directory.",
+    "Equal viewport and command sequence; automation pacing and seat fade differ, so total durations do not establish individual animation timing.",
+    "Signal measurements establish audio presence/silence, not perceptual mix or cue synchronization.",
+    "Both recordings are clean post-fix board-control runs; no Match actions/log or perspective switch. Set/attack/obstruction occur before these clips."
+  ]
+}

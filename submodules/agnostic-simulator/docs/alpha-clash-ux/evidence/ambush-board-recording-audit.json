@@ -1,0 +1,44 @@
+{
+  "response": {
+    "file": "ambush-board-response-audio.mp4",
+    "capturedFrames": 107,
+    "audioDurationSeconds": 6.06,
+    "peak": 0.0698360949754715,
+    "rms": 0.002174647098673005,
+    "peakDbFS": -23.118401061312966,
+    "rmsDbFS": -53.252224204385044,
+    "masterGain": 0.5625,
+    "viewport": "1366x768",
+    "audioOffsetSeconds": 0.015527963638305664
+  },
+  "entry": {
+    "file": "ambush-board-entry-audio.mp4",
+    "capturedFrames": 87,
+    "audioDurationSeconds": 6.12,
+    "peak": 0.37125253677368164,
+    "rms": 0.011548990512380149,
+    "peakDbFS": -8.606611402488685,
+    "rmsDbFS": -38.74911950861948,
+    "masterGain": 0.5625,
+    "viewport": "1366x768",
+    "audioOffsetSeconds": 0.012027978897094727
+  },
+  "limits": [
+    "Screencast encoding is not rendering FPS proof",
+    "Audio signal presence is not cue-by-cue perceptual acceptance",
+    "Entry clip covers Gur entry; original Sonoro resolution follows outside that clip",
+    "Normal and muted captures use different viewport sizes",
+    "Compact run includes hot reload of owner pile visibility; clean post-fix reset remains pending"
+  ],
+  "mutedReducedCompact": {
+    "file": "ambush-board-muted-reduced-844.mp4",
+    "capturedFrames": 52,
+    "audioDurationSeconds": 9.12,
+    "peak": 0.0,
+    "rms": 0.0,
+    "masterGain": 0,
+    "viewport": "844x390",
+    "audioOffsetSeconds": 0.02298712730407715,
+    "reducedMotion": true
+  }
+}

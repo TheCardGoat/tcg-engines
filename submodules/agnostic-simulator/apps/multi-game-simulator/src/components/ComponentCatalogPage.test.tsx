@@ -14,6 +14,9 @@ vi.mock("./component-catalog/GameCatalog", () => ({
     </div>
   ),
 }));
+vi.mock("./component-catalog/SharedCountersPreview", () => ({
+  SharedCountersPreview: () => <div>Shared counters</div>,
+}));
 afterEach(cleanup);
 describe("component catalog routing", () => {
   test("loads a linked game and passes category changes", async () => {

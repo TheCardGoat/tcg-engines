@@ -1,7 +1,11 @@
+import {
+  GrandArchiveChoicePrompt,
+  GrandArchiveMaterializationPrompt,
+} from "./GrandArchiveChoicePrompt";
 import { GrandArchiveRoleCard } from "./GrandArchiveRoleCard";
 import { grandArchivePhysicalCards } from "./grand-archive-physical-cards";
 import { Button, Group } from "@mantine/core";
-import type { InteractionSubmission } from "@tcg/protocol";
+import { inputAllowsOmission, type InteractionSubmission } from "@tcg/protocol";
 import {
   currentActionableInput,
   interactionInputComplete,
@@ -108,7 +112,7 @@ export function GrandArchiveInteractionLayer({
   }
   return (
     <InteractionDraftProvider
-      key={`${viewer?.id}:${fixture.id}`}
+      key={fixture.id}
       view={view}
       deferInitialSubmission={(action) =>
         action.inputs.some(
@@ -120,7 +124,7 @@ export function GrandArchiveInteractionLayer({
         )
       }
       onSubmit={(submission) => {
-        if (!onSubmit) return false;
+        if (!onSubmit || view.actorId !== viewer?.id) return false;
         return onSubmit(submission);
       }}
     >
@@ -203,6 +207,26 @@ function GrandArchiveInteractionWorkspace({
           (interaction) =>
             interaction.movePreview.command !== "concede" &&
             view?.actions.some((action) => action.id === interaction.id && action.enabled),
+        )
+      : [];
+  const materializationActions =
+    fixture.waitState.kind === "materialization-choice" &&
+    fixture.waitState.playerId === self?.id &&
+    view?.actorId === self?.id &&
+    onSubmit &&
+    !draft.active
+      ? fixture.interactions.filter(
+          (interaction) =>
+            (interaction.movePreview.command === "materialize" ||
+              interaction.movePreview.command === "return-preserved-card") &&
+            view.actions.some(
+              (action) =>
+                action.id === interaction.id &&
+                action.enabled &&
+                fixture.entities.some(
+                  (entity) => entity.id === action.source?.instanceId && entity.face === "public",
+                ),
+            ),
         )
       : [];
   const completion = pregameActions.find(
@@ -303,8 +327,12 @@ function GrandArchiveInteractionWorkspace({
       : [];
   const selectedOrder = useMemo(
     () =>
-      new Map(input?.kind === "ordering" ? selectedIds.map((id, index) => [id, index + 1]) : []),
-    [selectedIds, input?.kind],
+      new Map(
+        input?.kind === "ordering" || (input?.kind === "entity-selection" && input.ordered)
+          ? selectedIds.map((id, index) => [id, index + 1])
+          : [],
+      ),
+    [selectedIds, input],
   );
   const directSpatialInput =
     (input?.kind === "entity-selection" || input?.kind === "ordering") &&
@@ -355,6 +383,7 @@ function GrandArchiveInteractionWorkspace({
       !draft.active ||
       !directSpatialInput ||
       retaliation ||
+      input?.confirmBeforeSubmit ||
       (input?.kind !== "entity-selection" && input?.kind !== "ordering")
     )
       return;
@@ -425,6 +454,7 @@ function GrandArchiveInteractionWorkspace({
       return;
     }
     if (input.kind === "ordering") {
+      if (!selectedIds.includes(entityId) && selectedIds.length >= input.max) return;
       const next = selectedIds.includes(entityId)
         ? selectedIds.filter((id) => id !== entityId)
         : [...selectedIds, entityId];
@@ -519,9 +549,27 @@ function GrandArchiveInteractionWorkspace({
   const selectedActionId =
     draft.actionId ??
     (pregamePromptActive ? pregameActions[0]?.id : stackPromptActive ? passAction?.id : undefined);
+  const sharedChoice = Boolean(
+    onSubmit &&
+    draft.active &&
+    !retaliation &&
+    ((input && !directSpatialInput) || (!input && draft.submissionRejected)),
+  );
   const prompt =
-    !view ||
-    (!view.resolution && !draft.active && !stackPromptActive && !pregamePromptActive) ? null : (
+    materializationActions.length > 0 ? (
+      <GrandArchiveMaterializationPrompt
+        key={`${self?.id}:${view?.stateVersion}`}
+        fixture={fixture}
+        actionIds={materializationActions.map((action) => action.id)}
+        onBegin={beginAction}
+      />
+    ) : !view ||
+      (!view.resolution &&
+        !draft.active &&
+        !stackPromptActive &&
+        !pregamePromptActive) ? null : sharedChoice ? (
+      <GrandArchiveChoicePrompt fixture={fixture} view={view} />
+    ) : (
       <InteractionDraftPrompt
         view={view}
         viewerId={self?.id ?? ""}
@@ -589,7 +637,7 @@ function GrandArchiveInteractionWorkspace({
             </Group>
           ) : directSpatialInput && input ? (
             <Group gap="xs">
-              {input.min !== input.max ? (
+              {input.min !== input.max || input.confirmBeforeSubmit ? (
                 <Button
                   mih={44}
                   size="sm"
@@ -601,6 +649,13 @@ function GrandArchiveInteractionWorkspace({
                     : input.id === "weapons"
                       ? "No weapon"
                       : "Choose none"}
+                </Button>
+              ) : null}
+              {input.min > 0 && inputAllowsOmission(input, draft.values) ? (
+                <Button mih={44} size="sm" onClick={draft.skipCurrent}>
+                  {input.kind === "entity-selection" && input.role === "cost"
+                    ? "Skip payment"
+                    : "Skip selection"}
                 </Button>
               ) : null}
               {!view.resolution ? (

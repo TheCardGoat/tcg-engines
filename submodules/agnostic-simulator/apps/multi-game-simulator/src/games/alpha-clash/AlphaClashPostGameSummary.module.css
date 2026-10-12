@@ -1,0 +1,175 @@
+.modal {
+  --simulator-panel: #101f2a;
+  --simulator-text: #ecf4f7;
+  --simulator-text-secondary: #a4b7c2;
+  --simulator-accent: #8ce8ff;
+  --simulator-accent-rgb: 140 232 255;
+  --post-game-title-font: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --post-game-radius: 10px;
+  --post-game-detail-min: 150px;
+}
+.participant {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  min-width: 0;
+}
+.participant img {
+  width: 92px;
+  height: 130px;
+  object-fit: contain;
+  flex: none;
+}
+.participant strong {
+  display: block;
+  margin: 6px 0;
+  font-size: 18px;
+  line-height: 1.25;
+}
+.side {
+  color: #8ce8ff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 700;
+}
+.participant[data-side="opponent"] .side {
+  color: #cbb18a;
+}
+.playerName,
+.health {
+  color: #a4b7c2;
+  font-size: 13px;
+}
+.health {
+  margin-top: 10px;
+}
+.health b {
+  color: #ecf4f7;
+  font-size: 24px;
+  margin-right: 5px;
+}
+.comparison {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.comparison th,
+.comparison td {
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid #ffffff16;
+}
+.comparison th {
+  font-weight: 500;
+  color: #a4b7c2;
+}
+.comparison td:first-child {
+  color: #8ce8ff;
+  font-weight: 700;
+}
+.comparison td:last-child {
+  color: #cbb18a;
+  font-weight: 700;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.actions button,
+.actions a,
+.launcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #436c79;
+  border-radius: 6px;
+  background: #152733;
+  color: #ecf4f7;
+  text-decoration: none;
+  font:
+    600 13px system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+.actions [data-primary] {
+  background: #8ce8ff;
+  color: #09212b;
+}
+.actions button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+.launcher {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1100;
+}
+.launcher[hidden] {
+  display: none;
+}
+.launcher:focus-visible {
+  outline: 2px solid #8ce8ff;
+  outline-offset: 3px;
+}
+@media (width <= 620px) {
+  .participant {
+    padding: 8px 2px;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .participant img {
+    width: 54px;
+    height: 78px;
+  }
+  .participant strong {
+    font-size: 14px;
+  }
+  .playerName,
+  .health {
+    font-size: 11px;
+  }
+  .health b {
+    font-size: 21px;
+  }
+  .actions > * {
+    flex: 1;
+  }
+  .actions [data-primary] {
+    flex-basis: 100%;
+  }
+}
+@media (height <= 500px) and (width > 620px) {
+  .modal {
+    --post-game-detail-min: 45px;
+  }
+  .participant {
+    padding: 4px;
+    gap: 8px;
+  }
+  .participant img {
+    width: 42px;
+    height: 60px;
+  }
+  .participant strong {
+    font-size: 14px;
+    margin: 2px 0;
+  }
+  .health {
+    margin-top: 0;
+    font-size: 11px;
+  }
+  .health b {
+    font-size: 16px;
+  }
+  .comparison th,
+  .comparison td {
+    padding: 7px;
+  }
+}

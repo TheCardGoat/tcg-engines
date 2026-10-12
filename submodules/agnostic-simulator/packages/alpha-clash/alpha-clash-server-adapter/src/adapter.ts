@@ -9,6 +9,8 @@ import type {
   GameAdapter,
 } from "@tcg/shared/game-adapter";
 import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
+import { AC_JUDGE_MOVE_IDS } from "@tcg/alpha-clash-engine";
+import { alphaClashPracticeDecks, getAlphaClashMetaPracticeDeck } from "./practice";
 import {
   alphaClashCreateServerEngine,
   alphaClashExtractCardsMapsFromSnapshot,
@@ -33,6 +35,7 @@ function lookup(publicId: string): AcCardDefinition | undefined {
 export const alphaClashServerAdapter: GameAdapter = {
   slug: "alpha-clash",
   proposalPolicy: hostedUndoProposalPolicy,
+  correctionModePolicy: { moveTypes: AC_JUDGE_MOVE_IDS, pauseNormalPlay: true },
 
   createGameId(): string {
     return `alpha-clash-game-${crypto.randomUUID()}`;
@@ -166,14 +169,14 @@ export const alphaClashServerAdapter: GameAdapter = {
   },
 
   practiceDecks: {
-    ids: ["starter-titan", "starter-warden"],
+    ids: [...alphaClashPracticeDecks.map((deck) => deck.id), "starter-titan", "starter-warden"],
     getDeck(id: string): readonly DeckCard[] | undefined {
       // "<presetId>@<seed>" returns the same 50-card pool in a deterministic
       // seeded order, so practice matches can differ game to game while the
       // deck stays legal.
       const at = id.indexOf("@");
       const baseId = at === -1 ? id : id.slice(0, at);
-      const deck = buildPracticeDeck(baseId);
+      const deck = getAlphaClashMetaPracticeDeck(baseId) ?? buildPracticeDeck(baseId);
       if (!deck || at === -1) return deck;
       const seed = Number.parseInt(id.slice(at + 1), 10);
       if (!Number.isFinite(seed)) return deck;

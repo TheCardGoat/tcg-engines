@@ -123,7 +123,7 @@ describe("Grand Archive counter inspection", () => {
       const target = screen.getByRole("button");
       expect(target.getAttribute("aria-label")).toContain("Buff: 2");
       expect(target.getAttribute("aria-label")).toContain("Damage: 1");
-      const pills = target.querySelectorAll("[data-decoration-id]");
+      const pills = target.querySelectorAll('[data-decoration-id^="ga:counter:"]');
       expect(pills).toHaveLength(1);
       expect(pills[0]?.textContent).toBe("1");
       expect(pills[0]?.getAttribute("data-decoration-id")).toBe("ga:counter:damage");

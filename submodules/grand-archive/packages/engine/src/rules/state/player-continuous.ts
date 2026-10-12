@@ -206,6 +206,33 @@ export function grandArchivePlayerHasState(
   return value;
 }
 
+/** Public player properties after the same continuous effects used for state queries. */
+export function grandArchivePlayerEffectiveStates(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+): Readonly<Record<string, string | number | boolean>> {
+  const states = { ...state.players[playerId]?.states };
+  for (const entry of playerEffects(program, state)) {
+    if (
+      entry.effect.kind !== "continuous-player-state" ||
+      !resolveGrandArchivePlayers(entry.effect.players, entry.evaluation).includes(playerId)
+    )
+      continue;
+    const key = grandArchivePlayerStateStorageKey(entry.effect.state);
+    states[key] = grandArchivePlayerHasState(program, state, playerId, entry.effect.state);
+  }
+  for (const [key, value] of Object.entries(states)) {
+    if (
+      typeof value === "string" &&
+      !grandArchivePlayerHasState(program, state, playerId, { named: key, value })
+    ) {
+      delete states[key];
+    }
+  }
+  return states;
+}
+
 /** Derives a continuously modified player property; undefined means no limit is active. */
 export function deriveGrandArchiveContinuousPlayerProperty(
   program: GrandArchiveMatchProgram,

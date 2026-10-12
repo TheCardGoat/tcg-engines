@@ -87,6 +87,7 @@ export type ScenarioId =
   | "paymentQuickAbilityQa"
   | "paymentOnlyEddiesQa"
   | "paymentPhysicalEddiesQa"
+  | "paymentLegendSpendAbilityQa"
   | "retailCardCatalog"
   | "retailProgramTargetBench"
   | "retailCombatGigBench"

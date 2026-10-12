@@ -1,9 +1,11 @@
 # Cyberpunk V2 POC
 
 Open an existing Cyberpunk simulator or match route with `?ui=v2` (or `&ui=v2`).
-V1 remains the default. Its board and styles are unchanged. **Return to V1** removes
-only the UI query parameter and keeps the engine provider mounted. V2 loads lazily
-and has its own error boundary.
+V1 is the default until the player chooses a version. Switching versions saves the
+choice in local storage for later games in the same browser. An explicit `ui=v1`
+or `ui=v2` URL overrides that saved choice for the current game. **Return to V1**
+saves V1 and keeps the engine provider mounted. V2 loads lazily and has its own
+error boundary. If storage is blocked, switching still works for the current game.
 
 ## Rendering and ownership
 

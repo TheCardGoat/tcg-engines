@@ -1,0 +1,36 @@
+.trigger {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 32px;
+  max-width: 160px;
+  padding: 3px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.trigger:focus-visible,
+.close:focus-visible {
+  outline: 2px solid var(--mantine-color-yellow-4);
+  outline-offset: 2px;
+}
+
+.playerTrigger {
+  composes: trigger;
+  max-width: 220px;
+  margin: 2px auto 0;
+}
+
+.close {
+  min-height: 44px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 6px;
+  color: inherit;
+  background: var(--mantine-color-default);
+  cursor: pointer;
+}

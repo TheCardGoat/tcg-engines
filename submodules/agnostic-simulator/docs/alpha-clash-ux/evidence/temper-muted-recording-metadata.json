@@ -1,0 +1,129 @@
+{
+  "frames": [
+    {
+      "file": "frame-0000.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.567787
+    },
+    {
+      "file": "frame-0001.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.596513
+    },
+    {
+      "file": "frame-0002.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.617915
+    },
+    {
+      "file": "frame-0003.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.703558
+    },
+    {
+      "file": "frame-0004.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.786491
+    },
+    {
+      "file": "frame-0005.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.797943
+    },
+    {
+      "file": "frame-0006.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647937.815836
+    },
+    {
+      "file": "frame-0007.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647938.167572
+    },
+    {
+      "file": "frame-0008.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647938.18489
+    }
+  ],
+  "start": 1791647937551.5,
+  "gain": 0,
+  "fixture": "optional-temper",
+  "viewport": [
+    1366,
+    768
+  ],
+  "baseCommit": "94733f41bda25852bc545dcbe055642cb5f0e9ee",
+  "localChange": "attachWeapon source references",
+  "settings": {
+    "sound": false,
+    "reducedMotion": true
+  },
+  "steps": [
+    "Inspect Heavy Metal",
+    "Attach",
+    "Select Gearwin on board",
+    "Enter on Use"
+  ],
+  "result": {
+    "readyResources": 3,
+    "totalResources": 4,
+    "temperCounters": 1
+  },
+  "rawAudioMeanDbfs": -91.0,
+  "rawAudioPeakDbfs": -91.0,
+  "capture": "Temporary Howler master output branch, no microphone, disconnected after capture",
+  "video": "temper-muted-reduced.mp4",
+  "encodedFps": 30,
+  "limits": [
+    "Audio floor is the volumedetect measurement floor",
+    "Nine delivered frames are not a render benchmark",
+    "Only this sequence is checked; not all effects",
+    "No perceptual normal-audio acceptance inferred"
+  ]
+}

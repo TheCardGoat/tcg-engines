@@ -13,7 +13,7 @@ function open(scenario: string) {
 }
 test("declining an optional native choice preserves false as no", () => {
   open("option");
-  fireEvent.click(screen.getByRole("button", { name: "Decline effect" }));
+  fireEvent.click(screen.getByRole("button", { name: "Decline" }));
   expect(screen.getByText(/"optionId": "no"/)).toBeTruthy();
 });
 test("native count accepts zero rather than treating it as missing", () => {
@@ -31,6 +31,7 @@ test("a native modal choice returns its native option identifier", () => {
 test("native target selection survives conversion to a command", () => {
   open("target");
   fireEvent.click(screen.getByRole("button", { name: /^Choose card$/ }));
+  // A single required target submits on selection; no separate confirm step.
   fireEvent.click(screen.getByRole("button", { name: "Opponent · Crimson Warden, Last Ember" }));
   expect(screen.getByText(/"optionId": "player-two-2"/)).toBeTruthy();
 });

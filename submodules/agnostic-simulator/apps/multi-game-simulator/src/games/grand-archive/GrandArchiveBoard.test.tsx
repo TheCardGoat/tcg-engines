@@ -2,6 +2,12 @@
 import { cleanup, fireEvent, render, screen, within, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { GrandArchiveSimulatorProviders } from "./App";
+import { grandArchiveComposition } from "./board-renderer/composition";
+import { projectGrandArchiveSimulator } from "@tcg/grand-archive-server-adapter";
+import { grandArchivePlayerId } from "@tcg/grand-archive-engine/runtime";
+import { buildInteractionSubmission, type InteractionSubmissionValue } from "@tcg/protocol";
+import { findGrandArchiveNativeFixture } from "./native-fixtures";
+import { grandArchiveHarnessFixture } from "./fixtureProjection";
 import { grandArchiveBoardProjection } from "./GrandArchiveBoard";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 import { GRAND_ARCHIVE_VISUAL_FIXTURES } from "./fixtures";
@@ -11,10 +17,22 @@ vi.mock("./board-renderer", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./board-renderer")>()),
   GrandArchiveBoard: (props: import("./board-renderer").GrandArchiveBoardProps) => (
     <div>
+      <button onClick={() => props.onComposition?.(grandArchiveComposition(1440, 900))}>
+        Report scene layout
+      </button>
       <button onClick={() => props.events?.onBackgroundPick?.()}>Scene background</button>
       <button onClick={() => props.onAssetStatus?.({ loading: 0, failed: ["card.png"] })}>
         Fail texture
       </button>
+      <output aria-label="Selected scene cards">
+        {props.projection.selectedCardIds?.join(",")}
+      </output>
+      <output aria-label="Scene hand order">
+        {props.projection.cards
+          .filter((card) => card.owner === "self" && card.zone === "hand")
+          .map((card) => card.id)
+          .join(",")}
+      </output>
       <output aria-label="Texture retry">{props.assetRetryKey}</output>
     </div>
   ),
@@ -45,11 +63,96 @@ it("mounts one R3F board with accessible player controls", async () => {
   expect(screen.queryByRole("button", { name: "Cards & actions" })).toBeNull();
   expect(screen.queryByRole("button", { name: "Open cards & controls" })).toBeNull();
 });
+it.each([false, true])(
+  "keeps identity and pile labels relative to the viewer, switched=%s",
+  async (switched) => {
+    const seats = fixture.table.seats.map((seat) => ({
+      ...seat,
+      label: seat.perspective === "bottom" ? "You" : "Opponent",
+      perspective: switched
+        ? seat.perspective === "bottom"
+          ? ("top" as const)
+          : ("bottom" as const)
+        : seat.perspective,
+    }));
+    const current = { ...fixture, table: { ...fixture.table, seats } };
+    const { container } = await mount(current);
+    fireEvent.click(screen.getByRole("button", { name: "Report scene layout" }));
+    expect(
+      container.querySelector('.ga-portrait-identity[data-side="bottom"] strong')?.textContent,
+    ).toBe("You");
+    expect(
+      container.querySelector('.ga-portrait-identity[data-side="top"] strong')?.textContent,
+    ).toBe("Opponent");
+    for (const seat of seats) {
+      const label = seat.perspective === "bottom" ? "You" : "Opponent";
+      expect(
+        screen
+          .getByLabelText(`${label} memory`, { selector: ".ga-theme-memory" })
+          .closest(".ga-theme-readouts")
+          ?.getAttribute("data-side"),
+      ).toBe(seat.perspective);
+      expect(
+        screen
+          .getByLabelText(`${label} main deck`, { selector: ".ga-theme-deck" })
+          .closest(".ga-theme-readouts")
+          ?.getAttribute("data-side"),
+      ).toBe(seat.perspective);
+    }
+  },
+);
+it("preserves player names in board identity and pile labels", async () => {
+  const seats = fixture.table.seats.map((seat) => ({
+    ...seat,
+    label: seat.perspective === "bottom" ? "Alice" : "Bob",
+  }));
+  const { container } = await mount({ ...fixture, table: { ...fixture.table, seats } });
+  fireEvent.click(screen.getByRole("button", { name: "Report scene layout" }));
+  expect(
+    container.querySelector('.ga-portrait-identity[data-side="bottom"] strong')?.textContent,
+  ).toBe("Alice");
+  expect(
+    container.querySelector('.ga-portrait-identity[data-side="top"] strong')?.textContent,
+  ).toBe("Bob");
+  expect(screen.getByLabelText("Alice memory")).toBeTruthy();
+  expect(screen.getByLabelText("Bob main deck")).toBeTruthy();
+});
 it("opens direct card inspection without submitting a move", async () => {
   const { submit } = await mount();
   const card = within(screen.getByRole("region", { name: "Your champion" })).getByRole("button");
   fireEvent.click(card);
   expect(await screen.findByRole("button", { name: "Close card inspection" })).toBeTruthy();
+  expect(submit).not.toHaveBeenCalled();
+});
+it("keeps card states available in the inspection details", async () => {
+  const current = {
+    ...fixture,
+    entities: fixture.entities.map((entity) => ({
+      ...entity,
+      decorations: [
+        ...(entity.decorations ?? []),
+        {
+          id: "ga:keyword:inspection-test",
+          slot: "top-start" as const,
+          content: { kind: "text" as const, text: "Efficiency" },
+          ariaLabel: "Keyword: Efficiency",
+          tone: "neutral" as const,
+        },
+      ],
+    })),
+  };
+  const { submit } = await mount(current);
+  fireEvent.click(
+    within(screen.getByRole("region", { name: "Your champion" })).getByRole("button", {
+      name: /leader, p1/,
+    }),
+  );
+  const details = await screen.findByRole("region", { name: "Card details and actions" });
+  fireEvent.click(within(details).getByRole("button", { name: /Inspect states on.*Efficiency/ }));
+  expect(await screen.findByText("Keyword: Efficiency")).toBeTruthy();
+  // Floating UI treats zero-size jsdom anchors as detached; browser checks cover placement.
+  fireEvent.click(screen.getByRole("button", { name: "Close states", hidden: true }));
+  expect(screen.getByRole("button", { name: "Close card inspection" })).toBeTruthy();
   expect(submit).not.toHaveBeenCalled();
 });
 it("keeps an authorized face-down Memory card's face off the tabletop", async () => {
@@ -164,7 +267,7 @@ it("keeps the layout lean with count-only opponent hand and no empty optional pi
   const board = screen.getByRole("region", { name: "Your arena" });
   expect(within(board).getByRole("region", { name: "Your champion" })).toBeTruthy();
   expect(within(board).queryByLabelText("Opponent hand")).toBeNull();
-  expect(within(board).queryByRole("combobox")).toBeNull();
+  expect(within(board).getByLabelText("Board theme").closest(".ga-scene-inventory")).toBeTruthy();
   expect(within(board).queryByRole("button", { name: /Inspect.*Loaded/ })).toBeNull();
 });
 
@@ -450,4 +553,250 @@ it("offers image recovery after a board image fails", async () => {
   expect(screen.getByText("1 card/table image(s) unavailable")).toBeTruthy();
   fireEvent.click(retry);
   expect(screen.getByLabelText("Texture retry").textContent).toBe("1");
+});
+
+it("projects every selected card and its ordered position before the last pick", async () => {
+  const { paymentIds } = await startHandSelection(3, 3, "target", true);
+  fireEvent.click(boardCard(paymentIds[1]!));
+  fireEvent.click(boardCard(paymentIds[0]!));
+  expect(screen.getByLabelText("Selected scene cards").textContent).toBe(
+    `${paymentIds[1]},${paymentIds[0]}`,
+  );
+  expect(
+    document.querySelector(`[data-entity-id="${paymentIds[1]}"] .ga-scene-selection-order`)
+      ?.textContent,
+  ).toBe("1");
+  expect(
+    document.querySelector(`[data-entity-id="${paymentIds[0]}"] .ga-scene-selection-order`)
+      ?.textContent,
+  ).toBe("2");
+});
+
+it("keeps the board mounted and clears selection when the viewer and actor change", async () => {
+  const { value, paymentIds, rerender, submit } = await startHandSelection(3, 3);
+  fireEvent.click(boardCard(paymentIds[0]!));
+  const board = screen.getByTestId("grand-archive-three-board");
+  const nextViewer = value.table.seats.find((seat) => seat.perspective === "top")!.id;
+  rerender(
+    <GrandArchiveSimulatorProviders>
+      <GrandArchiveTabletop
+        fixture={{
+          ...value,
+          table: {
+            ...value.table,
+            seats: value.table.seats.map((seat) => ({
+              ...seat,
+              perspective: seat.id === nextViewer ? "bottom" : "top",
+              label: seat.id === nextViewer ? "Opponent" : "You",
+            })),
+          },
+          interactionView: { ...value.interactionView!, actorId: nextViewer, actions: [] },
+          interactions: [],
+        }}
+        onSubmitProtocolInteraction={submit}
+      />
+    </GrandArchiveSimulatorProviders>,
+  );
+  expect(screen.getByTestId("grand-archive-three-board")).toBe(board);
+  expect(screen.getByLabelText("Selected scene cards").textContent).toBe("");
+  expect(screen.queryByText("You choosing")).toBeNull();
+  expect(screen.getAllByText("Opponent choosing").length).toBeGreaterThan(0);
+  expect(submit).not.toHaveBeenCalled();
+});
+
+it("projects native opening metadata without exposing deck identities", () => {
+  const pregame = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "pregame-action")!;
+  const projection = grandArchiveBoardProjection(pregame);
+  expect(projection.opening).toEqual({
+    pregame: true,
+    turn: pregame.table.status.turn ?? 0,
+    stateVersion: pregame.table.status.stateVersion,
+  });
+  expect(
+    projection.cards
+      .filter((card) => card.zone === "main-deck")
+      .every((card) => card.faceDown && !card.faceUrl),
+  ).toBe(true);
+});
+
+it("opens an overflow field card for inspection without taking a native action", async () => {
+  const server = findGrandArchiveNativeFixture("native-crowded-board")!.createServer();
+  const player = grandArchivePlayerId("p1");
+  expect(server.runtime.waitState().kind).toBe("materialization-choice");
+  const before = server.runtime.state;
+  const current = grandArchiveHarnessFixture(
+    "native-crowded-board",
+    "Crowded board",
+    "Native crowded field inspection",
+    projectGrandArchiveSimulator(server.program, before, player),
+  );
+  const { submit } = await mount(current);
+  fireEvent.click(screen.getByRole("button", { name: "Your field (+3 more), 9 cards" }));
+  const field = await screen.findByRole("dialog", { name: "Your field (+3 more) · 9" });
+  fireEvent.click(within(field).getByRole("button", { name: /Luxera.s Map/ }));
+  const inspection = await screen.findByRole("dialog", { name: /Luxera.s Map/ });
+  expect(within(inspection).getByRole("button", { name: "Close card inspection" })).toBeTruthy();
+  expect(submit).not.toHaveBeenCalled();
+  expect(server.runtime.state).toBe(before);
+});
+
+it("starts native materialization from the visible phase chooser and pays its legal cost", async () => {
+  const server = findGrandArchiveNativeFixture("native-recollection")!.createServer();
+  const player = grandArchivePlayerId("p1");
+  const projection = projectGrandArchiveSimulator(server.program, server.runtime.state, player);
+  const current = grandArchiveHarnessFixture(
+    "native-recollection",
+    "Recollection",
+    "Native materialization",
+    projection,
+  );
+  const action = current.interactionView!.actions.find((entry) =>
+    entry.text.key.startsWith("Materialize Rai"),
+  )!;
+  const { submit } = await mount(current);
+  submit.mockImplementation(
+    (submission) =>
+      server.submitInteraction(player, submission, {
+        gameId: "board-materialization",
+        sourceAuthority: "client",
+      }).success,
+  );
+  expect(screen.getByRole("region", { name: "Materialization choices" })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Choose material" }));
+  const dialog = await screen.findByRole("dialog", { name: "Choose a card to materialize" });
+  fireEvent.click(within(dialog).getByRole("button", { name: /^Select Rai/ }));
+  for (const cost of action.inputs) {
+    if (cost.kind !== "entity-selection" || cost.role !== "cost" || cost.min === 0) continue;
+    const payment = await screen.findByRole("dialog", { name: "Choose payment cards" });
+    for (const candidate of cost.candidates.slice(0, cost.min)) {
+      const name = current.entities.find(
+        (entity) => entity.id === candidate.entity.instanceId,
+      )!.title;
+      fireEvent.click(within(payment).getByRole("button", { name: `Select ${name}` }));
+    }
+  }
+  await waitFor(() => expect(submit).toHaveBeenCalledOnce());
+  expect(server.runtime.state.zones[player].memory).toHaveLength(2);
+  expect(server.runtime.state.zones[player].banishment).toHaveLength(1);
+});
+
+it("offers Preserve return in the visible materialization chooser and returns the card to hand", async () => {
+  const server = findGrandArchiveNativeFixture("native-preserve")!.createServer();
+  const player = grandArchivePlayerId("p1");
+  const advance = (label?: string) => {
+    const wait = server.runtime.waitState();
+    if (!("playerId" in wait)) throw new Error(`No actor in ${wait.kind}`);
+    const view = server.getInteractionView(wait.playerId);
+    const action = view.actions.find((entry) =>
+      label ? entry.text.key.startsWith(label) : entry.intent === "pass",
+    );
+    if (!action) throw new Error(`Missing native action: ${label ?? "pass"}`);
+    const values: Record<string, InteractionSubmissionValue> = {};
+    for (const input of action.inputs) {
+      if (input.kind === "entity-selection" && input.role === "cost" && input.required)
+        values[input.id] = input.candidates
+          .slice(0, input.min)
+          .map((card) => card.entity.instanceId);
+    }
+    expect(
+      server.submitInteraction(
+        wait.playerId,
+        buildInteractionSubmission({ view, action, values }),
+        {
+          gameId: "board-preserve",
+          sourceAuthority: "client",
+        },
+      ).success,
+    ).toBe(true);
+  };
+  advance("Activate Tera Sight");
+  for (let step = 0; step < 60; step++) {
+    const wait = server.runtime.waitState();
+    if (wait.kind === "materialization-choice" && wait.playerId === player) break;
+    advance();
+  }
+  const preserved = Object.values(server.runtime.state.objects).find(
+    (card) => card.ownerId === player && card.states.has("preserved"),
+  )!;
+  expect(preserved.zone).toBe("material-deck");
+  const current = grandArchiveHarnessFixture(
+    "native-preserve",
+    "Preserve",
+    "Native Preserve return",
+    projectGrandArchiveSimulator(server.program, server.runtime.state, player),
+  );
+  const { submit } = await mount(current);
+  submit.mockImplementation(
+    (submission) =>
+      server.submitInteraction(player, submission, {
+        gameId: "board-preserve",
+        sourceAuthority: "client",
+      }).success,
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Choose materialization action" }));
+  const dialog = await screen.findByRole("dialog", { name: "Choose a materialization action" });
+  expect(
+    within(dialog).getByText("Return a preserved card to your hand instead of materializing."),
+  ).toBeTruthy();
+  expect(within(dialog).queryByText(/before it enters the field/)).toBeNull();
+  fireEvent.click(within(dialog).getByRole("button", { name: /^Select Return Tera Sight/ }));
+  await waitFor(() => expect(submit).toHaveBeenCalledOnce());
+  expect(server.runtime.state.zones[player].hand).toContain(preserved.id);
+  expect(server.runtime.state.objects[preserved.id]!.states.has("preserved")).toBe(false);
+});
+
+it("arranges only the local hand and resets it for a new fixture without native submission", async () => {
+  const { submit, rerender } = await mount();
+  const self = fixture.table.seats.find((seat) => seat.perspective === "bottom")!;
+  const hand = fixture.table.zones.find(
+    (zone) => zone.ownerId === self.id && zone.id.endsWith(":hand"),
+  )!;
+  const before = JSON.stringify(fixture);
+  const ids = hand.entityIds;
+  expect(ids.length).toBeGreaterThan(1);
+  const card = document.querySelector<HTMLButtonElement>(`button[data-sim-entity-id="${ids[0]}"]`)!;
+  fireEvent.click(card);
+  await screen.findByRole("button", { name: "Move right" });
+  fireEvent.click(screen.getByRole("button", { name: "Move right" }));
+  expect(screen.getByLabelText("Scene hand order").textContent).toBe(
+    [ids[1], ids[0], ...ids.slice(2)].join(","),
+  );
+  expect(screen.getByText(`Position 2 of ${ids.length}`)).toBeTruthy();
+  expect(JSON.stringify(fixture)).toBe(before);
+  expect(submit).not.toHaveBeenCalled();
+  rerender(
+    <GrandArchiveSimulatorProviders>
+      <GrandArchiveTabletop
+        fixture={{ ...fixture, id: "new-local-hand" }}
+        onSubmitProtocolInteraction={submit}
+      />
+    </GrandArchiveSimulatorProviders>,
+  );
+  expect(screen.getByLabelText("Scene hand order").textContent).toBe(ids.join(","));
+});
+
+it("skips a genuinely optional spatial payment before the next required input", async () => {
+  const selection = handSelectionFixture(1, 1, "cost");
+  const original = selection.value.interactionView!.actions[0]!;
+  const input = original.inputs[0]!;
+  const action = {
+    ...original,
+    inputs: [
+      { ...input, id: "optional-payment", required: false },
+      { ...input, id: "required-target", role: "target" as const, required: true },
+    ],
+  };
+  const { submit } = await mount({
+    ...selection.value,
+    interactionView: { ...selection.value.interactionView!, actions: [action] },
+  });
+  fireEvent.click(boardCard(selection.source));
+  fireEvent.click(await screen.findByRole("button", { name: "Activate test card" }));
+  fireEvent.click(await screen.findByRole("button", { name: "Skip payment" }));
+  expect(submit).not.toHaveBeenCalled();
+  fireEvent.click(boardCard(selection.paymentIds[0]!));
+  await waitFor(() => expect(submit).toHaveBeenCalledOnce());
+  expect(submit).toHaveBeenCalledWith(
+    expect.objectContaining({ values: { "required-target": [selection.paymentIds[0]] } }),
+  );
 });

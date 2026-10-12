@@ -1,4 +1,6 @@
+export { isolateModal } from "./modal-isolation";
 // Components
+export { LandscapeNotice, type LandscapeNoticeProps } from "./components/LandscapeNotice";
 export { AiControlPanel, type AiControlPanelProps } from "./components/AiControlPanel";
 export { Board } from "./components/Board";
 export { BoardBlock } from "./components/BoardBlock";
@@ -53,7 +55,7 @@ export { ChoiceModal } from "./components/ChoiceModal";
 export { ChoiceResolutionOverlay } from "./components/ChoiceResolutionOverlay";
 export { PromptBanner } from "./components/PromptBanner";
 export { CardInspector } from "./components/CardInspector";
-export { CardInspectionDialog } from "./components/CardInspectionDialog";
+export { CardInspectionDialog, CardInspectionLayout } from "./components/CardInspectionDialog";
 export {
   CARD_PRESENTATION_LAYERS,
   CardPresentationPlane,
@@ -167,6 +169,7 @@ export {
 } from "./components/MobilePortraitBoard";
 export { InteractionPanel } from "./components/InteractionPanel";
 export {
+  AllocationWorkspace,
   InteractionResolutionPrompt,
   type InteractionChoiceModalPresentation,
   type InteractionResolutionPromptProps,
@@ -352,3 +355,13 @@ export {
 
 export { createPromptVisibilityStore } from "./interactions/prompt-visibility";
 export { useInteractionSurface } from "./interactions/useInteractionSurface";
+
+export { BoardTargetHandles, replaceBoardTarget } from "./components/BoardTargetHandles";
+export { CostSlotControl } from "./interactions/CostSlotControl";
+export {
+  assignedCostEntities,
+  autoAssignCostSlots,
+  bestOptionForEntity,
+  normalizeCostSlotValue,
+} from "./interactions/cost-slots";
+export { ColorGem } from "./interactions/ColorGem";

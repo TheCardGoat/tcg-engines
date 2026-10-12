@@ -23,8 +23,36 @@
   padding: 8px 26px 22px;
 }
 .tcg-target__summary {
+  position: relative;
   color: #99aeb5;
   font-size: 12px;
+}
+.tcg-target__stack-toggle {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  display: inline-flex;
+  gap: 4px;
+}
+.tcg-target__stack-toggle button {
+  padding: 3px 11px;
+  border: 1px solid #52657099;
+  border-radius: 999px;
+  background: #071119aa;
+  color: #b9c9cb;
+  font-size: 11px;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease;
+}
+.tcg-target__stack-toggle button:hover {
+  border-color: #e2cda7;
+}
+.tcg-target__stack-toggle button[aria-pressed="true"] {
+  border-color: #e2cda7;
+  background: #1c2b33;
+  color: #f2e5c8;
 }
 .tcg-target__summary > span {
   text-transform: uppercase;
@@ -35,13 +63,18 @@
   line-height: 1.5;
 }
 .tcg-target__search {
-  width: 100%;
-  margin-top: 16px;
-  padding: 10px 12px;
+  flex: 0 1 260px;
+  min-width: 140px;
+  margin: 0;
+  padding: 8px 12px;
   border: 1px solid #526570;
   border-radius: 5px;
   background: #071119;
   color: #e7e2d4;
+}
+.tcg-target__search:focus-visible {
+  outline: 2px solid #e5ca93;
+  outline-offset: 2px;
 }
 .tcg-target__cards {
   display: grid;
@@ -68,6 +101,23 @@
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
+}
+.tcg-target__stack-count {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  z-index: 2;
+  min-width: 24px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #9c896cd9;
+  background: #0a141dee;
+  color: #f2e5c8;
+  font:
+    600 13px/1.5 system-ui,
+    sans-serif;
+  text-align: center;
+  pointer-events: none;
 }
 .tcg-target__card img {
   display: block;
@@ -190,13 +240,28 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  margin: 0;
   padding: 4px 0 18px;
 }
+.tcg-target__source figcaption {
+  min-width: 0;
+}
+.tcg-target__source-frame {
+  display: inline-flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #0c161c;
+  box-shadow:
+    0 0 0 1px #ffffff1f,
+    0 6px 14px #0008;
+}
 .tcg-target__source img {
+  display: block;
   width: 50px;
   aspect-ratio: 5/7;
-  object-fit: contain;
-  border-radius: 5px;
+  object-fit: cover;
+  border-radius: inherit;
 }
 .tcg-target__source small {
   display: block;
@@ -385,3 +450,96 @@
     min-height: 44px;
   }
 }
+
+/* A choice tray leaves the playfield clickable and does not dim the match. */
+.tcg-target-tray__inner {
+  align-items: flex-end;
+  padding-bottom: 20vh;
+  pointer-events: none;
+}
+.tcg-target-tray {
+  pointer-events: auto;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+@media (max-width: 650px) {
+  .tcg-target-tray__inner {
+    padding-bottom: 22vh;
+  }
+  .tcg-target-tray {
+    max-height: 48vh;
+  }
+}
+
+/* A temporary card decision over the battlefield, with no enclosing window. */
+.tcg-target-focus__inner { padding: 24px; }
+.tcg-target-focus {
+  --focus-gold: #e6c688;
+  width: min(1240px, 100%);
+  max-height: calc(100svh - 48px);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #9b89634d transparent;
+}
+.tcg-target-focus .tcg-target__header { position: relative; padding: 14px 100px 8px; justify-content: center; background: transparent; }
+.tcg-target-focus .tcg-target__title { font: 400 clamp(26px, 3vw, 40px)/1.15 Georgia, serif; letter-spacing: .025em; text-align: center; color: #f1e8d3; text-shadow: 0 2px 20px #000; }
+.tcg-target-focus .tcg-target__close { position: absolute; right: 0; top: 16px; }
+.tcg-target-focus .tcg-target__body { padding: 6px 12px 12px; }
+.tcg-target-focus .tcg-target__source { display: flex; justify-content: center; align-items: center; gap: 9px; margin: 0 0 12px; border: 0; background: transparent; padding: 0; }
+.tcg-target-focus .tcg-target__source > img { width: 22px; height: 31px; object-fit: contain; transform: rotate(-6deg); }
+.tcg-target-focus .tcg-target__source > div { display: flex; align-items: center; gap: 8px; }
+.tcg-target-focus .tcg-target__source small { font-size: 9px; letter-spacing: .14em; color: #9ba8aa; }
+.tcg-target-focus .tcg-target__source strong { font-size: 11px; font-weight: 400; }
+.tcg-target-focus .tcg-target__summary { display: none; }
+.tcg-target-focus .tcg-target__footer { position: relative; padding-top: 14px; margin-top: 6px; border: 0; min-height: 62px; }
+.tcg-target-focus .tcg-target__footer button[data-primary] { min-width: 210px; min-height: 48px; padding: 12px 32px; color: #fff1ce; font: 500 17px Georgia, serif; letter-spacing: .04em; border: 1px solid #dfb76a; border-radius: 6px; background: linear-gradient(#8a632a, #3c2b15); box-shadow: inset 0 1px #fff3cc55, 0 0 22px #c3893233, 0 8px 20px #0008; transition: filter 140ms ease, box-shadow 140ms ease; }
+.tcg-target-focus .tcg-target__footer button[data-primary]:hover:not(:disabled) { filter: brightness(1.25); box-shadow: inset 0 1px #fff3cc88, 0 0 28px #c3893255; }
+.tcg-target-focus .tcg-target__footer button[data-primary]:disabled { opacity: .4; filter: saturate(.3); }
+.tcg-target-focus .tcg-target__footer > button:last-child { position: absolute; right: 0; bottom: 10px; color: #a4b0b3; font-size: 11px; }
+@media (max-height: 550px) and (min-width: 601px) {
+  .tcg-target-focus__inner { padding: 8px 20px; }
+  .tcg-target-focus { max-height: calc(100svh - 16px); }
+  .tcg-target-focus .tcg-target__header { padding: 0 60px 4px; }
+  .tcg-target-focus .tcg-target__title { font-size: 24px; }
+  .tcg-target-focus .tcg-target__source { margin-bottom: 6px; }
+  .tcg-target-focus .tcg-target__source-frame { display: none; }
+  .tcg-target-focus .tcg-target__footer { padding-top: 6px; min-height: 44px; }
+  .tcg-target-focus .tcg-target__footer button[data-primary] { min-height: 40px; padding: 8px 24px; font-size: 15px; }
+}
+@media (max-width: 600px) {
+  .tcg-target-focus__inner { padding: 12px; }
+  .tcg-target-focus { max-height: calc(100svh - 24px); }
+  .tcg-target-focus .tcg-target__header { padding: 10px 30px; }
+  .tcg-target-focus .tcg-target__body { padding: 4px; }
+  .tcg-target-focus .tcg-target__footer { position: sticky; bottom: -4px; padding: 12px 0 8px; background: linear-gradient(transparent, #060e14 25%); z-index: 8; }
+  .tcg-target-focus .tcg-target__footer > button:last-child { position: static; padding: 8px; }
+  .tcg-target-focus .tcg-target__footer button[data-primary] { min-width: 170px; }
+  .tcg-target-focus .tcg-target__footer kbd { display: none; }
+}
+
+/* Ordered groups own vertical scrolling; keep their action rail outside that area. */
+@media (max-height: 550px) and (min-width: 601px) {
+  .tcg-target-focus:has(.tcg-ordered-groups) { overflow: hidden; }
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__body { overflow: hidden; }
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__footer {
+    min-height: 44px;
+    padding-top: 6px;
+  }
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__footer button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__footer button[data-primary] {
+    min-height: 44px;
+    font-size: 15px;
+  }
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__source strong,
+  .tcg-target-focus:has(.tcg-ordered-groups) .tcg-target__source small { font-size: 12px; }
+}
+
+/* Compact selection surfaces can show a readable caption beneath the complete artwork. */
+.tcg-target__candidate-label { display: none; }

@@ -1,4 +1,5 @@
-import { lazy, Suspense, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
+import { finishMatchIntro } from "@tcg/shared/match-intro";
 import { MatchSessionRecovery } from "../simulator/MatchSessionRecovery";
 import { Alert, Button } from "@mantine/core";
 import { MatchSessionProvider, useMatchSession } from "../simulator/MatchSessionProvider";
@@ -44,6 +45,11 @@ function SessionRouteModule({ routeKind }: SimulatorRouteModuleProps) {
   const routeData = useLoaderData<SharedSimulatorRouteData>();
   const { session, error: sessionError, refresh } = useMatchSession();
   const location = useLocation();
+  const resolved = resolveSimulatorRoute(routeData?.gameSlug ?? null, routeKind);
+  const introDestination = routeKind === "live-match" && Boolean(resolved);
+  useEffect(() => {
+    if (routeData.error || sessionError || !introDestination) finishMatchIntro();
+  }, [routeData.error, sessionError, introDestination]);
   if (
     routeData.gameSlug &&
     routeData.error &&
@@ -52,7 +58,6 @@ function SessionRouteModule({ routeKind }: SimulatorRouteModuleProps) {
     return <MatchUnavailable gameSlug={routeData.gameSlug} message={routeData.error} />;
   }
   const auth = rootData?.auth ?? null;
-  const resolved = resolveSimulatorRoute(routeData?.gameSlug ?? null, routeKind);
 
   if (!resolved) {
     return <UnsupportedSimulatorRoute routeData={routeData ?? null} routeKind={routeKind} />;

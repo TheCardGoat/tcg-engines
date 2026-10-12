@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import "./inspection.css";
 import "./card-selection.css";
 
 /** The caller must provide only cards this viewer is allowed to inspect. */
 export function useCardInspection<T>() {
   const [card, setCard] = useState<T | null>(null);
-  return { card, inspect: setCard, dismiss: () => setCard(null) };
+  // Dismiss stays referentially stable: seat-flip effects key on it to close
+  // the inspection without tearing down the card they were showing.
+  const dismiss = useCallback(() => setCard(null), []);
+  return { card, inspect: setCard, dismiss };
 }
 
 /** Accessible controls only: the card remains in the game's 3D scene. */

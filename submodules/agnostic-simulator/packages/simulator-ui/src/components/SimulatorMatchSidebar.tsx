@@ -90,6 +90,13 @@ export interface SimulatorMatchSidebarProps extends HTMLAttributes<HTMLElement> 
   readonly context?: ReactNode;
   readonly contextLabel?: string;
   readonly actions: SimulatorMatchActions;
+  /**
+   * "dense" groups both participants as compact clock rows directly under the
+   * optional brand row, trading identity chrome for vertical space.
+   */
+  readonly variant?: "default" | "dense";
+  /** Slim brand row (logo, consolidated match controls) rendered above the first participant. */
+  readonly brand?: ReactNode;
 }
 
 /**
@@ -107,10 +114,13 @@ export function SimulatorMatchSidebar({
   context,
   contextLabel = "Match context",
   actions,
+  variant = "default",
+  brand,
   className,
   ...props
 }: SimulatorMatchSidebarProps) {
   const hasCompactParticipants = !opponent.metrics?.length && !self.metrics?.length;
+  const dense = variant === "dense";
 
   return (
     <aside
@@ -121,9 +131,16 @@ export function SimulatorMatchSidebar({
       data-has-automation={automation ? "true" : "false"}
       data-has-context={context ? "true" : "false"}
       data-compact-participants={hasCompactParticipants ? "true" : undefined}
+      data-variant={dense ? "dense" : undefined}
       {...props}
     >
-      <SimulatorMatchParticipantView participant={opponent} />
+      {brand ? (
+        <header className={classes.brandRow} data-testid="simulator-sidebar-brand">
+          {brand}
+        </header>
+      ) : null}
+      <SimulatorMatchParticipantView participant={opponent} dense={dense} />
+      {dense ? <SimulatorMatchParticipantView participant={self} dense /> : null}
       {automation ? <SimulatorAutomationControl automation={automation} /> : null}
       {context ? (
         <section className={classes.context} aria-label={contextLabel}>
@@ -136,7 +153,7 @@ export function SimulatorMatchSidebar({
       <section className={classes.matchActions} aria-label="Match actions">
         <SimulatorMatchActionDock {...actions} />
       </section>
-      <SimulatorMatchParticipantView participant={self} />
+      {dense ? null : <SimulatorMatchParticipantView participant={self} />}
     </aside>
   );
 }
@@ -248,12 +265,53 @@ function SimulatorAutomationControl({
 
 export function SimulatorMatchParticipantView({
   participant,
+  dense = false,
   className,
 }: {
   readonly participant: SimulatorMatchParticipant;
+  /** Single-row clock layout used by the sidebar's dense variant. */
+  readonly dense?: boolean;
   readonly className?: string;
 }) {
   const hasVisibleName = participant.name !== undefined && participant.name !== null;
+
+  if (dense) {
+    return (
+      <section
+        className={cx(classes.denseParticipant, className)}
+        data-role={participant.role}
+        data-active={participant.active ? "true" : undefined}
+        data-testid={participant.testId}
+        aria-label={
+          participant.ariaLabel ??
+          (participant.role === "self" ? "Your match status" : "Opponent match status")
+        }
+      >
+        {participant.connection}
+        <div className={classes.denseIdentity}>
+          {hasVisibleName ? <strong>{participant.name}</strong> : null}
+          {participant.meta ? <span className={classes.denseMeta}>{participant.meta}</span> : null}
+        </div>
+        {participant.metrics?.length ? (
+          <span className={classes.denseMetrics}>
+            {participant.metrics.map((metric) => (
+              <span key={metric.id}>
+                {metric.label} <strong>{metric.value}</strong>
+              </span>
+            ))}
+          </span>
+        ) : null}
+        {participant.status ? (
+          <span className={classes.denseStatus}>{participant.status}</span>
+        ) : null}
+        {participant.clock ? (
+          <span className={classes.clock} data-participant-clock="true">
+            {participant.clock}
+          </span>
+        ) : null}
+      </section>
+    );
+  }
 
   if (participant.layout === "compact") {
     return (

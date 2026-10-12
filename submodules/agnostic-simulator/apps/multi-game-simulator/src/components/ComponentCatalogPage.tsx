@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { SharedCountersPreview } from "./component-catalog/SharedCountersPreview";
 import GameCatalog from "./component-catalog/GameCatalog";
 import ComponentInventory from "./component-catalog/ComponentInventory";
 import { GAMES, isGameSlug } from "../simulator/games";
@@ -108,6 +109,9 @@ export default function ComponentCatalogPage() {
             window.history.replaceState({}, "", url);
           }}
         />
+      )}
+      {mounted && (category === "All components" || category === "Counters") && (
+        <SharedCountersPreview />
       )}
       <div className={classes.catalog}>
         {games.map((item) => (

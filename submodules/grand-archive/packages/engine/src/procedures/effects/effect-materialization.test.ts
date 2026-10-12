@@ -115,10 +115,11 @@ function setup(
       (object) => object.ownerId === p2 && object.definitionId === materialCard.canonicalId,
     )!.id,
   };
-  const paymentCards = [p1, p2].map((playerId) =>
-    Object.values(initial.objects).find(
-      (object) => object.ownerId === playerId && object.definitionId === filler.canonicalId,
-    )!,
+  const paymentCards = [p1, p2].map(
+    (playerId) =>
+      Object.values(initial.objects).find(
+        (object) => object.ownerId === playerId && object.definitionId === filler.canonicalId,
+      )!,
   );
   const state = new GrandArchiveTransactionKernel().transact(initial, [
     ...(sourceObject.zone === "hand"

@@ -1,0 +1,50 @@
+.tcg-board-target-handles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+.tcg-board-target-handle {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #f6d285;
+  background: #201b12;
+  color: #ffe9b6;
+  box-shadow: 0 0 18px #d6ad5266;
+  font-weight: 700;
+  font-size: 22px;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  transition:
+    left 180ms ease,
+    top 180ms ease;
+}
+.tcg-board-target-handle[aria-pressed="true"],
+.tcg-board-target-handle:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+.tcg-target-notice {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffe9b6;
+  background: #181610e6;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+.tcg-target-notice:empty {
+  display: none;
+}
+[data-reduced-motion] .tcg-board-target-handle {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcg-board-target-handle {
+    transition: none;
+  }
+}

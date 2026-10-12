@@ -15,6 +15,24 @@ import { alphaClashServerAdapter } from "./adapter";
 const P1 = "actor-human";
 const P2 = "actor-bot";
 
+function declareOpening(engine: AlphaClashServerEngine, takeFor?: string) {
+  for (let index = 0; index < 2; index++) {
+    const actor = engine.getActivePlayerId();
+    if (!actor) throw new Error("Missing opening actor");
+    expect(
+      engine.dispatch(
+        "declareMulligan",
+        actor,
+        { take: actor === takeFor },
+        {
+          gameId: "opening-test",
+          sourceAuthority: "server",
+        },
+      ).success,
+    ).toBe(true);
+  }
+}
+
 function practiceDeck(id: string): DeckCard[] {
   const deck = alphaClashServerAdapter.practiceDecks?.getDeck(id);
   if (!deck) throw new Error(`Missing practice deck: ${id}`);
@@ -37,7 +55,10 @@ function cardsMapsFor(
 }
 
 /** Started practice engine with default decks under a deterministic seed. */
-async function createPracticeEngine(seed: string): Promise<AlphaClashServerEngine> {
+async function createPracticeEngine(
+  seed: string,
+  firstPlayerChooserId?: string,
+): Promise<AlphaClashServerEngine> {
   const maps = cardsMapsFor([
     { owner: P1, deck: practiceDeck("starter-titan") },
     { owner: P2, deck: practiceDeck("starter-warden") },
@@ -47,14 +68,33 @@ async function createPracticeEngine(seed: string): Promise<AlphaClashServerEngin
     seed,
     player1Id: P1,
     player2Id: P2,
+    firstPlayerChooserId,
     cardsMaps: maps,
   });
   return engine as AlphaClashServerEngine;
 }
 
 describe("Alpha Clash deck validation", () => {
+  it("starts hosted command versions at zero regardless of opening draw logs", async () => {
+    const engine = await createPracticeEngine("hosted-version-zero");
+    expect(engine.state.moveLog.length).toBeGreaterThan(0);
+    expect(engine.getStateID()).toBe(0);
+    declareOpening(engine);
+    expect(engine.getStateID()).toBe(2);
+    const actor = engine.getActivePlayerId();
+    if (!actor) throw new Error("Missing opening actor");
+    expect(
+      engine.dispatch(
+        "startGame",
+        actor,
+        {},
+        { gameId: "hosted-version-zero", sourceAuthority: "server" },
+      ).stateID,
+    ).toBe(3);
+  });
   it("restores a safe phase pass through the hosted undo checkpoint", async () => {
     const engine = await createPracticeEngine("undo-pass-7");
+    declareOpening(engine);
     const context = { gameId: "alpha-undo", sourceAuthority: "server" as const };
     expect(engine.dispatch("startGame", P1, {}, context).success).toBe(true);
     const actor = engine.seatToPlayerId[engine.state.activePlayer];
@@ -182,6 +222,33 @@ describe("Alpha Clash card summaries", () => {
 });
 
 describe("Alpha Clash server engine lifecycle", () => {
+  it.each([P1, P2])("paces native opening declarations when %s starts", async (first) => {
+    const engine = await createPracticeEngine("7", first);
+    const second = first === P1 ? P2 : P1;
+    const context = { gameId: "opening-test", sourceAuthority: "server" as const };
+    const cards = structuredClone(engine.state.cards);
+    expect(engine.dispatch("startGame", first, {}, context).success).toBe(false);
+    for (const actor of [first, second]) {
+      expect(engine.getActivePlayerId()).toBe(actor);
+      const waiting = actor === P1 ? P2 : P1;
+      expect(engine.getInteractionView(waiting).status).toBe("waiting");
+      expect(engine.getInteractionView(actor).actions.map((action) => action.id)).toEqual([
+        "declareMulligan:keep",
+        "declareMulligan:take",
+        "concede",
+      ]);
+      const result = engine.takeAutomatedAction({ strategyId: "default" }, context);
+      expect(result.finalResult.success).toBe(true);
+      expect(result.selectedCandidate?.family).toBe("declareMulligan");
+    }
+    expect(engine.state.cards).toEqual(cards);
+    expect(engine.getActivePlayerId()).toBe(first);
+    expect(engine.takeAutomatedAction({ strategyId: "default" }, context).finalResult.success).toBe(
+      true,
+    );
+    expect(engine.state.phase.name).toBe("expansion");
+  });
+
   async function createEngine(): Promise<AlphaClashServerEngine> {
     const maps = cardsMapsFor([
       { owner: P1, deck: practiceDeck("starter-titan") },
@@ -208,6 +275,7 @@ describe("Alpha Clash server engine lifecycle", () => {
 
   it("starts, passes turns through bot automation, and records a log", async () => {
     const engine = await createEngine();
+    declareOpening(engine);
     const context = {
       gameId: "test-game",
       sourceAuthority: "server" as const,
@@ -238,6 +306,7 @@ describe("Alpha Clash server engine lifecycle", () => {
 
   it("serializes and restores the engine round-trip", async () => {
     const engine = await createEngine();
+    declareOpening(engine);
     engine.dispatch("startGame", P1, {}, { gameId: "test-game", sourceAuthority: "server" });
     const snapshot = alphaClashSerializeEngine(engine, {
       cardInstances: {},
@@ -264,17 +333,21 @@ describe("Alpha Clash server engine lifecycle", () => {
 
   it("exposes an interaction view with setup actions and a concession", async () => {
     const engine = await createEngine();
-    const view = engine.getInteractionView(P1);
+    const actor = engine.getActivePlayerId()!;
+    const view = engine.getInteractionView(actor);
     expect(view.gameSlug).toBe("alpha-clash");
-    expect(view.actorId).toBe(P1);
+    expect(view.actorId).toBe(actor);
     const ids = view.actions.map((action) => action.id);
-    expect(ids).toContain("startGame");
-    expect(ids).toContain("mulligan");
+    expect(ids).toContain("declareMulligan:keep");
+    expect(ids).toContain("declareMulligan:take");
+    expect(ids).not.toContain("startGame");
+    expect(ids).not.toContain("mulligan");
     expect(ids).toContain("concede");
   });
 
   it("drops the mulligan action once this seat has taken it (rule 103.5)", async () => {
     const engine = await createEngine();
+    declareOpening(engine, P1);
     const before = engine.getInteractionView(P1);
     expect(before.actions.some((action) => action.id === "mulligan")).toBe(true);
 
@@ -291,11 +364,16 @@ describe("Alpha Clash server engine lifecycle", () => {
 
     const after = engine.getInteractionView(P1);
     expect(after.actions.some((action) => action.id === "mulligan")).toBe(false);
-    expect(after.actions.some((action) => action.id === "startGame")).toBe(true);
+    expect(
+      engine
+        .getInteractionView(engine.getActivePlayerId()!)
+        .actions.some((action) => action.id === "startGame"),
+    ).toBe(true);
   });
 
   it("advances the state version on every applied command, logged or not", async () => {
     const engine = await createEngine();
+    declareOpening(engine, P1);
     const start = engine.getStateID();
     const mulligan = engine.dispatch(
       "mulligan",
@@ -340,6 +418,7 @@ describe("Alpha Clash server engine lifecycle", () => {
 describe("Alpha Clash obstruct interaction view", () => {
   it("publishes a schema-valid obstruct view whose max fits the ready candidates (504.2c)", async () => {
     const engine = await createPracticeEngine("7");
+    declareOpening(engine);
     const context = { gameId: "test-game", sourceAuthority: "server" as const };
     const started = engine.dispatch("startGame", P1, {}, context);
     expect(started.success).toBe(true);
@@ -403,6 +482,7 @@ describe("Alpha Clash obstruct interaction view", () => {
 describe("Alpha Clash bot automation endurance", () => {
   it("keeps the seed-1 practice match automating past the historical turn-4 stall", async () => {
     const engine = await createPracticeEngine("1");
+    declareOpening(engine);
     const context = { gameId: "test-game", sourceAuthority: "server" as const };
     expect(engine.dispatch("startGame", P1, {}, context).success).toBe(true);
 

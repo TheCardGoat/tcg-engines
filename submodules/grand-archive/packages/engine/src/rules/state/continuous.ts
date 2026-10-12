@@ -393,6 +393,47 @@ const printedStaticSourcesByState = new WeakMap<
   WeakMap<object, readonly GrandArchiveCardInstance[]>
 >();
 
+export function grandArchiveContinuousStaticSources(
+  context: Pick<GrandArchiveEvaluationContext, "program" | "state">,
+): readonly GrandArchiveCardInstance[] {
+  let programs = printedStaticSourcesByState.get(context.state);
+  if (!programs) {
+    programs = new WeakMap();
+    printedStaticSourcesByState.set(context.state, programs);
+  }
+  const existing = programs.get(context.program);
+  if (existing) return existing;
+  const additionalSources = new Set<string>();
+  for (const instance of context.state.continuousEffects) {
+    if (
+      !isObjectContinuousEffect(instance.effect) ||
+      !isStaticAbilityLayerChange(instance.effect.change) ||
+      instance.effect.change.kind === "remove-abilities"
+    )
+      continue;
+    // Keep a context-independent superset. Applicability is still derived below;
+    // a locked grant or copy can only add abilities to its recorded recipients.
+    if (instance.effect.affectedSet !== "locked") {
+      const sources = Object.values(context.state.objects);
+      programs.set(context.program, sources);
+      return sources;
+    }
+    for (const id of instance.affectedObjectIds) additionalSources.add(id);
+  }
+  const sources = Object.values(context.state.objects).filter((source) => {
+    if (additionalSources.has(source.id)) return true;
+    const face = grandArchiveObjectFace(context.program, source);
+    return grandArchiveObjectPrintedAbilities(context.program, source, context.state).some(
+      (ability) =>
+        ability.kind === "static" &&
+        ability.staticKind === "effects" &&
+        grandArchiveAbilityIsFunctional(face, ability, source),
+    );
+  });
+  programs.set(context.program, sources);
+  return sources;
+}
+
 function continuousStaticSources(
   context: GrandArchiveEvaluationContext,
 ): readonly GrandArchiveCardInstance[] {

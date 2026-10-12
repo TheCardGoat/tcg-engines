@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../simulator/useMatchIntroReady";
 import type { ChatMessage as ProtocolChatMessage, ChatPresetKey, PendingProposal } from "@tcg/protocol";
 import { CHAT_PRESET_KEYS, CHAT_PRESETS } from "@tcg/simulator-runtime/chat";
 import {
@@ -32,6 +33,9 @@ export function RiftboundLiveMatchPage() {
     initialState,
   );
   const [display, setDisplay] = useState<RiftboundClientMatchStateV1 | null>(initialState);
+  useMatchIntroReady(
+    Boolean(route.error || (page && snapshot && (!viewerId || snapshot.authority !== "server" || display))),
+  );
   useLiveMatchDocumentTitle({
     game: "Riftbound",
     turn: null,

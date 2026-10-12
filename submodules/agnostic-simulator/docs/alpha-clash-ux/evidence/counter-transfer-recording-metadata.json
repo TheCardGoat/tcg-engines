@@ -1,0 +1,18 @@
+{
+  "file": "counter-transfer-audio.mp4",
+  "frames": 48,
+  "changingSpanSeconds": 1.5846350193023682,
+  "audioOffsetSeconds": 11.899998903274536,
+  "tailHoldSeconds": 2,
+  "masterVolume": 75,
+  "masterGain": 0.5625,
+  "audioContext": "running",
+  "documentHidden": false,
+  "capture": "Chromium screencast with app Howler master output; actual native Move counters click",
+  "volume": [
+    "mean_volume: -34.5 dB",
+    "max_volume: -8.0 dB"
+  ],
+  "performanceClaim": "30 FPS encoding is not a runtime FPS benchmark",
+  "settingsRestored": true
+}

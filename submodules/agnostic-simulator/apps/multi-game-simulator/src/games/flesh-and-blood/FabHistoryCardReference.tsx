@@ -1,3 +1,4 @@
+import { CardReference } from "@tcg/simulator-presentation/card-reference";
 import { useFabCardArt } from "./FabPresentationCatalog";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 
@@ -42,15 +43,31 @@ export function FabHistoryCardReference({
   const previewTarget = useFabPreviewTarget(entity, { pinOnClick: true });
 
   return (
-    <span
-      role="button"
+    <CardReference
+      card={{
+        id: entity.id,
+        label: name,
+        imageUrl: entity.imageUrl,
+        identity: definition?.pitchValue
+          ? [
+              {
+                label: `Pitch ${definition.pitchValue}`,
+                color:
+                  definition.pitchValue === 1
+                    ? "#ed6475"
+                    : definition.pitchValue === 2
+                      ? "#efcf61"
+                      : "#74b7f5",
+              },
+            ]
+          : undefined,
+      }}
+      previewMode="external"
       tabIndex={0}
       className="fab-card-name-reference fab-card-name-reference-label"
       data-fab-pitch={definition?.pitchValue ?? "none"}
       aria-label={`Preview ${name}`}
       {...previewTarget.previewProps}
-    >
-      {name}
-    </span>
+    />
   );
 }

@@ -1,8 +1,14 @@
-import { Button, Group, Modal, Stack, Text, Tooltip } from "@mantine/core";
+import { usePresentationSettings } from "@tcg/simulator-presentation/settings";
+import { Button, Group, Text, Tooltip } from "@mantine/core";
 import { RotateCcw } from "lucide-react";
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { CardFace } from "@tcg/simulator-ui";
+import {
+  CARD_PRESENTATION_LAYERS,
+  CardFace,
+  CardInspectionDialog,
+  CardInspectionLayout,
+} from "@tcg/simulator-ui";
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 import {
   grandArchiveEntityWithPrintedDetails,
@@ -10,6 +16,7 @@ import {
 } from "./GrandArchiveCardPreview";
 import { grandArchiveActionLabel } from "./GrandArchiveCardActions";
 import { useGrandArchiveInteractionWorkspace } from "./GrandArchiveInteractionLayer";
+import { GrandArchiveStatuses, isGrandArchiveStatus } from "./GrandArchiveStatuses";
 import { GrandArchiveRoleCard } from "./GrandArchiveRoleCard";
 import { grandArchivePhysicalCards } from "./grand-archive-physical-cards";
 import "./grand-archive-board-controls.css";
@@ -24,6 +31,8 @@ export function GrandArchiveBoardControls({
   onInspectClose,
   onInspectEntity,
   showStatus = true,
+  handOrder,
+  onMoveInHand,
 }: {
   readonly fixture: GrandArchiveHarnessFixture;
   readonly canAct: boolean;
@@ -33,8 +42,11 @@ export function GrandArchiveBoardControls({
   readonly onInspectClose?: () => void;
   readonly onInspectEntity?: (id: string) => void;
   readonly showStatus?: boolean;
+  readonly handOrder?: readonly string[];
+  readonly onMoveInHand?: (id: string, direction: -1 | 1) => void;
 }) {
   const workspace = useGrandArchiveInteractionWorkspace();
+  const { reducedMotion } = usePresentationSettings();
   const physical = useMemo(
     () => grandArchivePhysicalCards({ entities: fixture.entities, zones: fixture.table.zones }),
     [fixture.entities, fixture.table.zones],
@@ -80,6 +92,7 @@ export function GrandArchiveBoardControls({
   const waitingPlayerId = "playerId" in fixture.waitState ? fixture.waitState.playerId : undefined;
   const waitingPlayer = fixture.table.seats.find((seat) => seat.id === waitingPlayerId);
   const self = fixture.table.seats.find((seat) => seat.perspective === "bottom");
+  const handIndex = inspected ? (handOrder?.indexOf(inspected.id) ?? -1) : -1;
   const status =
     fixture.waitState.kind === "game-over"
       ? "Match complete"
@@ -88,7 +101,7 @@ export function GrandArchiveBoardControls({
         : waitingPlayer?.id === self?.id
           ? "Your choice"
           : waitingPlayer
-            ? `${waitingPlayer.label} choosing`
+            ? `${waitingPlayer.label === "You" || waitingPlayer.label === "Opponent" ? "Opponent" : waitingPlayer.label} choosing`
             : fixture.table.status.phase;
 
   useLayoutEffect(() => {
@@ -184,7 +197,7 @@ export function GrandArchiveBoardControls({
     <div className="ga-board-controls">
       {showStatus ? (
         <div className="ga-board-controls__status" role="status">
-          {canAct ? status : "Inspect cards and counters"}
+          {status}
         </div>
       ) : null}
       <Group className="ga-board-controls__buttons" justify="center" gap="xs" wrap="wrap">
@@ -229,18 +242,83 @@ export function GrandArchiveBoardControls({
           </Button>
         ) : null}
       </Group>
-      <Modal
+      <CardInspectionDialog
         closeButtonProps={{ "aria-label": "Close card inspection" }}
         opened={Boolean(inspected)}
         onClose={closeInspection}
         title={inspected?.title ?? "Card inspection"}
-        size="sm"
+        size="lg"
+        landscapeColumns
+        transitionProps={{ duration: reducedMotion ? 0 : 160 }}
         centered
       >
         {inspected ? (
-          <Stack gap="sm">
+          <CardInspectionLayout
+            artwork={
+              <div className="ga-board-controls__inspection">
+                <CardFace
+                  crossOrigin="anonymous"
+                  as="div"
+                  entity={grandArchiveEntityWithPrintedDetails({
+                    ...inspected,
+                    ...(typeof inspected.dataAttributes?.["data-ga-printed-image-url"] === "string"
+                      ? {
+                          imageUrl: inspected.dataAttributes["data-ga-printed-image-url"],
+                          imageAspectRatio:
+                            typeof inspected.dataAttributes[
+                              "data-ga-printed-image-aspect-ratio"
+                            ] === "number"
+                              ? inspected.dataAttributes["data-ga-printed-image-aspect-ratio"]
+                              : inspected.imageAspectRatio,
+                        }
+                      : {}),
+                    decorations: [],
+                  })}
+                  density="full"
+                  fill
+                  fullImageFit="contain"
+                />
+              </div>
+            }
+          >
+            <GrandArchiveStatuses
+              title={inspected.title}
+              statuses={(inspected.decorations ?? []).filter(isGrandArchiveStatus)}
+              zIndex={CARD_PRESENTATION_LAYERS.focus + 1}
+            />
+            {handIndex >= 0 && handOrder && onMoveInHand ? (
+              <Group
+                className="ga-board-controls__hand-order"
+                gap="xs"
+                role="group"
+                aria-label="Arrange your hand"
+                justify="center"
+              >
+                <Button
+                  mih={44}
+                  disabled={handIndex === 0}
+                  onClick={() => onMoveInHand(inspected.id, -1)}
+                >
+                  Move left
+                </Button>
+                <Text size="sm" aria-live="polite">
+                  Position {handIndex + 1} of {handOrder.length}
+                </Text>
+                <Button
+                  mih={44}
+                  disabled={handIndex === handOrder.length - 1}
+                  onClick={() => onMoveInHand(inspected.id, 1)}
+                >
+                  Move right
+                </Button>
+              </Group>
+            ) : null}
             {!workspace.active ? (
-              <Group gap="xs" aria-label="Inspected card actions">
+              <Group
+                gap="xs"
+                aria-label="Inspected card actions"
+                className="ga-board-controls__inspected-actions"
+              >
                 {entityActions(inspected).map((action) => (
                   <Button
                     key={action.id}
@@ -281,37 +359,14 @@ export function GrandArchiveBoardControls({
                 )}
               </div>
             ) : null}
-            <div className="ga-board-controls__inspection">
-              <CardFace
-                crossOrigin="anonymous"
-                as="div"
-                entity={grandArchiveEntityWithPrintedDetails({
-                  ...inspected,
-                  ...(typeof inspected.dataAttributes?.["data-ga-printed-image-url"] === "string"
-                    ? {
-                        imageUrl: inspected.dataAttributes["data-ga-printed-image-url"],
-                        imageAspectRatio:
-                          typeof inspected.dataAttributes["data-ga-printed-image-aspect-ratio"] ===
-                          "number"
-                            ? inspected.dataAttributes["data-ga-printed-image-aspect-ratio"]
-                            : inspected.imageAspectRatio,
-                      }
-                    : {}),
-                  decorations: [],
-                })}
-                density="full"
-                fill
-                fullImageFit="contain"
-              />
-            </div>
             <Text size="sm">
               {grandArchiveEntityWithPrintedDetails(inspected)
                 .details?.rules.map((rule) => rule.text ?? rule.label ?? "")
                 .join("\n")}
             </Text>
-          </Stack>
+          </CardInspectionLayout>
         ) : null}
-      </Modal>
+      </CardInspectionDialog>
     </div>
   );
 }

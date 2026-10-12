@@ -1,0 +1,71 @@
+.section {
+  --counter-border: #34424f;
+  --counter-muted: #aebcca;
+  max-width: 1440px;
+  margin: 0 auto 24px;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid var(--counter-border);
+  border-radius: 12px;
+  background: #111a23;
+}
+.section h2 {
+  margin: 0 0 8px;
+}
+.section h3 {
+  font-size: 14px;
+}
+.section p {
+  color: var(--counter-muted);
+  font-size: 13px;
+  max-width: 70ch;
+}
+.tokens {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 16px 0;
+}
+.tokens > div {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  min-width: 55px;
+}
+.tokens span {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 16px 0;
+  border-block: 1px solid var(--counter-border);
+}
+.controls label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+.controls input,
+.controls select {
+  width: 170px;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: #202c38;
+  color: #fff;
+  border: 1px solid #647383;
+  border-radius: 6px;
+}
+.comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 24px;
+}
+.scene {
+  height: 240px;
+  background: #0a1017;
+  border-radius: 8px;
+}

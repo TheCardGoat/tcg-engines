@@ -18,3 +18,30 @@
   outline: 2px solid #e9d78e;
   outline-offset: 3px;
 }
+
+.ga-board-controls__inspected-actions .mantine-Button-root {
+  height: auto;
+  min-height: 44px;
+  max-width: 100%;
+  padding-block: 10px;
+}
+.ga-board-controls__inspected-actions .mantine-Button-inner {
+  height: auto;
+}
+.ga-board-controls__inspected-actions .mantine-Button-label {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+}
+.ga-board-controls__hand-order {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 6px;
+}
+.ga-board-controls__hand-order .mantine-Button-root {
+  padding-inline: 8px;
+}
+.ga-board-controls__hand-order p {
+  font-size: 12px;
+  text-align: center;
+}

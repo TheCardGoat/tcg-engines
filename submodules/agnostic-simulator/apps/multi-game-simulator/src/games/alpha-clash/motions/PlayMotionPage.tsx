@@ -32,6 +32,7 @@ import {
 } from "./play-fixtures";
 import "./motions.css";
 import "./play.css";
+import { alphaClashProductImageUrl } from "../components/Arena3D/card-artwork";
 
 function PlayClock({
   phase,
@@ -111,7 +112,8 @@ export function PlayMotionPage() {
   useEffect(() => {
     for (const entry of Object.values(playCards)) {
       const image = new Image();
-      image.src = `https://tcgplayer-cdn.tcgplayer.com/product/${entry.product}_400w.jpg`;
+      const url = alphaClashProductImageUrl(entry.product);
+      if (url) image.src = url;
     }
   }, []);
   useEffect(() => {
@@ -319,7 +321,7 @@ export function PlayMotionPage() {
               if (n) nodes.current.set("subject", n);
               else nodes.current.delete("subject");
             }}
-            imageUrl={`https://tcgplayer-cdn.tcgplayer.com/product/${card.product}_400w.jpg`}
+            imageUrl={alphaClashProductImageUrl(card.product)}
             role="button"
             tabIndex={phase === "idle" || phase === "standby" ? 0 : -1}
             selected={showTarget}
@@ -353,7 +355,7 @@ export function PlayMotionPage() {
                 if (n) nodes.current.set(enemy.id, n);
                 else nodes.current.delete(enemy.id);
               }}
-              imageUrl={`https://tcgplayer-cdn.tcgplayer.com/product/${enemy.product}_400w.jpg`}
+              imageUrl={alphaClashProductImageUrl(enemy.product)}
               className="play-target"
               selected={kind !== "clash" && target === enemy.id && (phase === "idle" || showTarget)}
               interactive={kind !== "clash"}

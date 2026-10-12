@@ -19,7 +19,11 @@ import {
   type GrandArchiveLegalCommand,
   type GrandArchiveMatchRuntime,
 } from "@tcg/grand-archive-engine/simulator";
-import { grandArchivePlayerId } from "@tcg/grand-archive-engine/runtime";
+import {
+  getGrandArchiveAnnouncementModes,
+  grandArchiveObjectPrintedAbilities,
+  grandArchivePlayerId,
+} from "@tcg/grand-archive-engine/runtime";
 import type { GrandArchiveObjectId } from "@tcg/grand-archive-engine/runtime";
 
 type GrandArchiveDecision = NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>;
@@ -150,12 +154,17 @@ function decisionPresentation(decision: GrandArchiveDecision): GrandArchiveDecis
         instruction: "Choose a direction for the effect.",
         intent: "choose-option",
       };
-    case "resolve-distribution":
+    case "resolve-distribution": {
+      const resource =
+        decision.payload.kind === "damage"
+          ? "damage"
+          : `${typeof decision.payload.counter === "string" ? decision.payload.counter : decision.payload.counter.named} counters`;
       return {
         title: "Distribute amount",
-        instruction: `Distribute ${decision.amount} among the eligible objects.`,
+        instruction: `Assign ${decision.amount} ${resource} among the eligible objects.`,
         intent: "choose-option",
       };
+    }
     case "resolve-move-partition":
       return {
         title: "Separate cards",
@@ -165,7 +174,7 @@ function decisionPresentation(decision: GrandArchiveDecision): GrandArchiveDecis
     case "resolve-counter-allocation":
       return {
         title: "Allocate counters",
-        instruction: `Allocate at least ${decision.minimum} counters among the eligible objects.`,
+        instruction: `${decision.operation === "remove" ? "Remove" : "Move"} ${decision.minimum === decision.maximum ? decision.minimum : `${decision.minimum}–${decision.maximum}`} ${decision.counter.replace(/^named:/, "")} counters from the eligible objects.`,
         intent: "choose-option",
       };
     case "announce-effect-materialization":
@@ -275,14 +284,14 @@ function objectChoiceLabel(runtime: GrandArchiveMatchRuntime, id: string): strin
   const player = runtime.state.players[grandArchivePlayerId(id)];
   if (player) return player.name;
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return id;
-  const card = runtime.program.cardsById[object.activeDefinitionId ?? object.definitionId];
+  const card =
+    runtime.program.cardsById[object ? (object.activeDefinitionId ?? object.definitionId) : id];
   const name = card
     ? card.layout.kind === "single-faced"
       ? card.layout.face.name
       : card.layout.defaultFace.name
-    : object.definitionId;
-  return `${name} (${id})`;
+    : (object?.definitionId ?? id);
+  return object?.nameOverride ?? name;
 }
 
 function declarationValueLabel(runtime: GrandArchiveMatchRuntime, value: unknown): string {
@@ -297,6 +306,44 @@ function declarationValueLabel(runtime: GrandArchiveMatchRuntime, value: unknown
       .join(", ")}}`;
   }
   return String(value);
+}
+
+function targetChoiceLabel(runtime: GrandArchiveMatchRuntime, id: string): string {
+  const label = objectChoiceLabel(runtime, id);
+  const object = runtime.state.objects[id as GrandArchiveObjectId];
+  const wait = runtime.waitState();
+  if (!object || !("playerId" in wait)) return label;
+  return object.controllerId === wait.playerId ? `your ${label}` : `opponent's ${label}`;
+}
+
+/** Keep protocol mode IDs stable while displaying the native card's mode text. */
+function declarationModeLabels(
+  runtime: GrandArchiveMatchRuntime,
+  command: GrandArchiveDeclarationCommand,
+): ReadonlyMap<string, string> {
+  if (!command.modeIds?.length) return new Map();
+  const sourceId = command.move === "activate-ability" ? command.sourceId : command.cardId;
+  const source = runtime.state.objects[sourceId];
+  if (!source) return new Map();
+  const abilities = grandArchiveObjectPrintedAbilities(runtime.program, source, runtime.state);
+  const ability = abilities.find((candidate) =>
+    command.move === "activate-ability"
+      ? candidate.kind === "activated" && candidate.id === command.abilityId
+      : candidate.kind === "card-resolution",
+  );
+  if (ability?.kind !== "activated" && ability?.kind !== "card-resolution") return new Map();
+  const modes =
+    ("cascade" in ability ? ability.cascade?.modes : undefined) ??
+    getGrandArchiveAnnouncementModes(ability.modes, ability.effect, {
+      program: runtime.program,
+      state: runtime.state,
+      sourceId,
+      abilityBearerId: sourceId,
+      controllerId: source.controllerId,
+      bindings: command.targets ?? {},
+      variables: command.variables,
+    })?.modes;
+  return new Map(modes?.map((mode) => [mode.id, mode.text]));
 }
 
 function commandChoiceLabel(
@@ -316,10 +363,13 @@ function commandChoiceLabel(
   if (command.targets) {
     const targets = Object.values(command.targets).flat();
     if (targets.length > 0) {
-      details.push(`targets: ${targets.map((id) => objectChoiceLabel(runtime, id)).join(", ")}`);
+      details.push(`Target ${targets.map((id) => targetChoiceLabel(runtime, id)).join(", ")}`);
     }
   }
-  if (command.modeIds?.length) details.push(`modes: ${command.modeIds.join(", ")}`);
+  if (command.modeIds?.length) {
+    const labels = declarationModeLabels(runtime, command);
+    details.push(command.modeIds.map((id) => labels.get(id) ?? id).join(" · "));
+  }
   if (command.variables && Object.keys(command.variables).length > 0) {
     details.push(
       Object.entries(command.variables)
@@ -333,7 +383,15 @@ function commandChoiceLabel(
     ),
     ...(command.costSelections ?? []).flat().map((id) => objectChoiceLabel(runtime, id)),
   ];
-  if (payments.length > 0) details.push(`payment: ${payments.join(", ")}`);
+  if (payments.length > 0) {
+    const counts = new Map<string, number>();
+    for (const name of payments) counts.set(name, (counts.get(name) ?? 0) + 1);
+    details.push(
+      `Pay with ${[...counts]
+        .map(([name, count]) => (count > 1 ? `${name} ×${count}` : name))
+        .join(", ")}`,
+    );
+  }
   if (command.costOptionIndex !== undefined)
     details.push(`cost option ${command.costOptionIndex + 1}`);
   if (command.payOptionalCost !== undefined) {
@@ -527,7 +585,12 @@ function structuredDeclarationInputs(
       })),
     });
   };
-  const addOptions = (id: string, text: string, values: readonly (readonly string[])[]) => {
+  const addOptions = (
+    id: string,
+    text: string,
+    values: readonly (readonly string[])[],
+    labels: ReadonlyMap<string, string> = new Map(),
+  ) => {
     const optionIds = [...new Set(values.flat())];
     if (optionIds.length === 0) return;
     inputs.push({
@@ -539,7 +602,7 @@ function structuredDeclarationInputs(
       max: Math.max(...values.map((value) => value.length)),
       options: optionIds.map((optionId) => ({
         id: optionId,
-        text: { key: optionId },
+        text: { key: labels.get(optionId) ?? optionId },
         enabled: true,
       })),
     });
@@ -594,6 +657,7 @@ function structuredDeclarationInputs(
     "modes",
     "Choose modes.",
     commands.map((command) => command.modeIds ?? []),
+    new Map(commands.flatMap((command) => [...declarationModeLabels(runtime, command)])),
   );
   const bindings = [...new Set(commands.flatMap((command) => Object.keys(command.targets ?? {})))];
   for (const binding of bindings) {
@@ -788,7 +852,11 @@ function structuredDecisionActionId(decisionId: string): string {
 }
 
 function entityKindForId(runtime: GrandArchiveMatchRuntime, id: string) {
-  if (runtime.state.objects[id as GrandArchiveObjectId]) return "card" as const;
+  if (
+    runtime.state.objects[id as GrandArchiveObjectId] ||
+    runtime.program.cardsById[id]?.definitionKind === "card"
+  )
+    return "card" as const;
   if (id in runtime.state.players) return "player" as const;
   return "effect" as const;
 }
@@ -799,7 +867,12 @@ function entityRefForId(runtime: GrandArchiveMatchRuntime, id: string) {
     return { kind, instanceId: id, ownerId: id } as const;
   }
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return { kind, instanceId: id } as const;
+  if (!object)
+    return {
+      kind,
+      instanceId: id,
+      ...(runtime.program.cardsById[id]?.definitionKind === "card" ? { definitionId: id } : {}),
+    } as const;
   return {
     kind,
     instanceId: id,
@@ -826,7 +899,7 @@ function structuredCandidateLabel(runtime: GrandArchiveMatchRuntime, id: string)
   const player = runtime.state.players[grandArchivePlayerId(id)];
   if (player) return player.name;
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return id;
+  if (!object) return objectChoiceLabel(runtime, id);
   if (object.facing === "face-down" && object.zone === "banishment") return "Face-down card";
   return objectChoiceLabel(runtime, id);
 }
@@ -970,8 +1043,10 @@ function semanticDecisionAnswerValues(
           : [],
       };
     } else if (glimpse.kind === "starcall") {
-      values["glimpse-order"] = {
-        top: [],
+      // Each native card choice has a separate conditional partition. Merging
+      // these with reorder would expose destinations from the other branch.
+      values[`starcall-order:${String(glimpse.cardId)}`] = {
+        starcall: typeof glimpse.cardId === "string" ? [glimpse.cardId] : [],
         bottom: Array.isArray(glimpse.bottom)
           ? glimpse.bottom.filter((id): id is string => typeof id === "string")
           : [],
@@ -1065,12 +1140,36 @@ function semanticDecisionAnswerValues(
   return values;
 }
 
+/** Glimpse enumeration proposes declarations; only native-proven answers may create UI steps. */
+function semanticDecisionCandidates(
+  runtime: GrandArchiveMatchRuntime,
+  decision: GrandArchiveDecision,
+): readonly GrandArchiveDecisionAnswerCandidate[] {
+  const candidates = listGrandArchiveDecisionAnswerCandidates(
+    runtime.program,
+    runtime.state,
+    decision,
+  );
+  if (decision.kind !== "resolve-glimpse") return candidates;
+  return candidates.filter(
+    (candidate) =>
+      runtime.probe(
+        {
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: candidate.answer,
+        },
+        { playerId: decision.playerId, expectedStateVersion: runtime.state.stateVersion },
+      ).ok,
+  );
+}
+
 function semanticDecisionInputs(
   runtime: GrandArchiveMatchRuntime,
   decision: GrandArchiveDecision,
-  candidates: readonly GrandArchiveDecisionAnswerCandidate[] = listGrandArchiveDecisionAnswerCandidates(
-    runtime.program,
-    runtime.state,
+  candidates: readonly GrandArchiveDecisionAnswerCandidate[] = semanticDecisionCandidates(
+    runtime,
     decision,
   ),
 ): InteractionInput[] {
@@ -1089,7 +1188,7 @@ function semanticDecisionInputs(
   );
   const inputIds = [...new Set(answerValues.flatMap((values) => Object.keys(values)))];
   const priority = (id: string) =>
-    id === "accept"
+    id === "accept" || id === "glimpse-action"
       ? 0
       : id.includes("costOption") || id.includes("optional")
         ? 1
@@ -1097,9 +1196,12 @@ function semanticDecisionInputs(
           ? 2
           : id.includes("mode")
             ? 3
-            : id.startsWith("target:") || id.includes("target") || id.includes("attacker")
+            : id === "cardId" ||
+                id.startsWith("target:") ||
+                id.includes("target") ||
+                id.includes("attacker")
               ? 4
-              : id.includes("payment") || id.includes("cost")
+              : id.toLowerCase().includes("payment") || id.includes("cost")
                 ? 5
                 : id.includes("order")
                   ? 6
@@ -1116,6 +1218,7 @@ function semanticDecisionInputs(
       return (
         candidateValues.every(
           (value) =>
+            value === undefined ||
             typeof value === "string" ||
             typeof value === "number" ||
             typeof value === "boolean" ||
@@ -1128,22 +1231,51 @@ function semanticDecisionInputs(
           ...new Map(
             answerValues.flatMap((values) => {
               if (values[id] === undefined) return [];
-              const all = earlierDiscriminators.map((inputId) => {
-                const value = values[inputId]!;
-                return {
-                  inputId,
-                  value: Array.isArray(value) ? [...value] : (value as string | number | boolean),
-                };
+              const all = earlierDiscriminators.flatMap((inputId) => {
+                const value = values[inputId];
+                if (value === undefined) return [];
+                return [
+                  {
+                    inputId,
+                    value: Array.isArray(value) ? [...value] : (value as string | number | boolean),
+                  },
+                ];
               });
               if (all.length === 0 && values.accept === true)
                 all.push({ inputId: "accept", value: true });
-              return all.length > 0 ? [[stableDeclarationValue(all), { all }] as const] : [];
+              // A field is required only if every candidate in this branch needs it.
+              // For example, a zero-cost Starcall must not inherit another card's payment.
+              const hasMatchingOmission = answerValues.some(
+                (candidate) =>
+                  candidate[id] === undefined &&
+                  all.every(
+                    (condition) =>
+                      stableDeclarationValue(candidate[condition.inputId]) ===
+                      stableDeclarationValue(condition.value),
+                  ),
+              );
+              return all.length > 0 && !hasMatchingOmission
+                ? [[stableDeclarationValue(all), { all }] as const]
+                : [];
             }),
           ).values(),
         ]
       : [];
     const requiredWhen = conditionalRequirements.length > 0 ? conditionalRequirements : undefined;
-    const text = { key: id.replaceAll(".", " ").replaceAll(":", " ").replaceAll("-", " ") };
+    const text = {
+      key:
+        id === "glimpse-order" || id.startsWith("starcall-order:")
+          ? "Arrange the viewed cards"
+          : id === "glimpse-action"
+            ? "Choose how to use the viewed cards"
+            : id === "cardId"
+              ? decision.kind === "resolve-glimpse"
+                ? "Choose a card to Starcall"
+                : "Choose a card"
+              : id === "reservePayment"
+                ? "Choose cards to pay reserve"
+                : id.replaceAll(".", " ").replaceAll(":", " ").replaceAll("-", " "),
+    };
     const common = { id, text, required, ...(requiredWhen ? { requiredWhen } : {}) };
     if (present.every((value) => typeof value === "boolean")) {
       return [
@@ -1181,7 +1313,7 @@ function semanticDecisionInputs(
           {
             ...common,
             kind: "entity-allocation",
-            role: id.includes("payment") || id.includes("cost") ? "cost" : "target",
+            role: id.toLowerCase().includes("payment") || id.includes("cost") ? "cost" : "target",
             entityKinds: [...new Set(keys.map((key) => entityKindForId(runtime, key)))],
             totalMin: Math.min(...totals),
             totalMax: Math.max(...totals),
@@ -1213,13 +1345,18 @@ function semanticDecisionInputs(
               key:
                 decision.kind === "resolve-glimpse"
                   ? key === "top"
-                    ? "Top"
-                    : "Bottom"
-                  : `Group ${Number(key) + 1}`,
+                    ? "Top of deck"
+                    : key === "starcall"
+                      ? "Starcall"
+                      : "Bottom of deck"
+                  : partitionRouteLabel(decision, Number(key)),
             },
             kind: "destination" as const,
             ordered: true,
             orderDirection: "top-first" as const,
+            candidateIds: [
+              ...new Set(records.flatMap((record) => (record[key] as string[] | undefined) ?? [])),
+            ],
             min: Math.min(
               ...records.map((record) => (record[key] as string[] | undefined)?.length ?? 0),
             ),
@@ -1250,7 +1387,9 @@ function semanticDecisionInputs(
       const ordered =
         decision.kind === "order-retaliation-damage" ||
         decision.kind === "order-triggered-abilities" ||
-        decision.kind === "resolve-glimpse";
+        (decision.kind === "resolve-glimpse" &&
+          Math.max(...arrays.map((value) => value.length)) > 1 &&
+          !id.includes("Payment"));
       return [
         {
           ...common,
@@ -1263,7 +1402,7 @@ function semanticDecisionInputs(
               }
             : {
                 role:
-                  id.includes("payment") || id.includes("cost")
+                  id.toLowerCase().includes("payment") || id.includes("cost")
                     ? ("cost" as const)
                     : id.includes("attacker") || id.includes("weapon")
                       ? ("attacker" as const)
@@ -1287,11 +1426,21 @@ function semanticDecisionInputs(
       {
         ...common,
         kind: "option-selection",
+        implicit: required && optionIds.length === 1 && arrays.every((value) => value.length === 1),
         min: Math.min(...arrays.map((value) => value.length)),
         max: Math.max(...arrays.map((value) => value.length)),
         options: optionIds.map((optionId) => ({
           id: optionId,
-          text: { key: optionId },
+          text: {
+            key:
+              id === "glimpse-action"
+                ? optionId === "reorder"
+                  ? "Return cards to deck"
+                  : optionId === "starcall"
+                    ? "Starcall"
+                    : optionId
+                : optionId,
+          },
           enabled: true,
         })),
         ...(decision.kind === "resolve-effect-choice" &&
@@ -1308,6 +1457,17 @@ function semanticDecisionInputs(
       },
     ];
   });
+}
+
+function partitionRouteLabel(
+  decision: NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>,
+  index: number,
+): string {
+  if (decision.kind !== "resolve-move-partition") return `Group ${index + 1}`;
+  const destination = decision.destinations[index];
+  if (!destination) return `Group ${index + 1}`;
+  const placement = destination.placement.kind === "top" ? "Top" : "Bottom";
+  return `${placement} of ${destination.zone.replaceAll("-", " ")}`;
 }
 
 function structuredDecisionInput(
@@ -1374,7 +1534,7 @@ function structuredDecisionInput(
       candidates,
       routes: description.routeIds.map((id, index) => ({
         id,
-        text: { key: `Group ${index + 1}` },
+        text: { key: partitionRouteLabel(decision, index) },
         kind: "destination" as const,
         ordered: true,
         orderDirection: "top-first" as const,
@@ -1382,6 +1542,25 @@ function structuredDecisionInput(
         max: candidates.length,
       })),
       assignment: "exhaustive",
+    };
+  }
+  if (description.kind === "repeated-selection") {
+    // Infinity is a native bound; the wire contract accepts finite safe integers.
+    const maximum = Math.min(description.maximum, Number.MAX_SAFE_INTEGER);
+    return {
+      ...common,
+      kind: "entity-allocation",
+      role: "target",
+      entityKinds: [...new Set(description.candidateIds.map((id) => entityKindForId(runtime, id)))],
+      totalMin: description.minimum,
+      totalMax: maximum,
+      candidates: description.candidateIds.map((id) => ({
+        entity: entityRefForId(runtime, id),
+        text: { key: structuredCandidateLabel(runtime, id) },
+        enabled: maximum > 0,
+        min: 0,
+        max: maximum,
+      })),
     };
   }
   if (description.kind === "allocation") {
@@ -1437,7 +1616,7 @@ function structuredDecisionInput(
     entityKinds: [...new Set(candidates.map((candidate) => candidate.entity.kind))],
     min: description.minimum,
     max: description.maximum,
-    ordered: description.ordered,
+    ordered: description.ordered && description.maximum > 1,
     candidates,
   };
 }
@@ -1791,11 +1970,7 @@ export function commandForGrandArchiveSubmission(
     );
     const structuredInput = structuredDecisionInput(runtime, decision);
     if (!structuredInput) {
-      const candidates = listGrandArchiveDecisionAnswerCandidates(
-        runtime.program,
-        runtime.state,
-        decision,
-      );
+      const candidates = semanticDecisionCandidates(runtime, decision);
       const hasOptionalComplexAnswer =
         candidates.some((candidate) => candidate.answer === false) &&
         candidates.some(
@@ -1836,6 +2011,39 @@ export function commandForGrandArchiveSubmission(
     }
     const input = structuredInput;
     const submittedAnswer = submission.values[input.id];
+    if (description.kind === "repeated-selection") {
+      if (!submittedAnswer || typeof submittedAnswer !== "object" || Array.isArray(submittedAnswer))
+        return null;
+      const amounts: [string, number][] = [];
+      for (const [id, count] of Object.entries(submittedAnswer)) {
+        if (
+          !description.candidateIds.includes(id) ||
+          typeof count !== "number" ||
+          !Number.isSafeInteger(count) ||
+          count < 0
+        )
+          return null;
+        amounts.push([id, count]);
+      }
+      const total = amounts.reduce((sum, [, count]) => sum + count, 0);
+      if (
+        !Number.isSafeInteger(total) ||
+        total < description.minimum ||
+        total > description.maximum
+      )
+        return null;
+      return {
+        playerId,
+        stateVersion: runtime.state.stateVersion,
+        command: {
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: amounts.flatMap(([id, count]) => Array.from({ length: count }, () => id)),
+        },
+        label: decisionPresentation(decision).title,
+      };
+    }
     const answer =
       description.kind === "partition" &&
       submittedAnswer &&

@@ -1,5 +1,6 @@
 import { GrandArchivePreparationPage } from "./GrandArchivePreparation.page";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../simulator/useMatchIntroReady";
 import type {
   GrandArchiveViewerObject,
   GrandArchiveViewerState,
@@ -441,6 +442,9 @@ function toUiChatMessage(message: ProtocolChatMessage, viewerId: string): UiChat
 /** Server-authoritative Grand Archive match; the browser submits interactions only. */
 export function GrandArchiveLiveMatchPage() {
   const route = useSimulatorRoute();
+  useMatchIntroReady(
+    Boolean(route.error) || route.session?.phase === "preparation" || route.session?.phase === "cancelled",
+  );
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   const session = route.session;
   if (!session) return <GrandArchiveLiveGamePage />;
@@ -480,6 +484,12 @@ function GrandArchiveLiveGamePage() {
   const viewerId = bootstrap?.viewer.role === "player" ? bootstrap.viewer.actorId : null;
   const [state, setState] = useState<GrandArchiveViewerState | null>(() =>
     parseGrandArchiveLiveViewerState(bootstrap?.game.view),
+  );
+  useMatchIntroReady(
+    Boolean(
+      route.error ||
+        (bootstrap && (bootstrap.viewer.role === "spectator" || (gameId && viewerId && state))),
+    ),
   );
   useLiveMatchDocumentTitle({
     game: "Grand Archive",

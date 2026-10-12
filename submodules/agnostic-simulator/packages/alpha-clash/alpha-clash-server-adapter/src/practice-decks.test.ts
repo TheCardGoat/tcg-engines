@@ -1,10 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { officialCatalog } from "@tcg/alpha-clash-cards";
 import { alphaClashServerAdapter } from "./adapter";
+import { ALPHA_CLASH_META_DECKS, resolveAlphaClashLabDeck } from "./practice";
 
 const official = new Map(officialCatalog.map((card) => [card.id, card]));
 
 describe("official practice decks", () => {
+  for (const preset of ALPHA_CLASH_META_DECKS) {
+    it(`${preset.id} preserves the exact lab main deck and excludes the sideboard`, () => {
+      const deck = alphaClashServerAdapter.practiceDecks!.getDeck(preset.id)!;
+      expect(alphaClashServerAdapter.validateDeckForFormat("constructed", deck).valid).toBe(true);
+      const lab = resolveAlphaClashLabDeck(preset.id);
+      expect(deck.filter((entry) => entry.sectionId === "contender")).toEqual([
+        { cardId: lab.contenderId, quantity: 1, sectionId: "contender" },
+      ]);
+      expect(
+        deck
+          .filter((entry) => entry.sectionId === "main")
+          .flatMap((entry) => Array(entry.quantity).fill(entry.cardId))
+          .sort(),
+      ).toEqual([...lab.deckIds].sort());
+    });
+  }
   for (const preset of ["starter-titan", "starter-warden"]) {
     for (const suffix of ["", "@42"]) {
       it(`${preset}${suffix} contains only real cards with artwork`, () => {

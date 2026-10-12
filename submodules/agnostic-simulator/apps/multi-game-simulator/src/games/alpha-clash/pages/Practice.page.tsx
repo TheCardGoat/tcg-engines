@@ -1,22 +1,32 @@
+import { AlphaClashPostGameSummary } from "../AlphaClashPostGameSummary";
+import type { ResourceAudioState } from "../components/board-types";
+import { isAlphaClashPromptFixture } from "../prompt-fixture-catalog";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Paper, Stack, Text, Title } from "@mantine/core";
-import type { ProjectedState } from "@tcg/alpha-clash-engine";
-import {
-  alphaClashCreateServerEngine,
-  alphaClashServerAdapter,
-  type AlphaClashServerEngine,
-} from "@tcg/alpha-clash-server-adapter";
-import { INTERACTION_PROTOCOL_VERSION, type InteractionSubmission } from "@tcg/protocol";
-import { useArenaOpening } from "../components/Arena3D/useArenaOpening";
+import { useMediaQuery } from "@mantine/hooks";
+import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
+import { SeatPassOverlay, type SeatPass } from "../components/SeatPassOverlay";
+import { type AlphaClashServerEngine } from "@tcg/alpha-clash-server-adapter";
+import { type InteractionSubmission } from "@tcg/protocol";
+import { RetryErrorReset } from "../components/RetryErrorReset";
 import { InteractionWorkspace } from "@tcg/simulator-ui";
+import type { AcSeat } from "../components/board-types";
 import {
   AlphaClashInteractionPanel,
   AlphaClashInteractionBoard,
+  deferAlphaClashOptionalCosts,
   labelAlphaClashInteractions,
 } from "../components/AlphaClashInteractions";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import { AlphaClashPracticeSetup } from "./PracticeSetup";
+import {
+  createAlphaClashPracticeEngine,
+  alphaClashPracticeSetupFromSearch,
+  type AlphaClashPracticeSetupInput,
+} from "../practice-setup";
+import { IconPlayerPause, IconPlayerPlay, IconPlayerTrackNext } from "@tabler/icons-react";
 import classes from "./Practice.module.css";
-import { practiceModeFromSearch } from "../../../simulator/practiceMode";
+import { practiceModeFromSearch, type PracticeMode } from "../../../simulator/practiceMode";
+import type { SimulatorBotPacing } from "../../../simulator/SimulatorBotQuickControls";
 
 const HUMAN = "human";
 const BOT = "bot";
@@ -26,16 +36,101 @@ interface LogLine {
   readonly text: string;
 }
 
-/** Local practice match on the tabletop: you versus a practice bot. */
+/** Local setup and engine-backed practice share the fixture board. */
 export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {}) {
-  const mode = fixtureId ? "self" : practiceModeFromSearch(window.location.search);
-  const [setupPlayer, setSetupPlayer] = useState(HUMAN);
+  const [fixtureRun, setFixtureRun] = useState(0);
+  if (fixtureId)
+    return (
+      <AlphaClashPracticeSession
+        key={`${fixtureId}:${fixtureRun}`}
+        fixtureId={fixtureId}
+        onPlayAgain={() => setFixtureRun((run) => run + 1)}
+      />
+    );
+  return <AlphaClashRoutedPracticePage />;
+}
+
+function AlphaClashRoutedPracticePage() {
+  const [search, setSearch] = useSearchParams();
+  let setup: AlphaClashPracticeSetupInput | null = null;
+  let setupError: string | undefined;
+  try {
+    setup = alphaClashPracticeSetupFromSearch(search);
+  } catch (error) {
+    setupError = error instanceof Error ? error.message : String(error);
+  }
+  if (!setup) {
+    return (
+      <AlphaClashPracticeSetup
+        error={setupError}
+        initialMode={practiceModeFromSearch(search)}
+        onStart={(input, mode) => {
+          setSearch({
+            playerDeck: input.playerDeckId,
+            opponentDeck: input.opponentDeckId,
+            strategy: input.strategyId,
+            seed: input.seed,
+            mode,
+          });
+        }}
+      />
+    );
+  }
+  return (
+    <AlphaClashPracticeSession
+      key={search.toString()}
+      setup={setup}
+      initialMode={practiceModeFromSearch(search)}
+      onNewMatch={() => setSearch({ mode: practiceModeFromSearch(search) })}
+      onPlayAgain={() =>
+        setSearch((current) => {
+          const next = new URLSearchParams(current);
+          next.set("seed", crypto.randomUUID());
+          return next;
+        })
+      }
+    />
+  );
+}
+
+function AlphaClashPracticeSession({
+  fixtureId,
+  setup,
+  initialMode,
+  onNewMatch,
+  onPlayAgain,
+}: {
+  fixtureId?: string;
+  setup?: AlphaClashPracticeSetupInput;
+  initialMode?: PracticeMode;
+  onNewMatch?: () => void;
+  onPlayAgain: () => void;
+}) {
+  // Fixtures use the same automatic opponent as practice. Manual inspection
+  // remains available through ?mode=self or the Hot seat control.
+  const [mode, setMode] = useState<PracticeMode>(
+    () =>
+      initialMode ??
+      practiceModeFromSearch(typeof window === "undefined" ? "" : window.location.search),
+  );
+  /** Bot pacing, mirroring SimulatorBotQuickControls: "auto" plays the bot's
+   *  seat until the human's turn; "step" advances one move per Next click. */
+  // Keep fixture framing stable across turns. Following the acting seat is opt-in.
+  // Clean fixture recordings retain all player controls and native actions.
+  const captureView =
+    Boolean(fixtureId) &&
+    new URLSearchParams(typeof window === "undefined" ? "" : window.location.search).get(
+      "capture",
+    ) === "1";
+  const [fixtureViewer, setFixtureViewer] = useState(HUMAN);
+  const [botPacing, setBotPacing] = useState<SimulatorBotPacing>("auto");
   const [engine, setEngine] = useState<AlphaClashServerEngine | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [version, setVersion] = useState(0);
   const [log, setLog] = useState<LogLine[]>([]);
   const [error, setError] = useState<string | null>(null);
   const logCounter = useRef(0);
+  const resourceAudioState = useRef<ResourceAudioState>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -44,36 +139,21 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
         if (fixtureId) {
           const { createAlphaClashVisualFixture } = await import("../visual-fixtures");
           const created = createAlphaClashVisualFixture(fixtureId);
-          if (!cancelled) setEngine(created);
+          if (!cancelled) {
+            setEngine(created);
+            setLog(
+              created.state.moveLog
+                .filter((entry) => entry.public)
+                .slice(-30)
+                .reverse()
+                .map((entry) => ({ id: ++logCounter.current, text: entry.message })),
+            );
+          }
           return;
         }
-        // Deck presets are query-param selectable (?deckA=<preset>@<seed>&deckB=…)
-        // so practice matches can rotate decks; defaults keep the original table.
-        const params = new URLSearchParams(window.location.search);
-        const deckIdA = params.get("deckA") ?? "starter-titan";
-        const deckIdB = params.get("deckB") ?? "starter-warden";
-        const deckA = alphaClashServerAdapter.practiceDecks?.getDeck(deckIdA);
-        const deckB = alphaClashServerAdapter.practiceDecks?.getDeck(deckIdB);
-        if (!deckA || !deckB) throw new Error("Practice decks are unavailable.");
-        const owners = [HUMAN, BOT];
-        const cardsMaps = alphaClashServerAdapter.buildCardInstances(
-          [deckA, deckB].map((deck, index) => ({
-            owner: owners[index] ?? `owner-${index}`,
-            deck: deck.map((entry) => ({
-              cardId: entry.cardId,
-              qty: entry.quantity,
-              ...(entry.sectionId ? { sectionId: entry.sectionId } : {}),
-            })),
-          })),
-        );
-        const created = await alphaClashCreateServerEngine({
-          gameSlug: "alpha-clash",
-          seed: "1",
-          player1Id: HUMAN,
-          player2Id: BOT,
-          cardsMaps,
-        });
-        if (!cancelled) setEngine(created as AlphaClashServerEngine);
+        if (!setup) throw new Error("Choose practice decks first.");
+        const created = await createAlphaClashPracticeEngine(setup);
+        if (!cancelled) setEngine(created);
       } catch (loadError) {
         if (!cancelled) {
           setLoadError(loadError instanceof Error ? loadError.message : String(loadError));
@@ -83,7 +163,7 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
     return () => {
       cancelled = true;
     };
-  }, [fixtureId]);
+  }, [fixtureId, setup?.playerDeckId, setup?.opponentDeckId, setup?.seed]);
 
   const context = useMemo(
     () => ({ gameId: "alpha-clash-local-practice", sourceAuthority: "server" as const }),
@@ -93,6 +173,41 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
   const logLinesOf = useCallback((result: { engineLogRecords?: readonly unknown[] }): string[] => {
     return practiceLogLines(result.engineLogRecords ?? []);
   }, []);
+
+  /** Drives the practice bot (mirrors the adapter's headless automation loop;
+   *  the engine validates every action at the dispatch boundary). "single"
+   *  advances one bot move — the top bar's Next control in step pacing. */
+  const driveBot = useCallback(
+    (limit: "until-human" | "single") => {
+      if (!engine) return;
+      let guard = 0;
+      while (!engine.hasGameEnded() && guard < 200) {
+        const actor = engine.getActivePlayerId();
+        if (actor !== BOT) break;
+        const botResult = engine.takeAutomatedAction(
+          { strategyId: setup?.strategyId ?? "default" },
+          context,
+        );
+        if (!botResult.finalResult.success) {
+          setError(botResult.finalResult.error ?? "The practice bot could not act.");
+          break;
+        }
+        const botLines = logLinesOf(botResult.finalResult);
+        if (botLines.length > 0) {
+          setLog((current) =>
+            [
+              ...botLines.map((text) => ({ id: (logCounter.current += 1), text })),
+              ...current,
+            ].slice(0, 60),
+          );
+        }
+        guard += 1;
+        if (limit === "single") break;
+      }
+      setVersion(engine.getStateID());
+    },
+    [engine, context, logLinesOf, setup?.strategyId],
+  );
 
   const applyResult = useCallback(
     (result: { success: boolean; error?: string; engineLogRecords?: readonly unknown[] }) => {
@@ -111,75 +226,91 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
           ),
         );
       }
-      // Drive the practice bot synchronously until it is the human's turn
-      // again (mirrors the adapter's headless automation loop; the engine
-      // validates every action at the dispatch boundary).
-      let guard = 0;
       if (mode === "self") {
         setVersion(engine.getStateID());
         return true;
       }
-      while (!engine.hasGameEnded() && guard < 200) {
-        const actor = engine.getActivePlayerId();
-        if (actor !== BOT) break;
-        const botResult = engine.takeAutomatedAction({ strategyId: "default" }, context);
-        if (!botResult.finalResult.success) {
-          setError(botResult.finalResult.error ?? "The practice bot could not act.");
-          break;
-        }
-        const botLines = logLinesOf(botResult.finalResult);
-        if (botLines.length > 0) {
-          setLog((current) =>
-            [
-              ...botLines.map((text) => ({ id: (logCounter.current += 1), text })),
-              ...current,
-            ].slice(0, 60),
-          );
-        }
-        guard += 1;
-      }
-      setVersion(engine.getStateID());
+      driveBot(botPacing === "step" ? "single" : "until-human");
       return true;
     },
-    [engine, context, logLinesOf, mode],
+    [driveBot, engine, logLinesOf, mode, botPacing],
   );
 
+  // Enabling the bot mid-match hands the bot seat over immediately: in auto
+  // pacing run its loop now (a no-op when it is the human's turn); in step
+  // pacing wait for the top bar's Next control.
+  useEffect(() => {
+    if (mode !== "bot" || botPacing !== "auto") return;
+    driveBot("until-human");
+  }, [driveBot, mode, botPacing]);
+
   const openingSetup = fixtureId === "opening-preview" && engine?.state.phase.name === "setup";
-  const controlledPlayer = openingSetup
-    ? setupPlayer
-    : mode === "self"
-      ? (engine?.getActivePlayerId() ?? HUMAN)
-      : HUMAN;
+  const controlledPlayer = mode === "self" ? (engine?.getActivePlayerId() ?? HUMAN) : HUMAN;
+
+  const targetViewer = fixtureId && fixtureViewer !== "active" ? fixtureViewer : controlledPlayer;
+
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)", false);
+  const seatSide = (id: string) =>
+    (id === "player-two" || id === BOT ? "player-two" : "player-one") as
+      | "player-one"
+      | "player-two";
+  // The board presents the seat that was active when the last motion started;
+  // hot-seat hand-offs swap it only after those motions resolve.
+  const [presentedActor, setPresentedActor] = useState(controlledPlayer);
+  const presentedSeat = seatSide(presentedActor);
+  const [seatPass, setSeatPass] = useState<SeatPass | null>(null);
+  const [transientBusy, setTransientBusy] = useState(false);
+  const onTransientBusyChange = useCallback((busy: boolean) => setTransientBusy(busy), []);
+  const targetSeat = seatSide(targetViewer);
+  const presentedSide = seatSide(presentedActor);
+  const [heldPass, setHeldPass] = useState<SeatPass | null>(null);
+  const holdStartedRef = useRef(0);
+  const queuedActorRef = useRef(controlledPlayer);
+
+  // A seat hand-off queues whenever the active seat's side changes.
+  useEffect(() => {
+    if (targetSeat === presentedSide) return;
+    const pass = {
+      key: Date.now(),
+      from: presentedSide,
+      to: targetSeat,
+      turn: engine?.state.turnNumber ?? 0,
+      caption: (engine?.state.phase.name ?? "").replace(/_/g, " "),
+    } as SeatPass;
+    queuedActorRef.current = targetViewer;
+    holdStartedRef.current = Date.now();
+    setHeldPass(pass);
+  }, [targetViewer, targetSeat, presentedSide, engine?.state.turnNumber, engine?.state.phase.name]);
 
   const submit = useCallback(
     (submission: InteractionSubmission) => {
-      if (!engine) return false;
+      if (!engine || presentedActor !== controlledPlayer) return false;
       const result = engine.submitInteraction(controlledPlayer, submission, context);
       return applyResult(result);
     },
-    [engine, context, applyResult, controlledPlayer],
+    [engine, context, applyResult, controlledPlayer, presentedActor],
   );
 
-  const openingScene = useArenaOpening(fixtureId === "opening-preview", (id, values = {}) => {
-    if (!engine) return false;
-    const view = engine.getInteractionView(controlledPlayer);
-    const action = view.actions.find((candidate) => candidate.id === id && candidate.enabled);
-    if (!action) return false;
-    return submit({
-      protocolVersion: INTERACTION_PROTOCOL_VERSION,
-      stateVersion: view.stateVersion,
-      requestId: action.requestId,
-      actionId: action.id,
-      values,
-    });
-  });
-  const openingBusy = Boolean(openingScene && openingScene.beat.id !== "hand");
+  const pendingDecisionId = engine?.state.pendingChoices[0]?.id;
+
+  // A native choice takes focus even when an outgoing scene motion remains busy.
+  // Otherwise damage can hold the old seat indefinitely behind its own animation.
+  useEffect(() => {
+    if (!heldPass || (transientBusy && !pendingDecisionId)) return;
+    const dwell = Math.max(0, holdStartedRef.current + 500 - Date.now());
+    const start = setTimeout(() => {
+      setHeldPass(null);
+      setSeatPass(heldPass);
+    }, dwell);
+    return () => clearTimeout(start);
+  }, [heldPass, transientBusy, pendingDecisionId]);
 
   if (loadError) {
     return (
       <main className={classes.page}>
         <Title order={2}>Alpha Clash practice</Title>
         <Text c="red">Unable to load the practice match: {loadError}</Text>
+        {onNewMatch && <Button onClick={onNewMatch}>Choose decks</Button>}
       </main>
     );
   }
@@ -194,11 +325,12 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
 
   const board = engine.getViewerState({
     role: "player",
-    actorId: controlledPlayer,
-  }) as ProjectedState;
-  const nativeView = engine.getInteractionView(controlledPlayer);
+    actorId: presentedActor,
+  });
+  const nativeView = engine.getInteractionView(presentedActor);
   const ended = engine.hasGameEnded();
-  const endResult = engine.getGameEndResult();
+  /** A Next click is meaningful only while the bot seat owes the next move. */
+  const canStepBot = !ended && engine.getActivePlayerId() === BOT;
   const labelFor = (instanceId: string): string => {
     const card = board.cards.find((entry) => entry.instanceId === instanceId);
     if (!card) return instanceId;
@@ -209,85 +341,172 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
 
   return (
     <InteractionWorkspace
-      key={controlledPlayer}
       view={view}
-      viewerId={controlledPlayer}
+      viewerId={presentedActor}
       onSubmit={submit}
-      disabled={ended || openingBusy}
+      // Opening controls submit through the same native boundary after their
+      // animations. Do not also start a generic mulligan draft over the hand.
+      disabled={
+        ended ||
+        presentedActor !== controlledPlayer ||
+        Boolean(engine.state.phase.name === "setup" || heldPass || seatPass)
+      }
+      deferInitialSubmission={deferAlphaClashOptionalCosts}
     >
+      <RetryErrorReset onClear={() => setError(null)} />
       <main
         className={`${classes.page} ${classes.arenaPage}`}
+        data-testid="ac-practice-match"
+        data-player-deck={setup?.playerDeckId}
+        data-opponent-deck={setup?.opponentDeckId}
+        data-bot-strategy={setup?.strategyId}
         data-version={version}
         data-practice-mode={mode}
         data-controlled-player={controlledPlayer}
       >
-        <div className={classes.tableArea}>
-          {ended ? (
-            <Paper
-              withBorder
-              p="sm"
-              radius="md"
-              className={`${classes.resultBanner} ${
-                endResult?.winnerId === HUMAN ? classes.resultWin : classes.resultLose
-              }`}
-              data-testid="ac-result"
+        {fixtureId && !captureView && !transientBusy && (
+          <label className={classes.fixtureViewer}>
+            Fixture view
+            <select
+              aria-label="Fixture view"
+              value={fixtureViewer}
+              onChange={(event) => setFixtureViewer(event.currentTarget.value)}
             >
-              <Text fw={700}>
-                {mode === "self"
-                  ? `${endResult?.winnerId === HUMAN ? "Player 1" : "Player 2"} wins`
-                  : endResult?.winnerId === HUMAN
-                    ? "You win"
-                    : "You lose"}{" "}
-                · {endResult?.reason}
-              </Text>
-            </Paper>
-          ) : null}
+              <option value={HUMAN}>Player 1</option>
+              <option value={BOT}>Player 2</option>
+              <option value="active">Follow active player</option>
+            </select>
+          </label>
+        )}
+        <div className={classes.tableArea}>
+          <SeatPassOverlay
+            pass={seatPass}
+            reduced={reducedMotion || resourceAudioState.current.reducedMotion === true}
+            onFlipped={() => {
+              setPresentedActor(queuedActorRef.current);
+            }}
+            onDone={(done) => {
+              // The veil keeps hit-testing while mounted; clear it once the
+              // hand-off finishes or the board stays unclickable behind it.
+              setSeatPass((current) => (current?.key === done.key ? null : current));
+            }}
+          />
           <AlphaClashInteractionBoard
-            openingScene={openingScene}
+            resourceAudioState={resourceAudioState.current}
+            matchId={engine.state.id}
+            onSubmit={submit}
             board={{
               cards: board.cards,
+              counterMoves: board.counterMoves,
+              damageEvents: board.damageEvents,
               players: board.players,
               activePlayer: board.activePlayer,
+              decisionSeat: board.decisionSeat,
               phaseName: board.phase.name,
+              phaseStep: "step" in board.phase ? board.phase.step : undefined,
+              openingHandsReady: board.mulligan.resolved,
+              openingState: board.mulligan,
               turnNumber: board.turnNumber,
               portalOpen: board.portalOpen,
               clash: board.clash,
               standbyCount: board.standby.length,
+              responseWindow: board.responseWindow
+                ? {
+                    openFor: board.responseWindow.openFor as AcSeat,
+                    passedSeats: (board.responseWindow.passedPlayers ?? []) as AcSeat[],
+                  }
+                : null,
             }}
-            viewerSeat={controlledPlayer === HUMAN ? "player-one" : "player-two"}
+            viewerSeat={presentedSeat}
+            onTransientBusyChange={onTransientBusyChange}
             participantNames={{
               p1: mode === "self" ? "Player 1" : "You",
               p2: mode === "self" ? "Player 2" : "Opponent",
             }}
             view={view}
-            disabled={ended || openingBusy}
+            disabled={ended || presentedActor !== controlledPlayer || Boolean(heldPass || seatPass)}
             utilities={
               <>
-                {openingSetup && (
-                  <>
-                    <button
-                      type="button"
-                      aria-pressed={controlledPlayer === HUMAN}
-                      disabled={openingBusy}
-                      onClick={() => setSetupPlayer(HUMAN)}
-                    >
-                      Player 1
-                    </button>
-                    <button
-                      type="button"
-                      aria-pressed={controlledPlayer === BOT}
-                      disabled={openingBusy}
-                      onClick={() => setSetupPlayer(BOT)}
-                    >
-                      Player 2
-                    </button>
-                  </>
-                )}
-                <Link to="/alpha-clash/simulator/tests">Fixtures</Link>
-                {fixtureId && (
-                  <button type="button" onClick={() => window.location.reload()}>
-                    Reset
+                {onNewMatch && (
+                  <button type="button" onClick={onNewMatch}>
+                    New match
                   </button>
+                )}
+                <div
+                  className={classes.modeToggle}
+                  data-testid="ac-practice-mode"
+                  data-practice-mode={mode}
+                  role="group"
+                  aria-label="Practice mode"
+                >
+                  <button
+                    type="button"
+                    data-testid="ac-mode-hotseat"
+                    aria-pressed={mode === "self"}
+                    disabled={ended}
+                    onClick={() => setMode("self")}
+                  >
+                    Hot seat
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="ac-mode-bot"
+                    aria-pressed={mode === "bot"}
+                    disabled={ended}
+                    onClick={() => setMode("bot")}
+                  >
+                    Bot
+                  </button>
+                </div>
+                {mode === "bot" &&
+                  (botPacing === "auto" ? (
+                    <button
+                      type="button"
+                      className={classes.botPacing}
+                      data-testid="ac-bot-pause"
+                      aria-label="Pause automatic bot playback"
+                      title="Pause bot playback and advance one move at a time"
+                      disabled={ended}
+                      onClick={() => setBotPacing("step")}
+                    >
+                      <IconPlayerPause size={15} stroke={2.3} aria-hidden="true" />
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        className={`${classes.botPacing} ${classes.botNext}`}
+                        data-testid="ac-bot-next"
+                        aria-label="Run next bot move"
+                        title="Run the bot's next legal move"
+                        disabled={ended || !canStepBot}
+                        onClick={() => driveBot("single")}
+                      >
+                        <IconPlayerTrackNext size={14} stroke={2.2} aria-hidden="true" />
+                        <span>Next</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={classes.botPacing}
+                        data-testid="ac-bot-resume"
+                        aria-label="Resume automatic bot playback"
+                        title="Resume automatic bot playback"
+                        disabled={ended}
+                        onClick={() => setBotPacing("auto")}
+                      >
+                        <IconPlayerPlay size={15} stroke={2.3} aria-hidden="true" />
+                      </button>
+                    </>
+                  ))}
+                {isAlphaClashPromptFixture(fixtureId) ? null : (
+                  <>
+                    <Link to="/alpha-clash/simulator/tests">Fixtures</Link>
+                    {fixtureId && (
+                      <button type="button" onClick={() => window.location.reload()}>
+                        Reset
+                      </button>
+                    )}
+                  </>
                 )}
               </>
             }
@@ -295,17 +514,51 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
               <aside className={classes.arenaControls}>
                 {openingSetup && (
                   <Text size="sm">
-                    Local engine fixture. Player 1 starts. Use Player 1 / Player 2 to inspect each
-                    seat before starting. The engine currently supports one full-hand redraw per
-                    player; selective mulligans are not implemented.
+                    Local engine fixture. Player 1 starts. Each player declares keep or mulligan
+                    before selecting cards. Hot seat follows each player's opening choice; the
+                    practice bot keeps its hand.
                   </Text>
                 )}
-                <AlphaClashInteractionPanel
-                  view={view}
-                  viewerId={controlledPlayer}
-                  onSubmit={submit}
-                  disabled={ended || Boolean(openingScene)}
-                />
+                {board.phase.name !== "setup" && (
+                  <AlphaClashInteractionPanel
+                    view={view}
+                    viewerId={controlledPlayer}
+                    onSubmit={submit}
+                    disabled={ended}
+                  />
+                )}
+                <Group gap="xs" aria-label="Local undo controls">
+                  <Button
+                    size="xs"
+                    variant="default"
+                    disabled={
+                      ended ||
+                      transientBusy ||
+                      presentedActor !== controlledPlayer ||
+                      !engine.canUndo(controlledPlayer)
+                    }
+                    onClick={() =>
+                      applyResult(engine.dispatch("undo", controlledPlayer, {}, context))
+                    }
+                  >
+                    Undo
+                  </Button>
+                  <Button
+                    size="xs"
+                    variant="default"
+                    disabled={
+                      ended ||
+                      transientBusy ||
+                      presentedActor !== controlledPlayer ||
+                      !engine.canUndoToTurnStart(controlledPlayer)
+                    }
+                    onClick={() =>
+                      applyResult(engine.dispatch("undoToTurnStart", controlledPlayer, {}, context))
+                    }
+                  >
+                    Undo turn
+                  </Button>
+                </Group>
                 <Paper withBorder p="sm" radius="md" className={classes.logPanel}>
                   <Text fw={600} size="sm" mb={4}>
                     Event log
@@ -335,6 +588,32 @@ export function AlphaClashPracticePage({ fixtureId }: { fixtureId?: string } = {
           ) : null}
         </div>
       </main>
+      {board.phase.name === "complete" && (
+        <AlphaClashPostGameSummary
+          gameId={engine.state.id}
+          result={board.phase}
+          board={board}
+          viewer="player-one"
+          hotSeat={mode === "self"}
+          busy={transientBusy || Boolean(heldPass || seatPass)}
+          names={{
+            "player-one": mode === "self" ? "Player 1" : "You",
+            "player-two": mode === "self" ? "Player 2" : "Opponent",
+          }}
+          actions={
+            <>
+              {onNewMatch ? (
+                <button onClick={onNewMatch}>Back to setup</button>
+              ) : (
+                <Link to="/alpha-clash/simulator/tests">Fixtures</Link>
+              )}
+              <button data-primary onClick={onPlayAgain}>
+                {fixtureId ? "Reset fixture" : "Play again"}
+              </button>
+            </>
+          }
+        />
+      )}
     </InteractionWorkspace>
   );
 }

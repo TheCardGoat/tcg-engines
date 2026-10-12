@@ -2,6 +2,7 @@ import { describeGrandArchiveStructuredDecision } from "../commands/legal-comman
 import { projectGrandArchiveCombatView, type GrandArchiveCombatView } from "./combat.ts";
 import type {
   GrandArchiveActivationState,
+  GrandArchiveKeywordName,
   GrandArchiveObjectState,
   GrandArchiveZone,
 } from "@tcg/grand-archive-types";
@@ -9,7 +10,11 @@ import type { GrandArchiveObjectId, GrandArchivePlayerId } from "../game/identit
 import { grandArchiveObjectFace } from "../game/card-runtime.ts";
 import type { GrandArchiveMatchProgram } from "../kernel/match-program.ts";
 import type { GrandArchiveMatchState, GrandArchiveStackItem } from "../game/model.ts";
-import { grandArchivePlayerHasState } from "../rules/state/player-continuous.ts";
+import {
+  grandArchivePlayerEffectiveStates,
+  grandArchivePlayerHasState,
+} from "../rules/state/player-continuous.ts";
+import { grandArchiveObjectActiveKeywords } from "../rules/abilities/intrinsic-keywords.ts";
 import { grandArchiveObjectEffectiveStates } from "../game/object-state.ts";
 import { collectGrandArchiveActionRules } from "../rules/state/rule-modifications.ts";
 import { grandArchivePlayerZoneObjectIds } from "../game/zone-ownership.ts";
@@ -35,6 +40,11 @@ export interface GrandArchiveViewerObject {
   readonly name: string;
   readonly states: readonly GrandArchiveObjectState[];
   readonly activationStates: readonly GrandArchiveActivationState[];
+  /** Active keyword names only; effect bindings and private evaluation context stay server-side. */
+  readonly keywords: readonly {
+    readonly name: GrandArchiveKeywordName;
+    readonly value?: number | string;
+  }[];
   readonly activationVariables: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
   readonly cascadeCounts: Readonly<Record<string, number>>;
   readonly counters: Readonly<Record<string, number>>;
@@ -61,6 +71,8 @@ export interface GrandArchiveViewerPlayer {
   readonly turnOrder: number;
   readonly lost: boolean;
   readonly conceded: boolean;
+  /** Public player properties, including active continuous state effects. */
+  readonly states: Readonly<Record<string, string | number | boolean>>;
   readonly mastery?: GrandArchiveMatchState["players"][GrandArchivePlayerId]["mastery"];
   readonly zones: Readonly<Record<GrandArchiveZone, GrandArchiveViewerZone>>;
 }
@@ -348,6 +360,12 @@ function projectObject(
     name: face.name,
     states: [...grandArchiveObjectEffectiveStates(state, object)],
     activationStates: [...object.activationStates],
+    keywords: grandArchiveObjectActiveKeywords(program, state, object).map((keyword) => ({
+      name: keyword.name,
+      ...("value" in keyword && typeof keyword.value === "number" ? { value: keyword.value } : {}),
+      ...("lineageName" in keyword ? { value: keyword.lineageName } : {}),
+      ...("subtype" in keyword ? { value: keyword.subtype } : {}),
+    })),
     activationVariables: object.activationVariables,
     cascadeCounts: object.cascadeCounts,
     counters: object.counters,
@@ -464,6 +482,7 @@ export function projectGrandArchiveViewerState(
       turnOrder: player.turnOrder,
       lost: player.lost,
       conceded: player.conceded,
+      states: grandArchivePlayerEffectiveStates(program, state, playerId),
       ...(player.mastery ? { mastery: player.mastery } : {}),
       zones,
     };
