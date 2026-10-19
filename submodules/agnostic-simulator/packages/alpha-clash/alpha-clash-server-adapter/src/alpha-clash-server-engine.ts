@@ -1,10 +1,45 @@
-import { applyCommand, projectState, canEnterResource } from "@tcg/alpha-clash-engine";
+import { withActivationCosts } from "./activation-costs";
+import { withSacrificeReductions } from "./sacrifice-reductions";
+import { withManifestRoute } from "./manifest";
+import { withDeclaredModes } from "./declared-modes";
+import {
+  readCommonDeclaration,
+  readPlayDeclaration,
+  readRecord,
+  readStrings,
+  readString,
+  readDivision,
+  readInteger,
+} from "./command-declarations";
+import { createAlphaClashExpert } from "@tcg/alpha-clash-engine";
+import { routeResourceInputs, recoveryResourceInputs } from "./cost-routes";
+import {
+  resourcePaymentInput,
+  withVariableResourcePayment,
+  healthResourcePaymentInputs,
+  readResourcePayment,
+} from "./resource-payment";
+import { optionalDiscountPaymentInputs, withOptionalDiscountCounts } from "./optional-discounts";
+import {
+  applyCommand,
+  abilitiesForActivation,
+  getDefinition,
+  initiateClash,
+  declareObstructors,
+  resolveEffectTargets,
+  projectState,
+  canEnterResource,
+  voidReplayPermission,
+  normalizeNamedCounters,
+} from "@tcg/alpha-clash-engine";
 import type { AcCommand, MatchState, PlayerId, ProjectedState } from "@tcg/alpha-clash-engine";
 import {
   validateInteractionSubmission,
+  INTERACTION_PROTOCOL_VERSION,
   type AnimationPlanV2,
   type EngineInteractionView,
   type InteractionSubmission,
+  type InteractionAction,
 } from "@tcg/protocol";
 import {
   capUndoCheckpoints,
@@ -25,6 +60,9 @@ import {
   buildAlphaClashInteractionView,
 } from "./interaction-protocol";
 import { alphaClashBotCommandCandidates } from "./bot";
+import { ALPHA_CLASH_HEURISTICS, alphaClashHeuristicCommand } from "./heuristic";
+import { openingActionFor } from "./opening";
+import { isAcJudgeMove, parseAcJudgeCommand } from "@tcg/alpha-clash-engine";
 import {
   emptyAlphaClashUndoState,
   hasAlphaClashUndoBarrier,
@@ -37,6 +75,8 @@ import {
 type Seat = PlayerId;
 
 export class AlphaClashServerEngine implements ServerGameEngine {
+  private readonly expert = createAlphaClashExpert();
+
   private lastLoggedSequence: number;
   /**
    * Monotonic per-applied-command version. moveLog.length is NOT a valid
@@ -54,6 +94,7 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     playerIdToSeat: Record<string, Seat>,
     undoState?: AlphaClashUndoState,
   ) {
+    normalizeNamedCounters(state);
     this.state = state;
     this.playerIdToSeat = playerIdToSeat;
     this.lastLoggedSequence = state.moveLog.at(-1)?.sequence ?? 0;
@@ -104,6 +145,7 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     const previousStateID = this.getStateID();
     const restoredTurnStart = checkpoint.stateVersion === this.undoState.turnStart?.stateVersion;
     this.state = structuredClone(checkpoint.state);
+    normalizeNamedCounters(this.state);
     this.versionCounter += 1;
     this.state.stateID = this.versionCounter;
     this.lastLoggedSequence = this.state.moveLog.at(-1)?.sequence ?? 0;
@@ -180,6 +222,22 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    if (isAcJudgeMove(moveType) && context.correctionModeEnabled !== true) {
+      return {
+        success: false,
+        error: "Request opponent approval before correcting the game state.",
+        errorCode: "MOVE_NOT_AVAILABLE",
+        stateID: this.getStateID(),
+      };
+    }
+    if (context.correctionModeEnabled && !isAcJudgeMove(moveType) && moveType !== "concede") {
+      return {
+        success: false,
+        error: "Exit game state correction before continuing play.",
+        errorCode: "MOVE_NOT_AVAILABLE",
+        stateID: this.getStateID(),
+      };
+    }
     if (moveType === "undo") return this.restoreUndo(actorId, context, "last_move");
     if (moveType === "undoToTurnStart") return this.restoreUndo(actorId, context, "turn_start");
     const seat = this.playerIdToSeat[actorId];
@@ -192,7 +250,17 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       };
     }
 
-    const command = buildEngineCommand(moveType, seat, payload);
+    let command: AcCommand | null;
+    try {
+      command = buildEngineCommand(moveType, seat, payload);
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Invalid payment.",
+        errorCode: "INVALID_ARGUMENTS",
+        stateID: this.getStateID(),
+      };
+    }
     if (!command) {
       return {
         success: false,
@@ -214,6 +282,9 @@ export class AlphaClashServerEngine implements ServerGameEngine {
     }
 
     this.state = result.state;
+    // Drain forced passes inside the authoritative transition, before logs,
+    // undo barriers and persistence observe the final state.
+    if (!isAcJudgeMove(moveType)) this.drainEmptyResponseWindows();
     this.versionCounter += 1;
     this.state.stateID = this.versionCounter;
     const stateVersion = this.getStateID();
@@ -273,7 +344,42 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       undoable: this.canUndo(actorId),
       acceptedMoveRecord,
       engineLogRecords,
+      ...(isAcJudgeMove(moveType) ? { commandVisibility: "actor" as const } : {}),
     };
+  }
+
+  /** Native passes advance empty windows until the next player decision. */
+  private drainEmptyResponseWindows(): void {
+    for (let guard = 0; guard < 200 && !this.hasGameEnded(); guard++) {
+      if (this.state.pendingChoices.length || this.state.pendingTriggers.length) return;
+      if (!this.state.responseWindow && !this.state.clash) return;
+      const actor = this.getActivePlayerId();
+      if (!actor) return;
+      const actions = this.getInteractionView(actor).actions.filter(
+        (action) => action.enabled && action.id !== "concede",
+      );
+      const pass = actions.find((action) =>
+        ["passCounter", "passClashStep", "passObstruct"].includes(action.id),
+      );
+      if (!pass) return;
+      const hasDecision = actions.some((action) => {
+        if (["passCounter", "passClashStep", "passObstruct"].includes(action.id)) return false;
+        if (pass.id === "passObstruct" && action.id === "declareObstructors") {
+          return !action.inputs.every(
+            (input) =>
+              input.kind === "entity-selection" &&
+              input.min === 0 &&
+              !input.candidates.some((candidate) => candidate.enabled),
+          );
+        }
+        return true;
+      });
+      if (hasDecision) return;
+      const seat = this.playerIdToSeat[actor];
+      const result = applyCommand(this.state, { type: "pass", playerId: seat });
+      if (!result.success) return;
+      this.state = result.state;
+    }
   }
 
   /** Alpha Clash's engine emits no animation packets yet; the plan is empty. */
@@ -291,23 +397,20 @@ export class AlphaClashServerEngine implements ServerGameEngine {
 
   getViewerState(
     viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
-  ): unknown {
+  ): ProjectedState & { readonly decisionSeat?: Seat } {
     const seat = viewer.role === "player" ? this.playerIdToSeat[viewer.actorId] : "spectator";
-    return projectState(this.state, seat ?? "spectator");
+    return {
+      ...projectState(this.state, seat ?? "spectator"),
+      // Public pacing only. Choice candidates remain filtered by projectState.
+      decisionSeat: this.hasGameEnded()
+        ? undefined
+        : this.playerIdToSeat[this.getActivePlayerId() ?? ""],
+    };
   }
 
   getActivePlayerId(): string | undefined {
-    const pendingChoice = this.state.pendingChoices[0];
-    if (pendingChoice) return this.seatToPlayerId[pendingChoice.playerId];
-    if (this.state.responseWindow) {
-      return this.seatToPlayerId[this.state.responseWindow.openFor];
-    }
-    if (this.state.clash) {
-      const stepOwner = clashStepSeat(this.state);
-      if (stepOwner) return this.seatToPlayerId[stepOwner];
-      return undefined;
-    }
-    return this.seatToPlayerId[this.state.activePlayer];
+    const seat = alphaClashDecisionSeat(this.state);
+    return seat ? this.seatToPlayerId[seat] : undefined;
   }
 
   hasGameEnded(): boolean {
@@ -325,11 +428,76 @@ export class AlphaClashServerEngine implements ServerGameEngine {
   getInteractionView(actorId: string): EngineInteractionView {
     const seat = this.playerIdToSeat[actorId] ?? "spectator";
     const playerView = projectState(this.state, seat);
-    return buildAlphaClashInteractionView({
+    if (seat !== "player-one" && seat !== "player-two")
+      return {
+        protocolVersion: INTERACTION_PROTOCOL_VERSION,
+        gameSlug: "alpha-clash",
+        actorId,
+        stateVersion: this.getStateID(),
+        status: this.hasGameEnded() ? "game-over" : "waiting",
+        actions: [],
+      };
+    const view = buildAlphaClashInteractionView({
       actorId,
       seat,
+      decisionSeat: this.playerIdToSeat[this.getActivePlayerId() ?? ""],
       stateVersion: this.getStateID(),
       playerView,
+      banishedPlayCardIds: voidReplayPermission(this.state, seat)?.cardIds ?? [],
+      clashTargets:
+        this.state.phase.name === "primary" &&
+        this.state.activePlayer === seat &&
+        !this.state.responseWindow &&
+        !this.state.pendingChoices.length
+          ? Object.fromEntries(
+              playerView.cards
+                .filter(
+                  (card) =>
+                    card.controller === seat &&
+                    card.ready &&
+                    (card.zone === "clash" || card.zone === "contender"),
+                )
+                .map((attacker) => [
+                  attacker.instanceId,
+                  playerView.cards
+                    .filter(
+                      (card) =>
+                        card.controller !== seat &&
+                        (card.zone === "clash" || card.zone === "contender") &&
+                        initiateClash(
+                          structuredClone(this.state),
+                          seat,
+                          attacker.instanceId,
+                          card.instanceId,
+                          true,
+                        ) === null,
+                    )
+                    .map((card) => card.instanceId),
+                ]),
+            )
+          : undefined,
+      obstructorSelection: nativeObstructorSelection(this.state, seat, playerView),
+      definitionForCard: (cardId) => getDefinition(this.state, cardId),
+      activationAbilitiesForCard: (cardId) => abilitiesForActivation(this.state, cardId),
+      resolveTargetCandidates: (target, sourceId) => {
+        const selector = target.type === "declared" ? target.selector : target;
+        const legal = resolveEffectTargets(
+          this.state,
+          "chosen" in selector ? { ...selector, chosen: false } : selector,
+          { state: this.state, playerId: seat, sourceId },
+        );
+        // Native player selectors return seat IDs, not Contender card IDs.
+        // Both seats are public; card selectors still use viewer-safe projection.
+        if (selector.type === "player")
+          return legal.filter((id) => id === "player-one" || id === "player-two");
+        return legal.filter((id) =>
+          playerView.cards.some(
+            (card) =>
+              card.instanceId === id &&
+              (card.definitionId !== null || (card.zone !== "deck" && card.zone !== "hand")),
+          ),
+        );
+      },
       resourceCandidateIds: playerView.cards
         .filter(
           (card) =>
@@ -339,14 +507,73 @@ export class AlphaClashServerEngine implements ServerGameEngine {
         )
         .map((card) => card.instanceId),
     });
+    return {
+      ...view,
+      actions: view.actions
+        .flatMap((action) => withActivationCosts(action, this.state, seat))
+        .map((baseAction) => {
+          const action = withOptionalDiscountCounts(
+            this.state,
+            seat,
+            withSacrificeReductions(
+              withDeclaredModes(baseAction, this.state, playerView, seat),
+              this.state,
+              playerView,
+              seat,
+            ),
+          );
+          if (action.inputs.some((input) => input.id === "sacrificeRoute"))
+            return previewNativeBoardAction(this.state, seat, action);
+          // Route cards declare their cost route first; their resource slots are
+          // route-scoped (the alternative route waives the cost), so the shared
+          // plain-payment quote would be wrong for them.
+          if (action.inputs.some((input) => input.id === "costRoute")) {
+            return {
+              ...action,
+              inputs: [
+                ...action.inputs,
+                ...(action.id.startsWith("resolveEffectPlay:")
+                  ? recoveryResourceInputs(this.state, playerView, seat, action)
+                  : routeResourceInputs(this.state, playerView, seat, action)),
+              ],
+            };
+          }
+          if (action.inputs.some((input) => input.id === "healthReduction")) {
+            return {
+              ...action,
+              inputs: [
+                ...action.inputs,
+                ...healthResourcePaymentInputs(this.state, playerView, seat, action),
+              ],
+            };
+          }
+          const payment = resourcePaymentInput(this.state, playerView, seat, action);
+          const checked = previewNativeBoardAction(this.state, seat, action);
+          if (action.inputs.some((input) => input.id === "optionalDiscounts")) {
+            return {
+              ...checked,
+              inputs: [
+                ...checked.inputs,
+                ...optionalDiscountPaymentInputs(this.state, playerView, seat, action),
+              ],
+            };
+          }
+          return withManifestRoute(
+            payment ? { ...checked, inputs: [...checked.inputs, payment] } : checked,
+            this.state,
+            seat,
+          );
+        })
+        .map((action) => withVariableResourcePayment(action, this.state, playerView, seat)),
+    };
   }
 
   getInteractionActorIds(): readonly string[] {
     return Object.keys(this.playerIdToSeat);
   }
 
-  takeAutomatedAction(_options: BotActionOptions, context: DispatchContext): BotActionResult {
-    const actorId = this.seatToPlayerId[seatForAutomation(this.state)] ?? this.activeActorId();
+  takeAutomatedAction(options: BotActionOptions, context: DispatchContext): BotActionResult {
+    const actorId = this.getActivePlayerId() ?? this.activeActorId();
     if (!actorId) {
       return {
         finalResult: {
@@ -358,10 +585,26 @@ export class AlphaClashServerEngine implements ServerGameEngine {
         blocked: { reason: "no-active-actor" },
       };
     }
-    const seat = this.playerIdToSeat[actorId];
-    // Try the policy's proposal first, then its fallbacks (endTurn, pass) so
-    // one illegal proposal can no longer deadlock the automation pump.
-    const candidates = alphaClashBotCommandCandidates(this.state, seat);
+    // Meta policies already probe legality. The basic policy supplies fallbacks.
+    const strategyId = options.strategyId ?? "default";
+    const heuristic = ALPHA_CLASH_HEURISTICS[strategyId];
+    if (
+      !heuristic &&
+      strategyId !== "expert-oracle" &&
+      strategyId !== "default" &&
+      strategyId !== "practice-v1"
+    ) {
+      return {
+        finalResult: {
+          success: false,
+          error: `Unknown Alpha Clash bot strategy: ${strategyId}`,
+          errorCode: "MOVE_NOT_AVAILABLE",
+          stateID: this.getStateID(),
+        },
+        blocked: { reason: "strategy-stuck" },
+      };
+    }
+    const candidates = this.automatedActionCandidates(strategyId);
     let lastFailure: BotActionResult = {
       finalResult: {
         success: false,
@@ -384,6 +627,24 @@ export class AlphaClashServerEngine implements ServerGameEngine {
       lastFailure = { finalResult };
     }
     return lastFailure;
+  }
+
+  /** Read-only proposals; browser workers validate them on detached runtimes. */
+  automatedActionCandidates(strategyId: string): AcCommand[] {
+    const actorId = this.getActivePlayerId() ?? this.activeActorId();
+    const seat = this.playerIdToSeat[actorId];
+    const heuristic = ALPHA_CLASH_HEURISTICS[strategyId];
+    const proposal =
+      strategyId === "expert-oracle"
+        ? this.expert.decide(this.state, seat).command
+        : heuristic
+          ? alphaClashHeuristicCommand(this.state, seat, heuristic)
+          : null;
+    return heuristic || strategyId === "expert-oracle"
+      ? proposal
+        ? [proposal]
+        : []
+      : alphaClashBotCommandCandidates(this.state, seat);
   }
 
   private activeActorId(): string {
@@ -423,6 +684,19 @@ export class AlphaClashServerEngine implements ServerGameEngine {
   }
 }
 
+/** The same native decision owner drives local practice and headless bot-lab. */
+export function alphaClashDecisionSeat(state: MatchState): PlayerId | undefined {
+  if (state.phase.name === "setup") {
+    const view = projectState(state, "spectator");
+    const other = state.activePlayer === "player-one" ? "player-two" : "player-one";
+    const order: PlayerId[] = [state.activePlayer, other];
+    return order.find((candidate) => openingActionFor(view, candidate) !== "wait");
+  }
+  if (state.pendingChoices[0]) return state.pendingChoices[0].playerId;
+  if (state.responseWindow) return state.responseWindow.openFor;
+  return state.clash ? clashStepSeat(state) : state.activePlayer;
+}
+
 /** The seat whose turn it is to act, from the engine's public pacing state. */
 export function clashStepSeat(state: MatchState): Seat | undefined {
   const pendingChoice = state.pendingChoices[0];
@@ -450,8 +724,93 @@ export function clashStepSeat(state: MatchState): Seat | undefined {
   }
 }
 
-function seatForAutomation(state: MatchState): Seat {
-  return clashStepSeat(state) ?? state.activePlayer;
+/** Ask native declaration validation for individual cards and pairs. Pairs
+ * preserve Torment's minimum without incorrectly hiding every candidate. */
+function nativeObstructorSelection(state: MatchState, seat: Seat, view: ProjectedState) {
+  if (
+    state.phase.name !== "clash" ||
+    state.clash?.step !== "obstruct" ||
+    state.activePlayer === seat ||
+    state.responseWindow ||
+    state.pendingChoices.length
+  )
+    return undefined;
+  const ids = view.cards
+    .filter((card) => card.controller === seat && card.zone === "clash" && card.ready)
+    .map((card) => card.instanceId);
+  const valid = (selection: readonly string[]) =>
+    declareObstructors(structuredClone(state), seat, selection) === null;
+  const singles = ids.filter((id) => valid([id]));
+  const candidateIds = ids.filter(
+    (id) => singles.includes(id) || ids.some((other) => other !== id && valid([id, other])),
+  );
+  return { candidateIds, min: candidateIds.length > 0 && singles.length === 0 ? 2 : 0 };
+}
+
+/** Preview only complete, bounded board commands. Never mutate the live match or
+ * guess costs from printed values; modifiers and restrictions belong to native code. */
+function previewNativeBoardAction(
+  state: MatchState,
+  seat: Seat,
+  action: InteractionAction,
+): InteractionAction {
+  if (
+    !/^(resolveEffectPlay:|playCard:|respond:|setCard:|attachWeapon:|detachWeapon:|activateAbility:|activatePortal$)/.test(
+      action.id,
+    )
+  )
+    return action;
+  const preview = (values: InteractionSubmission["values"]) => {
+    const translated = alphaClashSubmissionToPayload({
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: 0,
+      requestId: action.requestId,
+      actionId: action.id,
+      values,
+    });
+    const command = buildEngineCommand(translated.moveType, seat, translated.payload);
+    return command ? applyCommand(structuredClone(state), command) : null;
+  };
+  if (action.inputs.length === 0) {
+    const result = preview({});
+    return result
+      ? {
+          ...action,
+          enabled: result.success,
+          disabledText: result.success ? undefined : { key: result.error ?? "Action unavailable" },
+        }
+      : action;
+  }
+  // A single host/target input can be checked exhaustively. Leave multi-stage
+  // costs and multi-target relationships to their own native projection.
+  const input = action.inputs[0];
+  if (
+    action.inputs.length !== 1 ||
+    input.kind !== "entity-selection" ||
+    input.min !== 1 ||
+    input.max !== 1
+  )
+    return action;
+  const candidates = input.candidates.map((candidate) => {
+    if (!candidate.enabled) return candidate;
+    const result = preview({ [input.id]: [candidate.entity.instanceId] });
+    return result
+      ? {
+          ...candidate,
+          enabled: result.success,
+          disabledText: result.success ? undefined : { key: result.error ?? "Target unavailable" },
+        }
+      : candidate;
+  });
+  const enabled = candidates.some((candidate) => candidate.enabled);
+  return {
+    ...action,
+    enabled,
+    disabledText: enabled
+      ? undefined
+      : candidates.find((candidate) => candidate.disabledText)?.disabledText,
+    inputs: [{ ...input, candidates, min: enabled ? 1 : 0, max: enabled ? 1 : 0 }],
+  };
 }
 
 function buildEngineCommand(
@@ -459,38 +818,27 @@ function buildEngineCommand(
   seat: Seat,
   payload: Record<string, unknown>,
 ): AcCommand | null {
+  if (isAcJudgeMove(moveType)) return parseAcJudgeCommand(moveType, seat, payload);
   const cardId = typeof payload.cardId === "string" ? payload.cardId : "";
   switch (moveType) {
     case "startGame":
       return { type: "startGame" };
+    case "declareMulligan":
+      return typeof payload.take === "boolean"
+        ? { type: "declareMulligan", playerId: seat, take: payload.take }
+        : null;
     case "mulligan":
       return {
         type: "mulligan",
         playerId: seat,
-        ...(Array.isArray(payload.cardIds) ? { cardIds: payload.cardIds as string[] } : {}),
+        cardIds: readStrings(payload.cardIds) ?? [],
       };
     case "deployResource":
       return { type: "deployResource", playerId: seat, cardId };
-    case "playCard": {
-      if (!cardId) return null;
-      return {
-        type: "playCard",
-        playerId: seat,
-        cardId,
-        ...(typeof payload.targetId === "string" ? { targetId: payload.targetId } : {}),
-        ...(Array.isArray(payload.targetIds)
-          ? { targetIds: payload.targetIds.filter((id): id is string => typeof id === "string") }
-          : {}),
-        ...(typeof payload.xValue === "number" ? { xValue: payload.xValue } : {}),
-        ...(Array.isArray(payload.alternateCostCardIds)
-          ? {
-              alternateCostCardIds: payload.alternateCostCardIds.filter(
-                (id): id is string => typeof id === "string",
-              ),
-            }
-          : {}),
-      };
-    }
+    case "playCard":
+      return cardId
+        ? { type: "playCard", playerId: seat, cardId, ...readPlayDeclaration(payload) }
+        : null;
     case "setCard":
       return cardId ? { type: "setCard", playerId: seat, cardId } : null;
     case "respond":
@@ -499,20 +847,23 @@ function buildEngineCommand(
             type: "respond",
             playerId: seat,
             cardId,
-            ...(typeof payload.targetId === "string" ? { targetId: payload.targetId } : {}),
-            ...(typeof payload.xValue === "number" ? { xValue: payload.xValue } : {}),
+            ...readCommonDeclaration(payload),
+            healthReduction: readInteger(payload.healthReduction),
           }
         : null;
     case "activatePortal":
       return { type: "activatePortal", playerId: seat };
     case "attachWeapon": {
+      const weaponId = readString(payload.weaponId) ?? cardId;
       const targetId = typeof payload.targetId === "string" ? payload.targetId : "";
-      return cardId && targetId
-        ? { type: "attachWeapon", playerId: seat, weaponId: cardId, targetId }
+      return weaponId && targetId
+        ? { type: "attachWeapon", playerId: seat, weaponId, targetId }
         : null;
     }
-    case "detachWeapon":
-      return cardId ? { type: "detachWeapon", playerId: seat, weaponId: cardId } : null;
+    case "detachWeapon": {
+      const weaponId = readString(payload.weaponId) ?? cardId;
+      return weaponId ? { type: "detachWeapon", playerId: seat, weaponId } : null;
+    }
     case "initiateClash": {
       const attackerId = typeof payload.attackerId === "string" ? payload.attackerId : "";
       const targetId = typeof payload.targetId === "string" ? payload.targetId : "";
@@ -524,22 +875,21 @@ function buildEngineCommand(
       return {
         type: "declareObstructors",
         playerId: seat,
-        obstructorIds: Array.isArray(payload.obstructorIds)
-          ? payload.obstructorIds.filter((id): id is string => typeof id === "string")
-          : [],
+        obstructorIds: readStrings(payload.obstructorIds) ?? [],
       };
     case "activateAbility": {
-      if (!cardId || typeof payload.abilityIndex !== "number") return null;
+      const abilityIndex = readInteger(payload.abilityIndex);
+      if (!cardId || abilityIndex === undefined) return null;
       return {
         type: "activateAbility",
         playerId: seat,
         cardId,
-        abilityIndex: payload.abilityIndex,
-        ...(typeof payload.targetId === "string" ? { targetId: payload.targetId } : {}),
-        ...(Array.isArray(payload.targetIds)
-          ? { targetIds: payload.targetIds.filter((id): id is string => typeof id === "string") }
-          : {}),
-        ...(typeof payload.xValue === "number" ? { xValue: payload.xValue } : {}),
+        abilityIndex,
+        costIndex: readInteger(payload.costIndex),
+        sendCostCardIds: readStrings(payload.sendCostCardIds),
+        targetId: readString(payload.targetId),
+        targetIds: readStrings(payload.targetIds),
+        xValue: readInteger(payload.xValue),
       };
     }
     case "pass":
@@ -552,10 +902,18 @@ function buildEngineCommand(
             type: "resolveChoice",
             playerId: seat,
             choiceId: payload.choiceId,
-            ...(typeof payload.optionId === "string" ? { optionId: payload.optionId } : {}),
-            ...(payload.division && typeof payload.division === "object"
-              ? { division: payload.division as Record<string, number> }
+            ...(payload.resourcePayment !== undefined
+              ? { resourcePayment: readResourcePayment(payload.resourcePayment) }
               : {}),
+            ...(payload.play !== undefined
+              ? { play: readPlayDeclaration(readRecord(payload.play)) }
+              : {}),
+            optionId: readString(payload.optionId),
+            orderedIds: readStrings(payload.orderedIds),
+            ...(payload.deckOrder !== undefined
+              ? { deckOrder: readDeckOrder(payload.deckOrder) }
+              : {}),
+            division: readDivision(payload.division),
           }
         : null;
     case "concede":
@@ -580,6 +938,7 @@ function toCanonicalLog(
     moveType,
     playerId,
     timestamp,
+    sequence: entry.sequence,
     turnNumber: undefined,
     messages:
       entry.public || entry.playerId === undefined
@@ -608,3 +967,15 @@ function toCanonicalLog(
 }
 
 export type { ProjectedState };
+
+function readDeckOrder(value: unknown): Record<string, string[]> {
+  if (!value || typeof value !== "object" || Array.isArray(value))
+    throw new Error("Invalid deck order.");
+  const result: Record<string, string[]> = {};
+  for (const [key, cards] of Object.entries(value)) {
+    if (!Array.isArray(cards) || !cards.every((card): card is string => typeof card === "string"))
+      throw new Error("Invalid deck group.");
+    result[key] = cards;
+  }
+  return result;
+}

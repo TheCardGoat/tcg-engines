@@ -1,0 +1,30 @@
+[
+  {
+    "file": "ambush-response-audio.mp4",
+    "frames": 65,
+    "changingSpanSeconds": 1.7336030006408691,
+    "audioOffsetSeconds": 18.578173875808716,
+    "volume": [
+      "mean_volume: -91.0 dB",
+      "max_volume: -91.0 dB"
+    ],
+    "tailHoldSeconds": 2,
+    "sharedMasterVolume": 0,
+    "legacyBoardSoundCheckbox": true,
+    "audioInterpretation": "Muted sample; unmuted Ambush cues not assessed"
+  },
+  {
+    "file": "ambush-entry-audio.mp4",
+    "frames": 3,
+    "changingSpanSeconds": 0.1442568302154541,
+    "audioOffsetSeconds": 0.015717029571533203,
+    "volume": [
+      "mean_volume: -91.0 dB",
+      "max_volume: -91.0 dB"
+    ],
+    "tailHoldSeconds": 2,
+    "sharedMasterVolume": 0,
+    "legacyBoardSoundCheckbox": true,
+    "audioInterpretation": "Muted sample; unmuted Ambush cues not assessed"
+  }
+]

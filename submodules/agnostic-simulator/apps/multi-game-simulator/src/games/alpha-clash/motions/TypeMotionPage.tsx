@@ -1,5 +1,6 @@
 import { MotionGallery, type MotionGalleryConfig } from "@tcg/simulator-presentation/gallery";
 import { rulesUrl, slots, typeMotions } from "./fixtures";
+import { alphaClashProductImageUrl } from "../components/Arena3D/card-artwork";
 const config: MotionGalleryConfig = {
   game: "Alpha Clash",
   tableOverlay: (
@@ -24,19 +25,19 @@ const config: MotionGalleryConfig = {
     {
       id: "host",
       name: "Captain Maxine Riggins",
-      imageUrl: "https://tcgplayer-cdn.tcgplayer.com/product/534928_400w.jpg",
+      imageUrl: alphaClashProductImageUrl(534928),
     },
     {
       id: "hero",
       name: "Magnate, Awakened",
-      imageUrl: "https://tcgplayer-cdn.tcgplayer.com/product/535079_400w.jpg",
+      imageUrl: alphaClashProductImageUrl(535079),
     },
     ...(fixture.id === "clashground"
       ? [
           {
             id: "old",
             name: "United Nations Headquarters",
-            imageUrl: "https://tcgplayer-cdn.tcgplayer.com/product/534926_400w.jpg",
+            imageUrl: alphaClashProductImageUrl(534926),
           },
         ]
       : []),

@@ -53,7 +53,7 @@ export function proveCannotAttack(
         }
         p.declareAttack(giantTortoise, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
         advanceToMain(game, q.id);
         q.declareAttack(enemy, source);
         let offered = false;
@@ -71,7 +71,7 @@ export function proveCannotAttack(
         }
         expect(game.state.combat).toBeNull();
         expect(offered).toBe(buffs > 0);
-        expect(game.state.objects[enemy.objectId]!.damage).toBe(buffs);
-        expect(game.state.objects[source.objectId]!.damage).toBe(preventsDamage ? 0 : 1);
+        expect(game.markedDamage(enemy.objectId)).toBe(buffs);
+        expect(game.markedDamage(source.objectId)).toBe(preventsDamage ? 0 : 1);
       });
 }

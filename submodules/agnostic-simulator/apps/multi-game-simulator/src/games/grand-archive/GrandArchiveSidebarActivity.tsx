@@ -1,3 +1,4 @@
+import { CardReference } from "@tcg/simulator-presentation/card-reference";
 import { getGrandArchiveCard, searchGrandArchiveCards } from "@tcg/grand-archive-cards";
 import { Loader } from "@mantine/core";
 import type {
@@ -514,8 +515,24 @@ function GrandArchiveHistoryCardReference({
   };
 
   return (
-    <button
-      type="button"
+    <CardReference
+      card={{
+        id: previewEntity.id,
+        label: reference.name,
+        imageUrl,
+        identity: definition?.elements.map((element) => ({
+          label: `Element ${element}`,
+          color:
+            element === "FIRE"
+              ? "#ed6475"
+              : element === "WATER"
+                ? "#74b7f5"
+                : element === "WIND"
+                  ? "#72cf9c"
+                  : "#bcaf96",
+        })),
+      }}
+      previewMode="external"
       className="ga-history-card-reference"
       aria-label={`Preview ${reference.name}`}
       aria-controls="ga-card-preview"
@@ -528,9 +545,7 @@ function GrandArchiveHistoryCardReference({
       onKeyDown={(event) => {
         if (event.key === "Escape") hide();
       }}
-    >
-      {reference.name}
-    </button>
+    />
   );
 }
 

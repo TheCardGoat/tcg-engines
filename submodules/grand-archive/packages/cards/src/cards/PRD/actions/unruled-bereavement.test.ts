@@ -70,15 +70,13 @@ describe("Unruled Bereavement damage and death empowerment", () => {
           }
           expect(game.state.stack).toHaveLength(0);
           for (const player of [p, q])
-            expect(game.state.objects[player.card(giantTortoise).objectId]!.damage).toBe(
-              level >= 7 ? 3 : 0,
-            );
+            expect(game.markedDamage(player.card(giantTortoise).objectId)).toBe(level >= 7 ? 3 : 0);
           for (const squirrel of small)
             expect(game.state.objects[squirrel.objectId]!.zone).toBe(
               level >= 7 ? "graveyard" : "field",
             );
-          expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(hero.objectId)).toBe(0);
+          expect(game.markedDamage(foe.objectId)).toBe(0);
           if (expired) advanceToMain(game, p.id, game.state.turn.number);
           const target = expired ? q.card(giantTortoise) : foe;
           const history = game.state.eventHistory.length;
@@ -98,7 +96,7 @@ describe("Unruled Bereavement damage and death empowerment", () => {
             targets: { "target-1": [hero.objectId] },
           });
           passEffectsStack(game);
-          expect(game.state.objects[hero.objectId]!.damage).toBe(1 + level);
+          expect(game.markedDamage(hero.objectId)).toBe(1 + level);
         });
       }
 });

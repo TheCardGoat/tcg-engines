@@ -71,6 +71,6 @@ describe("Mortal Ambition — Human and Horse ambush and steadfast", () => {
     opponent.declareAttack(opponent.card(ferventBeastmaster, { zone: "field" }), human);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[human.objectId]!.zone).toBe("field");
-    expect(game.state.objects[human.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(human.objectId)).toBe(3);
   });
 });

@@ -1,3 +1,4 @@
+import { ruleUnits } from "./rules-audit-units.mjs";
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -26,41 +27,22 @@ function linkedRuleFiles() {
     }
   }
   seen.delete("table-of-contents.md");
+  // Include current pages omitted by the table of contents, without reviving
+  // old unlinked aliases that remain on disk from previous imports.
+  const current = JSON.parse(readFileSync(join(rulesRoot, "current-pages.json"), "utf8"));
+  for (const file of current.files) {
+    if (file === "table-of-contents.md" || file === "changelog.md") continue;
+    if (!file.endsWith(".md") || file.includes("..") || !existsSync(join(rulesRoot, file))) {
+      throw new Error(`Invalid current rules page: ${file}`);
+    }
+    seen.add(file);
+  }
   return [...seen].sort();
 }
 
-function headingSlug(value) {
-  return value
-    .replace(/<a\b[^>]*>.*?<\/a>/g, "")
-    .replace(/[`*_]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function ruleUnits(file) {
-  const source = readFileSync(join(rulesRoot, file), "utf8");
-  const headings = [...source.matchAll(/^(#{1,6})\s+(.+?)\s*$/gm)];
-  const units = [];
-  for (let index = 0; index < headings.length; index += 1) {
-    const heading = headings[index];
-    const bodyStart = heading.index + heading[0].length;
-    const bodyEnd = headings[index + 1]?.index ?? source.length;
-    const body = source.slice(bodyStart, bodyEnd);
-    if (!/^\s*(?:\d+\.|\*)\s+/m.test(body)) continue;
-    const title = heading[2].replace(/<a\b[^>]*>.*?<\/a>/g, "").trim();
-    units.push({
-      key: `${file}#${headingSlug(title)}`,
-      file,
-      title,
-      line: source.slice(0, heading.index).split("\n").length,
-    });
-  }
-  return units;
-}
-
-const units = linkedRuleFiles().flatMap(ruleUnits);
+const units = linkedRuleFiles().flatMap((file) =>
+  ruleUnits(file, readFileSync(join(rulesRoot, file), "utf8")),
+);
 const unitByKey = new Map(units.map((unit) => [unit.key, unit]));
 if (unitByKey.size !== units.length) throw new Error("Rules audit contains duplicate unit keys");
 
@@ -73,15 +55,31 @@ for (const [key, entry] of Object.entries(statuses)) {
   if (typeof entry.evidence !== "string" || entry.evidence.trim().length === 0) {
     throw new Error(`Rules audit unit lacks evidence: ${key}`);
   }
+  const [evidenceFile, checkpoint] = entry.evidence.split(" — ");
+  const evidencePath = resolve(scriptDirectory, "..", evidenceFile);
+  if (
+    !existsSync(evidencePath) ||
+    !checkpoint ||
+    !readFileSync(evidencePath, "utf8").includes(`\`${checkpoint}\``)
+  ) {
+    throw new Error(`Rules audit evidence cannot be resolved: ${key}`);
+  }
+  if (!/^[a-f0-9]{64}$/.test(entry.reviewedFingerprint ?? "")) {
+    throw new Error(`Rules audit unit lacks a reviewed content fingerprint: ${key}`);
+  }
 }
 
 const rows = units.map((unit) => ({
   ...unit,
-  status: statuses[unit.key]?.status ?? "pending",
+  status: !statuses[unit.key]
+    ? "pending"
+    : statuses[unit.key].reviewedFingerprint === unit.fingerprint
+      ? statuses[unit.key].status
+      : "stale",
   evidence: statuses[unit.key]?.evidence ?? "",
 }));
 const counts = Object.fromEntries(
-  ["implemented", "external", "partial", "missing", "pending"].map((status) => [
+  ["implemented", "external", "partial", "missing", "pending", "stale"].map((status) => [
     status,
     rows.filter((row) => row.status === status).length,
   ]),
@@ -99,10 +97,10 @@ if (process.argv.includes("--list")) {
 
 if (
   process.argv.includes("--complete") &&
-  (counts.pending > 0 || counts.partial > 0 || counts.missing > 0)
+  (counts.pending > 0 || counts.partial > 0 || counts.missing > 0 || counts.stale > 0)
 ) {
   process.stderr.write(
-    `Rules audit is incomplete: ${counts.pending} pending, ${counts.partial} partial, ${counts.missing} missing.\n`,
+    `Rules audit is incomplete: ${counts.stale} stale, ${counts.pending} pending, ${counts.partial} partial, ${counts.missing} missing.\n`,
   );
   process.exitCode = 1;
 }

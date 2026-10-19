@@ -10,13 +10,13 @@
   "totals": {
     "cards": 2495,
     "abilities": 4544,
-    "provenAbilities": 2713,
-    "centrallyCoveredAbilities": 331,
-    "coveredAbilities": 3044,
-    "cardSpecificAbilities": 4213,
+    "provenAbilities": 2882,
+    "centrallyCoveredAbilities": 326,
+    "coveredAbilities": 3208,
+    "cardSpecificAbilities": 4218,
     "blockedAbilities": 0,
     "outOfScopeAbilities": 0,
-    "untestedAbilities": 1500,
+    "untestedAbilities": 1336,
     "cardsWithoutAbilities": 14,
     "coveredCardsWithoutAbilities": 7
   },
@@ -1781,7 +1781,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -1906,13 +1906,13 @@
             "rule-action:activate",
             "rule-mode:require"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "14hr8i5oix-a2",
           "text": "Negate all card activations you don't control.",
-          "signature": ["card-resolution", "effect:negate"],
-          "status": "untested"
+          "signature": ["card-resolution", "effect:negate-matching-stack-items"],
+          "status": "proven"
         }
       ]
     },
@@ -2040,7 +2040,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -3815,7 +3815,7 @@
           "abilityId": "24I0xn0OQ1-a1",
           "text": "Put Maledictum Vitae on the bottom of target champion's lineage.",
           "signature": ["card-resolution", "effect:move", "filter:type"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "24I0xn0OQ1-a2",
@@ -3827,7 +3827,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "24I0xn0OQ1-a3",
@@ -3845,7 +3845,7 @@
             "restriction:champion-bonus",
             "restriction:element-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -4344,7 +4344,7 @@
             "keyword:prepare",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "2ghdzy9tz7-a2",
@@ -4358,7 +4358,7 @@
             "event:card-drawn",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -4378,7 +4378,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -5376,14 +5376,18 @@
             "condition:champion-lineage-is",
             "condition:champion-matches-source",
             "condition:source-zone",
+            "effect:add-counter",
             "effect:conditional",
+            "effect:sequence",
             "event:phase-begins",
+            "filter:all",
+            "filter:subtype",
             "filter:type",
             "restriction:champion-bonus",
             "restriction:element-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -7810,20 +7814,22 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "4etkr73opc-a2",
           "text": "Deal 3 damage to target unit. If that unit is an ally that entered the field this turn, deal an additional 3 damage to it.",
           "signature": [
             "card-resolution",
+            "condition:all",
+            "condition:history",
             "condition:subject-matches",
             "effect:conditional",
             "effect:deal-damage",
             "effect:sequence",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -8856,7 +8862,7 @@
             "rule-mode:allow",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "4upufooz13-a3",
@@ -10182,9 +10188,11 @@
             "condition:combat-relation",
             "duration:while-source-in-functional-zone",
             "effect:continuous",
+            "filter:numeric",
+            "filter:type",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -10258,7 +10266,7 @@
             "keyword:fast-activation",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "5k1vt1cn1t-a2",
@@ -10272,7 +10280,7 @@
             "filter:not-source",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -10933,7 +10941,7 @@
             "rule-action:activate",
             "rule-mode:add-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "5upufyoz23-a2",
@@ -10951,7 +10959,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -11114,7 +11122,7 @@
             "filter:element",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -11266,18 +11274,18 @@
             "event:object-entered-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "5xjzPh6l2M-a3",
           "text": "On Leave: Put the damage counters that were on Cardiac Vessel onto your champion.",
           "signature": [
             "triggered",
-            "effect:move-counter",
+            "effect:add-counter",
             "event:object-left-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -11380,7 +11388,7 @@
             "filter:type",
             "keyword:taunt"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "62lVDTOToR-a2",
@@ -11397,7 +11405,7 @@
             "filter:subtype",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -12599,7 +12607,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -13856,7 +13864,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -14105,7 +14113,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -15176,7 +15184,7 @@
             "keyword:true-sight",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "88zq9ox7u6-a2",
@@ -15191,7 +15199,7 @@
             "rule-action:retaliate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "88zq9ox7u6-a3",
@@ -15205,7 +15213,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -16203,7 +16211,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -16661,6 +16669,7 @@
             "card-resolution",
             "condition:compare",
             "duration:for-next-event",
+            "effect:add-counter",
             "effect:replacement",
             "filter:type"
           ],
@@ -17065,7 +17074,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -18094,7 +18103,7 @@
             "filter:supertype",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "a4dk88zq9o-a2",
@@ -18107,7 +18116,7 @@
             "effect:continuous",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -18411,14 +18420,14 @@
           "text": "[Class Bonus] On Enter: If Sword Saint of Eveswind entered from a banishment, put two buff counters on it.",
           "signature": [
             "triggered",
-            "condition:activation-state",
             "condition:champion-matches-source",
+            "condition:event-origin",
             "effect:conditional",
             "event:object-entered-field",
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -18553,7 +18562,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -19006,7 +19015,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "AJeuUDTPmV-a2",
@@ -19018,7 +19027,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -19847,7 +19856,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "AsDKTmP3kp-a3",
@@ -19864,7 +19873,7 @@
             "filter:type",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -22604,7 +22613,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -23543,7 +23552,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -23600,7 +23609,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "CGdu1Vmlok-a2",
@@ -23612,7 +23621,7 @@
             "event:phase-begins",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -23941,7 +23950,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -24984,7 +24993,7 @@
             "filter:element",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -25575,18 +25584,13 @@
           "abilityId": "D79VKF2uOg-a1",
           "text": "Remove all sheen counters from units you control.",
           "signature": ["card-resolution", "effect:remove-counter", "filter:type"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "D79VKF2uOg-a2",
           "text": "Floating Memory (While paying for a memory cost, you may banish this card from your graveyard to pay for 1 of that cost.)",
-          "signature": ["static", "keyword:floating-memory"],
-          "status": "centrally-covered",
-          "centralEvidence": {
-            "keyword": "floating-memory",
-            "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Floating Memory pays one memory from the graveyard during materialization"
-          }
+          "signature": ["static", "static:intrinsic", "keyword:floating-memory"],
+          "status": "proven"
         }
       ]
     },
@@ -26099,7 +26103,7 @@
             "effect:continuous",
             "filter:has-counter"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "dDOMoeCJyK-a2",
@@ -26119,7 +26123,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -26534,7 +26538,7 @@
             "keyword:prepare",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "dih0LPaigc-a2",
@@ -26562,7 +26566,7 @@
             "rule-mode:allow",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -27634,14 +27638,14 @@
           "text": "On Enter: Put a quest counter on your champion. If Bell of the Chosen entered from a banishment, glimpse 2. (To glimpse, look at that many cards from the top of your deck. Put those cards back on the top or on the bottom of your deck in any order.)",
           "signature": [
             "triggered",
-            "condition:activation-state",
+            "condition:event-origin",
             "effect:add-counter",
             "effect:conditional",
             "effect:sequence",
             "event:object-entered-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -28853,7 +28857,7 @@
             "keyword:fast-activation",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "ecZsQQAYJJ-a2",
@@ -28861,6 +28865,7 @@
           "signature": [
             "triggered",
             "condition:champion-matches-source",
+            "condition:player-relation",
             "duration:this-turn",
             "effect:rule-modification",
             "event:object-entered-field",
@@ -28870,7 +28875,7 @@
             "rule-mode:forbid",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -28970,7 +28975,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "edjgscy50x-a2",
@@ -28979,6 +28984,7 @@
             "triggered",
             "condition:champion-matches-source",
             "effect:add-counter",
+            "effect:choose",
             "event:card-revealed",
             "filter:all",
             "filter:any",
@@ -28988,7 +28994,7 @@
             "restriction:element-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -29011,7 +29017,7 @@
             "rule-action:attack",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -29031,7 +29037,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -29615,7 +29621,7 @@
             "rule-action:materialize",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "enxi6tshtu-a2",
@@ -29633,7 +29639,7 @@
             "event:object-entered-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -30555,7 +30561,7 @@
             "effect:replacement",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -32025,13 +32031,13 @@
             "rule-action:activate",
             "rule-mode:allow"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "foy5mdrVCR-a2",
           "text": "Whenever this card is banished from your memory, put a charge counter on it.",
           "signature": ["triggered", "effect:add-counter", "event:card-banished", "trigger:event"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "foy5mdrVCR-a3",
@@ -32044,7 +32050,7 @@
             "effect:for-each-player",
             "effect:sequence"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -33195,7 +33201,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -36016,13 +36022,23 @@
             "event:object-entered-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "he6kd7hocc-a3",
           "text": "Remove two preparation counters from Tristan: Change the target of an attack that targets Tristan to a phantasia ally you control.",
-          "signature": ["card-resolution", "effect:remove-counter", "filter:type"],
-          "status": "untested"
+          "signature": [
+            "activated",
+            "condition:current-attack-target-matches",
+            "cost:remove-counter",
+            "effect:conditional",
+            "effect:retarget",
+            "filter:all",
+            "filter:not",
+            "filter:not-source",
+            "filter:type"
+          ],
+          "status": "proven"
         }
       ]
     },
@@ -36448,7 +36464,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -36550,7 +36566,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -36707,10 +36723,11 @@
             "condition:champion-lineage-is",
             "duration:while-source-in-functional-zone",
             "effect:continuous",
+            "filter:any",
             "filter:type",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -38048,7 +38065,7 @@
             "effect:replacement",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -38492,7 +38509,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -38649,7 +38666,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -38810,7 +38827,7 @@
             "keyword:prepare",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "iPpwkMxDt5-a2",
@@ -38825,7 +38842,7 @@
             "effect:summon",
             "keyword:true-sight"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -39204,7 +39221,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -39231,7 +39248,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -41239,7 +41256,7 @@
             "keyword:bulwark",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -41274,7 +41291,7 @@
             "filter:not-source",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -41910,7 +41927,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -41984,7 +42001,7 @@
             "keyword:bulwark",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -42549,7 +42566,7 @@
             "effect:replacement",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "ka5av43ehj-a2",
@@ -42557,12 +42574,14 @@
           "signature": [
             "static",
             "static:effects",
+            "condition:compare",
             "duration:while-source-in-functional-zone",
             "effect:rule-modification",
+            "restriction:level-restriction",
             "rule-action:recover",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "ka5av43ehj-a3",
@@ -42576,7 +42595,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -43068,7 +43087,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -43353,7 +43372,7 @@
             "rule-action:retaliate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "KmM2o1ozGr-a2",
@@ -43367,7 +43386,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -43385,13 +43404,14 @@
           "signature": [
             "triggered",
             "effect:add-counter",
+            "effect:choose",
             "event:object-entered-field",
             "filter:all",
             "filter:supertype",
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "kmuuqzfvg8-a2",
@@ -43537,7 +43557,7 @@
             "rule-mode:allow",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "KqBosnU7pU-a3",
@@ -45134,7 +45154,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -46303,6 +46323,7 @@
             "cost:remove-counter",
             "cost:rest",
             "effect:add-counter",
+            "effect:choose",
             "filter:type",
             "restriction:champion-bonus"
           ],
@@ -46682,7 +46703,7 @@
             "filter:type",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "m69XrVkaVh-a2",
@@ -46694,7 +46715,7 @@
             "keyword:commanded-will",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -48910,7 +48931,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "n06zlhihka-a3",
@@ -48923,7 +48944,7 @@
             "effect:replacement",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -49086,7 +49107,7 @@
             "effect:continuous",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -49590,7 +49611,7 @@
             "keyword:efficiency",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "ndnEl5mq7W-a2",
@@ -49609,7 +49630,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -50504,7 +50525,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -52088,13 +52109,13 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "OiyjVzW7Av-a2",
           "text": "Put a haunt counter on your Phantasmagoria. Then put the top X cards from your deck into your graveyard, where X is the amount of haunt counters on your Phantasmagoria.",
           "signature": ["card-resolution", "effect:add-counter", "effect:mill", "effect:sequence"],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -52338,7 +52359,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -52865,7 +52886,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "OSsRmNoETv-a2",
@@ -52879,7 +52900,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -53010,8 +53031,12 @@
         {
           "abilityId": "OvihPzTqcP-a1",
           "text": "Negate target card activation if that card was activated from a material deck.",
-          "signature": ["card-resolution", "effect:negate"],
-          "status": "untested"
+          "signature": [
+            "card-resolution",
+            "condition:bound-activation-origin",
+            "effect:conditional"
+          ],
+          "status": "proven"
         }
       ]
     },
@@ -53078,7 +53103,7 @@
             "effect:sequence",
             "filter:subtype"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "ow8iopvc8s-a2",
@@ -53092,7 +53117,7 @@
             "restriction:class-bonus",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -54387,7 +54412,7 @@
             "rule-action:retaliate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "pd2aigr677-a2",
@@ -54408,7 +54433,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -54541,7 +54566,7 @@
             "effect:replacement",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "peyG8Hfgqt-a2",
@@ -54560,7 +54585,7 @@
             "keyword:spellshroud",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -54822,7 +54847,7 @@
             "rule-action:retaliate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "PIcB5KuuMd-a2",
@@ -54838,7 +54863,7 @@
             "keyword:spellshroud",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "PIcB5KuuMd-a3",
@@ -54857,7 +54882,7 @@
             "restriction:champion-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -56321,7 +56346,7 @@
             "rule-action:use-weapon-for-attack",
             "rule-mode:add-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "pyx8bd7ozu-a2",
@@ -56335,7 +56360,7 @@
             "filter:token",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -56872,7 +56897,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -57247,7 +57272,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -57923,7 +57948,7 @@
             "rule-action:retaliate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "qry41lw9n0-a2",
@@ -57941,7 +57966,7 @@
             "filter:element",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -58094,7 +58119,7 @@
             "filter:element",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "qSxEKgmQ0I-a2",
@@ -58107,7 +58132,7 @@
             "effect:replacement",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -59593,7 +59618,7 @@
             "keyword:prepare",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "r84E55KBLM-a2",
@@ -59611,7 +59636,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -60493,6 +60518,7 @@
             "triggered",
             "condition:champion-matches-source",
             "condition:effect-succeeded",
+            "effect:add-counter",
             "effect:attempt",
             "effect:conditional",
             "effect:deal-damage",
@@ -60503,7 +60529,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -60905,7 +60931,7 @@
             "keyword:commanded-will",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "Rpr6yCQKU6-a2",
@@ -60923,7 +60949,7 @@
             "restriction:champion-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -61668,7 +61694,7 @@
             "filter:subtype",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "rYyOEGB3tD-a2",
@@ -61676,8 +61702,8 @@
           "signature": [
             "triggered",
             "condition:champion-lineage-is",
+            "effect:add-counter",
             "effect:choose",
-            "effect:move-counter",
             "event:object-left-field",
             "filter:all",
             "filter:subtype",
@@ -61685,7 +61711,7 @@
             "restriction:champion-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -63264,7 +63290,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -63654,7 +63680,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "stiyh3pmk3-a2",
@@ -64360,7 +64386,7 @@
             "restriction:champion-bonus",
             "restriction:sheen-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "t2lW0Q5KJS-a3",
@@ -64375,7 +64401,7 @@
             "restriction:champion-bonus",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -65710,7 +65736,7 @@
             "rule-action:activate",
             "rule-mode:add-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "TlhsnnRhGK-a2",
@@ -65724,7 +65750,7 @@
             "filter:not-subject",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -65822,7 +65848,7 @@
             "effect:replacement",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "tMy4zMpqcH-a3",
@@ -65833,7 +65859,7 @@
             "event:object-entered-field",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -66104,7 +66130,7 @@
             "restriction:champion-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "tqkkyf4ktr-a3",
@@ -66312,13 +66338,11 @@
             "activated",
             "condition:ability-activation-count",
             "condition:champion-lineage-is",
-            "condition:effect-succeeded",
             "cost:pay-reserve",
             "duration:until-start-of-turn",
-            "effect:conditional",
             "effect:deal-damage",
             "effect:destroy",
-            "effect:perform-as",
+            "effect:reflexive",
             "effect:remove-counter",
             "effect:rule-modification",
             "effect:sequence",
@@ -66329,7 +66353,7 @@
             "rule-action:activate",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -66413,7 +66437,7 @@
             "filter:type",
             "keyword:spellshroud"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "tsvbgl6ffq-a3",
@@ -66428,7 +66452,7 @@
             "filter:not-source",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -66570,7 +66594,7 @@
             "effect:continuous",
             "filter:has-counter"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -66716,7 +66740,7 @@
           "abilityId": "Tx3kHOY6vh-a1",
           "text": "Target unit becomes distant. (Units stay distant until the end of their controller’s turn.)",
           "signature": ["card-resolution", "effect:set-object-state", "filter:type"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "Tx3kHOY6vh-a2",
@@ -66740,7 +66764,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -67211,7 +67235,7 @@
             "rule-action:materialize",
             "rule-mode:add-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "u25fuv184p-a2",
@@ -67224,13 +67248,13 @@
             "filter:type",
             "keyword:spellshroud"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "u25fuv184p-a3",
           "text": "Banish Dusksoul Stone: Banish up to two cards from a single graveyard.",
           "signature": ["activated", "cost:banish-self", "effect:banish"],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -67252,7 +67276,7 @@
             "keyword:efficiency",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "u2Peefob8w-a2",
@@ -67265,7 +67289,7 @@
             "effect:move",
             "effect:sequence"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -69005,17 +69029,23 @@
           "signature": [
             "triggered",
             "condition:subject-matches",
+            "duration:this-turn",
+            "effect:add-counter",
             "effect:banish",
+            "effect:choose-value",
             "effect:conditional",
+            "effect:continuous",
             "effect:draw",
             "effect:for-each",
             "effect:sequence",
             "event:object-entered-field",
+            "filter:all",
             "filter:element-category",
+            "filter:subtype",
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -69102,7 +69132,7 @@
             "rule-action:activate",
             "rule-mode:allow"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "uutqo9hm33-a2",
@@ -69115,7 +69145,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "uutqo9hm33-a3",
@@ -69127,7 +69157,7 @@
             "effect:sequence",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -69743,10 +69773,10 @@
             "filter:supertype",
             "filter:type",
             "restriction:class-bonus",
-            "rule-action:attack",
+            "rule-action:use-weapon-for-attack",
             "rule-mode:allow"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "v1iyt8rugx-a2",
@@ -69766,7 +69796,7 @@
             "restriction:class-bonus",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "reks5jzk7c-a1",
@@ -69782,10 +69812,10 @@
             "filter:supertype",
             "filter:type",
             "restriction:class-bonus",
-            "rule-action:attack",
+            "rule-action:use-weapon-for-attack",
             "rule-mode:allow"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "reks5jzk7c-a2",
@@ -69800,7 +69830,7 @@
             "event:attack-declared",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -70819,7 +70849,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -71671,6 +71701,7 @@
             "duration:permanent",
             "duration:while-source-in-functional-zone",
             "effect:add-counter",
+            "effect:choose",
             "effect:continuous",
             "effect:summon",
             "event:object-entered-field",
@@ -71680,7 +71711,7 @@
             "keyword:vigor",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -71864,7 +71895,7 @@
             "keyword:brew",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "vt9y597fqr-a2",
@@ -71877,9 +71908,10 @@
             "effect:conditional",
             "effect:draw",
             "effect:sequence",
-            "filter:element"
+            "filter:element",
+            "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -72911,7 +72943,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -73541,7 +73573,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "wcfvrfw35s-a2",
@@ -73557,7 +73589,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -73925,7 +73957,7 @@
             "rule-action:materialize",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "WI5oMtzP3W-a2",
@@ -73943,7 +73975,7 @@
             "filter:has-keyword",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -74156,19 +74188,19 @@
           "abilityId": "WKA37tNxtw-a1",
           "text": "A deck with this card in it can have up to three more cards in its material deck.",
           "signature": ["game-setup"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "WKA37tNxtw-a2",
           "text": "First Boon (Bestow this boon at the beginning of the game, before Spirits enter.)",
           "signature": ["static", "static:intrinsic", "keyword:first-boon"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "WKA37tNxtw-a3",
           "text": "(10): Draw a card. This ability costs (1) less to activate for each regalia you control. Activate this ability only once.",
           "signature": ["activated", "cost:pay-reserve", "effect:draw", "filter:supertype"],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -75228,18 +75260,13 @@
           "abilityId": "WyNvyDHFdB-a1",
           "text": "(In a Pantheon game, each player summons this token at the beginning of the game.)",
           "signature": ["game-setup"],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "WyNvyDHFdB-a2",
           "text": "Omnishroud",
-          "signature": ["static", "keyword:omnishroud"],
-          "status": "centrally-covered",
-          "centralEvidence": {
-            "keyword": "omnishroud",
-            "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Omnishroud prevents activation targeting while attacks may still declare it"
-          }
+          "signature": ["static", "static:intrinsic", "keyword:omnishroud"],
+          "status": "proven"
         },
         {
           "abilityId": "WyNvyDHFdB-a3",
@@ -75251,7 +75278,7 @@
             "effect:replacement",
             "filter:not-source"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -76031,7 +76058,7 @@
             "filter:type",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "xdgpdcD33h-a3",
@@ -76236,11 +76263,14 @@
           "signature": [
             "triggered",
             "effect:add-counter",
+            "effect:choose",
             "event:phase-begins",
+            "filter:all",
+            "filter:subtype",
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "xfpk9xycwz-a2",
@@ -76483,12 +76513,7 @@
           "abilityId": "xhi5jnsl7d-a1",
           "text": "Foster (At the beginning of your recollection phase, if this ally hasn’t been dealt damage since the end of your previous turn, it becomes fostered.)",
           "signature": ["triggered", "keyword:foster"],
-          "status": "centrally-covered",
-          "centralEvidence": {
-            "keyword": "foster",
-            "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Foster fosters an undamaged ally at the beginning of its controller's recollection phase"
-          }
+          "status": "proven"
         },
         {
           "abilityId": "xhi5jnsl7d-a2",
@@ -76502,7 +76527,7 @@
             "effect:continuous",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -77152,7 +77177,7 @@
             "filter:token",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -77897,7 +77922,7 @@
             "event:attack-declared",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "xyan7zbtxi-a3",
@@ -77917,18 +77942,13 @@
             "filter:type",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "1hlxj4rywq-a1",
           "text": "Vigor",
           "signature": ["triggered", "keyword:vigor"],
-          "status": "centrally-covered",
-          "centralEvidence": {
-            "keyword": "vigor",
-            "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Vigor wakes the unit at the beginning of its controller's end step"
-          }
+          "status": "proven"
         },
         {
           "abilityId": "1hlxj4rywq-a2",
@@ -77942,7 +77962,7 @@
             "filter:not-source",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "1hlxj4rywq-a3",
@@ -77956,7 +77976,7 @@
             "filter:type",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -78154,7 +78174,7 @@
             "effect:replacement",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -78499,7 +78519,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "Y6PZntlVDl-a2",
@@ -78521,7 +78541,7 @@
             "filter:subtype",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -78697,7 +78717,7 @@
             "rule-action:activate",
             "rule-mode:modify-cost"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "y8BNOi4rwD-a2",
@@ -78711,7 +78731,7 @@
             "filter:type",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -78898,7 +78918,7 @@
             "keyword:brew",
             "restriction:champion-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "yBDxSHkT1s-a2",
@@ -78912,7 +78932,7 @@
             "event:card-activated",
             "trigger:event"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -79054,7 +79074,7 @@
           "centralEvidence": {
             "keyword": "exalted",
             "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Exalted permits playing Exalted-element cards only while a champion enables another advanced element"
+            "testName": "Exalted permits playing Exalted-element cards while a champion enables any advanced element"
           }
         },
         {
@@ -79067,7 +79087,7 @@
             "filter:object-state",
             "filter:type"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "YDjxpBd8Fm-a3",
@@ -79080,7 +79100,7 @@
             "restriction:class-bonus",
             "restriction:level-restriction"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -81473,7 +81493,7 @@
           "signature": [
             "triggered",
             "condition:champion-matches-source",
-            "effect:move-counter",
+            "effect:add-counter",
             "event:object-left-field",
             "filter:type",
             "restriction:class-bonus",
@@ -81726,13 +81746,8 @@
         {
           "abilityId": "zk96yd609g-a1",
           "text": "Steadfast (This ally can retaliate while rested and doesn't rest to do so.)",
-          "signature": ["static", "keyword:steadfast"],
-          "status": "centrally-covered",
-          "centralEvidence": {
-            "keyword": "steadfast",
-            "testPath": "../engine/src/rules/abilities/keyword-effects.test.ts",
-            "testName": "Steadfast lets a rested defending ally retaliate"
-          }
+          "signature": ["static", "static:intrinsic", "keyword:steadfast"],
+          "status": "proven"
         },
         {
           "abilityId": "zk96yd609g-a2",
@@ -81746,7 +81761,7 @@
             "effect:continuous",
             "restriction:class-bonus"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },
@@ -82722,7 +82737,7 @@
             "rule-action:attack",
             "rule-mode:forbid"
           ],
-          "status": "untested"
+          "status": "proven"
         },
         {
           "abilityId": "Zxab4Vi0wx-a2",
@@ -82733,7 +82748,7 @@
             "duration:while-source-on-field",
             "effect:replacement"
           ],
-          "status": "untested"
+          "status": "proven"
         }
       ]
     },

@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-types/card-types-functional-subtypes"
   relation: "current_index"
 ---
-
 # Card Types - Functional Subtypes
 
 Some subtypes of cards are functional. That is, they might have specific rules that pertain to how the card can function differently from or in addition to the rules of the card type.

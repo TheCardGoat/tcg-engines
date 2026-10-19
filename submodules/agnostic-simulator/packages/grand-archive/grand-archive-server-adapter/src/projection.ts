@@ -2,6 +2,12 @@ import {
   projectGrandArchiveStackPresentation,
   type GrandArchiveStackPresentation,
 } from "./stack-presentation.ts";
+import { grandArchivePlayerStatusEffects } from "./player-status-presentation.ts";
+import { grandArchiveStatusDecorations } from "./status-presentation.ts";
+import type {
+  GrandArchiveActivationState,
+  GrandArchiveObjectState,
+} from "@tcg/grand-archive-types";
 import { grandArchiveCardPresentation } from "./card-presentation.ts";
 import { getGrandArchiveCard } from "@tcg/grand-archive-cards";
 import type { EngineInteractionView, InteractionAction } from "@tcg/protocol";
@@ -147,6 +153,7 @@ type ProjectableGrandArchiveObject = Pick<
   | "facing"
   | "hostId"
   | "damage"
+  | "temporaryDamage"
   | "counters"
   | "incarnation"
 >;
@@ -154,7 +161,10 @@ type ProjectableGrandArchiveObject = Pick<
 function entityForCard(input: {
   readonly object: ProjectableGrandArchiveObject;
   readonly title: string;
-  readonly rested: boolean;
+  readonly states: readonly GrandArchiveObjectState[];
+  readonly activationStates: readonly GrandArchiveActivationState[];
+  readonly keywords?: GrandArchiveViewerObject["keywords"];
+  readonly damageLifetime?: GrandArchiveViewerObject["damageLifetime"];
   readonly stateVersion: number;
   readonly concealIdentity?: boolean;
   readonly extraDataAttributes?: Readonly<Record<string, string | number | boolean>>;
@@ -169,12 +179,16 @@ function entityForCard(input: {
     ? []
     : grandArchiveCounterDecorations({
         damage: object.damage,
+        temporaryDamage: object.temporaryDamage,
         counters: object.counters,
-        damageLifetime: card?.types.includes("CHAMPION")
-          ? "champion"
-          : card?.types.includes("ALLY")
-            ? "ally"
-            : undefined,
+        damageLifetime:
+          input.damageLifetime !== undefined
+            ? (input.damageLifetime ?? undefined)
+            : card?.types.includes("CHAMPION")
+              ? "champion"
+              : card?.types.includes("ALLY")
+                ? "ally"
+                : undefined,
       });
   return grandArchiveCardPresentation({
     id: object.id,
@@ -183,20 +197,27 @@ function entityForCard(input: {
     kind: card?.types.includes("CHAMPION") ? "leader" : object.isToken ? "token" : "card",
     ownerId: object.ownerId,
     face: hidden ? "hidden" : "public",
-    states: hidden ? ["hidden"] : input.rested ? ["rested"] : ["ready"],
+    states: hidden ? ["hidden"] : input.states.includes("rested") ? ["rested"] : ["ready"],
     stats: grandArchiveCounterStats(counters),
-    decorations: counters,
+    decorations: [
+      ...counters,
+      ...(hidden
+        ? []
+        : grandArchiveStatusDecorations(input.states, input.activationStates, input.keywords)),
+    ],
     traits: card ? [...card.elements, ...card.classes, ...card.subtypes] : [],
     ...(imageUrl ? { imageUrl } : {}),
     dataAttributes: {
       ...(!hidden && object.hostId ? { "data-host-id": object.hostId } : {}),
       "data-zone-id": `${object.controllerId}:${object.zone}`,
       "data-facing": object.facing,
-      ...(!hidden && card?.types.includes("ALLY") ? { "data-damage-lifetime": "end-phase" } : {}),
+      ...(!hidden && object.temporaryDamage > 0 ? { "data-damage-lifetime": "end-phase" } : {}),
       ...(!hidden
         ? {
             "data-definition-id": object.activeDefinitionId ?? object.definitionId,
             "data-base-definition-id": object.definitionId,
+            "data-native-states": input.states.join(" "),
+            "data-activation-states": input.activationStates.join(" "),
           }
         : {}),
       "data-incarnation": object.incarnation,
@@ -214,7 +235,10 @@ function entityForObject(object: GrandArchiveViewerObject, stateVersion: number)
         ? { "data-lineage-position": object.lineagePosition }
         : undefined,
     title: object.name,
-    rested: object.states.includes("rested"),
+    states: object.states,
+    activationStates: object.activationStates,
+    keywords: object.keywords,
+    damageLifetime: object.damageLifetime,
     stateVersion,
   });
 }
@@ -267,6 +291,14 @@ function appendEffectsStack(
       ownerId: item.controllerId,
       face: "public",
       states: item.negated ? [] : ["ready"],
+      decorations: grandArchiveStatusDecorations(
+        [],
+        [
+          ...item.activationStates,
+          ...(item.isCopy ? ["copy" as const] : []),
+          ...(item.negated ? ["negated" as const] : []),
+        ],
+      ),
       stats: [
         { label: "Layer", value: String(index + 1) },
         ...(item.selectedModeIds.length > 0
@@ -375,7 +407,8 @@ function entityForAuthorizedCandidate(
   return entityForCard({
     object,
     title: object.nameOverride ?? card?.name ?? object.definitionId,
-    rested: object.states.has("rested"),
+    states: [...object.states],
+    activationStates: [...object.activationStates],
     stateVersion,
     concealIdentity,
     extraDataAttributes: { "data-authorized-candidate": true },
@@ -562,7 +595,13 @@ export function projectGrandArchiveViewerSimulator(
   if (interactionView) {
     for (const action of interactionView.actions) {
       for (const input of action.inputs) {
-        if (input.kind !== "entity-selection" && input.kind !== "ordering") continue;
+        if (
+          input.kind !== "entity-selection" &&
+          input.kind !== "ordering" &&
+          input.kind !== "entity-partition" &&
+          input.kind !== "entity-allocation"
+        )
+          continue;
         for (const candidate of input.candidates) {
           const instanceId = candidate.entity.instanceId;
           if (visibleEntityIds.has(instanceId)) continue;
@@ -626,6 +665,7 @@ export function projectGrandArchiveViewerSimulator(
       seats: viewer.players.map((player) => ({
         id: player.id,
         label: player.name,
+        activeEffects: grandArchivePlayerStatusEffects(player),
         role: "human",
         perspective: player.id === viewer.selfId ? "bottom" : "top",
         counters: [
@@ -703,27 +743,53 @@ export function projectGrandArchiveSimulator(
   );
   for (const action of interaction.view.actions) {
     for (const input of action.inputs) {
-      if (input.kind !== "entity-selection" && input.kind !== "ordering") continue;
+      if (
+        input.kind !== "entity-selection" &&
+        input.kind !== "ordering" &&
+        input.kind !== "entity-partition" &&
+        input.kind !== "entity-allocation"
+      )
+        continue;
       for (const candidate of input.candidates) {
         const candidateId = candidate.entity.instanceId;
         if (visibleEntityIds.has(candidateId)) continue;
         const object = objectsById.get(candidateId);
+        const catalogCard = candidate.entity.definitionId
+          ? getGrandArchiveCard(candidate.entity.definitionId)
+          : undefined;
         const entity = object
           ? entityForAuthorizedCandidate(object, state.stateVersion)
-          : candidate.entity.kind === "effect"
+          : candidate.entity.definitionId
             ? {
                 id: candidateId,
-                title: candidate.text?.key ?? candidateId,
-                subtitle: "Triggered ability",
-                kind: "token" as const,
+                title: candidate.text?.key ?? catalogCard?.name ?? candidateId,
+                subtitle: catalogCard?.types.join(" · ") ?? "Card to generate",
+                kind: "card" as const,
                 ownerId: viewerId,
                 face: "public" as const,
                 states: [],
                 stats: [],
                 traits: [],
+                ...(catalogCard?.printings[0]?.imageUrl
+                  ? { imageUrl: catalogCard.printings[0].imageUrl }
+                  : {}),
+                imageAspectRatio: 5 / 7,
                 dataAttributes: { "data-authorized-candidate": true },
               }
-            : null;
+            : candidate.entity.kind === "effect"
+              ? {
+                  id: candidateId,
+                  title: candidate.text?.key ?? candidateId,
+                  subtitle: "Triggered ability",
+                  kind: "token" as const,
+                  ownerId: viewerId,
+                  face: "public" as const,
+                  states: [],
+                  stats: [],
+                  traits: [],
+                  dataAttributes: { "data-authorized-candidate": true },
+                }
+              : null;
         if (!entity) continue;
         entities.push(entity);
         visibleEntityIds.add(candidateId);
@@ -738,7 +804,7 @@ export function projectGrandArchiveSimulator(
     input: simulatorInputForAction(action),
     movePreview: {
       engine: "grand-archive",
-      command: interaction.commandsByActionId.get(action.id)?.[0]?.command.move ?? action.intent,
+      command: interaction.commandNamesByActionId.get(action.id) ?? action.intent,
       payload: JSON.stringify({ stateVersion: state.stateVersion, requestId: action.requestId }),
     },
   }));
@@ -803,6 +869,7 @@ export function projectGrandArchiveSimulator(
       seats: viewer.players.map((player) => ({
         id: player.id,
         label: player.name,
+        activeEffects: grandArchivePlayerStatusEffects(player),
         role: "human",
         perspective: player.id === viewerId ? "bottom" : "top",
         counters: [

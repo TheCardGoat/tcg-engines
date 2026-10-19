@@ -53,5 +53,5 @@ for (const counters of [1, 2])
     advanceToMain(game, p.id);
     p.declareAttack(p.card(goldenRook), target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(counters === 1 ? 1 : 2);
+    expect(game.markedDamage(target.objectId)).toBe(counters === 1 ? 1 : 2);
   });

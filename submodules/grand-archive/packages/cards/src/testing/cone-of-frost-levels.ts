@@ -81,17 +81,13 @@ export function proveConeOfFrostLevels() {
             return;
           }
           p.activate(coneOfFrost, { reservePayment, ...(count ? { targets } : {}) });
-          expect(game.state.objects[foe.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(foe.objectId)).toBe(0);
           passEffectsStack(game);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(
+          expect(game.markedDamage(foe.objectId)).toBe(
             mode === "same" ? 2 * count : mode === "split" && count === 3 ? 2 : 0,
           );
-          expect(game.state.objects[own.objectId]!.damage).toBe(
-            mode === "split" && count >= 1 ? 2 : 0,
-          );
-          expect(game.state.objects[other.objectId]!.damage).toBe(
-            mode === "split" && count >= 2 ? 2 : 0,
-          );
+          expect(game.markedDamage(own.objectId)).toBe(mode === "split" && count >= 1 ? 2 : 0);
+          expect(game.markedDamage(other.objectId)).toBe(mode === "split" && count >= 2 ? 2 : 0);
           expect(p.cards(coneOfFrost, { zone: "graveyard" })).toHaveLength(1);
         });
       }

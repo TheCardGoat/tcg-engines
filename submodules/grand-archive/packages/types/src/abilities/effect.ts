@@ -448,7 +448,15 @@ export type GrandArchiveAtomicEffect = GrandArchiveEffectBase &
         readonly subject: GrandArchiveSubject;
         readonly counter: GrandArchiveCounterKind;
         readonly amount: GrandArchiveAmount;
-        readonly counterScope?: "temporary";
+        readonly counterScope?: undefined;
+      }
+    | {
+        /** Temporary damage is not a counter; only its explicit removal uses this scope. */
+        readonly kind: "remove-counter";
+        readonly subject: GrandArchiveSubject;
+        readonly counter: "damage";
+        readonly amount: { readonly kind: "all" };
+        readonly counterScope: "temporary";
       }
     | {
         readonly kind: "move-counter";
@@ -773,6 +781,8 @@ export type GrandArchiveEffect =
   | {
       readonly kind: "reflexive";
       readonly action: GrandArchiveEffect;
+      /** Require the named result, rather than any event performed by a replacement. */
+      readonly requiredResult?: { readonly kind: "destroyed"; readonly binding: string };
       /** Targets are declared when the reflexive trigger is put on the Effects Stack. */
       readonly targets?: readonly import("./selection.ts").GrandArchiveTargetDeclaration[];
       /** One trigger is created for every object successfully affected by the action. */

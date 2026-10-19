@@ -87,7 +87,7 @@ export function provePreparedTargetAction({
           );
           passEffectsStack(game);
           if (effect === "damage")
-            expect(game.state.objects[target.objectId]!.damage).toBe(mode === "prepared" ? 4 : 2);
+            expect(game.markedDamage(target.objectId)).toBe(mode === "prepared" ? 4 : 2);
           else
             expect(game.state.objects[target.objectId]!.counters["named:sheen"]).toBe(
               3 + (mode === "prepared" ? Math.floor(banished / 3) : 0),

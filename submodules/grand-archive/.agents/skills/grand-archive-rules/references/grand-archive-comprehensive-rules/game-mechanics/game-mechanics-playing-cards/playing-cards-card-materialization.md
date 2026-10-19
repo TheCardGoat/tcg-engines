@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-playing-cards/playing-cards-card-materialization"
   relation: "current_index"
 ---
-
 # Playing Cards - Card Materialization
 
 #### General Rules:

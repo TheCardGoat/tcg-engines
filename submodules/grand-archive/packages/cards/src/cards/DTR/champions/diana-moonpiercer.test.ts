@@ -190,7 +190,7 @@ describe("Diana Moonpiercer — targeting card activations pay their controller"
           accept ? { reservePayment: pay(actor, 2) } : false,
         );
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(accept ? 2 : 0);
+        expect(game.markedDamage(hero.objectId)).toBe(accept ? 2 : 0);
         expect(game.state.objects[spell.objectId]!.zone).toBe("graveyard");
         expect(actor.zone("memory")).toHaveLength(memory + (accept ? 2 : 0));
       });
@@ -225,7 +225,7 @@ describe("Diana Moonpiercer — combat continuation payment", () => {
         }
         if (!defending || accept) game.resolveCombatWithoutRetaliation();
         expect(game.state.combat).toBeNull();
-        expect(game.state.objects[target.objectId]!.damage).toBe(defending && !accept ? 0 : 1);
+        expect(game.markedDamage(target.objectId)).toBe(defending && !accept ? 0 : 1);
         expect(q.zone("memory")).toHaveLength(defending && accept ? 2 : 0);
         expect(game.state.objects[q.card(trainingSword).objectId]!.counters.durability).toBe(
           defending && !accept ? 2 : 1,
@@ -274,8 +274,8 @@ describe("Diana Moonpiercer — each activation is independent", () => {
         );
         passEffectsStack(game);
       }
-      expect(game.state.objects[hero.objectId]!.damage).toBe(1 + 2 * accepted);
-      expect(game.state.objects[opponent.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(hero.objectId)).toBe(1 + 2 * accepted);
+      expect(game.markedDamage(opponent.objectId)).toBe(2);
       expect(q.zone("memory")).toHaveLength(6 + Math.min(2, accepted) * 2);
       expect(p.zone("memory")).toHaveLength(3 + (accepted === 3 ? 2 : 0));
       for (const spell of spells)
@@ -294,7 +294,7 @@ describe("Diana Moonpiercer — each activation is independent", () => {
       answerDecision(game, "resolve-effect-payment", false);
       passEffectsStack(game);
     }
-    expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(hero.objectId)).toBe(0);
     expect(game.state.objects[spell.objectId]!.zone).toBe("graveyard");
     expect(q.zone("memory")).toHaveLength(2);
   });
@@ -310,7 +310,7 @@ describe("Diana Moonpiercer — each activation is independent", () => {
     mode("negate-targeting-activations", [activation.id]);
     answerDecision(game, "resolve-effect-payment", false);
     passEffectsStack(game);
-    expect(game.state.objects[hero.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(hero.objectId)).toBe(2);
     expect(q.zone("memory")).toHaveLength(2);
   });
 });
@@ -334,7 +334,7 @@ for (const paySpell of [false, true])
       );
       passEffectsStack(game);
       expect(game.state.decision).toMatchObject({ kind: "resolve-effect-payment", playerId: q.id });
-      expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(hero.objectId)).toBe(0);
       answerDecision(
         game,
         "resolve-effect-payment",
@@ -342,9 +342,7 @@ for (const paySpell of [false, true])
       );
       passEffectsStack(game);
       if (payCombat) game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[hero.objectId]!.damage).toBe(
-        payCombat ? (paySpell ? 2 : 0) + 1 : 0,
-      );
+      expect(game.markedDamage(hero.objectId)).toBe(payCombat ? (paySpell ? 2 : 0) + 1 : 0);
       // Ending Phases 1: ending combat banishes pending stack cards even after their tax was paid.
       expect(game.state.objects[spell.objectId]!.zone).toBe(
         paySpell && !payCombat ? "banishment" : "graveyard",
@@ -366,7 +364,7 @@ it("Glimpse while defending leaves combat and its damage intact", () => {
   answerDecision(game, "resolve-glimpse", { kind: "reorder", top, bottom: [] });
   passEffectsStack(game);
   game.resolveCombatWithoutRetaliation();
-  expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+  expect(game.markedDamage(hero.objectId)).toBe(1);
   expect(q.zone("memory")).toHaveLength(0);
   expect(game.state.objects[q.card(trainingSword).objectId]!.counters.durability).toBe(1);
 });

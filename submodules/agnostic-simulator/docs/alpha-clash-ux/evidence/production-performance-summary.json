@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-10",
+  "build": "production React Router build; dirty worktree based on f403e816c4606be9febec2ecacdc0034824d7254",
+  "url": "http://127.0.0.1:4173/alpha-clash/simulator/tests/combat-obstruct-forced",
+  "hardware": "MacBook Pro, Apple M5 Pro, 48 GB",
+  "browser": "Codex in-app browser Chrome/155.0.0.0",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+  "viewport": [
+    1366,
+    768
+  ],
+  "devicePixelRatio": 1,
+  "visibility": "visible",
+  "method": "requestAnimationFrame intervals in two-second windows after native UI clicks; PerformanceObserver longtask",
+  "longTasks": [],
+  "samples": [
+    {
+      "action": "attacker-buff pass",
+      "windowMs": 2000,
+      "intervals": 119,
+      "meanMs": 16.667226890756254,
+      "p95Ms": 18.300000000017462,
+      "maxMs": 18.60000000000582,
+      "over33_4Ms": 0
+    },
+    {
+      "action": "defender-buff pass",
+      "windowMs": 2000,
+      "intervals": 119,
+      "meanMs": 16.672268907563026,
+      "p95Ms": 18.20000000001164,
+      "maxMs": 18.5,
+      "over33_4Ms": 0
+    },
+    {
+      "action": "first before-damage pass",
+      "windowMs": 2000,
+      "intervals": 119,
+      "meanMs": 16.666386554621994,
+      "p95Ms": 18.300000000017462,
+      "maxMs": 18.70000000001164,
+      "over33_4Ms": 0
+    },
+    {
+      "action": "final damage and destruction",
+      "windowMs": 2000,
+      "intervals": 113,
+      "meanMs": 17.551327433628472,
+      "p95Ms": 17.89999999999418,
+      "maxMs": 116.70000000001164,
+      "over33_4Ms": 1
+    }
+  ],
+  "limits": [
+    "Callback cadence does not measure GPU completion.",
+    "No CPU or network throttling was applied.",
+    "No screencast ran during this sample.",
+    "Single run; not a cross-device acceptance test.",
+    "Crowded board construction passes, but historical reachability is still under review; this sample measures layout interaction only."
+  ],
+  "crowdedSamples": [
+    {
+      "action": "Next hand cards",
+      "windowMs": 2000,
+      "intervals": 119,
+      "meanMs": 16.678151260504208,
+      "p95Ms": 18.0,
+      "maxMs": 18.700000000000728,
+      "over33_4Ms": 0
+    },
+    {
+      "action": "Previous hand cards",
+      "windowMs": 2000,
+      "intervals": 119,
+      "meanMs": 16.666386554621873,
+      "p95Ms": 18.0,
+      "maxMs": 18.5,
+      "over33_4Ms": 0
+    }
+  ]
+}

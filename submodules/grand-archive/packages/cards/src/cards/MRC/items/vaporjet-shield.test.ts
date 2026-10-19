@@ -99,7 +99,7 @@ describe("Vaporjet Shield — damage to its linked host", () => {
                 passEffectsStack(game);
               }
             const expected = matching && !other && mode !== "unpreventable" ? 2 : 4;
-            expect(game.state.objects[target.objectId]!.damage).toBe(expected);
+            expect(game.markedDamage(target.objectId)).toBe(expected);
             const amounts = game.state.eventHistory
               .slice(start)
               .filter((e) => e.type === "damage-marked" && e.objectId === target.objectId)
@@ -173,7 +173,7 @@ describe("Vaporjet Shield — opposing hosts and broken links", () => {
         passEffectsStack(game);
         advanceToMain(game, q.id);
         fire();
-        expect(game.state.objects[host.objectId]!.damage).toBe(matching ? 1 : 2);
+        expect(game.markedDamage(host.objectId)).toBe(matching ? 1 : 2);
         if (!opposing) advanceToMain(game, p.id);
         owner.activate(reclaim, {
           reservePayment: pay(owner, 2),
@@ -187,7 +187,7 @@ describe("Vaporjet Shield — opposing hosts and broken links", () => {
         expect(game.state.objects[host.objectId]!.incarnation).not.toBe(incarnation);
         if (!opposing) p.pass();
         fire();
-        expect(game.state.objects[host.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(host.objectId)).toBe(2);
       });
     }
 });

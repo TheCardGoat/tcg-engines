@@ -1,0 +1,274 @@
+.tcg-contextual-choice {
+  position: absolute;
+  z-index: 5;
+  right: 2.5%;
+  bottom: 21%;
+  max-width: min(520px, 94%);
+  box-sizing: border-box;
+  max-height: calc(79% - 12px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  gap: 12px;
+  padding: 16px 20px;
+  color: var(--tcg-prompt-text, #e9e5d9);
+  border: 1px solid var(--tcg-prompt-border, #a08d5c55);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #142329f5, #081218f2);
+  box-shadow:
+    0 12px 32px #0006,
+    inset 0 1px #ffffff08;
+  animation: tcg-choice-arrive 180ms ease-out;
+}
+.tcg-contextual-choice--spatial {
+  top: 25%;
+  right: 2.5%;
+  bottom: auto;
+  width: min(225px, 25vw);
+  padding: 13px 15px;
+}
+.tcg-contextual-choice__copy {
+  display: grid;
+  gap: 5px;
+}
+.tcg-contextual-choice__copy strong {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.tcg-contextual-choice__copy small,
+.tcg-contextual-choice__copy span,
+.tcg-contextual-choice__limit {
+  color: #afbbb9;
+  font-size: 12px;
+}
+.tcg-contextual-choice__controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tcg-contextual-choice button {
+  min-height: 44px;
+  padding: 9px 15px;
+  border: 1px solid #8f825744;
+  border-radius: 7px;
+  color: inherit;
+  background: #213038;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 120ms,
+    border-color 120ms;
+}
+.tcg-contextual-choice button:hover:not(:disabled) {
+  background: #30434a;
+  border-color: #c0ab76;
+}
+.tcg-contextual-choice button[data-primary] {
+  color: #f0d6a2;
+  border-color: #b19b6277;
+}
+.tcg-contextual-choice button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.tcg-contextual-choice :focus-visible {
+  outline: 2px solid #efd49b;
+  outline-offset: 3px;
+}
+.tcg-contextual-choice__amount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tcg-contextual-choice__amount-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tcg-contextual-choice__amount-options button {
+  min-width: 44px;
+  color: #f0d6a2;
+}
+.tcg-contextual-choice__amount-options small {
+  flex-basis: 100%;
+}
+.tcg-contextual-choice__amount button {
+  width: 44px;
+  font-size: 22px;
+  padding: 0;
+}
+.tcg-contextual-choice__amount input {
+  width: 64px;
+  height: 44px;
+  box-sizing: border-box;
+  background: #071116;
+  border: 1px solid #8f825744;
+  border-radius: 7px;
+  color: #f0d6a2;
+  text-align: center;
+  font: inherit;
+  font-size: 22px;
+  appearance: textfield;
+}
+.tcg-contextual-choice__amount input::-webkit-inner-spin-button {
+  appearance: none;
+}
+@keyframes tcg-choice-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 650px) {
+  .tcg-contextual-choice {
+    right: 3%;
+    bottom: 24%;
+    max-height: calc(76% - 12px);
+    padding: 12px 14px;
+    max-width: 94%;
+  }
+  .tcg-contextual-choice__copy strong {
+    font-size: 14px;
+  }
+  .tcg-contextual-choice--spatial {
+    top: 15%;
+    right: 3%;
+    bottom: auto;
+    width: 190px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcg-contextual-choice {
+    animation: none;
+  }
+  .tcg-contextual-choice button {
+    transition: none;
+  }
+}
+@media (max-height: 500px) and (min-width: 651px) {
+  .tcg-contextual-choice {
+    box-sizing: border-box;
+    width: 280px;
+    max-width: 34vw;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .tcg-contextual-choice__copy strong {
+    font-size: 13px;
+  }
+  .tcg-contextual-choice__amount input {
+    width: 50px;
+  }
+  .tcg-contextual-choice--spatial {
+    top: 19%;
+    bottom: auto;
+    width: 195px;
+  }
+}
+
+.tcg-contextual-choice__hint {
+  flex-basis: 100%;
+  color: #afbbb9;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.tcg-contextual-choice__card-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 100%;
+  gap: 12px;
+}
+
+.tcg-choice-options {
+  width: 100%;
+  min-width: 0;
+}
+.tcg-choice-options__search {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.tcg-choice-options__search input {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #8f825766;
+  border-radius: 7px;
+  background: #071116;
+  color: inherit;
+  font: inherit;
+  font-size: 16px;
+}
+.tcg-choice-options__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: min(32vh, 280px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 3px;
+}
+.tcg-choice-options__option {
+  display: grid;
+  gap: 4px;
+}
+.tcg-choice-options small {
+  color: #afbbb9;
+}
+.tcg-contextual-choice[data-reduced-motion] {
+  animation: none;
+}
+.tcg-contextual-choice[data-reduced-motion] button {
+  transition: none;
+}
+
+.tcg-contextual-choice--cost-slots {
+  max-height: 75vh;
+  width: min(460px, 95vw);
+}
+
+/* HUD and sidebar hosts provide their own position. Percentage height limits
+   would measure the resting host and collapse the active decision to a strip. */
+.tcg-contextual-choice[data-placement="inline"] {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: 520px;
+  max-height: min(62svh, 28rem);
+  margin-inline: auto;
+  grid-auto-rows: min-content;
+  align-content: start;
+}
+
+/* One scrolling allocation workspace; the confirmation stays in the modal rail. */
+.tcg-target-allocation {
+  overflow: hidden;
+}
+.tcg-target-allocation .tcg-target__body {
+  min-height: 0;
+  overflow: hidden;
+}
+.tcg-target-allocation .tcg-prompt-allocation {
+  --interaction-surface-soft: #142730;
+  --interaction-border: #526a75;
+  --interaction-text: #e3e6dd;
+  --interaction-muted: #a9bdc5;
+  --interaction-accent: #d8bd89;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 62svh;
+  overflow: auto;
+  padding: 12px;
+}
+.tcg-target-allocation .tcg-target__footer {
+  flex-shrink: 0;
+}

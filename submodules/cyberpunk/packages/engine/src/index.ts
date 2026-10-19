@@ -245,6 +245,7 @@ export {
 export {
   AIPlayer,
   type AIPlayerOptions,
+  type AIPlayerDecision,
   type AIStrategy,
   type ChoiceResolver,
   type ChoiceResolverMap,
@@ -328,3 +329,7 @@ export {
 } from "./automation/index.ts";
 
 export { COMBAT_STATE_VERSION, restoreCombatState } from "./state/combat-state-version.ts";
+export {
+  CYBERPUNK_SNAPSHOT_SCHEMA_VERSION,
+  migrateCyberpunkSnapshotState,
+} from "./state/snapshot-migration.ts";

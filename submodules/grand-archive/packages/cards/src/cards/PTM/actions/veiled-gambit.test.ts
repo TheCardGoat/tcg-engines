@@ -107,12 +107,12 @@ describe("Veiled Gambit — prevention", () => {
           if (!expired)
             for (const id of recipients) {
               hit(id, true);
-              expect(game.state.objects[id]!.damage).toBe(3);
+              expect(game.markedDamage(id)).toBe(3);
             }
           for (let n = 1; n <= (expired ? 1 : 5); n++) {
             for (const id of recipients) {
               hit(id);
-              expect(game.state.objects[id]!.damage).toBe(expired ? 1 : 3 + Math.max(0, n - 4));
+              expect(game.markedDamage(id)).toBe(expired ? 1 : 3 + Math.max(0, n - 4));
             }
           }
           const untouched =
@@ -120,7 +120,7 @@ describe("Veiled Gambit — prevention", () => {
               ? q.card(giantTortoise).objectId
               : p.card(giantTortoise).objectId;
           hit(untouched);
-          expect(game.state.objects[untouched]!.damage).toBe(1);
+          expect(game.markedDamage(untouched)).toBe(1);
           expect(game.state.decision).toBeNull();
         });
 });

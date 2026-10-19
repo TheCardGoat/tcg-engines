@@ -42,6 +42,8 @@ function submitCandidate(
 
 export interface TakeAutomatedActionWithFallbackOptions {
   readonly enumerateOptions?: EnumerateCandidatesOptions;
+  /** Pre-ranked snapshot proposals; every candidate still passes runtime validation. */
+  readonly preparedCandidates?: readonly GundamBotCandidate[];
   /** Max candidates to try before falling through to passTurn. Default: 3. */
   readonly maxCandidateAttempts?: number;
   /**
@@ -144,27 +146,9 @@ export function takeAutomatedActionWithFallback(
     return result;
   }
 
-  const candidates = enumerateGundamBotCandidates(
-    state,
-    playerId,
-    staticResources,
-    options.enumerateOptions,
-  );
-
-  const view = runtime.getFilteredView({ role: "player", playerId });
-  const pendingChoice = runtime.getPendingChoice({ role: "player", playerId }) ?? null;
-  const cards = runtime.getCardReadAPI();
-  const ctx: CandidateStrategyContext = {
-    playerId,
-    state,
-    view,
-    candidates,
-    turnNumber,
-    pendingChoice,
-    cards,
-  };
-
-  const ordered = strategy.selectCandidates(ctx);
+  const ordered =
+    options.preparedCandidates ??
+    rankGundamBotCandidates(runtime, playerId, strategy, staticResources, options.enumerateOptions);
   const maxAttempts = Math.max(0, options.maxCandidateAttempts ?? 3);
   const toTry = ordered.slice(0, maxAttempts);
   const attempted: GundamBotCandidate[] = [];
@@ -239,4 +223,38 @@ export function takeAutomatedActionWithFallback(
       : "no-candidates-pass-failed-concede-failed",
     undefined,
   );
+}
+
+/** Compute proposals independently from committing commands. */
+export function rankGundamBotCandidates(
+  runtime: MatchRuntime,
+  playerId: PlayerId,
+  strategy: CandidateStrategy,
+  staticResources: Parameters<typeof enumerateGundamBotCandidates>[2],
+  enumerateOptions?: EnumerateCandidatesOptions,
+): readonly GundamBotCandidate[] {
+  const state = runtime.getState();
+  if (state.ctx.status.gameEnded) return [];
+  const turnNumber = state.ctx.status.turn;
+  const candidates = enumerateGundamBotCandidates(
+    state,
+    playerId,
+    staticResources,
+    enumerateOptions,
+  );
+
+  const view = runtime.getFilteredView({ role: "player", playerId });
+  const pendingChoice = runtime.getPendingChoice({ role: "player", playerId }) ?? null;
+  const cards = runtime.getCardReadAPI();
+  const ctx: CandidateStrategyContext = {
+    playerId,
+    state,
+    view,
+    candidates,
+    turnNumber,
+    pendingChoice,
+    cards,
+  };
+
+  return strategy.selectCandidates(ctx);
 }

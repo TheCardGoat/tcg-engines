@@ -129,8 +129,8 @@ for (const level of [0, 2, 6])
             .map((c) => c.objectId)
             .sort(),
         ).toEqual([...paid].sort());
-        expect(game.state.objects[foe.objectId]!.damage).toBe(paid.length ? 2 : 0);
-        expect(game.state.objects[ally.objectId]!.damage).toBe(paid.length > 1 ? 2 : 0);
+        expect(game.markedDamage(foe.objectId)).toBe(paid.length ? 2 : 0);
+        expect(game.markedDamage(ally.objectId)).toBe(paid.length > 1 ? 2 : 0);
         expect(p.zone("memory")).toHaveLength(cost);
         expect(q.zone("main-deck")).toHaveLength(1);
       });

@@ -603,6 +603,7 @@ function observeGrandArchiveEvent(
     case "combat-retaliators-ordered":
     case "combat-defender-redirected":
     case "combat-ended":
+    case "combat-cleanup-started":
     case "phase-end-requested":
     case "turn-end-requested":
     case "termination-cleared":

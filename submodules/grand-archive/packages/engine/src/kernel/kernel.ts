@@ -223,6 +223,10 @@ export function reduceGrandArchiveEvent(
         event.object.zone,
         event.object.hostId,
       );
+      const intentController =
+        event.object.zone === "intent" && event.object.hostId
+          ? state.objects[event.object.hostId]?.controllerId
+          : undefined;
       if (
         isGrandArchivePlayerOwnedZone(event.object.zone) &&
         (event.object.baseControllerId !== event.object.ownerId ||
@@ -263,7 +267,13 @@ export function reduceGrandArchiveEvent(
                 },
               }
             : {}),
-          [event.object.id]: event.object,
+          [event.object.id]: intentController
+            ? {
+                ...event.object,
+                baseControllerId: intentController,
+                controllerId: intentController,
+              }
+            : event.object,
         },
         zones: addToZone(
           state.zones,
@@ -391,6 +401,13 @@ export function reduceGrandArchiveEvent(
       }
       assertValidObjectSpecificZoneHost(state, object.id, event.to, event.hostId);
       assertValidPlayerOwnedZoneController(object, event.to, event.newControllerId);
+      // Intent rule 4: the host champion's controller controls every entry,
+      // including cards owned or moved by another player.
+      const intentController =
+        event.to === "intent" && event.hostId
+          ? state.objects[event.hostId]?.controllerId
+          : undefined;
+      const entryController = intentController ?? event.newControllerId ?? object.ownerId;
       const zonesWithoutObject = removeFromZone(state, object.ownerId, event.from, event.objectId);
       const entryFacing =
         event.entryFacing ?? defaultFacingAfterMove(event.from, event.to, object.facing);
@@ -400,8 +417,8 @@ export function reduceGrandArchiveEvent(
           ? { copy: { ...object.copy, expires: "end-of-combat" as const } }
           : {}),
         zone: event.to,
-        baseControllerId: event.newControllerId ?? object.ownerId,
-        controllerId: event.newControllerId ?? object.ownerId,
+        baseControllerId: entryController,
+        controllerId: entryController,
         ...(event.hostId ? { hostId: event.hostId } : { hostId: undefined }),
         ...(event.to === "banishment" && event.banishedBy
           ? { banishedBy: event.banishedBy }
@@ -429,6 +446,7 @@ export function reduceGrandArchiveEvent(
         cascadeCounts: {},
         counters: event.initialCounters ?? {},
         damage: 0,
+        temporaryDamage: 0,
       };
       const trackedCharacteristics = { ...state.trackedCharacteristics };
       const tracked = trackedCharacteristics[object.id];
@@ -758,7 +776,9 @@ export function reduceGrandArchiveEvent(
         stateVersion: nextVersion,
         objects: {
           ...state.objects,
-          [event.objectId]: { ...object, damage: object.damage + event.amount },
+          [event.objectId]: event.asTemporaryDamage
+            ? { ...object, temporaryDamage: object.temporaryDamage + event.amount }
+            : { ...object, damage: object.damage + event.amount },
         },
       };
     }
@@ -768,7 +788,7 @@ export function reduceGrandArchiveEvent(
       return {
         ...state,
         stateVersion: nextVersion,
-        objects: { ...state.objects, [event.objectId]: { ...object, damage: 0 } },
+        objects: { ...state.objects, [event.objectId]: { ...object, temporaryDamage: 0 } },
       };
     }
     case "damage-removed": {
@@ -1037,6 +1057,15 @@ export function reduceGrandArchiveEvent(
         },
       };
     }
+    case "combat-cleanup-started":
+      if (!state.combat || state.combat.step !== "end" || state.combat.cleanupStarted) {
+        throw new GrandArchiveTransactionRefused("Combat cleanup cannot start in this state");
+      }
+      return {
+        ...state,
+        stateVersion: nextVersion,
+        combat: { ...state.combat, cleanupStarted: true },
+      };
     case "combat-ended":
       if (!state.combat) throw new GrandArchiveTransactionRefused("No combat phase is active");
       return {
@@ -1958,11 +1987,13 @@ export class GrandArchiveTransactionKernel {
     continuation: GrandArchiveReplacementContinuation,
     answer: GrandArchiveReplacementDecisionAnswer,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
-      event: entry.event,
-      depth: entry.depth,
-      appliedReplacementIds: new Set(entry.appliedReplacementIds),
-    }));
+    const queue = continuation.queue.map(
+      (entry): GrandArchiveRuntimeQueuedEvent => ({
+        event: entry.event,
+        depth: entry.depth,
+        appliedReplacementIds: new Set(entry.appliedReplacementIds),
+      }),
+    );
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex, answer);
   }
 
@@ -1970,11 +2001,13 @@ export class GrandArchiveTransactionKernel {
     state: GrandArchiveMatchState,
     continuation: GrandArchiveReplacementContinuation,
   ): { readonly state: GrandArchiveMatchState; readonly result: GrandArchiveTransactionResult } {
-    const queue = continuation.queue.map((entry): GrandArchiveRuntimeQueuedEvent => ({
-      event: entry.event,
-      depth: entry.depth,
-      appliedReplacementIds: new Set(entry.appliedReplacementIds),
-    }));
+    const queue = continuation.queue.map(
+      (entry): GrandArchiveRuntimeQueuedEvent => ({
+        event: entry.event,
+        depth: entry.depth,
+        appliedReplacementIds: new Set(entry.appliedReplacementIds),
+      }),
+    );
     return this.#transactQueue(state, queue, continuation.startedEventHistoryIndex);
   }
 

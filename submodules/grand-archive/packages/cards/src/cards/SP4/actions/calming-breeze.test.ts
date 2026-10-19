@@ -51,19 +51,19 @@ describe("Calming Breeze", () => {
         targets: { "target-1": [target.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[target.objectId]!.damage).toBe(4);
+      expect(game.markedDamage(target.objectId)).toBe(4);
       for (let hit = 1; hit <= 2; hit++) {
         p.activate(p.cards(demolition, { zone: "hand" })[0]!, {
           reservePayment: pay(3),
           targets: { "target-1": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(expired ? 4 + 3 * hit : 4);
+        expect(game.markedDamage(target.objectId)).toBe(expired ? 4 + 3 * hit : 4);
       }
       p.activate(pyroclasticFlow, { reservePayment: pay(4) });
       passEffectsStack(game);
-      expect(game.state.objects[target.objectId]!.damage).toBe(expired ? 12 : 4);
-      expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(2);
+      expect(game.markedDamage(target.objectId)).toBe(expired ? 12 : 4);
+      expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(2);
     });
 });
 

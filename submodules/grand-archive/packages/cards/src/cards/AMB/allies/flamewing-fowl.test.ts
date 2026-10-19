@@ -27,7 +27,7 @@ describe("Flamewing Fowl — Class Bonus champion-attack power", () => {
             : opponent.card(giantTortoise, { zone: "field" });
         player.declareAttack(flamewingFowl, target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(
+        expect(game.markedDamage(target.objectId)).toBe(
           classBonus && targetKind === "champion" ? 4 : 3,
         );
       });

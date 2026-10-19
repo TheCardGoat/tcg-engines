@@ -82,7 +82,7 @@ describe("Reveal the Hidden — stealth removal and locked targets", () => {
         }
         attacker.declareAttack(attackerAlly, hidden);
         advanceCombatToTrigger(game, "no-such-trigger");
-        expect(game.state.objects[hidden.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(hidden.objectId)).toBe(1);
         advanceToMain(game, p.id, game.state.turn.number);
         expect(stealth(p.card(cunningBroker).objectId)).toBe(true);
         expect(stealth(q.card(cunningBroker).objectId)).toBe(true);

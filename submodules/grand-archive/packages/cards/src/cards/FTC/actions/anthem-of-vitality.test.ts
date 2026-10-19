@@ -155,7 +155,7 @@ describe("Anthem of Vitality — targeted protection and untargeted Harmonize", 
           targets: { "target-1": [q.card(champion).objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
         advanceToMain(game, p.id, game.state.turn.number);
         expect(numeric(target.objectId, "life")).toBe(2);
         if (buffed) expect(numeric(buffed.objectId, "life")).toBe(harmonized ? 3 : 1);
@@ -164,7 +164,7 @@ describe("Anthem of Vitality — targeted protection and untargeted Harmonize", 
           targets: { "target-1": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         expect(p.card(anthemOfVitality, { zone: "graveyard" })).toBeDefined();
       });
     }

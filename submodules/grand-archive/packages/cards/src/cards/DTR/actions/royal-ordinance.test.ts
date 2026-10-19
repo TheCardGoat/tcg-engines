@@ -11,7 +11,7 @@ import {
 import { advanceToMain, passEffectsStack } from "../../../testing/decisions.ts";
 
 /** @covers UnOkglGVMN-a1 */
-describe("Royal Ordinance — Exalted requires another advanced element", () => {
+describe("Royal Ordinance — Exalted requires an advanced element, including itself", () => {
   for (const element of [
     "NORM",
     "FIRE",
@@ -49,7 +49,7 @@ describe("Royal Ordinance — Exalted requires another advanced element", () => 
       const payment = p
         .cards(woodlandSquirrels)
         .map((c) => ({ kind: "card" as const, cardId: c.objectId }));
-      if (["UMBRA", "ASTRA", "CRUX"].includes(element)) {
+      if (["EXALTED", "UMBRA", "ASTRA", "CRUX"].includes(element)) {
         p.activate(royalOrdinance, { reservePayment: payment });
         expect(p.zone("hand")).toHaveLength(0);
         passEffectsStack(game);

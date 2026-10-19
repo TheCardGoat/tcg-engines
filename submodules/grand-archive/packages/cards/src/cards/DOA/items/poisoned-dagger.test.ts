@@ -67,9 +67,9 @@ describe("Poisoned Dagger's paid damage and subsequent amplification", () => {
         expect(game.state).toEqual(before);
         p.activateAbility(dagger, "0D6AfZyKXh-a2", { targets: { "target-1": [target.objectId] } });
         expect(p.card(poisonedDagger, { zone: "banishment" }).objectId).toBe(dagger.objectId);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         expect(() =>
           p.activateAbility(dagger, "0D6AfZyKXh-a2", {
             targets: { "target-1": [target.objectId] },
@@ -77,14 +77,12 @@ describe("Poisoned Dagger's paid damage and subsequent amplification", () => {
         ).toThrow();
         p.declareAttack(woodlandSquirrels, recipient === "own-ally" ? foe : target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[foe.objectId]!.damage).toBe(
+        expect(game.markedDamage(foe.objectId)).toBe(
           recipient === "own-ally" ? 1 : classBonus ? 3 : 2,
         );
         advanceToMain(game, q.id);
         q.declareAttack(woodlandSquirrels, recipient === "own-ally" ? target : hero);
         game.resolveCombatWithoutRetaliation();
-        expect(
-          game.state.objects[(recipient === "own-ally" ? target : hero).objectId]!.damage,
-        ).toBe(1);
+        expect(game.markedDamage((recipient === "own-ally" ? target : hero).objectId)).toBe(1);
       });
 });

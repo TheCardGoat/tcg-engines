@@ -26,7 +26,7 @@ for (const boundary of ["enabled", "class", "element", "hand", "opponent"] as co
         answerDecision(game, "resolve-effect-choice", [chosen.objectId]);
         passEffectsStack(game);
       }
-      expect(game.state.objects[chosen.objectId]!.damage).toBe(boundary === "enabled" ? 2 : 0);
+      expect(game.markedDamage(chosen.objectId)).toBe(boundary === "enabled" ? 2 : 0);
       expect(game.state.objects[source.objectId]!.zone).toBe(
         boundary === "hand" ? "hand" : "memory",
       );
@@ -93,8 +93,8 @@ for (const memory of [0, 2])
         ],
       });
       passEffectsStack(game);
-      expect(game.state.objects[foe.objectId]!.damage).toBe(total - (split ? 1 : 0));
-      expect(game.state.objects[ally.objectId]!.damage).toBe(split ? 1 : 0);
+      expect(game.markedDamage(foe.objectId)).toBe(total - (split ? 1 : 0));
+      expect(game.markedDamage(ally.objectId)).toBe(split ? 1 : 0);
       expect(q.card(giantTortoise)).toBeDefined();
       expect(p.zone("memory").map((c) => c.objectId)).toEqual(revealed);
       expect(q.zone("memory")).toHaveLength(1);

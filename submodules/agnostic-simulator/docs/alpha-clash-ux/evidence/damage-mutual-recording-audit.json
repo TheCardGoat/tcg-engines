@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-10",
+  "fixture": "combat-buffs, no buffs, one Sonoro obstructor",
+  "file": "damage-mutual-native-audio.mp4",
+  "viewport": "1366x768",
+  "captureFrames": 108,
+  "captureAudioMs": 3256,
+  "decodedAudioSeconds": 3.159291666666667,
+  "masterGain": 0.5625,
+  "peak": 0.4454890489578247,
+  "rms": 0.023592598415347922,
+  "peakDbfs": -7.023259347049119,
+  "rmsDbfs": -32.54448449275734,
+  "nativeReadyControl": true,
+  "flow": "Recording includes final Before damage Pass, mutual Sonoro defeat, automatic handoff and settled Primary. Attack, obstruction and prior passes use normal UI before recording.",
+  "capture": "Application-output audio branch only; no microphone or replacement sound. Temporary branch disconnected, tracks stopped and capture state removed. Packet timestamp gaps preserve silence.",
+  "limits": [
+    "Change-frame count and 30 FPS encoding are not renderer FPS measurements.",
+    "Audio presence is not perceptual quality or synchronization proof.",
+    "One normal laptop run; separate mute/reduced and remaining boundary/viewports are open."
+  ]
+}

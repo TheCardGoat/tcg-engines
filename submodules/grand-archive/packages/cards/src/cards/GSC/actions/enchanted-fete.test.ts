@@ -53,11 +53,11 @@ describe("Enchanted Fete", () => {
       p.activate(enchantedFete, { reservePayment: payment });
       const memory = p.zone("memory");
       expect(memory).toHaveLength(5);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(damage);
+      expect(game.markedDamage(hero.objectId)).toBe(damage);
       expect(p.zone("main-deck")).toEqual(deck);
       passEffectsStack(game);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(Math.max(0, damage - 3));
-      expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(hero.objectId)).toBe(Math.max(0, damage - 3));
+      expect(game.markedDamage(ally.objectId)).toBe(1);
       expect(p.zone("memory")).toEqual([...memory, deck[0]]);
       expect(p.zone("main-deck")).toEqual(deck.slice(1));
       expect(p.zone("hand")).toHaveLength(0);

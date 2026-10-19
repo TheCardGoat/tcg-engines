@@ -1,0 +1,144 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.badge {
+  --zone-light: #b8a38a;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 53px;
+  height: 30px;
+  padding: 0 9px;
+  border: 1px solid #78919b38;
+  border-radius: 4px 10px;
+  background: linear-gradient(160deg, #25313ce8, #080f17ee 65%);
+  box-shadow:
+    inset 0 1px #c3e2ee17,
+    0 3px 7px #0007;
+  color: #e3ecee;
+  font:
+    600 13px/1 system-ui,
+    sans-serif;
+  transition:
+    border-color 140ms,
+    box-shadow 140ms;
+}
+.badge[data-own] {
+  --zone-light: #82dbe4;
+}
+.badge svg {
+  color: var(--zone-light);
+}
+.badge b {
+  font-variant-numeric: tabular-nums;
+}
+.badge[data-empty] {
+  opacity: 0.55;
+}
+.badge[data-lit] {
+  opacity: 1;
+  border-color: var(--zone-light);
+  box-shadow: 0 0 12px #82dbe430;
+}
+.badge[data-zone="oblivion"] {
+  border-radius: 50%;
+  min-width: 54px;
+}
+.badge[data-zone="banished"] {
+  background: #080f1799;
+  border-style: dashed;
+}
+.badge[data-zone="resource"] {
+  border: 0;
+  background: #08131cbd;
+  box-shadow: none;
+  border-radius: 2px;
+  height: 23px;
+}
+.total {
+  font-size: 10px;
+  color: #8c9da6;
+}
+.cells {
+  display: flex;
+  gap: 3px;
+  margin-left: 4px;
+}
+.cells i {
+  height: 8px;
+  width: 4px;
+  background: #36444c;
+  transform: skew(-14deg);
+}
+.cells i[data-ready] {
+  background: var(--zone-light);
+  box-shadow: 0 0 5px #82dbe44a;
+}
+.caption {
+  position: absolute;
+  top: calc(100% + 4px);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bdced4;
+  opacity: 0;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px #000;
+}
+.badge[data-lit] .caption {
+  opacity: 1;
+}
+@media (max-height: 550px) {
+  .badge {
+    min-width: 43px;
+    height: 25px;
+    gap: 4px;
+    padding: 0 6px;
+    font-size: 11px;
+  }
+  .badge svg {
+    width: 13px;
+    height: 13px;
+  }
+  .cells {
+    display: none;
+  }
+  .badge[data-zone="oblivion"] {
+    min-width: 43px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    transition: none;
+  }
+}
+
+.indicator {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.68);
+}
+.indicatorLabel {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #10212cf5;
+  border: 1px solid #607b8c;
+  border-radius: 5px;
+  padding: 6px 9px;
+  color: #e1edf3;
+  font:
+    13px/1.2 system-ui,
+    sans-serif;
+}
+@media (max-height: 550px) {
+  .indicator {
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+}

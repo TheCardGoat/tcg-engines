@@ -81,12 +81,12 @@ describe("Lawsur — resolves X from other controlled Specters", () => {
       p.declareAttack(source, q.card(foe));
       game.resolveCombatWithoutRetaliation();
       const power = mode === "none" ? 1 : mode === "remove-before" ? 2 : 3;
-      expect(game.state.objects[q.card(foe).objectId]!.damage).toBe(power);
+      expect(game.markedDamage(q.card(foe).objectId)).toBe(power);
       advanceToMain(game, q.id);
       advanceToMain(game, p.id);
       p.declareAttack(source, q.card(foe));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(foe).objectId]!.damage).toBe(power + 1);
+      expect(game.markedDamage(q.card(foe).objectId)).toBe(power + 1);
     });
 });
 
@@ -129,7 +129,7 @@ it("grants Stealth only to awake controlled Specter allies, includes itself, and
   game.resolveCombatWithoutRetaliation();
   p.declareAttack(p.card(giantTortoise), q.card(evercurrentRaider));
   game.resolveCombatWithoutRetaliation();
-  expect(game.state.objects[q.card(evercurrentRaider).objectId]!.damage).toBe(1);
+  expect(game.markedDamage(q.card(evercurrentRaider).objectId)).toBe(1);
   advanceToMain(game, q.id);
   for (const target of [source, awake!]) {
     const before = game.state;
@@ -149,5 +149,5 @@ it("grants Stealth only to awake controlled Specter allies, includes itself, and
   expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
   q.declareAttack(q.card(giantTortoise), awake!);
   game.resolveCombatWithoutRetaliation();
-  expect(game.state.objects[awake!.objectId]!.damage).toBe(1);
+  expect(game.markedDamage(awake!.objectId)).toBe(1);
 });

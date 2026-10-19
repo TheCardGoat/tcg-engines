@@ -68,7 +68,7 @@ describe("Reckless Researcher requires its controller's graveyard fire payment",
               answerDecision(game, "resolve-effect-choice", [paid.objectId]);
               passEffectsStack(game);
               expect(p.card(fireball, { zone: "banishment" }).objectId).toBe(paid.objectId);
-              expect(game.state.objects[target.objectId]!.damage).toBe(0);
+              expect(game.markedDamage(target.objectId)).toBe(0);
               expect(() =>
                 answerDecision(game, "resolve-effect-choice", [
                   p.card(jewelOfEnlightenment).objectId,
@@ -79,7 +79,7 @@ describe("Reckless Researcher requires its controller's graveyard fire payment",
             }
           }
           expect(game.state.decision).toBeNull();
-          expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(
+          expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(
             classBonus && available && accept ? 2 : 0,
           );
           expect(q.cards(fireball, { zone: "graveyard" })).toHaveLength(1);

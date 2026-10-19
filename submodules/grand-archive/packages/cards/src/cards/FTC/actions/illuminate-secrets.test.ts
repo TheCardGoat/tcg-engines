@@ -54,7 +54,7 @@ describe("Illuminate Secrets", () => {
               p.activate(favorableWinds, { reservePayment: payment.slice(2) });
             }
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(
+            expect(game.markedDamage(target.objectId)).toBe(
               owner === "player-one" ? 0 : Math.max(0, opponentInfluence - (response ? 3 : 4)),
             );
             expect(p.cards(illuminateSecrets, { zone: "graveyard" })).toHaveLength(1);

@@ -66,7 +66,7 @@ export function provePreventionFollowUp({
               q.declareAttack(attacker, hero);
               game.resolveCombatWithoutRetaliation();
             }
-            expect(game.state.objects[hero.objectId]!.damage).toBe(initial);
+            expect(game.markedDamage(hero.objectId)).toBe(initial);
             q.pass();
             p.activate(card, {
               reservePayment: p
@@ -74,7 +74,7 @@ export function provePreventionFollowUp({
                 .map((ref) => ({ kind: "card" as const, cardId: ref.objectId })),
             });
             passEffectsStack(game);
-            expect(game.state.objects[hero.objectId]!.damage).toBe(initial);
+            expect(game.markedDamage(hero.objectId)).toBe(initial);
             if (expired) advanceToMain(game, q.id, game.state.turn.number);
             else {
               const wait = game.waitState();
@@ -93,22 +93,22 @@ export function provePreventionFollowUp({
               passEffectsStack(game);
             };
             damage(0, other);
-            expect(game.state.objects[other.objectId]!.damage).toBe(amount);
+            expect(game.markedDamage(other.objectId)).toBe(amount);
             expect(p.zone("main-deck")).toEqual(deck);
-            expect(game.state.objects[hero.objectId]!.damage).toBe(initial);
+            expect(game.markedDamage(hero.objectId)).toBe(initial);
             damage(1, hero);
             const afterFirst = expired
               ? initial + amount
               : recover
                 ? Math.max(0, initial - amount)
                 : initial;
-            expect(game.state.objects[hero.objectId]!.damage).toBe(afterFirst);
+            expect(game.markedDamage(hero.objectId)).toBe(afterFirst);
             const milled = !recover && !expired ? amount : 0;
             expect(p.zone("main-deck")).toEqual(deck.slice(milled));
             for (const ref of deck.slice(0, milled))
               expect(game.state.objects[ref.objectId]!.zone).toBe("graveyard");
             damage(2, hero);
-            expect(game.state.objects[hero.objectId]!.damage).toBe(afterFirst + amount);
+            expect(game.markedDamage(hero.objectId)).toBe(afterFirst + amount);
             expect(p.zone("main-deck")).toEqual(deck.slice(milled));
           });
 }

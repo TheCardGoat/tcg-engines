@@ -295,7 +295,7 @@
 .ga-three-board.ga-themed-board .ga-counter-seal strong {
   font-size: 12px;
 }
-.ga-three-board.ga-themed-board .ga-counter-seal[data-counter-kind="damage"] {
+.ga-three-board.ga-themed-board .ga-counter-seal:is([data-counter-kind="damage"], [data-counter-kind="temporary-damage"]) {
   color: #ffc4b6;
   background: linear-gradient(#844347, #442125);
   border-color: #b3757966;

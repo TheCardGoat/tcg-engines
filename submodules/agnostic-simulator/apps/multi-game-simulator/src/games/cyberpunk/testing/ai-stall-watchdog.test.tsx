@@ -1,6 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { act, cleanup, render } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CyberpunkTestEngine, firstLegalStrategy, type AIStrategy } from "@tcg/cyberpunk-engine";
 import {
@@ -65,6 +66,7 @@ function renderAutoBoard(options: {
         </CardInspectProvider>
       </MantineProvider>
     </UserConfigProvider>,
+    { wrapper: MemoryRouter },
   );
   return engine;
 }

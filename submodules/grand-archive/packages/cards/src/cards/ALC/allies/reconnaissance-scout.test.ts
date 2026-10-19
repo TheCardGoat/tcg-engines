@@ -107,7 +107,7 @@ describe("Reconnaissance Scout — targeted distant and one-point protection", (
             const damage = (index + 1) * 2 - (protectedNow ? 1 : 0);
             if (!championTarget && damage === 4)
               expect(player.zone("graveyard")).toContainEqual(target);
-            else expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+            else expect(game.markedDamage(target.objectId)).toBe(damage);
           }
         });
       }

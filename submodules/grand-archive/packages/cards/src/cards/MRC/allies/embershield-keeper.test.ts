@@ -82,7 +82,7 @@ describe("Embershield Keeper — Foster and class life bonus", () => {
         passEffectsStack(game);
         expect(game.state.objects[source.objectId]!.zone).toBe(matching ? "field" : "graveyard");
         if (matching) {
-          expect(game.state.objects[source.objectId]!.damage).toBe(3);
+          expect(game.markedDamage(source.objectId)).toBe(3);
           expect(fostered()).toBe(true);
           expect(life()).toBe(4);
         }

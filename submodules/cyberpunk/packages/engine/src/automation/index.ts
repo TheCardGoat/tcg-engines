@@ -13,7 +13,7 @@ export type {
   TurnResult,
 } from "./types.ts";
 
-export { AIPlayer, type AIPlayerOptions } from "./ai-player.ts";
+export { AIPlayer, type AIPlayerOptions, type AIPlayerDecision } from "./ai-player.ts";
 export { buildDecisionContext } from "./decision-context.ts";
 export {
   createExpertOracleStrategy,

@@ -68,7 +68,7 @@ export function proveAttackKillTrigger({
           game.resolveCombatWithoutRetaliation();
           const enabled = kill && level >= 2 && (!classRestricted || classBonus);
           expect(game.state.objects[target.objectId]!.zone).toBe(kill ? "graveyard" : "field");
-          if (!kill) expect(game.state.objects[target.objectId]!.damage).toBe(power);
+          if (!kill) expect(game.markedDamage(target.objectId)).toBe(power);
           expect(p.zone("hand")).toHaveLength(!wake && enabled ? 1 : 0);
           expect(q.zone("hand")).toHaveLength(0);
           expect(game.state.objects[attacker.objectId]!.states.has("rested")).toBe(
@@ -79,7 +79,7 @@ export function proveAttackKillTrigger({
               weaponIds: [p.card(trainingSword).objectId],
             });
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+            expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
           }
         });
 }

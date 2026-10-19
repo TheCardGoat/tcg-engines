@@ -82,7 +82,7 @@ describe("Simple Slime — prevent three from each damage event", () => {
             expect(dealt).toBe(expected);
             const dies = expected * (i + 1) >= 2;
             expect(game.state.objects[source.objectId]!.zone).toBe(dies ? "graveyard" : "field");
-            if (!dies) expect(game.state.objects[source.objectId]!.damage).toBe(expected * (i + 1));
+            if (!dies) expect(game.markedDamage(source.objectId)).toBe(expected * (i + 1));
           }
         });
 });

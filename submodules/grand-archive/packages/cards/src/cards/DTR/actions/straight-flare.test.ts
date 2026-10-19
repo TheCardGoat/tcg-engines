@@ -78,9 +78,9 @@ describe("Straight Flare — distinct controlled Suited costs", () => {
             targets: { "target-1": [target.objectId] },
             reservePayment: payment,
           });
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(
+          expect(game.markedDamage(target.objectId)).toBe(
             variety === "none" ? 1 : variety === "duplicates" ? 2 : variety === "zero" ? 3 : 4,
           );
           expect(p.zone("memory")).toHaveLength(2);

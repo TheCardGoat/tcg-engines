@@ -356,7 +356,7 @@
   align-items: center;
   gap: 7px;
   width: 100%;
-  min-height: 28px;
+  min-height: var(--log-turn-min-height, 28px);
   padding: 5px 7px;
   border: 0;
   border-bottom: 1px solid var(--log-turn-border, oklch(0.58 0.04 245 / 0.28));
@@ -372,7 +372,7 @@
 }
 
 .panelEmbedded .turnHeader {
-  min-height: 26px;
+  min-height: var(--log-turn-min-height, 26px);
   padding: 5px 6px;
 }
 
@@ -445,7 +445,7 @@
   align-items: start;
   gap: 7px;
   width: 100%;
-  min-height: 28px;
+  min-height: var(--log-entry-min-height, 28px);
   padding: 5px 7px;
   border: 1px solid transparent;
   border-radius: 5px;
@@ -462,7 +462,7 @@
 .panelEmbedded .entry {
   grid-template-columns: 20px minmax(0, 1fr) auto;
   gap: 6px;
-  min-height: 25px;
+  min-height: var(--log-entry-min-height, 25px);
   padding: 4px 5px;
   font-size: 11px;
 }
@@ -1030,7 +1030,114 @@
   }
 }
 
+/* Compact density: tighter rows and headings for sidebars with tight vertical
+   budgets. Touch minimums re-assert themselves through the --log-*-min-height
+   custom properties in the coarse-pointer block below. */
+.panel[data-density="compact"] {
+  --log-entry-min-height: 20px;
+  --log-turn-min-height: 22px;
+
+  gap: 6px;
+}
+
+.panelEmbedded[data-density="compact"] {
+  gap: 5px;
+}
+
+.panel[data-density="compact"] .scroll {
+  gap: 4px;
+  padding: 5px 6px;
+}
+
+.panelEmbedded[data-density="compact"] .scroll {
+  padding: 4px 5px;
+}
+
+.panel[data-density="compact"] .turnGroup {
+  gap: 3px;
+  padding: 2px;
+}
+
+.panel[data-density="compact"] .turnHeader {
+  padding: 2px 6px;
+}
+
+.panel[data-density="compact"] .turnTitle {
+  font-size: 0.6875rem;
+}
+
+.panel[data-density="compact"] .turnMeta {
+  font-size: 0.625rem;
+}
+
+.panel[data-density="compact"] .turnCount {
+  font-size: 0.5625rem;
+}
+
+.panel[data-density="compact"] .phaseHeader {
+  min-height: 14px;
+  padding: 2px 5px 0;
+  font-size: 8px;
+}
+
+.panel[data-density="compact"] .entryList,
+.panel[data-density="compact"] .sectionEntries {
+  gap: 1px;
+}
+
+.panel[data-density="compact"] .entry {
+  gap: 5px;
+  padding: 2px 5px;
+  font-size: 11px;
+}
+
+.panel[data-density="compact"] .entry .message {
+  line-height: 1.25;
+}
+
+.panelEmbedded[data-density="compact"] .entry {
+  font-size: 10.5px;
+}
+
+.panel[data-density="compact"] .entryMeta {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+}
+
+.panel[data-density="compact"] .entryMeta svg {
+  width: 11px;
+  height: 11px;
+}
+
+.panel[data-density="compact"] .sectionGroup {
+  gap: 2px;
+  margin: 1px 0;
+  padding: 3px 4px;
+}
+
+.panel[data-density="compact"] .sectionGroup[data-section-depth]:not([data-section-depth="0"]) {
+  padding: 3px 1px 2px;
+}
+
+.panel[data-density="compact"] .sectionHeader {
+  padding-bottom: 0;
+}
+
+.panel[data-density="compact"] .sectionHeaderButton {
+  padding: 1px 1px 2px;
+}
+
+.panel[data-density="compact"] .sectionGroup[data-collapsed="true"] {
+  padding: 2px 4px;
+}
+
 @media (pointer: coarse), (max-width: 760px) {
+  .panel {
+    --log-entry-min-height: 44px;
+    --log-turn-min-height: 44px;
+  }
+
   .filters,
   .panelEmbedded .filters {
     display: grid;
@@ -1063,9 +1170,7 @@
   .filter,
   .panelEmbedded .filter,
   .sectionHeaderButton,
-  .sectionToggleButton,
-  .turnHeader,
-  button.entry {
+  .sectionToggleButton {
     min-height: 44px;
   }
 }

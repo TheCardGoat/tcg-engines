@@ -1,7 +1,9 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useLayoutEffect, useRef, useMemo, useEffect, useSyncExternalStore } from "react";
 import * as THREE from "three";
+import { paintCounter, type CounterKind } from "./counters";
 import { cardSelection } from "./card-selection";
+import { playSimulatorSound } from "./audio/sound-service";
 
 /** Structural view of the shared simulator-ui drag store. No game rules live here. */
 export interface SceneDragMotion<T = string> {
@@ -127,6 +129,7 @@ export function useCardPose(
       liftAxis?: "y" | "z";
       /** Let movement lead the turn into the destination orientation. */
       turnDelay?: number;
+      onStart?: () => () => void;
       onComplete?: () => void;
     };
   },
@@ -134,6 +137,12 @@ export function useCardPose(
   const ref = useRef<THREE.Group>(null);
   const mounted = useRef(false);
   const cardDrag = useSceneCardDrag(drag?.motion, (source) => source === drag?.id, reduced);
+  const releaseMotion = useRef<(() => void) | undefined>(undefined);
+  const finishMotion = () => {
+    releaseMotion.current?.();
+    releaseMotion.current = undefined;
+  };
+  useEffect(() => () => releaseMotion.current?.(), []);
   const transitionKey = useRef(transition?.key);
   const flight = useRef<{
     elapsed: number;
@@ -151,6 +160,8 @@ export function useCardPose(
     const object = ref.current;
     if (!object) return;
     if (transition && transitionKey.current !== transition.key && mounted.current && !reduced) {
+      finishMotion();
+      releaseMotion.current = transition.onStart?.();
       flight.current = {
         elapsed: 0,
         duration: transition.duration,
@@ -172,6 +183,7 @@ export function useCardPose(
       transition.onComplete?.();
     transitionKey.current = transition?.key;
     if (!mounted.current || reset.current !== resetKey || reduced) {
+      finishMotion();
       flight.current = null;
       const pose = !mounted.current && !reduced ? (origin ?? target) : target;
       object.position.set(pose.x, pose.y, pose.z);
@@ -194,17 +206,25 @@ export function useCardPose(
     rotationX,
     invalidate,
   ]);
+  useEffect(() => {
+    const resume = () => {
+      if (!document.hidden) invalidate();
+    };
+    document.addEventListener("visibilitychange", resume);
+    return () => document.removeEventListener("visibilitychange", resume);
+  }, [invalidate]);
   useFrame((_, delta) => {
     const object = ref.current;
     if (!object || document.hidden) return;
     if (cardDrag.update(object, delta, rotationX, 0, target.turn)) {
+      finishMotion();
       flight.current = null;
       return;
     }
     if (reduced) return;
     const transfer = flight.current;
     if (transfer) {
-      transfer.elapsed += delta;
+      transfer.elapsed += Math.min(delta, 0.05);
       const t = Math.min(1, transfer.elapsed / transfer.duration);
       const ease = t * t * t * (t * (t * 6 - 15) + 10);
       const arc = Math.sin(Math.PI * t);
@@ -228,6 +248,7 @@ export function useCardPose(
       object.scale.setScalar(THREE.MathUtils.lerp(transfer.from.scale, target.scale, ease));
       if (t === 1) {
         flight.current = null;
+        finishMotion();
         transfer.onComplete?.();
       }
       invalidate();
@@ -433,6 +454,201 @@ export function CardSelectionRim({
         </mesh>
       ))}
     </group>
+  );
+}
+
+function counterChipTexture(
+  label: string,
+  count: number,
+  color?: string,
+  kind: CounterKind = "neutral",
+  variant: "round" | "named" = "named",
+) {
+  const canvas = document.createElement("canvas");
+  paintCounter(canvas, { label, count, color, kind, variant });
+  const map = new THREE.CanvasTexture(canvas);
+  map.colorSpace = THREE.SRGBColorSpace;
+  return map;
+}
+
+/** Shared token; screen orientation keeps text upright through card turns and tilts. */
+export function CounterToken({
+  count,
+  label = "CNT",
+  color,
+  kind = "neutral",
+  variant = "named",
+  orientation = "card",
+  minScreenSize = 0,
+  position = [-0.25, 0.23, 0.055],
+  scale = 1,
+}: {
+  count: number;
+  label?: string;
+  color?: string;
+  kind?: CounterKind;
+  variant?: "round" | "named";
+  orientation?: "card" | "screen";
+  /** Minimum face height in CSS pixels, useful on compact boards. */
+  minScreenSize?: number;
+  position?: [number, number, number];
+  scale?: number;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const rotation = useMemo(() => new THREE.Quaternion(), []);
+  const cameraRotation = useMemo(() => new THREE.Quaternion(), []);
+  const worldPosition = useMemo(() => new THREE.Vector3(), []);
+  const parentScale = useMemo(() => new THREE.Vector3(), []);
+  const height = variant === "round" ? 0.34 : 0.24;
+  const texture = useMemo(
+    () => counterChipTexture(label, count, color, kind, variant),
+    [count, label, color, kind, variant],
+  );
+  useEffect(() => () => texture.dispose(), [texture]);
+  useFrame(({ camera, viewport, size }) => {
+    const node = ref.current;
+    if (!node?.parent) return;
+    if (orientation === "screen") {
+      node.parent.getWorldQuaternion(rotation);
+      camera.getWorldQuaternion(cameraRotation);
+      node.quaternion.copy(rotation.invert().multiply(cameraRotation));
+    } else {
+      node.quaternion.identity();
+    }
+    if (minScreenSize > 0) {
+      node.getWorldPosition(worldPosition);
+      node.parent.getWorldScale(parentScale);
+      const unitsPerPixel = viewport.getCurrentViewport(camera, worldPosition).height / size.height;
+      const parentHeight = Math.abs(parentScale.y);
+      node.scale.setScalar(
+        parentHeight > 0
+          ? Math.max(scale, (minScreenSize * unitsPerPixel) / (height * parentHeight))
+          : scale,
+      );
+    } else {
+      node.scale.setScalar(scale);
+    }
+  });
+  return (
+    <group ref={ref} position={position} scale={scale}>
+      <mesh renderOrder={5}>
+        <planeGeometry args={[variant === "round" ? height : height * 2, height]} />
+        <meshBasicMaterial map={texture} transparent depthWrite={false} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
+/** Elevated counter flight shared by board renderers. Coordinates are world-space. */
+export function CounterTransferMotion({
+  count,
+  label = "CNT",
+  from,
+  to,
+  color = "#e7bd70",
+  onComplete,
+  reduced = false,
+  sound = true,
+}: {
+  count: number;
+  label?: string;
+  from: [number, number, number];
+  to: [number, number, number];
+  color?: string;
+  onComplete: () => void;
+  reduced?: boolean;
+  sound?: boolean;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const shadowRef = useRef<THREE.Mesh>(null);
+  const elapsed = useRef(0);
+  const done = useRef(false);
+  const invalidate = useThree((state) => state.invalidate);
+  const texture = useMemo(() => counterChipTexture(label, count, color), [count, label, color]);
+  const shadowTexture = useMemo(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      const fade = ctx.createRadialGradient(32, 32, 3, 32, 32, 31);
+      fade.addColorStop(0, "#000000b8");
+      fade.addColorStop(1, "#00000000");
+      ctx.fillStyle = fade;
+      ctx.fillRect(0, 0, 64, 64);
+    }
+    return new THREE.CanvasTexture(canvas);
+  }, []);
+  const shadowMaterial = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        map: shadowTexture,
+        transparent: true,
+        opacity: 0.28,
+        depthWrite: false,
+        toneMapped: false,
+      }),
+    [shadowTexture],
+  );
+  useEffect(() => {
+    if (sound) playSimulatorSound("counter.move", () => !document.hidden);
+    if (reduced) {
+      if (sound) playSimulatorSound("counter.land", () => !document.hidden);
+      done.current = true;
+      onComplete();
+    }
+    return () => {
+      texture.dispose();
+      shadowTexture.dispose();
+      shadowMaterial.dispose();
+    };
+  }, []);
+  useFrame((_, delta) => {
+    if (done.current || !ref.current) return;
+    elapsed.current += Math.min(delta, 0.05);
+    const t = Math.min(1, elapsed.current / 0.62);
+    const eased = t * t * (3 - 2 * t);
+    ref.current.position.set(
+      THREE.MathUtils.lerp(from[0], to[0], eased),
+      THREE.MathUtils.lerp(from[1], to[1], eased) - Math.sin(Math.PI * t) * 75,
+      THREE.MathUtils.lerp(from[2], to[2], eased) + Math.sin(Math.PI * t) * 90 + 24,
+    );
+    ref.current.scale.setScalar(0.66 + Math.sin(Math.PI * t) * 0.2);
+    if (shadowRef.current) {
+      shadowRef.current.position.set(
+        THREE.MathUtils.lerp(from[0], to[0], eased),
+        THREE.MathUtils.lerp(from[1], to[1], eased),
+        Math.min(from[2], to[2]) - 18,
+      );
+      shadowRef.current.scale.setScalar(0.95 + Math.sin(Math.PI * t) * 0.24);
+      shadowMaterial.opacity = 0.28 - Math.sin(Math.PI * t) * 0.12;
+    }
+    if (t >= 1) {
+      done.current = true;
+      if (sound) playSimulatorSound("counter.land", () => !document.hidden);
+      onComplete();
+    } else invalidate();
+  });
+  useEffect(() => {
+    invalidate();
+  }, [invalidate]);
+  return (
+    <>
+      <mesh ref={shadowRef} position={[from[0], from[1], Math.min(from[2], to[2]) - 18]}>
+        <planeGeometry args={[96, 60]} />
+        <primitive object={shadowMaterial} attach="material" />
+      </mesh>
+      <group ref={ref} position={from}>
+        <mesh renderOrder={12}>
+          <circleGeometry args={[34, 32]} />
+          <meshBasicMaterial color={color} transparent opacity={0.3} toneMapped={false} />
+        </mesh>
+        <mesh position={[0, 0, 2]} renderOrder={13}>
+          <planeGeometry args={[78, 39]} />
+          <meshBasicMaterial map={texture} transparent depthTest={false} toneMapped={false} />
+        </mesh>
+      </group>
+    </>
   );
 }
 

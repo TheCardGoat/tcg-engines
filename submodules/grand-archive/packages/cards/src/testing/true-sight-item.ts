@@ -66,7 +66,7 @@ export function proveTrueSightItem({
     p.declareAttack(ally, enemies[0]!);
     game.resolveCombatWithoutRetaliation();
     if (powerBonus) expect(game.state.objects[enemies[0]!.objectId]!.zone).toBe("graveyard");
-    else expect(game.state.objects[enemies[0]!.objectId]!.damage).toBe(1);
+    else expect(game.markedDamage(enemies[0]!.objectId)).toBe(1);
     const after = game.state;
     expect(() =>
       p.activateAbility(item, abilityId, { targets: { "target-1": [ally.objectId] } }),
@@ -79,6 +79,6 @@ export function proveTrueSightItem({
     expect(game.state).toEqual(expired);
     p.declareAttack(ally, q.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
   });
 }

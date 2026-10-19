@@ -1,0 +1,7 @@
+{
+  "verifiedOn": "2026-10-12",
+  "durationSeconds": 263.214,
+  "expectedMatches": 128,
+  "scheduleHashMatches": true,
+  "scope": "Local native engine; exact imported main decks; no sideboarding, hosted flow, or deployment verification."
+}

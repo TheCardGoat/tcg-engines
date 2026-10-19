@@ -23,6 +23,7 @@ export function PaymentSelectionPrompt({
     paymentCost,
     selectedPaymentCount,
     paymentCardId,
+    pendingSpendLegendNames,
     payAutomatically,
     cancelPaymentSelection,
   } = usePaymentSelection();
@@ -41,6 +42,10 @@ export function PaymentSelectionPrompt({
   const remaining = paymentCost - selectedPaymentCount;
   const sourceNoun = remaining === 1 ? "Eddie or Legend" : "Eddies or Legends";
   const partial = selectedPaymentCount > 0;
+  const spendList = pendingSpendLegendNames.join(", ");
+  // A SPEND-only cost (e.g. a Legend spending itself) needs no Eddie picks —
+  // the bar becomes a confirmation naming the Legend the activation commits.
+  const needsEddiePicks = paymentCost > 0;
 
   return (
     <section
@@ -53,24 +58,31 @@ export function PaymentSelectionPrompt({
       <div className={classes.copy}>
         <strong>Choose payment</strong>
         <span>
-          {`Select ${remaining} ready ${sourceNoun} on your board, or pay${
-            partial ? " the rest" : ""
-          } automatically.`}
+          {needsEddiePicks
+            ? `Select ${remaining} ready ${sourceNoun} on your board, or pay${
+                partial ? " the rest" : ""
+              } automatically.${spendList ? ` Activating will also spend ${spendList}.` : ""}`
+            : `No Eddies are needed. Activating will spend ${spendList}.`}
         </span>
       </div>
-      <span
-        className={classes.progress}
-        aria-label={`${selectedPaymentCount} of ${paymentCost} selected`}
-      >
-        {selectedPaymentCount}/{paymentCost} €$
-      </span>
+      {needsEddiePicks && (
+        <span
+          className={classes.progress}
+          aria-label={`${selectedPaymentCount} of ${paymentCost} selected`}
+        >
+          {selectedPaymentCount}/{paymentCost} €$
+        </span>
+      )}
       <button
         type="button"
         className={classes.hybrid}
         onClick={payAutomatically}
         aria-keyshortcuts="Enter"
       >
-        <span>{partial ? "Pay rest automatically" : "Pay automatically"}</span> <kbd>Enter</kbd>
+        <span>
+          {needsEddiePicks ? (partial ? "Pay rest automatically" : "Pay automatically") : "Confirm"}
+        </span>{" "}
+        <kbd>Enter</kbd>
       </button>
       <button
         type="button"

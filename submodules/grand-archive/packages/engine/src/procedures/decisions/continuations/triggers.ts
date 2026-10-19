@@ -1,20 +1,9 @@
-import {
-  collectGrandArchiveModeTargets,
-  declareGrandArchiveModes,
-  declareGrandArchiveTargetsWithRandom,
-  getGrandArchiveAnnouncementModes,
-  grandArchiveModeTrackingEvents,
-  grandArchiveTargetingContext,
-  validateGrandArchiveChosenVariables,
-} from "../../activation/activation.ts";
+import { grandArchiveModeTrackingEvents } from "../../activation/activation.ts";
+import { declareGrandArchiveTriggerAnnouncement } from "../../activation/trigger-announcement.ts";
 import type { GrandArchiveCommandFailure } from "../../../kernel/command-results.ts";
 import type { GrandArchiveCommandHandlerContext } from "../../../commands/handler-context.ts";
-import { grandArchiveObjectCurrentCharacteristics } from "../../../rules/state/continuous.ts";
 import type { GrandArchiveProposedEvent } from "../../../kernel/events.ts";
-import {
-  grandArchiveEvaluationObject,
-  GrandArchiveUnsupportedRuleError,
-} from "../../effects/evaluation.ts";
+import { GrandArchiveUnsupportedRuleError } from "../../effects/evaluation.ts";
 import {
   grandArchiveOpportunityIsSuppressed,
   openGrandArchiveOpportunity,
@@ -92,67 +81,12 @@ export const resolveGrandArchiveTriggeredAbilityAnnouncementDecision: GrandArchi
   }
   const original = state;
   try {
-    const evaluation = {
-      program: match.getProgram(),
-      state,
-      controllerId: pending.controllerId,
-      ...(pending.sourceId
-        ? {
-            sourceId: pending.sourceId,
-            abilityBearerId: pending.sourceId,
-            sourceIdentityId: pending.sourceId,
-            sourceIncarnation: pending.sourceIncarnation,
-          }
-        : {}),
-      ...(pending.sourceLkiEventId
-        ? {
-            sourceLkiEventId: pending.sourceLkiEventId,
-            sourceInformationBasis: "last-known" as const,
-          }
-        : {}),
-      bindings: pending.bindings,
-      variables: { ...pending.variables, ...announcement.variables },
-    };
-    const evaluationSource = pending.sourceId
-      ? grandArchiveEvaluationObject(pending.sourceId, evaluation, true)
-      : undefined;
-    const modeDeclaration = getGrandArchiveAnnouncementModes(
-      pending.ability.modes,
-      "effect" in pending.ability ? pending.ability.effect : undefined,
-      evaluation,
-    );
-    const cascade = "cascade" in pending.ability ? pending.ability.cascade : undefined;
-    if (cascade && (announcement.modeIds?.length ?? 0) > 0) {
-      throw new Error("A Cascade mode is selected automatically and cannot be declared");
-    }
-    const modes = declareGrandArchiveModes(modeDeclaration, announcement.modeIds, evaluation);
-    const cascadeModes = cascade
-      ? pending.selectedModeIds.flatMap((modeId) => {
-          const mode = cascade.modes.find((entry) => entry.id === modeId);
-          return mode ? [mode] : [];
-        })
-      : [];
-    const selectedModes = [...cascadeModes, ...modes.modes];
-    validateGrandArchiveChosenVariables(pending.ability.variables, modes.modes, evaluation);
-    const targetDeclaration = declareGrandArchiveTargetsWithRandom(
-      collectGrandArchiveModeTargets(cascade ? undefined : pending.ability.targets, selectedModes),
-      announcement.targets,
-      {
-        ...evaluation,
-        ...(modes.random ? { state: { ...state, random: modes.random } } : { state }),
-        targeting: grandArchiveTargetingContext(
-          "triggered-ability",
-          evaluationSource
-            ? grandArchiveObjectCurrentCharacteristics(match.getProgram(), state, evaluationSource)
-                .subtypes
-            : [],
-          [pending.ability.effect, ...selectedModes.map((mode) => mode.effect)],
-          "resolutionAs" in pending.ability && pending.ability.resolutionAs === "spell",
-        ),
-      },
-    );
-    const targets = targetDeclaration.targets;
-    const announcementRandom = targetDeclaration.random ?? modes.random;
+    const {
+      modes,
+      targets,
+      random: announcementRandom,
+      variables,
+    } = declareGrandArchiveTriggerAnnouncement(match.getProgram(), state, pending, announcement);
     const events: GrandArchiveProposedEvent[] = [
       {
         type: "decision-cleared",
@@ -187,7 +121,7 @@ export const resolveGrandArchiveTriggeredAbilityAnnouncementDecision: GrandArchi
           pending,
           targets,
           [...pending.selectedModeIds, ...modes.ids],
-          { ...pending.variables, ...announcement.variables },
+          variables,
         ),
         actorId: playerId,
         cause: { kind: "rule", rule: "triggered-ability" },

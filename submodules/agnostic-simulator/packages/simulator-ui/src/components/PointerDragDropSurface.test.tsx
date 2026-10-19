@@ -65,9 +65,60 @@ afterEach(() => {
   activeContainer = null;
   dndHarness.contextProps = null;
   dndHarness.dropAnimation = null;
+  vi.unstubAllGlobals();
 });
 
 describe("PointerDragDropSurface", () => {
+  test("the same card can be dragged again before its cancelled return animation ends", () => {
+    vi.stubGlobal(
+      "requestAnimationFrame",
+      vi.fn(() => 17),
+    );
+    const cancelFrame = vi.fn();
+    vi.stubGlobal("cancelAnimationFrame", cancelFrame);
+    const motion = createDragMotion<string>();
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <PointerDragDropSurface
+          id="retry"
+          motion={motion}
+          presentation="external"
+          decodeSource={(id) => id}
+          renderOverlay={() => null}
+        >
+          Board
+        </PointerDragDropSurface>,
+      ),
+    );
+    const start: DragStartEvent = {
+      active: {
+        id: "card",
+        data: { current: {} },
+        rect: { current: { initial: null, translated: null } },
+      },
+      activatorEvent: new Event("pointerdown"),
+    };
+    act(() => dndHarness.contextProps?.onDragStart(start));
+    act(() => dndHarness.contextProps?.onDragCancel());
+    expect(motion.getSnapshot()?.phase).toBe("returning");
+    act(() => dndHarness.contextProps?.onDragStart(start));
+    expect(motion.getSnapshot()?.phase).toBe("dragging");
+    expect(cancelFrame).toHaveBeenCalledWith(17);
+    act(() =>
+      dndHarness.contextProps?.onDragMove({
+        ...start,
+        delta: { x: 90, y: -30 },
+        over: null,
+        collisions: null,
+      }),
+    );
+    expect(motion.getSnapshot()?.offset).toEqual({ x: 90, y: -30 });
+    motion.finish();
+  });
+
   test("external presentation measures its source after activation and draws no overlay", () => {
     const motion = createDragMotion<string>();
     const overlay = vi.fn(() => <span>Duplicate</span>);

@@ -165,6 +165,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   paymentQuickAbilityQa: "scenario:paymentQuickAbilityQa",
   paymentOnlyEddiesQa: "scenario:paymentOnlyEddiesQa",
   paymentPhysicalEddiesQa: "scenario:paymentPhysicalEddiesQa",
+  paymentLegendSpendAbilityQa: "scenario:paymentLegendSpendAbilityQa",
   retailCardCatalog: "scenario:retailCardCatalog",
   retailProgramTargetBench: "scenario:retailProgramTargetBench",
   retailCombatGigBench: "scenario:retailCombatGigBench",

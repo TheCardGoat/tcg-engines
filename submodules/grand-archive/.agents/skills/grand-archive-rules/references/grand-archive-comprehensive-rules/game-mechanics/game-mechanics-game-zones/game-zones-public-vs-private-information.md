@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-public-vs-private-information"
   relation: "current_index"
 ---
-
 # Game Zones - Public vs Private Information
 
 #### General Rules:
@@ -14,7 +13,7 @@ official_source:
    2. Cards in zones that are private have no characteristics apart from being cards by default.
       1. If a card with a specified characteristic is added to a private zone, that card must be revealed before it is added to that zone. This does not apply for moving cards to a public zone but with hidden or private information.
 
-{% hint style="warning" %} <img src="https://ga-index-public.s3.us-west-2.amazonaws.com/cards/polaris-twinkling-cauldron-prxy.jpg" alt="" data-size="original">![](/files/OEupqLu9Y8nXaHV2jdhZ)\
+{% hint style="warning" %} <img src="https://ga-index-public.s3.us-west-2.amazonaws.com/cards/polaris-twinkling-cauldron-prxy.jpg" alt="" data-size="original">![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2Fz0RZLSJ0ukfEqruUbavr%2Fquicksilver-grail-ftc.jpg?alt=media\&token=021eb3f6-f462-4cc2-a115-1390a92eb054)\
 \
 E.g., The Cosmic Bolts generated from Polaris must first be revealed to all players in a game before being shuffled into the Main Deck. This is not true of Quicksilver Grail since the Banishment is a public zone, even though the card added is face-down and considered private.
 {% endhint %}
@@ -28,7 +27,7 @@ E.g., The Cosmic Bolts generated from Polaris must first be revealed to all play
 
       1. When a card becomes private in a public zone (e.g., banishment), and that card was visible to a player due to that card being public information, that player will retain private information about that card and may look at that card. If an ability of that card would grant play permissions, that player can exercise the play permissions on that card.
 
-{% hint style="success" %} <img src="/files/WOtAXuXSq7kKJ0g6az7W" alt="" data-size="original"><img src="/files/m3yVWWXj4UwSZhimqb8e" alt="" data-size="original"><img src="/files/0lazSA5saiAjqleZ3t3m" alt="" data-size="original"> &#x20;
+{% hint style="success" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FUpsfY3IJvdKFZRrfAJWK%2Fgaias-blessing-doa-alter.jpg?alt=media&amp;token=0f38aeb7-8a62-4ecd-bb6b-c3f94c5ba0d9" alt="" data-size="original"><img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FW7dZS743jRafKgFUPyeF%2Fthree-visits-amb.jpg?alt=media&amp;token=92695279-441a-4f4b-8ab5-320e3afb54b8" alt="" data-size="original"><img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FHBRFYWjzp0yqggs02LXM%2Ftristan-shadowreaver-mrc.jpg?alt=media&amp;token=51b36284-7e36-427f-bfe8-14a5f17bc22a" alt="" data-size="original"> &#x20;
 
 \
 E.g., If a player who controls Gaia's Blessing and owns Three Visits were to have Three Visits banished by their opponent's Tristan, Shadowreaver, the player who owns Three Visits will still retain the ability to activate it from banishment, as it was previously public information through Gaia's Blessing.

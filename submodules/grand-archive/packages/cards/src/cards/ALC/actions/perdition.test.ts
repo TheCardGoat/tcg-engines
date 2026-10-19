@@ -47,9 +47,9 @@ describe("Perdition — opposing allies and granted death damage", () => {
     passEffectsStack(game);
 
     expect(game.state.objects[opposingSquirrel.objectId]!.zone).toBe("graveyard");
-    expect(game.state.objects[opposingTortoise.objectId]!.damage).toBe(2);
-    expect(game.state.objects[opposingChampion.objectId]!.damage).toBe(1);
-    expect(game.state.objects[ownChampion.objectId]!.damage).toBe(0);
-    expect(game.state.objects[ownAlly.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(opposingTortoise.objectId)).toBe(2);
+    expect(game.markedDamage(opposingChampion.objectId)).toBe(1);
+    expect(game.markedDamage(ownChampion.objectId)).toBe(0);
+    expect(game.markedDamage(ownAlly.objectId)).toBe(0);
   });
 });

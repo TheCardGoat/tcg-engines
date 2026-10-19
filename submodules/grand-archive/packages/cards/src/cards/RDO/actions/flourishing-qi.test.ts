@@ -79,15 +79,13 @@ describe("Flourishing Qi charges only its live activation on each change to Nort
             q.card(flourishingQi),
           ])
             expect(game.state.objects[copy.objectId]!.counters["named:charge"] ?? 0).toBe(0);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
           const damage = level + 4 * cycles;
           expect(game.state.objects[target.objectId]!.zone).toBe(
             targetAlly && damage >= 6 ? "graveyard" : "field",
           );
-          expect(game.state.objects[target.objectId]!.damage).toBe(
-            targetAlly && damage >= 6 ? 0 : damage,
-          );
+          expect(game.markedDamage(target.objectId)).toBe(targetAlly && damage >= 6 ? 0 : damage);
           expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
           expect(charge()).toBe(0);
         });

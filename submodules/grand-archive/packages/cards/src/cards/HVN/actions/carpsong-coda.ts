@@ -94,22 +94,27 @@ export const carpsongCoda: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 zones: ["graveyard"],
                 player: "controller",
                 filter: {
-                  kind: "all",
+                  kind: "any",
                   filters: [
                     {
-                      kind: "element",
-                      oneOf: ["WATER"],
-                    },
-                    {
-                      kind: "type",
-                      oneOf: ["ALLY"],
-                    },
-                    {
-                      kind: "any",
+                      kind: "all",
                       filters: [
+                        {
+                          kind: "element",
+                          oneOf: ["WATER"],
+                        },
                         {
                           kind: "subtype",
                           oneOf: ["ANIMAL"],
+                        },
+                      ],
+                    },
+                    {
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
                         },
                         {
                           kind: "subtype",

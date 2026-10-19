@@ -1,0 +1,62 @@
+@import "./layers.css";
+.tcg-damage-strike {
+  position: absolute;
+  inset: 0;
+  z-index: var(--tcg-layer-impact);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.tcg-damage-bolt {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 38% 34%, #fff4d6, #f0c877 45%, #d97741 78%, transparent);
+  box-shadow:
+    0 0 18px #f7d99a,
+    0 0 42px #e0b87288;
+}
+
+.tcg-damage-trail {
+  position: absolute;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 999px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #f0c87700, #ffd98acc 78%, #fff4d6);
+  opacity: 0;
+}
+
+.tcg-damage-impact {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 999px;
+  border: 3px solid #ffe9bd;
+  opacity: 0;
+}
+
+.tcg-damage-number {
+  position: absolute;
+  margin: -52px 0 0 12px;
+  color: #ffd98a;
+  font-size: clamp(28px, 2.2vw, 42px);
+  font-weight: 800;
+  text-shadow:
+    0 2px 0 #14202a,
+    0 0 18px #e0b87299;
+  opacity: 0;
+}
+
+.tcg-damage-strike[data-reduced] .tcg-damage-number {
+  opacity: 1;
+}
+
+.tcg-damage-strike[data-reduced] .tcg-damage-bolt,
+.tcg-damage-strike[data-reduced] .tcg-damage-trail,
+.tcg-damage-strike[data-reduced] .tcg-damage-impact {
+  display: none;
+}

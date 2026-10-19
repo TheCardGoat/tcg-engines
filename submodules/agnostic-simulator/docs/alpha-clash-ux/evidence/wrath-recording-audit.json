@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "fixture": "optional-wrath-two-dragons",
+  "flow": "Fresh optional-wrath-two-dragons board. Source inspection before capture; recording includes native Engage activation, Use, Choose cards, Cards and piles, selection of second Fangyin, Enter on Done without submission, Enter on Confirm and settled result: deck 41, hand one, opposing Clash zero/Oblivion one, health 26/30.",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "wrath-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 126,
+      "captureAudioMs": 3534,
+      "audioAlignmentSeconds": 0.015943050384521484,
+      "decodedAudioSeconds": 3.4619583333333335,
+      "masterGain": 0.5625,
+      "peak": 0.2189011573791504,
+      "rms": 0.015449905067098825,
+      "peakDbfs": -13.195038844287808,
+      "rmsDbfs": -36.22148369560727
+    },
+    {
+      "variant": "muted-reduced",
+      "file": "wrath-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 101,
+      "captureAudioMs": 3596,
+      "audioAlignmentSeconds": 0.012629985809326172,
+      "decodedAudioSeconds": 3.5251875,
+      "masterGain": 0,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "capture": "Application-output Howler branch only, no microphone or replacement audio; temporary branch disconnected and tracks stopped. Audio packet gaps retain silence. Change frames encoded at 30 FPS.",
+  "limits": [
+    "Only accepted Wrath branch recorded; not Decline/no-Dragon or opponent reveal.",
+    "Audio presence/silence does not establish perceptual mix, separate Wrath cue or cue synchronization.",
+    "Frame count/encoding FPS do not measure renderer performance.",
+    "Matched viewport/commands; different input pacing cannot establish individual motion duration."
+  ]
+}

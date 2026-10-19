@@ -164,6 +164,104 @@ describe("SimulatorMatchSidebar", () => {
     expect(sidebar.querySelectorAll('[data-has-metrics="false"]')).toHaveLength(2);
   });
 
+  test("dense variant groups the brand row and both participants above the activity", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    act(() =>
+      root?.render(
+        <SimulatorMatchSidebar
+          variant="dense"
+          brand={<span>Brand mark</span>}
+          opponent={{ id: "opponent", role: "opponent", name: "Rival", shortLabel: "OP" }}
+          automation={{
+            summary: <span>Bot · Auto</span>,
+            details: <button type="button">AI speed</button>,
+          }}
+          context={<dl title="Match score" />}
+          activity={{ log: <div>Battle log</div> }}
+          actions={{
+            undo: <button type="button">Undo</button>,
+            primary: <button type="button">Pass turn</button>,
+            danger: <button type="button">Concede</button>,
+          }}
+          self={{ id: "self", role: "self", name: "You", shortLabel: "YOU" }}
+        />,
+      ),
+    );
+
+    const sidebar = container.querySelector("aside")!;
+    expect(sidebar.getAttribute("data-variant")).toBe("dense");
+    expect(
+      Array.from(sidebar.children).map(
+        (child) => child.getAttribute("aria-label") ?? child.textContent,
+      ),
+    ).toEqual([
+      "Brand mark",
+      "Opponent match status",
+      "Your match status",
+      "Automated opponent controls",
+      "Match context",
+      "Activity",
+      "Match actions",
+    ]);
+    expect(sidebar.querySelector('[data-testid="simulator-sidebar-brand"]')?.textContent).toBe(
+      "Brand mark",
+    );
+  });
+
+  test("dense participant rows render clocks, status, metrics, and screen-reader metadata", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    act(() =>
+      root?.render(
+        <SimulatorMatchSidebar
+          variant="dense"
+          opponent={{
+            id: "opponent",
+            role: "opponent",
+            name: "Rival",
+            shortLabel: "OP",
+            status: "Waiting",
+            clock: "12:00",
+            meta: "1510 MMR",
+          }}
+          activity={{ log: <div>Battle log</div> }}
+          actions={{
+            controls: <button type="button">Pass turn</button>,
+            danger: null,
+          }}
+          self={{
+            id: "self",
+            role: "self",
+            name: "You",
+            shortLabel: "YOU",
+            status: "Priority",
+            clock: "11:54",
+            active: true,
+            metrics: [{ id: "score", label: "Score", value: 2 }],
+          }}
+        />,
+      ),
+    );
+
+    const opponent = container.querySelector('[aria-label="Opponent match status"]')!;
+    const self = container.querySelector('[aria-label="Your match status"]')!;
+    expect(opponent.getAttribute("data-active")).toBeNull();
+    expect(opponent.textContent).toContain("Rival");
+    expect(opponent.textContent).toContain("12:00");
+    expect(opponent.textContent).toContain("Waiting");
+    expect(opponent.textContent).toContain("1510 MMR");
+    expect(self.getAttribute("data-active")).toBe("true");
+    expect(self.textContent).toContain("11:54");
+    expect(self.textContent).toContain("Score 2");
+    // Identity actions are not rendered in the dense rows; games consolidate
+    // them into the brand row instead.
+    expect(opponent.querySelector("button")).toBeNull();
+    expect(self.querySelector("button")).toBeNull();
+  });
+
   test("opens automation details without growing the fixed summary row and restores focus", () => {
     container = document.createElement("div");
     document.body.append(container);

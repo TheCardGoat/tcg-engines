@@ -1,3 +1,6 @@
+import { BoundedNumberControl } from "./BoundedNumberControl";
+import { isLegalNumber } from "../interactions/number-value";
+import { CostSlotControl } from "../interactions/CostSlotControl";
 import type {
   EngineInteractionView,
   EntityAllocationInput,
@@ -17,6 +20,7 @@ import type {
 import {
   buildInteractionSubmission,
   inputAllowsOmission,
+  isEntityAllocationComplete,
   validateInteractionSubmission,
 } from "@tcg/protocol";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
@@ -138,7 +142,7 @@ export interface InteractionResolutionPromptProps {
   readonly choiceModal?: InteractionChoiceModalPresentation;
   /** Selects a ready action for pre-command drafting when no effect queue is active. */
   readonly actionId?: string;
-  /** Optional game-facing copy for a ready, inputless action shown in this shared prompt. */
+  /** Optional game-facing copy for an action draft or resolving choice shown in this prompt. */
   readonly actionPresentation?: {
     readonly title?: string;
     readonly body?: string;
@@ -288,7 +292,6 @@ export function InteractionResolutionPrompt({
   const [choicesOpen, setChoicesOpen] = useState(false);
   const [detailsExpanded, setDetailsExpanded] = useState(defaultDetailsExpanded);
   const [utilityMenuOpen, setUtilityMenuOpen] = useState(false);
-  const [clearedNumberKey, setClearedNumberKey] = useState<string>();
   const [instructionTooltipOpen, setInstructionTooltipOpen] = useState(false);
   const [optionQuery, setOptionQuery] = useState("");
   const rootRef = useRef<HTMLElement>(null);
@@ -306,7 +309,6 @@ export function InteractionResolutionPrompt({
   const mobileDrag = useMobilePromptDrag(rootRef, mobileDraggable && !embedded, placement);
   const choiceDialogRef = useRef<HTMLElement>(null);
   const utilityTriggerRef = useRef<HTMLButtonElement>(null);
-  const initializedNumberKeyRef = useRef<string | undefined>(undefined);
   const instructionTooltipTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const headingId = useId();
   const instructionId = useId();
@@ -324,7 +326,6 @@ export function InteractionResolutionPrompt({
     setChoicesOpen(choiceModal?.autoOpen === true);
     setDetailsExpanded(defaultDetailsExpanded);
     setUtilityMenuOpen(false);
-    setClearedNumberKey(undefined);
     setInstructionTooltipOpen(false);
     setOptionQuery("");
   }, [choiceModal?.autoOpen, defaultDetailsExpanded, promptId]);
@@ -365,7 +366,6 @@ export function InteractionResolutionPrompt({
     isDraftControlled && action ? action.inputs : inputs,
   );
   const input = optionalDecision?.dependent ?? inputs[0];
-  const numberKey = input?.kind === "number" ? `${promptId ?? "prompt"}:${input.id}` : undefined;
   const partitionInput = inputs.find(
     (candidate): candidate is EntityPartitionInput => candidate.kind === "entity-partition",
   );
@@ -485,13 +485,6 @@ export function InteractionResolutionPrompt({
     };
   }, [choicesOpen]);
 
-  useEffect(() => {
-    if (inputSuspended || input?.kind !== "number" || input.max === undefined || !numberKey) return;
-    if (initializedNumberKeyRef.current === numberKey) return;
-    initializedNumberKeyRef.current = numberKey;
-    if (values[input.id] === undefined) onChange?.(input.id, input.max);
-  }, [input, inputSuspended, numberKey, onChange, values]);
-
   if ((!resolution && !isActionDraft) || animationRuntime?.activeTransition) return null;
 
   const optionalTarget =
@@ -525,9 +518,10 @@ export function InteractionResolutionPrompt({
       resolution?.currentStep.text ??
       draftedAction?.text ?? { key: "interaction.prompt" },
   );
-  const effectTitle = isActionDraft
-    ? (actionPresentation?.title ?? resolveInteractionText(draftedAction!.text))
+  const nativeEffectTitle = isActionDraft
+    ? resolveInteractionText(draftedAction!.text)
     : resolveInteractionText(resolution!.currentEffect.text);
+  const effectTitle = actionPresentation?.title ?? nativeEffectTitle;
   const displayedEffectTitle = directOrderDestination
     ? `Order ${directOrderDestination.toLocaleLowerCase()}`
     : effectTitle;
@@ -566,24 +560,8 @@ export function InteractionResolutionPrompt({
   const max = input && "max" in input ? input.max : undefined;
   const min = input && "min" in input ? input.min : undefined;
   const numericSubmission = input?.kind === "number" ? values[input.id] : undefined;
-  const numericValue =
-    typeof numericSubmission === "number"
-      ? numericSubmission
-      : input?.kind === "number" && input.max !== undefined && clearedNumberKey !== numberKey
-        ? input.max
-        : undefined;
-  const numericCanConfirm =
-    input?.kind !== "number" ||
-    (typeof numericValue === "number" &&
-      Number.isFinite(numericValue) &&
-      (input.min === undefined || numericValue >= input.min) &&
-      (input.max === undefined || numericValue <= input.max) &&
-      (input.step === undefined ||
-        Math.abs(
-          (numericValue - (input.min ?? 0)) / input.step -
-            Math.round((numericValue - (input.min ?? 0)) / input.step),
-        ) <
-          Number.EPSILON * 16));
+  const numericValue = typeof numericSubmission === "number" ? numericSubmission : undefined;
+  const numericCanConfirm = input?.kind !== "number" || isLegalNumber(numericValue, input);
   const allocationValue = allocationInput
     ? readAllocationValue(values[allocationInput.id])
     : undefined;
@@ -593,11 +571,7 @@ export function InteractionResolutionPrompt({
   const allocationCanConfirm =
     !allocationInput ||
     (allocationTotal >= allocationInput.totalMin &&
-      allocationTotal <= allocationInput.totalMax &&
-      allocationInput.candidates.every((candidate) => {
-        const amount = allocationValue?.[candidate.entity.instanceId] ?? 0;
-        return amount >= candidate.min && amount <= candidate.max;
-      }));
+      isEntityAllocationComplete(allocationInput, allocationValue ?? {}));
   const selectionCanConfirm =
     input?.kind === "number"
       ? numericCanConfirm
@@ -675,7 +649,10 @@ export function InteractionResolutionPrompt({
       input.kind === "number" ||
       (input.kind === "option-selection" &&
         !optionDirectPresentation &&
-        (input.min !== 1 || input.max !== 1 || optionSearchPresentation !== undefined)) ||
+        (input.presentation?.kind === "cost-slots" ||
+          input.min !== 1 ||
+          input.max !== 1 ||
+          optionSearchPresentation !== undefined)) ||
       (input.kind === "entity-selection" &&
         (!immediateEntitySelection || hasMultipleTargetGroups)));
   const canConfirm = (() => {
@@ -799,6 +776,9 @@ export function InteractionResolutionPrompt({
   const detailCopy = [
     actionPresentation?.details,
     actionPresentation?.footerInstruction,
+    resolution && nativeEffectTitle !== effectTitle && nativeEffectTitle !== primaryInstruction
+      ? nativeEffectTitle
+      : undefined,
     !optionDirectPresentation && bounds && bounds !== instruction
       ? selectionRequirementCopy(bounds, selectionNoun)
       : undefined,
@@ -878,17 +858,6 @@ export function InteractionResolutionPrompt({
           : selectionMax !== undefined
             ? IconChecklist
             : IconProgress;
-  const setTypedNumericValue = (nextValue: number) => {
-    if (input?.kind !== "number") return;
-    setClearedNumberKey(undefined);
-    onChange?.(input.id, nextValue);
-  };
-  const setSteppedNumericValue = (nextValue: number) => {
-    if (input?.kind !== "number") return;
-    const clamped = Math.min(input.max ?? nextValue, Math.max(input.min ?? nextValue, nextValue));
-    setClearedNumberKey(undefined);
-    onChange?.(input.id, clamped);
-  };
   const choiceDialogContents =
     choicesOpen &&
     !inputSuspended &&
@@ -1087,6 +1056,19 @@ export function InteractionResolutionPrompt({
   // The tabletop isolates its stacking context from the persistent sidebar.
   // Portal the modal to the document so a required decision always remains
   // above both surfaces, rather than only above the board area.
+  if (input?.kind === "option-selection" && input.presentation?.kind === "cost-slots") {
+    return (
+      <CostSlotControl
+        input={input}
+        value={selection}
+        disabled={!isActor || instructionOnly}
+        onChange={(next) => onChange?.(input.id, next)}
+        onConfirm={confirmSelection}
+        onCancel={onCancel}
+        canConfirm={canConfirm}
+      />
+    );
+  }
   const choiceDialog = choiceModal
     ? choiceDialogContents
     : choiceDialogContents && typeof document !== "undefined"
@@ -1393,48 +1375,17 @@ export function InteractionResolutionPrompt({
           ) : isActor && !minimized && !instructionOnly ? (
             <footer className={classes.actions} data-slot="interaction-actions">
               {input?.kind === "number" ? (
-                <div className={classes.numberStepper} role="group" aria-label="Amount">
-                  <button
-                    type="button"
-                    aria-label="Decrease amount"
-                    disabled={
-                      numericValue === undefined || numericValue <= (input.min ?? -Infinity)
-                    }
-                    onClick={() =>
-                      setSteppedNumericValue((numericValue ?? input.min ?? 0) - (input.step ?? 1))
-                    }
-                  >
-                    <IconMinus size={18} aria-hidden="true" />
-                  </button>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    min={input.min}
-                    max={input.max}
-                    step={input.step}
-                    value={numericValue ?? ""}
-                    aria-label="Amount"
-                    aria-describedby={instructionId}
-                    onChange={(event) => {
-                      if (event.currentTarget.value === "") {
-                        setClearedNumberKey(numberKey);
-                        onClearInput?.(input.id);
-                        return;
-                      }
-                      setTypedNumericValue(event.currentTarget.valueAsNumber);
-                    }}
-                  />
-                  <button
-                    type="button"
-                    aria-label="Increase amount"
-                    disabled={numericValue === undefined || numericValue >= (input.max ?? Infinity)}
-                    onClick={() =>
-                      setSteppedNumericValue((numericValue ?? input.min ?? 0) + (input.step ?? 1))
-                    }
-                  >
-                    <IconPlus size={18} aria-hidden="true" />
-                  </button>
-                </div>
+                <BoundedNumberControl
+                  value={numericValue}
+                  min={input.min}
+                  max={input.max}
+                  step={input.step}
+                  describedBy={instructionId}
+                  onChange={(value) => {
+                    if (value === undefined) onClearInput?.(input.id);
+                    else onChange?.(input.id, value);
+                  }}
+                />
               ) : null}
               {isActionDraft && onCancel ? (
                 <button
@@ -1922,18 +1873,25 @@ function selectedInputLabels(
   return [];
 }
 
-function AllocationWorkspace({
+export function AllocationWorkspace({
   input,
   value,
   onChange,
   renderCandidate,
+  disabled = false,
+  presentation,
 }: {
+  readonly disabled?: boolean;
+  readonly presentation?: "cards";
   readonly input: EntityAllocationInput;
   readonly value: EntityAllocationValue;
   readonly onChange: (value: EntityAllocationValue) => void;
   readonly renderCandidate?: InteractionResolutionPromptProps["renderCandidate"];
 }) {
   const total = Object.values(value).reduce((sum, amount) => sum + amount, 0);
+  const recipients = Object.values(value).filter((amount) => amount > 0).length;
+  const recipientLimitReached =
+    input.maxRecipients !== undefined && recipients >= input.maxRecipients;
   const setAmount = (id: string, amount: number) => {
     const next = { ...value };
     if (amount === 0) delete next[id];
@@ -1943,6 +1901,7 @@ function AllocationWorkspace({
   return (
     <div
       className={classes.allocationWorkspace}
+      data-presentation={presentation}
       role="group"
       aria-label={`Allocation, ${total} assigned`}
     >
@@ -1958,13 +1917,15 @@ function AllocationWorkspace({
             ? `${input.totalMin - total} more required`
             : total > input.totalMax
               ? "Reduce the assigned amount"
-              : input.candidates.some(
-                    (candidate) =>
-                      (value[candidate.entity.instanceId] ?? 0) < candidate.min ||
-                      (value[candidate.entity.instanceId] ?? 0) > candidate.max,
-                  )
-                ? "Check the individual limits"
-                : "Ready to confirm"}
+              : input.maxRecipients !== undefined && recipients > input.maxRecipients
+                ? `Choose at most ${input.maxRecipients} recipients`
+                : input.candidates.some(
+                      (candidate) =>
+                        (value[candidate.entity.instanceId] ?? 0) < candidate.min ||
+                        (value[candidate.entity.instanceId] ?? 0) > candidate.max,
+                    )
+                  ? "Check the individual limits"
+                  : "Ready to confirm"}
         </span>
       </div>
       <div className={classes.allocationGrid}>
@@ -1995,7 +1956,7 @@ function AllocationWorkspace({
                 <button
                   type="button"
                   aria-label={`Decrease allocation for ${label}`}
-                  disabled={candidate.enabled === false || amount <= candidate.min}
+                  disabled={disabled || candidate.enabled === false || amount <= candidate.min}
                   onClick={() => setAmount(id, amount - 1)}
                 >
                   <IconMinus size={18} aria-hidden="true" />
@@ -2005,9 +1966,11 @@ function AllocationWorkspace({
                   type="button"
                   aria-label={`Increase allocation for ${label}`}
                   disabled={
+                    disabled ||
                     candidate.enabled === false ||
                     amount >= candidate.max ||
-                    total >= input.totalMax
+                    total >= input.totalMax ||
+                    (amount === 0 && recipientLimitReached)
                   }
                   onClick={() => setAmount(id, amount + 1)}
                 >

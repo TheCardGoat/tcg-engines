@@ -1,3 +1,8 @@
+import { useBackgroundBot } from "../../../simulator/bot/use-background-bot";
+import { decideOnePieceBot } from "../bot-decision";
+const botWorkerKey = {};
+const createBotWorker = () =>
+  new Worker(new URL("../bot-decision.worker.ts", import.meta.url), { type: "module" });
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -186,60 +191,38 @@ function OnePiecePracticeBoard({
     [debugHistory, enqueue, gate, snapshot],
   );
 
-  useEffect(() => {
-    if (mode === "self" || !state || gate.isBlocked || state.status !== "setup") return;
-    const setupActionTypes = new Set([
-      "chooseJoKenPo",
-      "chooseFirstPlayer",
-      "mulligan",
-      "keepHand",
-      "startGame",
-    ]);
-    if (
-      !engine.getLegalCommands(state, BOT_SEAT).some((action) => setupActionTypes.has(action.type))
-    ) {
-      return;
-    }
-    const timer = window.setTimeout(() => {
-      applyEngineResult((current) => {
-        if (!current || current.status !== "setup") return current;
-        const legal = engine.getLegalCommands(current, BOT_SEAT);
-        const command = engine.passOnlyStrategy(current, BOT_SEAT, legal);
-        return command && setupActionTypes.has(command.type)
+  const [botError, setBotError] = useState<string | null>(null);
+  useBackgroundBot({
+    identity: state,
+    getIdentity: () => state,
+    workerKey: botWorkerKey,
+    scope: mode,
+    enabled: Boolean(
+      mode === "bot" &&
+      state &&
+      !gate.isBlocked &&
+      (state.status === "setup" || (state.status === "active" && state.activeSeat === BOT_SEAT)),
+    ),
+    auto: !botError,
+    delayMs: state?.status === "setup" ? 300 : 450,
+    createWorker: createBotWorker,
+    context: () => null,
+    input: () => {
+      if (!state) throw new Error("No practice state");
+      return { state, setup: state.status === "setup" };
+    },
+    decide: decideOnePieceBot,
+    onError: setBotError,
+    commit: ({ command }) => {
+      if (!command) return;
+      const applied = applyEngineResult((current) =>
+        current && current === state
           ? { command, outcome: engine.applyCommand(current, command) }
-          : current;
-      });
-    }, 300);
-    return () => window.clearTimeout(timer);
-  }, [applyEngineResult, engine, gate.isBlocked, mode, state]);
-
-  useEffect(() => {
-    if (
-      mode === "self" ||
-      !state ||
-      gate.isBlocked ||
-      state.status !== "active" ||
-      state.activeSeat !== BOT_SEAT
-    ) {
-      return;
-    }
-    const timer = window.setTimeout(() => {
-      applyEngineResult((current) => {
-        if (!current || current.status !== "active" || current.activeSeat !== BOT_SEAT) {
-          return current;
-        }
-        const legal = engine.getLegalCommands(current, BOT_SEAT);
-        const command =
-          engine.greedyStrategy(current, BOT_SEAT, legal) ??
-          (() => {
-            const pass = legal.find((candidate) => candidate.type === "endTurn");
-            return pass ? engine.commandFromDescriptor(current, BOT_SEAT, pass) : null;
-          })();
-        return command ? { command, outcome: engine.applyCommand(current, command) } : current;
-      });
-    }, 450);
-    return () => window.clearTimeout(timer);
-  }, [applyEngineResult, engine, gate.isBlocked, mode, state]);
+          : current,
+      );
+      if (!applied) setBotError("The practice bot's move was rejected.");
+    },
+  });
 
   const controlledSeat = useMemo(() => {
     if (!state || mode === "bot") return HUMAN_SEAT;
@@ -290,6 +273,7 @@ function OnePiecePracticeBoard({
   return (
     <AnimationInteractionBoundary active={gate.isBlocked}>
       <div data-practice-mode={mode} data-controlled-seat={controlledSeat}>
+        {botError && <p role="alert">{botError}</p>}
         <OnePieceSimulatorShell
           practiceMode={mode}
           controlledSeat={controlledSeat}

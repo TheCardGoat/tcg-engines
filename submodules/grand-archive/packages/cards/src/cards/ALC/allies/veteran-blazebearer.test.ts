@@ -84,8 +84,8 @@ describe("Veteran Blazebearer — entry Taunt duration", () => {
       }
       opponent.declareAttack(automatedGardener, expired ? championRef : ally);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[championRef.objectId]!.damage).toBe(expired ? 2 : 0);
-      expect(game.state.objects[ally.objectId]!.damage).toBe(expired ? 0 : 2);
+      expect(game.markedDamage(championRef.objectId)).toBe(expired ? 2 : 0);
+      expect(game.markedDamage(ally.objectId)).toBe(expired ? 0 : 2);
     });
   }
 });
@@ -133,7 +133,7 @@ describe("Veteran Blazebearer — conditional Steadfast", () => {
         }
         const canRetaliate = classBonus || !rested;
         if (canRetaliate) {
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(attacker.objectId)).toBe(0);
           answerDecision(game, "choose-retaliators", [ally.objectId]);
           expect(game.state.objects[ally.objectId]!.states.has("rested")).toBe(
             rested || !classBonus,
@@ -143,8 +143,8 @@ describe("Veteran Blazebearer — conditional Steadfast", () => {
           answerDecision(game, "choose-retaliators", []);
         }
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[attacker.objectId]!.damage).toBe(canRetaliate ? 2 : 0);
-        expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(attacker.objectId)).toBe(canRetaliate ? 2 : 0);
+        expect(game.markedDamage(ally.objectId)).toBe(2);
       });
     }
   }

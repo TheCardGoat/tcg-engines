@@ -110,12 +110,12 @@ describe("Aether's Embrace — defending Ranger wake and combat stats", () => {
           }
         }
         expect(game.state.combat).toBeNull();
-        expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(bonus ? 3 : 0);
+        expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(bonus ? 3 : 0);
         if (load) {
-          const damage = game.state.objects[q.card(champion).objectId]!.damage;
+          const damage = game.markedDamage(q.card(champion).objectId);
           p.declareAttack(p.card(champion), q.card(champion), { weaponIds: [host.objectId] });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(damage + 2);
+          expect(game.markedDamage(q.card(champion).objectId)).toBe(damage + 2);
         }
         advanceToMain(game, q.id);
         expect(stat("power")).toBe(power);
@@ -124,10 +124,10 @@ describe("Aether's Embrace — defending Ranger wake and combat stats", () => {
           mode !== "nondefending-ranger",
         );
         if (bonus) {
-          const damage = game.state.objects[p.card(champion).objectId]!.damage;
+          const damage = game.markedDamage(p.card(champion).objectId);
           q.declareAttack(target, p.card(champion));
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(damage + 3);
+          expect(game.markedDamage(p.card(champion).objectId)).toBe(damage + 3);
         }
         advanceToMain(game, p.id);
         expect(game.state.objects[target.objectId]!.states.has("distant")).toBe(false);

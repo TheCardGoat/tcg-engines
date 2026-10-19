@@ -155,6 +155,7 @@ export function enqueueEventTriggers(
       if (
         ability.trigger?.trigger === "event" &&
         ability.limits?.includes("firstTimeEachTurn") &&
+        !state.G.turnMetadata.legacyFirstTimeLimitsUntilNextTurn &&
         state.G.turnMetadata.firstTimeEventsThisTurn.some(({ event: earlierEvent, card }) => {
           if (earlierEvent.type !== matchedEvent.type) return false;
           const historicalState = card

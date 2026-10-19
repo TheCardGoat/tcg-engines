@@ -163,7 +163,7 @@ describe("Castling — selected Chessmen gain temporary protection", () => {
         }
         q.declareAttack(woodlandSquirrels, ownTaunt ?? p.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[(ownTaunt ?? p.card(champion)).objectId]!.damage).toBe(1);
+        expect(game.markedDamage((ownTaunt ?? p.card(champion)).objectId)).toBe(1);
         advanceToMain(game, p.id);
         for (const target of [...own, ...opposing]) expect(life(target.objectId)).toBe(4);
         const formerlyProtected = selected[0] ?? own[0]!;
@@ -172,10 +172,10 @@ describe("Castling — selected Chessmen gain temporary protection", () => {
           targets: { "target-1": [formerlyProtected.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[formerlyProtected.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(formerlyProtected.objectId)).toBe(2);
         // Opposing Taunt also expires: a direct attack on that champion is legal.
         p.declareAttack(own[1]!, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
       });
 });

@@ -1,10 +1,11 @@
 import type { OpeningBeat, OpeningFixture } from "@tcg/simulator-presentation/opening";
+import { alphaClashProductImageUrl } from "./components/Arena3D/card-artwork";
 
-const card = (id: string, name: string, product: number) => ({
-  id,
-  name,
-  imageUrl: `https://tcgplayer-cdn.tcgplayer.com/product/${product}_400w.jpg`,
-});
+const card = (id: string, name: string, product: number) => {
+  const imageUrl = alphaClashProductImageUrl(product);
+  if (!imageUrl) throw new Error(`Missing Alpha Clash opening artwork: ${product}`);
+  return { id, name, imageUrl };
+};
 const board = { leaders: "field", hand: "review", localCount: 8, rivalCount: 8 } as const;
 const opening = { leaders: "field", hand: "deck", localCount: 0, rivalCount: 0 } as const;
 // Official printed records: alpha-clash-card-data.json. Rule 103.1–8, CR v5.3.

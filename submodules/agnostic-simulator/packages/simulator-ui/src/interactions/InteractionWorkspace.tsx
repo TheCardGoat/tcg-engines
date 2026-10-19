@@ -1,5 +1,9 @@
 import { Button, Group, Text } from "@mantine/core";
-import type { EngineInteractionView, InteractionSubmission } from "@tcg/protocol";
+import type {
+  EngineInteractionView,
+  InteractionAction,
+  InteractionSubmission,
+} from "@tcg/protocol";
 import { createContext, useContext, useEffect, type ReactNode } from "react";
 import { InteractionDraftProvider, useInteractionDraft } from "./InteractionDraftContext";
 import { currentActionableInput, resolveInteractionText } from "./interaction-presentation";
@@ -18,12 +22,15 @@ export function InteractionWorkspace({
   viewerId,
   onSubmit,
   disabled = false,
+  deferInitialSubmission,
   children,
 }: {
   view: EngineInteractionView;
   viewerId: string;
   onSubmit: (submission: InteractionSubmission) => boolean;
   disabled?: boolean;
+  /** Keep optional choices open instead of submitting their default when an action begins. */
+  deferInitialSubmission?: (action: InteractionAction) => boolean;
   children: ReactNode;
 }) {
   const animation = useOptionalAnimationRuntime();
@@ -34,7 +41,11 @@ export function InteractionWorkspace({
     view.status !== "game-over" &&
     view.actorId === viewerId;
   return (
-    <InteractionDraftProvider view={view} onSubmit={(submission) => canAct && onSubmit(submission)}>
+    <InteractionDraftProvider
+      view={view}
+      deferInitialSubmission={deferInitialSubmission}
+      onSubmit={(submission) => canAct && onSubmit(submission)}
+    >
       <InteractionAccessContext.Provider value={canAct}>
         <PendingDecision view={view} enabled={canAct} />
         {children}
@@ -149,10 +160,18 @@ export function useInteractionBoard(view: EngineInteractionView, disabled = fals
     ? currentActionableInput(action, draft.values, draft.confirmedInputIds)
     : undefined;
   const candidates =
-    !disabled && canAct && input && "candidates" in input
-      ? input.candidates
-          .filter((candidate) => candidate.enabled !== false)
-          .map((candidate) => candidate.entity.instanceId)
+    !disabled && canAct && input
+      ? input.kind === "option-selection"
+        ? input.options.flatMap((option) =>
+            option.enabled !== false && option.entity?.kind === "card"
+              ? [option.entity.instanceId]
+              : [],
+          )
+        : "candidates" in input
+          ? input.candidates
+              .filter((candidate) => candidate.enabled !== false)
+              .map((candidate) => candidate.entity.instanceId)
+          : []
       : [];
   const value = input ? draft.values[input.id] : undefined;
   const selected = Array.isArray(value)
@@ -162,12 +181,60 @@ export function useInteractionBoard(view: EngineInteractionView, disabled = fals
           Array.isArray(amount) ? amount : typeof amount === "number" && amount > 0 ? [id] : [],
         )
       : [];
+  const selectedCardIds =
+    input?.kind === "option-selection"
+      ? selected.flatMap((optionId) => {
+          const cardId = input.options.find((option) => option.id === optionId)?.entity?.instanceId;
+          return cardId ? [cardId] : [];
+        })
+      : selected;
   return {
     candidateIds: new Set(candidates),
-    selectedIds: new Set(selected),
+    selectedIds: new Set(selectedCardIds),
     selectEntity: (id: string) => {
       if (disabled || !canAct || !input || !candidates.includes(id)) return;
-      if (input.kind === "ordering") {
+      if (input.kind === "option-selection" && input.presentation?.kind === "cost-slots") {
+        const slots = input.presentation.slots;
+        const assigned = Array.isArray(value) ? value : [];
+        if (selectedCardIds.includes(id)) return;
+        const index = slots.findIndex(
+          (slot, i) =>
+            !assigned[i] &&
+            slot.optionIds.some((optionId) =>
+              input.options.some(
+                (option) => option.id === optionId && option.entity?.instanceId === id,
+              ),
+            ),
+        );
+        if (index < 0) return;
+        const options = input.options.filter(
+          (option) =>
+            option.enabled &&
+            option.entity?.instanceId === id &&
+            slots[index]!.optionIds.includes(option.id),
+        );
+        // A generic slot with several generated colors requires an explicit color choice.
+        if (options.length !== 1) return;
+        const next = slots.map((_, i) => assigned[i] ?? "");
+        next[index] = options[0]!.id;
+        draft.change(input.id, next);
+        return;
+      }
+      if (input.kind === "option-selection") {
+        const option = input.options.find(
+          (candidate) => candidate.enabled !== false && candidate.entity?.instanceId === id,
+        );
+        if (!option) return;
+        const next =
+          input.max === 1
+            ? [option.id]
+            : selected.includes(option.id)
+              ? selected.filter((item) => item !== option.id)
+              : selected.length < input.max
+                ? [...selected, option.id]
+                : selected;
+        draft.change(input.id, next);
+      } else if (input.kind === "ordering") {
         const next = selected.includes(id)
           ? selected.filter((item) => item !== id)
           : selected.length < input.max

@@ -69,6 +69,7 @@ import {
 import { grandArchivePlayerHasState } from "../state/player-continuous.ts";
 import {
   grandArchiveActiveMasteryAbilities,
+  grandArchiveMasterySourceSubtypes,
   grandArchivePlayerMastery,
 } from "../../game/mastery.ts";
 import {
@@ -512,12 +513,21 @@ type TriggerCandidate = TriggerCandidateBase &
         readonly source?: never;
         readonly gameSource: import("../../game/model.ts").GrandArchiveGameAbilitySource;
       }
+    | {
+        readonly source?: never;
+        readonly sourceLkiEventId?: never;
+        readonly gameSource?: never;
+        readonly masterySource: NonNullable<GrandArchiveStackItem["masterySource"]>;
+      }
   );
 
 function triggerCandidateSourceKey(candidate: TriggerCandidate): string {
-  if (candidate.source) return candidate.source.id;
+  if (candidate.source)
+    return candidate.masterySource
+      ? `mastery:${candidate.masterySource.playerId}:${candidate.masterySource.name}`
+      : candidate.source.id;
   if (candidate.gameSource) return `game:${candidate.gameSource.name}`;
-  return assertNever(candidate);
+  return `mastery:${candidate.masterySource.playerId}:${candidate.masterySource.name}`;
 }
 
 type TriggerSourceIdentity =
@@ -940,14 +950,16 @@ function pendingTriggerEvents(
           ? { masterySource: candidate.masterySource }
           : candidate.gameSource
             ? { gameSource: candidate.gameSource }
-            : {
-                sourceId: candidate.source.id,
-                sourceIncarnation:
-                  state.objects[candidate.source.id]?.incarnation ?? candidate.source.incarnation,
-                ...(candidate.sourceLkiEventId
-                  ? { sourceLkiEventId: candidate.sourceLkiEventId }
-                  : {}),
-              }),
+            : candidate.source
+              ? {
+                  sourceId: candidate.source.id,
+                  sourceIncarnation:
+                    state.objects[candidate.source.id]?.incarnation ?? candidate.source.incarnation,
+                  ...(candidate.sourceLkiEventId
+                    ? { sourceLkiEventId: candidate.sourceLkiEventId }
+                    : {}),
+                }
+              : { masterySource: candidate.masterySource }),
         controllerId: candidate.controllerId,
         ability: candidate.ability,
         selectedModeIds,
@@ -1183,6 +1195,22 @@ export function collectGrandArchiveTriggeredAbilityEvents(
 ): readonly GrandArchiveProposedEvent[] {
   const candidates: TriggerCandidate[] = state.generatedTriggers.flatMap(
     (generated): readonly TriggerCandidate[] => {
+      if (generated.masterySource) {
+        return [
+          {
+            masterySource: generated.masterySource,
+            controllerId: generated.controllerId,
+            ability: generated.ability,
+            bindings: generated.bindings,
+            variables: generated.variables,
+            activationPayment: [],
+            createdAtVersion: generated.createdAtVersion,
+            cascadeCounts: {},
+            advanceCascadeOnObject: false,
+            generatedTriggerId: generated.id,
+          },
+        ];
+      }
       const source = state.objects[generated.sourceId];
       return source
         ? [
@@ -1827,7 +1855,9 @@ export function collectGrandArchivePendingTriggerProgressEvents(
     ...evaluation,
     targeting: grandArchiveTargetingContext(
       "triggered-ability",
-      source ? grandArchiveObjectCurrentCharacteristics(program, state, source).subtypes : [],
+      source
+        ? grandArchiveObjectCurrentCharacteristics(program, state, source).subtypes
+        : grandArchiveMasterySourceSubtypes(program, pending.masterySource),
       [pending.ability.effect, ...cascadeModes.map((mode) => mode.effect)],
       "resolutionAs" in pending.ability && pending.ability.resolutionAs === "spell",
     ),

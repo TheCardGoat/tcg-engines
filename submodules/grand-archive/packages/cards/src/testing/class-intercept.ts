@@ -62,7 +62,7 @@ export function proveClassIntercept(
         expect(game.state.objects[source.objectId]!.states.has("rested")).toBe(mode === "rested");
         game.resolveCombatWithoutRetaliation();
         for (const ref of [source, hero, other])
-          expect(game.state.objects[ref.objectId]!.damage).toBe(
+          expect(game.markedDamage(ref.objectId)).toBe(
             ref.objectId === finalTarget.objectId ? 1 : 0,
           );
         expect(game.state.combat).toBeNull();

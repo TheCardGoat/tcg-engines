@@ -30,6 +30,7 @@ export const shockTherapy: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
           id: "tyj2s3572j-a1",
           kind: "triggered",
           text: "[Class Bonus] [Element Bonus] Whenever this card is banished from your memory, put an enlighten counter on your champion.",
+          functionalZones: ["memory"],
           trigger: {
             kind: "event",
             event: {
@@ -68,7 +69,6 @@ export const shockTherapy: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
             counter: "enlighten",
             amount: 1,
           },
-          functionalZones: ["memory"],
         },
         {
           id: "tyj2s3572j-a2",

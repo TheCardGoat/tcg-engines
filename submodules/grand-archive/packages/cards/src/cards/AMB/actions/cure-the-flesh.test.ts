@@ -29,7 +29,7 @@ describe("Cure the Flesh — remove temporary ally damage and draw", () => {
     const target = player.card(giantTortoise, { zone: "field" });
     opponent.declareAttack(ferventBeastmaster, target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(target.objectId)).toBe(3);
     opponent.pass();
     const before = game.state;
     expect(() =>
@@ -51,7 +51,7 @@ describe("Cure the Flesh — remove temporary ally damage and draw", () => {
       targets: { "target-1": [target.objectId] },
     });
     passEffectsStack(game);
-    expect(game.state.objects[target.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(target.objectId)).toBe(0);
     expect(player.zone("memory")).toContainEqual(deck[0]);
   });
 });

@@ -108,7 +108,7 @@ export function proveTargetedCounterAction(
           if (owner === "opponent") advanceToMain(game, q.id);
           controller.declareAttack(target, opponent.card(champion));
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[opponent.card(champion).objectId]!.damage).toBe(3);
+          expect(game.markedDamage(opponent.card(champion).objectId)).toBe(3);
           expect(game.state.objects[target.objectId]!.counters.buff).toBe(2);
         } else {
           if (!domain) {
@@ -117,7 +117,7 @@ export function proveTargetedCounterAction(
               targets: { "target-1": [target.objectId] },
             });
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(2);
+            expect(game.markedDamage(target.objectId)).toBe(2);
             expect(game.state.objects[target.objectId]!.counters.bulwark).toBe(2);
           }
           if (owner === "own") advanceToMain(game, q.id);
@@ -133,7 +133,7 @@ export function proveTargetedCounterAction(
                 index < 2 ? 4 : 3,
               );
             else
-              expect(game.state.objects[target.objectId]!.damage).toBe(
+              expect(game.markedDamage(target.objectId)).toBe(
                 (owner === "own" ? 0 : 2) + (index < 2 ? 0 : 1),
               );
           }

@@ -110,6 +110,6 @@ export function proveEphemeralStealth(
         expect(game.state.objects[source.objectId]!.zone).toBe(
           lethal ? (ephemeral ? "banishment" : "graveyard") : "field",
         );
-        expect(game.state.objects[source.objectId]!.damage).toBe(lethal ? 0 : damage);
+        expect(game.markedDamage(source.objectId)).toBe(lethal ? 0 : damage);
       });
 }

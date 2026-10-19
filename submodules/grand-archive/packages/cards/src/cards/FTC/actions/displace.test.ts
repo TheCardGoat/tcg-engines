@@ -78,7 +78,7 @@ describe("Displace — new object under its owner's control", () => {
               passEffectsStack(game);
             }
             expect(game.state.objects[ally.objectId]).toMatchObject({
-              damage: 1,
+              temporaryDamage: 1,
               counters: { buff: 1 },
               controllerId: stolen ? p.id : owner.id,
             });

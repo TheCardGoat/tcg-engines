@@ -20,7 +20,7 @@
   color: var(--simulator-text, #f1f1f1);
   border: 1px solid rgb(255 255 255 / 18%);
   border-top: 3px solid var(--simulator-accent, #f5e642);
-  border-radius: 2px;
+  border-radius: var(--post-game-radius, 2px);
 }
 
 .content {
@@ -92,7 +92,7 @@
 .headline {
   margin: 0;
   color: var(--simulator-accent, #f5e642);
-  font-family: Impact, "Arial Narrow", sans-serif;
+  font-family: var(--post-game-title-font, Impact, "Arial Narrow", sans-serif);
   font-size: clamp(48px, 6vw, 72px);
   font-weight: 400;
   line-height: 1;
@@ -244,7 +244,10 @@
 .card[data-layout="compact"] .content {
   flex: 1;
   display: grid;
-  grid-template-rows: minmax(0, auto) minmax(calc(var(--post-game-height) / 2), 1fr);
+  grid-template-rows: minmax(0, auto) minmax(
+      var(--post-game-detail-min, calc(var(--post-game-height) / 2)),
+      1fr
+    );
   overflow: hidden;
 }
 
@@ -271,7 +274,11 @@
   gap: 2px;
   padding-inline: 44px;
   min-height: 32px;
-  background: radial-gradient(ellipse at center, rgb(var(--simulator-accent-rgb, 245 230 66) / 10%), transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgb(var(--simulator-accent-rgb, 245 230 66) / 10%),
+    transparent 70%
+  );
 }
 
 .card[data-layout="compact"] .headline {

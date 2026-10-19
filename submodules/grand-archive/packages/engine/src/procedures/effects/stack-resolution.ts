@@ -60,6 +60,7 @@ import {
   GrandArchiveUnsupportedRuleError,
 } from "./evaluation.ts";
 import { grandArchiveDecisionId, grandArchiveObjectId } from "../../game/identity.ts";
+import { observeGrandArchiveCommittedEvent } from "../../kernel/observed-events.ts";
 import type {
   GrandArchiveObjectId,
   GrandArchivePlayerId,
@@ -71,7 +72,10 @@ import {
   grandArchiveLinkChoiceCandidates,
 } from "../../game/link.ts";
 import type { GrandArchiveMatchProgram } from "../../kernel/match-program.ts";
-import { grandArchiveMasteryCounterCount } from "../../game/mastery.ts";
+import {
+  grandArchiveMasteryCounterCount,
+  grandArchiveMasterySourceSubtypes,
+} from "../../game/mastery.ts";
 import type {
   GrandArchiveEffectResolution,
   GrandArchiveCardInstance,
@@ -353,18 +357,16 @@ export function declareGrandArchiveRetargetedStackItem(
     ...(item.sourceLkiEventId ? { sourceLkiEventId: item.sourceLkiEventId } : {}),
     bindings: item.bindings,
     variables: item.variables,
-    ...(source
-      ? {
-          targeting: grandArchiveTargetingContext(
-            kind,
-            grandArchiveObjectCurrentCharacteristics(program, state, source).subtypes,
-            [itemEffect(item), ...selectedModes(item).map((mode) => mode.effect)],
-            item.kind === "triggered-ability" &&
-              "resolutionAs" in item.ability &&
-              item.ability.resolutionAs === "spell",
-          ),
-        }
-      : {}),
+    targeting: grandArchiveTargetingContext(
+      kind,
+      source
+        ? grandArchiveObjectCurrentCharacteristics(program, state, source).subtypes
+        : grandArchiveMasterySourceSubtypes(program, item.masterySource),
+      [itemEffect(item), ...selectedModes(item).map((mode) => mode.effect)],
+      item.kind === "triggered-ability" &&
+        "resolutionAs" in item.ability &&
+        item.ability.resolutionAs === "spell",
+    ),
   };
   const targets = declareGrandArchiveTargets(declarations, submitted, evaluation);
   return {
@@ -778,6 +780,7 @@ function copiedCardResolutionEvents(
     cascadeCounts: {},
     counters: face.stats.durability === undefined ? {} : { durability: face.stats.durability },
     damage: 0,
+    temporaryDamage: 0,
     incarnation: 1,
     objectVersion: 1,
   };
@@ -1056,6 +1059,7 @@ function eventRepresentsPerformedAction(event: GrandArchiveCommittedEvent): bool
     case "combat-started":
     case "combat-step-changed":
     case "combat-ended":
+    case "combat-cleanup-started":
     case "phase-end-requested":
     case "turn-end-requested":
     case "continuous-effect-created":
@@ -1549,24 +1553,22 @@ export function evaluateGrandArchiveStackItemTargetLegality(
       ...(item.sourceLkiEventId ? { sourceLkiEventId: item.sourceLkiEventId } : {}),
       bindings,
       variables: item.variables,
-      ...(sourceInformation
-        ? {
-            targeting: grandArchiveTargetingContext(
-              item.kind === "materialization"
-                ? "materialization"
-                : item.kind === "activated-ability"
-                  ? "activated-ability"
-                  : item.kind === "triggered-ability"
-                    ? "triggered-ability"
-                    : "card-activation",
-              grandArchiveObjectCurrentCharacteristics(program, state, sourceInformation).subtypes,
-              [itemEffect(item), ...chosenModes.map((mode) => mode.effect)],
-              item.kind === "triggered-ability" &&
-                "resolutionAs" in item.ability &&
-                item.ability.resolutionAs === "spell",
-            ),
-          }
-        : {}),
+      targeting: grandArchiveTargetingContext(
+        item.kind === "materialization"
+          ? "materialization"
+          : item.kind === "activated-ability"
+            ? "activated-ability"
+            : item.kind === "triggered-ability"
+              ? "triggered-ability"
+              : "card-activation",
+        sourceInformation
+          ? grandArchiveObjectCurrentCharacteristics(program, state, sourceInformation).subtypes
+          : grandArchiveMasterySourceSubtypes(program, item.masterySource),
+        [itemEffect(item), ...chosenModes.map((mode) => mode.effect)],
+        item.kind === "triggered-ability" &&
+          "resolutionAs" in item.ability &&
+          item.ability.resolutionAs === "spell",
+      ),
       ...(championLevelModifier > 0
         ? {
             championLevelModifier: {
@@ -3302,9 +3304,37 @@ function advanceResolution(
       resolution = { ...resolution, frames: remaining };
       if (!frame.actionAlreadyPerformed && !actionEvents.some(eventRepresentsPerformedAction))
         continue;
+      if (frame.requiredResult) {
+        const resultIds = new Set(
+          resolveGrandArchiveSubjectObjects(
+            { kind: "bound", binding: frame.requiredResult.binding },
+            resolutionContext(program, current, resolution),
+          ).map((object) => object.id),
+        );
+        if (
+          !actionEvents.some(
+            (event) =>
+              event.type === "object-moved" &&
+              event.to === "graveyard" &&
+              resultIds.has(event.objectId) &&
+              observeGrandArchiveCommittedEvent(event).some(
+                (observed) => observed.name === "object-destroyed",
+              ),
+          )
+        )
+          continue;
+      }
       const sourceId = resolution.sourceId;
-      if (!sourceId) {
-        throw new GrandArchiveUnsupportedRuleError("reflexive trigger without source object");
+      const masterySource = !sourceId ? item.masterySource : undefined;
+      const sourceIdentity = sourceId
+        ? { sourceId }
+        : masterySource
+          ? { masterySource }
+          : undefined;
+      if (!sourceIdentity) {
+        throw new GrandArchiveUnsupportedRuleError(
+          "reflexive trigger without an identified source",
+        );
       }
       const resultIds = committedResultObjectIds(actionEvents);
       const instances: readonly (GrandArchiveObjectId | undefined)[] =
@@ -3317,7 +3347,7 @@ function advanceResolution(
             type: "reflexive-trigger-generated",
             trigger: {
               id: `reflexive-trigger-${ordinal}`,
-              sourceId,
+              ...sourceIdentity,
               controllerId: resolution.controllerId,
               ability: {
                 id: `reflexive-${ordinal}-a1`,
@@ -4586,6 +4616,7 @@ function advanceResolution(
               {
                 kind: "finish-reflexive",
                 startedEventHistoryIndex: current.eventHistory.length,
+                ...(effect.requiredResult ? { requiredResult: effect.requiredResult } : {}),
                 ...(effect.targets ? { targets: effect.targets } : {}),
                 ...(effect.cardinality ? { cardinality: effect.cardinality } : {}),
                 consequence: effect.consequence,

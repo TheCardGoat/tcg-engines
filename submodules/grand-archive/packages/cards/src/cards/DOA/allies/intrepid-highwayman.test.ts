@@ -47,7 +47,7 @@ describe("Intrepid Highwayman's retaliation-only power", () => {
         }
       }
       expect(game.state.combat).toBeNull();
-      expect(game.state.objects[defender.objectId]!.damage).toBe(1);
-      expect(game.state.objects[attacker.objectId]!.damage).toBe(retaliating ? 4 : 0);
+      expect(game.markedDamage(defender.objectId)).toBe(1);
+      expect(game.markedDamage(attacker.objectId)).toBe(retaliating ? 4 : 0);
     });
 });

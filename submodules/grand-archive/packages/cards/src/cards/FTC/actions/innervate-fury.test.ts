@@ -50,7 +50,7 @@ describe("Innervate Fury — paid delevel and declared damage targets", () => {
         });
         passEffectsStack(game);
       }
-      expect(game.state.objects[hero.objectId]!.damage).toBe(damage);
+      expect(game.markedDamage(hero.objectId)).toBe(damage);
       const targets = q.cards(giantTortoise).slice(0, count);
       const options = {
         reservePayment: p
@@ -77,9 +77,9 @@ describe("Innervate Fury — paid delevel and declared damage targets", () => {
       expect(game.state).toEqual(before);
       p.activate(innervateFury, options);
       expect(p.cards(next, { zone: "material-deck" })).toHaveLength(1);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(hero.objectId)).toBe(0);
       expect(p.zone("memory")).toHaveLength(damage + 3);
-      for (const target of targets) expect(game.state.objects[target.objectId]!.damage).toBe(0);
+      for (const target of targets) expect(game.markedDamage(target.objectId)).toBe(0);
       passEffectsStack(game);
       if (count) {
         const beforeAllocation = game.state;
@@ -97,7 +97,7 @@ describe("Innervate Fury — paid delevel and declared damage targets", () => {
         for (const allocation of allocations) {
           const object = game.state.objects[allocation.objectId]!;
           expect(object.zone).toBe(count === 1 ? "graveyard" : "field");
-          if (count !== 1) expect(object.damage).toBe(allocation.amount);
+          if (count !== 1) expect(game.markedDamage(allocation.objectId)).toBe(allocation.amount);
         }
       }
       expect(game.state.decision).toBeNull();
@@ -106,7 +106,7 @@ describe("Innervate Fury — paid delevel and declared damage targets", () => {
       for (const untouched of q
         .cards(giantTortoise, { zone: "field" })
         .filter((c) => !targets.some((t) => t.objectId === c.objectId)))
-        expect(game.state.objects[untouched.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(untouched.objectId)).toBe(0);
     });
   }
 });

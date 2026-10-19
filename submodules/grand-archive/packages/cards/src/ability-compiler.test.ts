@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { compileGrandArchiveAbilities } from "../scripts/compile-card-abilities.ts";
+import {
+  compileGrandArchiveAbilities,
+  compileInstruction,
+} from "../scripts/compile-card-abilities.ts";
 
 function compile(rulesText: string) {
   return compileGrandArchiveAbilities({
@@ -11,6 +14,81 @@ function compile(rulesText: string) {
 }
 
 describe("Grand Archive ability compiler", () => {
+  it("restricts opponents' cards, not their abilities or the controller's cards", () => {
+    expect(
+      compile(
+        "Until the beginning of your next turn, your opponents can't activate cards with an even reserve cost.",
+      ).abilities,
+    ).toMatchObject([
+      {
+        kind: "card-resolution",
+        effect: {
+          kind: "rule-modification",
+          subject: { kind: "player", player: "opponent" },
+          activationKind: "card",
+          filter: { kind: "parity", value: "even" },
+        },
+      },
+    ]);
+  });
+
+  it("derives Divine Comedy's page-four damage from counters actually removed", () => {
+    const result = compileInstruction(
+      "Remove all damage counters from your champion, then deal 20+X unpreventable damage to each champion your opponents control, where X is ten times the amount of damage counters removed this way",
+    );
+    expect(result?.variables).toEqual([
+      {
+        symbol: "X",
+        kind: "derived",
+        amount: {
+          kind: "calculate",
+          operator: "multiply",
+          operands: [{ kind: "modified-ability-result-amount", metric: "counters-removed" }, 10],
+        },
+      },
+    ]);
+  });
+
+  it("waits for actual destruction before generating Divine Comedy's recovery trigger", () => {
+    expect(
+      compile(
+        "As a Spell, destroy target non-champion object. When that object is destroyed this way, recover 4.",
+      ).abilities,
+    ).toMatchObject([
+      {
+        kind: "card-resolution",
+        effect: {
+          kind: "reflexive",
+          action: { kind: "perform-as", sourceKind: "spell", effect: { kind: "destroy" } },
+          requiredResult: { kind: "destroyed", binding: "target-1" },
+          consequence: { kind: "recover", player: "controller", amount: 4 },
+        },
+      },
+    ]);
+  });
+  it.each([
+    "(4): Draw a card. This ability costs (4) less to activate the first time you activate it.",
+    "(4): Activate this ability only once per turn, and only at slow speed. This ability costs (4) less to activate the first time you activate it. This ability's activation can't be negated. Cascade—\n• 1— Draw a card.\n• 2— Draw two cards.",
+  ])("keeps a first-ever activation discount across turn boundaries: %s", (text) => {
+    const result = compile(text);
+    expect(result.unparsedParagraphs).toBe(0);
+    expect(result.abilities).toMatchObject([
+      {
+        kind: "activated",
+        costModifiers: [
+          {
+            amount: 4,
+            condition: {
+              kind: "ability-activation-count",
+              scope: "source-instance",
+              window: "game",
+              value: 0,
+            },
+          },
+        ],
+      },
+    ]);
+  });
   it("keeps Prima Materia's next-source bonus across all unit recipients of that event", () => {
     const result = compile(
       "REST: Draw a card into your memory. If Prima Materia was brewed, the next time an astra element source you control would deal damage to one or more units this turn, it deals that much damage plus 3 to those units instead.",

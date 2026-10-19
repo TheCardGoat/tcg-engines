@@ -50,7 +50,7 @@ describe("Cyberpunk V2 fixture animation coverage", () => {
       plan.steps.some(
         (step) =>
           step.type === "entityTransfer" &&
-          step.to.kind === "zone" &&
+          step.to?.kind === "zone" &&
           step.to.id.endsWith("eddieArea"),
       ),
     );
@@ -83,7 +83,9 @@ describe("Cyberpunk V2 fixture animation coverage", () => {
     expectBothPlayersToReceive("play-unit", play, (plan) =>
       plan.steps.some(
         (step) =>
-          step.type === "entityTransfer" && step.to.kind === "zone" && step.to.id.endsWith("field"),
+          step.type === "entityTransfer" &&
+          step.to?.kind === "zone" &&
+          step.to.id.endsWith("field"),
       ),
     );
   });
@@ -97,7 +99,7 @@ describe("Cyberpunk V2 fixture animation coverage", () => {
     expectBothPlayersToReceive("attach-gear-to-legend", legendAttach, (plan) =>
       plan.steps.some(
         (step) =>
-          step.type === "entityTransfer" && step.to.kind === "entity" && step.to.id === legendId,
+          step.type === "entityTransfer" && step.to?.kind === "entity" && step.to.id === legendId,
       ),
     );
 
@@ -110,7 +112,7 @@ describe("Cyberpunk V2 fixture animation coverage", () => {
     expectBothPlayersToReceive("attach-gear-to-unit", unitAttach, (plan) =>
       plan.steps.some(
         (step) =>
-          step.type === "entityTransfer" && step.to.kind === "entity" && step.to.id === unitId,
+          step.type === "entityTransfer" && step.to?.kind === "entity" && step.to.id === unitId,
       ),
     );
   });
@@ -181,7 +183,7 @@ describe("Cyberpunk V2 fixture animation coverage", () => {
         plan.steps.some(
           (step) =>
             step.type === "entityTransfer" &&
-            step.to.kind === "zone" &&
+            step.to?.kind === "zone" &&
             step.to.id.endsWith("trash"),
         ),
       ),

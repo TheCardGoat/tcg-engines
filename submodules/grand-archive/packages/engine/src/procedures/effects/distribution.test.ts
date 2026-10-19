@@ -202,7 +202,7 @@ describe("Grand Archive distribution effects", () => {
     ]);
     if (!resolved.ok) throw new Error(resolved.message);
     expect(restored.state.objects[fixture.p1ChampionId]?.damage).toBe(2);
-    expect(restored.state.objects[fixture.p2AllyId]?.damage).toBe(5);
+    expect(restored.state.objects[fixture.p2AllyId]?.temporaryDamage).toBe(5);
   });
 
   it("distributes counters while honoring controlled-recipient restrictions", () => {

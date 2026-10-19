@@ -48,7 +48,7 @@ export const divineComedy: GrandArchiveCard<
                 kind: "ability-activation-count",
                 ability: "this",
                 scope: "source-instance",
-                window: "this-turn",
+                window: "game",
                 operator: "eq",
                 value: 0,
               },
@@ -86,9 +86,10 @@ export const divineComedy: GrandArchiveCard<
                   kind: "rule-modification",
                   mode: "forbid",
                   action: "activate",
+                  activationKind: "card",
                   subject: {
                     kind: "player",
-                    player: "each-player",
+                    player: "opponent",
                   },
                   filter: {
                     kind: "parity",
@@ -130,33 +131,28 @@ export const divineComedy: GrandArchiveCard<
                   },
                 ],
                 effect: {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "perform-as",
-                      sourceKind: "spell",
-                      effect: {
-                        kind: "destroy",
-                        subject: {
-                          kind: "bound",
-                          binding: "target-1",
-                        },
-                        bindResultAs: "destroyed-this-way",
+                  kind: "reflexive",
+                  action: {
+                    kind: "perform-as",
+                    sourceKind: "spell",
+                    effect: {
+                      kind: "destroy",
+                      subject: {
+                        kind: "bound",
+                        binding: "target-1",
                       },
+                      bindResultAs: "destroyed-this-way",
                     },
-                    {
-                      kind: "conditional",
-                      condition: {
-                        kind: "effect-succeeded",
-                        binding: "destroyed-this-way",
-                      },
-                      then: {
-                        kind: "recover",
-                        player: "controller",
-                        amount: 4,
-                      },
-                    },
-                  ],
+                  },
+                  requiredResult: {
+                    kind: "destroyed",
+                    binding: "target-1",
+                  },
+                  consequence: {
+                    kind: "recover",
+                    player: "controller",
+                    amount: 4,
+                  },
                 },
               },
               {
@@ -167,9 +163,10 @@ export const divineComedy: GrandArchiveCard<
                   kind: "rule-modification",
                   mode: "forbid",
                   action: "activate",
+                  activationKind: "card",
                   subject: {
                     kind: "player",
-                    player: "each-player",
+                    player: "opponent",
                   },
                   filter: {
                     kind: "parity",
@@ -195,8 +192,8 @@ export const divineComedy: GrandArchiveCard<
                       operator: "multiply",
                       operands: [
                         {
-                          kind: "binding",
-                          binding: "removed-counters",
+                          kind: "modified-ability-result-amount",
+                          metric: "counters-removed",
                         },
                         10,
                       ],

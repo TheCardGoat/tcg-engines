@@ -20,6 +20,7 @@ import {
 } from "./continuous.ts";
 import { executeGrandArchiveEffect } from "../../procedures/effects/effect-executor.ts";
 import { matchesGrandArchiveCardFilter } from "../../procedures/effects/evaluation.ts";
+import { projectGrandArchiveViewerState } from "../../projection/view.ts";
 import { grandArchivePlayerId, type GrandArchiveObjectId } from "../../game/identity.ts";
 import {
   createGrandArchiveMatchInitialState,
@@ -236,6 +237,14 @@ describe("Grand Archive Layer B/C characteristics", () => {
       "target-potion": [potionId],
     }).state;
     const animatedPotion = animated.objects[potionId]!;
+    const field = projectGrandArchiveViewerState(
+      fixture.program,
+      animated,
+      fixture.p1,
+    ).players.find((player) => player.id === fixture.p1)!.zones.field;
+    expect(field.visibility).toBe("visible");
+    if (field.visibility !== "visible") throw new Error("Expected a public field");
+    expect(field.objects.find((object) => object.id === potionId)?.damageLifetime).toBe("ally");
     expect(
       grandArchiveObjectCurrentCharacteristics(fixture.program, animated, animatedPotion),
     ).toMatchObject({
@@ -286,7 +295,7 @@ describe("Grand Archive Layer B/C characteristics", () => {
     ).not.toThrow();
 
     const damaged = new GrandArchiveTransactionKernel().transact(animated, [
-      { type: "damage-marked", objectId: potionId, amount: 4 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: potionId, amount: 4 },
     ]).state;
     expect(collectGrandArchiveStateBasedEvents(fixture.program, damaged)).toEqual(
       expect.arrayContaining([

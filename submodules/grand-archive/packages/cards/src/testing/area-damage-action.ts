@@ -48,17 +48,15 @@ export function proveAreaDamageAction({
         expect(() => p.activate(card, { reservePayment: payment.slice(1) })).toThrow();
         expect(game.state).toEqual(before);
         p.activate(card, { reservePayment: payment });
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(
-          hitsOwnChampion ? expected : 0,
-        );
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
+        expect(game.markedDamage(p.card(champion).objectId)).toBe(hitsOwnChampion ? expected : 0);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(
           hitsOpposingChampion ? expected : 0,
         );
         if (!empty)
           for (const player of [p, q]) {
-            expect(game.state.objects[player.card(giantTortoise).objectId]!.damage).toBe(expected);
+            expect(game.markedDamage(player.card(giantTortoise).objectId)).toBe(expected);
             expect(player.cards(woodlandSquirrels, { zone: "graveyard" })).toHaveLength(1);
           }
         expect(p.cards(trainingSword, { zone: "field" })).toHaveLength(1);

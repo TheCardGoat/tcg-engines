@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-element"
   relation: "current_index"
 ---
-
 # Parts of a Card - Element
 
 General Rules:
@@ -21,7 +20,11 @@ E.g., A player has a lineage containing a Spirit of Water, norm champions, and a
 {% endhint %}
 
 {% hint style="success" %}
-E.g. a player may materialize a Level 3 champion with the crux element type without previously having the crux element enabled as long as the other rules for leveling up that champion are followed.
+E.g., a player may materialize a Level 3 champion with the crux element type without previously having the crux element enabled as long as the other rules for leveling up that champion are followed.
 {% endhint %}
 
-4. Basic elements are Fire, Water, and Wind elements; Advanced elements are any elements that are not Fire, Water, Wind, or Norm. Exalted is a [special advanced element](/game-mechanics/game-mechanics-special-elements.md) that is unlocked by default as long as you have a champion that enables another advanced element.
+4. Basic elements are Fire, Water, and Wind elements; Advanced elements are any elements that are not Fire, Water, Wind, or Norm. Exalted is a [special advanced element](/game-mechanics/game-mechanics-special-elements.md) that is unlocked by default as long as you have a champion that enables an advanced element.
+
+{% hint style="success" %}
+An Exalted champion can enable the Exalted element
+{% endhint %}

@@ -1,3 +1,10 @@
+import {
+  grandArchivePlayerMastery,
+  grandArchiveActiveMasteryAbilities,
+  grandArchiveMasteryAbilityActivationCount,
+  grandArchiveMasterySourceSubtypes,
+} from "../game/mastery.ts";
+import type { GrandArchiveMasteryState } from "../game/model.ts";
 import type {
   GrandArchiveActivatedAbility,
   GrandArchiveActivationState,
@@ -15,6 +22,8 @@ import type {
 } from "@tcg/grand-archive-types";
 import {
   collectGrandArchiveModeTargets,
+  grandArchiveTargetingContext,
+  grandArchiveTriggerAnnouncementContext,
   declareGrandArchiveModes,
   declareGrandArchiveResolutionChoice,
   declareGrandArchiveTargets,
@@ -23,6 +32,7 @@ import {
   type GrandArchiveAnnouncementModes,
   type GrandArchiveDeclaredModes,
   isGrandArchiveTargetCandidate,
+  grandArchiveSelectionCountBounds,
 } from "../procedures/activation/activation.ts";
 import {
   flattenGrandArchiveAbilities,
@@ -46,6 +56,7 @@ import {
   evaluateGrandArchiveAmount,
   evaluateGrandArchiveCondition,
   matchesGrandArchiveCardFilter,
+  grandArchiveDefinitionMatchesCardFilter,
   resolveGrandArchivePlayers,
   type GrandArchiveEvaluationContext,
 } from "../procedures/effects/evaluation.ts";
@@ -95,6 +106,249 @@ export interface ListGrandArchiveLegalCommandsOptions {
    * Defaults to 20; callers may raise it while direct player commands remain unbounded.
    */
   readonly maximumChosenVariableValue?: number;
+}
+
+export interface GrandArchiveDeclarationVariableConstraint {
+  readonly symbol: "X" | "Y" | "Z";
+  /** Constant bounds only. Context-dependent bounds are checked on submission. */
+  readonly minimum?: number;
+  readonly maximum?: number;
+}
+
+function declarationContext(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: GrandArchiveCommand,
+) {
+  if (
+    command.move !== "activate-card" &&
+    command.move !== "activate-ability" &&
+    command.move !== "materialize" &&
+    command.move !== "bestow-boon"
+  )
+    return undefined;
+  const sourceId = command.move === "activate-ability" ? command.sourceId : command.cardId;
+  const source = sourceId ? state.objects[sourceId] : undefined;
+  const mastery =
+    command.move === "activate-ability" && command.masteryName !== undefined
+      ? grandArchivePlayerMastery(state, playerId, command.masteryName)
+      : undefined;
+  if (!source && !mastery) return undefined;
+  const activeAbilities = source
+    ? grandArchiveObjectActiveAbilities(program, state, source)
+    : grandArchiveActiveMasteryAbilities(program, state, playerId);
+  const ability =
+    command.move === "activate-ability"
+      ? activeAbilities.find(
+          (candidate): candidate is GrandArchiveActivatedAbility =>
+            candidate.kind === "activated" && candidate.id === command.abilityId,
+        )
+      : undefined;
+  const executionObject =
+    source && ability ? grandArchiveAbilityExecutionObject(state, source, ability) : source;
+  if (!executionObject && !mastery) return undefined;
+  const evaluation: GrandArchiveEvaluationContext = {
+    program,
+    state,
+    controllerId: playerId,
+    ...(executionObject
+      ? { sourceId: executionObject.id, abilityBearerId: executionObject.id }
+      : {}),
+    ...(source && command.move !== "activate-ability" ? { candidateId: source.id } : {}),
+    abilityId: ability?.id,
+    bindings: {
+      ...(mastery
+        ? {
+            masterySourcePlayer: [playerId],
+            masterySourceName: mastery.name,
+            masterySourceTimestamp: mastery.timestamp,
+          }
+        : {}),
+      ...command.targets,
+    },
+    variables: command.variables ?? {},
+  };
+  const face = source ? grandArchiveObjectFace(program, source) : undefined;
+  const resolution =
+    command.move === "activate-ability" || !face
+      ? undefined
+      : composeGrandArchiveCardResolution(face, evaluation);
+  const descriptor = ability ?? resolution;
+  const cascadeMode = ability?.cascade?.modes.find((mode) =>
+    mode.counts.includes(
+      (mastery
+        ? grandArchiveMasteryAbilityActivationCount(state, playerId, mastery, ability.id)
+        : (executionObject?.cascadeCounts[ability.id] ?? 0)) + 1,
+    ),
+  );
+  const modeDeclaration =
+    descriptor && getGrandArchiveAnnouncementModes(descriptor.modes, descriptor.effect, evaluation);
+  const selectedModes =
+    modeDeclaration?.modes.filter((mode) => command.modeIds?.includes(mode.id)) ?? [];
+  return {
+    source,
+    executionObject,
+    mastery,
+    evaluation,
+    face,
+    activeAbilities,
+    descriptor,
+    cascadeMode,
+    selectedModes,
+  };
+}
+
+/** Describes chosen numbers without applying the automation search ceiling.
+ * This is a form constraint, not a cost quote or a proof that a new command is legal. */
+export function describeGrandArchiveDeclarationVariables(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: GrandArchiveCommand,
+): readonly GrandArchiveDeclarationVariableConstraint[] {
+  if (
+    command.move !== "activate-card" &&
+    command.move !== "activate-ability" &&
+    command.move !== "materialize" &&
+    command.move !== "bestow-boon"
+  )
+    return [];
+  if (Object.keys(command.variables ?? {}).length === 0) return [];
+  const context = declarationContext(program, state, playerId, command);
+  if (!context) return [];
+  const { descriptor, cascadeMode, selectedModes, face, activeAbilities } = context;
+  const declarations = [
+    ...(descriptor?.variables ?? []),
+    ...(cascadeMode?.variables ?? []),
+    ...selectedModes.flatMap((mode) => mode.variables ?? []),
+    ...(command.move === "activate-ability"
+      ? []
+      : [
+          ...(face ? variableCostDeclaration(face) : []),
+          ...activeAbilities.flatMap((candidate) =>
+            candidate.kind === "static" && candidate.staticKind === "intrinsic"
+              ? (candidate.variables ?? [])
+              : [],
+          ),
+        ]),
+  ];
+  return (["X", "Y", "Z"] as const).flatMap((symbol) => {
+    if (command.variables?.[symbol] === undefined) return [];
+    const chosen = declarations.filter(
+      (declaration): declaration is Extract<GrandArchiveVariableDeclaration, { kind: "chosen" }> =>
+        declaration.kind === "chosen" && declaration.symbol === symbol,
+    );
+    const minima = chosen.flatMap((declaration) =>
+      typeof declaration.minimum === "number" ? [declaration.minimum] : [],
+    );
+    const maxima = chosen.flatMap((declaration) =>
+      typeof declaration.maximum === "number" ? [declaration.maximum] : [],
+    );
+    return [
+      {
+        symbol,
+        ...(minima.length ? { minimum: Math.max(...minima) } : {}),
+        ...(maxima.length ? { maximum: Math.min(...maxima) } : {}),
+      },
+    ];
+  });
+}
+
+export interface GrandArchiveDeclarationTargetConstraint {
+  readonly binding: string;
+  readonly candidateIds: readonly GrandArchiveTargetId[];
+  readonly minimum: number;
+  readonly maximum: number;
+  readonly ordered: boolean;
+}
+
+function usesDeclarationBinding(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  if ("binding" in value && typeof value.binding === "string") return true;
+  if (
+    "kind" in value &&
+    ["bound", "binding", "binding-count", "binding-remainder", "stack-source", "variable"].includes(
+      String(value.kind),
+    )
+  )
+    return true;
+  return Object.values(value).some(usesDeclarationBinding);
+}
+
+function independentTargetConstraints(
+  declarations: readonly GrandArchiveTargetDeclaration[],
+  evaluation: GrandArchiveEvaluationContext,
+): readonly GrandArchiveDeclarationTargetConstraint[] | null {
+  const choices = declarations.filter((target) => target.method !== "random");
+  if (
+    choices.some(
+      (target) =>
+        target.chooser !== "controller" ||
+        target.allowRepeated ||
+        target.distributedAmount !== undefined ||
+        usesDeclarationBinding(target),
+    )
+  )
+    return null;
+  return choices.map((target) => {
+    const candidateIds = potentialTargetIds(evaluation.state).filter((id) =>
+      isGrandArchiveTargetCandidate(id, target, evaluation),
+    );
+    const bounds = selectionBounds(target.count, evaluation, candidateIds.length);
+    return {
+      binding: target.id,
+      candidateIds,
+      minimum: bounds.minimum,
+      maximum: bounds.maximum,
+      ordered: target.ordered === true,
+    };
+  });
+}
+
+/** Complete identity choices for targets whose constraints do not depend on another declaration.
+ * Null means a dependent/unsupported form, never an empty candidate set. Final legality,
+ * including aggregate and cross-target restrictions, remains the command validator's job. */
+export function describeGrandArchiveIndependentDeclarationTargets(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: GrandArchiveCommand,
+): readonly GrandArchiveDeclarationTargetConstraint[] | null {
+  // These announcements can enable different resolution paragraphs or mode/target
+  // schemas. Do not advertise a context-free form based on a single bot seed.
+  if (
+    ("variables" in command && Object.keys(command.variables ?? {}).length > 0) ||
+    (command.move === "activate-card" &&
+      (command.revealForImbue === true || (command.prepareAbilityIndexes?.length ?? 0) > 0))
+  )
+    return null;
+  const context = declarationContext(program, state, playerId, command);
+  if (!context) return null;
+  const { descriptor, source, executionObject, mastery, evaluation, cascadeMode, selectedModes } =
+    context;
+  const modes = cascadeMode ? [cascadeMode] : selectedModes;
+  const link =
+    source && command.move !== "activate-ability"
+      ? grandArchiveLinkTargetDeclaration(program, state, source)
+      : undefined;
+  const declarations = [
+    ...collectGrandArchiveModeTargets(descriptor?.targets, modes),
+    ...(link ? [link] : []),
+  ].filter((target) => target.method !== "random");
+  const targeting = grandArchiveTargetingContext(
+    command.move === "activate-ability"
+      ? "activated-ability"
+      : command.move === "materialize"
+        ? "materialization"
+        : "card-activation",
+    executionObject
+      ? grandArchiveObjectCurrentCharacteristics(program, state, executionObject).subtypes
+      : grandArchiveMasterySourceSubtypes(program, mastery),
+    [descriptor?.effect, ...modes.map((mode) => mode.effect)],
+  );
+  const nativeEvaluation = { ...evaluation, targeting };
+  return independentTargetConstraints(declarations, nativeEvaluation);
 }
 
 export interface GrandArchiveDecisionAnswerCandidate {
@@ -366,9 +620,10 @@ function chosenVariableAssignments(
         variables: { ...evaluation.variables, ...assignment },
       };
       const minimum = evaluateGrandArchiveAmount(declaration.minimum, contextual);
-      const declaredMaximum = declaration.maximum
-        ? evaluateGrandArchiveAmount(declaration.maximum, contextual)
-        : maximumChosenVariableValue;
+      const declaredMaximum =
+        declaration.maximum !== undefined
+          ? evaluateGrandArchiveAmount(declaration.maximum, contextual)
+          : maximumChosenVariableValue;
       const maximum = Math.min(declaredMaximum, maximumChosenVariableValue);
       const existing = assignment[declaration.symbol];
       if (existing !== undefined) {
@@ -406,9 +661,11 @@ function announcementCandidates(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   playerId: GrandArchivePlayerId,
-  sourceId: GrandArchiveObjectId,
+  sourceId: GrandArchiveObjectId | undefined,
   describe: (evaluation: GrandArchiveEvaluationContext) => GrandArchiveAnnouncementDescriptor,
   options: {
+    readonly bindings?: GrandArchiveEvaluationContext["bindings"];
+    readonly abilityId?: GrandArchiveEvaluationContext["abilityId"];
     readonly cardTargetSourceId?: GrandArchiveObjectId;
     readonly forcedVariables?: readonly GrandArchiveVariableDeclaration[];
     readonly announcementActivationStates?: readonly GrandArchiveActivationState[];
@@ -422,7 +679,8 @@ function announcementCandidates(
     controllerId: playerId,
     sourceId,
     abilityBearerId: sourceId,
-    bindings: {},
+    bindings: options.bindings ?? {},
+    abilityId: options.abilityId,
     ...(options.announcementActivationStates
       ? { announcementActivationStates: options.announcementActivationStates }
       : {}),
@@ -580,9 +838,10 @@ function resolutionChoiceAnswers(
   }
   if (choice.kind === "number") {
     const minimum = evaluateGrandArchiveAmount(choice.minimum, evaluation);
-    const declaredMaximum = choice.maximum
-      ? evaluateGrandArchiveAmount(choice.maximum, evaluation)
-      : maximumChosenVariableValue;
+    const declaredMaximum =
+      choice.maximum !== undefined
+        ? evaluateGrandArchiveAmount(choice.maximum, evaluation)
+        : maximumChosenVariableValue;
     const maximum = Math.min(declaredMaximum, maximumChosenVariableValue);
     if (!Number.isSafeInteger(minimum) || !Number.isSafeInteger(maximum) || maximum < minimum) {
       return [];
@@ -611,7 +870,28 @@ function resolutionChoiceAnswers(
 export type GrandArchiveStructuredDecision =
   | { readonly kind: "semantic" }
   | {
+      readonly kind: "trigger-announcement";
+      readonly targets: readonly GrandArchiveDeclarationTargetConstraint[];
+      readonly variables: readonly GrandArchiveDeclarationVariableConstraint[];
+      readonly modes?: {
+        readonly options: readonly { readonly id: string; readonly text: string }[];
+        readonly minimum: number;
+        readonly maximum: number;
+      };
+    }
+  | {
+      readonly kind: "number";
+      readonly minimum: number;
+      readonly maximum?: number;
+    }
+  | {
       readonly kind: "boolean";
+    }
+  | {
+      readonly kind: "repeated-selection";
+      readonly candidateIds: readonly string[];
+      readonly minimum: number;
+      readonly maximum: number;
     }
   | {
       readonly kind: "identity-selection";
@@ -656,6 +936,89 @@ export function describeGrandArchiveStructuredDecision(
   decision: GrandArchiveDecision,
 ): GrandArchiveStructuredDecision {
   switch (decision.kind) {
+    case "announce-triggered-ability": {
+      const pending = state.pendingTriggers.find(
+        (trigger) => trigger.id === decision.pendingTriggerId,
+      );
+      if (!pending) return { kind: "semantic" };
+      const { evaluation, sourceSubtypes, modeDeclaration, cascade, cascadeModes } =
+        grandArchiveTriggerAnnouncementContext(program, state, pending);
+      const chosen = (pending.ability.variables ?? []).filter(
+        (variable) => variable.kind === "chosen",
+      );
+      // Mode-dependent and mutually dependent declarations need a draft-aware schema.
+      if (modeDeclaration) {
+        if (
+          cascade ||
+          chosen.length > 0 ||
+          (pending.ability.targets?.length ?? 0) > 0 ||
+          modeDeclaration.allowRepeat ||
+          modeDeclaration.random ||
+          usesDeclarationBinding(modeDeclaration.choose) ||
+          modeDeclaration.modes.some(
+            (mode) =>
+              (mode.targets?.length ?? 0) > 0 ||
+              (mode.variables?.length ?? 0) > 0 ||
+              usesDeclarationBinding(mode.condition),
+          )
+        )
+          return { kind: "semantic" };
+        const eligible = modeDeclaration.modes.filter(
+          (mode) => !mode.condition || evaluateGrandArchiveCondition(mode.condition, evaluation),
+        );
+        const bounds = selectionBounds(modeDeclaration.choose, evaluation, eligible.length);
+        return {
+          kind: "trigger-announcement",
+          targets: [],
+          variables: [],
+          modes: {
+            options: eligible.map((mode) => ({ id: mode.id, text: mode.text })),
+            minimum: bounds.minimum,
+            maximum: bounds.maximum,
+          },
+        };
+      }
+      if (
+        chosen.some(
+          (variable) =>
+            usesDeclarationBinding(variable.minimum) || usesDeclarationBinding(variable.maximum),
+        )
+      )
+        return { kind: "semantic" };
+      const variables = (["X", "Y", "Z"] as const).flatMap((symbol) => {
+        const declarations = chosen.filter((variable) => variable.symbol === symbol);
+        if (declarations.length === 0) return [];
+        const maxima = declarations.flatMap((variable) =>
+          variable.maximum !== undefined
+            ? [evaluateGrandArchiveAmount(variable.maximum, evaluation)]
+            : [],
+        );
+        return [
+          {
+            symbol,
+            minimum: Math.max(
+              ...declarations.map((variable) =>
+                evaluateGrandArchiveAmount(variable.minimum, evaluation),
+              ),
+            ),
+            ...(maxima.length ? { maximum: Math.min(...maxima) } : {}),
+          },
+        ];
+      });
+      const targeting = grandArchiveTargetingContext(
+        "triggered-ability",
+        sourceSubtypes,
+        [pending.ability.effect, ...cascadeModes.map((mode) => mode.effect)],
+        "resolutionAs" in pending.ability && pending.ability.resolutionAs === "spell",
+      );
+      const targets = independentTargetConstraints(
+        collectGrandArchiveModeTargets(cascade ? undefined : pending.ability.targets, cascadeModes),
+        { ...evaluation, targeting },
+      );
+      return targets === null || (targets.length === 0 && variables.length === 0)
+        ? { kind: "semantic" }
+        : { kind: "trigger-announcement", targets, variables };
+    }
     case "choose-replacement":
       return decision.mode === "order"
         ? {
@@ -773,7 +1136,6 @@ export function describeGrandArchiveStructuredDecision(
     case "resolve-effect-choice": {
       const selection = decision.selection;
       if (
-        selection.allowRepeated ||
         selection.aggregateConstraint ||
         selection.extreme ||
         selection.allShareCharacteristic ||
@@ -784,6 +1146,46 @@ export function describeGrandArchiveStructuredDecision(
       const evaluation = resolutionEvaluation(program, state);
       if (!evaluation) return { kind: "semantic" };
       const choice = selection.candidates;
+      if (choice.kind === "number") {
+        return {
+          kind: "number",
+          minimum: evaluateGrandArchiveAmount(choice.minimum, evaluation),
+          ...(choice.maximum !== undefined
+            ? { maximum: evaluateGrandArchiveAmount(choice.maximum, evaluation) }
+            : {}),
+        };
+      }
+      if (selection.allowRepeated) {
+        const declaration: GrandArchiveTargetDeclaration = {
+          ...selection,
+          kind: "target",
+          declared: "announcement",
+        };
+        const candidateIds =
+          choice.kind === "catalog-card"
+            ? Object.keys(program.cardsById).filter(
+                (id) =>
+                  program.cardsById[id]?.definitionKind === "card" &&
+                  grandArchiveDefinitionMatchesCardFilter(id, choice.filter, evaluation),
+              )
+            : choice.kind === "card" ||
+                choice.kind === "object" ||
+                choice.kind === "union" ||
+                choice.kind === "stack-item" ||
+                choice.kind === "player"
+              ? potentialTargetIds(state).filter((id) =>
+                  isGrandArchiveTargetCandidate(id, declaration, evaluation),
+                )
+              : undefined;
+        if (!candidateIds || selection.count.kind === "all") return { kind: "semantic" };
+        const bounds = grandArchiveSelectionCountBounds(selection, evaluation);
+        return {
+          kind: "repeated-selection",
+          candidateIds,
+          minimum: decision.mayFailToFind ? 0 : bounds.minimum,
+          maximum: bounds.maximum,
+        };
+      }
       if (
         choice.kind === "card" ||
         choice.kind === "object" ||
@@ -820,7 +1222,6 @@ export function describeGrandArchiveStructuredDecision(
     }
     case "resolve-critical":
     case "declare-resolved-attack":
-    case "announce-triggered-ability":
     case "retarget-stack-item":
     case "remode-stack-item":
     case "resolve-effect-payment":
@@ -1117,7 +1518,7 @@ function paymentDeclarationCandidates(
   state: GrandArchiveMatchState,
   playerId: GrandArchivePlayerId,
   cost: GrandArchiveAbilityCost | undefined,
-  sourceId: GrandArchiveObjectId,
+  sourceId: GrandArchiveObjectId | undefined,
   limit: number,
 ): readonly Readonly<Record<string, unknown>>[] {
   return cost ? paymentCandidates(state, playerId, cost, sourceId, limit) : [{}];
@@ -1196,7 +1597,7 @@ function cardAnnouncementCandidates(
     readonly announcement: GrandArchiveAnnouncementCandidate;
     readonly payment: Readonly<Record<string, unknown>>;
   }[] = [];
-  for (const announcement of announcements) {
+  const contributionSetsByAnnouncement = announcements.map((announcement) => {
     const contributionEvaluation: GrandArchiveEvaluationContext = {
       ...initialEvaluation,
       bindings: announcement.targets ?? {},
@@ -1213,7 +1614,11 @@ function cardAnnouncementCandidates(
       },
       limit,
     );
-    for (const payment of payments) {
+    return contributionSets;
+  });
+  for (const payment of payments) {
+    for (const [index, announcement] of announcements.entries()) {
+      const contributionSets = contributionSetsByAnnouncement[index]!;
       for (const paymentContributions of contributionSets) {
         out.push({
           announcement,
@@ -1417,7 +1822,10 @@ function cardActivationCandidates(
       methods.push({ activationMethod: "brew", costOverride: null, brewKeyword: keyword });
     }
   }
-  const out: GrandArchiveCardActivationCandidate[] = [];
+  const groups: GrandArchiveCardActivationCandidate[][] = [];
+  const prepareStates = keywords.some((keyword) => keyword.name === "prepare")
+    ? [false, true]
+    : [false];
   for (const method of methods) {
     const imbueDeclarations: readonly (true | undefined)[] = keywords.some(
       (keyword) => keyword.name === "imbue",
@@ -1425,52 +1833,63 @@ function cardActivationCandidates(
       ? [undefined, true]
       : [undefined];
     for (const revealForImbue of imbueDeclarations) {
-      const bases = cardAnnouncementCandidates(
-        program,
-        state,
-        playerId,
-        sourceId,
-        maximumChosenVariableValue,
-        limit,
-        method.costOverride,
-        revealForImbue ? ["imbued"] : undefined,
-      );
-      for (const base of bases) {
-        const evaluation: GrandArchiveEvaluationContext = {
-          program,
-          state,
-          controllerId: playerId,
-          sourceId,
-          abilityBearerId: sourceId,
-          bindings: base.announcement.targets ?? {},
-          variables: base.announcement.variables ?? {},
-        };
-        const ingredientSets = method.brewKeyword
-          ? brewIngredientCandidates(method.brewKeyword, evaluation, state, playerId, limit)
-          : [undefined];
-        for (const optional of optionalCardActivationFields(
+      for (const prepared of prepareStates) {
+        const out: GrandArchiveCardActivationCandidate[] = [];
+        groups.push(out);
+        const activationStates: GrandArchiveActivationState[] = [
+          ...(prepared ? ["prepared" as const] : []),
+          ...(revealForImbue ? ["imbued" as const] : []),
+          ...(method.activationMethod === "brew" ? ["brewed" as const] : []),
+        ];
+        const bases = cardAnnouncementCandidates(
           program,
           state,
           playerId,
           sourceId,
-          base.announcement,
-          method.activationMethod,
+          maximumChosenVariableValue,
           limit,
-          revealForImbue,
-        )) {
-          for (const brewIngredientIds of ingredientSets) {
-            out.push({
-              ...optional,
-              ...base.payment,
-              ...(brewIngredientIds ? { brewIngredientIds } : {}),
-            });
-            if (out.length >= limit) return out;
+          method.costOverride,
+          activationStates,
+        );
+        basesLoop: for (const base of bases) {
+          const evaluation: GrandArchiveEvaluationContext = {
+            program,
+            state,
+            controllerId: playerId,
+            sourceId,
+            abilityBearerId: sourceId,
+            bindings: base.announcement.targets ?? {},
+            variables: base.announcement.variables ?? {},
+            announcementActivationStates: activationStates,
+          };
+          const ingredientSets = method.brewKeyword
+            ? brewIngredientCandidates(method.brewKeyword, evaluation, state, playerId, limit)
+            : [undefined];
+          for (const optional of optionalCardActivationFields(
+            program,
+            state,
+            playerId,
+            sourceId,
+            base.announcement,
+            method.activationMethod,
+            limit,
+            revealForImbue,
+          )) {
+            if (Boolean(optional.prepareAbilityIndexes?.length) !== prepared) continue;
+            for (const brewIngredientIds of ingredientSets) {
+              out.push({
+                ...optional,
+                ...base.payment,
+                ...(brewIngredientIds ? { brewIngredientIds } : {}),
+              });
+              if (out.length >= limit) break basesLoop;
+            }
           }
         }
       }
     }
   }
-  return out;
+  return interleaveBounded(groups, limit);
 }
 
 function cardHasPotentialActivationOrigin(
@@ -1546,7 +1965,7 @@ function activatedAbilityAnnouncementCandidates(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   playerId: GrandArchivePlayerId,
-  sourceId: GrandArchiveObjectId,
+  sourceIdentity: GrandArchiveObjectId | { readonly mastery: GrandArchiveMasteryState },
   ability: GrandArchiveActivatedAbility,
   maximumChosenVariableValue: number,
   limit: number,
@@ -1554,15 +1973,29 @@ function activatedAbilityAnnouncementCandidates(
   readonly announcement: GrandArchiveAnnouncementCandidate;
   readonly payment: Readonly<Record<string, unknown>>;
 }[] {
-  const source = state.objects[sourceId];
-  if (!source) return [];
-  if (!grandArchiveAbilityIsFunctional(grandArchiveObjectFace(program, source), ability, source)) {
+  const source = typeof sourceIdentity === "string" ? state.objects[sourceIdentity] : undefined;
+  const mastery = typeof sourceIdentity === "string" ? undefined : sourceIdentity.mastery;
+  if (!source && !mastery) return [];
+  if (
+    source &&
+    !grandArchiveAbilityIsFunctional(grandArchiveObjectFace(program, source), ability, source)
+  )
     return [];
-  }
-  const executionObject = grandArchiveAbilityExecutionObject(state, source, ability);
-  if (!executionObject) return [];
+  const executionObject = source
+    ? grandArchiveAbilityExecutionObject(state, source, ability)
+    : undefined;
+  if (!executionObject && !mastery) return [];
+  const sourceBindings: GrandArchiveEvaluationContext["bindings"] = mastery
+    ? {
+        masterySourcePlayer: [playerId],
+        masterySourceName: mastery.name,
+        masterySourceTimestamp: mastery.timestamp,
+      }
+    : {};
   const cascadeCount = ability.cascade
-    ? (executionObject.cascadeCounts[ability.id] ?? 0) + 1
+    ? (mastery
+        ? grandArchiveMasteryAbilityActivationCount(state, playerId, mastery, ability.id)
+        : (executionObject?.cascadeCounts[ability.id] ?? 0)) + 1
     : undefined;
   const cascadeMode =
     ability.cascade && cascadeCount !== undefined
@@ -1572,7 +2005,7 @@ function activatedAbilityAnnouncementCandidates(
     program,
     state,
     playerId,
-    executionObject.id,
+    executionObject?.id,
     () =>
       ability.cascade
         ? {
@@ -1586,23 +2019,23 @@ function activatedAbilityAnnouncementCandidates(
             effect: ability.effect,
             targets: ability.targets,
           },
-    { maximumChosenVariableValue, limit },
+    { maximumChosenVariableValue, limit, bindings: sourceBindings, abilityId: ability.id },
   );
   const payments = paymentDeclarationCandidates(
     state,
     playerId,
     ability.cost,
-    executionObject.id,
+    executionObject?.id,
     limit,
   );
   const initialEvaluation: GrandArchiveEvaluationContext = {
     program,
     state,
     controllerId: playerId,
-    sourceId: executionObject.id,
-    abilityBearerId: executionObject.id,
+    sourceId: executionObject?.id,
+    abilityBearerId: executionObject?.id,
     abilityId: ability.id,
-    bindings: {},
+    bindings: sourceBindings,
   };
   const abilityIdentity = {
     ...(ability.keyword || ability.label
@@ -1610,6 +2043,12 @@ function activatedAbilityAnnouncementCandidates(
       : {}),
     ...(ability.label ? { label: ability.label.name } : {}),
   };
+  const ruleSource = executionObject
+    ? { candidateId: executionObject.id, fromZone: executionObject.zone }
+    : mastery
+      ? { masterySource: { playerId, name: mastery.name } }
+      : undefined;
+  if (!ruleSource) return [];
   const out: {
     readonly announcement: GrandArchiveAnnouncementCandidate;
     readonly payment: Readonly<Record<string, unknown>>;
@@ -1617,7 +2056,7 @@ function activatedAbilityAnnouncementCandidates(
   for (const announcement of announcements) {
     const contributionEvaluation: GrandArchiveEvaluationContext = {
       ...initialEvaluation,
-      bindings: announcement.targets ?? {},
+      bindings: { ...sourceBindings, ...announcement.targets },
       variables: announcement.variables ?? {},
     };
     const contributionSets = paymentContributionDeclarationCandidates(
@@ -1625,8 +2064,7 @@ function activatedAbilityAnnouncementCandidates(
         action: "pay-cost",
         activationKind: "ability",
         playerId,
-        candidateId: executionObject.id,
-        fromZone: executionObject.zone,
+        ...ruleSource,
         abilityIdentity,
         evaluation: contributionEvaluation,
       },
@@ -2549,6 +2987,32 @@ export function listGrandArchiveLegalCommands(
     }
   }
   if (moveNames.includes("activate-ability")) {
+    const mastery = grandArchivePlayerMastery(state, playerId);
+    if (mastery) {
+      for (const ability of grandArchiveActiveMasteryAbilities(program, state, playerId)) {
+        if (ability.kind !== "activated") continue;
+        for (const candidate of activatedAbilityAnnouncementCandidates(
+          program,
+          state,
+          playerId,
+          { mastery },
+          ability,
+          maximumChosenVariableValue,
+          limit,
+        )) {
+          pushActivation(
+            {
+              move: "activate-ability",
+              masteryName: mastery.name,
+              abilityId: ability.id,
+              ...candidate.announcement,
+              ...candidate.payment,
+            },
+            `Activate ${mastery.name} — ${ability.text}`,
+          );
+        }
+      }
+    }
     for (const object of Object.values(state.objects)) {
       for (const ability of grandArchiveObjectActiveAbilities(program, state, object)) {
         if (ability.kind !== "activated") continue;

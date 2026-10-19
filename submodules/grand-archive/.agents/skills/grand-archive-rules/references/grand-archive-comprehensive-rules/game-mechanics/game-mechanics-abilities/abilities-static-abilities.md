@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-static-abilities"
   relation: "current_index"
 ---
-
 # Abilities - Static Abilities
 
 #### General Rules:

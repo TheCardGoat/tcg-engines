@@ -44,6 +44,9 @@ export function useInteractionSurface(
   const canConfirm = Boolean(
     input &&
     (interactionInputComplete(input, draft.values[input.id]) ||
+      (input.kind === "entity-allocation" &&
+        draft.values[input.id] === undefined &&
+        interactionInputComplete(input, {})) ||
       (input.kind === "entity-selection" &&
         input.min === 0 &&
         interactionInputComplete(input, []))),

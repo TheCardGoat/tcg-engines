@@ -54,7 +54,7 @@ describe("Spellshield: Astra — prevent next damage and Glimpse the actual amou
       const ally = player.card(supplyDrone, { zone: "field" });
       opponent.declareAttack(attackers[0]!, ally);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(ally.objectId)).toBe(2);
       expect(player.zone("main-deck")).toEqual(deck);
       opponent.declareAttack(attackers[1]!, target);
       for (let step = 0; step < 64 && game.state.decision?.kind !== "resolve-glimpse"; step++) {
@@ -64,7 +64,7 @@ describe("Spellshield: Astra — prevent next damage and Glimpse the actual amou
         else if (wait.kind === "opportunity") game.player(wait.playerId).pass();
         else throw new Error(`Unexpected combat state ${wait.kind}`);
       }
-      expect(game.state.objects[target.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(target.objectId)).toBe(0);
       const glimpse = game.state.decision;
       if (glimpse?.kind !== "resolve-glimpse")
         throw new Error("Expected Glimpse after preventing damage");
@@ -80,7 +80,7 @@ describe("Spellshield: Astra — prevent next damage and Glimpse the actual amou
       expect(player.zone("main-deck")).toEqual([...deck.slice(2), ...bottom]);
       opponent.declareAttack(attackers[2]!, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(target.objectId)).toBe(2);
       expect(player.zone("main-deck")).toEqual([...deck.slice(2), ...bottom]);
     });
   }
@@ -113,6 +113,6 @@ describe("Spellshield: Astra — prevent next damage and Glimpse the actual amou
     const target = player.card(champion, { zone: "field" });
     opponent.declareAttack(automatedGardener, target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(target.objectId)).toBe(2);
   });
 });

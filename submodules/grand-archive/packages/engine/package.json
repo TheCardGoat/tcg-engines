@@ -25,10 +25,14 @@
       "types": "./src/testing/index.ts",
       "default": "./src/testing/index.ts"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./automation/decision": {
+      "types": "./src/automation/decision-api.ts",
+      "default": "./src/automation/decision-api.ts"
+    }
   },
   "scripts": {
-    "build": "vp pack src/runtime-api.ts src/simulator-api.ts src/automation/index.ts src/log/index.ts src/testing/index.ts --dts",
+    "build": "vp pack src/runtime-api.ts src/simulator-api.ts src/automation/index.ts src/automation/decision-api.ts src/log/index.ts src/testing/index.ts --dts",
     "bench": "node --experimental-transform-types --no-warnings scripts/automated-bench.ts",
     "check-types": "tsc -p tsconfig.json --noEmit",
     "test": "vp test run --maxWorkers=2 --testTimeout=15000"

@@ -77,6 +77,7 @@ export const resolveGrandArchiveReplacementDecision: GrandArchiveDecisionResolve
     if (
       match.getState().status === "playing" &&
       !match.getState().decision &&
+      !match.getState().opportunity &&
       match.getState().stack.length === 0 &&
       match.getState().combat?.step === "end"
     ) {

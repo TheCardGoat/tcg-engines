@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-recollection-phase"
   relation: "current_index"
 ---
-
 # Turn Order - Recollection Phase
 
 #### General Rules:

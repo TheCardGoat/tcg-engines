@@ -4,8 +4,9 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-starting-the-game"
   relation: "current_index"
 ---
-
 # General Rules - Starting the Game
+
+Steps taken to start a game of Grand Archive, including Turn One
 
 ### Standard Games
 
@@ -17,7 +18,7 @@ official_source:
 6. All players will reveal their starting Lv 0 champion from their respective material decks and place them onto the field. In turn order, players will resolve the On Enter abilities for obtaining their starting hands. Players can't gain the [Opportunity](/game-mechanics/game-mechanics-timing-and-permissions.md) to perform player actions until all of these abilities are resolved.
 7. &#x20;The first player takes their first turn.
 
-{% hint style="success" %} <img src="/files/fC0BRP2Az9expdZOgXSK" alt="" data-size="original">&#x20;
+{% hint style="success" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FYZZjSTR4dhr0gEStAdTS%2F22792b18-3769-4eca-b354-5399959a7018.jpg?alt=media&amp;token=b9b4fd1a-9c92-4637-9952-b5ff4a241f5f" alt="" data-size="original">&#x20;
 
 E.g., Cards like The Looking Glass have abilities that allow players to begin the game with it on the field. During step 5, they would be allowed to acknowledge the ability as a special game action and place this card on the field. When the game begins, it will treat this card as having been in play before the first turn.
 {% endhint %}

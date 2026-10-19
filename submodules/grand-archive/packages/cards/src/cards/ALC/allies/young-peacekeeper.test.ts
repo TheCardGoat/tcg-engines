@@ -47,13 +47,13 @@ describe("Young Peacekeeper — fostered power and life", () => {
       const target = opponent.card(champion);
       player.declareAttack(ally, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(fostered ? 2 : 1);
+      expect(game.markedDamage(target.objectId)).toBe(fostered ? 2 : 1);
       const wait = game.waitState();
       if (wait.kind === "opportunity" && wait.playerId !== player.id)
         game.player(wait.playerId).pass();
       player.declareAttack(woodlandSquirrels, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(fostered ? 3 : 2);
+      expect(game.markedDamage(target.objectId)).toBe(fostered ? 3 : 2);
       advanceToRecollection(game, opponent.id);
       for (let step = 0; game.state.turn.phase !== "main" && step < 16; step++) {
         const next = game.waitState();
@@ -64,7 +64,7 @@ describe("Young Peacekeeper — fostered power and life", () => {
       game.resolveCombatWithoutRetaliation();
       expect(player.cards(youngPeacekeeper, { zone: "field" })).toHaveLength(fostered ? 1 : 0);
       if (fostered) {
-        expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(ally.objectId)).toBe(2);
         expect(game.state.objects[ally.objectId]!.states.has("fostered")).toBe(true);
         const next = game.waitState();
         if (next.kind === "opportunity" && next.playerId !== opponent.id)

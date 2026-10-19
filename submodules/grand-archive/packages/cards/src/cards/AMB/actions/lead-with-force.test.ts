@@ -49,15 +49,13 @@ describe("Lead with Force — life and Animal or Beast buff", () => {
       if (animalOrBeast) {
         player.declareAttack(ally, opponent.card(champion, { zone: "field" }));
         game.resolveCombatWithoutRetaliation();
-        expect(
-          game.state.objects[opponent.card(champion, { zone: "field" }).objectId]!.damage,
-        ).toBe(2);
+        expect(game.markedDamage(opponent.card(champion, { zone: "field" }).objectId)).toBe(2);
       }
       advanceToMain(game, opponent.id);
       opponent.declareAttack(opponent.cards(woodlandSquirrels, { zone: "field" })[0]!, ally);
       game.resolveCombatWithoutRetaliation();
       expect(game.state.objects[ally.objectId]!.zone).toBe("field");
-      expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(ally.objectId)).toBe(1);
     }
   });
 });

@@ -152,80 +152,95 @@ export const huntWeissKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               {
                 id: "mode-2",
                 text: "Put a buff counter on a Chessman Knight ally.",
-                targets: [
-                  {
-                    id: "target-1",
-                    kind: "target",
-                    declared: "announcement",
+                effect: {
+                  kind: "choose",
+                  selection: {
+                    id: "chosen-counter-object",
+                    kind: "choice",
+                    declared: "resolution",
                     chooser: "controller",
                     count: {
                       kind: "exactly",
                       amount: 1,
                     },
-                    unique: true,
                     candidates: {
                       kind: "object",
                       zones: ["field"],
+                      relationship: "controlled-by",
+                      player: "each-player",
                       filter: {
-                        kind: "type",
-                        oneOf: ["ALLY"],
+                        kind: "all",
+                        filters: [
+                          {
+                            kind: "type",
+                            oneOf: ["ALLY"],
+                          },
+                          {
+                            kind: "subtype",
+                            oneOf: ["CHESSMAN"],
+                          },
+                          {
+                            kind: "subtype",
+                            oneOf: ["KNIGHT"],
+                          },
+                        ],
                       },
                     },
                   },
-                ],
-                effect: {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
+                  effect: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "chosen-counter-object",
+                    },
+                    counter: "buff",
+                    amount: 1,
                   },
-                  counter: "buff",
-                  amount: 1,
                 },
               },
               {
                 id: "mode-3",
                 text: "Change the target of an attack to a Chessman Rook ally you control. If you do, that ally gets +2 LIFE until end of turn",
                 effect: {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "attempt",
-                      effect: {
-                        kind: "choose",
-                        selection: {
-                          id: "target-1",
-                          kind: "choice",
-                          declared: "resolution",
-                          chooser: "controller",
-                          count: {
-                            kind: "exactly",
-                            amount: 1,
+                  kind: "choose",
+                  selection: {
+                    id: "chosen-redirect-ally",
+                    kind: "choice",
+                    declared: "resolution",
+                    chooser: "controller",
+                    count: {
+                      kind: "exactly",
+                      amount: 1,
+                    },
+                    candidates: {
+                      kind: "object",
+                      zones: ["field"],
+                      relationship: "controlled-by",
+                      player: "controller",
+                      filter: {
+                        kind: "all",
+                        filters: [
+                          {
+                            kind: "type",
+                            oneOf: ["ALLY"],
                           },
-                          candidates: {
-                            kind: "object",
-                            zones: ["field"],
-                            relationship: "controlled-by",
-                            player: "controller",
-                            filter: {
-                              kind: "all",
-                              filters: [
-                                {
-                                  kind: "type",
-                                  oneOf: ["ALLY"],
-                                },
-                                {
-                                  kind: "subtype",
-                                  oneOf: ["CHESSMAN"],
-                                },
-                                {
-                                  kind: "subtype",
-                                  oneOf: ["ROOK"],
-                                },
-                              ],
-                            },
+                          {
+                            kind: "subtype",
+                            oneOf: ["CHESSMAN"],
                           },
-                        },
+                          {
+                            kind: "subtype",
+                            oneOf: ["ROOK"],
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  effect: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "attempt",
                         effect: {
                           kind: "retarget",
                           subject: {
@@ -234,41 +249,42 @@ export const huntWeissKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                           chooser: "controller",
                           newTarget: {
                             kind: "bound",
-                            binding: "target-1",
+                            binding: "chosen-redirect-ally",
+                          },
+                        },
+                        bindSucceededAs: "prior-effect-succeeded",
+                      },
+                      {
+                        kind: "conditional",
+                        condition: {
+                          kind: "effect-succeeded",
+                          binding: "prior-effect-succeeded",
+                        },
+                        then: {
+                          kind: "continuous",
+                          subjects: {
+                            kind: "bound",
+                            binding: "chosen-redirect-ally",
+                          },
+                          affectedSet: "locked",
+                          duration: {
+                            kind: "this-turn",
+                          },
+                          layer: {
+                            layer: "E",
+                            modifies: "stat",
+                            sublayer: "modifier",
+                          },
+                          change: {
+                            kind: "numeric",
+                            property: "life",
+                            operation: "add",
+                            amount: 2,
                           },
                         },
                       },
-                      bindSucceededAs: "prior-effect-succeeded",
-                    },
-                    {
-                      kind: "conditional",
-                      condition: {
-                        kind: "effect-succeeded",
-                        binding: "prior-effect-succeeded",
-                      },
-                      then: {
-                        kind: "continuous",
-                        subjects: {
-                          kind: "event-subject",
-                        },
-                        affectedSet: "locked",
-                        duration: {
-                          kind: "this-turn",
-                        },
-                        layer: {
-                          layer: "E",
-                          modifies: "stat",
-                          sublayer: "modifier",
-                        },
-                        change: {
-                          kind: "numeric",
-                          property: "life",
-                          operation: "add",
-                          amount: 2,
-                        },
-                      },
-                    },
-                  ],
+                    ],
+                  },
                 },
               },
             ],

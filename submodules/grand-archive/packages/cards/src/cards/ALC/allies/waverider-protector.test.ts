@@ -67,8 +67,7 @@ describe("Waverider Protector — conditional Taunt", () => {
           } else {
             attacker.declareAttack(gardeners[0]!, target);
             game.resolveCombatWithoutRetaliation();
-            if (targetKind === "champion")
-              expect(game.state.objects[ownChampion.objectId]!.damage).toBe(2);
+            if (targetKind === "champion") expect(game.markedDamage(ownChampion.objectId)).toBe(2);
             else expect(defender.zone("graveyard")).toContainEqual(otherAlly);
           }
           const wait = game.waitState();
@@ -77,10 +76,10 @@ describe("Waverider Protector — conditional Taunt", () => {
           // Attacking the Protector itself remains legal in every condition.
           attacker.declareAttack(gardeners[taunting ? 0 : 1]!, protector);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[protector.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(protector.objectId)).toBe(2);
           expect(defender.cards(waveriderProtector, { zone: "field" })).toEqual([protector]);
           if (taunting) {
-            expect(game.state.objects[ownChampion.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(ownChampion.objectId)).toBe(0);
             expect(defender.cards(woodlandSquirrels, { zone: "field" })).toEqual([otherAlly]);
           }
         });

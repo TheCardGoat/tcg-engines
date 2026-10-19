@@ -59,7 +59,7 @@ describe("War Marshal — Class Bonus Steadfast", () => {
       }
       expect(retaliated).toBe(classBonus);
       expect(game.state.objects[marshal.objectId]!.states.has("rested")).toBe(true);
-      if (classBonus) expect(game.state.objects[attacker.objectId]!.damage).toBe(2);
+      if (classBonus) expect(game.markedDamage(attacker.objectId)).toBe(2);
     });
   }
 });
@@ -89,7 +89,7 @@ describe("War Marshal — Class Bonus Equestrian stats", () => {
         const target = opponent.card(champion, { zone: "field" });
         player.declareAttack(warMarshal, target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(classBonus && horse ? 3 : 2);
+        expect(game.markedDamage(target.objectId)).toBe(classBonus && horse ? 3 : 2);
       });
     }
   }

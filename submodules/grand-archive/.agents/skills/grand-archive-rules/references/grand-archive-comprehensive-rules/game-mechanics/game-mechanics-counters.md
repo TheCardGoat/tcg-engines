@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-counters"
   relation: "current_index"
 ---
-
 # Game Mechanics - Counters
 
 #### General Rules:
@@ -29,17 +28,18 @@ official_source:
 #### Bulwark
 
 1. Bulwark counters can be placed on units. They act as a continuous effect that prevents an instance of combat damage that would be dealt to that unit.
-   1. Since Bulwark counters work as a damage prevention effect, they function simultaneously with other damage replacement effects. As such, the owner of the objects receiving damage may select the order in which simultaneous effects apply.
+   1. Since bulwark counters work as a damage prevention effect, they function simultaneously with other damage replacement effects. As such, the owner of the objects receiving damage may select the order in which simultaneous effects apply.
 2. If a unit has a bulwark counter on it, the next time combat damage would be dealt to that unit, the damage is prevented and a bulwark counter is removed.
-3. Preventing damage with Bulwark counters is not optional. If the unit would take a non-zero amount of damage, the damage prevention and removal of the Bulwark counter must occur.
-4. Bulwark counters collectively apply only one replacement effect that removes a Bulwark counter. This applies regardless of how many Bulwark counters are on an object. No more than one counter may be removed per damage instance that is prevented.
-   1. If unpreventable damage is dealt, only one Bulwark counter is removed.
+3. Preventing damage with bulwark counters is not optional. If the unit would take a non-zero amount of damage, the damage prevention and removal of the bulwark counter must occur.
+4. Bulwark counters collectively apply only one replacement effect that removes a bulwark counter. This applies regardless of how many bulwark counters are on an object. No more than one counter may be removed per damage instance that is prevented.
+   1. If unpreventable damage is dealt, only one bulwark counter is removed.
 
 #### Damage
 
 1. Damage counters are permanent counters on champions that are placed whenever a champion is dealt any type of damage.
 2. Damage counters will mark damage in whole numbers starting from 0.
-3. Damage counters reaching or exceeding a champion's life stat cause that champion to die.
+3. Damage counters reaching or exceeding a champion's life stat cause that champion to die as a state-based action.
+   1. Damage counters on any other object do not do anything.
 
 {% hint style="success" %}
 A player loses the game if they control no champions.
@@ -82,7 +82,7 @@ A player loses the game if they control no champions.
 
 #### Wither
 
-1. At the beginning of a player's main phase, if they control one or more objects with a wither counter on them, they sacrifice each of those objects unless they pay 1 reserve for each wither counter on it, then remove those counters.
+1. At the beginning of a player's main phase, if they control one or more objects with a wither counter on them, for each object with wither counters, they sacrifice that object unless they pay 1 reserve for each wither counter on it, then they remove those counters.
 2. The triggered ability is sourced from the game rather than the objects on which the wither-related trigger originates.
 3. The reserve cost to be paid for each object must be paid in full. If it is not completely paid, that object is sacrificed.
 4. All wither counters are removed at the same time during the resolution of the triggered ability.

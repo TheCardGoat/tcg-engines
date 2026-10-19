@@ -56,10 +56,10 @@ export function proveAdditionalSacrifice({
     expect(game.state.objects[q.card(sacrifice).objectId]!.zone).toBe("field");
     expect(p.zone("memory")).toHaveLength(cost);
     expect(p.zone("hand")).toHaveLength(0);
-    expect(game.state.objects[target.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(target.objectId)).toBe(0);
     passEffectsStack(game);
     if (weapon) {
-      expect(game.state.objects[target.objectId]!.damage).toBe(4);
+      expect(game.markedDamage(target.objectId)).toBe(4);
       expect(p.zone("hand")).toHaveLength(0);
     } else {
       expect(p.zone("hand")).toHaveLength(2);

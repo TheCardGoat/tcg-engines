@@ -78,10 +78,10 @@ describe("Creative Shock draws before its discard and conditional damage choice"
             }
           }
           expect(game.state.decision).toBeNull();
-          expect(game.state.objects[q.card(giantTortoise).objectId]!.damage).toBe(
+          expect(game.markedDamage(q.card(giantTortoise).objectId)).toBe(
             classBonus && fireDiscard && accept ? 2 : 0,
           );
-          expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(hero.objectId)).toBe(0);
           expect(p.zone("hand")).toEqual(top.filter((c) => c.objectId !== discarded.objectId));
           expect(q.zone("hand")).toHaveLength(1);
         });

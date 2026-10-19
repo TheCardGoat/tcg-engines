@@ -48,6 +48,7 @@ export function VsAiControls() {
         } as CSSProperties
       }
     >
+      {ctx.error && <p role="alert">{ctx.error}</p>}
       <AiControlPanel
         compact
         embedded

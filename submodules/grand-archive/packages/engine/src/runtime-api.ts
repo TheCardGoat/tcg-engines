@@ -33,3 +33,7 @@ export * from "./projection/wait-state.ts";
 export * from "./game/zones.ts";
 export * from "./procedures/activation/activation.ts";
 export * from "./game/card-runtime.ts";
+
+export { grandArchiveObjectMarkedDamage } from "./game/object-state.ts";
+
+export { grandArchiveActiveMasteryAbilities, grandArchivePlayerMastery } from "./game/mastery.ts";

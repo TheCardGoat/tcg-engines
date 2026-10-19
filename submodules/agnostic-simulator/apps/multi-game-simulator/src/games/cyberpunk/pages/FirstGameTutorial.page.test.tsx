@@ -13,6 +13,7 @@ import {
 import { UserConfigProvider } from "../engine";
 import { theme } from "../theme";
 import { FirstGameTutorialPage } from "./FirstGameTutorial.page";
+import { CYBERPUNK_UI_VERSION_STORAGE_KEY } from "../components/BoardV2/uiVersion";
 
 vi.mock("../animation", async () => {
   const actual = await vi.importActual<typeof import("../animation")>("../animation");
@@ -58,13 +59,16 @@ test("the practice task waits for an action and can be skipped", () => {
   expect(window.localStorage.getItem("tcg:cyberpunk:first-game-tutorial:v1")).toBe("dismissed");
 });
 
-test("the guided game runs on the V2 board when ?ui=v2", async () => {
-  window.history.replaceState({}, "", "/cyberpunk/simulator/tutorial?ui=v2");
+test.each(["url", "preference"])("the guided game uses V2 from the %s", async (source) => {
+  const route =
+    source === "url" ? "/cyberpunk/simulator/tutorial?ui=v2" : "/cyberpunk/simulator/tutorial";
+  if (source === "preference") localStorage.setItem(CYBERPUNK_UI_VERSION_STORAGE_KEY, "v2");
+  window.history.replaceState({}, "", route);
   render(
     <MantineProvider theme={theme} env="test">
       <CardPreviewProvider>
         <UserConfigProvider>
-          <MemoryRouter initialEntries={["/cyberpunk/simulator/tutorial?ui=v2"]}>
+          <MemoryRouter initialEntries={[route]}>
             <FirstGameTutorialPage />
           </MemoryRouter>
         </UserConfigProvider>

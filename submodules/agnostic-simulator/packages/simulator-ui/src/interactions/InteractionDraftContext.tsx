@@ -23,9 +23,12 @@ import {
   activeActionableInputs,
   currentActionableInput,
   implicitSubmissionValues,
+  interactionInputAdvancesImmediately,
   interactionInputComplete,
   optionalDecisionInteraction,
 } from "./interaction-presentation";
+
+import { useInteractionPreview, type InteractionPreviewHandler } from "./useInteractionPreview";
 
 export interface InteractionDraftState {
   readonly submissionRejected?: boolean;
@@ -36,6 +39,10 @@ export interface InteractionDraftState {
 }
 
 export interface InteractionDraftControls extends InteractionDraftState {
+  readonly view?: EngineInteractionView;
+  readonly previewPending?: boolean;
+  readonly previewError?: string;
+  readonly retryPreview: () => void;
   readonly active: boolean;
   readonly begin: (
     actionId: string,
@@ -54,6 +61,7 @@ export interface InteractionDraftControls extends InteractionDraftState {
 const EMPTY_VALUES: Readonly<Record<string, InteractionSubmissionValue>> = {};
 const DEFAULT: InteractionDraftControls = {
   active: false,
+  retryPreview: () => undefined,
   values: EMPTY_VALUES,
   confirmedInputIds: new Set(),
   begin: () => undefined,
@@ -70,13 +78,15 @@ const DEFAULT: InteractionDraftControls = {
 const InteractionDraftContext = createContext<InteractionDraftControls>(DEFAULT);
 
 export function InteractionDraftProvider({
-  view,
+  view: authoritativeView,
   onSubmit,
+  onPreview,
   deferInitialSubmission,
   children,
 }: {
   readonly view: EngineInteractionView;
   readonly onSubmit: (submission: InteractionSubmission) => boolean;
+  readonly onPreview?: InteractionPreviewHandler;
   /** Keep optional choices open instead of submitting their default when an action begins. */
   readonly deferInitialSubmission?: (action: InteractionAction) => boolean;
   readonly children: ReactNode;
@@ -85,6 +95,27 @@ export function InteractionDraftProvider({
     values: EMPTY_VALUES,
     confirmedInputIds: new Set(),
   });
+  const preview = useInteractionPreview({
+    view: authoritativeView,
+    actionId: draft.actionId,
+    requestId: draft.requestId,
+    values: draft.values,
+    onPreview,
+    onNormalize: (values, inputIds) =>
+      setDraft((current) => {
+        const confirmedInputIds = new Set(
+          [...current.confirmedInputIds].filter((id) => inputIds.includes(id)),
+        );
+        if (
+          JSON.stringify(current.values) === JSON.stringify(values) &&
+          confirmedInputIds.size === current.confirmedInputIds.size
+        )
+          return current;
+        return { ...current, values, confirmedInputIds };
+      }),
+  });
+  const view = preview.view;
+  const [draftActorId, setDraftActorId] = useState(view.actorId);
   const submittedKeyRef = useRef<string | null>(null);
   // Last action id for which begin() actually opened a draft. Effects close
   // over the render that scheduled them, so the stale-draft invalidation below
@@ -92,6 +123,16 @@ export function InteractionDraftProvider({
   // layer's decision auto-begin) opened after that render.
   const begunActionIdRef = useRef<string | undefined>(undefined);
   const begunRequestIdRef = useRef<string | undefined>(undefined);
+
+  // Reset the draft before committing children when control changes seats.
+  // Keep the board subtree mounted so its WebGL context and artwork remain available.
+  if (draftActorId !== view.actorId) {
+    setDraftActorId(view.actorId);
+    setDraft({ values: EMPTY_VALUES, confirmedInputIds: new Set() });
+    submittedKeyRef.current = null;
+    begunActionIdRef.current = undefined;
+    begunRequestIdRef.current = undefined;
+  }
 
   const action = draft.actionId
     ? view.actions.find(
@@ -124,6 +165,7 @@ export function InteractionDraftProvider({
       // complete initial choices to keep their direct-selection flow open.
       if (
         choicesComplete &&
+        !nextAction.requiresPreview &&
         !deferInitialSubmission?.(nextAction) &&
         validateInteractionSubmission(view, submission).ok
       ) {
@@ -211,6 +253,9 @@ export function InteractionDraftProvider({
           ...current,
           submissionRejected: false,
           values: {
+            // Forced protocol values are not player drafts. Editing an earlier
+            // input must retain them even when later player choices are invalidated.
+            ...(action ? implicitSubmissionValues(action) : {}),
             ...retainedValues,
             ...(acceptsOptionalDecision ? { [optionalDecision.decision.id]: true } : {}),
             [inputId]: value,
@@ -312,7 +357,15 @@ export function InteractionDraftProvider({
             : {};
         const currentAmount = allocation[entityId] ?? 0;
         const total = Object.values(allocation).reduce((sum, amount) => sum + amount, 0);
-        if (currentAmount >= allocationCandidate.max || total >= input.totalMax) return;
+        const recipients = Object.values(allocation).filter((amount) => amount > 0).length;
+        if (
+          currentAmount >= allocationCandidate.max ||
+          total >= input.totalMax ||
+          (currentAmount === 0 &&
+            input.maxRecipients !== undefined &&
+            recipients >= input.maxRecipients)
+        )
+          return;
         change(inputId, { ...allocation, [entityId]: currentAmount + 1 });
         return;
       }
@@ -353,7 +406,7 @@ export function InteractionDraftProvider({
     if (!input) return;
     setDraft((current) => {
       // A partition whose routes are all optional, or an optional selection
-      // (min 0), can be valid without a player assignment (for example, a
+      // (min 0), or a zero allocation can be valid without a player assignment (for example, a
       // deck look with no eligible tutor, or a "choose up to one" target).
       // Persist the empty answer before marking it confirmed so the next
       // actionable-input pass can advance and submit it.
@@ -363,7 +416,9 @@ export function InteractionDraftProvider({
             ? Object.fromEntries(input.routes.map((route) => [route.id, []]))
             : input.kind === "entity-selection" && interactionInputComplete(input, [])
               ? []
-              : undefined
+              : input.kind === "entity-allocation" && interactionInputComplete(input, {})
+                ? {}
+                : undefined
           : undefined;
       if (emptyAnswer !== undefined) {
         const values = { ...current.values, [input.id]: emptyAnswer };
@@ -409,7 +464,7 @@ export function InteractionDraftProvider({
   }, [action, draft.values, draft.confirmedInputIds]);
 
   const submit = useCallback(() => {
-    if (!action) return;
+    if (!action || !preview.canSubmit) return;
     const submission = buildInteractionSubmission({ view, action, values: { ...draft.values } });
     if (!validateInteractionSubmission(view, submission).ok) return;
     const key = `${submission.requestId}:${JSON.stringify(submission.values)}`;
@@ -426,15 +481,28 @@ export function InteractionDraftProvider({
       const retryInput = [...action.inputs]
         .reverse()
         .find((input) => current.confirmedInputIds.has(input.id));
+      // Immediate selections (single targets) never enter confirmedInputIds, so
+      // a rejection must clear their value: with the answer still in place the
+      // input stays complete and every further pick is swallowed.
+      const values: Record<string, InteractionSubmissionValue> = { ...current.values };
+      for (const input of action.inputs) {
+        if (
+          input.kind === "entity-selection" &&
+          interactionInputAdvancesImmediately(input) &&
+          values[input.id] !== undefined
+        )
+          delete values[input.id];
+      }
       return {
         ...current,
         submissionRejected: true,
+        values,
         confirmedInputIds: retryInput
           ? new Set([...current.confirmedInputIds].filter((inputId) => inputId !== retryInput.id))
           : current.confirmedInputIds,
       };
     });
-  }, [action, draft.values, onSubmit, view]);
+  }, [action, draft.values, onSubmit, view, preview.canSubmit]);
 
   useEffect(() => {
     if (
@@ -449,6 +517,10 @@ export function InteractionDraftProvider({
   const value = useMemo<InteractionDraftControls>(
     () => ({
       ...draft,
+      view,
+      previewPending: preview.pending,
+      previewError: preview.error,
+      retryPreview: preview.retry,
       active: Boolean(action),
       begin,
       change,
@@ -461,6 +533,10 @@ export function InteractionDraftProvider({
       skipCurrent,
     }),
     [
+      view,
+      preview.pending,
+      preview.error,
+      preview.retry,
       action,
       begin,
       cancel,

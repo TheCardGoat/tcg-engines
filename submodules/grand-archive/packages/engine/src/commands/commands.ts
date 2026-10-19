@@ -172,9 +172,8 @@ export type GrandArchiveCommand =
       readonly prepareAbilityIndexes?: GrandArchivePrepareAbilityIndexes;
       readonly variables?: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
     }
-  | {
+  | ({
       readonly move: "activate-ability";
-      readonly sourceId: GrandArchiveObjectId;
       readonly abilityId: string;
       readonly modeIds?: readonly string[];
       readonly targets?: Readonly<Record<string, readonly GrandArchiveTargetId[]>>;
@@ -185,7 +184,10 @@ export type GrandArchiveCommand =
       readonly variables?: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
       readonly costOptionIndex?: number;
       readonly payOptionalCost?: boolean;
-    }
+    } & (
+      | { readonly sourceId: GrandArchiveObjectId; readonly masteryName?: never }
+      | { readonly sourceId?: never; readonly masteryName: string }
+    ))
   | {
       readonly move: "declare-attack";
       readonly attackerId: GrandArchiveObjectId;
@@ -536,14 +538,21 @@ export function decodeGrandArchiveCommand(
           ...(prepareAbilityIndexes ? { prepareAbilityIndexes } : {}),
         };
       }
-      case "activate-ability":
-        requireOnly(payload, ["sourceId", "abilityId", ...ACTIVATION_FIELDS]);
+      case "activate-ability": {
+        requireOnly(payload, ["sourceId", "masteryName", "abilityId", ...ACTIVATION_FIELDS]);
+        if ((payload.sourceId !== undefined) === (payload.masteryName !== undefined))
+          throw new Error("Ability activation requires exactly one source identity");
+        const source =
+          payload.masteryName !== undefined
+            ? { masteryName: identifier(payload.masteryName) }
+            : { sourceId: grandArchiveObjectId(identifier(payload.sourceId)) };
         return {
           move,
-          sourceId: grandArchiveObjectId(identifier(payload.sourceId)),
+          ...source,
           abilityId: identifier(payload.abilityId),
           ...activationDeclaration(payload),
         };
+      }
       case "declare-attack":
         requireOnly(payload, [
           "attackerId",

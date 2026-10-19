@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/naming"
   relation: "current_index"
 ---
-
 # Naming
 
 #### General Rules:

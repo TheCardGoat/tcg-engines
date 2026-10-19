@@ -54,11 +54,13 @@ export function OpeningMotion({
   opening,
   reduced,
   sound,
+  paused = false,
   children,
 }: {
   opening?: ArenaOpening;
   reduced: boolean;
   sound?: boolean;
+  paused?: boolean;
   children: ReactNode;
 }) {
   const clock = useRef(0);
@@ -77,8 +79,11 @@ export function OpeningMotion({
     lastDraw.current = -1;
     invalidate();
   }, [beat, invalidate]);
+  useEffect(() => {
+    if (!paused) invalidate();
+  }, [paused, invalidate]);
   useFrame((_, delta) => {
-    if (!beat?.duration || done.current || document.hidden) return;
+    if (!beat?.duration || done.current || document.hidden || paused) return;
     clock.current += Math.min(delta * 1000, 50);
     const draw = Math.min(7, Math.floor(clock.current / dealStagger));
     if ((beat.id === "deal" || beat.id === "redraw") && draw > lastDraw.current) {
@@ -111,8 +116,25 @@ export function useOpeningCardMotion(
 ) {
   const context = useContext(MotionContext);
   const beat = context?.opening.beat;
-  const source = useRef({ x: 0, y: 0, z: 0, scale: 1, turn: 0, tilt: 0, face: false });
+  const replacement = !!beat && ["return", "reshuffle", "redraw"].includes(beat.id);
+  // Replacement choreography belongs only to the local outgoing/incoming cards.
+  // A zero-distance flight still has lift and tilt, so other cards must not sample it.
+  const stationary =
+    (replacement &&
+      (!placed.hand || rival || context?.opening.retainedIds.has(placed.card.instanceId))) ||
+    (beat?.id === "settle" && (!placed.hand || rival));
+  const source = useRef({ x: 0, y: 0, z: 0, scale: 1, turn: 0, tilt: 0, flip: 0, face: false });
   const face = useRef(false);
+  // The resting-pose hook can update the group before this layout effect.
+  // Preserve the last rendered pose so each opening flight starts on screen.
+  const renderedPose = useRef<typeof source.current | null>(null);
+  const restoreStationaryPose = (group: Group) => {
+    const pose = renderedPose.current;
+    if (!pose) return;
+    group.position.set(pose.x, pose.y, pose.z);
+    group.scale.setScalar(pose.scale);
+    group.rotation.set(pose.tilt, pose.flip, pose.turn);
+  };
   const { camera, size } = useThree();
   const target = beat
     ? openingPlacement(placed, beat, rival, slot, count, compact, {
@@ -138,6 +160,10 @@ export function useOpeningCardMotion(
   useLayoutEffect(() => {
     const group = ref.current;
     if (!group || !beat) return;
+    if (stationary) {
+      restoreStationaryPose(group);
+      return;
+    }
     if (!initialized.current) {
       // Cards arriving after a native mulligan start from the deck, never flash in the hand.
       const fromDeck = placed.hand && beat.id === "redraw";
@@ -151,19 +177,54 @@ export function useOpeningCardMotion(
       face.current = fromDeck ? false : targetFace;
       initialized.current = true;
     }
-    source.current = {
+    source.current = renderedPose.current ?? {
       x: group.position.x,
       y: group.position.y,
       z: group.position.z,
       scale: group.scale.x,
       turn: group.rotation.z,
       tilt: group.rotation.x,
+      flip: group.rotation.y,
       face: face.current,
     };
+    // Native acceptance can briefly mount the new hand before its animation.
+    // Use opening slots and the deck as authoritative presentation origins.
+    if (
+      placed.hand &&
+      !rival &&
+      !context?.opening.retainedIds.has(placed.card.instanceId) &&
+      (beat.id === "return" || beat.id === "redraw")
+    ) {
+      const origin = openingPlacement(
+        placed,
+        { ...beat, hand: beat.id === "return" ? "review" : "deck" },
+        rival,
+        slot,
+        count,
+        compact,
+        { camera, viewportAspect: size.width / size.height },
+      );
+      source.current = {
+        x: origin.x * (beat.id === "redraw" ? horizontalScale : 1),
+        y: origin.y,
+        z: origin.z,
+        scale: origin.height * CARD_RATIO,
+        turn: origin.angle,
+        tilt: origin.rotationX ?? 0,
+        flip: beat.id === "return" ? 0 : Math.PI,
+        face: beat.id === "return" && !placed.card.faceDown,
+      };
+      // Set the first frame before paint; the frame loop then advances the flight.
+      const start = source.current;
+      group.position.set(start.x, start.y, start.z);
+      group.scale.setScalar(start.scale);
+      group.rotation.set(start.tilt, start.face ? 0 : Math.PI, start.turn);
+    }
     face.current = targetFace;
     group.visible = placed.card.zone !== "contender" || beat.leaders !== "hidden";
   }, [
     beat,
+    stationary,
     ref,
     compact,
     horizontalScale,
@@ -179,6 +240,10 @@ export function useOpeningCardMotion(
   useFrame(() => {
     const group = ref.current;
     if (!group) return;
+    if (stationary) {
+      restoreStationaryPose(group);
+      return;
+    }
     if (
       !beat ||
       !context ||
@@ -188,6 +253,16 @@ export function useOpeningCardMotion(
     ) {
       group.visible = true;
       group.rotation.y = 0;
+      renderedPose.current = {
+        x: group.position.x,
+        y: group.position.y,
+        z: group.position.z,
+        scale: group.scale.x,
+        turn: group.rotation.z,
+        tilt: group.rotation.x,
+        flip: group.rotation.y,
+        face: !placed.card.faceDown,
+      };
       return;
     }
     const start = source.current;
@@ -230,5 +305,15 @@ export function useOpeningCardMotion(
           12 *
           Math.sin(Math.PI * Math.min(1, context.clock.current / (beat.duration ?? 1)));
     }
+    renderedPose.current = {
+      x: group.position.x,
+      y: group.position.y,
+      z: group.position.z,
+      scale: group.scale.x,
+      turn: group.rotation.z,
+      tilt: group.rotation.x,
+      flip: group.rotation.y,
+      face: targetFace,
+    };
   });
 }

@@ -20,6 +20,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 const ICONS: Readonly<Record<string, LucideIcon>> = {
   damage: Droplet,
+  "temporary-damage": Droplet,
+  "damage-counters": Droplet,
   buff: CirclePlus,
   debuff: CircleMinus,
   bulwark: Shield,
@@ -36,20 +38,14 @@ export function isGrandArchiveCounter(decoration: SimulatorEntityDecoration): bo
   return decoration.id.startsWith("ga:counter:");
 }
 
-function CounterSeal({
-  counter,
-  temporaryDamage = false,
-}: {
-  readonly counter: SimulatorEntityDecoration;
-  readonly temporaryDamage?: boolean;
-}) {
+function CounterSeal({ counter }: { readonly counter: SimulatorEntityDecoration }) {
   const kind = counter.id.slice("ga:counter:".length);
   const Icon = ICONS[kind] ?? Tag;
   return (
     <span className="ga-counter-seal" data-counter-kind={kind}>
       <Icon size={14} aria-hidden="true" />
       <strong>{counter.content.kind === "text" ? counter.content.text : ""}</strong>
-      {kind === "damage" && temporaryDamage ? <Clock size={10} aria-hidden="true" /> : null}
+      {kind === "temporary-damage" ? <Clock size={10} aria-hidden="true" /> : null}
     </span>
   );
 }
@@ -58,13 +54,11 @@ function CounterSeal({
 export function GrandArchiveCounters({
   title,
   counters,
-  temporaryDamage,
   onUnmountFocus,
 }: {
   readonly onUnmountFocus: () => void;
   readonly title: string;
   readonly counters: readonly SimulatorEntityDecoration[];
-  readonly temporaryDamage: boolean;
 }) {
   const [opened, setOpened] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -81,7 +75,9 @@ export function GrandArchiveCounters({
       }
     };
   }, [onUnmountFocus]);
-  const damage = counters.find((counter) => counter.id === "ga:counter:damage");
+  const damage = counters.find(
+    (counter) => counter.id === "ga:counter:damage" || counter.id === "ga:counter:temporary-damage",
+  );
   const secondary = counters.filter((counter) => counter !== damage);
   const visible = secondary.slice(0, damage ? 1 : 2);
   const hiddenCount = secondary.length - visible.length;
@@ -90,7 +86,7 @@ export function GrandArchiveCounters({
       opened={opened}
       onChange={setOpened}
       position="bottom-end"
-      middlewares={{ flip: true, shift: { padding: 12 } }}
+      middlewares={{ flip: true, shift: { padding: 12, crossAxis: true } }}
       withArrow
       withinPortal
       trapFocus
@@ -116,7 +112,7 @@ export function GrandArchiveCounters({
             {visible.map((counter) => (
               <CounterSeal key={counter.id} counter={counter} />
             ))}
-            {damage ? <CounterSeal counter={damage} temporaryDamage={temporaryDamage} /> : null}
+            {damage ? <CounterSeal counter={damage} /> : null}
           </span>
         </button>
       </Popover.Target>

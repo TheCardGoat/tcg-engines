@@ -1355,3 +1355,21 @@ function expectInvalidCodes(
     result.issues.map((issue: { code: InteractionSubmissionValidationIssueCode }) => issue.code),
   ).toEqual(expectedCodes);
 }
+
+test("explicit target confirmation survives schema parsing without changing selection bounds", () => {
+  const input = EntitySelectionInput.parse({
+    kind: "entity-selection",
+    id: "target",
+    text: { key: "Choose a target" },
+    role: "target",
+    entityKinds: ["card"],
+    min: 1,
+    max: 1,
+    confirmBeforeSubmit: true,
+    ordered: false,
+    candidates: [{ entity: { kind: "card", instanceId: "public-card" }, enabled: true }],
+  });
+  expect(input.confirmBeforeSubmit).toBe(true);
+  expect(input.min).toBe(1);
+  expect(input.max).toBe(1);
+});

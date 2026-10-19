@@ -78,8 +78,8 @@ describe("Embersong's damage and class bonus have independent targets", () => {
         p.activate(embersong, { reservePayment: pay, targets });
         passEffectsStack(game);
         expect(p.zone("memory")).toHaveLength(2);
-        expect(game.state.objects[foe.objectId]!.damage).toBe(hit ? 2 : 0);
-        expect(game.state.objects[own.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(foe.objectId)).toBe(hit ? 2 : 0);
+        expect(game.markedDamage(own.objectId)).toBe(0);
         expect(power()).toBe(initialPower + (bonus ? 2 : 0));
         advanceToMain(game, q.id);
         expect(power()).toBe(initialPower);

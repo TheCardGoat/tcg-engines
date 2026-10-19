@@ -7,7 +7,7 @@
  * imported on the next run without maintaining a hand-written URL list.
  */
 import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { dirname, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const site = "https://rules.gatcg.com";
@@ -79,4 +79,17 @@ if (!Array.isArray(index.pages) || index.pages.length === 0) {
 }
 
 await runPool(index.pages, fetchMarkdown);
+await writeFile(
+  resolve(referenceDirectory, "current-pages.json"),
+  `${JSON.stringify(
+    {
+      source: `${site}/~gitbook/site-index`,
+      files: index.pages
+        .map((page) => relative(referenceDirectory, outputPathFor(page.pathname)))
+        .sort(),
+    },
+    null,
+    2,
+  )}\n`,
+);
 console.log(`Synced ${index.pages.length} Grand Archive rules pages to ${referenceDirectory}`);

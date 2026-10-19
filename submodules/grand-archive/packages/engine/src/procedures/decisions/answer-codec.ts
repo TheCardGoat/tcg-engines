@@ -1,3 +1,4 @@
+import type { GrandArchiveTriggerAnnouncement } from "../activation/trigger-announcement.ts";
 import type { GrandArchiveZone } from "@tcg/grand-archive-types";
 import { grandArchiveObjectCurrentCharacteristics } from "../../rules/state/continuous.ts";
 import type {
@@ -37,12 +38,6 @@ interface GrandArchiveEffectAttackAnswer {
   readonly delegatePlayerId?: GrandArchivePlayerId;
   readonly effectCostPayment?: GrandArchiveCostPaymentSelection;
   readonly attackCostPayment?: GrandArchiveCostPaymentSelection;
-}
-
-interface GrandArchiveParsedTriggerAnnouncement {
-  readonly modeIds?: readonly string[];
-  readonly targets?: Readonly<Record<string, readonly GrandArchiveTargetId[]>>;
-  readonly variables?: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
 }
 
 export class GrandArchiveDecisionAnswerCodec {
@@ -856,7 +851,7 @@ export class GrandArchiveDecisionAnswerCodec {
     };
   }
 
-  public parseTriggerAnnouncement(answer: unknown): GrandArchiveParsedTriggerAnnouncement | null {
+  public parseTriggerAnnouncement(answer: unknown): GrandArchiveTriggerAnnouncement | null {
     if (typeof answer !== "object" || answer === null || Array.isArray(answer)) return null;
     let modeIds: readonly string[] | undefined;
     let targets: Readonly<Record<string, readonly GrandArchiveTargetId[]>> | undefined;

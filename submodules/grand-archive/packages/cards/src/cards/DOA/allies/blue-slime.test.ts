@@ -52,7 +52,7 @@ describe("Blue Slime's damage-event buff counters", () => {
         other = p.card(giantTortoise);
       q.declareAttack(blitzMage, slime);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[slime.objectId]!.damage).toBe(3);
+      expect(game.markedDamage(slime.objectId)).toBe(3);
       expect(game.state.objects[slime.objectId]!.counters.buff ?? 0).toBe(classBonus ? 1 : 0);
       q.declareAttack(woodlandSquirrels, other);
       game.resolveCombatWithoutRetaliation();
@@ -69,6 +69,6 @@ describe("Blue Slime's damage-event buff counters", () => {
       expect(game.state.objects[slime.objectId]!.counters.buff ?? 0).toBe(classBonus ? 2 : 0);
       p.declareAttack(slime, q.card(opponent));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(opponent).objectId]!.damage).toBe(classBonus ? 3 : 1);
+      expect(game.markedDamage(q.card(opponent).objectId)).toBe(classBonus ? 3 : 1);
     });
 });

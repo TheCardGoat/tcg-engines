@@ -6,24 +6,27 @@ import {
 } from "@tcg/bot-core";
 import {
   applyCommand,
+  createAlphaClashExpert,
   createInitialState,
   type AcCommand,
   type DeckConfig,
   type MatchState,
 } from "../../../../../../alpha-clash/packages/engine/src/index.ts";
 import { alphaClashBotCommandCandidates } from "../../../../../packages/alpha-clash/alpha-clash-server-adapter/src/bot.ts";
-import { clashStepSeat } from "../../../../../packages/alpha-clash/alpha-clash-server-adapter/src/alpha-clash-server-engine.ts";
+import { alphaClashDecisionSeat } from "@tcg/alpha-clash-server-adapter";
 import {
   alphaClashHeuristicCommand,
   ALPHA_CLASH_HEURISTICS,
   type AlphaClashHeuristics,
-} from "./policy.ts";
+} from "@tcg/alpha-clash-server-adapter/practice";
 import { candidateWinner } from "../shared.ts";
 
 export interface AlphaClashRunInput {
   readonly blockId: string;
   readonly legId: string;
   readonly seed: string;
+  /** Paired legs use the same shuffle while retaining distinct journal identities. */
+  readonly shuffleSeed?: string;
   readonly candidateSeat: "p1" | "p2";
   readonly candidateDeckId: string;
   readonly baselineDeckId: string;
@@ -48,16 +51,22 @@ function stateHash(state: MatchState): string {
 /** Runs the existing practice policy through the same public command boundary as the server. */
 export function runAlphaClashPracticeMatch(input: AlphaClashRunInput): BotMatchRecordV1 {
   const candidateIsP1 = input.candidateSeat === "p1";
-  const state = createInitialState({
+  let state = createInitialState({
     id: `${input.blockId}/${input.legId}`,
-    seed: Number.parseInt(stableBotHash(input.seed).split(":")[1]!, 16),
+    seed: Number.parseInt(stableBotHash(input.shuffleSeed ?? input.seed).split(":")[1]!, 16),
     firstPlayer: "player-one",
+    validateDeck: false,
     players: {
       "player-one": { name: "P1", deck: candidateIsP1 ? input.candidateDeck : input.baselineDeck },
       "player-two": { name: "P2", deck: candidateIsP1 ? input.baselineDeck : input.candidateDeck },
     },
   });
   const detector = createSemanticCycleDetector();
+  const expert = createAlphaClashExpert();
+  let expertDecisions = 0,
+    expertNodes = 0,
+    expertMaxNodes = 0,
+    expertCycles = 0;
   input.observe?.(state);
   let termination: BotTerminationReason = "max-actions";
   let actions = 0;
@@ -68,10 +77,21 @@ export function runAlphaClashPracticeMatch(input: AlphaClashRunInput): BotMatchR
       termination = "repeated-state";
       break;
     }
-    const seat = clashStepSeat(state) ?? state.activePlayer;
+    const seat = alphaClashDecisionSeat(state);
+    if (!seat) {
+      termination = "illegal-command";
+      break;
+    }
     const isCandidate = (seat === "player-one") === candidateIsP1;
     const strategyId =
       (isCandidate ? input.candidateStrategyId : input.baselineStrategyId) ?? "practice-v1";
+    const decision = strategyId === "expert-oracle" ? expert.decide(state, seat) : undefined;
+    if (decision) {
+      expertDecisions++;
+      expertNodes += decision.diagnostics.nodesEvaluated;
+      expertMaxNodes = Math.max(expertMaxNodes, decision.diagnostics.nodesEvaluated);
+      expertCycles += decision.diagnostics.cyclesAvoided;
+    }
     const config = ALPHA_CLASH_HEURISTICS[strategyId];
     const heuristic = config
       ? alphaClashHeuristicCommand(state, seat, {
@@ -79,15 +99,20 @@ export function runAlphaClashPracticeMatch(input: AlphaClashRunInput): BotMatchR
           ...(isCandidate ? input.candidateOverrides : {}),
         })
       : undefined;
-    const commands = config
-      ? heuristic
-        ? [heuristic]
+    const commands = decision
+      ? decision.command
+        ? [decision.command]
         : []
-      : alphaClashBotCommandCandidates(state, seat);
+      : config
+        ? heuristic
+          ? [heuristic]
+          : []
+        : alphaClashBotCommandCandidates(state, seat);
     let applied = false;
     for (const command of commands) {
       const result = applyCommand(state, command);
       if (result.success) {
+        state = result.state;
         applied = true;
         actions++;
         input.observe?.(state, command);
@@ -122,6 +147,9 @@ export function runAlphaClashPracticeMatch(input: AlphaClashRunInput): BotMatchR
     turnCount: state.turnNumber,
     actionCount: actions,
     finalStateHash: stateHash(state),
-    diagnostics: { illegalProposals },
+    diagnostics: {
+      illegalProposals,
+      ...(expertDecisions ? { expertDecisions, expertNodes, expertMaxNodes, expertCycles } : {}),
+    },
   };
 }

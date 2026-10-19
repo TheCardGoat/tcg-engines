@@ -1,5 +1,6 @@
+import { buildInteractionSubmission } from "@tcg/protocol";
 import { useMemo, useReducer, useState } from "react";
-import { Button } from "@mantine/core";
+import { Button, Switch } from "@mantine/core";
 import { projectGrandArchiveSimulator } from "@tcg/grand-archive-server-adapter";
 import { grandArchivePlayerId } from "@tcg/grand-archive-engine/runtime";
 import { grandArchiveHarnessFixture } from "./fixtureProjection";
@@ -7,11 +8,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   GRAND_ARCHIVE_FIXTURE_GROUPS,
   GRAND_ARCHIVE_VISUAL_FIXTURES,
-  createMaterialHandFixtureServer,
-  createAttackTargetingFixtureServer,
+  createGrandArchivePlayableFixtureServer,
+  isGrandArchivePlayableFixtureId,
+  type GrandArchivePlayableFixtureId,
   type GrandArchiveFixtureGroupId,
 } from "./fixtures";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
+
+import { findGrandArchiveNativeFixture } from "./native-fixtures";
 
 const GRAND_ARCHIVE_SIMULATOR_BASE = "/grand-archive/simulator";
 const ALL_GROUPS = "all" as const;
@@ -113,7 +117,7 @@ export function GrandArchiveFixturesPage() {
     );
   }
 
-  if (fixtureId === "materialization-hand" || fixtureId === "attack-targeting")
+  if (isGrandArchivePlayableFixtureId(fixtureId))
     return <GrandArchivePlayableFixture key={fixtureId} kind={fixtureId} />;
 
   return (
@@ -128,28 +132,38 @@ export function GrandArchiveFixturesPage() {
 }
 
 /** Playable decision fixture using the same server submission path as practice. */
-export function GrandArchivePlayableFixture({
-  kind,
-}: {
-  kind: "materialization-hand" | "attack-targeting";
-}) {
-  const createServer =
-    kind === "attack-targeting"
-      ? createAttackTargetingFixtureServer
-      : createMaterialHandFixtureServer;
+export function GrandArchivePlayableFixture({ kind }: { kind: GrandArchivePlayableFixtureId }) {
+  const native = findGrandArchiveNativeFixture(kind);
+  const createServer = () => createGrandArchivePlayableFixtureServer(kind);
   const [server, setServer] = useState(createServer);
   const [resetVersion, reset] = useReducer((version: number) => version + 1, 0);
   const [, refresh] = useReducer((version: number) => version + 1, 0);
   const [error, setError] = useState<string>();
   const [viewerId, setViewerId] = useState("p1");
-  const viewer = grandArchivePlayerId(viewerId);
+  const [followActor, setFollowActor] = useState(kind !== "native-opening");
+  const wait = server.runtime.waitState();
+  const actor = "playerId" in wait ? wait.playerId : undefined;
+  const effectiveViewerId = followActor && actor ? actor : viewerId;
+  const viewer = grandArchivePlayerId(effectiveViewerId);
+  const otherActorView = actor && actor !== viewer ? server.getInteractionView(actor) : undefined;
+  const otherActorPass =
+    kind === "native-opening"
+      ? otherActorView?.actions.find((action) => action.intent === "pass")
+      : undefined;
   const fixture = grandArchiveHarnessFixture(
     kind,
-    kind === "attack-targeting" ? "Choose an attack target" : "Material deck in hand",
-    kind === "attack-targeting"
-      ? "Choose a legal target and inspect the resulting combat."
-      : "Try one materialization choice, then use Reset materialization to try another.",
-    projectGrandArchiveSimulator(server.program, server.runtime.state, viewer),
+    native?.name ??
+      (kind !== "materialization-hand" ? "Choose an attack target" : "Material deck in hand"),
+    native?.summary ??
+      (kind === "attack-targeting"
+        ? "Choose a legal target and inspect the resulting combat."
+        : "Try one materialization choice, then use Reset materialization to try another."),
+    projectGrandArchiveSimulator(
+      server.program,
+      server.runtime.state,
+      viewer,
+      server.getViewerResources({ role: "player", actorId: viewer }),
+    ),
   );
   return (
     <GrandArchiveTabletop
@@ -158,28 +172,61 @@ export function GrandArchivePlayableFixture({
       errorMessage={error}
       historyAccessory={
         <>
-          {kind === "attack-targeting" ? (
+          {otherActorView && otherActorPass && actor ? (
             <Button
               size="compact-sm"
-              variant="subtle"
-              onClick={() => setViewerId((id) => (id === "p1" ? "p2" : "p1"))}
+              variant="light"
+              onClick={() => {
+                const result = server.submitInteraction(
+                  actor,
+                  buildInteractionSubmission({ view: otherActorView, action: otherActorPass }),
+                  {
+                    gameId: `grand-archive-${kind}-fixture`,
+                    sourceAuthority: "client",
+                  },
+                );
+                setError(result.success ? undefined : result.error);
+                refresh();
+              }}
             >
-              Switch viewer ({viewerId === "p1" ? "opponent" : "you"})
+              Opponent: {otherActorPass.text.key}
             </Button>
           ) : null}
+          <Switch
+            size="xs"
+            label="Follow active player"
+            checked={followActor}
+            onChange={(event) => setFollowActor(event.currentTarget.checked)}
+          />
+          <Button
+            size="compact-sm"
+            variant="subtle"
+            onClick={() => {
+              setFollowActor(false);
+              setViewerId(effectiveViewerId === "p1" ? "p2" : "p1");
+            }}
+          >
+            Switch viewer ({effectiveViewerId === "p1" ? "opponent" : "you"})
+          </Button>
           <Button
             size="compact-sm"
             variant="default"
             onClick={() => {
               setServer(createServer());
               setError(undefined);
+              setViewerId("p1");
               reset();
             }}
           >
-            {kind === "attack-targeting" ? "Reset attack" : "Reset materialization"}
+            {native
+              ? "Reset scenario"
+              : kind !== "materialization-hand"
+                ? "Reset attack"
+                : "Reset materialization"}
           </Button>
         </>
       }
+      onPreviewProtocolInteraction={async (request) => server.previewInteraction(viewer, request)}
       onSubmitProtocolInteraction={(submission) => {
         const result = server.submitInteraction(viewer, submission, {
           gameId: `grand-archive-${kind}-fixture`,

@@ -95,7 +95,7 @@ describe("Intangible Geist's class-restricted combat prevention", () => {
         if (combat) {
           p.declareAttack(p.cards(woodlandSquirrels, { zone: "field" })[0]!, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(classBonus ? 0 : 1);
+          expect(game.markedDamage(target.objectId)).toBe(classBonus ? 0 : 1);
           p.declareAttack(
             p.cards(woodlandSquirrels, { zone: "field" })[1]!,
             q.card(woodlandSquirrels),
@@ -110,7 +110,7 @@ describe("Intangible Geist's class-restricted combat prevention", () => {
             targets: { "target-1": [target.objectId] },
           });
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
         }
       });
 });

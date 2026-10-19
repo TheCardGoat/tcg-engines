@@ -58,7 +58,7 @@ describe("Give Bath removes temporary ally damage", () => {
           });
           passEffectsStack(game);
         }
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         const payment = p
           .cards(woodlandSquirrels, { zone: "hand" })
           .map((c) => ({ kind: "card" as const, cardId: c.objectId }));
@@ -74,9 +74,9 @@ describe("Give Bath removes temporary ally damage", () => {
           reservePayment: payment,
           targets: { "target-1": [target.objectId] },
         });
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         expect(game.state.objects[target.objectId]!.zone).toBe("field");
       });
 });

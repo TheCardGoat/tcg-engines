@@ -1,0 +1,265 @@
+{
+  "verifiedOn": "2026-10-12",
+  "engineRevision": "fnv1a32:74f18f32",
+  "cardCatalogHash": "fnv1a32:054bba93",
+  "strategy": "meta-v1",
+  "constructionPolicy": "Execution permits non-constructed lists; format admission validates separately.",
+  "scope": "Exact admitted decks; public native commands; both seats; deterministic replay. No hosted-flow or deployment proof.",
+  "audits": [
+    {
+      "deckId": "clarity-hyper-aggro",
+      "mainCount": 50,
+      "sideCount": 10,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "absence-makati",
+      "mainCount": 60,
+      "sideCount": 15,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "mainCount": 51,
+      "sideCount": 11,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "mainCount": 50,
+      "sideCount": 10,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "mainCount": 60,
+      "sideCount": 0,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "mainCount": 50,
+      "sideCount": 0,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-silou-death",
+      "mainCount": 56,
+      "sideCount": 9,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "mainCount": 54,
+      "sideCount": 10,
+      "ready": true,
+      "issues": []
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "mainCount": 54,
+      "sideCount": 15,
+      "ready": true,
+      "issues": []
+    }
+  ],
+  "matches": [
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-xiii-war-p1",
+        "seed": "season3-card-support-season3-xiii-war",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-xiii-war",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 9,
+        "actionCount": 225,
+        "finalStateHash": "fnv1a32:69c567bd",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-xiii-war-p2",
+        "seed": "season3-card-support-season3-xiii-war",
+        "candidateSeat": "p2",
+        "candidateDeckId": "season3-xiii-war",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 211,
+        "finalStateHash": "fnv1a32:30b0027d",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-sloppy-valen-p1",
+        "seed": "season3-card-support-season3-sloppy-valen",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-sloppy-valen",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 269,
+        "finalStateHash": "fnv1a32:a5a50ab7",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-sloppy-valen-p2",
+        "seed": "season3-card-support-season3-sloppy-valen",
+        "candidateSeat": "p2",
+        "candidateDeckId": "season3-sloppy-valen",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 361,
+        "finalStateHash": "fnv1a32:195e0231",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-silou-death-p1",
+        "seed": "season3-card-support-season3-silou-death",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-death",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 236,
+        "finalStateHash": "fnv1a32:90a3d99f",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-silou-death-p2",
+        "seed": "season3-card-support-season3-silou-death",
+        "candidateSeat": "p2",
+        "candidateDeckId": "season3-silou-death",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 254,
+        "finalStateHash": "fnv1a32:7bd6ab4d",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-silou-clarity-p1",
+        "seed": "season3-card-support-season3-silou-clarity",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 303,
+        "finalStateHash": "fnv1a32:ba663888",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-silou-clarity-p2",
+        "seed": "season3-card-support-season3-silou-clarity",
+        "candidateSeat": "p2",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 8,
+        "actionCount": 181,
+        "finalStateHash": "fnv1a32:81ba968b",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-avalogaming-kilimanjaro-p1",
+        "seed": "season3-card-support-season3-avalogaming-kilimanjaro",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-avalogaming-kilimanjaro",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 284,
+        "finalStateHash": "fnv1a32:2bdcbb2a",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    },
+    {
+      "record": {
+        "blockId": "season3-card-support",
+        "legId": "season3-avalogaming-kilimanjaro-p2",
+        "seed": "season3-card-support-season3-avalogaming-kilimanjaro",
+        "candidateSeat": "p2",
+        "candidateDeckId": "season3-avalogaming-kilimanjaro",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 272,
+        "finalStateHash": "fnv1a32:3524d0dd",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayExact": true
+    }
+  ]
+}

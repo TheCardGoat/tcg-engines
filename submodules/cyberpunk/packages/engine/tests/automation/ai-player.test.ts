@@ -89,3 +89,44 @@ describe("AIPlayer.takeTurn", () => {
     );
   });
 });
+
+describe("AIPlayer deferred decisions", () => {
+  test("keeps seeded decisions and committed state identical across cloned worker snapshots", () => {
+    const { engine: synchronous, players } = createEngine("worker-parity");
+    const owner = new LocalEngine(structuredClone(synchronous.getState()));
+    const syncPlayers = players.map(({ id }) => new AIPlayer(synchronous, id, randomStrategy));
+    const committers = players.map(({ id }) => new AIPlayer(owner, id, randomStrategy));
+    const thinkers = players.map(({ id }) => new AIPlayer(owner.fork(), id, randomStrategy));
+    let committed = 0;
+    for (let step = 0; step < 40; step++) {
+      const seat = players.findIndex(({ id }) => id === synchronous.getEffectiveActivePlayerId());
+      if (seat < 0 || synchronous.getState().G.gameEnded) break;
+      const before = owner.getState();
+      const selection = thinkers[seat]!.decide(new LocalEngine(structuredClone(before)));
+      expect(owner.getState()).toBe(before);
+      const immediate = syncPlayers[seat]!.step();
+      const deferred = committers[seat]!.executeDecision(selection);
+      expect(deferred.kind).toBe(immediate.kind);
+      if (immediate.kind === "acted" && deferred.kind === "acted") {
+        committed++;
+        expect(deferred.decision).toEqual(immediate.decision);
+        expect(deferred.result.success).toBe(true);
+        expect(owner.getState()).toEqual(synchronous.getState());
+      } else break;
+    }
+    expect(committed).toBeGreaterThan(10);
+  });
+
+  test("validates deferred commands against the owning engine", () => {
+    const { engine, players } = createEngine();
+    const ai = new AIPlayer(engine, players[0]!.id, firstLegalStrategy);
+    const before = engine.getState();
+    const result = ai.executeDecision({
+      kind: "decision",
+      decision: { kind: "command", move: "playCard", args: { cardId: "missing" } },
+      decisionDurationMs: 1,
+    });
+    expect(result.kind).toBe("illegal");
+    expect(engine.getState()).toBe(before);
+  });
+});

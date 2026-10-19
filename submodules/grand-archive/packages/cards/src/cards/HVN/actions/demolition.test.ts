@@ -60,9 +60,9 @@ describe("Demolition", () => {
           ).toThrow();
           expect(game.state).toEqual(before);
           p.activate(demolition, { reservePayment, targets: { "target-1": [target.objectId] } });
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(kind === "domain" ? 0 : 3);
+          expect(game.markedDamage(target.objectId)).toBe(kind === "domain" ? 0 : 3);
           if (kind === "domain")
             expect(game.state.objects[target.objectId]!.counters.durability).toBe(1);
           expect(p.zone("memory")).toHaveLength(cost);

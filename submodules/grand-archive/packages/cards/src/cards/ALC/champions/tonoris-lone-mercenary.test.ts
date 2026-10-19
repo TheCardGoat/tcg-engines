@@ -74,12 +74,12 @@ describe("Tonoris, Lone Mercenary — temporary On Enter Taunt", () => {
     expect(game.state).toEqual(before);
     opponent.declareAttack(attackers[0]!, champion);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[champion.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(champion.objectId)).toBe(2);
 
     const firstOpponentTurn = game.state.turn.number;
     advanceToMain(game, "player-two", firstOpponentTurn);
     opponent.declareAttack(attackers[1]!, otherTarget);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[otherTarget.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(otherTarget.objectId)).toBe(2);
   });
 });

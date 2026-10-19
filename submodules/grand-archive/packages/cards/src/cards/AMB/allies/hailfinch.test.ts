@@ -56,7 +56,7 @@ describe("Hailfinch — attack declaration tax", () => {
         .map((ref) => ({ kind: "card" as const, cardId: ref.objectId })),
     });
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[finch.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(finch.objectId)).toBe(1);
     expect(opponent.zone("memory")).toHaveLength(2);
 
     const wait = game.waitState();
@@ -64,7 +64,7 @@ describe("Hailfinch — attack declaration tax", () => {
       game.player(wait.playerId).pass();
     opponent.declareAttack(attackers[1]!, game.player("player-one").card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[game.player("player-one").card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(game.player("player-one").card(champion).objectId)).toBe(1);
   });
 });
 

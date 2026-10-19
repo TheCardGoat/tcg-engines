@@ -75,7 +75,7 @@ export function proveStateStealth(
             p.card(woodlandSquirrels, { zone: "field" }),
           );
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[defender.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(defender.objectId)).toBe(0);
           return;
         }
         if (mode === "spell") cast(fireball, 2);
@@ -92,7 +92,7 @@ export function proveStateStealth(
         expect(game.state.objects[defender.objectId]!.zone).toBe(
           damage >= life ? "graveyard" : "field",
         );
-        expect(game.state.objects[defender.objectId]!.damage).toBe(damage >= life ? 0 : damage);
+        expect(game.markedDamage(defender.objectId)).toBe(damage >= life ? 0 : damage);
       });
   for (const trueSight of [false, true])
     it(`gaining ${condition} stealth during combat, true sight=${trueSight}`, () => {
@@ -107,7 +107,7 @@ export function proveStateStealth(
       const life = grandArchiveTestFace(card).stats.life;
       if (typeof life !== "number") throw new Error("Expected ally life");
       const damage = trueSight ? 3 : 0;
-      expect(game.state.objects[defender.objectId]!.damage).toBe(damage >= life ? 0 : damage);
+      expect(game.markedDamage(defender.objectId)).toBe(damage >= life ? 0 : damage);
       expect(game.state.objects[defender.objectId]!.zone).toBe(
         damage >= life ? "graveyard" : "field",
       );

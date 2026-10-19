@@ -114,7 +114,7 @@ describe("Devised Conspiracy — Tristan Prepare, next champion attack, and stol
             p.declareAttack(p.card(woodlandSquirrels, { zone: "field" }), target);
             game.resolveCombatWithoutRetaliation();
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(1);
+            expect(game.markedDamage(target.objectId)).toBe(1);
             expect(q.zone("main-deck")).toEqual(deck);
             const unhit = game.state;
             expect(() => p.declareAttack(shadow, target)).toThrow();
@@ -122,13 +122,13 @@ describe("Devised Conspiracy — Tristan Prepare, next champion attack, and stol
             p.declareAttack(hero, target);
             game.resolveCombatWithoutRetaliation();
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(4);
+            expect(game.markedDamage(target.objectId)).toBe(4);
             const steals = prepare && championHit;
             expect(q.zone("main-deck")).toEqual(steals ? deck.slice(1) : deck);
             p.declareAttack(shadow, target);
             game.resolveCombatWithoutRetaliation();
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(5);
+            expect(game.markedDamage(target.objectId)).toBe(5);
             expect(q.zone("main-deck")).toEqual(steals ? deck.slice(2) : deck);
             if (steals) {
               for (const stolen of deck.slice(0, 2))
@@ -155,11 +155,11 @@ describe("Devised Conspiracy — Tristan Prepare, next champion attack, and stol
               expect(q.cards(shimmercloakAssassin, { zone: "field" })).toHaveLength(2);
             } else advanceToMain(game, p.id, game.state.turn.number);
             const nextDeck = q.zone("main-deck"),
-              damage = game.state.objects[foe.objectId]!.damage;
+              damage = game.markedDamage(foe.objectId);
             p.declareAttack(hero, foe);
             game.resolveCombatWithoutRetaliation();
             passEffectsStack(game);
-            expect(game.state.objects[foe.objectId]!.damage).toBe(damage + 1);
+            expect(game.markedDamage(foe.objectId)).toBe(damage + 1);
             expect(q.zone("main-deck")).toEqual(nextDeck);
           });
 });
@@ -235,7 +235,7 @@ describe("Devised Conspiracy — exact Prepare payment, next attack only, and un
         p.declareAttack(hero, foe);
         game.resolveCombatWithoutRetaliation();
         passEffectsStack(game);
-        expect(game.state.objects[foe.objectId]!.damage).toBe(first);
+        expect(game.markedDamage(foe.objectId)).toBe(first);
         expect(q.zone("main-deck")).toHaveLength(deck.length - (steals ? 1 : 0));
         p.activate(rivetingWinds, { reservePayment: pay(4) });
         passEffectsStack(game);
@@ -243,7 +243,7 @@ describe("Devised Conspiracy — exact Prepare payment, next attack only, and un
         p.declareAttack(hero, foe);
         game.resolveCombatWithoutRetaliation();
         passEffectsStack(game);
-        expect(game.state.objects[foe.objectId]!.damage).toBe(first + 1);
+        expect(game.markedDamage(foe.objectId)).toBe(first + 1);
         expect(q.zone("main-deck")).toHaveLength(deck.length - (steals ? 2 : 0));
       });
 });

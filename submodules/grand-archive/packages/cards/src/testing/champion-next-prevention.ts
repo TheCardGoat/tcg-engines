@@ -68,19 +68,17 @@ export function proveChampionNextPrevention({
           }
           q.declareAttack(giantTortoise, other);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[other.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(other.objectId)).toBe(1);
           expect(game.state.objects[hero.objectId]!.counters.enlighten ?? 0).toBe(0);
           q.declareAttack(firstDamage === 1 ? woodlandSquirrels : blitzMage, hero);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[hero.objectId]!.damage).toBe(
-            expired ? firstDamage : enlighten ? 0 : 1,
-          );
+          expect(game.markedDamage(hero.objectId)).toBe(expired ? firstDamage : enlighten ? 0 : 1);
           expect(game.state.objects[hero.objectId]!.counters.enlighten ?? 0).toBe(
             !expired && enlighten ? firstDamage : 0,
           );
           q.declareAttack(grayWolf, hero);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[hero.objectId]!.damage).toBe(
+          expect(game.markedDamage(hero.objectId)).toBe(
             (expired ? firstDamage : enlighten ? 0 : 1) + 2,
           );
           expect(game.state.objects[hero.objectId]!.counters.enlighten ?? 0).toBe(

@@ -14,6 +14,8 @@ interface OpponentDisconnectOverlayProps {
   claimAvailable?: boolean;
   timeoutExpired?: boolean;
   dropEligibility?: DropEligibility | null;
+  minimized?: boolean;
+  onMinimizedChange?: (minimized: boolean) => void;
 }
 
 const RING_RADIUS = 38;
@@ -27,10 +29,13 @@ export function OpponentDisconnectOverlay({
   claimAvailable = false,
   timeoutExpired = false,
   dropEligibility,
+  minimized: controlledMinimized,
+  onMinimizedChange,
 }: OpponentDisconnectOverlayProps) {
   const status = connectionUiStatus(connection);
   const { secondsRemaining, canDrop } = useOpponentPresence(connection);
-  const [minimized, setMinimized] = useState(false);
+  const [localMinimized, setLocalMinimized] = useState(false);
+  const minimized = controlledMinimized ?? localMinimized;
   const [confirmingDrop, setConfirmingDrop] = useState(false);
   const opponentDisconnected = variant === "opponent" && status === "disconnected";
   const timeoutMode = variant === "opponent" && !opponentDisconnected && timeoutExpired;
@@ -51,13 +56,15 @@ export function OpponentDisconnectOverlay({
   }, []);
 
   const handleMinimize = useCallback(() => {
-    setMinimized(true);
+    setLocalMinimized(true);
+    onMinimizedChange?.(true);
     setConfirmingDrop(false);
-  }, []);
+  }, [onMinimizedChange]);
 
   const handleExpand = useCallback(() => {
-    setMinimized(false);
-  }, []);
+    setLocalMinimized(false);
+    onMinimizedChange?.(false);
+  }, [onMinimizedChange]);
 
   if (variant === "opponent" && !opponentDisconnected && !timeoutMode) {
     return null;

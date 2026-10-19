@@ -73,12 +73,12 @@ describe("Flamelash Subduer's ally damage and temporary power", () => {
         if (ally === woodlandSquirrels)
           expect(game.state.objects[target.objectId]!.zone).toBe("graveyard");
         else {
-          expect(game.state.objects[target.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(target.objectId)).toBe(2);
           expect(power(target.objectId)).toBe(3);
           if (ally === giantTortoise) {
             p.declareAttack(target, q.card(champion));
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(3);
+            expect(game.markedDamage(q.card(champion).objectId)).toBe(3);
           }
         }
         const rested = game.state;

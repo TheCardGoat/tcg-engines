@@ -109,11 +109,11 @@ describe("Three of Spades — Cardistry temporary life", () => {
           q.declareAttack(attacker, target);
           game.resolveCombatWithoutRetaliation();
         }
-        expect(game.state.objects[target.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(target.objectId)).toBe(2);
         expect(game.state.objects[target.objectId]!.zone).toBe("field");
         advanceToMain(game, p.id);
         expect(life()).toBe(baseLife);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         expect(game.state.objects[target.objectId]!.zone).toBe("field");
         const before = game.state;
         expect(() =>

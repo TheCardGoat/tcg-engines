@@ -65,10 +65,10 @@ describe("Revitalizing Cleanse recovers only revealed water memory and draws", (
         p.activate(revitalizingCleanse, { reservePayment: pay });
         const memory = p.zone("memory");
         expect(memory).toHaveLength(7);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(hero.objectId)).toBe(damage);
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(Math.max(0, damage - waterCount));
-        expect(game.state.objects[other.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(hero.objectId)).toBe(Math.max(0, damage - waterCount));
+        expect(game.markedDamage(other.objectId)).toBe(1);
         expect(p.zone("hand")).toEqual([drawn]);
         expect(p.zone("memory")).toEqual(memory);
         expect(q.zone("memory")).toHaveLength(2);

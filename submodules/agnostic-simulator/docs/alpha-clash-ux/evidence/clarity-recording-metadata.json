@@ -1,0 +1,219 @@
+{
+  "scope": "Local dev build, prompt-foretell, Confirm order and resulting native draw only. Activation and editing occur before these clips.",
+  "browser": "Codex in-app Chrome 155",
+  "viewport": {
+    "width": 1366,
+    "height": 768,
+    "dpr": 1
+  },
+  "normal": "Sound enabled, master gain 0.5625, Reduced motion unchecked",
+  "comparison": "Sound disabled, master gain 0, Reduced motion checked after reload",
+  "method": "Timestamped CDP screencast; app Howler master output branched to MediaRecorder. No microphone, fabricated cues, or engine commands. Output frame rate is encoding, not a performance measurement.",
+  "cleanup": "Capture node disconnected and page reference deleted; viewport, visibility, sound off and reduced-motion off restored.",
+  "samples": [
+    {
+      "file": "clarity-confirm-audio.mp4",
+      "capturedFrames": 34,
+      "changedFrameSpanSeconds": 1.0068838596343994,
+      "audioOffsetSeconds": 0.01746511459350586,
+      "encodedFPS": 30,
+      "finalFrameHoldSeconds": 2,
+      "masterGain": 0.5625,
+      "audioLevels": [
+        "mean_volume: -44.7 dB",
+        "max_volume: -17.8 dB"
+      ],
+      "raw": {
+        "audio": {
+          "gain": 0.5625,
+          "start": 1791642051473.8,
+          "state": "running"
+        },
+        "frames": [
+          {
+            "index": 0,
+            "timestamp": 1791642051.491265
+          },
+          {
+            "index": 1,
+            "timestamp": 1791642051.504747
+          },
+          {
+            "index": 2,
+            "timestamp": 1791642051.59811
+          },
+          {
+            "index": 3,
+            "timestamp": 1791642051.752503
+          },
+          {
+            "index": 4,
+            "timestamp": 1791642051.766217
+          },
+          {
+            "index": 5,
+            "timestamp": 1791642051.791442
+          },
+          {
+            "index": 6,
+            "timestamp": 1791642051.821948
+          },
+          {
+            "index": 7,
+            "timestamp": 1791642051.836159
+          },
+          {
+            "index": 8,
+            "timestamp": 1791642051.847888
+          },
+          {
+            "index": 9,
+            "timestamp": 1791642051.86881
+          },
+          {
+            "index": 10,
+            "timestamp": 1791642051.914785
+          },
+          {
+            "index": 11,
+            "timestamp": 1791642051.932897
+          },
+          {
+            "index": 12,
+            "timestamp": 1791642051.949307
+          },
+          {
+            "index": 13,
+            "timestamp": 1791642051.969674
+          },
+          {
+            "index": 14,
+            "timestamp": 1791642051.983209
+          },
+          {
+            "index": 15,
+            "timestamp": 1791642051.998714
+          },
+          {
+            "index": 16,
+            "timestamp": 1791642052.014762
+          },
+          {
+            "index": 17,
+            "timestamp": 1791642052.033828
+          },
+          {
+            "index": 18,
+            "timestamp": 1791642052.049492
+          },
+          {
+            "index": 19,
+            "timestamp": 1791642052.131084
+          },
+          {
+            "index": 20,
+            "timestamp": 1791642052.148702
+          },
+          {
+            "index": 21,
+            "timestamp": 1791642052.168601
+          },
+          {
+            "index": 22,
+            "timestamp": 1791642052.181674
+          },
+          {
+            "index": 23,
+            "timestamp": 1791642052.234897
+          },
+          {
+            "index": 24,
+            "timestamp": 1791642052.252495
+          },
+          {
+            "index": 25,
+            "timestamp": 1791642052.268754
+          },
+          {
+            "index": 26,
+            "timestamp": 1791642052.335224
+          },
+          {
+            "index": 27,
+            "timestamp": 1791642052.351633
+          },
+          {
+            "index": 28,
+            "timestamp": 1791642052.368794
+          },
+          {
+            "index": 29,
+            "timestamp": 1791642052.401569
+          },
+          {
+            "index": 30,
+            "timestamp": 1791642052.41847
+          },
+          {
+            "index": 31,
+            "timestamp": 1791642052.435205
+          },
+          {
+            "index": 32,
+            "timestamp": 1791642052.449262
+          },
+          {
+            "index": 33,
+            "timestamp": 1791642052.498149
+          }
+        ]
+      }
+    },
+    {
+      "file": "clarity-confirm-muted-reduced.mp4",
+      "capturedFrames": 6,
+      "changedFrameSpanSeconds": 0.3052530288696289,
+      "audioOffsetSeconds": 0.015896081924438477,
+      "encodedFPS": 30,
+      "finalFrameHoldSeconds": 2,
+      "masterGain": 0,
+      "audioLevels": [
+        "mean_volume: -91.0 dB",
+        "max_volume: -91.0 dB"
+      ],
+      "raw": {
+        "audio": {
+          "gain": 0,
+          "start": 1791642107519.9,
+          "state": "running"
+        },
+        "frames": [
+          {
+            "index": 0,
+            "timestamp": 1791642107.535796
+          },
+          {
+            "index": 1,
+            "timestamp": 1791642107.558111
+          },
+          {
+            "index": 2,
+            "timestamp": 1791642107.649962
+          },
+          {
+            "index": 3,
+            "timestamp": 1791642107.802703
+          },
+          {
+            "index": 4,
+            "timestamp": 1791642107.81664
+          },
+          {
+            "index": 5,
+            "timestamp": 1791642107.841049
+          }
+        ]
+      }
+    }
+  ]
+}

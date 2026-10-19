@@ -1,0 +1,852 @@
+[
+  {
+    "id": "clarity-hyper-aggro",
+    "name": "Clarity Hyper Aggro",
+    "contender": "Clarity, Ready for Trials",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/0162d182-517c-4bdf-97a2-69c8e3520301",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "Shaneth / shane — 1st, Online League Season 3, 2026-08-19",
+    "main": [
+      {
+        "count": 4,
+        "name": "Sacrificial Strength"
+      },
+      {
+        "count": 4,
+        "name": "Controlling the Situation"
+      },
+      {
+        "count": 2,
+        "name": "Clarity's 1911"
+      },
+      {
+        "count": 2,
+        "name": "Webber's Binoculars"
+      },
+      {
+        "count": 2,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 3,
+        "name": "Restoration"
+      },
+      {
+        "count": 3,
+        "name": "Bombardment"
+      },
+      {
+        "count": 4,
+        "name": "Zhao Li, Reconnaissance Agent"
+      },
+      {
+        "count": 4,
+        "name": "Haven, the Resourceful Helper"
+      },
+      {
+        "count": 4,
+        "name": "Cao Ling, Demon Hunter"
+      },
+      {
+        "count": 4,
+        "name": "LINN, the Nanite Assassin"
+      },
+      {
+        "count": 3,
+        "name": "Colonel Edwards, Mastermind"
+      },
+      {
+        "count": 2,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 1,
+        "name": "Lord Krung, the Agitated"
+      },
+      {
+        "count": 1,
+        "name": "Haven, Quick Witted"
+      },
+      {
+        "count": 1,
+        "name": "Kheprius"
+      },
+      {
+        "count": 1,
+        "name": "Shadowlight, the Skilled"
+      },
+      {
+        "count": 1,
+        "name": "Clarity, Harbinger of Death"
+      },
+      {
+        "count": 4,
+        "name": "Denver"
+      }
+    ],
+    "side": [
+      {
+        "count": 2,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 3,
+        "name": "Cybernetic Recall"
+      },
+      {
+        "count": 2,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 1,
+        "name": "Bombardment"
+      },
+      {
+        "count": 1,
+        "name": "Ancient Protection"
+      },
+      {
+        "count": 1,
+        "name": "Marcus, Ghost of the Gambit"
+      }
+    ]
+  },
+  {
+    "id": "season3-undefendable-clarity",
+    "name": "Clarity — undefendable (Season 3 link)",
+    "contender": "Clarity, Ready for Trials",
+    "source": "https://op-deckplanet.com/alpha_clash/deck/be48dd18-0a88-477a-b9d7-10c841624b21",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "undefendable — 2nd, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceNote": "Recovered from the web cache (reported crawl: September 2026). The original host returns DEPLOYMENT_NOT_FOUND; the same ID on www.deckplanet.net is inaccessible. Card names resolved from cached image printing numbers; the displayed totals are 51 main and 11 side.",
+    "main": [
+      {
+        "count": 4,
+        "name": "Zhao Li, Reconnaissance Agent"
+      },
+      {
+        "count": 4,
+        "name": "Haven, the Resourceful Helper"
+      },
+      {
+        "count": 4,
+        "name": "LINN, the Nanite Assassin"
+      },
+      {
+        "count": 4,
+        "name": "Cao Ling, Demon Hunter"
+      },
+      {
+        "count": 3,
+        "name": "Colonel Edwards, Mastermind"
+      },
+      {
+        "count": 2,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 4,
+        "name": "Denver"
+      },
+      {
+        "count": 4,
+        "name": "Sacrificial Strength"
+      },
+      {
+        "count": 4,
+        "name": "Controlling the Situation"
+      },
+      {
+        "count": 3,
+        "name": "Bombardment"
+      },
+      {
+        "count": 3,
+        "name": "Restoration"
+      },
+      {
+        "count": 2,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 2,
+        "name": "From Beginning to End"
+      },
+      {
+        "count": 2,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 2,
+        "name": "Clarity's 1911"
+      },
+      {
+        "count": 1,
+        "name": "Shadowlight, the Skilled"
+      },
+      {
+        "count": 1,
+        "name": "Clarity, Harbinger of Death"
+      },
+      {
+        "count": 1,
+        "name": "Kheprius"
+      },
+      {
+        "count": 1,
+        "name": "Haven, Quick Witted"
+      }
+    ],
+    "side": [
+      {
+        "count": 2,
+        "name": "Ancient Protection"
+      },
+      {
+        "count": 2,
+        "name": "Home Field Advantage"
+      },
+      {
+        "count": 2,
+        "name": "Cybernetic Recall"
+      },
+      {
+        "count": 2,
+        "name": "Webber's Binoculars"
+      },
+      {
+        "count": 1,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 1,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 1,
+        "name": "Lord Krung, the Agitated"
+      }
+    ]
+  },
+  {
+    "id": "season3-fexar-clarity",
+    "name": "Clarity — fexar (Season 3 link)",
+    "contender": "Clarity, Ready for Trials",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/58126252-e6a3-421e-8556-13e2c286812d",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "fexar — 3rd, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-09-23T19:21:45.200Z",
+    "sourceNote": "Live linked list. The page was updated after the event; the original Season 3 submission is not verified.",
+    "main": [
+      {
+        "count": 4,
+        "name": "Zhao Li, Reconnaissance Agent"
+      },
+      {
+        "count": 4,
+        "name": "Haven, the Resourceful Helper"
+      },
+      {
+        "count": 4,
+        "name": "LINN, the Nanite Assassin"
+      },
+      {
+        "count": 4,
+        "name": "Cao Ling, Demon Hunter"
+      },
+      {
+        "count": 2,
+        "name": "Colonel Edwards, Mastermind"
+      },
+      {
+        "count": 2,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 4,
+        "name": "Denver"
+      },
+      {
+        "count": 4,
+        "name": "Sacrificial Strength"
+      },
+      {
+        "count": 4,
+        "name": "Controlling the Situation"
+      },
+      {
+        "count": 3,
+        "name": "Bombardment"
+      },
+      {
+        "count": 3,
+        "name": "Restoration"
+      },
+      {
+        "count": 2,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 2,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 2,
+        "name": "Clarity's 1911"
+      },
+      {
+        "count": 1,
+        "name": "Shadowlight, the Skilled"
+      },
+      {
+        "count": 1,
+        "name": "Clarity, Harbinger of Death"
+      },
+      {
+        "count": 1,
+        "name": "Kheprius"
+      },
+      {
+        "count": 1,
+        "name": "Haven, Quick Witted"
+      },
+      {
+        "count": 1,
+        "name": "Lord Krung, the Agitated"
+      },
+      {
+        "count": 1,
+        "name": "Shadowblade"
+      }
+    ],
+    "side": [
+      {
+        "count": 2,
+        "name": "Ancient Protection"
+      },
+      {
+        "count": 2,
+        "name": "Home Field Advantage"
+      },
+      {
+        "count": 2,
+        "name": "Cybernetic Recall"
+      },
+      {
+        "count": 2,
+        "name": "Webber's Binoculars"
+      },
+      {
+        "count": 1,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 1,
+        "name": "From Life to Death"
+      }
+    ]
+  },
+  {
+    "id": "season3-xiii-war",
+    "name": "War — xiii (Season 3 link)",
+    "contender": "War, Legion Commander",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/182f7a71-2424-4805-80e9-3ece79fa55b3",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "xiii — 5th, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-10-10T15:12:42.438Z",
+    "sourceNote": "The Season 3 article link now shows \"7th Place Progenitor's Gambit: USA (R. Acosta)\". Preserved as the current linked list, not a verified Season 3 submission.",
+    "main": [
+      {
+        "count": 4,
+        "name": "War's Gauntlets"
+      },
+      {
+        "count": 4,
+        "name": "Modern Bardaga"
+      },
+      {
+        "count": 4,
+        "name": "War, Combat Marshal"
+      },
+      {
+        "count": 3,
+        "name": "I am Chaos"
+      },
+      {
+        "count": 3,
+        "name": "Favorable Outcome"
+      },
+      {
+        "count": 4,
+        "name": "Areson, Call to Arms"
+      },
+      {
+        "count": 4,
+        "name": "War, Bloodlust Commander"
+      },
+      {
+        "count": 4,
+        "name": "Rizlac, Ferocious Threat"
+      },
+      {
+        "count": 2,
+        "name": "Bardagan Warhorn"
+      },
+      {
+        "count": 3,
+        "name": "Conquering Might"
+      },
+      {
+        "count": 4,
+        "name": "Decimation"
+      },
+      {
+        "count": 2,
+        "name": "The Beginning of the End"
+      },
+      {
+        "count": 4,
+        "name": "War, Strife Bringer"
+      },
+      {
+        "count": 4,
+        "name": "Areson, Rising Threat"
+      },
+      {
+        "count": 1,
+        "name": "War, the Second Horseman"
+      },
+      {
+        "count": 1,
+        "name": "Consuming Fire"
+      },
+      {
+        "count": 1,
+        "name": "HERE COMES THE BOOM!"
+      },
+      {
+        "count": 4,
+        "name": "Energy Blast"
+      },
+      {
+        "count": 2,
+        "name": "Replicate"
+      },
+      {
+        "count": 2,
+        "name": "Warzone"
+      }
+    ],
+    "side": []
+  },
+  {
+    "id": "season3-sloppy-valen",
+    "name": "Valen — sloppy (Season 3 link)",
+    "contender": "Valen Solariel, Healer of Eldralore",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/19552f17-de2f-40ac-a233-a1548280172f",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "sloppy — 6th, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-09-20T10:31:59.396Z",
+    "sourceNote": "Live linked list. The page was updated after the event; the original Season 3 submission is not verified.",
+    "main": [
+      {
+        "count": 1,
+        "name": "Conquest, the Contentious"
+      },
+      {
+        "count": 3,
+        "name": "Somewhere in San Francisco"
+      },
+      {
+        "count": 3,
+        "name": "Clarity's Suite"
+      },
+      {
+        "count": 4,
+        "name": "Triumphant Revitalization"
+      },
+      {
+        "count": 2,
+        "name": "Ancient Protection"
+      },
+      {
+        "count": 3,
+        "name": "Sphere of Protection"
+      },
+      {
+        "count": 1,
+        "name": "Cleansing Whirlwind Kick"
+      },
+      {
+        "count": 4,
+        "name": "Life From Ashes"
+      },
+      {
+        "count": 2,
+        "name": "Haven, Hiding in Plain Sight"
+      },
+      {
+        "count": 3,
+        "name": "HERE COMES THE BOOM!"
+      },
+      {
+        "count": 3,
+        "name": "LINN, Adaptable Fighter"
+      },
+      {
+        "count": 4,
+        "name": "Master Zephyrion, Holding the Line"
+      },
+      {
+        "count": 4,
+        "name": "Clarity, Omniscient Envoy"
+      },
+      {
+        "count": 3,
+        "name": "Clarity, Foreseeing Fate"
+      },
+      {
+        "count": 4,
+        "name": "Flare, Explosive Combatant"
+      },
+      {
+        "count": 1,
+        "name": "Chains of Dominion"
+      },
+      {
+        "count": 3,
+        "name": "Valen Solariel"
+      },
+      {
+        "count": 2,
+        "name": "Chaos Ensues"
+      }
+    ],
+    "side": []
+  },
+  {
+    "id": "season3-silou-death",
+    "name": "Death — silou (Season 3 link)",
+    "contender": "Death, Chaos Bringer",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/f9675478-fe5e-454a-ad65-8c0f701f3210",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "silou — 7th, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-09-21T18:11:14.263Z",
+    "sourceNote": "Live linked list. The page was updated after the event; the original Season 3 submission is not verified.",
+    "main": [
+      {
+        "count": 3,
+        "name": "Death, Agent of the Dark"
+      },
+      {
+        "count": 4,
+        "name": "I am Demise"
+      },
+      {
+        "count": 4,
+        "name": "Death, Queen of the Dark"
+      },
+      {
+        "count": 4,
+        "name": "Death, the Endbringer"
+      },
+      {
+        "count": 4,
+        "name": "Death, Charging Through"
+      },
+      {
+        "count": 4,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 3,
+        "name": "Low Earth Orbit"
+      },
+      {
+        "count": 3,
+        "name": "Shadowstrike"
+      },
+      {
+        "count": 4,
+        "name": "Death, the Dreadful"
+      },
+      {
+        "count": 4,
+        "name": "Pestilence, the Infectious"
+      },
+      {
+        "count": 1,
+        "name": "Cadavros"
+      },
+      {
+        "count": 1,
+        "name": "Kilimanjaro, the Versatile"
+      },
+      {
+        "count": 4,
+        "name": "Deflating"
+      },
+      {
+        "count": 3,
+        "name": "Amazon Rainforest"
+      },
+      {
+        "count": 1,
+        "name": "Thragor, Dread Titan"
+      },
+      {
+        "count": 3,
+        "name": "Clarity, Bad Omen"
+      },
+      {
+        "count": 3,
+        "name": "Clarity, From the Shadows"
+      },
+      {
+        "count": 3,
+        "name": "From Life to Death"
+      }
+    ],
+    "side": [
+      {
+        "count": 4,
+        "name": "Spatial Gateway"
+      },
+      {
+        "count": 1,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 4,
+        "name": "Magnate's Plan"
+      }
+    ]
+  },
+  {
+    "id": "season3-silou-clarity",
+    "name": "Clarity — silou (Season 3 link)",
+    "contender": "Clarity, Ready for Trials",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/d6c61784-9846-49a1-9f5f-94dc323b6883",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "silou — 7th, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-10-01T06:08:21.642Z",
+    "sourceNote": "Live linked list. The page was updated after the event; the original Season 3 submission is not verified.",
+    "main": [
+      {
+        "count": 4,
+        "name": "I am Demise"
+      },
+      {
+        "count": 4,
+        "name": "Areson, Call to Arms"
+      },
+      {
+        "count": 4,
+        "name": "Areson, Rising Threat"
+      },
+      {
+        "count": 4,
+        "name": "Rizlac, Ferocious Threat"
+      },
+      {
+        "count": 4,
+        "name": "Death, the Endbringer"
+      },
+      {
+        "count": 4,
+        "name": "War, Bloodlust Commander"
+      },
+      {
+        "count": 4,
+        "name": "War, Strife Bringer"
+      },
+      {
+        "count": 3,
+        "name": "Shadowstrike"
+      },
+      {
+        "count": 4,
+        "name": "Deflating"
+      },
+      {
+        "count": 1,
+        "name": "Moxie, the Decisive"
+      },
+      {
+        "count": 1,
+        "name": "Iron Piston"
+      },
+      {
+        "count": 4,
+        "name": "Favorable Outcome"
+      },
+      {
+        "count": 3,
+        "name": "Bombardment"
+      },
+      {
+        "count": 3,
+        "name": "Somewhere in San Francisco"
+      },
+      {
+        "count": 3,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 4,
+        "name": "Anzudak, in the Mix"
+      }
+    ],
+    "side": [
+      {
+        "count": 1,
+        "name": "Sharpshooter Moxie"
+      },
+      {
+        "count": 4,
+        "name": "Consuming Fire"
+      },
+      {
+        "count": 1,
+        "name": "Somewhere in San Francisco"
+      },
+      {
+        "count": 4,
+        "name": "HERE COMES THE BOOM!"
+      }
+    ]
+  },
+  {
+    "id": "season3-avalogaming-kilimanjaro",
+    "name": "Kilimanjaro — avalogaming (Season 3 link)",
+    "contender": "Kilimanjaro, Power Erupting",
+    "source": "https://www.deckplanet.net/alpha_clash/deck/bb3ab20f-ceed-4292-99f2-4244f3056dda",
+    "resultSource": "https://alphaclashtcg.com/news/alpha-clash-online-league-season3-recap",
+    "result": "avalogaming — 8th, Online League Season 3, 2026-08-19 (article result; linked-list snapshot)",
+    "sourceRetrievedOn": "2026-10-11",
+    "sourceUpdatedAt": "2026-10-06T20:53:45.275Z",
+    "sourceNote": "Live linked list. The page was updated after the event; the original Season 3 submission is not verified.",
+    "main": [
+      {
+        "count": 4,
+        "name": "LINN, the Nanite Assassin"
+      },
+      {
+        "count": 4,
+        "name": "Pestilence, the Infectious"
+      },
+      {
+        "count": 4,
+        "name": "Pestilence, Mayhem Maker"
+      },
+      {
+        "count": 3,
+        "name": "Moxie, Alpha Hunting Specialist"
+      },
+      {
+        "count": 4,
+        "name": "Cadavros, Vile Virtuoso"
+      },
+      {
+        "count": 3,
+        "name": "Pestilence, Devious Servant"
+      },
+      {
+        "count": 1,
+        "name": "Cao Ling, the Huntsman"
+      },
+      {
+        "count": 2,
+        "name": "Magnate, the Tyrant"
+      },
+      {
+        "count": 3,
+        "name": "Khagan, the Dragon"
+      },
+      {
+        "count": 1,
+        "name": "Thragor, Dread Titan"
+      },
+      {
+        "count": 1,
+        "name": "Apex, the Fastest"
+      },
+      {
+        "count": 1,
+        "name": "Kilimanjaro, the Versatile"
+      },
+      {
+        "count": 1,
+        "name": "Lord Krung, the Agitated"
+      },
+      {
+        "count": 3,
+        "name": "Bombardment"
+      },
+      {
+        "count": 2,
+        "name": "Under Pressure"
+      },
+      {
+        "count": 2,
+        "name": "Restoration"
+      },
+      {
+        "count": 2,
+        "name": "Endless Cycle"
+      },
+      {
+        "count": 2,
+        "name": "Danger Detected"
+      },
+      {
+        "count": 2,
+        "name": "Harvest of Souls"
+      },
+      {
+        "count": 2,
+        "name": "Chaotic Unmaking"
+      },
+      {
+        "count": 4,
+        "name": "Amazon Rainforest"
+      },
+      {
+        "count": 3,
+        "name": "Molten Crag"
+      }
+    ],
+    "side": [
+      {
+        "count": 3,
+        "name": "Marcus, Ghost of the Gambit"
+      },
+      {
+        "count": 3,
+        "name": "Ancient Greed"
+      },
+      {
+        "count": 3,
+        "name": "Kilimanjaro, the Primordial"
+      },
+      {
+        "count": 2,
+        "name": "From Life to Death"
+      },
+      {
+        "count": 2,
+        "name": "Clarity, From the Shadows"
+      },
+      {
+        "count": 2,
+        "name": "Lefty's Last Stand"
+      }
+    ]
+  }
+]

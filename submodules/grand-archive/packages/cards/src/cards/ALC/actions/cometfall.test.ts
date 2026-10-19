@@ -49,9 +49,9 @@ describe("Cometfall — Starcalling and non-Astra damage", () => {
       expect(game.state.objects[starcalledId]!.activationStates.has("starcalled")).toBe(true);
       passEffectsStack(game);
 
-      expect(game.state.objects[ownNonAstra.objectId]!.damage).toBe(classBonus ? 4 : 3);
-      expect(game.state.objects[opposingNonAstra.objectId]!.damage).toBe(classBonus ? 4 : 3);
-      expect(game.state.objects[astraUnit.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(ownNonAstra.objectId)).toBe(classBonus ? 4 : 3);
+      expect(game.markedDamage(opposingNonAstra.objectId)).toBe(classBonus ? 4 : 3);
+      expect(game.markedDamage(astraUnit.objectId)).toBe(0);
       expect(player.cards(woodlandSquirrels, { zone: "graveyard" })).toHaveLength(1);
       expect(opposing.cards(woodlandSquirrels, { zone: "graveyard" })).toHaveLength(1);
     });

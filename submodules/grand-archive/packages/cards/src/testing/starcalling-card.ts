@@ -120,14 +120,14 @@ export function proveStarcallingCard(
         passEffectsStack(game);
       }
       if (result === "meteor") {
-        expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-        expect(game.state.objects[foe.objectId]!.damage).toBe(called ? 3 : 0);
-        expect(game.state.objects[ownAlly.objectId]!.damage).toBe(called ? 3 : 0);
+        expect(game.markedDamage(hero.objectId)).toBe(0);
+        expect(game.markedDamage(foe.objectId)).toBe(called ? 3 : 0);
+        expect(game.markedDamage(ownAlly.objectId)).toBe(called ? 3 : 0);
         expect(game.state.objects[otherAlly.objectId]!.zone).toBe(called ? "field" : "graveyard");
-        if (called) expect(game.state.objects[otherAlly.objectId]!.damage).toBe(3);
+        if (called) expect(game.markedDamage(otherAlly.objectId)).toBe(3);
       }
       if (result === "bolt" || result === "glow")
-        expect(game.state.objects[foe.objectId]!.damage).toBe(result === "bolt" ? 4 : 2);
+        expect(game.markedDamage(foe.objectId)).toBe(result === "bolt" ? 4 : 2);
       expect(game.state.objects[source.objectId]!.zone).toBe(
         result === "ally" ? "field" : result === "glow" && called ? "memory" : "graveyard",
       );

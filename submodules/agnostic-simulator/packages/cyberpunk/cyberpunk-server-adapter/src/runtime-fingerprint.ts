@@ -1,9 +1,15 @@
 import { CYBERPUNK_CARDS_RUNTIME } from "@tcg/cyberpunk-cards";
-import { MOVE_IDS } from "@tcg/cyberpunk-engine";
+import {
+  MOVE_IDS,
+  COMBAT_STATE_VERSION,
+  CYBERPUNK_SNAPSHOT_SCHEMA_VERSION,
+} from "@tcg/cyberpunk-engine";
 import { DSL_VERSION, MIN_SUPPORTED_DSL_VERSION } from "@tcg/cyberpunk-types";
 import type { GameRuntimeFingerprint } from "@tcg/shared/game-adapter";
 
 const engineHash = runtimeHash({
+  combatStateVersion: COMBAT_STATE_VERSION,
+  snapshotSchemaVersion: CYBERPUNK_SNAPSHOT_SCHEMA_VERSION,
   dslVersion: DSL_VERSION,
   minSupportedDslVersion: MIN_SUPPORTED_DSL_VERSION,
   moves: MOVE_IDS,

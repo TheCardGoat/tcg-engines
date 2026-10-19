@@ -87,7 +87,7 @@ describe("Grand Archive Standard practice", () => {
 
   it(
     "keeps the human projection private while stepping an authoritative bot move",
-    () => {
+    async () => {
       const { container } = render(
         <GrandArchiveSimulatorProviders>
           <GrandArchivePracticePage />
@@ -106,12 +106,14 @@ describe("Grand Archive Standard practice", () => {
         "You",
       );
       fireEvent.click(screen.getByTestId("ga-practice-bot-next"));
-      const stepped = JSON.parse(container.querySelector("output")!.textContent!) as {
-        stateVersion: number;
-        selfId: string;
-      };
-      expect(stepped.stateVersion).toBeGreaterThan(after.stateVersion);
-      expect(stepped.selfId).toBe("p1");
+      await waitFor(() => {
+        const stepped = JSON.parse(container.querySelector("output")!.textContent!) as {
+          stateVersion: number;
+          selfId: string;
+        };
+        expect(stepped.stateVersion).toBeGreaterThan(after.stateVersion);
+        expect(stepped.selfId).toBe("p1");
+      });
     },
     FULL_ENGINE_INTERACTION_TIMEOUT,
   );

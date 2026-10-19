@@ -1350,7 +1350,7 @@ function intrinsicLinkShieldCandidates(
             return {
               kind: "replaced",
               events:
-                destroy && linked.damage > 0
+                destroy && linked.temporaryDamage > 0
                   ? [
                       {
                         type: "object-reference-substituted",

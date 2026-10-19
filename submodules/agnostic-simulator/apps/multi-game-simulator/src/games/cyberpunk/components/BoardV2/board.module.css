@@ -13,8 +13,7 @@
 }
 /* The match-utilities cluster floats over the board's free top-right corner;
    the shell injects its buttons, this side only positions and reports. The
-   zoom wrapper carries the column layout so the Board can shrink the plates
-   on small tables without scaling the slot's edge offsets. */
+   stack keeps the plates at screen size while the table scales below it. */
 .utilitiesSlot {
   position: absolute;
   /* Above the rotate-guidance scrim (160): the V1 escape hatch and match
@@ -29,19 +28,14 @@
   align-items: flex-end;
   gap: 5px;
 }
-.connection {
-  display: none;
-  padding: 5px 10px;
-  border: 1px solid #50616a;
-  background: #10171cf0;
-  color: var(--v2-yellow);
-  font:
-    600 13px/1 "Cyberpunk Blender Pro",
-    sans-serif;
-  letter-spacing: 0.08em;
-}
-.connection:not(:empty) {
-  display: inline-block;
+/* Keep the minimized connection/timeout notice out of the utility cluster.
+   Its expanded view still covers the table and keeps its existing controls. */
+.root .table > button:global([data-mobile-field-overlay]) {
+  left: 50%;
+  right: auto;
+  top: 10px;
+  translate: -50% 0;
+  min-height: 44px;
 }
 /* Board surface trigger; lives in the Match drawer footer since the header
    strip went away. Fills the footer row next to "Return to V1". */
@@ -1986,7 +1980,7 @@
   left: 8%;
   top: 17%;
   width: 84%;
-  height: 10%;
+  height: 12%;
 }
 .root
   .table
@@ -1995,9 +1989,9 @@
   > :global([data-testid="clock-combat-steps"]),
 .root .table .clock :global([data-testid="phase-clock"]) > :global([data-testid="clock-chips"]) {
   left: 8%;
-  top: 28%;
+  top: 31%;
   width: 84%;
-  height: 11%;
+  height: 14%;
 }
 .root .table .clock :global([data-testid="phase-clock"]) > div:last-child {
   left: 7%;
@@ -2047,7 +2041,7 @@
   order: -1;
 }
 .root .table .clock :global(.clock-readout) strong {
-  font-size: calc(1.7cqw * var(--hud-scale, 1));
+  font-size: calc(1.45cqw * var(--hud-scale, 1));
   letter-spacing: 0.025em;
   color: inherit;
   flex-shrink: 0;
@@ -2072,6 +2066,24 @@
 .root .table .clock :global(.clock-readout[data-urgency="critical"]) {
   color: #f18c80;
   animation: seat-clock-pulse 0.8s ease-in-out infinite;
+}
+
+.root .table .clock :global(.clock-readout[data-timeout-action="true"]) {
+  animation: none;
+  opacity: 1;
+  outline: 1px solid rgb(245 230 66 / 45%);
+  outline-offset: 2px;
+  border-radius: 2px;
+  background: rgb(245 230 66 / 5%);
+  transition:
+    background 0.15s,
+    outline-color 0.15s;
+}
+
+.root .table .clock :global(.clock-readout[data-timeout-action="true"]:hover),
+.root .table .clock :global(.clock-readout[data-timeout-action="true"]:focus-visible) {
+  outline-color: #f5e642;
+  background: rgb(245 230 66 / 12%);
 }
 
 @keyframes seat-clock-pulse {
@@ -2285,6 +2297,8 @@
   :global([data-interaction-appearance])
   > :global([data-sim-animation-face-target])::after {
   content: "";
+  /* Gear targets do not inherit V1's positioned ::after action rim. */
+  position: absolute;
   inset: -2px;
   border: 2px solid var(--interaction-rim, transparent);
   border-radius: var(--rim-radius, 4px);
@@ -2540,7 +2554,6 @@
   overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: #8b9da877 transparent;
-  border-bottom: 1px solid #8b9da866;
 }
 /* The local strip reads right-to-left, so its rail mirrors too: the row's
    first child stays the card nearest the counters on both seats. */
@@ -2599,9 +2612,16 @@
 .root .flatOverlay .status .eddieMini[data-payment-source="true"]:focus-visible {
   filter: brightness(1.22);
 }
+.root .flatOverlay .status .saleCard[data-resource-state="spent"],
+.root .flatOverlay .status .eddieMini[data-resource-state="spent"],
 .root .flatOverlay .status .saleCard[data-payment-selected="true"],
 .root .flatOverlay .status .eddieMini[data-payment-selected="true"] {
   transform: rotate(90deg);
+  /* Reserve the landscape width, keeping adjacent card art clear. */
+  margin-inline: 0.5cqw;
+}
+.root .flatOverlay .status .saleCard[data-payment-selected="true"],
+.root .flatOverlay .status .eddieMini[data-payment-selected="true"] {
   border-color: #f5e642;
   box-shadow:
     0 0 10px rgb(245 230 66 / 75%),

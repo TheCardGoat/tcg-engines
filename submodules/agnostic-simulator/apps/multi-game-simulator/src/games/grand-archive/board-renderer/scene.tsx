@@ -1,3 +1,4 @@
+import { TabletopCanvas } from "@tcg/simulator-presentation/tabletop";
 import { PresentationZone, cardSelection } from "@tcg/simulator-presentation";
 import {
   SceneCard,
@@ -5,10 +6,15 @@ import {
   useCardPose,
   useSceneTextures,
 } from "@tcg/simulator-presentation/three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
+import {
+  grandArchiveOpeningFlights,
+  sampleGrandArchiveOpeningFlight,
+  type GrandArchiveOpeningFlight,
+} from "./opening";
 import { grandArchiveAnimationOrigins, type GrandArchivePresentationSnapshot } from "./animation";
 import {
   GRAND_ARCHIVE_ARENA,
@@ -19,6 +25,7 @@ import {
   type GrandArchivePose,
 } from "./layout";
 import { grandArchiveComposition } from "./composition";
+import { grandArchiveHandHitArea } from "./hit-area";
 import { ThemeTable } from "./theme-table";
 import { grandArchiveShouldReportMetrics } from "./metrics";
 import type {
@@ -35,6 +42,7 @@ function useBoardTextures(
 ) {
   return useSceneTextures(
     [
+      props.assets.cardBackUrl,
       ...displayedCards.map((card) => grandArchiveCardTextureUrl(card, props.assets.cardBackUrl)),
       ...themeAssets,
     ],
@@ -160,6 +168,8 @@ function Card({
   card,
   pose,
   initialPose,
+  openingFlight,
+  backTexture,
   texture,
   failed,
   selected,
@@ -170,6 +180,8 @@ function Card({
   card: GrandArchiveBoardCard;
   pose: GrandArchivePose;
   initialPose?: GrandArchivePose;
+  openingFlight?: GrandArchiveOpeningFlight;
+  backTexture?: THREE.Texture;
   texture?: THREE.Texture;
   failed: boolean;
   selected: boolean;
@@ -190,6 +202,7 @@ function Card({
   const lifted = (hovered || selected) && card.owner === "self" && card.zone === "hand";
   const targetY = pose.y + (lifted ? 0.24 : 0);
   const targetScale = pose.scale * (selected ? cardSelection.scale : lifted ? 1.14 : 1);
+  const handHitArea = grandArchiveHandHitArea(size.width, size.height, pose.scale, aspect);
   const visibleHeight = Math.max(
     GRAND_ARCHIVE_ARENA.height,
     (GRAND_ARCHIVE_ARENA.width * size.height) / Math.max(1, size.width),
@@ -205,11 +218,41 @@ function Card({
   const group = useCardPose(
     { ...pose, y: targetY, z: targetZ, scale: targetScale },
     {
-      origin: initialPose,
+      origin: openingFlight?.origin ?? initialPose,
       resetKey: props.projection.resetKey,
       reduced: props.reducedMotion,
     },
   );
+  const openingClock = useRef(0);
+  const openingDone = useRef(false);
+  const invalidate = useThree((state) => state.invalidate);
+  useLayoutEffect(() => {
+    openingClock.current = 0;
+    openingDone.current = false;
+    if (!openingFlight || props.reducedMotion || !group.current) return;
+    const start = sampleGrandArchiveOpeningFlight(openingFlight, pose, 0);
+    group.current.position.set(start.x, start.y, start.z);
+    group.current.scale.setScalar(start.scale);
+    group.current.rotation.set(-Math.PI / 2, start.flip, start.turn);
+    invalidate();
+  }, [openingFlight?.key, props.reducedMotion, invalidate]);
+  useFrame((_, delta) => {
+    if (
+      !openingFlight ||
+      props.reducedMotion ||
+      openingDone.current ||
+      document.hidden ||
+      !group.current
+    )
+      return;
+    openingClock.current += Math.min(delta * 1000, 50);
+    const current = sampleGrandArchiveOpeningFlight(openingFlight, pose, openingClock.current);
+    group.current.position.set(current.x, current.y, current.z);
+    group.current.scale.setScalar(current.scale);
+    group.current.rotation.set(-Math.PI / 2, current.flip, current.turn);
+    openingDone.current = current.done;
+    invalidate();
+  });
   const highlighted = selected || candidate || feedbackVisible;
   const accent = selected ? cardSelection.rim : candidate ? "#f5e4a5" : "#b3f3d9";
   return (
@@ -229,12 +272,19 @@ function Card({
         props.events?.onCardHover?.();
       }}
     >
+      {card.zone === "hand" ? (
+        <mesh position={[0, 0, -0.1]}>
+          <planeGeometry args={[handHitArea.width, handHitArea.height]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} colorWrite={false} />
+        </mesh>
+      ) : null}
       {!card.faceDown && card.zone === "field" ? (
         <Socket aspect={aspect} champion={card.role === "champion"} />
       ) : null}
       <SceneCard
         rounded
         texture={texture}
+        backTexture={backTexture}
         aspect={aspect}
         failed={failed}
         edgeColor={
@@ -304,9 +354,7 @@ function BoardWorld(props: GrandArchiveBoardProps) {
     compositionCallback.current?.(composition);
   }, [composition]);
   const poses = useMemo(() => {
-    const { width, height, slots, playCenterX } = composition;
-    const horizontalScale = width / GRAND_ARCHIVE_ARENA.width;
-    const stretch = height / GRAND_ARCHIVE_ARENA.height;
+    const { slots } = composition;
     const cards = new Map(props.projection.cards.map((card) => [card.id, card]));
     return new Map(
       [...grandArchiveLayout(props.projection.cards)].map(([id, pose]) => {
@@ -331,25 +379,9 @@ function BoardWorld(props: GrandArchiveBoardProps) {
         }
         if (card.zone === "main-deck" && !card.attachedTo) {
           const slot = card.owner === "self" ? slots.selfDeck : slots.opponentDeck;
-          return [id, { ...pose, x: slot.x, z: slot.y - 0.12, scale: 1.14 }];
+          return [id, { ...pose, x: slot.x, z: slot.y - 0.12, scale: 1.35 }];
         }
-        const hand = card.zone === "hand";
-        const field = card.zone === "field";
-        return [
-          id,
-          {
-            ...pose,
-            x:
-              pose.x *
-                (hand
-                  ? Math.min(horizontalScale, 1.64)
-                  : field
-                    ? Math.max(1, (width - slots.action.width - 1) / GRAND_ARCHIVE_ARENA.width)
-                    : horizontalScale) +
-              (hand || field ? playCenterX : 0),
-            z: pose.z * stretch,
-          },
-        ];
+        return [id, pose];
       }),
     );
   }, [props.projection.cards, composition]);
@@ -360,14 +392,34 @@ function BoardWorld(props: GrandArchiveBoardProps) {
   const themeAssets = props.assets.theme.variants[composition.mode].assets;
   const textures = useBoardTextures(props, displayedCards, Object.values(themeAssets));
   const previous = useRef<GrandArchivePresentationSnapshot | undefined>(undefined);
-  const { cards, resetKey } = props.projection;
+  const { cards, resetKey, opening } = props.projection;
   const origins = useMemo(
     () => grandArchiveAnimationOrigins(previous.current, { cards, resetKey }),
     [cards, resetKey],
   );
+  const openingFlights = useMemo(
+    () => grandArchiveOpeningFlights(previous.current, { cards, resetKey, opening }),
+    [cards, resetKey, opening],
+  );
   useLayoutEffect(() => {
-    previous.current = { projection: { cards, resetKey }, poses };
-  }, [cards, resetKey, poses]);
+    const prior = previous.current;
+    const continuous =
+      prior?.projection.resetKey === resetKey &&
+      (opening?.stateVersion ?? 0) >= (prior?.projection.opening?.stateVersion ?? 0);
+    previous.current = {
+      projection: { cards, resetKey, opening },
+      poses,
+      openingObserved: Boolean(
+        opening?.pregame || (continuous && prior?.openingObserved && (opening?.turn ?? 2) <= 1),
+      ),
+      openingDealt: [
+        ...new Set([
+          ...(continuous ? (prior?.openingDealt ?? []) : []),
+          ...cards.filter((card) => card.zone === "hand").map((card) => card.owner),
+        ]),
+      ],
+    };
+  }, [cards, resetKey, opening, poses]);
   const candidates = useMemo(
     () => new Set(props.projection.candidateCardIds),
     [props.projection.candidateCardIds],
@@ -400,9 +452,14 @@ function BoardWorld(props: GrandArchiveBoardProps) {
               card={card}
               pose={pose}
               initialPose={origins.get(card.id)}
+              openingFlight={openingFlights.get(card.id)}
+              backTexture={textures.get(props.assets.cardBackUrl)?.texture}
               texture={resource?.texture}
               failed={resource?.failed ?? false}
-              selected={props.projection.selectedCardId === card.id}
+              selected={
+                props.projection.selectedCardIds?.includes(card.id) === true ||
+                props.projection.selectedCardId === card.id
+              }
               candidate={candidates.has(card.id)}
               feedback={feedback.has(card.id)}
               props={props}
@@ -428,10 +485,9 @@ function BoardWorld(props: GrandArchiveBoardProps) {
 /** Rendering only. Legal actions, visibility, focus, and prompts stay in React DOM. */
 export function GrandArchiveBoard(props: GrandArchiveBoardProps) {
   return (
-    <Canvas
+    <TabletopCanvas
       orthographic
       shadows
-      frameloop="demand"
       dpr={[1, 2]}
       camera={{ position: [0, 30, 0], near: 0.1, far: 100 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
@@ -442,6 +498,6 @@ export function GrandArchiveBoard(props: GrandArchiveBoardProps) {
       }}
     >
       <BoardWorld {...props} />
-    </Canvas>
+    </TabletopCanvas>
   );
 }

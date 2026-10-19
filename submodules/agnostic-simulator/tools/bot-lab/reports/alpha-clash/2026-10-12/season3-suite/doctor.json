@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "clarity-hyper-aggro",
+      "ok": true,
+      "detail": "50 main + 10 side; https://www.deckplanet.net/alpha_clash/deck/0162d182-517c-4bdf-97a2-69c8e3520301; "
+    },
+    {
+      "name": "absence-makati",
+      "ok": true,
+      "detail": "60 main + 15 side; https://www.deckplanet.net/alpha_clash/deck/45fd8407-7912-4fbc-b900-6bb2dbb06216; "
+    },
+    {
+      "name": "season3-undefendable-clarity",
+      "ok": true,
+      "detail": "51 main + 11 side; https://op-deckplanet.com/alpha_clash/deck/be48dd18-0a88-477a-b9d7-10c841624b21; "
+    },
+    {
+      "name": "season3-fexar-clarity",
+      "ok": true,
+      "detail": "50 main + 10 side; https://www.deckplanet.net/alpha_clash/deck/58126252-e6a3-421e-8556-13e2c286812d; "
+    },
+    {
+      "name": "season3-xiii-war",
+      "ok": true,
+      "detail": "60 main + 0 side; https://www.deckplanet.net/alpha_clash/deck/182f7a71-2424-4805-80e9-3ece79fa55b3; "
+    },
+    {
+      "name": "season3-sloppy-valen",
+      "ok": true,
+      "detail": "50 main + 0 side; https://www.deckplanet.net/alpha_clash/deck/19552f17-de2f-40ac-a233-a1548280172f; "
+    },
+    {
+      "name": "season3-silou-death",
+      "ok": true,
+      "detail": "56 main + 9 side; https://www.deckplanet.net/alpha_clash/deck/f9675478-fe5e-454a-ad65-8c0f701f3210; "
+    },
+    {
+      "name": "season3-silou-clarity",
+      "ok": true,
+      "detail": "54 main + 10 side; https://www.deckplanet.net/alpha_clash/deck/d6c61784-9846-49a1-9f5f-94dc323b6883; "
+    },
+    {
+      "name": "season3-avalogaming-kilimanjaro",
+      "ok": true,
+      "detail": "54 main + 15 side; https://www.deckplanet.net/alpha_clash/deck/bb3ab20f-ceed-4292-99f2-4244f3056dda; "
+    }
+  ]
+}

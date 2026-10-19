@@ -59,18 +59,18 @@ export function proveTeamStealth({
     if (!championProtected) {
       q.declareAttack(woodlandSquirrels, hero);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(hero.objectId)).toBe(1);
     }
     q.declareAttack(stillwaterPatrol, tortoise);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[tortoise.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(tortoise.objectId)).toBe(3);
     advanceToMain(game, p.id);
     p.declareAttack(p.card(woodlandSquirrels, { zone: "field" }), q.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
     advanceToMain(game, q.id);
     q.declareAttack(woodlandSquirrels, tortoise);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[tortoise.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(tortoise.objectId)).toBe(1);
   });
 }

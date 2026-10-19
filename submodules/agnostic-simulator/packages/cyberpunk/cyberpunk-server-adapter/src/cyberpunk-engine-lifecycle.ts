@@ -1,7 +1,8 @@
 import {
   LocalEngine,
   COMBAT_STATE_VERSION,
-  restoreCombatState,
+  CYBERPUNK_SNAPSHOT_SCHEMA_VERSION,
+  migrateCyberpunkSnapshotState,
   createMatchState,
   createPlayerId as createCyberpunkPlayerId,
   setCardRegistry,
@@ -22,6 +23,7 @@ import type {
   TimeControlConfig,
 } from "@tcg/shared/game-engine";
 import { CyberpunkServerEngine } from "./cyberpunk-server-engine";
+import { GameRuntimeError } from "@tcg/shared/game-engine";
 
 let registeredCatalog: CardCatalog | null = null;
 
@@ -111,6 +113,7 @@ export function cyberpunkSerializeEngine(
   const cyberpunk = unwrap(engine);
   return {
     gameSlug: "cyberpunk",
+    snapshotSchemaVersion: CYBERPUNK_SNAPSHOT_SCHEMA_VERSION,
     state: cyberpunk.getRawState(),
     historyLength: 0,
     cardsMaps,
@@ -128,6 +131,16 @@ export async function cyberpunkRestoreEngine(
   snapshot: EngineSnapshot,
   _context: ServerEngineRestoreContext,
 ): Promise<ServerGameEngine> {
+  try {
+    return restoreSnapshot(snapshot);
+  } catch (error) {
+    throw new GameRuntimeError("game_state_incompatible", "Cannot restore Cyberpunk saved game", {
+      cause: error,
+    });
+  }
+}
+
+function restoreSnapshot(snapshot: EngineSnapshot): ServerGameEngine {
   getCyberpunkCatalog();
   const metadata = snapshot.metadata;
   const version =
@@ -136,21 +149,25 @@ export async function cyberpunkRestoreEngine(
       : 1;
   if (version !== COMBAT_STATE_VERSION)
     throw new Error("Unsupported Cyberpunk combat snapshot version");
-  const continuation = parseContinuation(snapshot.metadata);
+  const schemaVersion = snapshot.snapshotSchemaVersion ?? 1;
+  const continuation = parseContinuation(structuredClone(snapshot.metadata));
+  if (metadata && typeof metadata === "object" && "continuation" in metadata && !continuation) {
+    throw new Error("Invalid Cyberpunk snapshot continuation");
+  }
   if (continuation) {
     continuation.undoStack = continuation.undoStack.map((entry) => ({
       ...entry,
-      state: restoreCombatState(entry.state, version),
+      state: migrateCyberpunkSnapshotState(entry.state, schemaVersion),
     }));
     if (continuation.turnStartCheckpoint)
       continuation.turnStartCheckpoint = {
         ...continuation.turnStartCheckpoint,
-        state: restoreCombatState(continuation.turnStartCheckpoint.state, version),
+        state: migrateCyberpunkSnapshotState(continuation.turnStartCheckpoint.state, schemaVersion),
       };
   }
   return new CyberpunkServerEngine(
     new LocalEngine(
-      restoreCombatState(snapshot.state as MatchState, version),
+      migrateCyberpunkSnapshotState(snapshot.state as MatchState, schemaVersion),
       continuation ? { continuation } : { initializeTurnStartCheckpoint: false },
     ),
   );

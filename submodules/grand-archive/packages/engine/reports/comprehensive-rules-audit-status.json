@@ -1,1202 +1,1527 @@
 {
   "game-mechanics/game-mechanics-card-and-object-information.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "c3d78e1301644c1d986284ffc94080a8d24f3409a847b6701119c7f65539c2f9"
   },
   "game-mechanics/game-mechanics-card-and-object-information.md#last-known-information": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "092b7c1bd360e9a3cde316f333643a944d7bfd390d2b4790f40bf1e7afdee856"
   },
   "game-mechanics/game-mechanics-copy.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "1dc49a38118cf1fa0a604ffc128be61d6e115b5394a12e0411cecf0e9830923a"
   },
   "game-mechanics/game-mechanics-copy.md#copying-objects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "1f552b3ede8cdd16cd066d3bc9eea7b2182075cbce8bfb1650cfa9894788bd11"
   },
   "game-mechanics/game-mechanics-copy.md#static-copying": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "2f848089e96e87bc413b75b8b961eedab843c317f1920286dae890fd8b86a879"
   },
   "game-mechanics/game-mechanics-copy.md#copying-abilities-card-activations-and-materializations": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies",
+    "reviewedFingerprint": "7bc57fa30b2456a95d846edf657e2a6d17b870cde17a3713c88fef1b7f83af0d"
   },
   "game-mechanics/game-mechanics-game-zones.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract"
+    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract",
+    "reviewedFingerprint": "e4026b628dbc03b893cbe74769140265e0251dcf757108f38e2030c6c173ba9b"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-banishment.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones",
+    "reviewedFingerprint": "ad458bb92517c62b81fef0993ce67ecce60982790dfe229d67b6b94f20ace4c3"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-effects-stack.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility",
+    "reviewedFingerprint": "d9742f11b4427444639eb99d0c5bf1ab7021d2fea14056aae91c8a8624896951"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-field.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility",
+    "reviewedFingerprint": "cdeb7e9edc6fa31af3511afa5ae2ea64f4ed45c92505682bb8d06743aaef2e96"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-graveyard.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones",
+    "reviewedFingerprint": "eb49c4b187483ba2256978042d548333c86ef0acce185678711cf42add210d4d"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-hand.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones",
+    "reviewedFingerprint": "4ff41a1ee0db633642a76772f306169d339f1dc14c162498c0801430d15492b5"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-intent.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 Intent control correction",
+    "reviewedFingerprint": "28bc799ab34ad6021408372dba1f1a091a07a6c9896bd6ecb64aff9631087a0e"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-memory.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones",
+    "reviewedFingerprint": "4fd7e464ed7ce3e7a26510df037218be90b75254452bece94fec391b389a0cfb"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-main-deck.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon",
+    "reviewedFingerprint": "8c477e175eeb9b78c063c708eb7a19019a9d71486ca02a99c9eb5ea3219e397b"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-material-deck.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon",
+    "reviewedFingerprint": "114895b4e8e5a7012d416d4fe0c13e38eb35805bd258f6bbc63f5edadce4d813"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract"
+    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract",
+    "reviewedFingerprint": "aadb9d1020d1de219f8296ed01336accdb4befe98b59cd9bc5ce4b38c8a41ce2"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-pantheon.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon",
+    "reviewedFingerprint": "2890ae4d893b71869f9538c8d80d71a95b5a58fd28d0656e8c4b15c9fb766c96"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-public-vs-private-information.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility",
+    "reviewedFingerprint": "1a1868c0deeef4da2ece0354bd0bc71564292061a60d624ca88582d0e0a44efc"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states",
+    "reviewedFingerprint": "ef4560a0aeaf6a06c62c3d4eb67bec16f6c220cdf9d2f3d131e30dc495542106"
   },
   "game-mechanics/game-mechanics-playing-cards.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "f16bed746ba36ca22eb58bc39d9a609ae8c1f9ef903c126972b9daab8f0d44e3"
   },
   "game-mechanics/game-mechanics-playing-cards/playing-cards-card-activation.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "6347f2df9e35c8ecdc7dcf4d111949e681d4e09f81fe24b353c492e048c685b0"
   },
   "game-mechanics/game-mechanics-playing-cards/playing-cards-card-materialization.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "9a658d669951e6a8f912ea4ed73b46cfb6af36fd36d9f7c0a267df4b7be52498"
   },
   "game-mechanics/game-mechanics-playing-cards/playing-cards-costs-and-memory.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "976b1fec8292bf30d660fee5351169a901a9d86f2fd43b9573c4e895bbc30f9c"
   },
   "game-mechanics/game-mechanics-playing-cards/playing-cards-resolution.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "4f02778c7562a98a88f8526f9ac65aae93de5ad45cf5875a12313a8b98b0a1bb"
   },
   "game-mechanics/game-mechanics-playing-cards/playing-cards-resolution.md#checking-resolution": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle",
+    "reviewedFingerprint": "8bf5dec94e99ffcedce610ea41ca5236b4d04869ba531c82acaba1eac4cf64f3"
   },
   "game-mechanics/game-mechanics-mastery.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "959851f0fb9d3f455ee0876c2121708830dae611fda8677e100c3301140c4948"
   },
   "game-mechanics/game-mechanics-mastery.md#fractured-memories": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state",
+    "reviewedFingerprint": "760d1b6dd9f3e75990995b24245176d0aa4370cde4d61456d556b02842340a16"
   },
   "game-mechanics/game-mechanics-mastery.md#phantasmagoria": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state",
+    "reviewedFingerprint": "236e12772a3a8c43f7eb032dda83b7a529fec01a71330a4aa3fbb3c694862226"
   },
   "game-mechanics/game-mechanics-mastery.md#servile-possessions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
-  },
-  "game-mechanics/game-mechanics-mastery.md#files-bplhk9r8zibbpc3uinsm-files-uuzsopogyzfqfjk5rpk9": {
-    "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state",
+    "reviewedFingerprint": "6b4f8483b33dbe552e453ea8f00415b0651ecbd9299edb87a8ea3a3d55751360"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#facing": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Facing and end-of-game disclosure"
+    "evidence": "docs/grand-archive-rules-coverage.md — Facing and end-of-game disclosure",
+    "reviewedFingerprint": "b3045b3b9430f0862522f98cc86daeee980e475b01eaaed636b7eab94875b172"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#orientation": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states",
+    "reviewedFingerprint": "46588de298170469c525d8a389d7cbe7749948880af2bec2a48842b04e7f4b8c"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#properties-of-cards-in-the-effects-stack": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states",
+    "reviewedFingerprint": "a555c7e5a7d389b70e1ab1ddfcd88d950c39a4339fd2df1f851f4d23ddea41ff"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#properties-and-states-of-objects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states",
+    "reviewedFingerprint": "dae46c8360d53eab3b8633b792ec48c2a0e23e6035da75708f8b6d82ecb6fbbf"
   },
   "game-mechanics/game-mechanics-properties-and-states.md#properties-and-states-of-players": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states",
+    "reviewedFingerprint": "7f176eccb2cc7fb150807c399db5c5b0caaf6d539dd17dd661755c54339aa390"
   },
   "game-mechanics/game-mechanics-special-elements.md#exalted": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Exalted and Norm element enablement"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 Exalted and Taunt corrections",
+    "reviewedFingerprint": "e44f2a3714f5cc9ccb7dc6921d0f174021184cbbfffde143b2561890b6aa0439"
   },
   "game-mechanics/game-mechanics-special-elements.md#norm": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Exalted and Norm element enablement"
+    "evidence": "docs/grand-archive-rules-coverage.md — Exalted and Norm element enablement",
+    "reviewedFingerprint": "1a828afff1210c912d340baa56c6875f52db8db51662b72234f22ab898ebe9f0"
   },
   "game-mechanics/game-mechanics-statuses.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor"
+    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor",
+    "reviewedFingerprint": "6a1747e7a27d2bc4c0691f16a4fbffe0b1d9438ad13e992b73349016d907820f"
   },
   "game-mechanics/game-mechanics-statuses.md#crowd-s-favor": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor"
+    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor",
+    "reviewedFingerprint": "e2611d32cd915a0cdbabcf32344683f1ef1a8e6dbaea24cdc4db8ce96bc1058e"
   },
   "game-mechanics/game-mechanics-timing-and-permissions.md#fast-vs-slow-x20": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions",
+    "reviewedFingerprint": "42ac86d5f0b8da1307b7d495ff13fc8cdb70b9dd791a7eae84142969c2fcd164"
   },
   "game-mechanics/game-mechanics-timing-and-permissions.md#opportunity": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions",
+    "reviewedFingerprint": "312628936460014dec8d4724ed2551afe214905da9cf7e80bd84f82e5da6ba65"
   },
   "game-mechanics/game-mechanics-timing-and-permissions.md#special-play-permissions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions",
+    "reviewedFingerprint": "d7b6442ff62ebdea040d6710e405f7205ba64b90659b30c871baaa6815e59bf2"
   },
   "game-mechanics/game-mechanics-turn-order.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Turn order and phase boundaries"
+    "evidence": "docs/grand-archive-rules-coverage.md — Turn order and phase boundaries",
+    "reviewedFingerprint": "830aca67ee8e6a111fd8f40ffaf6ae041e2258581808d477a8754a1607b1e12f"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase.md#turn-order-combat-phase": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "35a3288b330e182d48db2db189da55ed8cdb538bd5f5bec14d48cc2bb90d21fb"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attack-declaration.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "aaff54b3415358712b071297e2e9560a3faedd66f4e2436a820227c839ebdb39"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attack-declaration.md#declaring-an-attack": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "903ede4c3ab19de733b34bdd117b1f5d2834a13d3362fd01d6a4fda61cb94955"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attacking-and-the-combat-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "1599c815e05399eb4113e9eba86e61a01517d0062f489d00a05d461b2e80e7e4"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-damage-step.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "e291265ac141c7c80e33e092d53e739b2c6ede0d7bc12e41d50d904ed910e380"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-retaliation-step.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage",
+    "reviewedFingerprint": "6ba70a8b712979754604f13e2f61cab5fc2e5ba6b7524d9bec73f66f72426d66"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-materialize-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection",
+    "reviewedFingerprint": "c9683be7cb71e8f6a55d70176539de5d21154d602f5bd67e8a00b4f3af9b1fe8"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-draw-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End",
+    "reviewedFingerprint": "acc3d86419ecf2fa658124ec7b75a8efcddb84e0bd9b80527f7208a240545a43"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-end-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End",
+    "reviewedFingerprint": "5f0b77399f4b4d41667438f62cfadcbbd5869af3412ca3c88b2d8f2191bf2ba4"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-ending-phases.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ending phases and turns"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ending phases and turns",
+    "reviewedFingerprint": "f471c4be04f2da4b2175b7fd43182072e70be8a3c54a1f0882340063fa5240f4"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-main-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End",
+    "reviewedFingerprint": "bfb9a09835f07c23671715758dc8912b8028c64ab19667396957562628889237"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-recollection-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection",
+    "reviewedFingerprint": "4943e13347c39296c9c0b160fa77968c5243b3caf8d5ca7b897c68106d5f5aef"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-skipping-phases.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Skipping phases"
+    "evidence": "docs/grand-archive-rules-coverage.md — Skipping phases",
+    "reviewedFingerprint": "92b3eb0a176cbd6a8e02a0832ac9ca26c8e760e94ca2526e6594f4fbbd41f8fd"
   },
   "game-mechanics/game-mechanics-turn-order/turn-order-wake-up-phase.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection",
+    "reviewedFingerprint": "d245233e4188ea07cd7e5b2ab5138e22ee71c373f53a3d43a346850fc2827bec"
   },
   "game-mechanics/game-mechanics-damage.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Damage and damage prevention"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "39b536db7a50cbf3fa66f72bbd25948374274066c52a9d89511ce81ed342890d"
   },
   "game-mechanics/game-mechanics-damage-prevention.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Damage and damage prevention"
+    "evidence": "docs/grand-archive-rules-coverage.md — Damage and damage prevention",
+    "reviewedFingerprint": "1f0fdea4d43b70bcf28e837a35786be7198dab6bbbea65641919d24cb2fd7d1c"
   },
   "game-mechanics/game-mechanics-drawing-cards.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Drawing cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Drawing cards",
+    "reviewedFingerprint": "c1f1c70b0d31ac03b7d86f26eb44b76f4e3fb58915a0e57b6a7d28faa1bc7f3b"
   },
   "game-mechanics/game-mechanics-types-of-effects.md#game-mechanics-types-of-effects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "b995d7ee30cce5990547e2b7706e59048363b03d94ac77f2b07a83b41ddf34f5"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "2f2cc05533a90d9ebbc60108275bc03c0183d9339ab9ea7041f6e32b818ada98"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#instanced-effects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "df2e639321c872d907be1924f8cabead90ec6d7246ee53760d80cbeb01021a64"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#static-effects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "89fc73f1d729a43220a276895d1dba9128cea4cd0bc2479ad9011dd068842446"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#syntax-of-continuous-effects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "e23b837ccc41769de70a10846ae35aa862cb97333c1845485592923e5c597146"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#layers": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "9d680eaa707b131832689ce8341b21189d9e2122f1d445ea71196f277a84c4b7"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#dependencies": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "46b19843dfd2ecc6eede5fb5f0b5319a9df6412a5c25008cbe7ddbaa89f11c65"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#timestamps": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "19953fd9e50a873c242ff62e0d6fe711d8cca2a1ca8581e0b3ca07a92d27f24f"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-game-effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "990283079defd20f56d10cf0cca21ac4c6a13ef81cd479c813dd3ad0da6b6e63"
   },
   "game-mechanics/game-mechanics-types-of-effects/types-of-effects-replacement-effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects",
+    "reviewedFingerprint": "47b660a017c3c6b414aac540fb7846791cd9da05ff7ac6b11baf8cf51031640c"
   },
   "game-mechanics/game-mechanics-tokens.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Token classification, control, and lifetime"
+    "evidence": "docs/grand-archive-rules-coverage.md — Token classification, control, and lifetime",
+    "reviewedFingerprint": "de1adc502bdbbdec8e572a04d5aa3e0051898a3159a82a8d5ea209f692e4db45"
   },
   "game-mechanics/game-mechanics-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "bbbc0de8f4fdcd7cc598f7360b06ab710ecec9fd77fc7cc31201fe93739355ce"
   },
   "game-mechanics/game-mechanics-abilities/abilities-ability-tracking.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "de6edd356603bf5ae2b3887d1678ad0e43d9749c56aa06467403d157c38095a4"
   },
   "game-mechanics/game-mechanics-abilities/abilities-activated-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "9e1ece926a4525a0f4b5a192c6c5d49b1a19d642171e1c942e4d4056278d554b"
   },
   "game-mechanics/game-mechanics-abilities/abilities-resolving-triggered-and-activated-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "f1b4140f6f2e2a2f4c1b9a6cd8b88dba5428d2588bd3876535bffcbcc5779618"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "d193bd979f81d3129090ad64a3d0eedf725054a950caf209745cb5e0174bd371"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#level-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "9873b5a26bc0edf01e1992912c21082e00b9ddd5727fbbc1d80cfc00bc081339"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#class-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "66e4ac16e512c5a583d997a1f1c8f99c97dc39224ddb52e127c8d93df5abb2d3"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#damage-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "66b05874ca1fe6d5cd7f53f712f5c48c4bacd6fff348e365b254469ca5c96a66"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#memory-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "72bb579f0876c1fa257262cbf07b0b9727fa2d9aa2b83b6e4c63f841fe21ae58"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#element-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "079f12857ff9b5a6b08bdb45422b17777deca13a3609438bdec0f2942c5609ee"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#champion-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "4e1b88125cc48e177e725baeb712aeb5349c207b4775c1417a112d41fbcc08a9"
   },
   "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#sheen-x-restrictions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "d88ed96069962119a19db61eac3b1d9fd245ea42d586af03ddbc2529ea3df172"
   },
   "game-mechanics/game-mechanics-abilities/abilities-static-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "8b676407a70e15c16cb916293b12ec67ee30a9c8740fac22bf69ccf9a7f28179"
   },
   "game-mechanics/game-mechanics-abilities/abilities-triggered-abilities.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions",
+    "reviewedFingerprint": "6878098775de39c6e2e15be07f7945b23b25d0887ed26ce5837a3e58f52974f6"
   },
   "game-mechanics/game-mechanics-counters.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "144cc8e86cfe31927ec52e931c3b102c2c20bbb1fe4e59d862abdcac4bf07ad8"
   },
   "game-mechanics/game-mechanics-counters.md#buff": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "b3c4249b757d3c4ecab2c428305600788a934009ed173a6d7df61f0fdc084421"
   },
   "game-mechanics/game-mechanics-counters.md#bulwark": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Bulwark"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "2150ca7239ca92543bda600ff16333831fbc7216744860b4595a644b1d6b0da4"
   },
   "game-mechanics/game-mechanics-counters.md#damage": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "abc1032f79f7b99b86dd179c4552908552fadde1896f274e951fa76ddb397597"
   },
   "game-mechanics/game-mechanics-counters.md#debuff": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "0c1fc3a0d657e30c9e4c7c3e8fe43acf97a91e8402418293784bf182d639b6c1"
   },
   "game-mechanics/game-mechanics-counters.md#durability": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "e9551ea0475b0bae87277b20f593df4392bce7db7d9cf1fe3f945235081e419c"
   },
   "game-mechanics/game-mechanics-counters.md#enlighten": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "13734d35e8c56f306c36afab6eed9a4ba7acd0f14b38cb34b1a8774c18c1b192"
   },
   "game-mechanics/game-mechanics-counters.md#level": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "0bd66791d8ee858c5ec2c36c5a899c6265274b9fcea924aa5abd5c6cde0ebffc"
   },
   "game-mechanics/game-mechanics-counters.md#omen": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "e8f31a1b6cbfc5bbed32657dcd17e5449377874f2610d697395a37aa07138376"
   },
   "game-mechanics/game-mechanics-counters.md#static": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities",
+    "reviewedFingerprint": "05bee7d15fcd7f49a3704a3448075be55a1bc97bda31b4979aaefd94a550fde9"
   },
   "game-mechanics/game-mechanics-counters.md#wither": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "8d22f4b6977bea39168c4674c8572005fece8c88a7fe9015ed7effb34a687be5"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#inner-lineage": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect; generated lineage; host incarnation"
+    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect; generated lineage; host incarnation",
+    "reviewedFingerprint": "77519662c81c75e8a21b0add23e6b6043437352aa237df020c8839e605dedcf8"
   },
   "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#loaded-cards": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards",
+    "reviewedFingerprint": "cdf8013c620809280f91014d567c530f6c6e041a004c60195b531023b2e20b70"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics.md#game-mechanics-miscellaneous-topics": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "663f2bff909ca3e9ccacb9a9b8288dac5b532409dcc531e5b625326514d7ba6d"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/concession.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "b027c50e8022ef395fb18d52e369fbaf81af009660335b721f9fbac13b45f37a"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/default-case.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "65d2fc493ad0698bc8d5f6923ff95caf64cf2dfce2a406f5dfe6ea8e909dba4f"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/die-results-d-effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "c5547f18e6b490bcd227b8ce9732746660ea7d1b8cddf6e25448ed9310ebdf79"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "fbbd715efee0342c2042a36b23862d7db3e3b9269eed47a73a6308467c6df2a2"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/naming.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "85544fe2ca23af66b1dc481136e878165b127700eed1764c85a1e77f830f9bed"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/permission.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "6cd2f214dd920199961d126c21d491562ec28c3adb59907307ef3763fae5c2d7"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/player-action-legality.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "d8e47c767003520a34106ca9dd74dc5a08b191fa6baea07e75ddd76379127a92"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/randomization.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "d5b3ad2204f2c3a9439f06da6b032a0ea358b8638fc2429cd8a7fd621ee56051"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/rounding.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "77d950d84cd2845f7191fddd4aa65993878c3da9cdbeedbf400aa8fcf0e331bf"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/searching-and-finding.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "513cf404752252bf4187941f3912b3edda72ccadf5ad0264c110a07b12a17cf9"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/simultaneous-selections.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "17b62fc39de3db068e1cb0106680d3c59c77c5066e8ea5d4a4bc0df58747a6f4"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/special-game-actions-and-turn-based-actions.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "a242b0a143079a95d13982c9ba1cdc70a97688757a69c79c24fbd829b98dfa73"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "4640ce7ad327cf6eb4626012747ca176c3c8843fa86cadc4a0e84f1a3177c4bc"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects.md#types-of-checks": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "99fb8be0a1d0aae7597dc3925fa161a99e16111912467b95163793276ab5a87b"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/tracking-information.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization",
+    "reviewedFingerprint": "45d796cae175af27e9d969aa085257021e4d25bab3deafb43d67060f023be0d8"
   },
   "game-mechanics/game-mechanics-miscellaneous-topics/ordering-and-tracking.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ordered private placements"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ordered private placements",
+    "reviewedFingerprint": "d32b96521f8c951f23cf684615b67097beab9ca1636d8fbd9d552f5f70e4c524"
   },
   "game-mechanics/game-mechanics-objects-and-targeting.md#objects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect",
+    "reviewedFingerprint": "052a299b484bba764174c6aa314b77259697d03e12dce6db83a99d1be74adad9"
   },
   "game-mechanics/game-mechanics-objects-and-targeting.md#non-objects": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect",
+    "reviewedFingerprint": "80677bd56e39cc5ed5de181e73291b4604110d7e6fd0156f45a2e2cb4f25198c"
   },
   "game-mechanics/game-mechanics-objects-and-targeting.md#target": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect",
+    "reviewedFingerprint": "d0f266d6d18a473bcbb5a259d15f473d5101d773a2a2fa60ba9b5d70f5821215"
   },
   "game-mechanics/game-mechanics-objects-and-targeting.md#redirect": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect",
+    "reviewedFingerprint": "d466e1c974c265170ead1f10190ad8aa24c8afd592f102e7d65c657079c85097"
   },
   "glossary/game-terms.md#distant": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters"
+    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters",
+    "reviewedFingerprint": "132e742a7dcaab9c87142ca409917ca80d7615cfb2105e8c4f16f96ef383b4c7"
   },
   "glossary/game-terms.md#durability-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters"
+    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters",
+    "reviewedFingerprint": "f7dc53614772b3ad7d115ed6f1a310caaea97adab02f3b983db37b8a325363a7"
   },
   "glossary/keywords-and-abilities.md#aenean-progression": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Aenean Progression"
+    "evidence": "docs/grand-archive-rules-coverage.md — Aenean Progression",
+    "reviewedFingerprint": "02422e5fffa5c8a050fc64511a855637d039788d568b2b56812679de00724bbe"
   },
   "glossary/keywords-and-abilities.md#aethercalling": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards",
+    "reviewedFingerprint": "4ed5dc648ecc3d255d3ebfe7533b4d17560c178f186417eb5a3b690cd25f84f5"
   },
   "glossary/keywords-and-abilities.md#agility-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Agility"
+    "evidence": "docs/grand-archive-rules-coverage.md — Agility",
+    "reviewedFingerprint": "307cbdd610bbec5a7e1250be46e19c9cbf015a0ac5243ca989bb426bcdb0454b"
   },
   "glossary/keywords-and-abilities.md#ambush": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast",
+    "reviewedFingerprint": "023a7a3fb5658e61a1ef97cc5cbb51bd4d8eac7a8bf6d7798a3d71af27c6405b"
   },
   "glossary/keywords-and-abilities.md#bulwark": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Bulwark"
+    "evidence": "docs/grand-archive-rules-coverage.md — Bulwark",
+    "reviewedFingerprint": "e93f6002bf0596bfb6dcf894bdf0360c51bd44cf033f0e4668f82d7ed416ad25"
   },
   "glossary/keywords-and-abilities.md#brew": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Brew"
+    "evidence": "docs/grand-archive-rules-coverage.md — Brew",
+    "reviewedFingerprint": "e0ef0d75c97d4977424d0a02658d082817b5ecbd253e036c26b626f05f85aa8c"
   },
   "glossary/keywords-and-abilities.md#cascade": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Cascade"
+    "evidence": "docs/grand-archive-rules-coverage.md — Cascade",
+    "reviewedFingerprint": "d6dc3aa2a67784d468ccc7a64442c44b53eea8afdb1cc235aadfc2a1526a1c47"
   },
   "glossary/keywords-and-abilities.md#champion-bonus": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions",
+    "reviewedFingerprint": "03e555be6c7e88d6c52365ea81a778e292e1734ffb49a97a51d0b39a45fd8c4b"
   },
   "glossary/keywords-and-abilities.md#class-bonus": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions",
+    "reviewedFingerprint": "8a1f70731f1d9d153bf21671aca535674d0064b93bc25693db76937cf52eff7f"
   },
   "glossary/keywords-and-abilities.md#class-locked": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions and Class Locked"
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions and Class Locked",
+    "reviewedFingerprint": "872d7caf7707c1e416159efe8c038aa8573db267ee2ed2168d90d993049afb69"
   },
   "glossary/keywords-and-abilities.md#cleave": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Cleave"
+    "evidence": "docs/grand-archive-rules-coverage.md — Cleave",
+    "reviewedFingerprint": "d66eae27638a60101c87013aaa3d36410e85faa4a615a565dcc81942dd9b5016"
   },
   "glossary/keywords-and-abilities.md#command": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Command abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Command abilities",
+    "reviewedFingerprint": "48ec70c8c595d132e4f359fd953108a3874d5646354a6c5d8fb065b6e62f3eab"
   },
   "glossary/keywords-and-abilities.md#commanded-will-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic",
+    "reviewedFingerprint": "4806a2707310e84137d5c43d73fd4bcaa3fc242155e8d29927dac41d4b6612e2"
   },
   "glossary/keywords-and-abilities.md#critical-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic",
+    "reviewedFingerprint": "f9d5dfc722322ab5a08cefa7876e7ba6c8bf81a19ae9c175377f1a1d48f6ad60"
   },
   "glossary/keywords-and-abilities.md#divine-relic": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic",
+    "reviewedFingerprint": "8bdeaf8a1c2f8508a74ed968688a1506865b5e08cf6c22c7944eea3d90bcce83"
   },
   "glossary/keywords-and-abilities.md#efficiency": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Efficiency"
+    "evidence": "docs/grand-archive-rules-coverage.md — Efficiency",
+    "reviewedFingerprint": "fa06a2953ad5aa7fb2a41cf23c94d253d5186d5d3d8dd999f58330c125ae9bdb"
   },
   "glossary/keywords-and-abilities.md#element-bonus": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions",
+    "reviewedFingerprint": "8acecaa189ec6474f5d03fe159b68119dd487a67ccd27caaeaae897bc1a825d9"
   },
   "glossary/keywords-and-abilities.md#empower-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "fc566629430831bb86b47b39ff87e00bd8a4246cc3a95a75f2cccabe34e93798"
   },
   "glossary/keywords-and-abilities.md#ephemerate": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "e69fbeb3118b7c3de88b77df77d8fd18d9d0bfea91bd85fe9d3f272e350c61a7"
   },
   "glossary/keywords-and-abilities.md#fast-activation": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "b05860a6078a7d6e3dd1fabdc73bfea37ec21cd1d4fa2069a0d171fe1dab996c"
   },
   "glossary/keywords-and-abilities.md#first-boon": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "a90df9d07cb47956d7c76db2a389979e8a8804448b24c8242eff4e387077e7fe"
   },
   "glossary/keywords-and-abilities.md#floating-memory": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "84ca5e570446c1805e76902482ad677ad29e52a6baf9f70e029ac2fe91241514"
   },
   "glossary/keywords-and-abilities.md#elysian-aura": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Elysian Aura"
+    "evidence": "docs/grand-archive-rules-coverage.md — Elysian Aura",
+    "reviewedFingerprint": "4cc7ae9b8d269d64421cfb6bfec2eb42fc2d664ac501d31cb08ed8d013c47663"
   },
   "glossary/keywords-and-abilities.md#foster": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Foster"
+    "evidence": "docs/grand-archive-rules-coverage.md — Foster",
+    "reviewedFingerprint": "19127b0797e47bbef52ae171f07eef3e26122f7a1181616b81cb49df974eec94"
   },
   "glossary/keywords-and-abilities.md#hindered": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "d02c54053587d793781125c7d86bbf4d4e102d3e19dfecab539a1c08c8fd30ca"
   },
   "glossary/keywords-and-abilities.md#imbue": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Imbue"
+    "evidence": "docs/grand-archive-rules-coverage.md — Imbue",
+    "reviewedFingerprint": "edfb465c126bdec343acc769167b1f9697cbcbf143e2545be68ccdd7cfb990c0"
   },
   "glossary/keywords-and-abilities.md#immortality": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "591a81f3a9dd821cd1340771ba61b141dfaf6b1948a80fd840c777fbc98109d1"
   },
   "glossary/keywords-and-abilities.md#inherited-effect": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect"
+    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect",
+    "reviewedFingerprint": "ab8e0003f789f2a6f6ae50d4b65f36ac5b4af962c7e23fd91d0ceda77436d795"
   },
   "glossary/keywords-and-abilities.md#intercept": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Intercept"
+    "evidence": "docs/grand-archive-rules-coverage.md — Intercept",
+    "reviewedFingerprint": "7447bb2a13bae421ea737cfd8fbe5720841b9f133e02f48d37490b72c2b4822c"
   },
   "glossary/keywords-and-abilities.md#interdiction": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster",
+    "reviewedFingerprint": "701bdbfca9056c5174b233e466a1f75b562b9d6a8e272e890230a856a5b044bb"
   },
   "glossary/keywords-and-abilities.md#kindle-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "ec3e2c70d1411174816b3f93a2037b8fa2542b4ef408bb26f761f7dca47a7286"
   },
   "glossary/keywords-and-abilities.md#level-locked-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "bfce12ffc91fd793f86b4e002c519b784c74e2339c760cdf3f055c75cd75074d"
   },
   "glossary/keywords-and-abilities.md#level-restriction": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "74cf7e780ecb2ee3d5b9a9d142040307aa8cb5cd4677a9f6c05d3833e1cbc419"
   },
   "glossary/keywords-and-abilities.md#lineage-keyword": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Lineage"
+    "evidence": "docs/grand-archive-rules-coverage.md — Lineage",
+    "reviewedFingerprint": "4bd31e74d0a33cb764ca423a6a8c5508e8efb860480103cefaa680883ec7e9c0"
   },
   "glossary/keywords-and-abilities.md#lineage-release": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "95e85b11dc8dfdd51b6c99fb63e44867ae80b6cf744a646740b5092bf93a093d"
   },
   "glossary/keywords-and-abilities.md#link": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Link"
+    "evidence": "docs/grand-archive-rules-coverage.md — Link",
+    "reviewedFingerprint": "82945d81736aee07dca4f0be24132416b16334e35a9e4e95d69a76695724557f"
   },
   "glossary/keywords-and-abilities.md#link-shield": {
-    "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Link Shield reference substitution"
+    "status": "partial",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 Link Shield interpretation gap",
+    "reviewedFingerprint": "fcc246129457dc2eb60c722ba98866215cc04009b04ce46e2ea05a4528f2905e"
   },
   "glossary/keywords-and-abilities.md#memory-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "6fbafcce334158fc51e000bc86f9a11eef8417c548cf6c11b9616a75111ae249"
   },
   "glossary/keywords-and-abilities.md#multistrike-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "ae8b7268aedbf74a1886e41bd6abecf31b3ef2af02195fc3178329a28f5b7af9"
   },
   "glossary/keywords-and-abilities.md#omnishroud": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster",
+    "reviewedFingerprint": "e62bd3b93fc94137892993bd1e3b68a6ff8f2171e7d5edc722827caccaf08738"
   },
   "glossary/keywords-and-abilities.md#on-attack": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "99bef679106e5f53635981d8d6874c2ab834b381b8197f49f63be16aae752ee7"
   },
   "glossary/keywords-and-abilities.md#on-banish": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "785720d89a7a576ea1e54b3ca8863a43d954322bba2fc29999b6e0695f8bd1f6"
   },
   "glossary/keywords-and-abilities.md#on-charge-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "bb5c4c5de3e2f6d96c7d161087ef3af26690e18443f3f194024a46f5bb61c9e4"
   },
   "glossary/keywords-and-abilities.md#on-death": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "dc724c23c190454b394fe86c61d2141acef044ba707afb729e1b0b93ad835c34"
   },
   "glossary/keywords-and-abilities.md#on-enter": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "e1c8fe4f56213d492f6b211d93daaee67b3852736dfc63d0e55fc69c89df1105"
   },
   "glossary/keywords-and-abilities.md#on-foster": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "15a1c86da69af6c0007b8f0e1ef1c089d78ce81130cb51d81a58cd45b1fbb5e0"
   },
   "glossary/keywords-and-abilities.md#on-hit": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "c82e8476a3d15b4d01bbe4817a3d5a3f83686460fdd90589c760e271e2449a0e"
   },
   "glossary/keywords-and-abilities.md#on-kill": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "54524b2080d6123d4eab2ac32fc0ebc31587b4869db38e6716f2c1dffb6a4289"
   },
   "glossary/keywords-and-abilities.md#on-leave": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family",
+    "reviewedFingerprint": "4529644c44215fee77527be1a99dc54ffe7d13cceb9aeb25a0f9e631d53c07ba"
   },
   "glossary/keywords-and-abilities.md#prepare-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Prepare abilities"
+    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Prepare abilities",
+    "reviewedFingerprint": "19387c1c5ba45fe1f3773a116214a5785fd6a502401eecffaa91bd11b127b17c"
   },
   "glossary/keywords-and-abilities.md#preserve-preserved": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail",
+    "reviewedFingerprint": "93638d275f2b34c824e1eb15eb1d48715c44c1f3c05b4f349aadaec6d03da079"
   },
   "glossary/keywords-and-abilities.md#pride-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Pride and obedience"
+    "evidence": "docs/grand-archive-rules-coverage.md — Pride and obedience",
+    "reviewedFingerprint": "4b6195c4124a3b111f04fb99e08d4fc9e3fe9317bfac15276fa32a05874ddf88"
   },
   "glossary/keywords-and-abilities.md#ranged-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance"
+    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance",
+    "reviewedFingerprint": "8f603db54f54ebcc569056a1ee7db29136b06a7187b33860690b1c893190f87c"
   },
   "glossary/keywords-and-abilities.md#renewable": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — restricted destinations and Renewable regression"
+    "evidence": "docs/grand-archive-rules-coverage.md — restricted destinations and Renewable regression",
+    "reviewedFingerprint": "5950476e5e3a018809f56f916d177ccfa782aae6d3f580bd5da6d69ec90e4391"
   },
   "glossary/keywords-and-abilities.md#reservable": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail",
+    "reviewedFingerprint": "438d065f0713e9f409d825e2a70e908afdab12a29c04fd4a7f60a68723f23254"
   },
   "glossary/keywords-and-abilities.md#retort-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance"
+    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance",
+    "reviewedFingerprint": "368f63a4d8ef9601336ce17d9cc012e4891c6f04a3d0f7b2a3aad7bdbb22116b"
   },
   "glossary/keywords-and-abilities.md#steadfast": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast"
+    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast",
+    "reviewedFingerprint": "fc402cb47b7bde06a07a28892d514856f04facbb9c80f5c7a3425cc4e67c7b11"
   },
   "glossary/keywords-and-abilities.md#spellshroud": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 native mastery activation",
+    "reviewedFingerprint": "127c5246fdc8ec4bc4e6e4daeb0bcea69e69b8db8141d2e44645c3f648d03831"
   },
   "glossary/keywords-and-abilities.md#starcalling": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail",
+    "reviewedFingerprint": "aab4f80608ec26d9ecdecc2058becdcd28b48b31e0ad721a8d6f05b67374cac1"
   },
   "glossary/keywords-and-abilities.md#stealth": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight",
+    "reviewedFingerprint": "0781266e6109b1cc501e26a533e7095674f9de4d1dbe8a956713a72e4068be00"
   },
   "glossary/keywords-and-abilities.md#taunt": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 Exalted and Taunt corrections",
+    "reviewedFingerprint": "8c1d623663352b2370a674bcd699a8948d4cc9704bd16e7773df7e45f5c583b2"
   },
   "glossary/keywords-and-abilities.md#true-sight": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight",
+    "reviewedFingerprint": "b58cb3baacc8495ee6f87dcc09b09ba9fc12c498a66d721cbd82b65935b77e45"
   },
   "glossary/keywords-and-abilities.md#unblockable": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail",
+    "reviewedFingerprint": "d237aaae5519c17e9e05d5dfeab04a7694b81fd1700f52e8c62810d532bbd221"
   },
   "glossary/keywords-and-abilities.md#vigor": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Vigor"
+    "evidence": "docs/grand-archive-rules-coverage.md — Vigor",
+    "reviewedFingerprint": "3a389be3ca69cbdb3d46f95784a1b3f1c98ab1cc988d2bcc0139f84ea3d6725b"
   },
   "general-rules/general-rules-card-characteristics.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "18da3ddcfd34756bbf4136bfd9899abb492c45b492345c182c10282947c7050b"
   },
   "general-rules/general-rules-card-characteristics.md#type-overwriting-and-type-setting": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "3783d9c41e1210cd6692f765831ca12f09b6081c06b13a30745716f8423f08f3"
   },
   "general-rules/general-rules-card-characteristics.md#type-acting": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "777ccd517099bdbd8080a2fd4ecea2444f734de39b674007e9ebaf69e3a97759"
   },
   "general-rules/general-rules-card-characteristics.md#type-expansion": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "f75bd3be521a3c781cf98f75a8e4780f06ded1068dcac00c4a05e99d7ff9d750"
   },
   "general-rules/general-rules-card-characteristics.md#stat-setting": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "8a64070771abd10838caabb672a4a4efb5062b3d4f0843bb77c612782cc8a03e"
   },
   "general-rules/general-rules-card-characteristics/double-faced-cards.md#double-faced-cards": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards",
+    "reviewedFingerprint": "5ddca8c946c76db18b8e8bcb673db86a104da7b2151a106d63017a11ccdd10fa"
   },
   "general-rules/general-rules-parts-of-a-card.md#general-rules-parts-of-a-card": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "2a7bad4e47121532736a7b0afcfe55793a862fd66966721be2b46d4fe21912af"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-border-information.md#parts-of-a-card-border-information": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "033f39645c3547f401cdb1e66706b9dad377f36d29ca8c0169bc01a82dc88df2"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-cost.md#parts-of-a-card-cost": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "3f3bdc4cd4c064041e560865e2c3131fd48613c23f935072e877a76dc32cb48f"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-element.md#parts-of-a-card-element": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 Exalted and Taunt corrections",
+    "reviewedFingerprint": "8cd874a1c52a853186d6a995353c195d8594d86b8532ff195969502aa5ea16c1"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-name.md#parts-of-a-card-name": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "7eb5a695c32857bc6d635ae2a379fae4274bb6c43751f50689c002ec38e3baed"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#durability": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "410cd6bc5564ce4ffe5db533a5d3484c4aa9687d1c7421bb26a219d85abb930b"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#life": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "cee96a3e5ececefa0ae4489f5eabf0aad0fa17dc62815216792de16bc9647f31"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#power": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "acb7d725cda740e28011e6041fa3e968848faab7cf10726bb455056ff6c88caa"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#speed": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "098ce263834cc4d38b0a7b1ba5258349677b8f5a09b2a8a81ca1831fbd0f691b"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-text-box.md#parts-of-a-card-text-box": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "0e7a906fbee7835fcb9a1b14efba37035339d67393bb26ffc38f171939df2613"
   },
   "general-rules/general-rules-parts-of-a-card/parts-of-a-card-typeline.md#parts-of-a-card-typeline": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts",
+    "reviewedFingerprint": "b4d848ecaa84fdfea7bb4fd3ba4f7494edbadeb393e259d8840157d3fab7b79f"
   },
   "general-rules/general-rules-card-types.md#general-rules-card-types": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "108a06690254c830b058f49758cedee6995bb01e07d4ed395c680e7b1cfa4e6b"
   },
   "general-rules/general-rules-card-types/card-types-action.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "1c81843af6cce7a2511e72c505fb1ce3241e18322927ef2ed72792f1226a37b8"
   },
   "general-rules/general-rules-card-types/card-types-ally.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "14e4fa866f832aab49a169bf6bc1d6616d54a4b95f688063f82cc6af7dc01d9b"
   },
   "general-rules/general-rules-card-types/card-types-attack.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "e6064c68cd2614c4b2adfb33e9175afe718cb1e0c6d4b7857fea9fc646c1b180"
   },
   "general-rules/general-rules-card-types/card-types-boons.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "b9b8d75e4b391123f975701a4fd6c219bea39d94869af7354b0f93cd43ed38a4"
   },
   "general-rules/general-rules-card-types/card-types-champion.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "18243c5c5b0347224a57cff325c90ce31fc83658f0160fa95495726349439fd5"
   },
   "general-rules/general-rules-card-types/card-types-domain.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "6e5f0810dd9878f657354c53331a2aaf3c5e35e8902858e8c5fdbc2d48e10c7e"
   },
   "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-domains": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "5f6d7ae16c3a397c1a2f41252ace047f85e8a845f658c36ae6fbbb9f62bedb27"
   },
   "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-items": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "3e2166b99cc85418aade66a406b4850d825bc704a7b7b7729e5ca410e0d03770"
   },
   "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-actions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "44874aa80866a643ee12ca7ea1816615423cd5098ab4a7dd159aff7f354741b1"
   },
   "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-weapons": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "8a89a0b0dead1a65cca2edb04a54df0e349bbf9bb29ae661d1003927a07151a0"
   },
   "general-rules/general-rules-card-types/card-types-item.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "9e08a79a483d8d07cf3b9450fb5d9e86016d7939d24ddf59ac27c8dd36f4d486"
   },
   "general-rules/general-rules-card-types/card-types-phantasia.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "7f83ff75d7f8a3ca35b26eb0541f9996e946398beb39eaf70acb8a29d4e9c3e1"
   },
   "general-rules/general-rules-card-types/card-types-supertypes.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "51f0e00b8cf0b1236f18266a5413a4b1f125ff44bfcc9d4e116bf5a2e46f3b13"
   },
   "general-rules/general-rules-card-types/card-types-supertypes.md#unique": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "c495595e50a7859fe428efbf364547abbc4e24b09dab3df84a60a72b2a72eb6a"
   },
   "general-rules/general-rules-card-types/card-types-supertypes.md#regalia": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "c29c6c82ba264f5b1caaa0ec044b8cd6dff070efaa56389af1ad2457cd803898"
   },
   "general-rules/general-rules-card-types/card-types-weapon.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes",
+    "reviewedFingerprint": "cebee200d0ffe147235b69cbd1cd0b5770687d6470528fbede59eb77de2c3436"
   },
   "general-rules/general-rules-format-conventions.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "488b0ed07b03dfd946f1d222a771ea9adee1b53fc1f5e81ab6e10c8c32163499"
   },
   "general-rules/general-rules-format-conventions.md#standard-constructed-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "c1c56cd2e122c14c6b5eef51abffeda48a4f56eba9a8e5b627a8fd1958156d22"
   },
   "general-rules/general-rules-format-conventions.md#draft-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "aee028edbb78ff638384a5120fdd63429ac70c483e5ef9544bc3f163511691da"
   },
   "general-rules/general-rules-format-conventions.md#pantheon-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "1e0cb7a7bcc5351a45c15b338ab55acf143faf5ddfa501f050abbe8fc4ed4a30"
   },
   "general-rules/general-rules-ending-the-game.md#general-rules-ending-the-game": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game",
+    "reviewedFingerprint": "8bea33323551c52f54d0a918eb44de025ca38f597e11eb7aac1ef0f43af355ae"
   },
   "general-rules/general-rules-objectives.md#general-rules-objectives": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game",
+    "reviewedFingerprint": "5ee842ac24610ce8b3720b5bd25f181b6e2642bff3b4aa0c8d42598bcd0f4b25"
   },
   "general-rules/general-rules-players.md#general-rules-players": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 damage and editorial review",
+    "reviewedFingerprint": "23f46cd8a70d7a8b7938afef65aeb51da6985917eb0dcc70f0eefd80a219a1c2"
   },
   "general-rules/general-rules-players.md#player-actions": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game",
+    "reviewedFingerprint": "aa63481cc408b9f809ac491a54ee1ab9b9d701fe2d0a6d9482680783786cf474"
   },
   "general-rules/general-rules-starting-the-game.md#standard-games": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "c369afbb17c18fb937691a0a8e28aa459e6b48d3f1b34f4b72a490d93e5e1e73"
   },
   "general-rules/general-rules-starting-the-game.md#standard-games-turn-one": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "f897c358ff16835df997e8a3d45050f4d328ba38d255621906833d1a3965f9be"
   },
   "general-rules/general-rules-starting-the-game.md#pantheon-games": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "d8181254a2cbb19fa8efa9619f27b7029cf1167c7742e7a8c2e5cea608c3e9b0"
   },
   "general-rules/general-rules-starting-the-game.md#pantheon-games-turn-one": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup",
+    "reviewedFingerprint": "f2110fba6283144b6bc5ff60499fa8687a66bd1b10664adfb25e1a1d333434de"
   },
   "game-mechanics.md#game-mechanics": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "f82ea4cdb7a5d271fadda3a938f8afd4f335cd95fa2f2a6c58e0c7ae5edc6e8a"
   },
   "general-rules.md#general-rules": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "b401e73b9ac97e0e6aecf0e6094fcbd64e910b036c3821de52da4d92f3010030"
   },
   "glossary.md#glossary": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "59531b164af6b12d6c0f157e20ccf905b6b37c6337a852e046adf7b2305c83df"
   },
   "glossary/game-terms.md#activate-activating": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "32de8bb324cf7cf51a84e8633d814eb9e3614acfb29a6f912f22c9e729c4242c"
   },
   "glossary/game-terms.md#awake": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "60df41d48dcb29583faa979c8e32c08102d2985f4efb82725444d9b75a5fd644"
   },
   "glossary/game-terms.md#banish": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "f69426e7f446d83519a737ac29f2c70de13cb96fb4fcce0136558694c0603253"
   },
   "glossary/game-terms.md#buff-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "3182441954574f5cc0124da07234988055c2d680bbf46f7a8abdd6442e1993d6"
   },
   "glossary/game-terms.md#control-and-ownership": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "7d6a6094d1b54373f8683d1b3d43a99b09e31b56c6f2c22f42f73fdbb8a1d528"
   },
   "glossary/game-terms.md#copy": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "d836861f88917df936e0c7adfcf79fa0e293de0ac8e30634f1c2420539631d14"
   },
   "glossary/game-terms.md#damage-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "c462788a0dde094c7a65ac19687057f43b3936179214c448af1497315eca1fe5"
   },
   "glossary/game-terms.md#destruction": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "3759e0cc91a3948ae145140f00defb2b7262da867caae7aa702391fd79d0d575"
   },
   "glossary/game-terms.md#died-dies-and-kills-killed": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "1080c2bbc068f42d7e17fdce78ebd270216421eb26673a4320fec1fc8623cd37"
   },
   "glossary/game-terms.md#discard": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "e28630d505615c61a2ba4ef8604ebc67a52035a19b2b20a37b0dcf18cd49f7f4"
   },
   "glossary/game-terms.md#element": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "f81bae978186524f40eb639e4bcce5914939974dcab43fdd436b7b5bbccd292f"
   },
   "glossary/game-terms.md#enlighten-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "c30f03b869002270a06230687f8d59126d780dc806db6378b2af8b41af942e1b"
   },
   "glossary/game-terms.md#ephemeral": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "01febf2c021ac67578a441a91ade0a6e4be21e6749db6a8c3e951847135ad78b"
   },
   "glossary/game-terms.md#fast": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "65278690b399ed9987e2e06a56384b07291f4eef2ef369d76271415bd3aa158e"
   },
   "glossary/game-terms.md#fizzle": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "5a0938041bd4172238e8679d6f9bf132d25bbae544bb66d002838da20bb8986d"
   },
   "glossary/game-terms.md#fostered": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "9e25952d4d721004dee8c67b6b4fc990f65232914391d8b256327fb726eccd1f"
   },
   "glossary/game-terms.md#gather": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "900b08719e11c10b21ed5d4339d37ab162f869ab4dffe32a9c144d5d9d076dc1"
   },
   "glossary/game-terms.md#generate": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "51266f759603a87d4cfa53f5f788c133584e1cf416ec8f12808d4de6e4b41fdb"
   },
   "glossary/game-terms.md#glimpse": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "bb33830ab5b1efc8d43bf0bc033c6486636432fbf7525c2e173df2e53442165e"
   },
   "glossary/game-terms.md#hit": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "95b3b073be7e93817f616ae4ceead38a7b35ce7eed31763ddb76593a92e0354a"
   },
   "glossary/game-terms.md#influence": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "1f63d33f3824d49f551681a5c3cafce47c7f31fb3d0f22bc0b13765893a26a44"
   },
   "glossary/game-terms.md#inner-lineage": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "cc94e91a98e3328a04975cb0e942978275902fb4b66227e0db606f37883453d2"
   },
   "glossary/game-terms.md#label-keywords": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "664c501b4464563efdd1ad2f14fd30c25d91dd22747bab9c9a591458e1df442c"
   },
   "glossary/game-terms.md#last-known-information": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "2bb7fc70a29e0195cb762242ff68331f392f02858d711d5fff85378b2c41619f"
   },
   "glossary/game-terms.md#leave-leaves": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "3f27a98797985b4e176afd41a95c3fce7a766609ef8252942da4a6f3608cda66"
   },
   "glossary/game-terms.md#level-base": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "6803d077db3c1e8bf9d7510be1e2b0e63db4c67497f37a1666b0938991b5ca4a"
   },
   "glossary/game-terms.md#level-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "adf96006be170136c25078a74a67f05169ed5d59586eb5955f563a17ad3ce1c0"
   },
   "glossary/game-terms.md#level-up": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "bd93d2ef528f89fedc389985c7ef7034c8fedeaf9282a6b991dcecb534f4d1de"
   },
   "glossary/game-terms.md#lineage-term": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "697a2e5c29eed8883c77f3bcb0c248d5c083510b16a5d737fe5ceed6b377833d"
   },
   "glossary/game-terms.md#load": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "bec39368bcd3b86d75660975c3e2a00ac4d496bf7b47ae525edc08d74edd42f1"
   },
   "glossary/game-terms.md#loaded": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "d0665ad37741377f30b83bd3393fa92d9de2d3b812c52a175cd88bf5a7c9789d"
   },
   "glossary/game-terms.md#lv": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "71fb28a625fc7b7bf9af66799a2f20e92483c84fd399e08ee31ebc3b0a546402"
   },
   "glossary/game-terms.md#modes": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "70013489bb828bc11709ce73b9b18c1d5e80840d5e2e20da25cab3c8d28abb2a"
   },
   "glossary/game-terms.md#negate": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "3fdcc80d888edd3d523a4ca79433d48c084d0a86700cd75e618529a67b9a2b6a"
   },
   "glossary/game-terms.md#negated-x20": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "6a96647111ce4774d4dc18f469ef0739a549fb1e3b0484705489883064cdcdb4"
   },
   "glossary/game-terms.md#obedience": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "c5d4b6a58100aced4ed7fc721403ac9c8412c6592e4a273e39918d55a82709e5"
   },
   "glossary/game-terms.md#opportunity": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "6ace25cacd3696bccdb80802342b8c6420d72884f35e29a6d309577106a3958e"
   },
   "glossary/game-terms.md#play-played": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "f8fd5860f4ac5c7b0c0f524601e5e9f4c7da41eea06d4d7f888a39624ac53059"
   },
   "glossary/game-terms.md#player-action": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "d166d223096d9e1e3a2fab704c784fd766d50724e263c27bd4e1c9c379f4ffb9"
   },
   "glossary/game-terms.md#players": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "9199b8001ff648534ef7392d5438f807343deb08e25f6130f1935e6e9c770588"
   },
   "glossary/game-terms.md#preparation-counters": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "fc38de3be90560ef5bc3dacb027fd66a2e3753a91546c734bea3ab508f7668a5"
   },
   "glossary/game-terms.md#recover": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "e4faa80b9661d7106205d196e6628393013380261ab5847fdcfd47378184bfac"
   },
   "glossary/game-terms.md#redirect": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "cdc67bfa59eb8a9cada088391dd33d06d90f95c81a744d398091be175fbc0fba"
   },
   "glossary/game-terms.md#reflexive-trigger": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "77608e44f5d18afb5ab1962d5212ee8c6770cd233b37839985bb7028ac3d8764"
   },
   "glossary/game-terms.md#reserve": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "0b7f22741573eac5a0528e56b7205ab8c37947e8c78572cb1a3ba1614e2a3ab0"
   },
   "glossary/game-terms.md#rest-rested": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "9d268a27527f0867d8463ccb5a26370f2740276946fe501b2d21f913835363f2"
   },
   "glossary/game-terms.md#retaliate-retaliation": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "60d8a52b4b6f7c642a6e508745b541cd2504d28caab446723c2a7324e9bacf7e"
   },
   "glossary/game-terms.md#reveal": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "267e60020b01b376d31dc72720c5f85b6abe78cd2582a83efc1bfd345d5598c6"
   },
   "glossary/game-terms.md#sacrifice": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "8d31694571f40f71410b85e9845d9274f388fa566191c10e3b31c4c42ce39a87"
   },
   "glossary/game-terms.md#scavenge-n": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "d44eb35309fd6244e9fdce6443a4543eb85ccbdd1596075db38c580afd490587"
   },
   "glossary/game-terms.md#search": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "c040e7e378515afb7efaf088fb583210202009684bd723104e41892777029ad9"
   },
   "glossary/game-terms.md#shuffling": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "c860b759fdcc3ab4a42ecf4493f755123d207f59a3cf7755377d68e7be3bb901"
   },
   "glossary/game-terms.md#slow": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "eb172196591447ecaa978e6c86b9ae72ed8953f1e2fb874b0c2ebd3685cd4cee"
   },
   "glossary/game-terms.md#source": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "8679bc92d661a3f63e3c9a4030cc3416c3c439811e843af19bcf89c849c4f539"
   },
   "glossary/game-terms.md#suppress": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "0f8cac44b33299d5c0cec17087ddcb8cba9477cb8eb49dddfaead2eab819bf72"
   },
   "glossary/game-terms.md#summon": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "b9a019d9cbc879b8939c9e87339e6acb4e9ca86bf9c43249eac2fdbf522031b3"
   },
   "glossary/game-terms.md#timestamp": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "2531132284aad025329300997325903a13e1dbdf08c4a444ef0ff28cd6e47d66"
   },
   "glossary/game-terms.md#token": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "04c27e471a78ffaf9c91ffae7bbffbadf72e6101de0235d234a95b5927c7717d"
   },
   "glossary/game-terms.md#transform": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "db5b9e215f1f56ae21cc0690190085390446a45afca3d720f65c86cbb944c62e"
   },
   "glossary/game-terms.md#unit": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "6c7cbfc3675861e7ac1c45f7e9f0e198d386152cb224f9d703ff3cf0c435c46e"
   },
   "glossary/game-terms.md#wake-up": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "e619959159a7c0a1746a372c59c50b6e5e1a64293ed6a21192ebf18f97dd6d22"
   },
   "glossary/game-terms.md#wield": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "837ac7cb7a0e4a3e35677ccbc3ab6ddf385e281075e370743f0d5c1d21712c02"
   },
   "glossary/type-list.md#elements": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "e0df06f8f43f4037d83ef109f1a75f36e2d2a225e91a5a76daba66279af33878"
   },
   "glossary/type-list.md#types": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "5f677f52cb919199643daef8e3614616eac1967b3eb4d51e686d9e6ee1fdf572"
   },
   "glossary/type-list.md#subtypes": {
     "status": "implemented",
-    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list",
+    "reviewedFingerprint": "2f12915628b540ce2e68e6b002b42f7fa98286d24626dd235c2dca8485100d28"
+  },
+  "game-mechanics/game-mechanics-mastery.md#shifting-currents": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 mastery source characteristics",
+    "reviewedFingerprint": "23a94a756fdad6bb2abf91c11cc9165ef4090facea5372d5cce682a7d0b09326"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-bestowing-boons.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 bestowment and time distortion review",
+    "reviewedFingerprint": "7aad10c2ba958466d191427148c51c2bd1217ed9a4b026caeef07040591ec533"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects/special-continuous-effects.md#time-is-distorted": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 bestowment and time distortion review",
+    "reviewedFingerprint": "5db4578bcb81e14dbbe981302a99dea2416ab03c9e10abcb0ded4a6ba2f8ceb1"
+  },
+  "game-mechanics/game-mechanics-mastery.md#divine-comedy": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 native mastery activation",
+    "reviewedFingerprint": "985f0a5870a9e42800237024ab17fd262eb807e8fb4e70dae2ddff191e42d543"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-end-of-combat-step.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 end-of-combat cleanup",
+    "reviewedFingerprint": "b16b1ec863a4dd5b9ff7e6fdf718e23da209be42a7d7feb475660a642e64d4ac"
+  },
+  "glossary/game-terms.md#linked-linked-to": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — October 2026 bilateral Link collections",
+    "reviewedFingerprint": "3ff71ae8f8e497b04390abdb7f1ab2b753b82e7afc65dce17c0a7e6fe6b6d385"
   }
 }

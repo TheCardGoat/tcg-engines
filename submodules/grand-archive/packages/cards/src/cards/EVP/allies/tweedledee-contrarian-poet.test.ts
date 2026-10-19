@@ -34,7 +34,7 @@ describe("Tweedledee, Contrarian Poet — Class Bonus Taunt", () => {
         attacker.declareAttack(automatedGardener, other);
       }
       game.resolveCombatWithoutRetaliation();
-      if (classBonus) expect(game.state.objects[source.objectId]!.damage).toBe(2);
+      if (classBonus) expect(game.markedDamage(source.objectId)).toBe(2);
       else expect(game.state.objects[other.objectId]!.zone).toBe("graveyard");
     });
   }
@@ -67,7 +67,7 @@ describe("Tweedledee, Contrarian Poet — permanent On Hit penalty", () => {
     player.declareAttack(tweedledeeContrarianPoet, target);
     game.resolveCombatWithoutRetaliation();
     passEffectsStack(game);
-    expect(game.state.objects[target.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(target.objectId)).toBe(3);
     const firstTurn = game.state.turn.number;
     advanceToMain(game, player.id, firstTurn);
     const before = game.state;
@@ -75,6 +75,6 @@ describe("Tweedledee, Contrarian Poet — permanent On Hit penalty", () => {
       /cannot declare an attack/i,
     );
     expect(game.state).toEqual(before);
-    expect(game.state.objects[target.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(target.objectId)).toBe(3);
   });
 });

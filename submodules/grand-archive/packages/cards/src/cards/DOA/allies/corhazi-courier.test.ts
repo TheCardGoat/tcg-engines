@@ -71,8 +71,8 @@ for (const bonus of [false, true])
             }
           }
           if (game.state.combat) game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[hit.objectId]!.damage).toBe(1);
-          expect(game.state.objects[chosen.objectId]!.damage).toBe(bonus && fire ? 1 : 0);
+          expect(game.markedDamage(hit.objectId)).toBe(1);
+          expect(game.markedDamage(chosen.objectId)).toBe(bonus && fire ? 1 : 0);
           expect(p.zone("hand")).toHaveLength(1);
           expect(q.zone("hand")).toHaveLength(1);
           expect(p.zone("graveyard")).toHaveLength(bonus ? 1 : 0);

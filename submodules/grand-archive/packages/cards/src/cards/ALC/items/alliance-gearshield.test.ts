@@ -61,6 +61,6 @@ describe("Alliance Gearshield", () => {
     }
     expect(opponent.cards(automatedGardener, { zone: "graveyard" })).toHaveLength(1);
     expect(game.state.objects[defender.objectId]!.zone).toBe("field");
-    expect(game.state.objects[defender.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(defender.objectId)).toBe(2);
   });
 });

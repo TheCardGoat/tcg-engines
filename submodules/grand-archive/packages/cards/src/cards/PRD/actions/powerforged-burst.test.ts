@@ -78,7 +78,7 @@ describe("Powerforged Burst — bounded sacrifice and repeated damage", () => {
         for (const c of cells.slice(0, x))
           expect(game.state.objects[c.objectId]?.zone).not.toBe("field");
         for (const c of cells.slice(x)) expect(game.state.objects[c.objectId]!.zone).toBe("field");
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         passEffectsStack(game);
         const hits = game.state.eventHistory
           .slice(history)
@@ -88,7 +88,7 @@ describe("Powerforged Burst — bounded sacrifice and repeated damage", () => {
         expect(game.state.objects[target.objectId]!.zone).toBe(
           ally && x === 3 ? "graveyard" : "field",
         );
-        expect(game.state.objects[target.objectId]!.damage).toBe(ally && x === 3 ? 0 : 2 * x);
+        expect(game.markedDamage(target.objectId)).toBe(ally && x === 3 ? 0 : 2 * x);
         expect(p.zone("memory")).toEqual(x === 3 ? [top] : []);
         expect(p.zone("main-deck")).toHaveLength(x === 3 ? 1 : 2);
         expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");

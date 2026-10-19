@@ -1,3 +1,4 @@
+import { useCyberpunkPresentationPending } from "../../animation/CyberpunkPresentationPendingContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { DropDisposition } from "@tcg/simulator-ui";
 import { useAttackSelection, useDragDrop, useMoveSelection } from "./index";
@@ -55,6 +56,7 @@ function isCostedPlayDropShape(event: CardDropEvent): boolean {
 export function DropDispatchBridge() {
   const { registerCardDropHandler, gearTargets, activeSource, setParkedDropCardId } = useDragDrop();
   const engine = useEngineOptional();
+  const presentationPending = useCyberpunkPresentationPending();
   const { dispatchCostedAction, paymentSelectionActive } = usePaymentSelection();
   const moveSelection = useMoveSelection();
   const humanSide = engine?.humanSide ?? "player";
@@ -88,6 +90,7 @@ export function DropDispatchBridge() {
     if (!intent || !engine || intent.side !== humanSide) {
       return;
     }
+    if (presentationPending) return;
     if (paymentSelectionActive) {
       intent.sawPaymentSelection = true;
       return;
@@ -143,7 +146,14 @@ export function DropDispatchBridge() {
     if (humanInteractionView.status === "ready" && !sourceInHand) {
       programDropRef.current = null;
     }
-  }, [engine, humanInteractionView, humanSide, humanZones.hand, paymentSelectionActive]);
+  }, [
+    engine,
+    humanInteractionView,
+    humanSide,
+    humanZones.hand,
+    paymentSelectionActive,
+    presentationPending,
+  ]);
 
   const setParkedDrop = useCallback(
     (intent: ParkedDropIntent | null) => {
@@ -170,7 +180,7 @@ export function DropDispatchBridge() {
       setParkedDrop(null);
       return;
     }
-    if (paymentSelectionActive || engine.hasPendingRemoteMove) return;
+    if (presentationPending || paymentSelectionActive || engine.hasPendingRemoteMove) return;
     const sourceInHand = humanZones.hand.some((card) => card.cardId === intent.cardId);
     if (!sourceInHand || Date.now() > intent.expiresAt) {
       setParkedDrop(null);
@@ -208,6 +218,7 @@ export function DropDispatchBridge() {
     // Refused again: stay parked; the next render or retry tick re-checks.
   }, [
     parkedDrop,
+    presentationPending,
     parkTick,
     engine,
     humanSide,

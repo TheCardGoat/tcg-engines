@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-graveyard"
   relation: "current_index"
 ---
-
 # Game Zones - Graveyard
 
 #### General Rules:

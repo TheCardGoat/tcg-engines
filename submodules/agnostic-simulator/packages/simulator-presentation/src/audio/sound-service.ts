@@ -48,6 +48,14 @@ const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
     duration: 0.22,
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 340, 920),
   },
+  "counter.move": {
+    duration: 0.2,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 520, 780),
+  },
+  "counter.land": {
+    duration: 0.22,
+    render: (ctx, dest, now) => synthClick(ctx, dest, now, 620),
+  },
   "life.gain": {
     duration: 0.24,
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 440, 880),

@@ -73,13 +73,11 @@ describe("Dispersion spends all selected Sword durability before distributing ex
             ],
           });
           passEffectsStack(game);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(
-            (spent ? 1 : 0) + amount - ownAmount,
-          );
-          expect(game.state.objects[ally.objectId]!.damage).toBe(ownAmount);
+          expect(game.markedDamage(foe.objectId)).toBe((spent ? 1 : 0) + amount - ownAmount);
+          expect(game.markedDamage(ally.objectId)).toBe(ownAmount);
         } else {
           expect(game.state.decision).toBeNull();
-          expect(game.state.objects[foe.objectId]!.damage).toBe(spent ? 1 : 0);
+          expect(game.markedDamage(foe.objectId)).toBe(spent ? 1 : 0);
         }
         expect(game.state.objects[p.card(curvedDagger).objectId]!.counters.durability).toBe(1);
         expect(game.state.objects[q.card(trainingSword).objectId]!.counters.durability).toBe(2);

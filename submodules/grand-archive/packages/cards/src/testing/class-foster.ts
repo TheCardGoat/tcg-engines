@@ -30,13 +30,13 @@ export function proveClassFoster(card: GrandArchiveAnyCard<GrandArchiveAbilityDe
           const target = damage === "source" ? source : p.card(giantTortoise);
           q.declareAttack(woodlandSquirrels, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
         }
         expect(fostered()).toBe(false);
         advanceToRecollection(game, p.id);
         expect(fostered()).toBe(false);
         // Cleanup removes damage marks, but the damage event must still prevent Foster.
-        expect(game.state.objects[source.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(source.objectId)).toBe(0);
         expect(fosterTriggers()).toHaveLength(matching && damage !== "source" ? 1 : 0);
         if (!matching || damage === "source") {
           advanceToRecollection(game, q.id);

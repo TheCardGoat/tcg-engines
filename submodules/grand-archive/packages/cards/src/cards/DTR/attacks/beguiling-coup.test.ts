@@ -103,16 +103,16 @@ describe("Beguiling Coup - element bonus and the only cost-one omen", () => {
             weaponIds: [p.card(trainingSword).objectId],
           });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(1 + bonus);
+          expect(game.markedDamage(target.objectId)).toBe(1 + bonus);
           p.declareAttack(p.card(woodlandSquirrels, { zone: "field" }), target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(2 + bonus);
+          expect(game.markedDamage(target.objectId)).toBe(2 + bonus);
           advanceToMain(game, q.id);
           q.declareAttack(q.card(champion), p.card(champion), {
             weaponIds: [q.card(trainingSword).objectId],
           });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+          expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
         });
 });
 
@@ -186,7 +186,7 @@ describe("Beguiling Coup - replace an attacking card with an omen", () => {
                 });
                 passEffectsStack(game);
               }
-              expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(3);
+              expect(game.markedDamage(p.card(champion).objectId)).toBe(3);
               const outside = game.state;
               expect(() =>
                 p.activateAbility(source, "q1b6htzcox-a1", {
@@ -220,8 +220,8 @@ describe("Beguiling Coup - replace an attacking card with an omen", () => {
                 game.resolveCombatWithoutRetaliation();
                 expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
                 expect(game.state.objects[omen.objectId]!.zone).toBe("banishment");
-                expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(3);
-                if (!taunt) expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(3);
+                expect(game.markedDamage(p.card(champion).objectId)).toBe(3);
+                if (!taunt) expect(game.markedDamage(q.card(champion).objectId)).toBe(3);
                 return;
               }
               for (const invalid of [
@@ -276,13 +276,13 @@ describe("Beguiling Coup - replace an attacking card with an omen", () => {
               }
               passEffectsStack(game);
               game.resolveCombatWithoutRetaliation();
-              expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(command ? 3 : 0);
-              expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
+              expect(game.markedDamage(p.card(champion).objectId)).toBe(command ? 3 : 0);
+              expect(game.markedDamage(q.card(champion).objectId)).toBe(
                 redirect || taunt ? 0 : command ? 1 : 6,
               );
               if (redirect)
                 expect(game.state.objects[redirected.objectId]).toMatchObject(
-                  command ? { zone: "field", damage: 1 } : { zone: "graveyard" },
+                  command ? { zone: "field", temporaryDamage: 1 } : { zone: "graveyard" },
                 );
               expect(game.state.objects[omen.objectId]!.zone).toBe("graveyard");
             });
@@ -353,7 +353,7 @@ describe("Beguiling Coup - redirect after the original defender leaves", () => {
         }
         passEffectsStack(game);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(redirect ? 6 : 0);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(redirect ? 6 : 0);
         expect(game.state.objects[source.objectId]!.zone).toBe("banishment");
         expect(game.state.objects[omen.objectId]!.zone).toBe("graveyard");
         expect(p.zone("memory")).toHaveLength(6);

@@ -1,7 +1,8 @@
 import type { GrandArchiveAbilityDefinition, GrandArchiveAnyCard } from "@tcg/grand-archive-types";
 import type { GrandArchiveCommand } from "../commands/commands.ts";
 import { grandArchivePlayerId } from "../game/identity.ts";
-import type { GrandArchivePlayerId } from "../game/identity.ts";
+import type { GrandArchiveObjectId, GrandArchivePlayerId } from "../game/identity.ts";
+import { grandArchiveObjectMarkedDamage } from "../game/object-state.ts";
 import {
   createGrandArchiveMatchInitialState,
   type GrandArchiveInitializeOptions,
@@ -105,6 +106,13 @@ export class GrandArchiveTestEngine {
 
   public get program(): GrandArchiveMatchProgram {
     return this.runtime.program;
+  }
+
+  /** Read damage relevant to the current type without conflating it with counters. */
+  public markedDamage(objectId: GrandArchiveObjectId): number {
+    const object = this.state.objects[objectId];
+    if (!object) throw new Error(`Unknown Grand Archive object ${objectId}`);
+    return grandArchiveObjectMarkedDamage(this.program, this.state, object);
   }
 
   public waitState(): GrandArchiveWaitState {

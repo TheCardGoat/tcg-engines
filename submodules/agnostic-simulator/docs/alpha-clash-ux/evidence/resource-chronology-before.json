@@ -1,0 +1,233 @@
+[
+  {
+    "id": "combat-prevention",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "board-actions",
+    "turn": 7,
+    "gaps": [
+      "player-one: 9 resources exceed 4 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "simultaneous-both-owners",
+    "turn": 5,
+    "gaps": [
+      "player-one: 14 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-cost-routes",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-additional-cost",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-discount-cost",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-health-payment",
+    "turn": 5,
+    "gaps": [
+      "player-two: 5 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-target-change",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-modes",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-optional",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-alternate-cost",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-foretell",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-foretell-draw-step",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-barrage",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "prompt-play",
+    "turn": 5,
+    "gaps": [
+      "player-one: 6 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "optional-restore",
+    "turn": 5,
+    "gaps": [
+      "player-one: 4 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "optional-wrath",
+    "turn": 5,
+    "gaps": [
+      "player-one: 4 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "optional-temper",
+    "turn": 5,
+    "gaps": [
+      "player-one: 4 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "optional-void",
+    "turn": 5,
+    "gaps": [
+      "player-one: 4 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-discard",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-banish",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-return",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-send",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-select",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "destination-reveal",
+    "turn": 5,
+    "gaps": [
+      "player-one: 8 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "simultaneous-oblivion",
+    "turn": 5,
+    "gaps": [
+      "player-one: 14 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "search-deck",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "search-single",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "search-empty",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "retrieve-oblivion",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "retrieve-single",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "retrieve-empty",
+    "turn": 5,
+    "gaps": [
+      "player-one: 10 resources exceed 3 ordinary Resource Steps; effect provenance required."
+    ]
+  },
+  {
+    "id": "clash-play",
+    "turn": 3,
+    "gaps": [
+      "player-one: 3 resources exceed 2 ordinary Resource Steps; effect provenance required."
+    ]
+  }
+]

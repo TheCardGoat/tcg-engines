@@ -1,3 +1,6 @@
+import { arrangeCardSlots, moveCardInLocalOrder } from "../../components/local-card-order";
+import { grandArchivePlayerLabel } from "./player-label";
+import { playSimulatorSound } from "@tcg/simulator-presentation/audio/sound-service";
 import {
   GrandArchiveBoard as GrandArchiveScene,
   grandArchiveSlotStyle,
@@ -10,11 +13,15 @@ import {
   type GrandArchiveCardScreenPosition,
   type GrandArchiveBoardMetrics,
 } from "./board-renderer";
+import { usePresentationSettings } from "@tcg/simulator-presentation/settings";
+import { GrandArchiveStatuses, isGrandArchiveStatus } from "./GrandArchiveStatuses";
 import { GrandArchiveZoneInspector } from "./GrandArchiveZoneInspector";
 import { GrandArchiveRoleCard } from "./GrandArchiveRoleCard";
 import { getGrandArchiveCard } from "@tcg/grand-archive-cards";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { GrandArchiveCounters, isGrandArchiveCounter } from "./GrandArchiveCounters";
+import { GrandArchivePlayerStatuses } from "./GrandArchivePlayerStatuses";
+import { GrandArchiveDamageFeedback } from "./GrandArchiveDamageFeedback";
 import { GrandArchiveCombatFlow } from "./GrandArchiveCombatFlow";
 import { Button, NativeSelect } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -30,6 +37,7 @@ import { useGrandArchiveFeedback } from "./useGrandArchiveFeedback";
 
 import { cambriaThemes } from "./assets/themes/cambria/themes";
 import "./grand-archive-theme.css";
+import "./grand-archive-choices.css";
 
 function boardZone(zoneId: string | undefined): GrandArchiveBoardZone | undefined {
   const zone = zoneId?.split(":").at(-1);
@@ -131,7 +139,14 @@ export function grandArchiveBoardProjection(
         faceDown: true,
       });
   }
-  return { cards };
+  return {
+    cards,
+    opening: {
+      pregame: fixture.waitState.kind === "pregame-action",
+      turn: fixture.table.status.turn ?? 0,
+      stateVersion: fixture.table.status.stateVersion,
+    },
+  };
 }
 
 export function GrandArchiveBoard({
@@ -166,7 +181,34 @@ export function GrandArchiveBoard({
       canvasHost.current.dataset.renderMetrics = JSON.stringify(metrics);
     }
   }, []);
-  const projection = useMemo(() => grandArchiveBoardProjection(fixture), [fixture]);
+  const nativeProjection = useMemo(() => grandArchiveBoardProjection(fixture), [fixture]);
+  const handScope = `${fixture.id}:${viewerId}:${feedbackResetKey}`;
+  const [handOrder, setHandOrder] = useState<{ scope: string; ids: readonly string[] }>({
+    scope: handScope,
+    ids: [],
+  });
+  const projection = useMemo(
+    () => ({
+      ...nativeProjection,
+      cards: arrangeCardSlots(
+        nativeProjection.cards,
+        (card) => card.owner === "self" && card.zone === "hand",
+        (card) => card.id,
+        handOrder.scope === handScope ? handOrder.ids : [],
+      ),
+    }),
+    [nativeProjection, handOrder, handScope],
+  );
+  const handIds = projection.cards
+    .filter((card) => card.owner === "self" && card.zone === "hand")
+    .map((card) => card.id);
+  useEffect(() => {
+    setHandOrder((previous) =>
+      previous.scope === handScope && previous.ids.join("|") === handIds.join("|")
+        ? previous
+        : { scope: handScope, ids: handIds },
+    );
+  }, [handScope, handIds.join("|")]);
   const physical = useMemo(
     () => grandArchivePhysicalCards({ entities: fixture.entities, zones: fixture.table.zones }),
     [fixture],
@@ -191,7 +233,29 @@ export function GrandArchiveBoard({
   }
   const [inspectedCardId, setInspectedCardId] = useState<string>();
   const [hoveredHandCard, setHoveredHandCard] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const { reducedMotion, soundEnabled } = usePresentationSettings();
+  const handSoundState = useRef({ scope: handScope, soundEnabled, mounted: true });
+  handSoundState.current = { scope: handScope, soundEnabled, mounted: true };
+  useEffect(
+    () => () => {
+      handSoundState.current.mounted = false;
+    },
+    [],
+  );
+  const moveInHand = (id: string, direction: -1 | 1) => {
+    const next = moveCardInLocalOrder(handIds, id, direction);
+    if (next.join("|") === handIds.join("|")) return;
+    setHandOrder({ scope: handScope, ids: next });
+    if (soundEnabled && !document.hidden)
+      playSimulatorSound(
+        "card.move",
+        () =>
+          handSoundState.current.mounted &&
+          handSoundState.current.scope === handScope &&
+          handSoundState.current.soundEnabled &&
+          !document.hidden,
+      );
+  };
   const [assetStatus, setAssetStatus] = useState<{ loading: number; failed: readonly string[] }>({
     loading: 0,
     failed: [],
@@ -202,13 +266,6 @@ export function GrandArchiveBoard({
     [fixture],
   );
   const feedback = useGrandArchiveFeedback(feedbackSnapshot, `${fixture.id}:${feedbackResetKey}`);
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
   useEffect(() => {
     setInspectedCardId(undefined);
   }, [fixture.table.status.stateVersion, feedbackResetKey, viewerId]);
@@ -247,7 +304,15 @@ export function GrandArchiveBoard({
               ),
           ),
       );
-      if (attack) {
+      const hasOtherAction = fixture.interactionView?.actions.some(
+        (action) =>
+          action.enabled &&
+          action.intent !== "attack" &&
+          action.source?.kind === "card" &&
+          displayId(action.source.instanceId) === entity.id,
+      );
+      if (hasOtherAction) setInspectedCardId(entity.id);
+      else if (attack) {
         const attacker = attack.inputs.find((input) => input.id === "attacker");
         const nativeId =
           attacker && "candidates" in attacker
@@ -265,6 +330,10 @@ export function GrandArchiveBoard({
     const position = positions.get(entity.id);
     const card = projection.cards.find((entry) => entry.id === entity.id);
     const concealed = card?.faceDown ?? entity.face !== "public";
+    const selectionOrder = workspace.selectedOrder.get(
+      candidatesByDisplayId.get(entity.id) ?? entity.id,
+    );
+    const statuses = concealed ? [] : (entity.decorations ?? []).filter(isGrandArchiveStatus);
     const counters = concealed ? [] : (entity.decorations ?? []).filter(isGrandArchiveCounter);
     return (
       <div
@@ -294,14 +363,25 @@ export function GrandArchiveBoard({
           data-sim-entity-id={entity.id}
           aria-pressed={selectedDisplayIds.includes(entity.id)}
           data-candidate={candidatesByDisplayId.has(entity.id) || undefined}
+          data-board-target-id={candidatesByDisplayId.get(entity.id)}
           onClick={() => pickCard(entity.id)}
           onBlur={() => workspace.previewEntity(undefined)}
         />
+        {selectionOrder !== undefined ? (
+          <span
+            className="ga-scene-selection-order"
+            aria-label={`Selection order ${selectionOrder}`}
+          >
+            {selectionOrder}
+          </span>
+        ) : null}
+        {statuses.length && card?.zone !== "hand" ? (
+          <GrandArchiveStatuses title={entity.title} statuses={statuses} />
+        ) : null}
         {counters.length ? (
           <GrandArchiveCounters
             title={entity.title}
             counters={counters}
-            temporaryDamage={entity.dataAttributes?.["data-damage-lifetime"] === "end-phase"}
             onUnmountFocus={() => canvasHost.current?.focus()}
           />
         ) : null}
@@ -328,21 +408,6 @@ export function GrandArchiveBoard({
       aria-label="Grand Archive board"
       data-hand-hovered={hoveredHandCard || undefined}
     >
-      {!suppliedTheme ? (
-        <NativeSelect
-          className="ga-theme-picker"
-          aria-label="Board theme"
-          value={theme.id}
-          data={cambriaThemes.map((item) => ({
-            value: item.id,
-            label: item.id[0]!.toUpperCase() + item.id.slice(1),
-          }))}
-          onChange={(event) => {
-            const next = cambriaThemes.find((item) => item.id === event.currentTarget.value);
-            if (next) setSelectedTheme(next);
-          }}
-        />
-      ) : null}
       <div
         ref={canvasHost}
         tabIndex={-1}
@@ -361,7 +426,7 @@ export function GrandArchiveBoard({
             projection={{
               ...projection,
               candidateCardIds: [...candidatesByDisplayId.keys()],
-              selectedCardId: selectedDisplayIds.at(-1),
+              selectedCardIds: selectedDisplayIds,
               feedbackKey: feedback.cues.map((cue) => cue.id).join("|"),
               feedbackCardIds: feedback.cues.flatMap((cue) =>
                 "entityId" in cue ? [cue.entityId] : [],
@@ -374,8 +439,8 @@ export function GrandArchiveBoard({
               ]),
               targetLinks: attackSource
                 ? attackTargets.map((targetCardId) => ({
-                    sourceCardId: attackSource,
-                    targetCardId,
+                    sourceCardId: displayId(attackSource),
+                    targetCardId: displayId(targetCardId),
                   }))
                 : [],
             }}
@@ -400,6 +465,12 @@ export function GrandArchiveBoard({
           <p role="status">3D rendering is unavailable. Enable WebGL to view the board.</p>
         )}
       </div>
+      <GrandArchiveDamageFeedback
+        fixture={fixture}
+        positions={positions}
+        host={canvasHost}
+        resetKey={JSON.stringify([fixture.id, viewerId, feedbackResetKey, feedback.generation])}
+      />
       <div className="ga-scene-card-controls">
         <div aria-label="Effects stack and intent">
           {physicalEntities
@@ -418,12 +489,30 @@ export function GrandArchiveBoard({
           const zones = fixture.table.zones.filter((zone) => zone.ownerId === seat.id);
           const fieldIds = zones.find((zone) => zone.id.endsWith(":field"))?.entityIds ?? [];
           const field = physicalEntities.filter((entity) => fieldIds.includes(entity.id));
+          const champion = field.find((entity) => entity.kind === "leader");
+          const championPosition = champion ? positions.get(champion.id) : undefined;
           const isAlly = (entity: SimulatorEntity) => {
             const id = entity.dataAttributes?.["data-definition-id"];
             return typeof id === "string" && getGrandArchiveCard(id)?.types.includes("ALLY");
           };
           return (
             <section key={seat.id} aria-label={`${name} arena`}>
+              {seat.activeEffects?.length ? (
+                <div
+                  className="ga-scene-player-status"
+                  data-side={seat.perspective}
+                  style={
+                    championPosition
+                      ? {
+                          left: `${championPosition.left}%`,
+                          top: `${championPosition.top - championPosition.height / 2 - 1}%`,
+                        }
+                      : undefined
+                  }
+                >
+                  <GrandArchivePlayerStatuses seat={seat} />
+                </div>
+              ) : null}
               <section aria-label={`${name} champion`}>
                 {field.filter((entity) => entity.kind === "leader").map(renderControl)}
               </section>
@@ -451,6 +540,24 @@ export function GrandArchiveBoard({
               <details className="ga-scene-inventory" data-side={seat.perspective}>
                 <summary>{name} zones</summary>
                 <div className="ga-scene-inventory__body">
+                  {!suppliedTheme && seat.perspective === "bottom" ? (
+                    <NativeSelect
+                      className="ga-theme-picker"
+                      aria-label="Board theme"
+                      value={theme.id}
+                      data={cambriaThemes.map((item) => ({
+                        value: item.id,
+                        label: item.id[0]!.toUpperCase() + item.id.slice(1),
+                      }))}
+                      onChange={(event) => {
+                        const next = cambriaThemes.find(
+                          (item) => item.id === event.currentTarget.value,
+                        );
+                        if (next) setSelectedTheme(next);
+                      }}
+                    />
+                  ) : null}
+
                   {zones.map((zone) => (
                     <GrandArchiveZoneInspector
                       key={zone.id}
@@ -510,10 +617,7 @@ export function GrandArchiveBoard({
                   width: `${position.width + 1.8}%`,
                 }}
               >
-                <strong>
-                  {selected ? "✓ " : target ? "◇ " : ""}
-                  {entity.title}
-                </strong>
+                <strong>{entity.title}</strong>
                 <span className="ga-portrait-stats">
                   {entity.stats
                     .filter(
@@ -541,13 +645,7 @@ export function GrandArchiveBoard({
       </div>
       {fixture.table.seats.map((seat) => (
         <div key={seat.id} className="ga-portrait-identity" data-side={seat.perspective}>
-          <strong>
-            {seat.perspective === "bottom"
-              ? "You"
-              : /^p\d+$/i.test(seat.label)
-                ? "Opponent"
-                : seat.label}
-          </strong>
+          <strong>{grandArchivePlayerLabel(seat)}</strong>
           <small>
             {seat.connectionStatus === "offline"
               ? "Offline"
@@ -584,7 +682,7 @@ export function GrandArchiveBoard({
                     own ? composition.slots.selfMemory : composition.slots.opponentMemory,
                     composition,
                   )}
-                  aria-label={`${seat.label} memory`}
+                  aria-label={`${grandArchivePlayerLabel(seat)} memory`}
                 >
                   <span>
                     <strong>{memory?.count ?? memory?.entityIds.length ?? 0}</strong>
@@ -597,7 +695,7 @@ export function GrandArchiveBoard({
                     own ? composition.slots.selfDeck : composition.slots.opponentDeck,
                     composition,
                   )}
-                  aria-label={`${seat.label} main deck`}
+                  aria-label={`${grandArchivePlayerLabel(seat)} main deck`}
                 >
                   <span>
                     {deck?.count ?? deck?.entityIds.length ?? 0}
@@ -617,24 +715,49 @@ export function GrandArchiveBoard({
             .map((seat) => (
               <Button
                 key={seat.id}
+                data-side={seat.perspective}
                 disabled={!canAct}
                 onClick={() => workspace.selectEntity(seat.id)}
               >
-                Select {seat.id === viewerId ? "You" : seat.label}
+                Select {grandArchivePlayerLabel(seat)}
               </Button>
             ))}
         </div>
-        {overflow.self + overflow.opponent > 0 ? (
-          <small className="ga-portrait-overflow">
-            Additional field cards: yours {overflow.self}, opponent {overflow.opponent}. Use Cards
-            and zones.
-          </small>
+        {!workspace.active && overflow.self + overflow.opponent > 0 ? (
+          <div className="ga-field-overflow" aria-label="Additional field cards">
+            {fixture.table.seats.map((seat) => {
+              const extra = overflow[seat.perspective === "bottom" ? "self" : "opponent"];
+              if (!extra) return null;
+              const zone = fixture.table.zones.find((entry) => entry.id === `${seat.id}:field`);
+              const entities = physicalEntities.filter((entity) =>
+                zone?.entityIds.includes(entity.id),
+              );
+              return (
+                <GrandArchiveZoneInspector
+                  key={seat.id}
+                  name="field"
+                  label={`${seat.perspective === "bottom" ? "Your" : "Opponent"} field (+${extra} more)`}
+                  count={zone?.count ?? entities.length}
+                  entities={entities}
+                  renderCard={(entity) => (
+                    <GrandArchiveRoleCard
+                      entity={entity}
+                      density="compact"
+                      onClick={() => pickCard(entity.id)}
+                    />
+                  )}
+                />
+              );
+            })}
+          </div>
         ) : null}
         <GrandArchiveBoardControls
           fixture={fixture}
           canAct={canAct}
           canUndo={canUndo}
           onUndo={onUndo}
+          handOrder={handIds}
+          onMoveInHand={moveInHand}
           inspectedEntityId={inspectedCardId}
           onInspectClose={() => setInspectedCardId(undefined)}
           onInspectEntity={setInspectedCardId}

@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/permission"
   relation: "current_index"
 ---
-
 # Permission
 
 #### General Rules:

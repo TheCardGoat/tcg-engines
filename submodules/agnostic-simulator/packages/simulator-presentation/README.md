@@ -235,3 +235,45 @@ Do not draw availability on rectangular screen hit areas. Reserve the selection
 checkmark for actual selection. Hide availability
 when board input is blocked by an inspection, dialog or active choice. This cue
 has no repeating animation and remains readable with reduced motion.
+
+## Match presentation foundation
+
+Use `/tabletop` (`TabletopCanvas`) for a persistent, demand-rendered scene.
+Alpha Clash and Grand Archive both consume this lifecycle. Supply each game's
+camera, lighting, layout and artwork; do not key the canvas by turn or actor.
+`onContextLost` lets the host offer recovery without resetting the match.
+
+Use `/settings` for match-lifetime sound and reduced-motion preferences. DOM
+and R3F effects must read the same provider. The OS reduced-motion preference
+always takes precedence. `/activity` gives each active motion its own release
+ticket; releasing one motion cannot mark another as finished. React updates
+occur only at the idle/active boundary, never on each frame.
+
+Use `/effects` for damage impacts and card departures. Callers supply public
+coordinates, artwork, labels and audio callbacks. These components neither
+submit commands nor infer rules. The Alpha Clash controller maps confirmed
+viewer projections to these effects for both practice and live routes. Drafts
+must never produce damage feedback. New viewers and rewinds reset the baseline.
+
+Use `/focus` for an elevated card with caller-owned captions and controls.
+Supply `pose` for an embedded board; the default fits the viewport and follows
+resize. `/layers.css` names table, interaction, focus, transition, impact and
+departure levels. Layer numbers express presentation ordering, not game zones.
+
+`AnimationScope` (`/animation-scope`) owns browser animations and their retained
+fill poses. Run asynchronous sequences through `scope.run`, stop them with
+`scope.cancel` on cleanup, and check `scope.active` before callbacks. Hidden
+tabs pause these animations. Cancellation is a normal outcome; other errors
+must be handled by the host so input does not remain blocked.
+
+Keep game-specific payments, zone visibility, triggers, card text and event
+mapping in the game adapter/UI. Add a reusable primitive when a concrete
+consumer needs it; do not add game flags to the shared renderer. Keep asset
+caches bounded by authorized visible content.
+
+Performance guidance: [R3F pitfalls](https://r3f.docs.pmnd.rs/advanced/pitfalls)
+and [scaling performance](https://r3f.docs.pmnd.rs/advanced/scaling-performance).
+Mutate refs in frame callbacks, use bounded deltas, reuse geometry/materials,
+and invalidate only during active motion. Preserve mounted scene identity.
+Validate important behaviour with public interactions and the existing fixture
+inventory; do not add a second gallery or snapshot implementation details.

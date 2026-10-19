@@ -1,9 +1,11 @@
 import { BackgroundMusicControls, BackgroundMusicProvider } from "../audio/BackgroundMusic";
+import { CommandFeedback } from "../components/CommandFeedback";
 import { CyberpunkVersionMenuItem } from "../components/BoardV2/VersionMenuItem";
 import { BookOpen } from "lucide-react";
 import { CyberpunkViewportShell, useCyberpunkUiV2 } from "../components/BoardV2/version";
 import { useInRouterContext } from "react-router";
 import { SupporterPlayerName } from "../../../components/SupporterPlayerName";
+import tcgMarkUrl from "../assets/android-chrome-512x512.png";
 import { CombatPriorityShortcut } from "../components/PaymentSelection/CombatPriorityShortcut";
 import type { FilteredMatchView, MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
 import type {
@@ -125,6 +127,19 @@ import sidebarClasses from "./Sidebar.module.css";
 
 const EVENT_LOG_ENTRY_CAP = 200;
 const CYBERPUNK_SHELL_BREAKPOINT_PX = 767;
+
+/**
+ * Slim brand row shown at the top of every dense match sidebar: the TCG mark
+ * plus the match controls consolidated out of the participant rows.
+ */
+function SidebarBrandBar({ children }: { readonly children?: ReactNode }) {
+  return (
+    <>
+      <img className={sidebarClasses.brandMark} src={tcgMarkUrl} alt="" />
+      {children ? <div className={sidebarClasses.brandActions}>{children}</div> : null}
+    </>
+  );
+}
 
 type RendererPackage = ComponentType<SimulatorRendererProps>;
 
@@ -368,6 +383,7 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
             >
               {!props.suspendPresentation && (
                 <PaymentSelectionProvider>
+                  <CommandFeedback />
                   <CyberpunkSharedAnimationLayer commandGate={animationCommandGate}>
                     <BoardSharedContent
                       practiceMode={practiceMode}
@@ -483,6 +499,7 @@ function BoardSharedContent({
         embedded
         showHeader={false}
         controlsContainer={controlsContainer}
+        density="compact"
         entries={eventLogEntries}
         turnPlayerLabel={turnPlayerLabel}
         countUnit="log"
@@ -780,7 +797,6 @@ function SidebarContent({
     return {
       id: identity?.id ?? side,
       role,
-      layout: "stacked",
       name: identity ? (
         <SupporterPlayerName name={identity.displayName} tier={identity.subscriptionTier} />
       ) : undefined,
@@ -797,12 +813,9 @@ function SidebarContent({
     <>
       <SimulatorMatchSidebar
         className={sidebarClasses.sharedSidebar}
-        data-testid="cyberpunk-practice-sidebar"
-        data-practice-surface={isDeckBuilderPractice ? "deck-builder" : "simulator"}
-        opponent={toPracticeParticipant(rivalSide, "opponent")}
-        self={{
-          ...toPracticeParticipant(humanSide, "self"),
-          actions: (
+        variant="dense"
+        brand={
+          <SidebarBrandBar>
             <CyberpunkPaymentSelectionDiscovery>
               <div className={sidebarClasses.participantQuickActions}>
                 <CyberpunkPaymentSelectionShortcut />
@@ -824,8 +837,12 @@ function SidebarContent({
                 />
               </div>
             </CyberpunkPaymentSelectionDiscovery>
-          ),
-        }}
+          </SidebarBrandBar>
+        }
+        data-testid="cyberpunk-practice-sidebar"
+        data-practice-surface={isDeckBuilderPractice ? "deck-builder" : "simulator"}
+        opponent={toPracticeParticipant(rivalSide, "opponent")}
+        self={toPracticeParticipant(humanSide, "self")}
         automation={
           tutorialMode || hasLocalTableControls
             ? undefined
@@ -948,7 +965,6 @@ function SpectatorMatchSidebar({
     return {
       id: participant?.id ?? `seat-${seat}`,
       role,
-      layout: "stacked",
       testId: `spectator-sidebar-seat-${seat}`,
       name: (
         <SupporterPlayerName
@@ -973,6 +989,8 @@ function SpectatorMatchSidebar({
     <div className={sidebarClasses.sharedSidebarFrame} data-testid="cyberpunk-spectator-sidebar">
       <SimulatorMatchSidebar
         className={sidebarClasses.sharedSidebar}
+        variant="dense"
+        brand={<SidebarBrandBar />}
         opponent={participantForSeat(2, "opponent")}
         self={participantForSeat(1, "self")}
         activity={{ log: activityFeed, headerActions: activityHeaderActions }}
@@ -1080,7 +1098,6 @@ function HumanMatchSidebar({
   ): SimulatorMatchParticipant => ({
     id: participant.id,
     role,
-    layout: "stacked",
     testId: `human-sidebar-${role}`,
     name: (
       <SupporterPlayerName
@@ -1103,50 +1120,51 @@ function HumanMatchSidebar({
         connectionDiagnostic={connectionDiagnostic}
       />
     ),
-    actions:
-      role === "opponent" ? (
-        <SimulatorOpponentParticipantActions
-          participant={{
-            kind: "human",
-            gameProfileId: participant.id,
-            userId: participant.userId,
-            displayName: participant.displayName,
-            connected: connectionUiStatus(connection) === "connected",
-          }}
-          match={{ matchId: config.matchId, gameId: config.gameId, gameSlug: "cyberpunk" }}
-        />
-      ) : (
-        <CyberpunkPaymentSelectionDiscovery>
-          <div className={sidebarClasses.participantQuickActions}>
-            <CyberpunkPaymentSelectionShortcut />
-            <CombatPriorityShortcut />
-            <SimulatorSelfParticipantActions
-              gameConfiguration={{
-                settings: <CyberpunkSettingsFields />,
-                audioSettings: <BackgroundMusicControls />,
-                label: "Game configuration",
-                requiresConfirmation: false,
-                onSelect: () => setGameConfigurationOpen(true),
-              }}
-              matchMenuItems={(close) => <CyberpunkMatchMenuItems close={close} />}
-              support={{
-                source: "cyberpunk-live-participant-menu",
-                gameSlug: "cyberpunk",
-                matchId: config.matchId,
-                gameId: config.gameId,
-                stateVersion: matchState.ctx.stateID,
-                turn: matchState.G.turnMetadata.turnNumber,
-              }}
-            />
-          </div>
-        </CyberpunkPaymentSelectionDiscovery>
-      ),
   });
 
   return (
     <div className={sidebarClasses.sharedSidebarFrame} data-testid="cyberpunk-human-match-sidebar">
       <SimulatorMatchSidebar
-        className={`${sidebarClasses.sharedSidebar} ${sidebarClasses.humanSidebar}`}
+        className={sidebarClasses.sharedSidebar}
+        variant="dense"
+        brand={
+          <SidebarBrandBar>
+            <CyberpunkPaymentSelectionDiscovery>
+              <div className={sidebarClasses.participantQuickActions}>
+                <CyberpunkPaymentSelectionShortcut />
+                <CombatPriorityShortcut />
+                <SimulatorSelfParticipantActions
+                  gameConfiguration={{
+                    settings: <CyberpunkSettingsFields />,
+                    audioSettings: <BackgroundMusicControls />,
+                    label: "Game configuration",
+                    requiresConfirmation: false,
+                    onSelect: () => setGameConfigurationOpen(true),
+                  }}
+                  matchMenuItems={(close) => <CyberpunkMatchMenuItems close={close} />}
+                  support={{
+                    source: "cyberpunk-live-participant-menu",
+                    gameSlug: "cyberpunk",
+                    matchId: config.matchId,
+                    gameId: config.gameId,
+                    stateVersion: matchState.ctx.stateID,
+                    turn: matchState.G.turnMetadata.turnNumber,
+                  }}
+                />
+              </div>
+            </CyberpunkPaymentSelectionDiscovery>
+            <SimulatorOpponentParticipantActions
+              participant={{
+                kind: "human",
+                gameProfileId: model.opponent.id,
+                userId: model.opponent.userId,
+                displayName: model.opponent.displayName,
+                connected: connectionUiStatus(model.opponentConnection) === "connected",
+              }}
+              match={{ matchId: config.matchId, gameId: config.gameId, gameSlug: "cyberpunk" }}
+            />
+          </SidebarBrandBar>
+        }
         context={shouldShowMatchScore(config) ? <CyberpunkMatchScore config={config} /> : undefined}
         contextLabel="Match score"
         opponent={toHumanParticipant(

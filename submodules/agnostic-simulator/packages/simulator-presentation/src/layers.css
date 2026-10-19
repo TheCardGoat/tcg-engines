@@ -1,0 +1,8 @@
+:root {
+  --tcg-layer-table: 0;
+  --tcg-layer-interaction: 6;
+  --tcg-layer-focus: 9;
+  --tcg-layer-transition: 30;
+  --tcg-layer-impact: 32;
+  --tcg-layer-departure: 33;
+}

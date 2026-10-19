@@ -63,10 +63,8 @@ describe("Armored Valkyrie — Steadfast retaliation and conditional power", () 
           }
           expect(offered).toBe(true);
           expect(game.state.combat).toBeNull();
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(
-            retaliate ? (matching ? 4 : 2) : 0,
-          );
-          expect(game.state.objects[defender.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(attacker.objectId)).toBe(retaliate ? (matching ? 4 : 2) : 0);
+          expect(game.markedDamage(defender.objectId)).toBe(1);
           expect(game.state.objects[defender.objectId]!.states.has("rested")).toBe(rested);
           expect(power()).toBe(2);
         });

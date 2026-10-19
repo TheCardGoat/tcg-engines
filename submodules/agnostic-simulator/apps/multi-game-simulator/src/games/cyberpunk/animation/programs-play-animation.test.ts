@@ -11,7 +11,7 @@ import { cyberpunkAnimationScriptToAnimationPlans } from "./sharedEvents";
  * full script must project into a valid V2 plan for both seats. This is the
  * catalog-wide gate behind the per-program fixture benches.
  */
-function playProgram(program: { id: string }): {
+function playProgram(program: (typeof programCards)[number]): {
   engine: CyberpunkTestEngine;
   instanceId: string;
   script: ReturnType<CyberpunkTestEngine["playCard"]>["animationScript"];

@@ -62,7 +62,7 @@ describe("Imperial Panzer — conditional power, life, and Vigor", () => {
           player.declareAttack(attacker, target);
           game.resolveCombatWithoutRetaliation();
           expect(game.state.objects[attacker.objectId]!.states.has("rested")).toBe(true);
-          expect(game.state.objects[target.objectId]!.damage).toBe(
+          expect(game.markedDamage(target.objectId)).toBe(
             (active ? 3 : 2) + (attacker === squirrel ? 1 : 0),
           );
         }
@@ -81,7 +81,7 @@ describe("Imperial Panzer — conditional power, life, and Vigor", () => {
         game.resolveCombatWithoutRetaliation();
         expect(player.cards(imperialPanzer, { zone: "field" })).toHaveLength(active ? 1 : 0);
         if (active) {
-          expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(ally.objectId)).toBe(2);
           const attackers = opponent.cards(woodlandSquirrels, { zone: "field" });
           for (const [index, attacker] of attackers.entries()) {
             const wait = game.waitState();
@@ -93,7 +93,7 @@ describe("Imperial Panzer — conditional power, life, and Vigor", () => {
               index === 0 ? 1 : 0,
             );
             if (index === 0) {
-              expect(game.state.objects[ally.objectId]!.damage).toBe(3);
+              expect(game.markedDamage(ally.objectId)).toBe(3);
               expect(game.state.objects[ally.objectId]!.states.has("fostered")).toBe(true);
             }
           }

@@ -1052,8 +1052,8 @@ describe("Grand Archive keyword effects", () => {
     player.declareAttack(attackingAlly, retortAlly);
     completeCombat(game, [defenderId]);
     const attacker = game.state.objects[objectIdOf(game, attackingAlly.canonicalId)]!;
-    expect(attacker.damage).toBe(3);
-    expect(game.state.objects[defenderId]?.damage).toBe(2);
+    expect(attacker.temporaryDamage).toBe(3);
+    expect(game.state.objects[defenderId]?.temporaryDamage).toBe(2);
   });
 
   it("Critical doubles combat damage unless an opponent discards N cards", () => {
@@ -1091,7 +1091,8 @@ describe("Grand Archive keyword effects", () => {
     });
     completeCombat(declinedGame);
     expect(
-      declinedGame.state.objects[objectIdOf(declinedGame, defenderAlly.canonicalId)]?.damage,
+      declinedGame.state.objects[objectIdOf(declinedGame, defenderAlly.canonicalId)]
+        ?.temporaryDamage,
     ).toBe(4);
 
     const paidGame = setupGame();
@@ -1105,11 +1106,13 @@ describe("Grand Archive keyword effects", () => {
       answer: [discardId],
     });
     completeCombat(paidGame);
-    expect(paidGame.state.objects[objectIdOf(paidGame, defenderAlly.canonicalId)]?.damage).toBe(2);
+    expect(
+      paidGame.state.objects[objectIdOf(paidGame, defenderAlly.canonicalId)]?.temporaryDamage,
+    ).toBe(2);
     expect(paidGame.state.objects[discardId]?.zone).toBe("graveyard");
   });
 
-  it("Exalted permits playing Exalted-element cards only while a champion enables another advanced element", () => {
+  it("Exalted permits playing Exalted-element cards while a champion enables any advanced element", () => {
     const exaltedAction = keywordCard(
       { name: "exalted" },
       {
@@ -1134,7 +1137,7 @@ describe("Grand Archive keyword effects", () => {
     for (const [label, elements, playable] of [
       ["advanced element", ["TERA"], true],
       ["basic element only", ["FIRE"], false],
-      ["Exalted itself", ["EXALTED"], false],
+      ["Exalted itself", ["EXALTED"], true],
     ] as const) {
       const game = GrandArchiveTestEngine.startFixture({
         playerOne: {
@@ -1154,6 +1157,67 @@ describe("Grand Archive keyword effects", () => {
       }
     }
   });
+
+  it.each([false, true])(
+    "Taunt prioritizes a Siegeable Domain only while awake, rested=%s",
+    (rested) => {
+      const domainId = "kw-taunt-domain";
+      const domain = keywordCard(
+        { name: "taunt" },
+        {
+          canonicalId: domainId,
+          type: "DOMAIN",
+          stats: { durability: 5 },
+          abilities: [
+            keywordAbility(domainId, { name: "taunt" }, false),
+            keywordAbility(domainId, { name: "siegeable" }, false, 2),
+          ],
+        },
+      );
+      const attacker = keywordCard(
+        { name: "taunt" },
+        {
+          canonicalId: "kw-taunt-domain-attacker",
+          stats: { power: 1, life: 5 },
+          abilities: [],
+        },
+      );
+      const initial = keywordFixture({
+        phase: "main",
+        playerOne: { zones: { field: [attacker] } },
+        playerTwo: { zones: { field: [domain] } },
+      });
+      const game = rested
+        ? GrandArchiveTestEngine.fromState(
+            initial.program,
+            new GrandArchiveTransactionKernel().transact(initial.state, [
+              {
+                type: "object-state-changed",
+                objectId: objectIdOf(initial, domainId),
+                state: "rested",
+                value: true,
+              },
+            ]).state,
+          )
+        : initial;
+      const actor = game.player("player-one");
+      const defender = game.player("player-two").card(domain);
+      const before = game.state;
+      if (!rested) {
+        expect(() => actor.declareAttack(attacker, "keyword-fixture-champion-two")).toThrow();
+        expect(game.state).toEqual(before);
+        actor.declareAttack(attacker, defender);
+        completeCombat(game);
+        expect(game.state.objects[defender.objectId]!.counters.durability).toBe(4);
+      } else {
+        actor.declareAttack(attacker, "keyword-fixture-champion-two");
+        completeCombat(game);
+        expect(game.state.objects[objectIdOf(game, "keyword-fixture-champion-two")]!.damage).toBe(
+          1,
+        );
+      }
+    },
+  );
 
   it("Intercept redirects a champion attack to the awake intercept ally", () => {
     const interceptAlly = keywordCard(
@@ -1223,7 +1287,7 @@ describe("Grand Archive keyword effects", () => {
       answer: [ambusherId],
     });
     completeCombat(game);
-    expect(game.state.objects[objectIdOf(game, attacker.canonicalId)]?.damage).toBe(2);
+    expect(game.state.objects[objectIdOf(game, attacker.canonicalId)]?.temporaryDamage).toBe(2);
   });
 
   it("Steadfast lets a rested defending ally retaliate", () => {
@@ -1293,7 +1357,7 @@ describe("Grand Archive keyword effects", () => {
       ]),
     );
     completeCombat(game);
-    expect(game.state.objects[objectIdOf(game, bystander.canonicalId)]?.damage).toBe(2);
+    expect(game.state.objects[objectIdOf(game, bystander.canonicalId)]?.temporaryDamage).toBe(2);
     expect(game.state.objects[objectIdOf(game, "keyword-fixture-champion-two")]?.damage).toBe(2);
   });
 
@@ -1345,7 +1409,7 @@ describe("Grand Archive keyword effects", () => {
     });
     expect(game.state.combat?.targetIds).toHaveLength(2);
     completeCombat(game);
-    expect(game.state.objects[secondTargetId]?.damage).toBe(2);
+    expect(game.state.objects[secondTargetId]?.temporaryDamage).toBe(2);
   });
 
   it("Command rests an ally attacker instead of the champion", () => {
@@ -1435,7 +1499,7 @@ describe("Grand Archive keyword effects", () => {
     });
     completeCombat(game);
     const defender = game.state.objects[objectIdOf(game, defenderAlly.canonicalId)]!;
-    expect(defender.damage).toBe(4);
+    expect(defender.temporaryDamage).toBe(4);
   });
 
   it("Ranged powers up a distant attacker", () => {
@@ -1467,7 +1531,7 @@ describe("Grand Archive keyword effects", () => {
     distantGame.player("player-one").declareAttack(rangedAlly, defenderAlly);
     completeCombat(distantGame);
     const defender = distantGame.state.objects[objectIdOf(distantGame, defenderAlly.canonicalId)]!;
-    expect(defender.damage).toBe(4);
+    expect(defender.temporaryDamage).toBe(4);
   });
 
   it("Siegeable domains lose durability from combat damage instead of life", () => {
@@ -1518,7 +1582,7 @@ describe("Grand Archive keyword effects", () => {
     completeCombat(game);
     const immortal = game.state.objects[objectIdOf(game, immortalAlly.canonicalId)]!;
     expect(immortal.zone).toBe("field");
-    expect(immortal.damage).toBeGreaterThanOrEqual(2);
+    expect(immortal.temporaryDamage).toBeGreaterThanOrEqual(2);
   });
 
   it("Interdiction removes Opportunity while its activation is on the Effects Stack", () => {

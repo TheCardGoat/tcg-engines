@@ -164,6 +164,7 @@ export function viewerProjectionToMatchState(
         : hiddenCards(rawPlayerId, zone, projectedZone ?? 0, placeholderDefinitionId);
       for (const card of cards) {
         const instance = cardInstanceFromProjection(card, playerId, placeholderDefinitionId);
+        if (!instance) continue;
         G.cardIndex[String(instance.instanceId)] = instance;
         projectedCards.set(String(instance.instanceId), card);
         player.zones[zone].push(instance.instanceId);
@@ -292,7 +293,8 @@ function registerPromptRevealedCards(
       continue;
     }
     const ownerId = ownerOfInstance(projection, instanceId) ?? chooserId;
-    G.cardIndex[instanceId] = cardInstanceFromProjection(card, ownerId, placeholderDefinitionId);
+    const instance = cardInstanceFromProjection(card, ownerId, placeholderDefinitionId);
+    if (instance) G.cardIndex[instanceId] = instance;
   }
 }
 
@@ -660,7 +662,10 @@ function cardInstanceFromProjection(
   card: FilteredCardView,
   ownerId: PlayerId,
   placeholderDefinitionId: string,
-): CardInstance {
+): CardInstance | null {
+  // The projection uses the same entry shape for cards and dice. Dice are
+  // hydrated by diceFromProjection and must never enter the card catalog.
+  if (card.zone === "gigArea" || card.zone === "fixerArea") return null;
   const resolvedPlaceholderId =
     card.zone === "legendArea" ? legendCardPlaceholderDefinitionId() : placeholderDefinitionId;
   // Fail closed to an explicit viewer-only placeholder. Never substitute a

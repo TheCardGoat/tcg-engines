@@ -1,0 +1,386 @@
+{
+  "frames": [
+    {
+      "file": "frame-0000.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647841.171997
+    },
+    {
+      "file": "frame-0001.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.061291
+    },
+    {
+      "file": "frame-0002.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.075245
+    },
+    {
+      "file": "frame-0003.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.091075
+    },
+    {
+      "file": "frame-0004.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.14142
+    },
+    {
+      "file": "frame-0005.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.20955
+    },
+    {
+      "file": "frame-0006.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.212463
+    },
+    {
+      "file": "frame-0007.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.29423
+    },
+    {
+      "file": "frame-0008.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.307746
+    },
+    {
+      "file": "frame-0009.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.323865
+    },
+    {
+      "file": "frame-0010.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.357469
+    },
+    {
+      "file": "frame-0011.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.375338
+    },
+    {
+      "file": "frame-0012.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.391108
+    },
+    {
+      "file": "frame-0013.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.452302
+    },
+    {
+      "file": "frame-0014.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.475275
+    },
+    {
+      "file": "frame-0015.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.492334
+    },
+    {
+      "file": "frame-0016.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.508563
+    },
+    {
+      "file": "frame-0017.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.524965
+    },
+    {
+      "file": "frame-0018.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.645728
+    },
+    {
+      "file": "frame-0019.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.66296
+    },
+    {
+      "file": "frame-0020.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.677531
+    },
+    {
+      "file": "frame-0021.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.724419
+    },
+    {
+      "file": "frame-0022.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.740516
+    },
+    {
+      "file": "frame-0023.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.876065
+    },
+    {
+      "file": "frame-0024.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.881281
+    },
+    {
+      "file": "frame-0025.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.890829
+    },
+    {
+      "file": "frame-0026.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.958408
+    },
+    {
+      "file": "frame-0027.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.975272
+    },
+    {
+      "file": "frame-0028.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647851.989715
+    },
+    {
+      "file": "frame-0029.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.008502
+    },
+    {
+      "file": "frame-0030.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.027462
+    },
+    {
+      "file": "frame-0031.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.044512
+    },
+    {
+      "file": "frame-0032.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.058064
+    },
+    {
+      "file": "frame-0033.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.077345
+    },
+    {
+      "file": "frame-0034.jpg",
+      "deviceHeight": 768,
+      "deviceWidth": 1366,
+      "offsetTop": 0,
+      "pageScaleFactor": 1,
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0,
+      "timestamp": 1791647852.158339
+    }
+  ],
+  "start": 1791647841156.6,
+  "gain": 0.5625,
+  "fixture": "optional-temper",
+  "viewport": [
+    1366,
+    768
+  ],
+  "baseCommit": "94733f41bda25852bc545dcbe055642cb5f0e9ee",
+  "localChange": "attachWeapon source references",
+  "steps": [
+    "Inspect Heavy Metal",
+    "Attach",
+    "Select Gearwin on board",
+    "Enter on Use"
+  ],
+  "result": {
+    "readyResources": 3,
+    "totalResources": 4,
+    "temperCounters": 1
+  },
+  "rawAudioMeanDbfs": -44.8,
+  "rawAudioPeakDbfs": -11.1,
+  "capture": "Howler master output via temporary MediaStreamDestination; no microphone; disconnected after recording",
+  "video": "temper-board-audio.mp4",
+  "encodedFps": 30,
+  "limits": [
+    "Encoded FPS is not a render benchmark",
+    "Screencast frames include long static intervals",
+    "Raw audio level includes capture lead-in and tail",
+    "No reduced-motion or muted capture in this run",
+    "Perceptual mix and cue timing acceptance remain open"
+  ]
+}

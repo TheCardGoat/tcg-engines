@@ -78,9 +78,9 @@ export function proveRecoveryActionBoundaries(
           passEffectsStack(game);
           const allyDamage =
             matching && grandArchiveTestFace(card).typeLine.classes.includes("MAGE") ? 3 : 2;
-          expect(game.state.objects[ally.objectId]!.damage).toBe(allyDamage);
-          expect(game.state.objects[hero.objectId]!.damage).toBe(damage);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(13);
+          expect(game.markedDamage(ally.objectId)).toBe(allyDamage);
+          expect(game.markedDamage(hero.objectId)).toBe(damage);
+          expect(game.markedDamage(foe.objectId)).toBe(13);
           const payment = p
             .cards(woodlandSquirrels, { zone: "hand" })
             .slice(0, cost)
@@ -89,8 +89,8 @@ export function proveRecoveryActionBoundaries(
           expect(() => p.activate(card, { reservePayment: payment.slice(1) })).toThrow();
           expect(game.state).toEqual(before);
           p.activate(card, { reservePayment: payment });
-          expect(game.state.objects[hero.objectId]!.damage).toBe(damage);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(13);
+          expect(game.markedDamage(hero.objectId)).toBe(damage);
+          expect(game.markedDamage(foe.objectId)).toBe(13);
           passEffectsStack(game);
           const amount =
             mode === "tides"
@@ -98,11 +98,11 @@ export function proveRecoveryActionBoundaries(
               : mode === "petalfall"
                 ? 8 + level
                 : 4;
-          expect(game.state.objects[hero.objectId]!.damage).toBe(Math.max(0, damage - amount));
-          expect(game.state.objects[foe.objectId]!.damage).toBe(
+          expect(game.markedDamage(hero.objectId)).toBe(Math.max(0, damage - amount));
+          expect(game.markedDamage(foe.objectId)).toBe(
             mode === "feast" || mode === "petalfall" ? Math.max(0, 13 - amount) : 13,
           );
-          expect(game.state.objects[ally.objectId]!.damage).toBe(allyDamage);
+          expect(game.markedDamage(ally.objectId)).toBe(allyDamage);
           expect(p.cards(card, { zone: "graveyard" })).toHaveLength(1);
         });
       }

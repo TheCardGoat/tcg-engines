@@ -1,3 +1,9 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects/special-continuous-effects"
+  relation: "current_index"
+---
 # Special Continuous Effects
 
 This section covers special continuous effects that modify game rules to significant degrees.

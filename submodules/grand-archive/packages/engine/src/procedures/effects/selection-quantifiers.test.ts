@@ -11,6 +11,7 @@ import { describe, expect, it } from "vitest";
 import {
   declareGrandArchiveResolutionChoice,
   declareGrandArchiveTargets,
+  declareGrandArchiveTargetsWithRandom,
   randomlyDeclareGrandArchiveResolutionChoice,
 } from "../activation/activation.ts";
 import { grandArchivePlayerId, type GrandArchiveObjectId } from "../../game/identity.ts";
@@ -224,6 +225,75 @@ describe("Grand Archive selection quantifiers", () => {
         evaluation,
       ),
     ).toThrow("A target identity cannot be selected twice");
+    expect(() =>
+      declareGrandArchiveTargetsWithRandom(
+        [first, second],
+        {
+          [first.id]: [fixture.allyIds[0]],
+          [second.id]: [fixture.allyIds[0]],
+        },
+        evaluation,
+      ),
+    ).toThrow("A target identity cannot be selected twice");
+  });
+
+  it("keeps random target groups distinct from earlier explicit targets", () => {
+    const fixture = setup();
+    const first = {
+      id: "first",
+      kind: "target",
+      declared: "announcement",
+      chooser: "controller",
+      count: { kind: "exactly", amount: 1 },
+      candidates: { kind: "object", zones: ["field"], filter: { kind: "type", oneOf: ["ALLY"] } },
+    } satisfies GrandArchiveTargetDeclaration;
+    const evaluation = {
+      program: fixture.program,
+      state: fixture.runtime.state,
+      controllerId: fixture.p1,
+      sourceId: fixture.championId,
+      bindings: {},
+    };
+    const before = structuredClone(fixture.runtime.state);
+    const result = declareGrandArchiveTargetsWithRandom(
+      [first, { ...first, id: "random", method: "random" }],
+      { first: [fixture.allyIds[0]] },
+      evaluation,
+    );
+    expect(result.targets[1]!.targetIds).toHaveLength(1);
+    expect(result.targets[1]!.targetIds).not.toContain(fixture.allyIds[0]);
+    expect(fixture.runtime.state).toEqual(before);
+    expect(() =>
+      declareGrandArchiveTargetsWithRandom(
+        [
+          first,
+          {
+            ...first,
+            id: "random",
+            method: "random",
+            candidates: { kind: "object", binding: "first" },
+          },
+        ],
+        { first: [fixture.allyIds[0]] },
+        evaluation,
+      ),
+    ).toThrow("too few eligible candidates");
+    expect(
+      declareGrandArchiveTargetsWithRandom(
+        [
+          first,
+          {
+            ...first,
+            id: "random",
+            method: "random",
+            allowRepeated: true,
+            candidates: { kind: "object", binding: "first" },
+          },
+        ],
+        { first: [fixture.allyIds[0]] },
+        evaluation,
+      ).targets[1]!.targetIds,
+    ).toEqual([fixture.allyIds[0]]);
   });
 
   it("requires explicit printed permission to select one target repeatedly", () => {
@@ -441,7 +511,7 @@ describe("Grand Archive selection quantifiers", () => {
     }
     expect(fixture.runtime.state.stack).toHaveLength(0);
     for (const allyId of fixture.allyIds) {
-      expect(fixture.runtime.state.objects[allyId]).toMatchObject({ damage: 1 });
+      expect(fixture.runtime.state.objects[allyId]).toMatchObject({ temporaryDamage: 1 });
       expect(fixture.runtime.state.objects[allyId]?.states.has("rested")).toBe(true);
     }
   });

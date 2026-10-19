@@ -59,7 +59,7 @@ export function proveClassLevelAllyStats(card: Card, powerBonus: number, lifeBon
         q.declareAttack(attackers[0]!, p.card(champion));
         game.resolveCombatWithoutRetaliation();
         expect(q.zone("memory")).toHaveLength(memoryBeforeOtherAttack);
-        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
         for (const [i, attacker] of attackers.slice(1).entries()) {
           const payment =
             card.slug === "beguiling-bandit"
@@ -81,7 +81,7 @@ export function proveClassLevelAllyStats(card: Card, powerBonus: number, lifeBon
           game.resolveCombatWithoutRetaliation();
           expect(p.cards(card, { zone: "field" })).toHaveLength(i + 1 < life ? 1 : 0);
           if (i + 1 < life) {
-            expect(game.state.objects[ally.objectId]!.damage).toBe(i + 1);
+            expect(game.markedDamage(ally.objectId)).toBe(i + 1);
             expect(numeric("power")).toBe(power);
             expect(numeric("life")).toBe(life);
           }

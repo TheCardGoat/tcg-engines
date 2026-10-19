@@ -17,6 +17,7 @@ import type { GrandArchiveMatchState } from "../../game/model.ts";
 import { grandArchiveOpportunityIsSuppressed } from "./opportunity.ts";
 import { collectGrandArchiveStateBasedEvents } from "../../rules/state/state-based.ts";
 import { resolveTopGrandArchiveStackItem } from "../effects/stack-resolution.ts";
+import { proposeGrandArchiveEndCombatStepCleanup } from "../combat/combat.ts";
 import {
   collectGrandArchivePendingTriggerProgressEvents,
   collectGrandArchiveTriggeredAbilityEvents,
@@ -480,6 +481,23 @@ export class GrandArchiveMatchRuntime {
       }
       const stateBasedEvents = collectGrandArchiveStateBasedEvents(this.#program, this.#state);
       if (stateBasedEvents.length === 0) {
+        if (
+          this.#state.status === "playing" &&
+          this.#state.combat?.step === "end" &&
+          !this.#state.combat.cleanupStarted &&
+          this.#state.pendingTriggers.length === 0 &&
+          !this.#state.resolution
+        ) {
+          const cleanup = this.#kernel.transact(
+            this.#state,
+            proposeGrandArchiveEndCombatStepCleanup(this.#state),
+          );
+          this.#state = cleanup.state;
+          committed.push(...cleanup.result.events);
+          if (this.#state.decision) return { ok: true, state: this.#state, events: committed };
+          triggerEvents = cleanup.result.events;
+          continue;
+        }
         if (
           this.#state.status !== "finished" &&
           !this.#state.opportunity &&

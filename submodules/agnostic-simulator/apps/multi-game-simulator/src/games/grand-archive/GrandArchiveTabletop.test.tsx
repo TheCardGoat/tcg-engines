@@ -14,6 +14,23 @@ import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 afterEach(cleanup);
 
 describe("Grand Archive tabletop", () => {
+  it("shows the field champion in match status instead of a material deck champion", () => {
+    const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
+      (entry) => entry.id === "materialization-hand",
+    )!;
+    const field = fixture.table.zones.find((zone) => zone.id === "p1:field")!;
+    const champion = fixture.entities.find(
+      (entity) => entity.kind === "leader" && field.entityIds.includes(entity.id),
+    )!;
+    render(
+      <GrandArchiveSimulatorProviders>
+        <GrandArchiveTabletop fixture={fixture} />
+      </GrandArchiveSimulatorProviders>,
+    );
+    expect(screen.getByRole("region", { name: "Your match status" }).textContent).toContain(
+      champion.title,
+    );
+  });
   it("shows the exact full printing in card inspection", async () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "art-only")!;
     const entity = fixture.entities.find(

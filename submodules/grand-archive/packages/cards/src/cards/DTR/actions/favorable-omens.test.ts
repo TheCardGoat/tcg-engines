@@ -118,12 +118,12 @@ describe("Favorable Omens — controlled wind omens and a fixed set of allies", 
         });
         passEffectsStack(game);
         expect(game.state.objects[ally.objectId]!.zone).toBe(bonus ? "field" : "graveyard");
-        if (bonus) expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+        if (bonus) expect(game.markedDamage(ally.objectId)).toBe(1);
         advanceToMain(game, q.id);
         expect(life(tortoise.objectId)).toBe(6);
         if (bonus) {
           expect(game.state.objects[ally.objectId]!.zone).toBe("field");
-          expect(game.state.objects[ally.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(ally.objectId)).toBe(0);
           expect(life(ally.objectId)).toBe(1);
           q.activateAbility(q.cards(enfeebledDagger, { zone: "field" })[0]!, "idpdon8f0h-a1", {
             targets: { "target-unit": [ally.objectId] },

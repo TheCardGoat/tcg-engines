@@ -51,10 +51,10 @@ describe("Servant's Obligation — Taunt until this champion is attacked", () =>
           championAttacker ? { weaponIds: [q.card(trainingSword).objectId] } : {},
         );
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(hero.objectId)).toBe(1);
         q.declareAttack(attackers[1]!, ally);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(ally.objectId)).toBe(1);
         advanceToMain(game, p.id);
         advanceToMain(game, q.id);
         if (ciel) {
@@ -64,7 +64,7 @@ describe("Servant's Obligation — Taunt until this champion is attacked", () =>
         } else {
           q.declareAttack(attackers[0]!, ally);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(ally.objectId)).toBe(1);
         }
       });
 
@@ -110,7 +110,7 @@ describe("Servant's Obligation — Taunt until this champion is attacked", () =>
     expect(game.state).toEqual(before);
     q.declareAttack(q.card(giantTortoise), hero);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(hero.objectId)).toBe(1);
   });
 });
 
@@ -175,7 +175,7 @@ describe("Servant's Obligation — pay, rest and banish to summon", () => {
       expect(q.zone("field")).toHaveLength(1);
       p.declareAttack(token, q.card(opponent));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(opponent).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(q.card(opponent).objectId)).toBe(1);
     });
 });
 
@@ -207,8 +207,8 @@ it("Servant's Obligation stops granting Taunt after an attack that deals no dama
   });
   passEffectsStack(game);
   game.resolveCombatWithoutRetaliation();
-  expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+  expect(game.markedDamage(hero.objectId)).toBe(0);
   q.declareAttack(attackers[1]!, p.card(giantTortoise));
   game.resolveCombatWithoutRetaliation();
-  expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(1);
+  expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(1);
 });

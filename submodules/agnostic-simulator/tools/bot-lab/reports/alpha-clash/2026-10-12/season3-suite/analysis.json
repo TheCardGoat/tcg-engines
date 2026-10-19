@@ -1,0 +1,469 @@
+{
+  "matches": 128,
+  "crossDeckGames": 112,
+  "mirrorGames": 16,
+  "terminationCounts": {
+    "rules-win": 128
+  },
+  "firstSeatWins": 66,
+  "secondSeatWins": 62,
+  "rejectedProposals": 0,
+  "rankingExcludesMirrors": true,
+  "ranking": [
+    {
+      "deckId": "season3-sloppy-valen",
+      "name": "Valen \u2014 sloppy (Season 3 link)",
+      "wins": 24,
+      "losses": 4,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 12,
+      "firstSeatGames": 14,
+      "secondSeatWins": 12,
+      "secondSeatGames": 14,
+      "winRate": 0.8571428571428571
+    },
+    {
+      "deckId": "season3-silou-death",
+      "name": "Death \u2014 silou (Season 3 link)",
+      "wins": 22,
+      "losses": 6,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 11,
+      "firstSeatGames": 14,
+      "secondSeatWins": 11,
+      "secondSeatGames": 14,
+      "winRate": 0.7857142857142857
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "name": "War \u2014 xiii (Season 3 link)",
+      "wins": 21,
+      "losses": 7,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 12,
+      "firstSeatGames": 14,
+      "secondSeatWins": 9,
+      "secondSeatGames": 14,
+      "winRate": 0.75
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "name": "Clarity \u2014 silou (Season 3 link)",
+      "wins": 11,
+      "losses": 17,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 7,
+      "firstSeatGames": 14,
+      "secondSeatWins": 4,
+      "secondSeatGames": 14,
+      "winRate": 0.39285714285714285
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "name": "Kilimanjaro \u2014 avalogaming (Season 3 link)",
+      "wins": 11,
+      "losses": 17,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 4,
+      "firstSeatGames": 14,
+      "secondSeatWins": 7,
+      "secondSeatGames": 14,
+      "winRate": 0.39285714285714285
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "name": "Clarity Hyper Aggro",
+      "wins": 9,
+      "losses": 19,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 3,
+      "firstSeatGames": 14,
+      "secondSeatWins": 6,
+      "secondSeatGames": 14,
+      "winRate": 0.32142857142857145
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "name": "Clarity \u2014 undefendable (Season 3 link)",
+      "wins": 9,
+      "losses": 19,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 8,
+      "firstSeatGames": 14,
+      "secondSeatWins": 1,
+      "secondSeatGames": 14,
+      "winRate": 0.32142857142857145
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "name": "Clarity \u2014 fexar (Season 3 link)",
+      "wins": 5,
+      "losses": 23,
+      "unresolved": 0,
+      "games": 28,
+      "firstSeatWins": 4,
+      "firstSeatGames": 14,
+      "secondSeatWins": 1,
+      "secondSeatGames": 14,
+      "winRate": 0.17857142857142858
+    }
+  ],
+  "actions": {
+    "min": 146,
+    "median": 254.5,
+    "mean": 260.578125,
+    "max": 473
+  },
+  "turns": {
+    "min": 7,
+    "median": 11.0,
+    "mean": 10.9921875,
+    "max": 16
+  },
+  "failures": [],
+  "matchups": [
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "clarity-hyper-aggro",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-avalogaming-kilimanjaro",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-fexar-clarity",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-clarity",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-silou-death",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-sloppy-valen",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-undefendable-clarity",
+      "opponentDeckId": "season3-xiii-war",
+      "wins": 0,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "clarity-hyper-aggro",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-avalogaming-kilimanjaro",
+      "wins": 4,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-fexar-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-silou-clarity",
+      "wins": 3,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-silou-death",
+      "wins": 2,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-sloppy-valen",
+      "wins": 1,
+      "games": 4
+    },
+    {
+      "deckId": "season3-xiii-war",
+      "opponentDeckId": "season3-undefendable-clarity",
+      "wins": 4,
+      "games": 4
+    }
+  ]
+}

@@ -1,5 +1,22 @@
+import { z } from "zod";
 import type { MusicBackend, MusicClip, MusicTrackId } from "./background-music";
-const BASE_URL = "https://cdn.tcg.online/public/cyberpunk/audio/background/v1";
+export const MUSIC_ASSET_BASE_URL = "https://cdn.tcg.online/public/cyberpunk/audio/background/v1";
+
+const manifestSchema = z.object({
+  version: z.literal(1),
+  tracks: z.array(
+    z.object({
+      id: z.string(),
+      formats: z.array(
+        z.object({
+          file: z.string(),
+          normalization: z.object({ gain: z.number().finite().positive().max(1) }),
+        }),
+      ),
+    }),
+  ),
+});
+type MusicManifest = z.infer<typeof manifestSchema>;
 
 /** Separate graph from Howler's global sound-effect volume. Created on user input. */
 export class WebAudioMusic implements MusicBackend {
@@ -7,6 +24,22 @@ export class WebAudioMusic implements MusicBackend {
   private master: GainNode | null = null;
   private volume = 0.25;
   private disposed = false;
+  private manifestPromise: Promise<MusicManifest> | null = null;
+  private manifestRequest = new AbortController();
+  private loadManifest(): Promise<MusicManifest> {
+    this.manifestPromise ??= fetch(`${MUSIC_ASSET_BASE_URL}/manifest.json`, {
+      signal: this.manifestRequest.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Music manifest request failed: ${response.status}`);
+        return manifestSchema.parse(await response.json());
+      })
+      .catch((error: unknown) => {
+        this.manifestPromise = null;
+        throw error;
+      });
+    return this.manifestPromise;
+  }
   get now() {
     return this.context?.currentTime ?? 0;
   }
@@ -35,15 +68,32 @@ export class WebAudioMusic implements MusicBackend {
     const context = this.context;
     const master = this.master;
     if (!context || !master || this.disposed) throw new Error("Music is not unlocked");
+    // Static encoded-file levels are measured at asset publication, never on
+    // the gameplay thread. A failed manifest leaves music unavailable; the
+    // BackgroundMusicPlayer handles it without blocking or changing the game.
+    const manifest = await this.loadManifest();
+    signal.throwIfAborted();
     const formats = new Audio().canPlayType('audio/webm; codecs="opus"')
       ? ["webm", "mp3"]
       : ["mp3"];
     let buffer: AudioBuffer | undefined;
+    let trim = 0;
     for (const format of formats) {
+      const filename = `${track}.${format}`;
+      const level = manifest.tracks
+        .find((item) => item.id === track)
+        ?.formats.find((item) => item.file === filename)?.normalization;
+      if (!level) {
+        // A corrected CDN manifest must be reachable through Retry music too.
+        this.manifestPromise = null;
+        throw new Error(`Missing music normalization: ${filename}`);
+      }
       try {
-        const response = await fetch(`${BASE_URL}/${track}.${format}`, { signal });
+        const response = await fetch(`${MUSIC_ASSET_BASE_URL}/${track}.${format}`, { signal });
         if (!response.ok) throw new Error(`Music request failed: ${response.status}`);
         buffer = await context.decodeAudioData(await response.arrayBuffer());
+        signal.throwIfAborted();
+        trim = level.gain;
         break;
       } catch (error) {
         if (signal.aborted || format === "mp3") throw error;
@@ -52,18 +102,6 @@ export class WebAudioMusic implements MusicBackend {
     }
     if (!buffer || !Number.isFinite(buffer.duration) || buffer.duration <= 0)
       throw new Error("Invalid music duration");
-    // Match track levels without changing the source assets. Leave headroom
-    // for overlapping tracks during the crossfade.
-    let sumSquares = 0;
-    let peak = 0;
-    for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
-      for (const sample of buffer.getChannelData(channel)) {
-        sumSquares += sample * sample;
-        peak = Math.max(peak, Math.abs(sample));
-      }
-    }
-    const rms = Math.sqrt(sumSquares / (buffer.length * buffer.numberOfChannels));
-    const trim = rms > 0 && peak > 0 ? Math.min(1, 0.1 / rms, 0.5 / peak) : 1;
     const decoded = buffer;
     return {
       duration: decoded.duration,
@@ -102,6 +140,7 @@ export class WebAudioMusic implements MusicBackend {
   }
   dispose() {
     this.disposed = true;
+    this.manifestRequest.abort();
     if (this.context) void this.context.close().catch(() => undefined);
     this.master = null;
     this.context = null;

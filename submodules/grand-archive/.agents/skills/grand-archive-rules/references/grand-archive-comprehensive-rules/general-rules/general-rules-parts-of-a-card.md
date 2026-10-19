@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card"
   relation: "current_index"
 ---
-
 # General Rules - Parts of a Card
 
 General Rules:

@@ -154,7 +154,7 @@ describe("Stellaria Shower — Starcalling and Spell entry damage", () => {
       passEffectsStack(game);
       const damage = called ? extra + 1 - (remove === "source" || remove === "other" ? 1 : 0) : 0;
       if (remove === "target") expect(game.state.objects[target.objectId]!.zone).toBe("graveyard");
-      else expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+      else expect(game.markedDamage(target.objectId)).toBe(damage);
       expect(game.state.stack).toHaveLength(0);
       expect(game.state.decision).toBeNull();
     });

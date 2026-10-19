@@ -109,18 +109,18 @@ describe("Humpty Dumpty — persistent buff growth and temporary ally form", () 
       expect(stat("life")).toBe(count);
       p.declareAttack(source, q.card(champion));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(count);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(count);
       if (count === 2) {
         p.activate(fireball, {
           targets: { "target-1": [source.objectId] },
           reservePayment: payment(4),
         });
         passEffectsStack(game);
-        expect(game.state.objects[source.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(source.objectId)).toBe(1);
       }
       advanceToMain(game, q.id);
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
-      expect(game.state.objects[source.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(source.objectId)).toBe(0);
       expect(stat("power")).toBeUndefined();
       expect(stat("life")).toBeUndefined();
       expect(game.state.objects[source.objectId]!.counters.buff).toBe(count);

@@ -63,7 +63,7 @@ describe("Stillshard Strike", () => {
             });
             passEffectsStack(game);
           }
-          expect(game.state.objects[hero.objectId]!.damage).toBe(10);
+          expect(game.markedDamage(hero.objectId)).toBe(10);
           p.activate(acceptedContract, { reservePayment: pay(5) });
           passEffectsStack(game);
           p.activate(stillshardStrike, {
@@ -75,10 +75,10 @@ describe("Stillshard Strike", () => {
           passEffectsStack(game);
           declareResolvedAttack(game, hero.objectId, target.objectId, "Resolve Stillshard Strike");
           passEffectsStack(game);
-          expect(game.state.objects[hero.objectId]!.damage).toBe(prepared ? 9 - sheen : 10);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(hero.objectId)).toBe(prepared ? 9 - sheen : 10);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(3);
-          expect(game.state.objects[hero.objectId]!.damage).toBe(prepared ? 9 - sheen : 10);
+          expect(game.markedDamage(target.objectId)).toBe(3);
+          expect(game.markedDamage(hero.objectId)).toBe(prepared ? 9 - sheen : 10);
         });
 });

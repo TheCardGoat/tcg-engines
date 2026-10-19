@@ -206,17 +206,20 @@ describe("Lucenia's Reign — paid Chessman Command discard, temporary life and 
           });
           passEffectsStack(game);
         }
-        expect(game.state.objects[target.objectId]).toMatchObject({ zone: "field", damage: count });
+        expect(game.state.objects[target.objectId]).toMatchObject({
+          zone: "field",
+          temporaryDamage: count,
+        });
         advanceToMain(game, opposingTurn ? p.id : q.id);
         expect(life()).toBe(1);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         giveOpportunity(game, q.id);
         q.activateAbility(q.cards(enfeebledDagger, { zone: "field" })[0]!, "idpdon8f0h-a1", {
           targets: { "target-unit": [target.objectId] },
         });
         passEffectsStack(game);
         expect(game.state.objects[target.objectId]!.zone).toBe("graveyard");
-        expect(game.state.objects[q.card(snowWhiteWeissQueen).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(q.card(snowWhiteWeissQueen).objectId)).toBe(0);
       });
   for (const removeTarget of [false, true])
     it(`responding removal of ${removeTarget ? "target" : "source"}`, () => {

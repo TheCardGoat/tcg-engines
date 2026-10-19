@@ -282,7 +282,7 @@ describe("Grand Archive ordered state-based checks", () => {
       { type: "object-moved", objectId: allyObject.id, from: allyObject.zone, to: "field" },
       { type: "object-created", object: token },
       { type: "object-moved", objectId: token.id, from: "field", to: "graveyard" },
-      { type: "damage-marked", objectId: allyObject.id, amount: 2 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: allyObject.id, amount: 2 },
     ]).state;
 
     const damagePass = collectGrandArchiveStateBasedEvents(fixture.program, simultaneousState);
@@ -325,7 +325,7 @@ describe("Grand Archive ordered state-based checks", () => {
     const simultaneousState = kernel.transact(fixture.state, [
       { type: "object-moved", objectId: allyObject.id, from: allyObject.zone, to: "field" },
       { type: "object-moved", objectId: domainObject.id, from: domainObject.zone, to: "field" },
-      { type: "damage-marked", objectId: allyObject.id, amount: 2 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: allyObject.id, amount: 2 },
       { type: "counter-changed", objectId: domainObject.id, counter: "durability", delta: -1 },
     ]).state;
 

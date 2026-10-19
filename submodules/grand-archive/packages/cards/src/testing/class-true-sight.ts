@@ -85,9 +85,9 @@ export function proveClassTrueSight(card: GrandArchiveAnyCard<GrandArchiveAbilit
         game.resolveCombatWithoutRetaliation();
         if (aetherwing && enabled)
           expect(game.state.objects[hidden.objectId]!.zone).toBe("graveyard");
-        else expect(game.state.objects[target.objectId]!.damage).toBe(aetherwing ? 2 : 1);
+        else expect(game.markedDamage(target.objectId)).toBe(aetherwing ? 2 : 1);
         expect(game.state.objects[attacker.objectId]!.states.has("rested")).toBe(true);
         if (aetherwing) expect(p.card(resonantAether, { zone: "graveyard" })).toBeDefined();
-        if (!enabled) expect(game.state.objects[hidden.objectId]!.damage).toBe(0);
+        if (!enabled) expect(game.markedDamage(hidden.objectId)).toBe(0);
       });
 }

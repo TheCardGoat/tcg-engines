@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-playing-cards/playing-cards-resolution"
   relation: "current_index"
 ---
-
 # Playing Cards - Resolution
 
 #### General Rules:

@@ -60,10 +60,10 @@ describe("Seeker's Rifle — Class Bonus True Sight", () => {
       }
       const target = classBonus ? hidden : opponent.card(champion, { zone: "field" });
       player.declareAttack(attacker, target, { weaponIds: [gun.objectId] });
-      expect(game.state.objects[target.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(target.objectId)).toBe(0);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(2);
-      expect(game.state.objects[hidden.objectId]!.damage).toBe(classBonus ? 2 : 0);
+      expect(game.markedDamage(target.objectId)).toBe(2);
+      expect(game.markedDamage(hidden.objectId)).toBe(classBonus ? 2 : 0);
     });
   }
 });

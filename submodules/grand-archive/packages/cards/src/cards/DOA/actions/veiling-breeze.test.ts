@@ -81,14 +81,14 @@ describe("Veiling Breeze reduces each damage instance by the chosen wind reveal 
         }
         q.declareAttack(giantTortoise, other);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[other.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(other.objectId)).toBe(1);
         q.declareAttack(blitzMage, hero);
         game.resolveCombatWithoutRetaliation();
         const prevention = expired ? 0 : revealed;
-        expect(game.state.objects[hero.objectId]!.damage).toBe(Math.max(0, 3 - prevention));
+        expect(game.markedDamage(hero.objectId)).toBe(Math.max(0, 3 - prevention));
         q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), hero);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
+        expect(game.markedDamage(hero.objectId)).toBe(
           Math.max(0, 3 - prevention) + Math.max(0, 1 - prevention),
         );
         q.activate(fireball, {
@@ -99,7 +99,7 @@ describe("Veiling Breeze reduces each damage instance by the chosen wind reveal 
           targets: { "target-1": [hero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
+        expect(game.markedDamage(hero.objectId)).toBe(
           Math.max(0, 3 - prevention) + 2 * Math.max(0, 1 - prevention),
         );
         expect(q.zone("memory")).toHaveLength(expired ? 2 : 3);

@@ -1,26 +1,54 @@
 import { describe, expect, it } from "vitest";
-import { officialCatalog } from "@tcg/alpha-clash-cards";
-import { alphaClashServerAdapter } from "./adapter";
+import { alphaClashServerAdapter as adapter } from "./adapter";
+import { alphaClashReleaseDecks } from "./release-policy";
+import {
+  alphaClashPracticeDecks,
+  getAlphaClashMetaPracticeDeck,
+  getAlphaClashPracticeCatalog,
+  resolveAlphaClashLabDeck,
+} from "./practice";
 
-const official = new Map(officialCatalog.map((card) => [card.id, card]));
-
-describe("official practice decks", () => {
-  for (const preset of ["starter-titan", "starter-warden"]) {
-    for (const suffix of ["", "@42"]) {
-      it(`${preset}${suffix} contains only real cards with artwork`, () => {
-        const deck = alphaClashServerAdapter.practiceDecks!.getDeck(`${preset}${suffix}`)!;
-        expect(deck).toBeDefined();
-        expect(alphaClashServerAdapter.validateDeckForFormat("constructed", deck).valid).toBe(true);
-        for (const entry of deck) {
-          const card = official.get(entry.cardId);
-          expect(card, entry.cardId).toBeDefined();
-          expect(card!.printings?.[0]?.productId, entry.cardId).toBeGreaterThan(0);
-          expect(JSON.stringify(card), entry.cardId).not.toContain('"kind":"unparsed"');
+describe("audited curated practice presets", () => {
+  for (const preset of alphaClashReleaseDecks()) {
+    it(`${preset.id} is published only after every release check passes`, () => {
+      const approved = preset.issues.length === 0;
+      expect(adapter.practiceDecks!.ids.includes(preset.id)).toBe(approved);
+      expect(alphaClashPracticeDecks.some((deck) => deck.id === preset.id)).toBe(approved);
+      expect(getAlphaClashPracticeCatalog().decks.some((deck) => deck.id === preset.id)).toBe(
+        approved,
+      );
+      expect(Boolean(getAlphaClashMetaPracticeDeck(preset.id))).toBe(approved);
+      for (const suffix of ["", "@42"]) {
+        const deck = adapter.practiceDecks!.getDeck(`${preset.id}${suffix}`);
+        if (!approved) {
+          expect(deck).toBeUndefined();
+          continue;
         }
-        expect(deck.find((entry) => entry.sectionId === "contender")?.cardId).toBe(
-          preset === "starter-titan" ? "ac-st-001" : "ac-ac1-096",
-        );
-      });
-    }
+        expect(deck).toBeDefined();
+        expect(adapter.validateDeckForFormat("constructed", deck!).valid).toBe(true);
+        const lab = resolveAlphaClashLabDeck(preset.id);
+        expect(deck!.filter((entry) => entry.sectionId === "contender")).toEqual([
+          { cardId: lab.contenderId, quantity: 1, sectionId: "contender" },
+        ]);
+        expect(
+          deck!
+            .filter((entry) => entry.sectionId === "main")
+            .flatMap((entry) => Array(entry.quantity).fill(entry.cardId))
+            .sort(),
+        ).toEqual([...lab.deckIds].sort());
+      }
+    });
   }
+
+  it.each(["starter-titan", "starter-titan@42", "starter-warden", "starter-warden@42", "unknown"])(
+    "does not expose unaudited generated preset %s",
+    (id) => {
+      expect(adapter.practiceDecks!.ids).not.toContain(id);
+      expect(adapter.practiceDecks!.getDeck(id)).toBeUndefined();
+    },
+  );
+
+  it("retains raw curated lists for developer audit tooling", () => {
+    expect(resolveAlphaClashLabDeck("clarity-hyper-aggro").deckIds).toHaveLength(50);
+  });
 });

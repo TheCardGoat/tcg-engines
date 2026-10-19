@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-playing-cards"
   relation: "current_index"
 ---
-
 # Game Mechanics - Playing Cards
 
 #### General Rules:
@@ -19,7 +18,7 @@ official_source:
    1. Cards with reserve costs will go to the Graveyard from the Effects Stack; cards with memory costs will go to Banishment. If a non-copy instance resolves and becomes an object, then the card will instead be placed on the field to represent the object.
 8. If a card is removed from the Effects Stack, any instances of its activation, materialization, or bestowment will be removed from the Effects Stack, as well.
 
-{% hint style="info" %} <img src="/files/ikI0PpXIgPjy3Xu3nMhp" alt="" data-size="original">\
+{% hint style="info" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FCfiW4PLM4nj9cNlfiEvM%2Ffroistbind.jpg?alt=media&amp;token=a21db457-36b1-4e65-9ea8-1b6d9d58be0e" alt="" data-size="original">\
 \
 E.g., if a card activation is negated via Frostbind, the corresponding card for that activation will also be banished. If there were any other copies of the activation of that card, those copies will fizzle since the sourced card for those activations is now removed from the Effects Stack.
 {% endhint %}

@@ -67,7 +67,7 @@ describe("Ghost Hunter — attacking ephemeral allies", () => {
             game.player(wait.playerId).pass();
           }
         }
-        expect(game.state.objects[ephemeral.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(ephemeral.objectId)).toBe(1);
         expect(game.state.objects[ephemeral.objectId]!.zone).toBe("field");
       } else {
         advanceToMain(game, p.id);
@@ -84,7 +84,7 @@ describe("Ghost Hunter — attacking ephemeral allies", () => {
         game.resolveCombatWithoutRetaliation();
         if (mode === "ephemeral")
           expect(game.state.objects[target.objectId]!.zone).toBe("banishment");
-        else expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        else expect(game.markedDamage(target.objectId)).toBe(1);
       }
       expect(game.state.combat).toBeNull();
       expect(power()).toBe(1);

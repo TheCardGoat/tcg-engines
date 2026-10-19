@@ -60,6 +60,7 @@ export const auravoltCurrent: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           id: "foy5mdrVCR-a2",
           kind: "triggered",
           text: "Whenever this card is banished from your memory, put a charge counter on it.",
+          functionalZones: ["memory"],
           trigger: {
             kind: "event",
             event: {
@@ -81,7 +82,6 @@ export const auravoltCurrent: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
             },
             amount: 1,
           },
-          functionalZones: ["memory"],
         },
         {
           id: "foy5mdrVCR-a3",

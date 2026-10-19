@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "fixture": "combat-obstruct-forced-unable",
+  "flow": "Fresh native hot-seat board: Clash, War attacker, Magnate target, War trigger targeting engaged Sonoro, Enter Do not obstruct. Final Primary, health30/27, Clash1/3, Oblivion0/0, decks44/41; all native board controls. Match only sets Hot seat before capture.",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "forced-unable-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 164,
+      "captureAudioMs": 4632,
+      "audioAlignmentSeconds": 0.016541004180908203,
+      "decodedAudioSeconds": 4.601208333333333,
+      "masterGain": 0.5625,
+      "peak": 0.15255685150623322,
+      "rms": 0.00839206370307694,
+      "peakDbfs": -16.331365658231466,
+      "rmsDbfs": -41.52262456256787
+    },
+    {
+      "variant": "muted-reduced",
+      "file": "forced-unable-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 72,
+      "captureAudioMs": 4179,
+      "audioAlignmentSeconds": 0.023951053619384766,
+      "decodedAudioSeconds": 4.1143125,
+      "masterGain": 0,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "capture": "Application-output Howler branch only, no microphone or replacement audio; temporary branch disconnected and tracks stopped. Audio packet gaps retain silence. Change frames encoded at 30 FPS.",
+  "limits": [
+    "Only engaged required target and no companion recorded; no ready target, explicit companion, Torment, Flight, cancellation or other viewport input.",
+    "Audio presence/silence does not establish perceptual mix, impact hierarchy or cue synchronization.",
+    "Frame count/encoding FPS do not measure renderer performance.",
+    "Matched viewport/commands; different input pacing cannot establish individual motion duration."
+  ]
+}

@@ -84,7 +84,7 @@ describe("Alice Golden Queen — inherited Chessman Command power", () => {
           );
           game.resolveCombatWithoutRetaliation();
           const base = kind === "automaton" ? 2 : 3;
-          expect(game.state.objects[defender.objectId]!.damage).toBe(
+          expect(game.markedDamage(defender.objectId)).toBe(
             base + (!opposing && position !== "material" && kind === "chessman" ? 1 : 0),
           );
         });
@@ -233,7 +233,7 @@ describe("Alice Golden Queen — Lineage Release protects the awake Chessmen at 
           targets: { "target-1": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(target.objectId)).toBe(2);
       }
       const protectedTarget =
         scenario === "awake" ||
@@ -249,7 +249,7 @@ describe("Alice Golden Queen — Lineage Release protects the awake Chessmen at 
         const damage =
           (scenario === "unpreventable" ? 2 : 0) + (protectedTarget ? Math.max(0, hit - 3) : hit);
         expect(game.state.objects[target.objectId]!.zone).toBe(damage >= 4 ? "graveyard" : "field");
-        if (damage < 4) expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        if (damage < 4) expect(game.markedDamage(target.objectId)).toBe(damage);
       }
       if (scenario === "awake") {
         const hit = (id: typeof target.objectId) => {
@@ -270,7 +270,7 @@ describe("Alice Golden Queen — Lineage Release protects the awake Chessmen at 
           p.card(starter),
         ]) {
           hit(excluded.objectId);
-          expect(game.state.objects[excluded.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(excluded.objectId)).toBe(1);
         }
         opportunity(p);
         const late = p.card(snowWhiteWeissQueen, { zone: "hand" });

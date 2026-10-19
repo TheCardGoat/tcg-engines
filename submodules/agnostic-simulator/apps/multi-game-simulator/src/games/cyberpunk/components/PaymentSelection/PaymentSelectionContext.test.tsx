@@ -4,6 +4,7 @@ import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
 import {
   promoLucynaKushinada,
   welcomeToNightCityRetailDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
 } from "@tcg/cyberpunk-cards";
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
 
@@ -427,6 +428,101 @@ describe("board payment selection", () => {
         expect(
           view.container.querySelectorAll('[data-zone="p-legendArea"][data-spent="true"]'),
         ).toHaveLength(2);
+      });
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("a spend-only ability waits for confirmation in manual mode before spending its Legend", async () => {
+    ensureBrowserSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "paymentLegendSpendAbilityQa" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const hanakoCard = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor.id,
+      );
+      fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
+      fireEvent.click(screen.getByRole("menuitem", { name: "Choose payment for every cost" }));
+
+      // Hanako's only enabled action is her SPEND swap, so a primary click
+      // auto-activates it — the cost must still be confirmed, not paid silently.
+      fireEvent.click(
+        view.container.querySelector<HTMLElement>(
+          `[data-testid="card"][data-instance-id="${hanakoCard.instanceId}"]`,
+        )!,
+      );
+
+      const prompt = await screen.findByRole("region", { name: "Choose payment" });
+      expect(prompt.textContent).toContain("Activating will spend Hanako Arasaka");
+      expect(
+        view.container
+          .querySelector(`[data-instance-id="${hanakoCard.instanceId}"]`)
+          ?.getAttribute("data-spent"),
+      ).toBe("false");
+
+      fireEvent.keyDown(window, { key: "Escape" });
+      await waitFor(() => {
+        expect(screen.queryByRole("region", { name: "Choose payment" })).toBeNull();
+        expect(
+          view.container
+            .querySelector(`[data-instance-id="${hanakoCard.instanceId}"]`)
+            ?.getAttribute("data-spent"),
+        ).toBe("false");
+      });
+
+      fireEvent.click(
+        view.container.querySelector<HTMLElement>(
+          `[data-testid="card"][data-instance-id="${hanakoCard.instanceId}"]`,
+        )!,
+      );
+      fireEvent.click(await screen.findByRole("button", { name: /^Confirm/ }));
+
+      await waitFor(() => {
+        expect(screen.queryByRole("region", { name: "Choose payment" })).toBeNull();
+        expect(
+          view.container
+            .querySelector(`[data-instance-id="${hanakoCard.instanceId}"]`)
+            ?.getAttribute("data-spent"),
+        ).toBe("true");
+        // The Netwatch Netdriver trigger drew for the confirmed spend.
+        expect(
+          view.container.querySelectorAll('[data-zone-id="p-hand"] [data-testid="hand-card"]'),
+        ).toHaveLength(1);
+      });
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("a spend-only ability still pays automatically when manual mode is off", async () => {
+    ensureBrowserSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "paymentLegendSpendAbilityQa" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const hanakoCard = await pom.getCardInZoneByDefinitionId(
+        "legendArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor.id,
+      );
+
+      fireEvent.click(
+        view.container.querySelector<HTMLElement>(
+          `[data-testid="card"][data-instance-id="${hanakoCard.instanceId}"]`,
+        )!,
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByRole("region", { name: "Choose payment" })).toBeNull();
+        expect(
+          view.container
+            .querySelector(`[data-instance-id="${hanakoCard.instanceId}"]`)
+            ?.getAttribute("data-spent"),
+        ).toBe("true");
       });
     } finally {
       view.unmount();

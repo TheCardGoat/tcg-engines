@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-mastery"
   relation: "current_index"
 ---
-
 # Game Mechanics - Mastery
 
 Masteries are special non-object player functions and are typically granted by various effects. Players can only have one mastery at a time.
@@ -15,7 +14,33 @@ Masteries are special non-object player functions and are typically granted by v
 2. Cards interacting with certain masteries may have symbols and icons related to that mastery on the card.
 3. Cards that track and represent masteries cannot be placed or used in any decks (Main, Material, Sideboard) and only serve to visually reflect the active Mastery.
 
-#### Masteries:
+{% hint style="success" %}
+Players may use anything as a token for the mastery to visually indicate it if they don't possess the actual token card(s) for it. Do use the Index or this rules document to refer to the official Mastery text.
+{% endhint %}
+
+### Masteries:
+
+#### Divine Comedy
+
+&#x20;                                           <img src="https://api.gatcg.com/cards/images/zHu0at9CDs.jpg" alt="" data-size="original">
+
+1. Divine Comedy is a Mage Ultimate Book mastery with a restricted activated ability that [cascades](/glossary/keywords-and-abilities.md#cascade) through the four "pages" of the book.
+2. Divine Comedy's ability is a "Dante Bonus" restriction ability that says "4: Activate this ability only once per turn, and only at slow speed. This ability costs 4 less to activate the first time you activate it. This ability's activation can't be negated. Cascade— "
+   1. 1 says: "Until the beginning of your next turn, your opponents can’t activate cards with an even reserve cost."
+      1. 0 is even.
+   2. 2 says: "As a Spell, destroy target non-champion object. When that object is destroyed this way, recover 4."
+      1. The source of the ability is Divine Comedy.
+      2. The object must go directly to the graveyard as a result of the destruction to add the trigger that recovers 4 to the Effects Stack. If the object is banished instead (typically due to a replacement effect) or is not destroyed, the recover 4 part of the ability will not trigger.
+   3. 3 says: "Until the beginning of your next turn, your opponents can’t activate cards with an even reserve cost."
+      1. 0 is even.
+   4. 4 says: "Remove all damage counters from your champion, then deal 20+X unpreventable damage to each champion your opponents control, where X is ten times the amount of damage counters removed this way."
+   5. If the ability's activation is copied, the copies may be negated.
+3. Each cascade effect is represented by a "page" of the Mastery: Inferno, Purgatorio, Paradiso, and Silenzio, as shown below.
+
+{% hint style="success" icon="book-sparkles" %} <img src="https://api.gatcg.com/cards/images/variants/6nVEqDroI3.jpg" alt="" data-size="original"> <img src="https://api.gatcg.com/cards/images/variants/jtTZVG6Iyo.jpg" alt="" data-size="original"> <img src="https://api.gatcg.com/cards/images/variants/95Up1SjeA0.jpg" alt="" data-size="original"> <img src="https://api.gatcg.com/cards/images/variants/aOrFveQmFB.jpg" alt="" data-size="original">
+
+*The four pages of the Divine Comedy mastery.*
+{% endhint %}
 
 #### Fractured Memories
 
@@ -53,9 +78,9 @@ Masteries are special non-object player functions and are typically granted by v
 
 #### Shifting Currents
 
-#### ![](/files/bPLHK9r8ziBbPc3UINsM)![](/files/UUZSOpoGYzFQfJk5RPk9)
+#### ![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2Fi4T5xk24BiNu2C992aFP%2Fshifting-currents-ambsd.png?alt=media\&token=8e10f4c8-afbf-431e-9f03-0e7cb1428998)![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FGuYt6YHlAvy5hrukCCi2%2Fbagua-of-cardinal-fate-amb.jpg?alt=media\&token=e81be57d-c787-4756-a18f-8f1084afacd7)
 
-1. Shifting currents is a triggered ability that says, "At the beginning of your end phase, you may change the direction of your Shifting Currents to a different direction of your choice." This ability is behind a restriction ability of "Kongming Bonus."
+1. Shifting currents is Mage Spell mastery with a Kongming Bonus restricted triggered ability that says, "At the beginning of your end phase, you may change the direction of your Shifting Currents to a different direction of your choice."
 2. Shifting Currents has four modes that may be chosen. Each mode is represented as a "direction" of either North, South, East, or West. Shifting Currents can only be set to one mode at a time, and changing the mode will overwrite the previous mode.
    1. The starting mode is always "North."
    2. Only one mode can be chosen at a time.

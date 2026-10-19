@@ -114,7 +114,7 @@ describe("Grand Archive property state transitions", () => {
       bindings: { subject: [fixture.objectId] satisfies readonly GrandArchiveObjectId[] },
     };
 
-    expect(grandArchiveObjectHasState(fixture.state, object, "awake")).toBe(true);
+    expect(grandArchiveObjectHasState(fixture.program, fixture.state, object, "awake")).toBe(true);
     expect(object.states.has("awake")).toBe(false);
     expect(
       evaluateGrandArchiveCondition(
@@ -146,11 +146,17 @@ describe("Grand Archive property state transitions", () => {
       },
     ]).state;
     const derivedObject = derived.objects[fixture.objectId]!;
-    const effective = grandArchiveObjectEffectiveStates(derived, derivedObject);
+    const effective = grandArchiveObjectEffectiveStates(fixture.program, derived, derivedObject);
 
-    expect(grandArchiveObjectHasState(derived, derivedObject, "damaged")).toBe(true);
-    expect(grandArchiveObjectHasState(derived, derivedObject, "loaded")).toBe(true);
-    expect(grandArchiveObjectHasState(derived, derivedObject, "prepared")).toBe(true);
+    expect(grandArchiveObjectHasState(fixture.program, derived, derivedObject, "damaged")).toBe(
+      true,
+    );
+    expect(grandArchiveObjectHasState(fixture.program, derived, derivedObject, "loaded")).toBe(
+      true,
+    );
+    expect(grandArchiveObjectHasState(fixture.program, derived, derivedObject, "prepared")).toBe(
+      true,
+    );
     expect(effective).toEqual(new Set(["awake", "damaged", "loaded", "prepared"]));
     const projected = projectGrandArchiveViewerState(fixture.program, derived, fixture.p1);
     const projectedObject = projected.players
@@ -249,14 +255,24 @@ describe("Grand Archive property state transitions", () => {
       { type: "object-state-changed", state: "rested", value: true },
     ]);
     expect(
-      grandArchiveObjectHasState(rest.state, rest.state.objects[fixture.objectId]!, "awake"),
+      grandArchiveObjectHasState(
+        fixture.program,
+        rest.state,
+        rest.state.objects[fixture.objectId]!,
+        "awake",
+      ),
     ).toBe(false);
     expect(wake.events).toMatchObject([
       { type: "object-state-changed", state: "rested", value: false },
     ]);
     expect(wake.state.objects[fixture.objectId]?.states.has("awake")).toBe(false);
     expect(
-      grandArchiveObjectHasState(wake.state, wake.state.objects[fixture.objectId]!, "awake"),
+      grandArchiveObjectHasState(
+        fixture.program,
+        wake.state,
+        wake.state.objects[fixture.objectId]!,
+        "awake",
+      ),
     ).toBe(true);
   });
 

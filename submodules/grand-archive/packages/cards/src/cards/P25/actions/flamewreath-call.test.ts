@@ -56,7 +56,7 @@ describe("Flamewreath Call", () => {
           p.activate(flamewreathCall, { reservePayment, targets });
           passEffectsStack(game);
           allies.forEach((ref, index) =>
-            expect(game.state.objects[ref.objectId]!.damage).toBe(index < count ? 3 : 0),
+            expect(game.markedDamage(ref.objectId)).toBe(index < count ? 3 : 0),
           );
           expect(p.zone("memory")).toHaveLength(cost);
         });

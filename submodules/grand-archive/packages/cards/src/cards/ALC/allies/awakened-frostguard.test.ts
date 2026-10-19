@@ -45,7 +45,7 @@ describe("Awakened Frostguard — conditional Foster and Vigor", () => {
         if (damaged) {
           opponent.declareAttack(woodlandSquirrels, ally);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(ally.objectId)).toBe(1);
         }
         advanceToRecollection(game, player.id);
         expect(game.state.objects[ally.objectId]!.states.has("fostered")).toBe(false);
@@ -205,7 +205,7 @@ describe("Awakened Frostguard — optional Floating Memory banishment", () => {
         const target = opponent.card(champion);
         player.declareAttack(ally, target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(1 + selected.length);
+        expect(game.markedDamage(target.objectId)).toBe(1 + selected.length);
         // Vigor depends on being fostered, not on having Class Bonus.
         for (let step = 0; game.state.turn.phase !== "end" && step < 16; step++) {
           const wait = game.waitState();

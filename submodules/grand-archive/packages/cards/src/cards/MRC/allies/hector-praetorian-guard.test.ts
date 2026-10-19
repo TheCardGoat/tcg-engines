@@ -166,7 +166,7 @@ describe("Hector — once-per-turn Neos prevention", () => {
                 else expect(targetState!.zone).toBe("graveyard");
                 break;
               }
-              expect(targetState!.damage).toBe(total);
+              expect(game.markedDamage(target.objectId)).toBe(total);
             }
           });
         }
@@ -240,7 +240,7 @@ for (const matching of [false, true])
           );
         expect(actual).toBe(expected);
       }
-      const previous = game.state.objects[hero.objectId]!.damage;
+      const previous = game.markedDamage(hero.objectId);
       q.activate(q.card(plantedExplosive), {
         targets: { "target-1": [hero.objectId] },
         reservePayment: q
@@ -249,7 +249,7 @@ for (const matching of [false, true])
           .map((c) => ({ kind: "card" as const, cardId: c.objectId })),
       });
       passEffectsStack(game);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(previous + 2);
+      expect(game.markedDamage(hero.objectId)).toBe(previous + 2);
     });
 
 for (const matching of [false, true])
@@ -298,7 +298,7 @@ for (const matching of [false, true])
         });
         passEffectsStack(game);
         total += matching ? Math.max(0, 2 - tokens) : 2;
-        expect(game.state.objects[hero.objectId]!.damage).toBe(total);
+        expect(game.markedDamage(hero.objectId)).toBe(total);
       }
     });
 
@@ -328,10 +328,10 @@ for (const matching of [false, true])
       q.declareAttack(attackers[0]!, hero);
       game.resolveCombatWithoutRetaliation();
       const first = matching && tokens > 0 ? 0 : 1;
-      expect(game.state.objects[hero.objectId]!.damage).toBe(first);
+      expect(game.markedDamage(hero.objectId)).toBe(first);
       q.declareAttack(attackers[1]!, hero);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[hero.objectId]!.damage).toBe(first + 1);
+      expect(game.markedDamage(hero.objectId)).toBe(first + 1);
     });
 
 import { sylphsEnvelopment } from "../../HVN/actions/sylphs-envelopment.ts";
@@ -368,7 +368,7 @@ for (const matching of [false, true])
       reservePayment: pay(),
     });
     passEffectsStack(game);
-    expect(game.state.objects[hero.objectId]!.damage).toBe(matching ? 0 : 2);
+    expect(game.markedDamage(hero.objectId)).toBe(matching ? 0 : 2);
     const incarnation = game.state.objects[hector.objectId]!.incarnation;
     p.activate(p.card(sylphsEnvelopment), {
       targets: { "target-ally": [hector.objectId] },
@@ -381,5 +381,5 @@ for (const matching of [false, true])
       reservePayment: pay(),
     });
     passEffectsStack(game);
-    expect(game.state.objects[hero.objectId]!.damage).toBe(matching ? 0 : 4);
+    expect(game.markedDamage(hero.objectId)).toBe(matching ? 0 : 4);
   });

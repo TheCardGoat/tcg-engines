@@ -39,9 +39,8 @@ describe("Carnwennan prevents retaliation only when used by its matching class",
         }
         expect(game.state.combat).toBeNull();
         expect(retaliationOffered).toBe(!(classBonus && useWeapon));
-        expect(game.state.objects[defender.objectId]!.damage).toBe(useWeapon ? 3 : 1);
+        expect(game.markedDamage(defender.objectId)).toBe(useWeapon ? 3 : 1);
         expect(game.state.objects[attacker.objectId]!.zone).toBe(useWeapon ? "field" : "graveyard");
-        if (useWeapon)
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(classBonus ? 0 : 1);
+        if (useWeapon) expect(game.markedDamage(attacker.objectId)).toBe(classBonus ? 0 : 1);
       });
 });

@@ -198,7 +198,7 @@ describe("Grand Archive die calculations", () => {
 
     expect(rolls).toHaveLength(2);
     expect(rolls.every((roll) => roll.sides === 6 && roll.results.length === 1)).toBe(true);
-    expect(fixture.runtime.state.objects[fixture.targetId]?.damage).toBe(
+    expect(fixture.runtime.state.objects[fixture.targetId]?.temporaryDamage).toBe(
       rolls.reduce((total, roll) => total + roll.total, 0),
     );
     expect(fixture.runtime.state.random.cursor).toBeGreaterThanOrEqual(2);

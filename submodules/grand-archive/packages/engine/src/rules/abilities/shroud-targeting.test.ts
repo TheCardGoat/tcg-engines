@@ -294,7 +294,7 @@ describe("Grand Archive shroud and True Sight targeting", () => {
       passCurrentOpportunity(runtime);
     }
     expect(runtime.state.combat).toBeNull();
-    expect(runtime.state.objects[fixture.defenderId]?.damage).toBe(0);
-    expect(runtime.state.objects[fixture.attackerId]?.damage).toBe(2);
+    expect(runtime.state.objects[fixture.defenderId]?.temporaryDamage).toBe(0);
+    expect(runtime.state.objects[fixture.attackerId]?.temporaryDamage).toBe(2);
   });
 });

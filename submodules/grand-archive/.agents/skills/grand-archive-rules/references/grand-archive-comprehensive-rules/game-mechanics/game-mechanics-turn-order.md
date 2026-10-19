@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order"
   relation: "current_index"
 ---
-
 # Game Mechanics - Turn Order
 
 #### General Rules:

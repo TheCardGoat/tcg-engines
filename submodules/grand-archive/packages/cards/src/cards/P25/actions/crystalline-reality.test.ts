@@ -133,9 +133,7 @@ describe("Crystalline Reality — Merlin Prepare changes exactly one mode to exa
             }
             p.declareAttack(hero, sight ? hidden[0]! : q.card(champion), { weaponIds: [] });
             game.resolveCombatWithoutRetaliation();
-            expect(
-              game.state.objects[(sight ? hidden[0]! : q.card(champion)).objectId]!.damage,
-            ).toBe(1);
+            expect(game.markedDamage((sight ? hidden[0]! : q.card(champion)).objectId)).toBe(1);
             advanceToMain(game, p.id, game.state.turn.number);
             const expired = game.state;
             expect(() => p.declareAttack(hero, hidden[1]!, { weaponIds: [] })).toThrow();

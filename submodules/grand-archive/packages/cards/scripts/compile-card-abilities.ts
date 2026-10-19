@@ -195,6 +195,25 @@ function rulesAmount(raw: string): GrandArchiveAmount | null {
 
 function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | null {
   const text = raw.trim().replace(/[.]$/u, "");
+  if (/^the killed ally['’]s power stat plus its life stat$/iu.test(text))
+    return {
+      kind: "calculate",
+      operator: "add",
+      operands: [
+        {
+          kind: "property",
+          subject: { kind: "event-recipient" },
+          property: "power",
+          basis: "last-known",
+        },
+        {
+          kind: "property",
+          subject: { kind: "event-recipient" },
+          property: "life",
+          basis: "last-known",
+        },
+      ],
+    };
   const multiplied = /^(two|three|four|five|six|seven|eight|nine|ten|\d+) times (.+)$/iu.exec(text);
   if (multiplied) {
     const factor = amount(multiplied[1]);
@@ -467,7 +486,17 @@ function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | n
       text,
     );
   if (zoneAggregateProperty) {
-    const filter = describedCardFilter(`${zoneAggregateProperty[4]} card`);
+    const descriptions = zoneAggregateProperty[4].split(/,\s*(?:and )?| and /iu);
+    const alternatives = descriptions.map((description) =>
+      describedCardFilter(`${description} card`),
+    );
+    const filter: GrandArchiveCardFilter | undefined = alternatives.every(
+      (item): item is GrandArchiveCardFilter => item !== undefined,
+    )
+      ? alternatives.length > 1
+        ? { kind: "any", filters: alternatives }
+        : alternatives[0]
+      : undefined;
     if (filter)
       return {
         kind: "aggregate-property",
@@ -2396,6 +2425,33 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
     };
   }
 
+  const singleGraveyard =
+    /^Banish (up to )?(one|two|three|four|five|\d+) cards? from a single graveyard$/iu.exec(text);
+  if (singleGraveyard)
+    return {
+      effect: {
+        kind: "banish",
+        player: "controller",
+        selection: {
+          id: "banished-cards",
+          kind: "choice",
+          declared: "resolution",
+          chooser: "controller",
+          count: {
+            kind: singleGraveyard[1] ? "up-to" : "exactly",
+            amount: amount(singleGraveyard[2]) ?? 0,
+          },
+          candidates: {
+            kind: "card",
+            zones: ["graveyard"],
+            relationship: "zone-of",
+            player: "each-player",
+          },
+          unique: true,
+          singleZoneOwner: true,
+        },
+      },
+    };
   const faceDown = / face down$/iu.test(text);
   const normalizedText = text.replace(/ face down$/iu, "");
   const selected =
@@ -2758,6 +2814,24 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
         filter,
       };
   }
+  if (/^that unit is an ally that entered the field this turn$/iu.test(text))
+    return {
+      kind: "all",
+      conditions: [
+        {
+          kind: "subject-matches",
+          subject: { kind: "bound", binding: "target-1" },
+          filter: { kind: "type", oneOf: ["ALLY"] },
+        },
+        {
+          kind: "history",
+          event: "object-entered-field",
+          window: "this-turn",
+          subject: { kind: "bound", binding: "target-1" },
+          minimum: 1,
+        },
+      ],
+    };
   const priorTargetIs = /^that (?:ally|unit|object|champion) is (?:a|an) (.+)$/iu.exec(text);
   if (priorTargetIs) {
     const filter = describedCardFilter(priorTargetIs[1]);
@@ -3047,7 +3121,37 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
         : /^your champion$/iu.test(rawSubject)
           ? ({ kind: "champion", player: "controller" } as const)
           : null;
-    const filter = describedCardFilter(combatRelation[3]);
+    const statThreshold = / with (\d+) (POWER|LIFE|level) or more$/iu.exec(combatRelation[3]);
+    const baseFilter = describedCardFilter(
+      combatRelation[3].replace(/ with \d+ (?:POWER|LIFE|level) or more$/iu, ""),
+    );
+    const filter: GrandArchiveCardFilter | undefined =
+      baseFilter && statThreshold
+        ? {
+            kind: "all",
+            filters: [
+              baseFilter,
+              {
+                kind: "numeric",
+                comparison: {
+                  left: {
+                    kind: "property",
+                    subject: { kind: "candidate" },
+                    property:
+                      statThreshold[2].toLowerCase() === "power"
+                        ? "power"
+                        : statThreshold[2].toLowerCase() === "life"
+                          ? "life"
+                          : "level",
+                    basis: "current",
+                  },
+                  operator: "gte",
+                  right: Number(statThreshold[1]),
+                },
+              },
+            ],
+          }
+        : baseFilter;
     if (subject && filter)
       return {
         kind: "combat-relation",
@@ -3329,24 +3433,6 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
         | "rested"
         | "distant",
     };
-  if (/^that unit is an ally that entered the field this turn$/iu.test(text))
-    return {
-      kind: "all",
-      conditions: [
-        {
-          kind: "subject-matches",
-          subject: { kind: "bound", binding: "target-1" },
-          filter: { kind: "type", oneOf: ["ALLY"] },
-        },
-        {
-          kind: "history",
-          event: "object-entered-field",
-          window: "this-turn",
-          subject: { kind: "bound", binding: "target-1" },
-          minimum: 1,
-        },
-      ],
-    };
   if (text === "you have agility")
     return { kind: "player-state", player: "controller", state: "agility" };
   const controllerStatus = /^you have the (.+?) status$/iu.exec(text);
@@ -3397,7 +3483,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
       };
     const enteredFromBanishment = /^(.+) entered from a banishment$/u.exec(text);
     if (enteredFromBanishment && refersToSource(enteredFromBanishment[1], sourceName))
-      return { kind: "activation-state", state: "entered-from-banishment" };
+      return { kind: "event-origin", zone: "banishment" };
     const notEphemeral = /^(.+) is not ephemeral$/u.exec(text);
     if (notEphemeral && refersToSource(notEphemeral[1], sourceName))
       return {
@@ -3801,7 +3887,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
       filter: { kind: "type", oneOf: ["CHAMPION"] },
       combatDamage: true,
       ...(championDealtCombatDamage[1]
-        ? { eventAmountMinimum: Number(championDealtCombatDamage[1]) }
+        ? { totalAmountMinimum: Number(championDealtCombatDamage[1]) }
         : {}),
       minimum: 1,
     };
@@ -4993,7 +5079,7 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
   }
 
   const selfBanished =
-    /^this card is banished from your (memory|graveyard)(?: to pay for a (?:memory|reserve) cost)?$/iu.exec(
+    /^this card is banished from your (memory|graveyard)(?: to pay for a (memory|reserve) cost)?$/iu.exec(
       clause,
     );
   if (selfBanished)
@@ -5002,6 +5088,16 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
       actor: "controller",
       subject: { kind: "source" },
       from: selfBanished[1].toLowerCase() === "memory" ? "memory" : "graveyard",
+      ...(selfBanished[2]
+        ? {
+            payment: {
+              costKind:
+                selfBanished[2].toLowerCase() === "memory"
+                  ? ("memory" as const)
+                  : ("reserve" as const),
+            },
+          }
+        : {}),
     };
   const passiveCardBanished =
     /^(?:a|an) (.+?) (?:card )?is banished from (your|an opponent['’]s) (memory|graveyard|hand)$/iu.exec(
@@ -5353,6 +5449,111 @@ export function compileInstruction(
     .replace(/\s+\(As you materialize,[^]*\)$/u, "")
     .replace(/\s+\(This effect lasts indefinitely\.\)$/u, "")
     .replace(/[.]$/u, "");
+
+  const removeAllThenDamage =
+    /^Remove all ([a-z-]+) counters from all units on the field\. Then deal X damage to each unit except for your champion, where X is the amount of counters removed this way$/iu.exec(
+      text,
+    );
+  if (removeAllThenDamage) {
+    const damage = compileInstruction(
+      "Deal X damage to each unit except for your champion",
+      sourceName,
+      pronounContext,
+    );
+    if (damage?.effect.kind === "deal-damage")
+      return {
+        effect: sequence([
+          {
+            kind: "remove-counter",
+            subject: {
+              kind: "each",
+              collection: {
+                zones: ["field"],
+                filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
+              },
+            },
+            counter: compileCounterKind(removeAllThenDamage[1]),
+            amount: { kind: "all" },
+            bindResultAs: `removed-${removeAllThenDamage[1]}`,
+          },
+          {
+            ...damage.effect,
+            amount: { kind: "binding", binding: `removed-${removeAllThenDamage[1]}` },
+          },
+        ]),
+      };
+  }
+  const memoryRefresh =
+    /^Banish up to (one|two|three|four|five|\d+) cards at random from your memory\. For each card banished this way, draw a card into your memory\. If that card is advanced element, (.+)$/iu.exec(
+      text,
+    );
+  if (memoryRefresh) {
+    const followup = compileInstruction(memoryRefresh[2], sourceName, pronounContext);
+    if (followup && !followup.targets?.length)
+      return {
+        effect: sequence([
+          {
+            kind: "choose-value",
+            trackAs: "memory-refresh-count",
+            selection: {
+              id: "memory-refresh-count",
+              kind: "choice",
+              declared: "resolution",
+              chooser: "controller",
+              count: { kind: "exactly", amount: 1 },
+              candidates: {
+                kind: "number",
+                minimum: 0,
+                maximum: {
+                  kind: "calculate",
+                  operator: "minimum",
+                  operands: [
+                    amount(memoryRefresh[1]) ?? 0,
+                    { kind: "count", collection: { zones: ["memory"], player: "controller" } },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            kind: "banish",
+            player: "controller",
+            selection: resolutionChoice({
+              id: "refreshed-memory-cards",
+              count: {
+                kind: "exactly",
+                amount: { kind: "binding", binding: "memory-refresh-count" },
+              },
+              zone: "memory",
+              method: "random",
+            }),
+          },
+          {
+            kind: "for-each",
+            collection: { binding: "refreshed-memory-cards" },
+            bindEachAs: "refreshed-memory-card",
+            effect: sequence([
+              {
+                kind: "draw",
+                player: "controller",
+                amount: 1,
+                to: "memory",
+                bindResultAs: "refreshed-drawn-card",
+              },
+              {
+                kind: "conditional",
+                condition: {
+                  kind: "subject-matches",
+                  subject: { kind: "bound", binding: "refreshed-drawn-card" },
+                  filter: { kind: "element-category", value: "advanced" },
+                },
+                then: followup.effect,
+              },
+            ]),
+          },
+        ]),
+      };
+  }
 
   const eventChampionsDamageAndRecover =
     /^Deal (\d+) damage to each champion that (?:opponent|player) controls and you recover (\d+)$/iu.exec(
@@ -7566,8 +7767,13 @@ export function compileInstruction(
           condition: { kind: "activation-state", state: "brewed" },
           then: {
             kind: "replacement",
+            consumptionScope: "source-game-event",
             event: {
               name: "damage-dealt",
+              recipient: {
+                kind: "event-object",
+                filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
+              },
               subject: {
                 kind: "event-object",
                 controller: "controller",
@@ -14472,6 +14678,9 @@ export function compileInstruction(
               : {}),
           },
           ...(condition ? { condition } : {}),
+          ...(/^one or more /iu.test(recipientAndCondition)
+            ? { consumptionScope: "source-game-event" as const }
+            : {}),
           ...(genericDamagePrevention[0].includes("only once")
             ? { limit: { count: 1, per: "turn" as const } }
             : {}),
@@ -15989,7 +16198,7 @@ export function compileInstruction(
             kind: "calculate",
             operator: "multiply",
             operands: [
-              { kind: "binding", binding: "removed-counters" },
+              { kind: "modified-ability-result-amount", metric: "counters-removed" },
               removeThenScaledDamage[4].toLowerCase() === "ten"
                 ? 10
                 : Number(removeThenScaledDamage[4]),
@@ -16040,7 +16249,8 @@ export function compileInstruction(
         kind: "rule-modification",
         mode: "forbid",
         action: "activate",
-        subject: { kind: "player", player: "each-player" },
+        activationKind: "card",
+        subject: { kind: "player", player: "opponent" },
         filter: {
           kind: "parity",
           property: "reserve-cost",
@@ -16058,22 +16268,18 @@ export function compileInstruction(
     const first = compileInstruction(destroyThen[1], sourceName, pronounContext);
     const followup = compileInstruction(destroyThen[2], sourceName, pronounContext);
     const boundDestroy = first ? bindDestroyedObject(first.effect, "destroyed-this-way") : null;
-    if (first && followup && boundDestroy)
+    if (first && followup && boundDestroy && first.targets?.length === 1)
       return {
         ...(first.targets ? { targets: first.targets } : {}),
         ...(first.variables || followup.variables
           ? { variables: [...(first.variables ?? []), ...(followup.variables ?? [])] }
           : {}),
         effect: {
-          kind: "sequence",
-          effects: [
-            boundDestroy,
-            {
-              kind: "conditional",
-              condition: { kind: "effect-succeeded", binding: "destroyed-this-way" },
-              then: followup.effect,
-            },
-          ],
+          kind: "reflexive",
+          action: boundDestroy,
+          requiredResult: { kind: "destroyed", binding: first.targets[0].id },
+          ...(followup.targets ? { targets: followup.targets } : {}),
+          consequence: followup.effect,
         },
       };
   }
@@ -16385,6 +16591,11 @@ export function compileInstruction(
           action: "prevent-damage",
           subject: { kind: "player", player: "each-player" },
           sourceFilter,
+          condition: {
+            kind: "player-relation",
+            player: { controllerOf: "eventSource" },
+            relation: "controller",
+          },
           duration: { kind: "this-turn" },
         },
       };
@@ -16889,6 +17100,31 @@ export function compileInstruction(
     if (attempted && continuation) {
       const targets = [...(attempted.targets ?? []), ...(continuation.targets ?? [])];
       if (new Set(targets.map((item) => item.id)).size !== targets.length) return null;
+      const redirectBinding = redirectedAllyChoice(attempted.effect);
+      if (
+        redirectBinding &&
+        attempted.effect.kind === "choose" &&
+        attempted.effect.effect &&
+        succeededThen[2].toLowerCase() === "if"
+      ) {
+        return {
+          effect: {
+            ...attempted.effect,
+            effect: sequence([
+              {
+                kind: "attempt",
+                effect: attempted.effect.effect,
+                bindSucceededAs: "prior-effect-succeeded",
+              },
+              {
+                kind: "conditional",
+                condition: { kind: "effect-succeeded", binding: "prior-effect-succeeded" },
+                then: bindEventSubjectToPriorTarget(continuation.effect, redirectBinding),
+              },
+            ]),
+          },
+        };
+      }
       return {
         ...(targets.length ? { targets } : {}),
         effect:
@@ -18144,14 +18380,22 @@ export function compileInstruction(
     };
 
   const retargetAttackToChosenControlled =
-    /^Change the target of an attack(?: that targets (your champion))? to (?:a|an) (.+?) you control$/iu.exec(
+    /^Change the target of an attack(?: that targets (.+?))? to (?:a|an) (.+?) you control$/iu.exec(
       text,
     );
-  if (retargetAttackToChosenControlled) {
+  if (
+    retargetAttackToChosenControlled &&
+    (!retargetAttackToChosenControlled[1] ||
+      retargetAttackToChosenControlled[1] === "your champion" ||
+      refersToSource(retargetAttackToChosenControlled[1], sourceName))
+  ) {
     const filter = describedCardFilter(retargetAttackToChosenControlled[2]);
     if (filter) {
       const selection = resolutionChoice({
-        id: "target-1",
+        id:
+          retargetAttackToChosenControlled[1] === "your champion"
+            ? "target-1"
+            : "chosen-redirect-ally",
         count: { kind: "exactly", amount: 1 },
         zone: "field",
         relationship: "controlled-by",
@@ -18174,7 +18418,10 @@ export function compileInstruction(
               condition: {
                 kind: "current-attack-target-matches",
                 controller: "controller",
-                filter: { kind: "type", oneOf: ["CHAMPION"] },
+                filter:
+                  retargetAttackToChosenControlled[1] === "your champion"
+                    ? { kind: "type", oneOf: ["CHAMPION"] }
+                    : { kind: "not", filter: { kind: "not-source" } },
               },
               then: retarget,
             }
@@ -18542,22 +18789,28 @@ export function compileInstruction(
           candidates: {
             kind: "stack-item",
             itemTypes: ["card-activation"],
-            activationFrom: [
-              negateFromZone[1].toLowerCase() === "material deck"
-                ? "material-deck"
-                : negateFromZone[1].toLowerCase() === "graveyard"
-                  ? "graveyard"
-                  : negateFromZone[1].toLowerCase() === "memory"
-                    ? "memory"
-                    : "banishment",
-            ],
           },
         },
       ],
       effect: {
-        kind: "negate",
-        subject: { kind: "bound", binding },
-        bindResultAs: "negated-stack-item",
+        kind: "conditional",
+        condition: {
+          kind: "bound-activation-origin",
+          binding,
+          zone:
+            negateFromZone[1].toLowerCase() === "material deck"
+              ? "material-deck"
+              : negateFromZone[1].toLowerCase() === "graveyard"
+                ? "graveyard"
+                : negateFromZone[1].toLowerCase() === "memory"
+                  ? "memory"
+                  : "banishment",
+        },
+        then: {
+          kind: "negate",
+          subject: { kind: "bound", binding },
+          bindResultAs: "negated-stack-item",
+        },
       },
     };
   }
@@ -18700,11 +18953,8 @@ export function compileInstruction(
   if (/^Negate all card activations you (?:don't|don’t) control$/iu.test(text))
     return {
       effect: {
-        kind: "negate",
-        subject: {
-          kind: "each",
-          collection: { zones: ["effects-stack"], player: "opponent" },
-        },
+        kind: "negate-matching-stack-items",
+        candidates: { kind: "stack-item", itemTypes: ["card-activation"], controller: "opponent" },
       },
     };
 
@@ -19977,6 +20227,51 @@ export function compileInstruction(
           },
         },
       };
+    }
+  }
+  const chosenCounter =
+    /^Put (?:a|an|one) ([a-z-]+) counter on (?:a|an) (.+?)( you control)?( and each object linked to it| and it gets \+(\d+)\s*(POWER|LIFE) until end of turn)?$/iu.exec(
+      text,
+    );
+  if (chosenCounter) {
+    const filter = describedCardFilter(chosenCounter[2]);
+    if (filter) {
+      const selection = resolutionChoice({
+        id: "chosen-counter-object",
+        count: { kind: "exactly", amount: 1 },
+        zone: "field",
+        filter,
+        player: chosenCounter[3] ? "controller" : "each-player",
+        ...(chosenCounter[3] ? { relationship: "controlled-by" as const } : {}),
+      });
+      const subject: GrandArchiveSubject = { kind: "bound", binding: selection.id };
+      const counter = compileCounterKind(chosenCounter[1]);
+      const effects: GrandArchiveEffect[] = [{ kind: "add-counter", subject, counter, amount: 1 }];
+      if (chosenCounter[4]?.includes("linked"))
+        effects.push({
+          kind: "add-counter",
+          subject: {
+            kind: "each",
+            collection: { zones: ["field"], host: subject, relationship: "linked-to" },
+          },
+          counter,
+          amount: 1,
+        });
+      else if (chosenCounter[5])
+        effects.push({
+          kind: "continuous",
+          subjects: subject,
+          affectedSet: "locked",
+          duration: { kind: "this-turn" },
+          layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
+          change: {
+            kind: "numeric",
+            property: chosenCounter[6].toUpperCase() === "POWER" ? "power" : "life",
+            operation: "add",
+            amount: Number(chosenCounter[5]),
+          },
+        });
+      return { effect: { kind: "choose", selection, effect: sequence(effects) } };
     }
   }
   const putCounter = /^Put (?:a|an|one) ([a-z-]+) counter on (your champion|.+)$/iu.exec(text);
@@ -23458,11 +23753,16 @@ export function compileInstruction(
   if (formerCountersToChampion && refersToSource(formerCountersToChampion[2], sourceName))
     return {
       effect: {
-        kind: "move-counter",
-        from: { kind: "event-subject" },
-        to: { kind: "champion", player: "controller" },
-        counter: { named: formerCountersToChampion[1].toLowerCase() },
-        amount: { kind: "all" },
+        kind: "add-counter",
+        subject: { kind: "champion", player: "controller" },
+        counter: compileCounterKind(formerCountersToChampion[1]),
+        amount: {
+          kind: "counter-count",
+          subject: { kind: "source" },
+          counter: compileCounterKind(formerCountersToChampion[1]),
+          basis: "last-known",
+          missing: "zero",
+        },
       },
     };
   const formerCountersToTarget =
@@ -23477,11 +23777,16 @@ export function compileInstruction(
       return {
         targets: [declaration],
         effect: {
-          kind: "move-counter",
-          from: { kind: "event-source" },
-          to: { kind: "bound", binding },
-          counter: { named: formerCountersToTarget[1].toLowerCase() },
-          amount: { kind: "all" },
+          kind: "add-counter",
+          subject: { kind: "bound", binding },
+          counter: compileCounterKind(formerCountersToTarget[1]),
+          amount: {
+            kind: "counter-count",
+            subject: { kind: "source" },
+            counter: compileCounterKind(formerCountersToTarget[1]),
+            basis: "last-known",
+            missing: "zero",
+          },
         },
       };
   }
@@ -23502,11 +23807,16 @@ export function compileInstruction(
           kind: "choose",
           selection,
           effect: {
-            kind: "move-counter",
-            from: { kind: "event-source" },
-            to: { kind: "bound", binding: selection.id },
-            counter: { named: formerCountersToChosen[1].toLowerCase() },
-            amount: { kind: "all" },
+            kind: "add-counter",
+            subject: { kind: "bound", binding: selection.id },
+            counter: compileCounterKind(formerCountersToChosen[1]),
+            amount: {
+              kind: "counter-count",
+              subject: { kind: "source" },
+              counter: compileCounterKind(formerCountersToChosen[1]),
+              basis: "last-known",
+              missing: "zero",
+            },
           },
         },
       };
@@ -25726,7 +26036,14 @@ function compileCascade(
     .entries()) {
     const mode = /^(.+?)[—-]\s*([^]*)$/u.exec(printedMode);
     if (!mode) return null;
-    const counts = [...mode[1].matchAll(/\d+/gu)].map((match) => Number(match[0]));
+    const range = /^(\d+) to (\d+)$/u.exec(mode[1].trim());
+    if (range && (Number(range[2]) < Number(range[1]) || Number(range[2]) > 1000)) return null;
+    const counts = range
+      ? Array.from(
+          { length: Number(range[2]) - Number(range[1]) + 1 },
+          (_, offset) => Number(range[1]) + offset,
+        )
+      : [...mode[1].matchAll(/\d+/gu)].map((match) => Number(match[0]));
     if (!counts.length || counts.some((count) => !Number.isSafeInteger(count) || count < 1))
       return null;
     const peeled = peelRestrictions(mode[2]);
@@ -32890,8 +33207,18 @@ function compileParagraph(
           players: { binding: players.id },
           bindEachAs: "affected-player",
           effect: sequence([
-            { kind: "banish", player: { binding: "affected-player" }, selection: cards },
-            { kind: "draw", player: { binding: "affected-player" }, amount: 2, to: "memory" },
+            {
+              kind: "banish",
+              player: { binding: "affected-player" },
+              selection: cards,
+              bindResultAs: "actually-banished-memory-cards",
+            },
+            {
+              kind: "draw",
+              player: { binding: "affected-player" },
+              amount: { kind: "count", collection: { binding: "actually-banished-memory-cards" } },
+              to: "memory",
+            },
           ]),
         },
         { kind: "banish-object", subject: { kind: "source" } },
@@ -42734,6 +43061,7 @@ function compileParagraph(
               name: "champion-leveled-up",
               actor: "controller",
               previousObject: { kind: "source" },
+              sameBaseLevel: true,
             },
           },
           effect: { kind: "draw", player: "controller", amount: 2 },
@@ -44518,7 +44846,7 @@ function compileParagraph(
         {
           kind: "rule-modification",
           mode: "allow",
-          action: "attack",
+          action: "use-weapon-for-attack",
           subject: {
             kind: "each",
             collection: {
@@ -44852,7 +45180,8 @@ function compileParagraph(
     countedSourceStats &&
     refersToSource(countedSourceStats[1], sourceName) &&
     // Independently scaled second stats belong to the exact dual-stat grammar below.
-    !/ and \+\d+\s*(?:POWER|LIFE|level) for each /iu.test(countedSourceStats[6])
+    !/ and \+\d+\s*(?:POWER|LIFE|level) for each /iu.test(countedSourceStats[6]) &&
+    !/^of up to /iu.test(countedSourceStats[6])
   ) {
     const count = perDescriptorAmount(countedSourceStats[6], sourceName);
     if (count) {
@@ -47631,7 +47960,9 @@ function compileParagraph(
         ...(restrictions.length ? { restrictions } : {}),
         ...(/in your material deck/iu.test(phaseInstructionText)
           ? { functionalZones: ["material-deck"] as const }
-          : {}),
+          : /if this card is in your banishment/iu.test(phaseInstructionText)
+            ? { functionalZones: ["banishment"] as const }
+            : {}),
         effect: instruction.effect,
       };
     }
@@ -47941,9 +48272,21 @@ function compileParagraph(
   if (wheneverTrigger) {
     const event = compileEventClause(wheneverTrigger[1], sourceName);
     const selfActivationZones =
-      wheneverTrigger[1].toLowerCase() === "you activate this card"
-        ? { functionalZones: ["effects-stack"] as const }
-        : {};
+      event &&
+      "name" in event &&
+      event.name === "card-banished" &&
+      event.subject?.kind === "source" &&
+      event.from
+        ? { functionalZones: [event.from] }
+        : event &&
+            "name" in event &&
+            event.name === "card-moved" &&
+            event.subject?.kind === "source" &&
+            event.to === "inner-lineage"
+          ? { functionalZones: ["inner-lineage"] as const }
+          : wheneverTrigger[1].toLowerCase() === "you activate this card"
+            ? { functionalZones: ["effects-stack"] as const }
+            : {};
     const triggerLimit = /\. Trigger this ability only (once|twice)( per turn)?\.?$/u.exec(
       wheneverTrigger[2],
     );
@@ -49500,6 +49843,7 @@ function compileParagraph(
       kind: "static",
       staticKind: "effects",
       text: printedText,
+      ...(restrictions.length ? { restrictions } : {}),
       effects: [
         {
           kind: "rule-modification",
@@ -50099,7 +50443,7 @@ function compileParagraph(
         kind: "ability-activation-count",
         ability: "this",
         scope: "source-instance",
-        window: "this-turn",
+        window: "game",
         operator: "eq",
         value: 0,
       },
@@ -50207,7 +50551,7 @@ function compileParagraph(
         kind: "ability-activation-count",
         ability: "this",
         scope: "source-instance",
-        window: "this-turn",
+        window: "game",
         operator: "eq",
         value: 0,
       },

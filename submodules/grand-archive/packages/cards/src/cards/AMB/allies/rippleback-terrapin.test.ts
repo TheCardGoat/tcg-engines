@@ -58,7 +58,7 @@ describe("Rippleback Terrapin — Class Bonus Spellshroud", () => {
       } else {
         caster.activate(focalIntensity, payment);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
       }
     });
   }

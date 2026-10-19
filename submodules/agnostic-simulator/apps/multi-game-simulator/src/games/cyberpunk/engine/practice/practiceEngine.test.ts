@@ -25,6 +25,8 @@ describe("practice first-player setup", () => {
       { args: { goFirst: false } },
       createPlayerId("p1"),
     );
+    expect(result.success).toBe(true);
+    if (!result.success) throw new Error("First-player choice failed");
     expect(engine.getState().G.players.p2?.firstPlayer).toBe(true);
     expect(engine.getState().G.turnMetadata.pendingChoice?.type).not.toBe("chooseFirstPlayer");
     expect(result.moveLogs).toContainEqual(
@@ -45,6 +47,8 @@ describe("practice first-player setup", () => {
       createPlayerId("p2"),
     );
 
+    expect(result.success).toBe(true);
+    if (!result.success) throw new Error("First-player choice failed");
     expect(engine.getState().G.players.p2?.firstPlayer).toBe(true);
     expect(result.moveLogs).toContainEqual(
       expect.objectContaining({

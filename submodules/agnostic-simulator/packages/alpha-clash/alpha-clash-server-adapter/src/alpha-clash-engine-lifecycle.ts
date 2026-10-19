@@ -10,12 +10,14 @@ import type {
 } from "@tcg/shared/game-engine";
 import { AlphaClashServerEngine } from "./alpha-clash-server-engine";
 import { readAlphaClashUndoState } from "./undo";
+import { alphaClashReleaseDeckIssue } from "./release-policy";
 
 const SEAT_ORDER: readonly PlayerId[] = ["player-one", "player-two"];
 
-/** The deck section holding the Contender (rule 100.2a); everything else is main. */
+/** Game-owned section ids used by deck admission and setup. */
 export const ALPHA_CLASH_CONTENDER_SECTION_ID = "contender";
 export const ALPHA_CLASH_MAIN_SECTION_ID = "main";
+export const ALPHA_CLASH_SIDEBOARD_SECTION_ID = "sideboard";
 
 interface ClassifiedDeck {
   contenderId: string | undefined;
@@ -30,30 +32,25 @@ interface ClassifiedDeck {
  */
 function classifyDeck(instanceIds: readonly string[], cardsMaps: CardsMaps): ClassifiedDeck {
   let contenderId: string | undefined;
-  const sectionMain: string[] = [];
-  const typeMain: string[] = [];
-  let sawSections = false;
+  const mainDeck: string[] = [];
 
   for (const instanceId of instanceIds) {
     const cardId = cardsMaps.cardInstances[instanceId];
     if (!cardId) continue;
     const section = cardsMaps.instanceSections?.[instanceId];
+    if (section === ALPHA_CLASH_SIDEBOARD_SECTION_ID) continue;
     const card = getCard(cardId);
-    if (section) {
-      sawSections = true;
-      if (section === ALPHA_CLASH_CONTENDER_SECTION_ID) {
-        contenderId ??= cardId;
-        continue;
-      }
-      sectionMain.push(cardId);
-    } else if (card.cardType === "contender") {
+    if (
+      section === ALPHA_CLASH_CONTENDER_SECTION_ID ||
+      (!section && card.cardType === "contender")
+    ) {
       contenderId ??= cardId;
     } else {
-      typeMain.push(cardId);
+      mainDeck.push(cardId);
     }
   }
 
-  return { contenderId, mainDeck: sawSections ? sectionMain : typeMain };
+  return { contenderId, mainDeck };
 }
 
 export async function alphaClashCreateServerEngine(
@@ -76,6 +73,15 @@ export async function alphaClashCreateServerEngine(
     const playerId = playerIds[index];
     const seat = SEAT_ORDER[index];
     const instanceIds = input.cardsMaps.owners[playerId] ?? [];
+    const admissionIssue = alphaClashReleaseDeckIssue(
+      instanceIds.map((instanceId) => ({
+        cardId: input.cardsMaps.cardInstances[instanceId] ?? "",
+        quantity: 1,
+        sectionId: input.cardsMaps.instanceSections?.[instanceId],
+      })),
+    );
+    if (admissionIssue)
+      throw new Error(`Alpha Clash release admission for ${playerId}: ${admissionIssue}`);
     const { contenderId, mainDeck } = classifyDeck(instanceIds, input.cardsMaps);
     if (!contenderId) {
       throw new Error(`Alpha Clash deck for ${playerId} does not contain a Contender card.`);
@@ -83,22 +89,27 @@ export async function alphaClashCreateServerEngine(
     players[seat] = { name: playerId, deck: { contenderId, deckIds: mainDeck } };
   }
 
+  const firstPlayerId = input.firstTurnPlayerId ?? input.firstPlayerChooserId;
+  if (firstPlayerId !== undefined && !playerIds.includes(firstPlayerId)) {
+    throw new Error("Alpha Clash starting player must be one of the match players.");
+  }
+  const firstPlayer: PlayerId | undefined = firstPlayerId
+    ? firstPlayerId === input.player2Id
+      ? "player-two"
+      : "player-one"
+    : undefined;
   const options: CreateMatchOptions = {
     id: input.matchID ?? input.gameID ?? `alpha-clash-${crypto.randomUUID()}`,
     ...(input.seed !== undefined ? { seed: numericSeed(input.seed) } : {}),
-    ...(input.firstPlayerChooserId
-      ? {
-          firstPlayer:
-            input.firstPlayerChooserId === input.player2Id
-              ? "player-two"
-              : ("player-one" as PlayerId),
-        }
-      : {}),
+    ...(firstPlayer ? { firstPlayer } : {}),
     players,
     validateDeck: true,
   };
 
   const state = createInitialState(options);
+  // Opening draw logs are not accepted commands. New hosted games begin at
+  // the platform's version zero, then advance once per accepted command.
+  state.stateID = 0;
   return new AlphaClashServerEngine(state, {
     [input.player1Id]: "player-one",
     [input.player2Id]: "player-two",
@@ -113,9 +124,8 @@ export function alphaClashSerializeEngine(
   const state = structuredClone(alphaClash.state) as unknown as MatchState;
   return {
     gameSlug: "alpha-clash",
-    // Platform persistence derives the CAS version from the snapshot itself
-    // (stateVersionFromSnapshot); the raw MatchState carries no version, so
-    // the engine's moveLog-count version is embedded here (naruto pattern).
+    // Persist the accepted-command version explicitly, including version-only
+    // envelopes supported by the platform's stateVersionFromSnapshot reader.
     state: { ...state, stateVersion: alphaClash.getStateID() },
     historyLength: alphaClash.state.moveLog.length,
     cardsMaps,
@@ -131,14 +141,24 @@ export async function alphaClashRestoreEngine(
   snapshot: EngineSnapshot,
   context: ServerEngineRestoreContext,
 ): Promise<ServerGameEngine> {
-  const { stateVersion: _persistedVersion, ...rawState } = snapshot.state as MatchState & {
-    stateVersion?: number;
+  const { stateVersion: persistedVersion, ...state } = snapshot.state as MatchState & {
+    stateVersion?: unknown;
   };
-  return new AlphaClashServerEngine(rawState as MatchState, {
-    [context.player1Id]: "player-one",
-    [context.player2Id]: "player-two",
-  }, readAlphaClashUndoState(snapshot.metadata, rawState as MatchState,
-    typeof _persistedVersion === "number" ? _persistedVersion : rawState.stateID ?? rawState.moveLog.length));
+  // Match platform precedence. Logs are a legacy fallback only when neither
+  // accepted-command version field is present; one command can emit many logs.
+  const version =
+    state.stateID ?? (persistedVersion !== undefined ? persistedVersion : state.moveLog.length);
+  if (typeof version !== "number" || !Number.isSafeInteger(version) || version < 0)
+    throw new Error("Invalid Alpha Clash snapshot state version.");
+  state.stateID = version;
+  return new AlphaClashServerEngine(
+    state,
+    {
+      [context.player1Id]: "player-one",
+      [context.player2Id]: "player-two",
+    },
+    readAlphaClashUndoState(snapshot.metadata, state, version),
+  );
 }
 
 export function alphaClashExtractCardsMapsFromSnapshot(snapshot: EngineSnapshot): CardsMaps {

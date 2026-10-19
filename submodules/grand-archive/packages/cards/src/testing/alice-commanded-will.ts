@@ -96,7 +96,7 @@ export function proveAliceCommandedWill(
               }
             }
             expect(offered).toBe(base > 0);
-            expect(game.state.objects[attacker.objectId]!.damage).toBe(base);
+            expect(game.markedDamage(attacker.objectId)).toBe(base);
             expect(power(source.objectId)).toBe(base);
             return;
           }
@@ -130,7 +130,7 @@ export function proveAliceCommandedWill(
           expect(power(source.objectId)).toBe(base + extra);
           expect(power(other.objectId)).toBe(grandArchiveTestFace(card).stats.power);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[foe.objectId]!.damage).toBe(
+          expect(game.markedDamage(foe.objectId)).toBe(
             mode === "other-command" ? 3 : base + extra + (mode === "command" ? 2 : 0),
           );
           expect(power(source.objectId)).toBe(base);

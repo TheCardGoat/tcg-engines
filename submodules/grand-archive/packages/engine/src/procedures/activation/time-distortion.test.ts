@@ -123,68 +123,72 @@ function passCycle(runtime: GrandArchiveMatchRuntime) {
 }
 
 describe("Grand Archive Chronowarp turn structure", () => {
-  it("persists time distortion and adds a post-main materialize phase", () => {
-    const fixture = setup();
-    const distorted = distortTime(fixture);
-    expect(distorted.events).toMatchObject([
-      { type: "game-state-changed", state: "time-distorted", value: true },
-    ]);
-    const restored = restoreGrandArchiveMatchSnapshot(
-      fixture.program,
-      JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(distorted.state))),
-    );
-    expect(restored.gameStates["time-distorted"]).toBe(true);
-    expect(
-      projectGrandArchiveViewerState(fixture.program, restored, fixture.p1).gameStates,
-    ).toEqual({
-      "time-distorted": true,
-    });
+  it.each([1, 2])(
+    "persists time distortion and adds exactly one post-main materialize phase after %s effects",
+    (effects) => {
+      const fixture = setup();
+      const prior = effects === 2 ? distortTime(fixture).state : fixture.state;
+      const distorted = distortTime(fixture, prior);
+      expect(distorted.events).toMatchObject(
+        effects === 2 ? [] : [{ type: "game-state-changed", state: "time-distorted", value: true }],
+      );
+      const restored = restoreGrandArchiveMatchSnapshot(
+        fixture.program,
+        JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(distorted.state))),
+      );
+      expect(restored.gameStates["time-distorted"]).toBe(true);
+      expect(
+        projectGrandArchiveViewerState(fixture.program, restored, fixture.p1).gameStates,
+      ).toEqual({
+        "time-distorted": true,
+      });
 
-    const runtime = new GrandArchiveMatchRuntime(fixture.program, restored);
-    passCycle(runtime);
-    expect(runtime.state.turn).toMatchObject({
-      playerId: fixture.p1,
-      phase: "materialize",
-      materializeKind: "additional",
-      materializeChoicePending: true,
-    });
-    expect(runtime.state.opportunity).toBeNull();
-    expect(listGrandArchiveLegalMoves(runtime.state, fixture.p1)).toEqual(
-      expect.arrayContaining(["materialize", "skip-materialization"]),
-    );
+      const runtime = new GrandArchiveMatchRuntime(fixture.program, restored);
+      passCycle(runtime);
+      expect(runtime.state.turn).toMatchObject({
+        playerId: fixture.p1,
+        phase: "materialize",
+        materializeKind: "additional",
+        materializeChoicePending: true,
+      });
+      expect(runtime.state.opportunity).toBeNull();
+      expect(listGrandArchiveLegalMoves(runtime.state, fixture.p1)).toEqual(
+        expect.arrayContaining(["materialize", "skip-materialization"]),
+      );
 
-    expect(runtime.execute({ move: "skip-materialization" }, { playerId: fixture.p1 }).ok).toBe(
-      true,
-    );
-    expect(runtime.state.turn).toMatchObject({
-      phase: "end",
-      materializeKind: null,
-      materializeChoicePending: false,
-    });
-    expect(runtime.state.opportunity?.holderId).toBe(fixture.p1);
+      expect(runtime.execute({ move: "skip-materialization" }, { playerId: fixture.p1 }).ok).toBe(
+        true,
+      );
+      expect(runtime.state.turn).toMatchObject({
+        phase: "end",
+        materializeKind: null,
+        materializeChoicePending: false,
+      });
+      expect(runtime.state.opportunity?.holderId).toBe(fixture.p1);
 
-    const nextTurn = passCycle(runtime);
-    expect(runtime.state.turn).toMatchObject({
-      number: 2,
-      playerId: fixture.p2,
-      phase: "recollection",
-      materializeKind: null,
-      materializeChoicePending: false,
-    });
-    expect(runtime.state.opportunity?.holderId).toBe(fixture.p2);
-    expect(
-      nextTurn.events.some(
-        (event) => event.type === "phase-changed" && event.phase === "materialize",
-      ),
-    ).toBe(false);
-    expect(nextTurn.events).toContainEqual(
-      expect.objectContaining({
-        type: "phase-changed",
+      const nextTurn = passCycle(runtime);
+      expect(runtime.state.turn).toMatchObject({
+        number: 2,
+        playerId: fixture.p2,
         phase: "recollection",
-        cause: { kind: "rule", rule: "time-distorted-skips-regular-materialize-phase" },
-      }),
-    );
-  });
+        materializeKind: null,
+        materializeChoicePending: false,
+      });
+      expect(runtime.state.opportunity?.holderId).toBe(fixture.p2);
+      expect(
+        nextTurn.events.some(
+          (event) => event.type === "phase-changed" && event.phase === "materialize",
+        ),
+      ).toBe(false);
+      expect(nextTurn.events).toContainEqual(
+        expect.objectContaining({
+          type: "phase-changed",
+          phase: "recollection",
+          cause: { kind: "rule", rule: "time-distorted-skips-regular-materialize-phase" },
+        }),
+      );
+    },
+  );
 
   it("continues to the end phase after resolving an additional materialization", () => {
     const fixture = setup();

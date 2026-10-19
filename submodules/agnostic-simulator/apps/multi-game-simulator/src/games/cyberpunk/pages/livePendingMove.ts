@@ -14,6 +14,7 @@ export interface PendingOptimisticMove {
 }
 
 export const PENDING_MOVE_SYNC_RETRY_MS = 3_000;
+export const PENDING_MOVE_SYNC_MAX_ATTEMPTS = 3;
 
 export function matchesPendingCorrelation(
   pending: PendingOptimisticMove,
@@ -47,7 +48,7 @@ export function shouldClearPendingAfterAuthoritativeState(
   if (
     pending.awaitingRecoverySync &&
     message.type === "state_sync" &&
-    message.interactionView === undefined
+    (message.interactionView === undefined || message.interactionView?.projectionFailure)
   ) {
     // Recovery snapshots must replace the rejected controls. This guard must
     // run before the newer-version fast path because a projection failure can
@@ -98,18 +99,28 @@ export function startPendingMoveStateSyncWatchdog({
   readStateVersion,
   requestStateSync,
   retryMs = PENDING_MOVE_SYNC_RETRY_MS,
+  onExhausted,
 }: {
   correlationId: string;
   readPending: () => PendingOptimisticMove | null;
   readStateVersion: () => number | null;
   requestStateSync: (version: number) => void;
   retryMs?: number;
+  onExhausted?: () => void;
 }): () => void {
+  let attempts = 0;
   const timer = setInterval(() => {
     if (readPending()?.correlationId !== correlationId) {
+      clearInterval(timer);
+      return;
+    }
+    if (attempts >= PENDING_MOVE_SYNC_MAX_ATTEMPTS) {
+      clearInterval(timer);
+      onExhausted?.();
       return;
     }
     const version = readStateVersion();
+    attempts += 1;
     if (version !== null) {
       requestStateSync(version);
     }

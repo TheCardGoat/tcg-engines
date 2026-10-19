@@ -158,7 +158,7 @@ describe("Guan Yu, Prime Exemplar — Ambush and Retort 2", () => {
     expect(retaliated).toBe(true);
     expect(game.state.combat).toBeNull();
     expect(opponent.zone("graveyard")).toContainEqual(attacker);
-    expect(game.state.objects[guanYu.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(guanYu.objectId)).toBe(2);
   });
 
   it("lets Ambush retaliate while another unit is defending", () => {

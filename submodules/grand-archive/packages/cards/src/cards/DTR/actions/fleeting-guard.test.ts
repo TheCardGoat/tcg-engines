@@ -106,19 +106,19 @@ describe("Fleeting Guard — repeated prevention from controlled ephemeral objec
           };
           for (let n = 1; n <= 2; n++) {
             burn(target.objectId);
-            expect(game.state.objects[target.objectId]!.damage).toBe(n * (2 - count));
+            expect(game.markedDamage(target.objectId)).toBe(n * (2 - count));
           }
           if (!own) {
             p.declareAttack(p.card(giantTortoise), target);
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[target.objectId]!.damage).toBe(2 * (2 - count));
+            expect(game.markedDamage(target.objectId)).toBe(2 * (2 - count));
           }
           const otherChampion = (own ? q : p).card(champion);
           burn(otherChampion.objectId);
-          expect(game.state.objects[otherChampion.objectId]!.damage).toBe(3);
+          expect(game.markedDamage(otherChampion.objectId)).toBe(3);
           advanceToMain(game, q.id);
           q.pass();
           burn(target.objectId);
-          expect(game.state.objects[target.objectId]!.damage).toBe(ally ? 3 : 2 * (2 - count) + 3);
+          expect(game.markedDamage(target.objectId)).toBe(ally ? 3 : 2 * (2 - count) + 3);
         });
 });

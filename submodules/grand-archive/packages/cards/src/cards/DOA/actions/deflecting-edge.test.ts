@@ -99,15 +99,15 @@ describe("Deflecting Edge's Sword discount and combat-only three-damage buffer",
             targets: { "target-1": [target.objectId] },
           });
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
           q.declareAttack(giantTortoise, other);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[other.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(other.objectId)).toBe(1);
           q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(expired ? 2 : 1);
+          expect(game.markedDamage(target.objectId)).toBe(expired ? 2 : 1);
           q.declareAttack(blitzMage, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(expired ? 5 : 2);
+          expect(game.markedDamage(target.objectId)).toBe(expired ? 5 : 2);
         });
 });

@@ -61,6 +61,7 @@ export const GRAND_ARCHIVE_EVENT_LOG_POLICIES = {
   "combat-retaliators-ordered": "omit",
   "combat-defender-redirected": "omit",
   "combat-ended": "log",
+  "combat-cleanup-started": "omit",
   "phase-end-requested": "omit",
   "turn-end-requested": "omit",
   "termination-cleared": "omit",

@@ -8,7 +8,7 @@ export type {
   TakeAutomatedActionWithFallbackResult,
 } from "./types.ts";
 
-export { takeAutomatedActionWithFallback } from "./planner.ts";
+export { takeAutomatedActionWithFallback, rankGundamBotCandidates } from "./planner.ts";
 
 export type {
   PlayMatchAction,

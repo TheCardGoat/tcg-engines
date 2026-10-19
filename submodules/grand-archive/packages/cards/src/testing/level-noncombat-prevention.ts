@@ -102,10 +102,10 @@ export function proveLevelNoncombatPrevention(
                 marked >= (other ? 6 : life) ? "graveyard" : "field",
               );
               if (marked < (other ? 6 : life))
-                expect(game.state.objects[target.objectId]!.damage).toBe(marked);
+                expect(game.markedDamage(target.objectId)).toBe(marked);
             }
             if (other) {
-              expect(game.state.objects[source.objectId]!.damage).toBe(0);
+              expect(game.markedDamage(source.objectId)).toBe(0);
               expect(game.state.objects[source.objectId]!.zone).toBe("field");
             }
           });
@@ -170,7 +170,7 @@ export function proveTemporaryLevelPrevention(
         passEffectsStack(game);
       };
       cast(0);
-      expect(game.state.objects[source.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(source.objectId)).toBe(0);
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
       advanceToMain(game, q.id);
       cast(1);

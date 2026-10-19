@@ -168,8 +168,15 @@ export function PaymentSelectionProvider({ children }: { readonly children: Reac
       const cost = costForAction(action);
       // The engine's Eddie total covers the numeric pool plus every ready
       // Legend that can pay (face-up with a Sell Tag and hidden ones). A cost
-      // using that full pool leaves no meaningful choice, so skip selection.
-      if (cost === 0 || cost === availableEddies(engine.matchState, playerId)) {
+      // using that full pool leaves no Eddie choice — but a SPEND cost still
+      // commits specific cards, so manual mode surfaces it for confirmation
+      // (e.g. a Legend spending itself to swap Gigs) instead of paying silently.
+      const spendsCommittedCards =
+        action.type === "activateAbility" &&
+        (reservedLegendIdsForAction(action).size > 0 ||
+          abilitySelfSpendCommittedId(action, engine.matchState) !== null);
+      const eddiesLeaveAChoice = cost > 0 && cost !== availableEddies(engine.matchState, playerId);
+      if (!eddiesLeaveAChoice && !spendsCommittedCards) {
         const result = engine.dispatch(action);
         return result.success;
       }
@@ -177,7 +184,7 @@ export function PaymentSelectionProvider({ children }: { readonly children: Reac
       setPendingAction(action);
       return true;
     },
-    [choosePaymentSources, costForAction, engine, playerId],
+    [choosePaymentSources, costForAction, engine, playerId, reservedLegendIdsForAction],
   );
 
   const dismiss = useCallback(() => {
@@ -208,6 +215,21 @@ export function PaymentSelectionProvider({ children }: { readonly children: Reac
   );
 
   const selectedPaymentSourceIds = useMemo(() => new Set(selectedSourceIds), [selectedSourceIds]);
+
+  const pendingSpendLegendNames = useMemo(() => {
+    if (!pendingAction) return [];
+    const committedIds = new Set<string>(
+      [...reservedLegendIdsForAction(pendingAction)].map((id) => id as string),
+    );
+    // A SPEND-self/host cost commits the source (or a fielded Legend's host)
+    // even when it is no longer an Eddie resource in the legend area.
+    const selfSpendId = abilitySelfSpendCommittedId(pendingAction, engine.matchState);
+    if (selfSpendId !== null) committedIds.add(selfSpendId);
+    return [...committedIds].flatMap((id) => {
+      const card = engine.matchState.G.cardIndex[id];
+      return card ? [defOf(card).displayName] : [];
+    });
+  }, [engine.matchState, pendingAction, reservedLegendIdsForAction]);
 
   const payAutomatically = useCallback(() => {
     if (!pendingAction) return;
@@ -269,6 +291,7 @@ export function PaymentSelectionProvider({ children }: { readonly children: Reac
       paymentCost,
       selectedPaymentCount: selectedSourceIds.length,
       paymentCardId,
+      pendingSpendLegendNames,
       eligiblePaymentSourceIds,
       selectedPaymentSourceIds,
       payAutomatically,
@@ -280,8 +303,10 @@ export function PaymentSelectionProvider({ children }: { readonly children: Reac
       dismiss,
       dispatchCostedAction,
       eligiblePaymentSourceIds,
+      paymentCardId,
       paymentCost,
       pendingAction,
+      pendingSpendLegendNames,
       selectedPaymentSourceIds,
       payAutomatically,
       selectedSourceIds.length,
@@ -303,4 +328,29 @@ export function usePaymentSelection(): PaymentSelectionContextValue {
 /** Non-throwing variant for card surfaces that may render outside the board tree. */
 export function usePaymentSelectionOptional(): PaymentSelectionContextValue | null {
   return useContext(PaymentSelectionContext);
+}
+
+type EngineHandle = ReturnType<typeof useEngine>;
+
+/**
+ * The card a SPEND-self/host activation cost unconditionally commits — the
+ * ability's source, or a Gear's host. Display and confirmation only; legality
+ * stays with the engine's affordability checks.
+ */
+function abilitySelfSpendCommittedId(
+  action: PaymentAction,
+  matchState: EngineHandle["matchState"],
+): string | null {
+  if (action.type !== "activateAbility") return null;
+  const source = matchState.G.cardIndex[action.cardId];
+  const ability = source ? defOf(source).abilities[action.abilityIndex] : undefined;
+  if (!ability) return null;
+  for (const cost of ability.costs ?? []) {
+    if (cost.cost !== "spend") continue;
+    if (cost.target.selector === "self") return String(action.cardId);
+    if (cost.target.selector === "host" && source?.meta.attachedToId) {
+      return String(source.meta.attachedToId);
+    }
+  }
+  return null;
 }

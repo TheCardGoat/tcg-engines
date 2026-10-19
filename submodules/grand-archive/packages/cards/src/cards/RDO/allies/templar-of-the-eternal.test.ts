@@ -205,7 +205,7 @@ describe("Templar of the Eternal — regalia payment and temporary Spellshroud",
             expect(game.state).toEqual(before);
             if (pending) {
               passEffectsStack(game);
-              expect(game.state.objects[source.objectId]!.damage).toBe(2);
+              expect(game.markedDamage(source.objectId)).toBe(2);
             }
             return;
           }
@@ -215,7 +215,7 @@ describe("Templar of the Eternal — regalia payment and temporary Spellshroud",
           expect(game.state.objects[source.objectId]!.counters.buff ?? 0).toBe(0);
           passEffectsStack(game);
           expect(game.state.objects[source.objectId]!.counters.buff).toBe(1);
-          expect(game.state.objects[source.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(source.objectId)).toBe(0);
           if (!pending) p.pass();
           const protectedState = game.state;
           expect(spell).toThrow();
@@ -224,7 +224,7 @@ describe("Templar of the Eternal — regalia payment and temporary Spellshroud",
           if (pending) p.pass();
           spell();
           passEffectsStack(game);
-          expect(game.state.objects[source.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(source.objectId)).toBe(2);
           expect(game.state.objects[source.objectId]!.counters.buff).toBe(1);
           expect(game.state.objects[source.objectId]!.zone).toBe("field");
           expect(game.state.objects[sword.objectId]!.zone).toBe("material-deck");

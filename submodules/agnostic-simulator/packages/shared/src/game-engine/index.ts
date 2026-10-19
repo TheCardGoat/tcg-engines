@@ -1,4 +1,5 @@
 export { UNDO_CHECKPOINT_LIMIT, capUndoCheckpoints } from "./undo-checkpoints.js";
+export { GameRuntimeError } from "./runtime-error.js";
 
 export type {
   TimeControlChessConfig,

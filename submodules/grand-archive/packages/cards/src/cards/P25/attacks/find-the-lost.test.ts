@@ -89,8 +89,8 @@ describe("Find the Lost", () => {
         }
         expect(game.state.combat).toBeNull();
         expect(intercepted).toBe(defense === "intercept");
-        expect(game.state.objects[foe.objectId]!.damage).toBe(mode === "prepared" ? 3 : 0);
+        expect(game.markedDamage(foe.objectId)).toBe(mode === "prepared" ? 3 : 0);
         if (defense === "intercept")
-          expect(game.state.objects[guard.objectId]!.damage).toBe(mode === "prepared" ? 0 : 3);
+          expect(game.markedDamage(guard.objectId)).toBe(mode === "prepared" ? 0 : 3);
       });
 });

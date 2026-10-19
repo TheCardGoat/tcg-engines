@@ -1,0 +1,22 @@
+{
+  "adapterVersion": "3",
+  "candidateId": "meta-v1",
+  "cardCatalogHash": "fnv1a32:054bba93",
+  "changes": {},
+  "engineRevision": "fnv1a32:74f18f32",
+  "evaluation": {
+    "batchSize": 360,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 360,
+    "maximumCellRegression": 1,
+    "minimumBlocks": 360,
+    "minimumMeanImprovement": 0,
+    "seedBase": "alpha-clash-season3-calibration-v1",
+    "suiteId": "season3"
+  },
+  "game": "alpha-clash",
+  "hypothesis": "Check stability of the Season 3 deck rankings across ten paired seed blocks per matchup under unchanged meta-v1 self-play; no trained or promoted strategy.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "meta-v1",
+  "schemaVersion": 1
+}

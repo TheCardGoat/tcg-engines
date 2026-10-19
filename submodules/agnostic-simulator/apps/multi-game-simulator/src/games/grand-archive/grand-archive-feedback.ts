@@ -97,6 +97,7 @@ export function reconcileGrandArchiveFeedback(
       old.imageUrl !== entity.imageUrl ||
       old.dataAttributes?.["data-facing"] !== entity.dataAttributes?.["data-facing"] ||
       JSON.stringify(old.states) !== JSON.stringify(entity.states) ||
+      JSON.stringify(old.decorations) !== JSON.stringify(entity.decorations) ||
       JSON.stringify(old.stats) !== JSON.stringify(entity.stats)
     ) {
       const changedStates = [

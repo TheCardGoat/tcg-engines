@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-drawing-cards"
   relation: "current_index"
 ---
-
 # Game Mechanics - Drawing Cards
 
 #### General Rules:

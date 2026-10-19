@@ -184,8 +184,8 @@ describe("Hunt, Weiss King — Knight choice and Rook redirection", () => {
       if (attack) {
         expect(game.state.combat!.targetIds).toEqual([rook.objectId]);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-        expect(game.state.objects[rook.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(hero.objectId)).toBe(0);
+        expect(game.markedDamage(rook.objectId)).toBe(1);
       }
       advanceToMain(game, attack ? p.id : q.id);
       expect(life()).toBe(3);

@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-types/card-types-supertypes"
   relation: "current_index"
 ---
-
 # Card Types - Supertypes
 
 #### General Rules

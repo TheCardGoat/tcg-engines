@@ -1,5 +1,8 @@
+import { requestInteractionPreview } from "@tcg/gateway-client";
+import type { InteractionPreviewHandler } from "@tcg/simulator-ui";
 import { GrandArchivePreparationPage } from "./GrandArchivePreparation.page";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../simulator/useMatchIntroReady";
 import type {
   GrandArchiveViewerObject,
   GrandArchiveViewerState,
@@ -76,7 +79,11 @@ function isViewerObject(value: unknown): value is GrandArchiveViewerObject {
     typeof value.name === "string" &&
     Array.isArray(value.states) &&
     isRecord(value.counters) &&
-    typeof value.damage === "number"
+    typeof value.damage === "number" &&
+    typeof value.temporaryDamage === "number" &&
+    (value.damageLifetime === null ||
+      value.damageLifetime === "champion" ||
+      value.damageLifetime === "ally")
   );
 }
 
@@ -441,6 +448,11 @@ function toUiChatMessage(message: ProtocolChatMessage, viewerId: string): UiChat
 /** Server-authoritative Grand Archive match; the browser submits interactions only. */
 export function GrandArchiveLiveMatchPage() {
   const route = useSimulatorRoute();
+  useMatchIntroReady(
+    Boolean(route.error) ||
+      route.session?.phase === "preparation" ||
+      route.session?.phase === "cancelled",
+  );
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   const session = route.session;
   if (!session) return <GrandArchiveLiveGamePage />;
@@ -480,6 +492,12 @@ function GrandArchiveLiveGamePage() {
   const viewerId = bootstrap?.viewer.role === "player" ? bootstrap.viewer.actorId : null;
   const [state, setState] = useState<GrandArchiveViewerState | null>(() =>
     parseGrandArchiveLiveViewerState(bootstrap?.game.view),
+  );
+  useMatchIntroReady(
+    Boolean(
+      route.error ||
+      (bootstrap && (bootstrap.viewer.role === "spectator" || (gameId && viewerId && state))),
+    ),
   );
   useLiveMatchDocumentTitle({
     game: "Grand Archive",
@@ -608,7 +626,8 @@ function GrandArchiveLiveGamePage() {
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
       handle.on("proposal_received", (payload) => {
-        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal({ ...payload, actionType: "undo" });
+        if (payload.gameId === gameId && payload.actionType === "undo")
+          setUndoProposal({ ...payload, actionType: "undo" });
       }),
       handle.on("proposal_resolved", (payload) => {
         if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
@@ -619,7 +638,8 @@ function GrandArchiveLiveGamePage() {
       handle.on("proposal_send:response", (response) => {
         if (response.status === "err") setConnectionError(response.data.message);
         else if ("resolution" in response.data) setUndoProposal(null);
-        else if (response.data.actionType === "undo") setUndoProposal({ ...response.data, actionType: "undo" });
+        else if (response.data.actionType === "undo")
+          setUndoProposal({ ...response.data, actionType: "undo" });
       }),
       handle.on("proposal_accept:response", (response) => {
         if (response.status === "err") setConnectionError(response.data.message);
@@ -691,6 +711,16 @@ function GrandArchiveLiveGamePage() {
       handle.release();
     };
   }, [bootstrap?.match.matchId, gameId, viewerId]);
+
+  const previewInteraction = useCallback<InteractionPreviewHandler>(
+    (request, signal) => {
+      const handle = gatewayHandleRef.current;
+      if (!handle || !gameId || !viewerId || bootstrap?.viewer.role !== "player")
+        return Promise.reject(new Error("Connect to the match before choosing an action."));
+      return requestInteractionPreview(handle, gameId, request, { signal });
+    },
+    [gameId, viewerId, bootstrap?.viewer.role],
+  );
 
   const submitInteraction = useCallback(
     (submission: InteractionSubmission) => {
@@ -832,20 +862,35 @@ function GrandArchiveLiveGamePage() {
         </div>
       ) : null}
       {undoProposal ? (
-        <div className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-3 rounded-lg border border-amber-500 bg-slate-950 px-4 py-3 text-sm text-white shadow-xl" role="status">
-          <span>{undoProposal.senderPlayerId === viewerId
-            ? "Waiting for the opponent to approve undo."
-            : undoProposal.undoScope === "turn_start"
-              ? "Opponent requests to undo the turn."
-              : "Opponent requests to undo the last action."}</span>
+        <div
+          className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-3 rounded-lg border border-amber-500 bg-slate-950 px-4 py-3 text-sm text-white shadow-xl"
+          role="status"
+        >
+          <span>
+            {undoProposal.senderPlayerId === viewerId
+              ? "Waiting for the opponent to approve undo."
+              : undoProposal.undoScope === "turn_start"
+                ? "Opponent requests to undo the turn."
+                : "Opponent requests to undo the last action."}
+          </span>
           {undoProposal.senderPlayerId !== viewerId ? (
             <>
-              <button type="button" className="rounded bg-emerald-700 px-3 py-1" onClick={() =>
-                gatewayHandleRef.current?.emit("proposal_accept", { gameId, actionType: "undo" })}>
+              <button
+                type="button"
+                className="rounded bg-emerald-700 px-3 py-1"
+                onClick={() =>
+                  gatewayHandleRef.current?.emit("proposal_accept", { gameId, actionType: "undo" })
+                }
+              >
                 Approve
               </button>
-              <button type="button" className="rounded bg-slate-700 px-3 py-1" onClick={() =>
-                gatewayHandleRef.current?.emit("proposal_decline", { gameId, actionType: "undo" })}>
+              <button
+                type="button"
+                className="rounded bg-slate-700 px-3 py-1"
+                onClick={() =>
+                  gatewayHandleRef.current?.emit("proposal_decline", { gameId, actionType: "undo" })
+                }
+              >
                 Decline
               </button>
             </>
@@ -872,6 +917,7 @@ function GrandArchiveLiveGamePage() {
         }
         errorMessage={connectionError ?? undefined}
         onSubmitProtocolInteraction={submitInteraction}
+        onPreviewProtocolInteraction={previewInteraction}
       />
       {state.status === "finished" && summaryOpen ? (
         <GrandArchiveGameSummary

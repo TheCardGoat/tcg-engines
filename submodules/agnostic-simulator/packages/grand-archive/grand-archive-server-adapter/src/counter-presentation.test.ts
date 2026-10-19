@@ -1,3 +1,7 @@
+import {
+  grandArchiveCounterDecorations,
+  grandArchiveCounterStats,
+} from "./counter-presentation.ts";
 import { describe, expect, it } from "vitest";
 import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
 import { projectGrandArchiveViewerState } from "@tcg/grand-archive-engine/simulator";
@@ -20,7 +24,8 @@ describe("Grand Archive counter projection", () => {
         [championId]: { ...engine.state.objects[championId]!, damage: 7 },
         [id]: {
           ...engine.state.objects[id]!,
-          damage: 2,
+          damage: 0,
+          temporaryDamage: 2,
           counters: {
             buff: 3,
             debuff: 0,
@@ -38,6 +43,35 @@ describe("Grand Archive counter projection", () => {
       grandArchivePlayerId("p1"),
     ).entities.find((entry) => entry.id === championId)!;
     expect(champion.decorations?.[0]?.ariaLabel).toContain("Persists until removed by an effect");
+    // The wire projection is authoritative when an effect changes a printed Champion's type.
+    const changedType = projectGrandArchiveViewerState(
+      engine.program,
+      state,
+      grandArchivePlayerId("p1"),
+    );
+    const changedTypeViewer = {
+      ...changedType,
+      players: changedType.players.map((player) => ({
+        ...player,
+        zones: {
+          ...player.zones,
+          field:
+            player.zones.field.visibility === "visible"
+              ? {
+                  ...player.zones.field,
+                  objects: player.zones.field.objects.map((object) =>
+                    object.id === championId ? { ...object, damageLifetime: null } : object,
+                  ),
+                }
+              : player.zones.field,
+        },
+      })),
+    };
+    const inert = projectGrandArchiveViewerSimulator(changedTypeViewer).entities.find(
+      (entry) => entry.id === championId,
+    )!;
+    expect(inert.decorations?.[0]?.id).toBe("ga:counter:damage-counters");
+    expect(inert.decorations?.[0]?.ariaLabel).toContain("no inherent effect on a non-champion");
     const viewer = grandArchivePlayerId("p1");
     const direct = projectGrandArchiveSimulator(engine.program, state, viewer).entities.find(
       (entry) => entry.id === id,
@@ -48,14 +82,18 @@ describe("Grand Archive counter projection", () => {
     expect(direct.decorations).toEqual(projected.decorations);
     expect(direct.stats).toEqual(projected.stats);
     expect(direct.stats).toEqual([
-      { label: "Damage", value: "2" },
+      { label: "Temporary damage", value: "2" },
       { label: "Buff", value: "3" },
       { label: "Durability", value: "0" },
       { label: "charge", value: "12" },
       { label: "Preparation", value: "2" },
     ]);
-    expect(direct.decorations?.map((entry) => entry.id)).toEqual([
-      "ga:counter:damage",
+    expect(
+      direct.decorations
+        ?.filter((entry) => entry.id.startsWith("ga:counter:"))
+        .map((entry) => entry.id),
+    ).toEqual([
+      "ga:counter:temporary-damage",
       "ga:counter:buff",
       "ga:counter:durability",
       "ga:counter:named:charge",
@@ -66,7 +104,9 @@ describe("Grand Archive counter projection", () => {
     expect(
       direct.decorations?.find((entry) => entry.id === "ga:counter:named:charge")?.ariaLabel,
     ).toBe("charge: 12. Card-defined counter.");
-    expect(direct.decorations?.at(-1)?.ariaLabel).toBe(
+    expect(
+      direct.decorations?.find((entry) => entry.id === "ga:counter:preparation")?.ariaLabel,
+    ).toBe(
       "Preparation: 2. May be paid as an additional cost when activating a card with Prepare; distinct from the Prepared state.",
     );
     expect(
@@ -75,4 +115,20 @@ describe("Grand Archive counter projection", () => {
       )?.decorations,
     ).toEqual(direct.decorations);
   });
+});
+
+it("shows inert counters separately from temporary damage", () => {
+  const decorations = grandArchiveCounterDecorations({
+    damage: 20,
+    temporaryDamage: 2,
+    damageLifetime: "ally",
+    counters: {},
+  });
+  expect(grandArchiveCounterStats(decorations)).toEqual([
+    { label: "Damage counters", value: "20" },
+    { label: "Temporary damage", value: "2" },
+  ]);
+  expect(decorations[0]?.ariaLabel).toContain("no inherent effect on a non-champion");
+  expect(decorations[0]?.ariaLabel).toContain("Persists until removed");
+  expect(decorations[1]?.ariaLabel).toContain("Clears during the end phase");
 });

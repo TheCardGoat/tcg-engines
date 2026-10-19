@@ -2,13 +2,17 @@ import { Badge, Button, Group, Select, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { buildMountedHref } from "../../routes/router-paths";
-import { GRAND_ARCHIVE_FIXTURE_GROUPS, GRAND_ARCHIVE_VISUAL_FIXTURES } from "./fixtures";
+import {
+  GRAND_ARCHIVE_FIXTURE_GROUPS,
+  GRAND_ARCHIVE_VISUAL_FIXTURES,
+  isGrandArchivePlayableFixtureId,
+} from "./fixtures";
 import { GrandArchivePlayableFixture } from "./Fixtures.page";
 import { GrandArchiveInteractionPreview } from "./GrandArchiveInteractionPreview";
 import classes from "../../components/InteractionCatalogPage.module.css";
 
 const inventoryPath = "/simulator-ui-fixtures/game-interactions/grand-archive";
-const isPlayable = (id: string) => id === "attack-targeting" || id === "materialization-hand";
+const isPlayable = isGrandArchivePlayableFixtureId;
 
 /** Uses the existing native fixture registry, so new fixtures also enter this inventory. */
 export function GrandArchiveInteractionInventory({ scenario }: { scenario: string }) {

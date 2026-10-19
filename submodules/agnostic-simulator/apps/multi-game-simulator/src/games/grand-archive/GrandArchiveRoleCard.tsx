@@ -40,7 +40,10 @@ export function GrandArchiveRoleCard({
   const counters =
     entity.face === "public" ? (entity.decorations ?? []).filter(isGrandArchiveCounter) : [];
   const primaryCounter =
-    counters.find((counter) => counter.id === "ga:counter:damage") ?? counters[0];
+    counters.find(
+      (counter) =>
+        counter.id === "ga:counter:damage" || counter.id === "ga:counter:temporary-damage",
+    ) ?? counters[0];
   const badges =
     entity.face === "public"
       ? (entity.decorations ?? []).flatMap((decoration) => {
@@ -125,7 +128,6 @@ export function GrandArchiveRoleCard({
           key={`${entity.id}:${entity.dataAttributes?.["data-incarnation"]}:${entity.face}`}
           onUnmountFocus={restoreCardFocus}
           title={entity.title}
-          temporaryDamage={entity.dataAttributes?.["data-damage-lifetime"] === "end-phase"}
           counters={counters}
         />
       ) : null}

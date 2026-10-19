@@ -15,6 +15,15 @@ export interface AIPlayerOptions {
   commandIdFor?: (stepIndex: number) => string;
 }
 
+/** A decision can be computed off-thread, then validated by the owning engine. */
+export type AIPlayerDecision =
+  | Extract<StepResult, { kind: "idle" | "stuck" }>
+  | {
+      kind: "decision";
+      decision: Extract<MoveDecision, { kind: "command" }>;
+      decisionDurationMs: number;
+    };
+
 /**
  * Drives a single player using a pluggable strategy. Talks to the engine
  * exclusively through the public {@link LocalEngine} surfaces (`getPrompt`,
@@ -44,7 +53,12 @@ export class AIPlayer {
 
   /** Execute exactly one decision. Returns what happened or why we stopped. */
   step(): StepResult {
-    const ctx = buildDecisionContext(this.engine, this.playerId, () => this.rng.next());
+    return this.executeDecision(this.decide());
+  }
+
+  /** Choose without committing. Reusing this player preserves its strategy RNG. */
+  decide(engine: LocalEngine = this.engine): AIPlayerDecision {
+    const ctx = buildDecisionContext(engine, this.playerId, () => this.rng.next());
 
     if (ctx.view.gameEnded) return { kind: "idle", reason: "gameEnded" };
 
@@ -56,7 +70,7 @@ export class AIPlayer {
       case "choice": {
         const startedAt = performance.now();
         const decision = this.decideChoice(ctx);
-        return this.dispatch(decision, ctx, performance.now() - startedAt);
+        return this.prepareDecision(decision, ctx, performance.now() - startedAt);
       }
       case "action": {
         if (ctx.prompt.availableMoves.length === 0) {
@@ -64,7 +78,7 @@ export class AIPlayer {
         }
         const startedAt = performance.now();
         const decision = this.strategy.decideAction(ctx);
-        return this.dispatch(decision, ctx, performance.now() - startedAt);
+        return this.prepareDecision(decision, ctx, performance.now() - startedAt);
       }
       default:
         return assertNever(status, "PlayerPromptStatus");
@@ -122,11 +136,11 @@ export class AIPlayer {
     return decision;
   }
 
-  private dispatch(
+  private prepareDecision(
     decision: MoveDecision,
     ctx: DecisionContext,
     decisionDurationMs: number,
-  ): StepResult {
+  ): AIPlayerDecision {
     if (decision.kind === "stuck") {
       return {
         kind: "stuck",
@@ -135,6 +149,13 @@ export class AIPlayer {
         decisionDurationMs,
       };
     }
+    return { kind: "decision", decision, decisionDurationMs };
+  }
+
+  /** Commits through normal command validation; callers must discard stale decisions. */
+  executeDecision(selection: AIPlayerDecision): StepResult {
+    if (selection.kind !== "decision") return selection;
+    const { decision, decisionDurationMs } = selection;
     const command: CommandEnvelope = {
       commandID: this.commandIdFor(this.stepIndex++),
       move: decision.move,

@@ -87,7 +87,7 @@ export function proveSupportedStealth(card: Card, support: Card, phantasia: bool
             p.card(woodlandSquirrels, { zone: "field" }),
           );
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[defender.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(defender.objectId)).toBe(0);
           return;
         }
         if (interaction === "spell") {
@@ -106,6 +106,6 @@ export function proveSupportedStealth(card: Card, support: Card, phantasia: bool
         expect(game.state.objects[defender.objectId]!.zone).toBe(
           damage >= life ? "graveyard" : "field",
         );
-        expect(game.state.objects[defender.objectId]!.damage).toBe(damage >= life ? 0 : damage);
+        expect(game.markedDamage(defender.objectId)).toBe(damage >= life ? 0 : damage);
       });
 }

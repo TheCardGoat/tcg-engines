@@ -2,6 +2,7 @@ import { describeGrandArchiveStructuredDecision } from "../commands/legal-comman
 import { projectGrandArchiveCombatView, type GrandArchiveCombatView } from "./combat.ts";
 import type {
   GrandArchiveActivationState,
+  GrandArchiveKeywordName,
   GrandArchiveObjectState,
   GrandArchiveZone,
 } from "@tcg/grand-archive-types";
@@ -9,8 +10,13 @@ import type { GrandArchiveObjectId, GrandArchivePlayerId } from "../game/identit
 import { grandArchiveObjectFace } from "../game/card-runtime.ts";
 import type { GrandArchiveMatchProgram } from "../kernel/match-program.ts";
 import type { GrandArchiveMatchState, GrandArchiveStackItem } from "../game/model.ts";
-import { grandArchivePlayerHasState } from "../rules/state/player-continuous.ts";
+import {
+  grandArchivePlayerEffectiveStates,
+  grandArchivePlayerHasState,
+} from "../rules/state/player-continuous.ts";
+import { grandArchiveObjectActiveKeywords } from "../rules/abilities/intrinsic-keywords.ts";
 import { grandArchiveObjectEffectiveStates } from "../game/object-state.ts";
+import { grandArchiveObjectCurrentCharacteristics } from "../rules/state/continuous.ts";
 import { collectGrandArchiveActionRules } from "../rules/state/rule-modifications.ts";
 import { grandArchivePlayerZoneObjectIds } from "../game/zone-ownership.ts";
 import { GRAND_ARCHIVE_PRIVATE_ZONES, GRAND_ARCHIVE_ZONES } from "../game/zones.ts";
@@ -35,10 +41,19 @@ export interface GrandArchiveViewerObject {
   readonly name: string;
   readonly states: readonly GrandArchiveObjectState[];
   readonly activationStates: readonly GrandArchiveActivationState[];
+  /** Active keyword names only; effect bindings and private evaluation context stay server-side. */
+  readonly keywords: readonly {
+    readonly name: GrandArchiveKeywordName;
+    readonly value?: number | string;
+  }[];
   readonly activationVariables: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
   readonly cascadeCounts: Readonly<Record<string, number>>;
   readonly counters: Readonly<Record<string, number>>;
+  /** Permanent counters, including inert counters on non-champions. */
   readonly damage: number;
+  readonly temporaryDamage: number;
+  /** Current functional type, including transformations and continuous effects. */
+  readonly damageLifetime: "champion" | "ally" | null;
 }
 
 export type GrandArchiveViewerZone =
@@ -61,6 +76,8 @@ export interface GrandArchiveViewerPlayer {
   readonly turnOrder: number;
   readonly lost: boolean;
   readonly conceded: boolean;
+  /** Public player properties, including active continuous state effects. */
+  readonly states: Readonly<Record<string, string | number | boolean>>;
   readonly mastery?: GrandArchiveMatchState["players"][GrandArchivePlayerId]["mastery"];
   readonly zones: Readonly<Record<GrandArchiveZone, GrandArchiveViewerZone>>;
 }
@@ -331,6 +348,7 @@ function projectObject(
   const object = state.objects[objectId];
   if (!object) throw new Error(`Zone contains missing object ${objectId}`);
   const face = grandArchiveObjectFace(program, object);
+  const types = grandArchiveObjectCurrentCharacteristics(program, state, object).types;
   return {
     id: object.id,
     incarnation: object.incarnation,
@@ -346,12 +364,24 @@ function projectObject(
     face: object.face,
     facing: object.facing,
     name: face.name,
-    states: [...grandArchiveObjectEffectiveStates(state, object)],
+    states: [...grandArchiveObjectEffectiveStates(program, state, object)],
     activationStates: [...object.activationStates],
+    keywords: grandArchiveObjectActiveKeywords(program, state, object).map((keyword) => ({
+      name: keyword.name,
+      ...("value" in keyword && typeof keyword.value === "number" ? { value: keyword.value } : {}),
+      ...("lineageName" in keyword ? { value: keyword.lineageName } : {}),
+      ...("subtype" in keyword ? { value: keyword.subtype } : {}),
+    })),
     activationVariables: object.activationVariables,
     cascadeCounts: object.cascadeCounts,
     counters: object.counters,
     damage: object.damage,
+    temporaryDamage: object.temporaryDamage,
+    damageLifetime: types.includes("CHAMPION")
+      ? "champion"
+      : types.includes("ALLY")
+        ? "ally"
+        : null,
   };
 }
 
@@ -464,6 +494,7 @@ export function projectGrandArchiveViewerState(
       turnOrder: player.turnOrder,
       lost: player.lost,
       conceded: player.conceded,
+      states: grandArchivePlayerEffectiveStates(program, state, playerId),
       ...(player.mastery ? { mastery: player.mastery } : {}),
       zones,
     };
@@ -507,7 +538,9 @@ export function projectGrandArchiveViewerState(
                       ? ("optional-effect" as const)
                       : decision.kind === "resolve-effect-payment" && decision.mayDecline
                         ? ("optional-payment" as const)
-                        : "minimum" in description && description.minimum === 0
+                        : "minimum" in description &&
+                            description.kind !== "number" &&
+                            description.minimum === 0
                           ? ("optional-selection" as const)
                           : description.kind === "semantic"
                             ? ("unavailable" as const)

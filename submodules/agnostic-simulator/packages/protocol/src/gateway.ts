@@ -1,8 +1,12 @@
 import { PresentationEnvelopeSchema } from "./presentation.js";
 import { z } from "zod";
-import { EngineInteractionView, InteractionSubmission } from "./interactions.js";
+import {
+  EngineInteractionView,
+  InteractionSubmission,
+  InteractionPreviewResult,
+} from "./interactions.js";
 import { AnimationPlanV2Schema } from "./animations/plan.js";
-import { MAX_HEARTBEAT_ROUND_TRIP_MS } from "./schemas.js";
+import { MAX_HEARTBEAT_ROUND_TRIP_MS, PreviewInteractionMessage } from "./schemas.js";
 import { DropEligibilitySchema } from "./drop-eligibility.js";
 import {
   RequestPreparationSyncMessage,
@@ -127,6 +131,7 @@ export const RawGatewayClientMessageSchema = z.discriminatedUnion("type", [
   RawGatewayJoinGameMessageSchema,
   RawGatewayExecuteMoveMessageSchema,
   RawGatewaySubmitInteractionMessageSchema,
+  PreviewInteractionMessage,
   RawGatewayHeartbeatMessageSchema,
   RawGatewayLeaveGameMessageSchema,
   RawGatewayRequestStateSyncMessageSchema,
@@ -418,7 +423,17 @@ export const RawGatewayPongMessageSchema = z
   })
   .strict();
 
+export const RawGatewayInteractionPreviewMessageSchema = z
+  .object({
+    type: z.literal("interaction_preview"),
+    gameId: opaqueId,
+    correlationId: opaqueId,
+    result: InteractionPreviewResult,
+  })
+  .strict();
+
 export const RawGatewayServerMessageSchema = z.discriminatedUnion("type", [
+  RawGatewayInteractionPreviewMessageSchema,
   z
     .object({
       type: z.literal("preparation_state"),

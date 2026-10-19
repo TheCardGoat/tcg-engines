@@ -171,15 +171,19 @@ export function prepareGrandArchiveRuleBoundEvent(
           grandArchiveObjectCurrentCharacteristics(program, state, object),
         ) ||
           grandArchiveObjectHasActiveKeyword(program, state, object, "siegeable"));
-      if (asDurabilityLoss) return { ...event, asDurabilityLoss: true };
-      if (!event.asDurabilityLoss && event.durabilityRemoved === undefined) return event;
       const {
         asDurabilityLoss: _asDurabilityLoss,
+        asTemporaryDamage: _asTemporaryDamage,
         durabilityRemoved: _durabilityRemoved,
         ...markedDamage
       } = event;
-      return markedDamage;
+      if (asDurabilityLoss) return { ...markedDamage, asDurabilityLoss: true };
+      const isChampion =
+        object &&
+        grandArchiveObjectCurrentCharacteristics(program, state, object).types.includes("CHAMPION");
+      return isChampion ? markedDamage : { ...markedDamage, asTemporaryDamage: true };
     }
+
     case "counter-changed": {
       if (event.delta <= 0) return event;
       const object = state.objects[event.objectId];

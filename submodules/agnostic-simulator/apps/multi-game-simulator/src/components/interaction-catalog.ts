@@ -203,6 +203,23 @@ export const interactionCatalog: readonly InteractionCatalogCase[] = [
     "Disabled options must not be submitted.",
   ),
   fixture(
+    "colors",
+    "Color selection",
+    [
+      {
+        ...options,
+        text: text("Choose a color"),
+        options: ["White", "Blue", "Black", "Red", "Green"].map((color) => ({
+          id: color.toLowerCase(),
+          text: text(color),
+          enabled: true,
+        })),
+      },
+    ],
+    { mode: ["blue"] },
+    "Choose one color without opening a search list. This checks the shared control only.",
+  ),
+  fixture(
     "multi-option",
     "Multiple modes",
     [{ ...options, max: 2 }],

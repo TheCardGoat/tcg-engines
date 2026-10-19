@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-ability-tracking"
   relation: "current_index"
 ---
-
 # Abilities - Ability Tracking
 
 Some abilities ask players to remember previously selected modes or options for abilities. Abilities tracked in this way depend on the card that creates and instances the ability.&#x20;
@@ -24,7 +23,7 @@ E.g., Tonoris, Genesis Aegis says “At the beginning of your recollection phase
    1. If the ability references the source card, it may only do so through the immediate change in zone. If it is moved from the zone it was expected to be in for the sake of resolving an effect related to the presence of the source card, it will not function if the card is positioned to another zone.
 
 {% hint style="success" %}
-![](/files/0TFpqNTVg4OaWBPIIqS7)&#x20;
+![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FWe1u7o2OIr8LmwJP2NSx%2Fimage.png?alt=media\&token=a7f44ac7-4297-4356-afeb-9a4df5d5fdf2)&#x20;
 
 E.g., Seafletched Serpent can't be loaded if it is banished from the graveyard after its On Hit ability has triggered but not resolved.
 {% endhint %}

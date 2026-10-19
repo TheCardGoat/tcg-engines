@@ -1,5 +1,26 @@
 /* Alpha Clash practice page: a dim room around the table, actions on the side. */
 
+.setupPage {
+  justify-content: center;
+  align-items: center;
+}
+
+.setupCard {
+  width: min(100%, 680px);
+}
+
+.setupDecks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .setupDecks {
+    grid-template-columns: 1fr;
+  }
+}
+
 .page {
   display: flex;
   align-items: flex-start;
@@ -87,6 +108,7 @@
 
 /* The Arena occupies the viewport; decisions and logs live in its action drawer. */
 .arenaPage {
+  position: relative;
   display: block;
   padding: 0;
   gap: 0;
@@ -106,8 +128,135 @@
   right: 25%;
   z-index: 10;
 }
+/* Top-bar switch between hot seat (both seats on this screen) and the
+   practice bot; the arena renders it inside the header tools. */
+.modeToggle {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid #ffe9b655;
+  border-radius: 7px;
+  overflow: hidden;
+}
+.modeToggle button {
+  appearance: none;
+  border: 0;
+  background: #14252e;
+  color: #dfe7e6;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.modeToggle button + button {
+  border-left: 1px solid #ffe9b655;
+}
+.modeToggle button[aria-pressed="true"] {
+  background: #ffe9b6;
+  color: #14252e;
+  font-weight: 700;
+}
+.modeToggle button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* Pause / Next / Resume for the practice bot, mirroring the shared
+   SimulatorBotQuickControls semantics in the arena's top bar. */
+.botPacing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 30px;
+  padding: 5px 8px;
+  border: 1px solid #ffe9b655;
+  border-radius: 7px;
+  background: #14252e;
+  color: #dfe7e6;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.botPacing span {
+  letter-spacing: 0.04em;
+}
+.botPacing:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* Center-of-board handoff callout: names the seat now making the decisions so
+   hot-seat priority switches read as deliberate, not as a layout glitch. */
+.seatCallout {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  pointer-events: none;
+  animation: seatCalloutFade 1900ms ease forwards;
+}
+.seatCallout strong {
+  font-size: 30px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffe9b6;
+  text-shadow:
+    0 2px 18px #000,
+    0 0 34px #0009;
+}
+.seatCallout span {
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #dfe7e6;
+  text-shadow: 0 2px 12px #000;
+}
+@keyframes seatCalloutFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  14% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  74% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seatCallout {
+    animation-duration: 1ms;
+  }
+}
 .arenaControls {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.fixtureViewer {
+  position: fixed;
+  top: 8px;
+  left: 180px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid #68747b;
+  border-radius: 4px;
+  color: #eef2f4;
+  background: #0c151b;
+  font-size: 11px;
+}
+.fixtureViewer select {
+  color: inherit;
+  background: #0c151b;
+  max-width: 112px;
 }

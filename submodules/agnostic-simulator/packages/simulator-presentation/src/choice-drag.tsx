@@ -42,6 +42,7 @@ export function ChoiceDragProvider({
   onChange,
   onReject,
   locked = false,
+  ghostClassName = "",
   children,
 }: {
   tokens: readonly ChoiceToken[];
@@ -50,6 +51,7 @@ export function ChoiceDragProvider({
   onChange: (value: ChoiceAssignments) => void;
   onReject?: (token: string, destination: string | null) => void;
   locked?: boolean;
+  ghostClassName?: string;
   children: ReactNode;
 }) {
   const scope = useId();
@@ -174,7 +176,7 @@ export function ChoiceDragProvider({
         createPortal(
           <div
             ref={ghost}
-            className="choice-ghost"
+            className={`choice-ghost ${ghostClassName}`}
             style={{
               transform: `translate3d(${(session.current?.x ?? 0) + 14}px,${(session.current?.y ?? 0) - 24}px,0)`,
             }}
@@ -224,15 +226,30 @@ export function ChoiceDraggable({
     </button>
   );
 }
+/** Makes the whole group a pointer destination without nesting interactive controls. */
+export function ChoiceDropRegion({ id, children }: { id: string; children: ReactNode }) {
+  const ctx = useDrag();
+  const slot = ctx.slots.find((entry) => entry.id === id);
+  if (!slot) return null;
+  return (
+    <section aria-label={`${slot.label} group`} data-choice-scope={ctx.scope} data-choice-slot={id}>
+      {children}
+    </section>
+  );
+}
+
 export function ChoiceDropSlot({
   id,
   before,
+  tokenId,
   children,
   style,
   className = "",
 }: {
   id: string;
   before?: string;
+  /** A direct placement control; omitted for the current picked-up card. */
+  tokenId?: string;
   children?: ReactNode;
   style?: CSSProperties;
   className?: string;
@@ -240,10 +257,12 @@ export function ChoiceDropSlot({
   const ctx = useDrag();
   const slot = ctx.slots.find((s) => s.id === id);
   if (!slot) return null;
+  const target = tokenId ?? ctx.active;
   const eligible =
-    !!ctx.active &&
-    slot.accepts.includes(ctx.active) &&
-    ((ctx.value[id]?.length ?? 0) < slot.max || !!ctx.value[id]?.includes(ctx.active));
+    !!target &&
+    slot.accepts.includes(target) &&
+    ((ctx.value[id]?.length ?? 0) < slot.max || !!ctx.value[id]?.includes(target));
+  const tokenLabel = ctx.tokens.find((token) => token.id === tokenId)?.label;
   return (
     <button
       type="button"
@@ -253,9 +272,9 @@ export function ChoiceDropSlot({
       data-choice-slot={id}
       data-choice-before={before}
       data-eligible={eligible}
-      disabled={ctx.locked}
-      aria-label={`Place in ${slot.label}${before ? " before this card" : ""}`}
-      onClick={() => ctx.drop(id, before)}
+      disabled={ctx.locked || (tokenId !== undefined && !eligible)}
+      aria-label={`Place ${tokenId !== undefined ? `${tokenLabel ?? "card"} ` : ""}in ${slot.label}${before ? " before this card" : ""}`}
+      onClick={() => ctx.drop(id, before, tokenId)}
     >
       {children ?? (
         <>

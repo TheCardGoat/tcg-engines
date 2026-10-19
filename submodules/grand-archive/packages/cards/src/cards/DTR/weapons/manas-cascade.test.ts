@@ -99,14 +99,14 @@ describe("Mana's Cascade - water intent threshold and champion-hit memory banish
             hand = q.zone("hand");
           p.declareAttack(p.card(hero), target, { weaponIds: [weapon.objectId] });
           expect(q.zone("memory")).toEqual(memory);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           for (const card of waters.slice(0, water))
             expect(game.state.objects[card.objectId]!.zone).toBe("intent");
           expect(game.state.objects[waters.at(-1)!.objectId]!.zone).toBe("loaded");
           game.resolveCombatWithoutRetaliation();
           const enabled = matching && water >= 2;
           const damage = 4 + (enabled ? 1 : 0);
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+          expect(game.markedDamage(target.objectId)).toBe(damage);
           expect(q.zone("memory")).toHaveLength(3 - (enabled && championHit ? 1 : 0));
           const banished = memory.filter(
             (c) => game.state.objects[c.objectId]!.zone === "banishment",
@@ -126,9 +126,7 @@ describe("Mana's Cascade - water intent threshold and champion-hit memory banish
           load(normals.at(-1)!);
           p.declareAttack(p.card(hero), q.card(hero), { weaponIds: [weapon.objectId] });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[q.card(hero).objectId]!.damage).toBe(
-            (championHit ? damage : 0) + 2,
-          );
+          expect(game.markedDamage(q.card(hero).objectId)).toBe((championHit ? damage : 0) + 2);
           expect(q.zone("memory")).toEqual(memoryAfter);
           expect(game.state.objects[weapon.objectId]!.counters.durability).toBe(1);
         });
@@ -140,7 +138,7 @@ describe("Mana's Cascade - water intent threshold and champion-hit memory banish
         const before = q.zone("memory");
         p.declareAttack(p.card(hero), q.card(hero), { weaponIds: [weapon.objectId] });
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(hero).objectId]!.damage).toBe(5);
+        expect(game.markedDamage(q.card(hero).objectId)).toBe(5);
         expect(q.zone("memory")).toHaveLength(Math.max(0, count - 1));
         expect(
           before.filter((c) => game.state.objects[c.objectId]!.zone === "banishment"),
@@ -163,7 +161,7 @@ describe("Mana's Cascade - water intent threshold and champion-hit memory banish
       else throw new Error(`Unexpected combat state ${wait.kind}`);
     }
     expect(game.state.combat).toBeFalsy();
-    expect(game.state.objects[q.card(hero).objectId]!.damage).toBe(0);
+    expect(game.markedDamage(q.card(hero).objectId)).toBe(0);
     expect(q.zone("memory")).toEqual(memory);
     expect(q.zone("banishment")).toHaveLength(0);
     expect(game.state.objects[weapon.objectId]!.counters.durability).toBe(2);

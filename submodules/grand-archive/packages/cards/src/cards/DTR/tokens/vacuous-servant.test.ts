@@ -106,15 +106,13 @@ describe("Vacuous Servant — independent attack/ally omen scaling", () => {
         expect(stat("life")).toBe(1 + (ciel ? allies : 0));
         p.declareAttack(token, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
-          1 + (ciel ? attacks : 0),
-        );
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(1 + (ciel ? attacks : 0));
         advanceToMain(game, q.id);
         q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), token);
         game.resolveCombatWithoutRetaliation();
         if (ciel && allies) {
           expect(p.cards(vacuousServant, { zone: "field" })).toHaveLength(1);
-          expect(game.state.objects[token.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(token.objectId)).toBe(1);
           q.declareAttack(q.card(threeOfSpades, { zone: "field" }), token);
           game.resolveCombatWithoutRetaliation();
         }

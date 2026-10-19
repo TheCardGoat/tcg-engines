@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/"
   relation: "current_index"
 ---
-
 # Changelog
 
 IMPORTANT LINKS:
@@ -17,9 +16,35 @@ IMPORTANT LINKS:
 \
 To download the full PDF of the rulebook, [click here](https://rules.gatcg.com/~gitbook/pdf?limit=150).
 
-To check out the rulebook and the full list of changes via GitHub, [click here](https://github.com/weebsoftheshore/gitbook-rules).
+To check out the rulebook and the exact list of changes via GitHub, [click here](https://github.com/weebsoftheshore/gitbook-rules).
+
+September 17th, 2026
+
+* Added explicit clarification regarding control of Intents
+* Moved element identity clarification to general rules in the Champion section
+* Updated Shifting Currents to state the mastery subtyping correctly
+* Corrected Taunt to generalized "object" phrasing
+* Added clarification to damage counters on allies
+* Slight fix in phrasing for enabling Exalted
+* Typos, various phrasing fixes
+
+September 10th, 2026
+
+* Slight clarification with [Spellshroud](/glossary/keywords-and-abilities.md#spellshroud) to be consistent with the restrictions on targeting of Omnishroud.
 
 \
+August 31st, 2026
+
+* Added missing Dante Mastery ([Divine Comedy](/game-mechanics/game-mechanics-mastery.md#divine-comedy))
+* Added [Linked/Linked to](/glossary/game-terms.md#linked-linked-to) clarification as a game term
+  * Objects can only be directly linked, not transitively linked. E.g., objects A and B are linked, objects B and C are linked, A is not linked with C.
+
+\
+\
+August 24th, 2026
+
+* Small clarification added regarding ending combat with [Break the Line](https://index.gatcg.com/edition/break-the-line-prd) at the [End fof Combat Step](/game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-end-of-combat-step.md) has been added
+
 August 21st, 2026
 
 * Various small fixes

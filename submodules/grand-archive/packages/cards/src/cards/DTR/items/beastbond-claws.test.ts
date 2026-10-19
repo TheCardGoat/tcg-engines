@@ -80,11 +80,11 @@ describe("Beastbond Claws — owned Animal or Beast protection", () => {
         q.declareAttack(q.card(trainedHawk), target);
         game.resolveCombatWithoutRetaliation();
         expect(game.state.objects[target.objectId]!.zone).toBe("field");
-        expect(game.state.objects[target.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(target.objectId)).toBe(2);
         if (expiry) {
           advanceToMain(game, p.id);
           expect(life()).toBe(baseLife);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           advanceToMain(game, q.id);
           q.declareAttack(q.card(giantTortoise), target);
           game.resolveCombatWithoutRetaliation();

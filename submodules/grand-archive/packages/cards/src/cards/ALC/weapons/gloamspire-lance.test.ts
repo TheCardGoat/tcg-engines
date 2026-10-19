@@ -95,8 +95,8 @@ describe("Gloamspire Lance — Curse-scaled hit damage and recovery", () => {
               .map((ref) => ({ kind: "card", cardId: ref.objectId })),
           });
           passEffectsStack(game);
-          const ownDamage = game.state.objects[attacker.objectId]!.damage;
-          const previousDamage = game.state.objects[target.objectId]!.damage;
+          const ownDamage = game.markedDamage(attacker.objectId);
+          const previousDamage = game.markedDamage(target.objectId);
           player.declareAttack(attacker, target, { weaponIds: [gun.objectId] });
           advanceCombatToTrigger(game, "8vn1voy5tt-a1");
           expect(
@@ -104,8 +104,8 @@ describe("Gloamspire Lance — Curse-scaled hit damage and recovery", () => {
               (item) => item.kind === "triggered-ability" && item.ability.id === "8vn1voy5tt-a1",
             ),
           ).toBe(classBonus);
-          expect(game.state.objects[target.objectId]!.damage).toBe(previousDamage + 3);
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(ownDamage);
+          expect(game.markedDamage(target.objectId)).toBe(previousDamage + 3);
+          expect(game.markedDamage(attacker.objectId)).toBe(ownDamage);
           if (classBonus && hitsChampion) {
             player.pass();
             opponent.activate(spellshieldAstra, {
@@ -127,11 +127,9 @@ describe("Gloamspire Lance — Curse-scaled hit damage and recovery", () => {
           if (!hitsChampion && classBonus) {
             expect(game.state.objects[target.objectId]!.zone).toBe("graveyard");
           } else {
-            expect(game.state.objects[target.objectId]!.damage).toBe(previousDamage + 3 + amount);
+            expect(game.markedDamage(target.objectId)).toBe(previousDamage + 3 + amount);
           }
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(
-            Math.max(0, ownDamage - amount),
-          );
+          expect(game.markedDamage(attacker.objectId)).toBe(Math.max(0, ownDamage - amount));
           expect(player.cards(umbraSight, { zone: "inner-lineage" })).toEqual(curses);
           expect(opponent.zone("inner-lineage")).toEqual(opposingLineage);
           expect(game.state.decision).toBeNull();

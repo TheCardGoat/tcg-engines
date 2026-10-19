@@ -20,6 +20,11 @@ export interface PaymentSelectionContextValue {
   readonly selectedPaymentCount: number;
   /** Card instance awaiting payment, for the prompt's art thumbnail. */
   readonly paymentCardId: string | null;
+  /**
+   * Names the pending action will spend as its own cost (a SPEND cost on a
+   * ready Legend, e.g. the ability's host). Empty when only Eddies are paid.
+   */
+  readonly pendingSpendLegendNames: readonly string[];
   readonly eligiblePaymentSourceIds: ReadonlySet<string>;
   readonly selectedPaymentSourceIds: ReadonlySet<string>;
   /**

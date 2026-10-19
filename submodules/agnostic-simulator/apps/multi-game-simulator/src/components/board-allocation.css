@@ -1,0 +1,407 @@
+/* Board-native allocation: everything anchors to the cards; no panel. */
+
+.tcg-allocation-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* The board spot of the staged card reads as "held at the resolution focus". */
+.tcg-allocation-veil {
+  position: absolute;
+  z-index: 6;
+  border-radius: 10px;
+  background: #070e1680;
+  box-shadow: inset 0 0 0 1px #9fd8e833;
+  pointer-events: none;
+}
+
+/* Resolution focus: the staged actor holds at the shared right-center pose. */
+.tcg-allocation-focus {
+  position: absolute;
+  z-index: 9;
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow:
+    0 26px 60px #000d,
+    0 0 0 1px #0b141c,
+    0 0 34px #9fd8e83d;
+  pointer-events: none;
+}
+.tcg-allocation-focus img,
+.tcg-allocation-focus-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.tcg-allocation-focus-fallback {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  background: linear-gradient(180deg, #162b3a, #0c1a24);
+  border: 1px solid #9fd8e866;
+  color: #cdeaf2;
+  font-size: 13px;
+  text-align: center;
+}
+.tcg-allocation-focus::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px #9fd8e8cc;
+  pointer-events: none;
+}
+.tcg-allocation-tag {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #0e2733f0;
+  border: 1px solid #9fd8e8aa;
+  color: #cdeaf2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Tethers tie each allocation back to the resolving card. */
+.tcg-allocation-tethers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 6;
+}
+.tcg-allocation-tether-casing {
+  stroke: #0b141c;
+  stroke-width: 8;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+.tcg-allocation-tether {
+  stroke: #ffd98a;
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 5px #e0b87299);
+}
+.tcg-allocation-tethers:not([data-reduced-motion])
+  .tcg-allocation-tether:not(.tcg-allocation-tether--preview) {
+  stroke-dasharray: 12 7;
+  animation: tcg-allocation-flow 1s linear infinite;
+}
+@keyframes tcg-allocation-flow {
+  from {
+    stroke-dashoffset: 38;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcg-allocation-tethers .tcg-allocation-tether {
+    animation: none !important;
+  }
+}
+.tcg-allocation-tether--preview {
+  stroke-dasharray: 7 7;
+  stroke-width: 3;
+  opacity: 0.9;
+}
+
+/* Source cluster: pool chip + reset / decline / confirm, straddling the source card's base. */
+.tcg-allocation-source {
+  position: absolute;
+  z-index: 9;
+  transform: translate(-50%, -38%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  background: linear-gradient(180deg, #162b3aec, #0c1a24f2);
+  border: 1px solid #d9b36a59;
+  border-radius: 999px;
+  box-shadow:
+    0 12px 30px #000a,
+    inset 0 1px 0 #ffffff12;
+  backdrop-filter: blur(6px);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.tcg-allocation-source[data-ready] {
+  border-color: #ffe1a0cc;
+  box-shadow:
+    0 12px 30px #000a,
+    0 0 0 2px #ffe1a033,
+    0 0 22px #e0b87259;
+}
+.tcg-allocation-source[data-rejected] {
+  border-color: #d3705dcc;
+}
+
+.tcg-allocation-pool {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #1d3140d9;
+  border: 1px solid #e0b87240;
+  color: #f2e9d4;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.tcg-allocation-pool:active {
+  cursor: grabbing;
+}
+.tcg-allocation-pool:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+.tcg-allocation-pool strong {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #f0c877;
+}
+.tcg-allocation-pool span {
+  font-size: 11.5px;
+  color: #c4cfcf;
+}
+
+.tcg-allocation-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #a7926140;
+  background: #223441d9;
+  color: #ece4d0;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+.tcg-allocation-icon:hover:not(:disabled) {
+  background: #2c4454;
+  border-color: #e0b87280;
+}
+.tcg-allocation-icon:active:not(:disabled) {
+  transform: scale(0.94);
+}
+.tcg-allocation-icon:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+.tcg-allocation-decline {
+  color: #e8a79a;
+}
+.tcg-allocation-confirm {
+  font-size: 17px;
+  font-weight: 700;
+}
+.tcg-allocation-confirm:not(:disabled) {
+  background: linear-gradient(180deg, #f3cf83, #d9a95c);
+  border-color: #ffe1a0;
+  color: #1a2630;
+  box-shadow: 0 2px 12px #e0b87266;
+}
+.tcg-allocation-confirm:not(:disabled):hover {
+  background: linear-gradient(180deg, #ffe1a0, #e3b76e);
+}
+
+.tcg-allocation-alert {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  color: #f2ddd2;
+  background: #3c221cf0;
+  border: 1px solid #d3705c66;
+}
+.tcg-allocation-alert[role="status"] {
+  color: #d9e3e3;
+  background: #13252ff0;
+  border-color: #a7926140;
+}
+
+/* Targets: the card itself is the control. The resolving card keeps its aura, not a ring. */
+.tcg-allocation-target {
+  position: absolute;
+  z-index: 7;
+  border: 2px solid #e0b87299;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px #00000055,
+    0 0 18px #e0b8722e;
+  pointer-events: auto;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
+}
+.tcg-allocation-target[data-issource],
+.tcg-allocation-target[data-issource][data-assigned],
+.tcg-allocation-target[data-issource][data-drop-over] {
+  border-color: transparent;
+  box-shadow: none;
+  background: none;
+}
+.tcg-allocation-target[data-assigned] {
+  border-color: #ffe1a0;
+  box-shadow:
+    0 0 0 1px #00000055,
+    0 0 22px #e0b87252;
+}
+.tcg-allocation-target[data-drop-over] {
+  border-color: #ffe9bd;
+  box-shadow:
+    0 0 0 2px #ffe9bd88,
+    0 0 26px #f1c27366;
+  background: #f1c2731f;
+}
+.tcg-allocation-target[data-saturated] {
+  opacity: 0.55;
+}
+.tcg-allocation-target[data-saturated][data-assigned] {
+  opacity: 1;
+}
+
+.tcg-allocation-hit {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.tcg-allocation-hit:disabled {
+  cursor: default;
+}
+@media (hover: hover) {
+  .tcg-allocation-hit:not(:disabled):hover::after {
+    content: "+1";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: #9d402bee;
+    border: 2px solid #f7bf78;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    box-shadow: 0 6px 18px #0009;
+  }
+}
+
+.tcg-allocation-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 25%, #b0533a, #8c3a27);
+  border: 2px solid #f7bf78;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px #000a;
+  transition: transform 140ms ease;
+}
+.tcg-allocation-badge:hover:not(:disabled) {
+  transform: scale(1.08);
+}
+.tcg-allocation-badge:disabled {
+  cursor: default;
+}
+.tcg-allocation-badge output {
+  font: inherit;
+}
+
+.tcg-allocation-max {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #102029e0;
+  border: 1px solid #a7926138;
+  color: #cdb98c;
+  font-size: 10.5px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tcg-allocation-target[data-assigned] .tcg-allocation-max {
+  display: none;
+}
+
+.tcg-allocation-target button:focus-visible,
+.tcg-allocation-source button:focus-visible,
+.tcg-allocation-pool:focus-visible {
+  outline: 2px solid #ffe1a0;
+  outline-offset: 2px;
+}
+
+.tcg-allocation-marker {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #9d402b;
+  color: #fff;
+  border: 2px solid #f7bf78;
+  font-weight: 800;
+  cursor: grabbing;
+  touch-action: none;
+  box-shadow: 0 10px 26px #000b;
+}
+
+@media (max-height: 550px) {
+  .tcg-allocation-source {
+    transform: translate(-50%, -34%) scale(0.92);
+  }
+}
+
+.tcg-allocation-source[data-striking] {
+  opacity: 0;
+  pointer-events: none;
+}

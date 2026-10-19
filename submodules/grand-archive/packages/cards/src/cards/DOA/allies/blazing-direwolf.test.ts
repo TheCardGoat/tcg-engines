@@ -46,7 +46,7 @@ describe("Blazing Direwolf's own attack deals targeted damage before combat", ()
             wolf = p.card(blazingDirewolf);
           p.declareAttack(p.card(giantTortoise), foe);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(!own && championTarget ? 1 : 0);
+          expect(game.markedDamage(target.objectId)).toBe(!own && championTarget ? 1 : 0);
           p.declareAttack(wolf, foe);
           advanceCombatToTrigger(game, "gKVMTAeLXQ-a2");
           if (classBonus) {
@@ -61,12 +61,10 @@ describe("Blazing Direwolf's own attack deals targeted damage before combat", ()
               targets: { "target-1": [target.objectId] },
             });
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(
-              own || !championTarget ? 2 : 3,
-            );
+            expect(game.markedDamage(target.objectId)).toBe(own || !championTarget ? 2 : 3);
           }
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(
+          expect(game.markedDamage(target.objectId)).toBe(
             (classBonus ? 2 : 0) + (!own && championTarget ? 5 : 0),
           );
           expect(game.state.objects[wolf.objectId]!.states.has("rested")).toBe(true);

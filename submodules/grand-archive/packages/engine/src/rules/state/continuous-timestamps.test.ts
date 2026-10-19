@@ -119,6 +119,7 @@ function objectTimestamp(
 describe("Grand Archive continuous-effect timestamps", () => {
   it("keeps the champion object's original timestamp while timestamping a new lineage card", () => {
     const fixture = setup();
+    expect(objectTimestamp(fixture, fixture.state, fixture.levelId)).toBe(0);
     const leveled = new GrandArchiveTransactionKernel().transact(fixture.state, [
       {
         type: "champion-leveled-up",
@@ -133,6 +134,7 @@ describe("Grand Archive continuous-effect timestamps", () => {
 
   it("timestamps a bestowed card when it returns to the Pantheon", () => {
     const fixture = setup();
+    expect(objectTimestamp(fixture, fixture.state, fixture.boonId)).toBe(0);
     const bestowed = new GrandArchiveTransactionKernel().transact(fixture.state, [
       {
         type: "object-moved",

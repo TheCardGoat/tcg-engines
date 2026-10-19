@@ -49,20 +49,20 @@ describe("Bombard Flarecannon — fire intent and defending player's units", () 
           if (!polkhawk) {
             // Combat has completed without a trigger; only its chosen target took damage.
             const untouched = targetsChampion ? opposingAlly : defender;
-            expect(game.state.objects[untouched.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(untouched.objectId)).toBe(0);
             expect(game.state.objects[squirrel.objectId]!.zone).toBe("field");
             for (const ref of [attacker, ownAlly, opposingItem])
-              expect(game.state.objects[ref.objectId]!.damage).toBe(0);
+              expect(game.markedDamage(ref.objectId)).toBe(0);
             return;
           }
           for (const ref of [defender, opposingAlly, squirrel, attacker, ownAlly, opposingItem])
-            expect(game.state.objects[ref.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(ref.objectId)).toBe(0);
           passEffectsStack(game);
           for (const ref of [defender, opposingAlly])
-            expect(game.state.objects[ref.objectId]!.damage).toBe(fire ? 2 : 0);
+            expect(game.markedDamage(ref.objectId)).toBe(fire ? 2 : 0);
           expect(game.state.objects[squirrel.objectId]!.zone).toBe(fire ? "graveyard" : "field");
           for (const ref of [attacker, ownAlly, opposingItem])
-            expect(game.state.objects[ref.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(ref.objectId)).toBe(0);
           expect(game.state.objects[opposingItem.objectId]!.zone).toBe("field");
         });
       }

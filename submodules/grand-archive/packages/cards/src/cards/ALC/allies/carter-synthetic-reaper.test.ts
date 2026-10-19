@@ -63,18 +63,14 @@ describe("Carter — Class Bonus Cleave", () => {
         );
         expect(game.state.stack.some((item) => item.sourceId === intercept.objectId)).toBe(false);
       }
-      expect(game.state.objects[target.objectId]!.damage).toBe(0);
-      expect(game.state.objects[opponent.card(supplyDrone).objectId]!.damage).toBe(0);
+      expect(game.markedDamage(target.objectId)).toBe(0);
+      expect(game.markedDamage(opponent.card(supplyDrone).objectId)).toBe(0);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(2);
-      expect(game.state.objects[opponent.card(supplyDrone).objectId]!.damage).toBe(
-        classBonus ? 2 : 0,
-      );
-      expect(game.state.objects[opponent.card(automatedGardener).objectId]!.damage).toBe(
-        classBonus ? 2 : 0,
-      );
+      expect(game.markedDamage(target.objectId)).toBe(2);
+      expect(game.markedDamage(opponent.card(supplyDrone).objectId)).toBe(classBonus ? 2 : 0);
+      expect(game.markedDamage(opponent.card(automatedGardener).objectId)).toBe(classBonus ? 2 : 0);
       expect(opponent.zone("graveyard")).toEqual(classBonus ? [intercept] : []);
-      expect(game.state.objects[player.card(supplyDrone).objectId]!.damage).toBe(0);
+      expect(game.markedDamage(player.card(supplyDrone).objectId)).toBe(0);
     });
   }
 });
@@ -119,7 +115,7 @@ describe("Carter — every ally death recovers one", () => {
           passEffectsStack(game);
         }
         const initialDamage = damaged ? 2 : 0;
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(initialDamage);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(initialDamage);
         const attackingPlayer = victim === "opposing" ? player : opponent;
         const target =
           victim === "opposing"
@@ -142,28 +138,28 @@ describe("Carter — every ally death recovers one", () => {
         attackingPlayer.declareAttack(attackers[0]!, target);
         if (victim === "self") {
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[ownChampion.objectId]!.damage).toBe(initialDamage);
-          expect(game.state.objects[target.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(ownChampion.objectId)).toBe(initialDamage);
+          expect(game.markedDamage(target.objectId)).toBe(2);
           ready();
           attackingPlayer.declareAttack(attackers[1]!, target);
         }
         advanceCombatToTrigger(game, "1wl8ao8bls-a2");
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(initialDamage);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(initialDamage);
         expect(
           game.state.stack.some(
             (item) => item.kind === "triggered-ability" && item.ability.id === "1wl8ao8bls-a2",
           ),
         ).toBe(victim !== "surviving");
         passEffectsStack(game);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(
+        expect(game.markedDamage(ownChampion.objectId)).toBe(
           Math.max(0, initialDamage - (victim === "surviving" ? 0 : 1)),
         );
-        expect(game.state.objects[opponent.card(champion).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(opponent.card(champion).objectId)).toBe(0);
         if (victim !== "surviving")
           expect((victim === "opposing" ? opponent : player).zone("graveyard")).toContainEqual(
             target,
           );
-        else expect(game.state.objects[target.objectId]!.damage).toBe(2);
+        else expect(game.markedDamage(target.objectId)).toBe(2);
       });
     }
   }
@@ -253,9 +249,9 @@ describe("Carter — optional entry sacrifice", () => {
           }
           const target = game.player("player-two").card(champion);
           player.declareAttack(carter, target);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(performed && !expired ? 4 : 2);
+          expect(game.markedDamage(target.objectId)).toBe(performed && !expired ? 4 : 2);
         });
       }
     }

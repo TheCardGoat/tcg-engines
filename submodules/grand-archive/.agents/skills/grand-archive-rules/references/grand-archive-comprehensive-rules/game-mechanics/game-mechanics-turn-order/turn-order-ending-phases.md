@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-ending-phases"
   relation: "current_index"
 ---
-
 # Turn Order - Ending Phases
 
 #### General Rules:

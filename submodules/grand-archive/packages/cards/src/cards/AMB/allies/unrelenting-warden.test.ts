@@ -80,7 +80,7 @@ describe("Unrelenting Warden — Class Bonus Taunt", () => {
         game.player(wait.playerId).pass();
       opponent.declareAttack(attackers[classBonus ? 0 : 1]!, warden);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[warden.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(warden.objectId)).toBe(2);
     });
   }
 });

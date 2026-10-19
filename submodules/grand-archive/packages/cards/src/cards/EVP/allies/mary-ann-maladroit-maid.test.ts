@@ -102,7 +102,7 @@ describe("Mary Ann, Maladroit Maid — distinct omen reserve costs", () => {
     const opponent = game.player("player-two");
     player.declareAttack(maryAnnMaladroitMaid, opponent.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[opponent.card(champion).objectId]!.damage).toBe(3);
+    expect(game.markedDamage(opponent.card(champion).objectId)).toBe(3);
   });
 });
 
@@ -132,7 +132,7 @@ describe("Mary Ann, Maladroit Maid — omen keyword inheritance", () => {
       }
     }
     expect(retaliated).toBe(true);
-    expect(game.state.objects[attacker.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(attacker.objectId)).toBe(1);
   });
 
   it("inherits Spellshroud and Intercept from an Overlord omen", () => {
@@ -199,7 +199,7 @@ describe("Mary Ann, Maladroit Maid — omen keyword inheritance", () => {
       }
     }
     expect(retaliated).toBe(true);
-    expect(game.state.objects[attacker.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(attacker.objectId)).toBe(1);
   });
 
   it("inherits Stealth from a Shimmercloak Assassin omen", () => {

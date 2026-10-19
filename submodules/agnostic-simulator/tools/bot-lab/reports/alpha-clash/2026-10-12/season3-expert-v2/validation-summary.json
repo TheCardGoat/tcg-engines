@@ -1,0 +1,12 @@
+{
+  "games": 512,
+  "suite": 384,
+  "archived_mirror_controls": 48,
+  "supplement": 80,
+  "terminations": {
+    "rules-win": 512
+  },
+  "rejected": 0,
+  "maximum_nodes": 768,
+  "exact_fresh_replays": 10
+}

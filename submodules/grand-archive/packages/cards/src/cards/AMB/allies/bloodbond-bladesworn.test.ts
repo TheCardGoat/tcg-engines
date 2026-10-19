@@ -27,17 +27,17 @@ describe("Bloodbond Bladesworn — mirror damage to champion", () => {
     const ownChampion = player.card(champion, { zone: "field" });
     opponent.declareAttack(automatedGardener, bladesworn);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[bladesworn.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(bladesworn.objectId)).toBe(2);
     if (
       game.state.stack.some(
         (item) => item.kind === "triggered-ability" && item.ability.id === "blyb6fd6vy-a2",
       )
     ) {
-      expect(game.state.objects[ownChampion.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(ownChampion.objectId)).toBe(0);
       passEffectsStack(game);
     }
-    expect(game.state.objects[ownChampion.objectId]!.damage).toBe(2);
-    expect(game.state.objects[opponent.card(champion).objectId]!.damage).toBe(0);
+    expect(game.markedDamage(ownChampion.objectId)).toBe(2);
+    expect(game.markedDamage(opponent.card(champion).objectId)).toBe(0);
   });
 });
 
@@ -87,14 +87,12 @@ describe("Bloodbond Bladesworn — Class Bonus damage-scaled power", () => {
           });
           passEffectsStack(game);
         }
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(blasts * 3);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(blasts * 3);
         passToPlayerMain(game, "player-one");
         const target = opponent.card(champion, { zone: "field" });
         player.declareAttack(bloodbondBladesworn, target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(
-          classBonus && blasts * 3 >= 10 ? 4 : 3,
-        );
+        expect(game.markedDamage(target.objectId)).toBe(classBonus && blasts * 3 >= 10 ? 4 : 3);
       });
     }
   }

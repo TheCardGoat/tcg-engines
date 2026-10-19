@@ -60,6 +60,7 @@ export const shatteringDischarge: GrandArchiveCard<GrandArchiveAbilityDefinition
           id: "uutqo9hm33-a2",
           kind: "triggered",
           text: "[Class Bonus] Whenever this card is banished from your memory, put a charge counter on it.",
+          functionalZones: ["memory"],
           trigger: {
             kind: "event",
             event: {
@@ -91,7 +92,6 @@ export const shatteringDischarge: GrandArchiveCard<GrandArchiveAbilityDefinition
             },
             amount: 1,
           },
-          functionalZones: ["memory"],
         },
         {
           id: "uutqo9hm33-a3",

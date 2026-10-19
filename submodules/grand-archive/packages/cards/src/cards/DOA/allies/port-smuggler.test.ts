@@ -32,7 +32,7 @@ describe("Port Smuggler protects only its own attacks with matching class", () =
         expect(game.state.combat?.targetIds).toEqual([blocked ? foe.objectId : guard.objectId]);
         game.resolveCombatWithoutRetaliation();
       }
-      expect(game.state.objects[foe.objectId]!.damage).toBe(bonus ? 1 : 0);
-      expect(game.state.objects[guard.objectId]!.damage).toBe(bonus ? 1 : 2);
+      expect(game.markedDamage(foe.objectId)).toBe(bonus ? 1 : 0);
+      expect(game.markedDamage(guard.objectId)).toBe(bonus ? 1 : 2);
     });
 });

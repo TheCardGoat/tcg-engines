@@ -5,7 +5,9 @@
  * solo-vs-self mode is used to keep the test deterministic.
  */
 
-import { act, cleanup, fireEvent, render } from "@testing-library/react";
+import { MantineProvider } from "@mantine/core";
+import type { ReactElement } from "react";
+import { act, cleanup, fireEvent, render as renderView } from "@testing-library/react";
 import { StrictMode } from "react";
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest";
 
@@ -14,6 +16,9 @@ import { PREVIEW_DECKS, cardOf, previewDeckList } from "@tcg-engines/naruto-engi
 import type { DeckList } from "@tcg-engines/naruto-engine";
 
 import { NarutoPracticePage } from "../pages/Practice.page.tsx";
+
+const render = (element: ReactElement) =>
+  renderView(<MantineProvider env="test">{element}</MantineProvider>);
 
 function serializeDeck(deck: DeckList): string {
   const counts = new Map<string, number>();

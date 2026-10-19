@@ -191,6 +191,7 @@ function Contents({ category, version }: { category: string; version: "v1" | "v2
                   <Scene
                     fallbackMessage="3D is unavailable. Select V1 above or use the live card controls below."
                     cards={worldCards}
+                    movingIds={emptyIds}
                     cardAppearances={appearances}
                     hovered={hovered}
                     reduced={false}

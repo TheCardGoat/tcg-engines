@@ -79,7 +79,7 @@ export type {
   BotDecisionSink,
   TakeAutomatedActionWithFallbackResult,
 } from "./automation/types.ts";
-export { takeAutomatedActionWithFallback } from "./automation/planner.ts";
+export { takeAutomatedActionWithFallback, rankGundamBotCandidates } from "./automation/planner.ts";
 export type {
   PlayMatchAction,
   PlayMatchOptions,

@@ -210,6 +210,16 @@ function counterChangeEvents(
     effect.kind === "remove-counter" &&
     typeof effect.amount === "object" &&
     effect.amount.kind === "all";
+  if (effect.counterScope === "temporary") {
+    if (effect.kind !== "remove-counter" || effect.counter !== "damage" || !removesAll) {
+      throw new GrandArchiveUnsupportedRuleError(
+        "temporary damage removal must remove all temporary damage",
+      );
+    }
+    return resolveGrandArchiveSubjectObjects(effect.subject, evaluation)
+      .filter((object) => object.temporaryDamage > 0)
+      .map((object) => ({ type: "damage-cleared", objectId: object.id }));
+  }
   const amountFor = (current: number): number =>
     removesAll ? current : evaluateGrandArchiveAmount(effect.amount, evaluation);
   const counter = grandArchiveCounterKey(effect.counter);
@@ -300,7 +310,7 @@ function moveEvents(
     destination.zone === "field" && destination.controller
       ? resolveSinglePlayer(destination.controller, evaluation)
       : destination.zone === "intent"
-        ? execution.base.controllerId
+        ? hosts[0]?.controllerId
         : undefined;
   const orderedPrivateDestination =
     (destination.zone === "main-deck" || destination.zone === "material-deck") &&
@@ -460,6 +470,7 @@ function createdObject(
       return face.stats.durability === undefined ? {} : { durability: face.stats.durability };
     })(),
     damage: 0,
+    temporaryDamage: 0,
     incarnation: 1,
     objectVersion: 1,
   };
@@ -946,10 +957,20 @@ function stackItemNegationIsForbidden(
   item: GrandArchiveStackItem,
   execution: MutableExecution,
 ): boolean {
+  if (
+    item.kind === "activated-ability" &&
+    !item.isCopy &&
+    item.ability.stackBehavior?.canBeNegated === false
+  )
+    return true;
   const targetId = item.sourceId ?? ("cardId" in item ? item.cardId : undefined);
-  if (!targetId) return false;
-  const target = execution.state.objects[targetId];
-  if (!target) return false;
+  const target = targetId ? execution.state.objects[targetId] : undefined;
+  const ruleSource = target
+    ? { candidateId: target.id, fromZone: target.zone }
+    : item.masterySource
+      ? { masterySource: item.masterySource }
+      : undefined;
+  if (!ruleSource) return false;
   return collectGrandArchiveActionRules({
     action: "negate",
     activationKind:
@@ -960,13 +981,12 @@ function stackItemNegationIsForbidden(
         : "ability",
     playerId: execution.base.controllerId,
     subjectPlayerId: item.controllerId,
-    candidateId: target.id,
+    ...ruleSource,
     stackItemId: item.id,
-    fromZone: target.zone,
-    againstIds: [target.id],
+    ...(target ? { againstIds: [target.id] } : {}),
     evaluation: {
       ...context(execution),
-      candidateId: target.id,
+      candidateId: target?.id,
     },
   }).some((rule) => rule.effect.mode === "forbid");
 }
@@ -1841,7 +1861,15 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
     case "set-object-state": {
       const events = resolveGrandArchiveSubjectObjects(effect.subject, evaluation).flatMap(
         (object): readonly GrandArchiveProposedEvent[] => {
-          if (grandArchiveObjectHasState(execution.state, object, effect.state) === effect.value) {
+          if (
+            grandArchiveObjectHasState(
+              execution.base.program,
+              execution.state,
+              object,
+              effect.state,
+              evaluation,
+            ) === effect.value
+          ) {
             return [];
           }
           if (effect.state === "awake") {

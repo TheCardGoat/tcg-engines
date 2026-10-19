@@ -46,7 +46,9 @@ describe("CyberpunkSimulatorPom jsdom driver", () => {
         ),
         "expected occupied legend slots to register animation entities",
       ).not.toBeNull();
-      expect(view.container.querySelector("[data-animation-interaction-boundary]")).not.toBeNull();
+      const presentation = view.container.querySelector("[data-cyberpunk-input-ready]");
+      expect(presentation).not.toBeNull();
+      expect(presentation?.hasAttribute("inert")).toBe(false);
     } finally {
       view.unmount();
     }

@@ -48,7 +48,7 @@ it("protects its champion and current controlled ephemeral objects from spells f
       reservePayment: payment(4),
     });
     passEffectsStack(game);
-    expect(game.state.objects[target.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(target.objectId)).toBe(1);
   }
   advanceToMain(game, q.id);
   advanceToMain(game, p.id);
@@ -57,5 +57,5 @@ it("protects its champion and current controlled ephemeral objects from spells f
     reservePayment: payment(4),
   });
   passEffectsStack(game);
-  expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+  expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
 });

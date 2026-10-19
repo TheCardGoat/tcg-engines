@@ -65,14 +65,14 @@ describe("Infernal Manastreak — current champion distance and optional load", 
         ).toThrow();
         expect(game.state).toEqual(before);
         p.activate(source, { targets: { "target-1": [target.objectId] }, reservePayment });
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         if (distance === "response") becomeDistant();
         passEffectsStack(game);
         const increased = distance === "self" || distance === "response",
           damage = increased ? 3 : 2;
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         const untouched = (targetKind === "own-ally" ? q : p).card(giantTortoise);
-        expect(game.state.objects[untouched.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(untouched.objectId)).toBe(0);
         finishOptionalAetherwingLoad(game, source.objectId, host.objectId, increased, [
           q.card(trivariateDream).objectId,
           p.card(trainingSword).objectId,
@@ -80,7 +80,7 @@ describe("Infernal Manastreak — current champion distance and optional load", 
         if (increased) {
           p.declareAttack(p.card(champion), q.card(champion), { weaponIds: [host.objectId] });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
+          expect(game.markedDamage(q.card(champion).objectId)).toBe(
             (targetKind === "champion" ? damage : 0) + 2,
           );
           expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");

@@ -240,11 +240,10 @@ const LOCAL_PILES_Y = LOCAL_FIXER_Y - 28 - PILE_HEIGHT;
 /* The match-utilities cluster owns the board's top-right corner, so the rival
    instrument column starts below it. The cluster is fixed screen pixels while
    the world scales down on narrow windows, so callers convert its height into
-   world units from the current table scale — a fixed inset would collide.
-   `zoom` is the scale the Board shrinks the cluster to on small tables. */
-export function rivalTopInset(scale: number, zoom = 1): number {
+   world units from the current table scale — a fixed inset would collide. */
+export function rivalTopInset(scale: number): number {
   // 10px edge inset + 44px plates + the "Sending action…" chip row below.
-  return Math.ceil((85 * zoom) / Math.max(scale, 0.3)) + 8;
+  return Math.ceil(85 / Math.max(scale, 0.3)) + 8;
 }
 const RIVAL_TOP_INSET = rivalTopInset(1);
 
@@ -264,7 +263,9 @@ export function fixerRect(
   if (compact)
     return [
       rival ? TABLE_WIDTH - COMPACT_INSET - CONTROL_WIDTH : COMPACT_INSET,
-      rival ? 244 : COMPACT_LOCAL_FIXER_Y,
+      rival
+        ? Math.max(COMPACT_RIVAL_NAMEPLATE_Y, rivalInset) + PILE_HEIGHT + 28
+        : COMPACT_LOCAL_FIXER_Y,
       CONTROL_WIDTH,
       FIXER_HEIGHT,
     ];
@@ -284,7 +285,7 @@ export function pilesRect(
   if (compact)
     return [
       rival ? TABLE_WIDTH - COMPACT_INSET - PILE_WIDTH : COMPACT_INSET,
-      rival ? COMPACT_RIVAL_NAMEPLATE_Y : COMPACT_LOCAL_NAMEPLATE_Y,
+      rival ? Math.max(COMPACT_RIVAL_NAMEPLATE_Y, rivalInset) : COMPACT_LOCAL_NAMEPLATE_Y,
       PILE_WIDTH,
       PILE_HEIGHT,
     ];
@@ -304,7 +305,7 @@ export function identityRect(
   if (compact)
     return [
       rival ? TABLE_WIDTH - COMPACT_INSET - CONTROL_WIDTH : COMPACT_INSET + PILE_WIDTH + HUD_GAP,
-      rival ? COMPACT_RIVAL_NAMEPLATE_Y : COMPACT_LOCAL_NAMEPLATE_Y,
+      rival ? Math.max(COMPACT_RIVAL_NAMEPLATE_Y, rivalInset) : COMPACT_LOCAL_NAMEPLATE_Y,
       CONTROL_WIDTH - PILE_WIDTH - HUD_GAP,
       PILE_HEIGHT,
     ];
@@ -333,7 +334,7 @@ export function actionRect(compact = false): Rect {
 }
 
 export function clockRect(compact = false): Rect {
-  if (compact) return [COMPACT_INSET, 340, CONTROL_WIDTH, 112];
+  if (compact) return [COMPACT_INSET, 440, 320, 128];
   return [HUD_INSET, TABLE_HEIGHT / 2 - 56, CONTROL_WIDTH, 112];
 }
 

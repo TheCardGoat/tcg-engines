@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "fixture": "optional-void",
+  "flow": "Fresh optional-void board. Native End turn, Use top-card banish, then Enter Decline on parent draw; mandatory Void draws after the parent effect. Final deck 38, hand three, Banished one, health 24/30. Bot starts a later clash, which remains unresolved.",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "void-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 72,
+      "captureAudioMs": 2620,
+      "audioAlignmentSeconds": 0.014821767807006836,
+      "decodedAudioSeconds": 2.5636875,
+      "masterGain": 0.5625,
+      "peak": 0.17062345147132874,
+      "rms": 0.013629919780988655,
+      "peakDbfs": -15.359225542546163,
+      "rmsDbfs": -37.310134004035056
+    },
+    {
+      "variant": "muted-reduced",
+      "file": "void-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 19,
+      "captureAudioMs": 2483,
+      "audioAlignmentSeconds": 0.02342987060546875,
+      "decodedAudioSeconds": 2.4349583333333333,
+      "masterGain": 0,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "capture": "Application-output Howler branch only, no microphone or replacement audio; temporary branch disconnected and tracks stopped. Audio packet gaps retain silence. Change frames encoded at 30 FPS.",
+  "limits": [
+    "Only Use banish then Decline parent draw recorded; not first Decline, both Use, deck exhaustion or opponent view.",
+    "Audio presence/silence does not establish perceptual mix, separate Void cue or cue synchronization.",
+    "Frame count/encoding FPS do not measure renderer performance.",
+    "Matched viewport/commands; different input pacing cannot establish individual motion duration."
+  ]
+}

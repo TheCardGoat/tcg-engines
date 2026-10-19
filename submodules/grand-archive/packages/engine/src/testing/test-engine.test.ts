@@ -109,8 +109,8 @@ describe("GrandArchiveTestEngine", () => {
     p.declareAttack(attacker, defender);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.combat).toBeNull();
-    expect(game.state.objects[defender.objectId]!.damage).toBe(3);
-    expect(game.state.objects[attacker.objectId]!.damage).toBe(0);
+    expect(game.state.objects[defender.objectId]!.temporaryDamage).toBe(3);
+    expect(game.state.objects[attacker.objectId]!.temporaryDamage).toBe(0);
     expect(game.state.objects[attacker.objectId]!.states.has("rested")).toBe(true);
     expect(game.state.objects[defender.objectId]!.states.has("rested")).toBe(false);
     expect(p.zone("hand")).toHaveLength(1);

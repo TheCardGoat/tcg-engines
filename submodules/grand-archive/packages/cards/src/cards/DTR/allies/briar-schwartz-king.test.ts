@@ -88,7 +88,7 @@ describe("Briar — grouped protections, Hindered, and forbidden wake", () => {
       expect(game.state).toEqual(before);
       q.declareAttack(q.card(giantTortoise), p.card(giantTortoise));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(1);
       advanceToMain(game, p.id);
       expect(game.state.objects[source.objectId]!.states.has("rested")).toBe(true);
       expect(game.state.objects[p.card(giantTortoise).objectId]!.states.has("rested")).toBe(false);

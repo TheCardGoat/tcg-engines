@@ -199,6 +199,8 @@ export interface TurnMetadata {
     event: Extract<GameEvent, { type: "cardDefeated" | "cardPlayed" | "attackDeclared" }>;
     card: CardInstance | undefined;
   }[];
+  /** Migrated pre-history games retain their per-ability limits until the next turn. */
+  legacyFirstTimeLimitsUntilNextTurn?: true;
   triggerQueue: QueuedTrigger[];
   currentTrigger?: ResolvingTrigger;
   nextTriggerId: number;

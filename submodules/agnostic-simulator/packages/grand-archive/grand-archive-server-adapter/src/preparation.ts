@@ -1,3 +1,4 @@
+import { assertGrandArchiveStandardLegality } from "./standard-legality.ts";
 import { getGrandArchiveCard, grandArchiveCards } from "@tcg/grand-archive-cards";
 import {
   assertGrandArchiveDeckConstruction,
@@ -153,6 +154,7 @@ export function validateGrandArchivePreparation(
         definitionId: canonicalId,
         count: quantity,
       }));
+    assertGrandArchiveStandardLegality(sections.flatMap(entries));
     assertGrandArchiveDeckConstruction(getProgram(), "standard", {
       id: "preparation",
       name: "preparation",

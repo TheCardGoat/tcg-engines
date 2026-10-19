@@ -1,0 +1,283 @@
+.indicator {
+  --rim: #6d899a;
+  --signal: #9aeeff;
+  --gold: #f3d298;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 90px;
+  height: 94px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #d6edf5;
+  pointer-events: none;
+  border-radius: 9px;
+  -webkit-tap-highlight-color: transparent;
+}
+.indicator:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 4px;
+}
+.visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 70px;
+  filter: drop-shadow(0 3px 3px #000c);
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+}
+.socket {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background:
+    radial-gradient(ellipse at 45% 0%, #2b3e4c, #0a1722 75%) padding-box,
+    linear-gradient(150deg, #b0c0c9, #344958 45%, #1b2e3d 60%, #7897a9) border-box;
+  box-shadow:
+    inset 0 0 0 2px #09121b,
+    inset 0 0 0 3px #69879950,
+    0 2px 3px #000a;
+}
+.socket::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid transparent;
+  border-top-color: var(--rim);
+  border-bottom-color: var(--rim);
+  border-radius: 50%;
+  transform: rotate(-35deg);
+  opacity: 0.6;
+}
+.glyph {
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 1px 1px #000);
+}
+.indicator[data-kind="health"] .visual {
+  width: 78px;
+  height: 78px;
+}
+.indicator[data-kind="health"] .socket {
+  width: 72px;
+  height: 72px;
+  background:
+    radial-gradient(ellipse at 45% 0%, #275267, #0a1924 70%) padding-box,
+    linear-gradient(155deg, #d7f5ff, #648b9d 35%, #263e4e 65%, #9dbdca) border-box;
+  box-shadow:
+    inset 0 0 0 3px #0c1d29,
+    inset 0 0 0 4px #73b1c66b,
+    0 2px 3px #000a;
+}
+.healthValue {
+  color: #f1f8fb;
+  font:
+    600 34px/1 "Barlow Condensed",
+    "Arial Narrow",
+    system-ui,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 2px #000;
+}
+.count {
+  position: absolute;
+  z-index: 1;
+  right: -7px;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  height: 27px;
+  padding: 0 5px;
+  border: 1px solid #8aa5b6;
+  border-radius: 4px 4px 8px 4px;
+  background: linear-gradient(155deg, #263c4a, #081521 65%);
+  box-shadow:
+    inset 0 1px #d8f5ff24,
+    0 2px 3px #000a;
+  color: #edf6fa;
+  font:
+    600 18px/1 "Barlow Condensed",
+    "Arial Narrow",
+    system-ui,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.stack {
+  position: relative;
+  width: 44px;
+  height: 62px;
+}
+.stack img,
+.emptyDeck {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #7896a8;
+  border-radius: 4px;
+  background: linear-gradient(140deg, #405568, #101c28);
+  box-shadow: 0 2px 3px #000b;
+}
+.stack img:first-child {
+  transform: translate(-6px, -4px) rotate(-5deg);
+}
+.stack img:nth-child(2) {
+  transform: translate(-3px, -2px) rotate(-2.5deg);
+}
+.stack img {
+  object-fit: contain;
+  border-color: #302d29;
+  background: #0b0b0c;
+}
+.emptyDeck {
+  background: #07121d90;
+  border-color: #526b7b;
+  box-shadow:
+    inset 0 0 0 3px #0c1b26,
+    inset 0 0 0 4px #657e8e35;
+}
+.indicator[data-empty] {
+  color: #8ea6b4;
+}
+.indicator[data-empty] .socket {
+  background:
+    radial-gradient(ellipse at 45% 0%, #182732, #08131d 75%) padding-box,
+    linear-gradient(150deg, #69808f, #243a49 55%, #526d80) border-box;
+}
+.indicator[data-empty] .socket::after {
+  opacity: 0.3;
+}
+.indicator[data-empty] .glyph {
+  opacity: 0.55;
+}
+.indicator:hover .visual,
+.indicator[data-hover] .visual,
+.indicator:focus-visible .visual {
+  filter: brightness(1.25) drop-shadow(0 3px 4px #000c);
+  transform: translateY(-2px);
+}
+.indicator[data-selectable] {
+  --rim: var(--signal);
+}
+.indicator[data-selected] {
+  --rim: var(--gold);
+  color: #f8deb0;
+}
+.indicator[data-selectable] .socket {
+  border-color: var(--rim);
+  box-shadow:
+    inset 0 0 0 3px #0c1d29,
+    inset 0 0 0 4px #689eb54d,
+    0 0 14px #67dffc38;
+}
+.indicator[data-selected] .socket {
+  box-shadow:
+    inset 0 0 0 3px #0c1d29,
+    inset 0 0 0 4px #ad95634d,
+    0 0 14px #f3d29830;
+}
+.indicator[data-selectable] .socket::after {
+  opacity: 1;
+}
+.indicator[data-selectable] .stack img:last-child {
+  border-color: var(--rim);
+  outline: 1px solid var(--rim);
+  outline-offset: 2px;
+}
+.indicator[data-selectable] .count {
+  border-color: var(--rim);
+}
+.selectedMark {
+  position: absolute;
+  z-index: 2;
+  top: -1px;
+  right: -6px;
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffe7b5;
+  border-radius: 50%;
+  background: #f3d298;
+  color: #14202a;
+  box-shadow: 0 1px 4px #0009;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visual {
+    transition: none;
+  }
+  .indicator[data-hover] .visual {
+    transform: none;
+  }
+}
+
+/* Health is seated in the contender rail: keep its silhouette quiet and fixed. */
+.indicator[data-kind="health"] .socket::after {
+  display: none;
+}
+.indicator[data-kind="health"] .socket {
+  background:
+    radial-gradient(ellipse at 45% 0%, #243e4d, #0a1722 75%) padding-box,
+    linear-gradient(155deg, #c4d9e2, #577688 35%, #263e4e 65%, #91aebd) border-box;
+  box-shadow:
+    inset 0 0 0 2px #0b1822,
+    inset 0 0 0 3px #7896a33d,
+    0 2px 4px #000b;
+}
+.indicator[data-kind="health"][data-hover] .visual {
+  transform: none;
+}
+
+/* Health belongs to the contender holder; secondary piles sit quietly in the table. */
+.indicator[data-kind="health"],
+.indicator[data-kind="health"] .visual {
+  width: 130px;
+  height: 42px;
+}
+.indicator[data-kind="health"] .socket {
+  width: 126px;
+  height: 40px;
+  border-radius: 0;
+  clip-path: var(--health-clip, polygon(0 0, 100% 0, 100% 75%, 92% 100%, 8% 100%, 0 75%));
+  background:
+    linear-gradient(#323e43, #10191f 48%, #18232a) padding-box,
+    linear-gradient(#8b9699, #3d4b52) border-box;
+  box-shadow:
+    inset 0 1px #a9b6ba55,
+    inset 0 -3px #050b10;
+}
+.indicator[data-kind="health"] .socket::after {
+  display: none;
+}
+.indicator[data-kind="health"] .healthValue {
+  font-size: 30px;
+}
+.indicator[data-kind="oblivion"] .socket,
+.indicator[data-kind="banished"] .socket {
+  border-radius: 3px;
+  border-width: 1px;
+  background: linear-gradient(145deg, #233038a0, #09131b88);
+  box-shadow: inset 0 1px #9aabb222;
+}
+.indicator[data-kind="oblivion"] .socket::after,
+.indicator[data-kind="banished"] .socket::after {
+  display: none;
+}
+.indicator[data-empty] .visual {
+  filter: none;
+  opacity: 0.8;
+}
+.indicator[data-empty] .count {
+  border-color: #4b5962;
+  box-shadow: none;
+}

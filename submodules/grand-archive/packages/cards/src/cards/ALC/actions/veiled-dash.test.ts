@@ -86,10 +86,10 @@ describe("Veiled Dash — distance and per-unit prevention", () => {
     }
 
     blast(ally.objectId);
-    expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(ally.objectId)).toBe(1);
     blast(ally.objectId);
-    expect(game.state.objects[ally.objectId]!.damage).toBe(4);
+    expect(game.markedDamage(ally.objectId)).toBe(4);
     blast(ownChampion.objectId);
-    expect(game.state.objects[ownChampion.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(ownChampion.objectId)).toBe(1);
   });
 });

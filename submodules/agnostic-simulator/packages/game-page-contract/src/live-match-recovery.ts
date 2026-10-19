@@ -9,6 +9,8 @@
  * and waiting for a broadcast that will never come.
  */
 
+import { isRuntimeRecoveryCode, runtimeRecoveryMessage } from "@tcg/protocol";
+
 export type ClientAuthorityStaleResolution<T = unknown> =
   | { action: "ack" }
   | { action: "rebase"; baseVersion: number }
@@ -112,7 +114,14 @@ export function describeLiveMatchServerFeedback(input: {
   message: string;
   severity: "error" | "warning";
 } {
-  if (input.code === "rejected_stale" || input.code === "match_operation_failed") {
+  if (isRuntimeRecoveryCode(input.code)) {
+    return {
+      title: input.code === "game_state_incompatible" ? "Game update required" : "Server problem",
+      message: runtimeRecoveryMessage(input.code),
+      severity: "error",
+    };
+  }
+  if (input.code === "rejected_stale") {
     if (input.authority === "client") {
       return {
         title: MATCH_RELOAD_FEEDBACK.title,

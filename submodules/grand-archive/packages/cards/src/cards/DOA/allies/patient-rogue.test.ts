@@ -46,19 +46,19 @@ describe("Patient Rogue's awake stealth and recollection power", () => {
       } else {
         q.declareAttack(woodlandSquirrels, rogue);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[rogue.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(rogue.objectId)).toBe(1);
       }
       advanceToMain(game, p.id);
       expect(power()).toBe(3);
       p.declareAttack(rogue, q.card(champion));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(3);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(3);
       expect(game.state.objects[rogue.objectId]!.states.has("rested")).toBe(true);
       advanceToMain(game, q.id);
       expect(power()).toBe(0);
       q.declareAttack(woodlandSquirrels, rogue);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[rogue.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(rogue.objectId)).toBe(1);
       advanceToMain(game, p.id);
       expect(power()).toBe(3);
     });

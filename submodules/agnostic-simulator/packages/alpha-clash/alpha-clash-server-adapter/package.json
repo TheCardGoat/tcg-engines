@@ -13,6 +13,10 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./practice": {
+      "types": "./src/practice.ts",
+      "default": "./src/practice.ts"
     }
   },
   "scripts": {

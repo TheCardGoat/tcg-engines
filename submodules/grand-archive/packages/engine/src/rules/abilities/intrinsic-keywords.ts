@@ -120,6 +120,10 @@ export interface GrandArchiveAbilityDerivationContext {
 }
 
 interface GrandArchiveDefaultAbilityDerivationCache {
+  printedKeywordBaseline?: readonly (readonly [
+    GrandArchiveObjectId,
+    readonly GrandArchiveKeyword[],
+  ])[];
   functionalStaticSources?: readonly {
     readonly source: GrandArchiveCardInstance;
     readonly ability: Extract<FlatAbility, { kind: "static"; staticKind: "effects" }>;
@@ -328,7 +332,12 @@ function withObjectKeywordOverride(
   object: GrandArchiveCardInstance,
   keywords: readonly GrandArchiveKeyword[],
 ): GrandArchiveEvaluationContext {
-  const baselineKeywords = Object.values(evaluation.state.objects).map(
+  const cache = defaultAbilityDerivationCache(evaluation.program, evaluation.state);
+  // Printed faces are independent of the recursive derivation context. Only
+  // this baseline is shared; each evaluation still applies its own overrides.
+  const baselineKeywords = (cache.printedKeywordBaseline ??= Object.values(
+    evaluation.state.objects,
+  ).map(
     (candidate) =>
       [
         candidate.id,
@@ -338,7 +347,7 @@ function withObjectKeywordOverride(
           ),
         ),
       ] as const,
-  );
+  ));
   return {
     ...evaluation,
     keywordOverrides: new Map([

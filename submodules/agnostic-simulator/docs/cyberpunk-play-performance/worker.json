@@ -1,0 +1,18 @@
+{
+  "url": "http://127.0.0.1:5195/smoothness.tmp.html",
+  "botTurnCompleteMs": 3195.2999999970198,
+  "elapsed": 20112.59999999404,
+  "longTasks": [],
+  "totalBlockingMs": 0,
+  "clicks": [
+    {
+      "name": "click",
+      "duration": 88,
+      "delay": 6.4000000059604645
+    }
+  ],
+  "frames": 1199,
+  "frameP95": 16.799999999999272,
+  "maxFrameMs": 50,
+  "text": "WAITING\n11:56\nPRIORITY\n11:38\nCONTROL OPPONENT\nBOT PLAYBACK\nAUTO-RUNNING\n+\nLOG\nMORE\nTURN 1\nRival\n10 LOGS\nSETUP\n\nRival chose to go first.\n\nKept opening hand.\n\nKept opening hand.\n\nSTART\n\nSetup complete; start phase begins.\n\nGained D8 gig (5).\n\nMAIN\n\nAdvanced from start to main.\n\nCalled \nGoro Takemura: Hands Unclean\n.\n\nSold \nOver the Edge\n.\n\nPlayed \nMandibular Upgrade\n for 1 eddies, attached to \nGoro Takemura: Hands Unclean\n.\n\nSTART\n\nTurn 1 ended.\n\nTURN 2\nYou\n3 LOGS\nMAIN\n\nPassed main phase; advanced to start.\n\nSTART\n\nAdvanced from main to start.\n\nTurn 2 started.\n\nUNDO\nSTART\nSPACE\nCONCEDE\nD20\nD12\nD10\nD6\nD4\nFIXER\nFIELD\nLEGENDS\n0/4\nT2\nSTART\nYOUR TURN\nRIVAL\n11:56\nYOU\n11:38\n33\nDECK\nTrash(0)\nTRASH\nStr"
+}

@@ -143,7 +143,7 @@ describe("Verita — death bonus lasts through the controller's next turn", () =
         p.declareAttack(p.card(fourOfHearts), q.card(champion));
         game.resolveCombatWithoutRetaliation();
         total += 2;
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(total);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(total);
       }
       advanceToMain(game, p.id, game.state.turn.number);
       const late = p.card(twoOfHearts, { zone: "hand" });
@@ -157,23 +157,23 @@ describe("Verita — death bonus lasts through the controller's next turn", () =
       p.declareAttack(late, q.card(champion));
       game.resolveCombatWithoutRetaliation();
       total += 1;
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(total);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(total);
       p.declareAttack(p.card(fourOfHearts), q.card(champion));
       game.resolveCombatWithoutRetaliation();
       total += 2;
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(total);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(total);
       p.declareAttack(p.card(woodlandSquirrels, { zone: "field" }), q.card(champion));
       game.resolveCombatWithoutRetaliation();
       total += 1;
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(total);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(total);
       advanceToMain(game, q.id);
       q.declareAttack(q.card(fourOfHearts), p.card(champion));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
       advanceToMain(game, p.id);
       p.declareAttack(p.card(fourOfHearts), q.card(champion));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(total + 1);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(total + 1);
     });
   }
 });
@@ -215,7 +215,7 @@ it("protects other owned Suited allies from lethal damage and destruction only w
       target.objectId === protectedAlly.objectId ? "field" : "graveyard",
     );
   }
-  expect(game.state.objects[protectedAlly.objectId]!.damage).toBe(1);
+  expect(game.markedDamage(protectedAlly.objectId)).toBe(1);
   for (const target of [protectedAlly, p.card(veritaQueenOfHearts)]) {
     opportunity();
     q.activate(q.cards(nocturnesOblivion, { zone: "hand" })[0]!, {

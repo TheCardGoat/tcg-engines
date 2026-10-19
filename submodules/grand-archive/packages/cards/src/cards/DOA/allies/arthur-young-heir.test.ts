@@ -78,7 +78,7 @@ describe("Arthur's optional entry rest grants immortality and powers only other 
         expect(power(enemy.objectId)).toBe(1);
         p.declareAttack(ally, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(accept ? 2 : 1);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(accept ? 2 : 1);
         if (accept && wake) {
           p.activate(secondWind, {
             reservePayment: pay(3),
@@ -101,7 +101,7 @@ describe("Arthur's optional entry rest grants immortality and powers only other 
           expect(power(ally.objectId)).toBe(1);
           return;
         }
-        expect(game.state.objects[source.objectId]!.damage).toBe(3);
+        expect(game.markedDamage(source.objectId)).toBe(3);
         expect(power(ally.objectId)).toBe(wake ? 1 : 2);
         advanceToMain(game, q.id);
         expect(game.state.objects[source.objectId]!.zone).toBe("field");

@@ -1,5 +1,6 @@
 import type { DomCardPose } from "@tcg/simulator-presentation/dom";
 import type { SimulatorAudioCueId } from "@tcg/protocol";
+import { alphaClashProductImageUrl } from "../components/Arena3D/card-artwork";
 export const rulesUrl = "https://alphaclashtcg.com/s/Alpha_Clash_TCG_Comprehensive-Rulebook-80.pdf";
 export interface MotionCard {
   name: string;
@@ -21,7 +22,7 @@ export interface TypeMotion {
 }
 const art = (name: string, product: number): MotionCard => ({
   name,
-  imageUrl: `https://tcgplayer-cdn.tcgplayer.com/product/${product}_400w.jpg`,
+  imageUrl: alphaClashProductImageUrl(product),
 });
 const pose = (x: number, y: number, width = 105, face = true, rotation = 0): DomCardPose => ({
   left: x - width / 2,

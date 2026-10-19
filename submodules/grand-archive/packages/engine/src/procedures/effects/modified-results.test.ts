@@ -207,7 +207,7 @@ describe("Grand Archive modified instruction results", () => {
       "target-1": [targetObject.id],
     });
 
-    expect(runtime.state.objects[targetObject.id]?.damage).toBe(3);
+    expect(runtime.state.objects[targetObject.id]?.temporaryDamage).toBe(3);
     expect(runtime.state.objects[fixture.sourceId]?.damage).toBe(2);
   });
 
@@ -407,7 +407,7 @@ describe("Grand Archive modified instruction results", () => {
       ).ok,
     ).toBe(true);
 
-    expect(runtime.state.objects[targetObject.id]?.damage).toBe(6);
+    expect(runtime.state.objects[targetObject.id]?.temporaryDamage).toBe(6);
     expect(runtime.state.zones[fixture.p1].graveyard).toEqual(
       expect.arrayContaining(fractals.map((object) => object.id)),
     );

@@ -42,6 +42,8 @@ import type {
 import { INTERACTION_PROTOCOL_VERSION } from "@tcg/protocol";
 import { DEFAULT_SCENARIO, getScenario, P1, P2, type ScenarioId } from "./fixtures/scenarios";
 import { AI_SPEED_MS, type AiMode, type AiSpeed } from "./aiStatus";
+import { createAiDecisionClient, type AiDecisionClient } from "./ai-worker-client";
+import { createBrowserAiStrategy, workerStrategyFor } from "./ai-worker-strategy";
 import type { ChatMessage, ChatPresetKey } from "./chat";
 import type { EngineAction } from "../types/e2e";
 import type { CyberpunkAnalyticsEnvelope } from "../components/EndGameModal/postGameApi";
@@ -1119,10 +1121,25 @@ export function EngineProvider({
   // are stored alongside the side they were attributed to. Viewer-filtered
   // entries are derived in a useMemo so flipping humanSide re-projects the
   // history correctly.
-  const [rawMoveLogs, setRawMoveLogs] = useState<
+  const [localRawMoveLogs, setRawMoveLogs] = useState<
     Array<{ id: number; side: MoveLogEntry["side"]; log: MoveLog }>
   >(() => remoteMoveLogs.map((log, index) => rawMoveLogEntry(log, index + 1)));
-  const [rawEngineEvents, setRawEngineEvents] = useState<RawEngineEventEntry[]>([]);
+  const [localRawEngineEvents, setRawEngineEvents] = useState<RawEngineEventEntry[]>([]);
+  // Hosted state, interactions and events are one snapshot. Mirroring each
+  // prop in a passive effect rendered a mixed-version board, then repeated the
+  // entire board render before the animation could even prepare.
+  const isRemote = Boolean(remoteDispatch);
+  const rawMoveLogs = useMemo(
+    () =>
+      isRemote
+        ? remoteMoveLogs.map((log, index) => rawMoveLogEntry(log, index + 1))
+        : localRawMoveLogs,
+    [isRemote, remoteMoveLogs, localRawMoveLogs],
+  );
+  const rawEngineEvents = useMemo(
+    () => (isRemote ? remoteEngineEvents.slice(-RAW_ENGINE_EVENT_CAP) : localRawEngineEvents),
+    [isRemote, remoteEngineEvents, localRawEngineEvents],
+  );
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() =>
     remoteChatMessages.slice(-CHAT_LOG_CAP),
   );
@@ -1165,30 +1182,34 @@ export function EngineProvider({
     setHistoryControlsHydrated(true);
   }, []);
 
-  useEffect(() => {
-    if (syncedEngineBuilderRef.current === initialEngineBuilder) {
-      return;
-    }
+  // Adjust this provider before rendering children, so a new hosted view
+  // never reaches them paired with the previous engine snapshot.
+  if (syncedEngineBuilderRef.current !== initialEngineBuilder) {
     syncedEngineBuilderRef.current = initialEngineBuilder;
     customEngineBuilderRef.current = initialEngineBuilder;
-    if (!initialEngineBuilder) {
-      return;
-    }
-    try {
+    if (initialEngineBuilder) {
       engineRef.current = initialEngineBuilder();
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error("[engine] failed to rebuild hosted session", err);
-      return;
+      setEngineBuildId((n) => n + 1);
+      notifiedGameEndStateIdRef.current = null;
     }
-    setEngineBuildId((n) => n + 1);
-    notifiedGameEndStateIdRef.current = null;
-    forceRender();
-  }, [initialEngineBuilder, forceRender]);
+  }
 
   // AIPlayer instances are cached per (engine, side, strategy). Recreated on
   // strategy change or scenario rebuild; never mutated in place.
   const aiPlayersRef = useRef<Record<Side, AIPlayer | null>>({ player: null, opponent: null });
+  const aiWorkersRef = useRef<Partial<Record<Side, AiDecisionClient>>>({});
+  const pendingAiRef = useRef<{
+    side: Side;
+    state: MatchState;
+    engine: CyberpunkTestEngine;
+    mode: AiMode;
+    humanSide: Side;
+    ai: AIPlayer;
+    client: AiDecisionClient;
+    cancelDelay: () => void;
+  } | null>(null);
+  const aiModeRef = useRef(aiMode);
+  aiModeRef.current = aiMode;
   const logIdRef = useRef(0);
 
   // Watchdog bookkeeping for the seat whose prompt has been actionable too
@@ -1232,6 +1253,12 @@ export function EngineProvider({
     aiPlayersRef.current = {
       player: buildAiPlayer(scenarioId, "player", aiStrategies.player),
       opponent: buildAiPlayer(scenarioId, "opponent", aiStrategies.opponent),
+    };
+    return () => {
+      pendingAiRef.current?.cancelDelay();
+      pendingAiRef.current = null;
+      for (const client of Object.values(aiWorkersRef.current)) client.dispose();
+      aiWorkersRef.current = {};
     };
   }, [scenarioId, engineBuildId, aiStrategies, buildAiPlayer]);
 
@@ -1310,8 +1337,13 @@ export function EngineProvider({
       // with. Unbound seats and strategies that cannot carry a profile (the
       // forced/test strategies) pass through unchanged.
       const previousProfile = boundDeckProfile(prev[side]);
+      const workerStrategy = strategy ? workerStrategyFor(strategy) : null;
       const next =
-        strategy && previousProfile ? withDeckProfile(strategy, previousProfile) : strategy;
+        strategy && previousProfile
+          ? workerStrategy
+            ? createBrowserAiStrategy(workerStrategy.id, previousProfile)
+            : withDeckProfile(strategy, previousProfile)
+          : strategy;
       return { ...prev, [side]: next };
     });
     setAiTakeover((prev) => (prev?.side === side ? null : prev));
@@ -1404,22 +1436,6 @@ export function EngineProvider({
         : next;
     });
   }, []);
-
-  useEffect(() => {
-    if (!remoteDispatch) {
-      return;
-    }
-    setRawMoveLogs(remoteMoveLogs.map((log, index) => rawMoveLogEntry(log, index + 1)));
-    moveLogIdRef.current = remoteMoveLogs.length;
-  }, [remoteDispatch, remoteMoveLogs]);
-
-  useEffect(() => {
-    if (!remoteDispatch) {
-      return;
-    }
-    setRawEngineEvents(remoteEngineEvents.slice(-RAW_ENGINE_EVENT_CAP));
-    rawEngineEventIdRef.current = remoteEngineEvents.at(-1)?.id ?? 0;
-  }, [remoteDispatch, remoteEngineEvents]);
 
   useEffect(() => {
     if (!hasHostedChat && !remoteDispatch) {
@@ -1555,13 +1571,73 @@ export function EngineProvider({
   );
 
   const runStepFor = useCallback(
-    (side: Side): boolean => {
+    (side: Side, pacingMs = 0): boolean => {
       const ai = aiPlayersRef.current[side];
       if (!ai) {
         return false;
       }
+      if (pendingAiRef.current) return false;
       try {
-        const beforeState = engineRef.current.getState();
+        const currentEngine = engineRef.current;
+        const beforeState = currentEngine.getState();
+        const workerStrategy = workerStrategyFor(ai.strategy);
+        if (typeof Worker !== "undefined" && workerStrategy) {
+          const client = (aiWorkersRef.current[side] ??= createAiDecisionClient(
+            PLAYER_SIDE_TO_ID[side],
+            workerStrategy,
+            `${scenarioId}:${side}`,
+          ));
+          let cancelDelay = () => {};
+          const pacing =
+            pacingMs > 0
+              ? new Promise<void>((resolve) => {
+                  const timer = setTimeout(resolve, pacingMs);
+                  cancelDelay = () => {
+                    clearTimeout(timer);
+                    resolve();
+                  };
+                })
+              : Promise.resolve();
+          const pending = {
+            side,
+            state: beforeState,
+            engine: currentEngine,
+            mode: aiModeRef.current,
+            humanSide: humanSideRef.current,
+            ai,
+            client,
+            cancelDelay,
+          };
+          pendingAiRef.current = pending;
+          const isCurrent = () =>
+            pendingAiRef.current === pending &&
+            engineRef.current === currentEngine &&
+            currentEngine.getState() === beforeState &&
+            aiPlayersRef.current[side] === ai &&
+            aiModeRef.current === pending.mode &&
+            humanSideRef.current === pending.humanSide;
+          const combatProgression =
+            import.meta.env.DEV &&
+            new URLSearchParams(window.location.search).get("auto-advance-attack") === "off"
+              ? "manual"
+              : "automatic";
+          void Promise.all([client.decide(beforeState, combatProgression), pacing])
+            .then(([selection]) => {
+              if (!selection || !isCurrent()) return;
+              recordStep(side, ai.executeDecision(selection), beforeState);
+            })
+            .catch((error: unknown) => {
+              if (isCurrent())
+                setLastAiError(error instanceof Error ? error.message : String(error));
+            })
+            .finally(() => {
+              pending.cancelDelay();
+              if (pendingAiRef.current !== pending) return;
+              pendingAiRef.current = null;
+              forceRender();
+            });
+          return true;
+        }
         const result = ai.step();
         recordStep(side, result, beforeState);
         return result.kind === "acted";
@@ -1573,7 +1649,7 @@ export function EngineProvider({
         return false;
       }
     },
-    [recordStep],
+    [recordStep, scenarioId, forceRender],
   );
 
   // ── Read engine state every render ────────────────────────────────────────
@@ -1587,12 +1663,30 @@ export function EngineProvider({
   );
   const matchState = engine.getState();
   const engineStateId = matchState.ctx.stateID;
+  // Stop obsolete searches promptly. Object identity also covers undo/restart,
+  // where a numeric state version can be reused.
+  useEffect(() => {
+    const pending = pendingAiRef.current;
+    if (
+      !pending ||
+      (pending.state === matchState &&
+        pending.engine === engine &&
+        pending.mode === aiMode &&
+        pending.humanSide === humanSide &&
+        aiPlayersRef.current[pending.side] === pending.ai)
+    )
+      return;
+    pending.cancelDelay();
+    pendingAiRef.current = null;
+    pending.client.dispose();
+    delete aiWorkersRef.current[pending.side];
+  }, [matchState, engine, aiMode, humanSide, aiStrategies]);
   // State numbers can repeat after restart, undo or hosted-engine replacement.
   // Include both identities so caching never crosses those boundaries.
   const derived = useMemo(() => {
     const playerPrompt = engine.getPrompt(P1);
     const opponentPrompt = engine.getPrompt(P2);
-    const interactionViewFor = (actorId: string, prompt: PlayerPrompt) => {
+    const interactionViewFor = (actorId: string, prompt: PlayerPrompt): EngineInteractionView => {
       try {
         return buildCyberpunkInteractionView({
           actorId,
@@ -1780,10 +1874,19 @@ export function EngineProvider({
     forceRender();
   }, [aiSideToStep, remoteSubmitInteraction, runRemoteStepFor, runStepFor, forceRender]);
 
+  // Only automatic bot and singleton-target actions need notifications from this
+  // gate. Human dispatch reads it synchronously. Subscribing the entire engine
+  // provider made every prepare/start pair render the whole board twice.
+  const singletonTargetAction = useMemo(
+    () => (autoResolveSingletonCardTargets ? singletonCardTargetAction(matchState) : null),
+    [autoResolveSingletonCardTargets, matchState],
+  );
+  const paceAutomaticActions =
+    (aiMode === "auto" && aiSideToStep !== null) || singletonTargetAction !== null;
   const animationsBlockCommands = useSyncExternalStore(
-    animationCommandGate.subscribe,
-    animationCommandGate.isBlocked,
-    animationCommandGate.isBlocked,
+    paceAutomaticActions ? animationCommandGate.subscribe : subscribeIdleAnimationGate,
+    paceAutomaticActions ? animationCommandGate.isBlocked : idleAnimationGateSnapshot,
+    idleAnimationGateSnapshot,
   );
 
   useEffect(() => {
@@ -1801,11 +1904,11 @@ export function EngineProvider({
       const warnDrop = (error: string) => {
         console.warn("[cyberpunk] command dropped:", action.type, JSON.stringify({ error }));
       };
-      if (animationsBlockCommands) {
-        warnDrop("animation-active");
+      if (animationCommandGate.isBlocked()) {
+        warnDrop("presentation-pending");
         return {
           success: false as const,
-          error: "animation-active",
+          error: "presentation-pending",
         };
       }
       if (remoteDispatch) {
@@ -1839,7 +1942,7 @@ export function EngineProvider({
           if (sent === false || sent === undefined) {
             return {
               success: false as const,
-              error: "Gateway is unavailable; reconnect before taking another move",
+              error: "Action not sent. Check the match status before trying again.",
             };
           }
           const result = remotePendingCommandResult(action, preMoveState);
@@ -1895,7 +1998,7 @@ export function EngineProvider({
             }
             return {
               success: false as const,
-              error: "Gateway is unavailable; reconnect before taking another move",
+              error: "Action not sent. Check the match status before trying again.",
             };
           }
           const result = remotePendingCommandResult(action, preMoveState);
@@ -2219,7 +2322,7 @@ export function EngineProvider({
       remoteExecuteMove,
       boardCorrectionEnabled,
       hasPendingRemoteMove,
-      animationsBlockCommands,
+      animationCommandGate,
       lockLocalHistoryControls,
       humanSide,
       playerInteractionView,
@@ -2372,19 +2475,13 @@ export function EngineProvider({
   );
 
   useEffect(() => {
-    if (!autoResolveSingletonCardTargets) {
-      return;
-    }
-    const action = singletonCardTargetAction(matchState);
-    if (!action) {
-      return;
-    }
-    dispatch(action);
-  }, [autoResolveSingletonCardTargets, dispatch, engineStateId, matchState]);
+    if (!singletonTargetAction || animationsBlockCommands || hasPendingRemoteMove) return;
+    dispatch(singletonTargetAction);
+  }, [singletonTargetAction, animationsBlockCommands, hasPendingRemoteMove, dispatch]);
 
   // After every render, in auto mode, schedule one AI step if a side is
-  // eligible. Normal and slow pacing wait for the previous animation queue to
-  // finish; fast pacing intentionally drains without that visual gate.
+  // eligible and its committed board is presented. The remaining cosmetic
+  // motion does not hold up the next decision.
   useEffect(() => {
     if (aiMode !== "auto") {
       return;
@@ -2404,6 +2501,18 @@ export function EngineProvider({
       return;
     }
     const delay = AI_SPEED_MS[aiSpeed];
+    const strategy = aiPlayersRef.current[aiSideToStep]?.strategy;
+    // Search while the deliberate reading delay elapses. The worker cannot
+    // block rendering, and commit still waits for both the result and pacing.
+    if (
+      !remoteSubmitInteraction &&
+      typeof Worker !== "undefined" &&
+      strategy &&
+      workerStrategyFor(strategy)
+    ) {
+      runStepFor(aiSideToStep, delay);
+      return;
+    }
     const timer = setTimeout(() => {
       if (remoteSubmitInteraction) {
         runRemoteStepFor(aiSideToStep);
@@ -2677,4 +2786,11 @@ function notifyInsufficientEddies(message: string): void {
     title: "Not enough Eddies",
     message: "You still have to pay that card's cost. Pick a cheaper Program, or cancel.",
   });
+}
+
+function subscribeIdleAnimationGate(): () => void {
+  return () => {};
+}
+function idleAnimationGateSnapshot(): boolean {
+  return false;
 }

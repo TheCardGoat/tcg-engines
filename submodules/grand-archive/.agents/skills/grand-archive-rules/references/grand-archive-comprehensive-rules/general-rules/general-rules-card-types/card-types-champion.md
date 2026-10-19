@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-types/card-types-champion"
   relation: "current_index"
 ---
-
 # Card Types - Champion
 
 #### General Rules
@@ -22,6 +21,7 @@ official_source:
 7. Champions can be materialized from the material deck as long as they have a legal lineage requirement and are level N+1, where N is the current level of a champion on the field under that player's control.
    1. If the materialized champion becomes N+2 with respect to the champion in play, the materialization becomes illegal and fizzles.
 8. If a Champion card would be put into a graveyard from anywhere, it is instead banished.
+9. The element identity of the champion consists of all elements among champion cards within the lineage.
 
 **Leveling Up**
 
@@ -45,9 +45,8 @@ E.g., A player who controls Lorraine, Blademaster with a Spirit of Fire in the L
    1. The Champion is considered the champion object that is on the field.
    2. A new champion card being placed on top of the original champion does not count as a new object entering the field. It will still count as a new champion card entering the lineage. Therefore, the addition of that card to the lineage will trigger any On Enter abilities of the topmost champion card in the lineage.
       1. When a champion leaves or enters the field, it will do so with all cards within its inner lineage as well as its counters (Enlighten, Level, etc.).
-      2. The element identity of the champion consists of all elements among champion cards within the lineage.
-      3. If a new object were to replace the current champion and its lineage, no attributes of that lineage carry over, such as enlighten counters or damage counters.
-      4. Only Inherited Effects from among cards in the lineage will contribute to the effects and abilities of the champion of the lineage; any other characteristics from the inner lineage such as card name, cost, class identity, types, non-Inherited Effect abilities, life stats, and power stats are ignored.
+      2. If a new object were to replace the current champion and its lineage, no attributes of that lineage carry over, such as enlighten counters or damage counters.
+      3. Only Inherited Effects from among cards in the lineage will contribute to the effects and abilities of the champion of the lineage; any other characteristics from the inner lineage such as card name, cost, class identity, types, non-Inherited Effect abilities, life stats, and power stats are ignored.
 8. Players can only level up champions they control.
 9. Players can't play nor level up champions they do not meet leveling requirements for.
 

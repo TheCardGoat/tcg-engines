@@ -69,19 +69,19 @@ describe("Haunting Demise hit and inherited damage", () => {
           passEffectsStack(game);
           const hit = ally || !prevent,
             inherited = matches && !ally && hit;
-          expect(game.state.objects[target.objectId]!.damage).toBe(hit ? 3 : 0);
+          expect(game.markedDamage(target.objectId)).toBe(hit ? 3 : 0);
           expect(game.state.objects[source.objectId]!.zone).toBe(
             inherited ? "inner-lineage" : "graveyard",
           );
           if (inherited) expect(game.state.objects[source.objectId]!.hostId).toBe(foe.objectId);
-          const before = game.state.objects[foe.objectId]!.damage;
+          const before = game.markedDamage(foe.objectId);
           advanceToRecollection(game, q.id);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(before);
+          expect(game.markedDamage(foe.objectId)).toBe(before);
           expect(game.state.stack).toHaveLength(inherited ? 1 : 0);
           if (inherited)
             q.activate(q.cards(penumbralWaltz, { zone: "hand" })[0]!, { variables: { X: 0 } });
           passEffectsStack(game);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(before + (inherited ? 1 : 0));
+          expect(game.markedDamage(foe.objectId)).toBe(before + (inherited ? 1 : 0));
           if (inherited) {
             advanceToMain(game, q.id);
             const spells = q.cards(fireball, { zone: "hand" });
@@ -94,16 +94,16 @@ describe("Haunting Demise hit and inherited damage", () => {
                 targets: { "target-1": [foe.objectId] },
               });
               passEffectsStack(game);
-              expect(game.state.objects[foe.objectId]!.damage).toBe(before + 1 + (i === 3 ? 1 : 0));
+              expect(game.markedDamage(foe.objectId)).toBe(before + 1 + (i === 3 ? 1 : 0));
             }
           }
-          const current = game.state.objects[foe.objectId]!.damage;
+          const current = game.markedDamage(foe.objectId);
           advanceToRecollection(game, p.id);
           passEffectsStack(game);
-          expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(current);
+          expect(game.markedDamage(hero.objectId)).toBe(0);
+          expect(game.markedDamage(foe.objectId)).toBe(current);
           advanceToRecollection(game, q.id);
           passEffectsStack(game);
-          expect(game.state.objects[foe.objectId]!.damage).toBe(current + (inherited ? 1 : 0));
+          expect(game.markedDamage(foe.objectId)).toBe(current + (inherited ? 1 : 0));
         });
 });

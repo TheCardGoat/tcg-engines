@@ -49,6 +49,7 @@ export const pelagicFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           id: "tqkkyf4ktr-a2",
           kind: "triggered",
           text: "[Guo Jia Bonus] Whenever this card is banished from your graveyard to pay for a memory cost, put it onto the field transformed.",
+          functionalZones: ["graveyard"],
           trigger: {
             kind: "event",
             event: {
@@ -84,7 +85,6 @@ export const pelagicFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               face: "transformed",
             },
           },
-          functionalZones: ["graveyard"],
         },
         {
           id: "tqkkyf4ktr-a3",

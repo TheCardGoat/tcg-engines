@@ -72,6 +72,8 @@ export interface DevRuntimeConfig {
  * `src/games/gundam/src/game/bot/strategy-bot.ts::StrategyBotHandle`.
  */
 export interface DevRuntimeBotHandle {
+  getError?(): string | null;
+  subscribeStatus?(listener: () => void): () => void;
   getMode(): "auto" | "step" | "paused";
   getSpeed(): "fast" | "balanced" | "slow";
   getStrategyName(): string;

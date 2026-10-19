@@ -1,3 +1,7 @@
+import { useBackgroundBot } from "../../simulator/bot/use-background-bot";
+import { decideFabBot } from "./bot-decision";
+const createBotWorker = () =>
+  new Worker(new URL("./bot-decision.worker.ts", import.meta.url), { type: "module" });
 import {
   captureFabZoneLocations,
   fabLatestAnnouncementTransition,
@@ -34,14 +38,12 @@ import {
   DEFAULT_FAB_AUTOMATED_ACTION_STRATEGY_ID,
   createFabMatchContext,
   getSafeFabAutomatedActionStrategyOption,
-  chooseAutomatedAction,
   decodeFabCommand,
   botEligibleFabCommands,
   listLegalCommands,
   seatMustAct,
   submitAutomatedAction,
   seedFromString,
-  nextRandom,
   type FabCommandExecutionContext,
   type FabLegalCommand,
   FabMatchRuntime,
@@ -400,15 +402,6 @@ type FabActionFlow =
   | { readonly kind: "intents" }
   | { readonly kind: "cards"; readonly intent: FabActionIntent }
   | { readonly kind: "commands"; readonly intent: FabActionIntent; readonly cardKey: string };
-
-function createSeededRandom(seed: string): () => number {
-  let rng = seedFromString(seed);
-  return () => {
-    const result = nextRandom(rng);
-    rng = result.state;
-    return result.value;
-  };
-}
 
 function projectSession(
   runtime: FabMatchRuntime,
@@ -1672,7 +1665,7 @@ function ReadyLocalEngineMatch({
     [match.runtime, match.seed, sessionKey],
   );
   useRegisterSimulatorDebugExportSource(debugHistory);
-  const randomRef = useRef(createSeededRandom(`${match.seed}:bot`));
+  const randomRef = useRef(seedFromString(`${match.seed}:bot`));
   const [activeBotStrategyId, setActiveBotStrategyId] = useState<string | null>(botStrategyId);
   const [botPacing, setBotPacing] = useState<SimulatorBotPacing>("auto");
   const [botSpeed, setBotSpeed] = useState<SimulatorBotSpeed>("balanced");
@@ -2334,215 +2327,225 @@ function ReadyLocalEngineMatch({
     });
   }, [botError, botId, controlledPlayerId, engineVersion, runtime, strategy]);
 
-  const runBotStep = useCallback(() => {
-    if (
-      botStepInFlightRef.current ||
-      !strategy ||
-      controlledPlayerId === botId ||
-      runtime.hasGameEnded() ||
-      botError
-    ) {
-      return false;
-    }
-    const legal = botEligibleFabCommands(
-      listLegalCommands(runtime, botId, { includeConcede: true }),
-    );
-    if (
-      !shouldScheduleFabPracticeBot({
-        botId,
-        decisionActorId: runtime.getState().decision?.actorId,
-        seatMustAct: seatMustAct(runtime, botId),
-        legalCommands: legal,
-      })
-    ) {
-      return false;
-    }
-
-    const previousLocations = captureFabZoneLocations(runtime.getState());
-    botStepInFlightRef.current = true;
-    setPending(true);
-    let presentationUpdated = false;
-    try {
-      const decisionBefore = practiceDecisionSnapshot(runtime.waitState());
-      const choice = chooseAutomatedAction(runtime, botId, strategy, {
-        random: randomRef.current,
-      });
-      if (!choice) {
-        if (seatMustAct(runtime, botId)) {
-          const execution = botExecutionContext(runtime);
-          const submitted = submitAutomatedAction(
-            runtime,
-            botId,
-            {
-              move: "concede",
-              payload: {},
-              label: "Concede",
-            },
-            legal,
-            execution,
-          );
-          if (!submitted.advanced) {
-            setBotError(submitted.error ?? "Bot could not play, pass, or concede.");
-          } else {
-            if (fabPracticeUndoBlockedByBarrier(submitted.undoBarrier)) setUndoCheckpoint(null);
-            const snapshot = submitted.snapshot ?? runtime.snapshot();
-            const commandId = `practice:bot:${runtime.getStateID()}:${++animationCommandIdRef.current}`;
-            debugHistory.record({
-              stateAfter: snapshot,
-              stateVersion: runtime.getStateID(),
-              turnNumber: runtime.getState().turnNumber,
-              actorId: botId,
-              moveId: submitted.command.move,
-              commandId: execution.commandId,
-              input: submitted.command.payload,
-              processedCommand: submitted.command,
-              timestamp: execution.timestamp,
-              domainEvents: submitted.committedEvents,
-            });
-            let willAnimate = false;
-            runFabPracticePostCommandWork({
-              commandId,
-              stage: "animation",
-              work: () => {
-                willAnimate = enqueueEngineAnimation({
-                  previousLocations,
-                  commandId,
-                  events: submitted.committedEvents,
-                  version: runtime.getStateID(),
-                });
-                presentationUpdated = true;
-              },
-            });
-            const telemetryEntry = buildTelemetryEntry({
-              source: "bot",
-              actorId: botId,
-              command: submitted.command,
-              playerLog: submitted.playerLog,
-              moveLogs: submitted.moveLogs,
-              decisionBefore,
-            });
-            deferCommandWork(
-              {
-                correlationId: commandId,
-                snapshot,
-                commitAnalytics: () =>
-                  recordAnalyticsBatch({
-                    commandId: execution.commandId,
-                    stateVersion: runtime.getStateID(),
-                    timestamp: execution.timestamp,
-                    events: submitted.committedEvents,
-                  }),
-                commitTelemetry: () => commitTelemetry(telemetryEntry),
-              },
-              willAnimate,
-            );
-          }
-        }
+  const commitBotChoice = useCallback(
+    (choice: ReturnType<typeof decideFabBot>["choice"]) => {
+      if (
+        botStepInFlightRef.current ||
+        !strategy ||
+        controlledPlayerId === botId ||
+        runtime.hasGameEnded() ||
+        botError
+      ) {
+        return false;
+      }
+      const legal = botEligibleFabCommands(
+        listLegalCommands(runtime, botId, { includeConcede: true }),
+      );
+      if (
+        !shouldScheduleFabPracticeBot({
+          botId,
+          decisionActorId: runtime.getState().decision?.actorId,
+          seatMustAct: seatMustAct(runtime, botId),
+          legalCommands: legal,
+        })
+      ) {
         return false;
       }
 
-      const execution = botExecutionContext(runtime);
-      const submitted = submitAutomatedAction(runtime, botId, choice, legal, execution);
-      if (!submitted.advanced) {
-        setBotError(submitted.error ?? `Bot stalled on ${choice.move}.`);
-      } else {
-        if (fabPracticeUndoBlockedByBarrier(submitted.undoBarrier)) setUndoCheckpoint(null);
-        const snapshot = submitted.snapshot ?? runtime.snapshot();
-        const commandId = `practice:bot:${runtime.getStateID()}:${++animationCommandIdRef.current}`;
-        debugHistory.record({
-          stateAfter: snapshot,
-          stateVersion: runtime.getStateID(),
-          turnNumber: runtime.getState().turnNumber,
-          actorId: botId,
-          moveId: submitted.command.move,
-          commandId: execution.commandId,
-          input: submitted.command.payload,
-          processedCommand: submitted.command,
-          timestamp: execution.timestamp,
-          domainEvents: submitted.committedEvents,
-        });
-        let willAnimate = false;
-        runFabPracticePostCommandWork({
-          commandId,
-          stage: "animation",
-          work: () => {
-            willAnimate = enqueueEngineAnimation({
-              previousLocations,
-              commandId,
-              events: submitted.committedEvents,
-              version: runtime.getStateID(),
-            });
-            presentationUpdated = true;
-          },
-        });
-        const telemetryEntry = buildTelemetryEntry({
-          source: "bot",
-          actorId: botId,
-          command: submitted.command,
-          playerLog: submitted.playerLog,
-          moveLogs: submitted.moveLogs,
-          decisionBefore,
-        });
-        deferCommandWork(
-          {
-            correlationId: commandId,
-            snapshot,
-            commitAnalytics: () =>
-              recordAnalyticsBatch({
-                commandId: execution.commandId,
+      const previousLocations = captureFabZoneLocations(runtime.getState());
+      botStepInFlightRef.current = true;
+      setPending(true);
+      let presentationUpdated = false;
+      try {
+        const decisionBefore = practiceDecisionSnapshot(runtime.waitState());
+        if (!choice) {
+          if (seatMustAct(runtime, botId)) {
+            const execution = botExecutionContext(runtime);
+            const submitted = submitAutomatedAction(
+              runtime,
+              botId,
+              {
+                move: "concede",
+                payload: {},
+                label: "Concede",
+              },
+              legal,
+              execution,
+            );
+            if (!submitted.advanced) {
+              setBotError(submitted.error ?? "Bot could not play, pass, or concede.");
+            } else {
+              if (fabPracticeUndoBlockedByBarrier(submitted.undoBarrier)) setUndoCheckpoint(null);
+              const snapshot = submitted.snapshot ?? runtime.snapshot();
+              const commandId = `practice:bot:${runtime.getStateID()}:${++animationCommandIdRef.current}`;
+              debugHistory.record({
+                stateAfter: snapshot,
                 stateVersion: runtime.getStateID(),
+                turnNumber: runtime.getState().turnNumber,
+                actorId: botId,
+                moveId: submitted.command.move,
+                commandId: execution.commandId,
+                input: submitted.command.payload,
+                processedCommand: submitted.command,
                 timestamp: execution.timestamp,
+                domainEvents: submitted.committedEvents,
+              });
+              let willAnimate = false;
+              runFabPracticePostCommandWork({
+                commandId,
+                stage: "animation",
+                work: () => {
+                  willAnimate = enqueueEngineAnimation({
+                    previousLocations,
+                    commandId,
+                    events: submitted.committedEvents,
+                    version: runtime.getStateID(),
+                  });
+                  presentationUpdated = true;
+                },
+              });
+              const telemetryEntry = buildTelemetryEntry({
+                source: "bot",
+                actorId: botId,
+                command: submitted.command,
+                playerLog: submitted.playerLog,
+                moveLogs: submitted.moveLogs,
+                decisionBefore,
+              });
+              deferCommandWork(
+                {
+                  correlationId: commandId,
+                  snapshot,
+                  commitAnalytics: () =>
+                    recordAnalyticsBatch({
+                      commandId: execution.commandId,
+                      stateVersion: runtime.getStateID(),
+                      timestamp: execution.timestamp,
+                      events: submitted.committedEvents,
+                    }),
+                  commitTelemetry: () => commitTelemetry(telemetryEntry),
+                },
+                willAnimate,
+              );
+            }
+          }
+          return false;
+        }
+
+        const execution = botExecutionContext(runtime);
+        const submitted = submitAutomatedAction(runtime, botId, choice, legal, execution);
+        if (!submitted.advanced) {
+          setBotError(submitted.error ?? `Bot stalled on ${choice.move}.`);
+        } else {
+          if (fabPracticeUndoBlockedByBarrier(submitted.undoBarrier)) setUndoCheckpoint(null);
+          const snapshot = submitted.snapshot ?? runtime.snapshot();
+          const commandId = `practice:bot:${runtime.getStateID()}:${++animationCommandIdRef.current}`;
+          debugHistory.record({
+            stateAfter: snapshot,
+            stateVersion: runtime.getStateID(),
+            turnNumber: runtime.getState().turnNumber,
+            actorId: botId,
+            moveId: submitted.command.move,
+            commandId: execution.commandId,
+            input: submitted.command.payload,
+            processedCommand: submitted.command,
+            timestamp: execution.timestamp,
+            domainEvents: submitted.committedEvents,
+          });
+          let willAnimate = false;
+          runFabPracticePostCommandWork({
+            commandId,
+            stage: "animation",
+            work: () => {
+              willAnimate = enqueueEngineAnimation({
+                previousLocations,
+                commandId,
                 events: submitted.committedEvents,
-              }),
-            commitTelemetry: () => commitTelemetry(telemetryEntry),
-          },
-          willAnimate,
-        );
+                version: runtime.getStateID(),
+              });
+              presentationUpdated = true;
+            },
+          });
+          const telemetryEntry = buildTelemetryEntry({
+            source: "bot",
+            actorId: botId,
+            command: submitted.command,
+            playerLog: submitted.playerLog,
+            moveLogs: submitted.moveLogs,
+            decisionBefore,
+          });
+          deferCommandWork(
+            {
+              correlationId: commandId,
+              snapshot,
+              commitAnalytics: () =>
+                recordAnalyticsBatch({
+                  commandId: execution.commandId,
+                  stateVersion: runtime.getStateID(),
+                  timestamp: execution.timestamp,
+                  events: submitted.committedEvents,
+                }),
+              commitTelemetry: () => commitTelemetry(telemetryEntry),
+            },
+            willAnimate,
+          );
+        }
+        return submitted.advanced;
+      } finally {
+        if (!presentationUpdated) {
+          runFabPracticePostCommandWork({
+            commandId: `practice:bot:refresh:${runtime.getStateID()}`,
+            stage: "presentation",
+            work: refresh,
+          });
+        }
+        setPending(false);
+        botStepInFlightRef.current = false;
       }
-      return submitted.advanced;
-    } finally {
-      if (!presentationUpdated) {
-        runFabPracticePostCommandWork({
-          commandId: `practice:bot:refresh:${runtime.getStateID()}`,
-          stage: "presentation",
-          work: refresh,
-        });
-      }
-      setPending(false);
-      botStepInFlightRef.current = false;
-    }
-  }, [
-    botError,
-    botId,
-    buildTelemetryEntry,
-    commitTelemetry,
-    controlledPlayerId,
-    deferCommandWork,
-    debugHistory,
-    enqueueEngineAnimation,
-    recordAnalyticsBatch,
-    refresh,
-    runtime,
-    strategy,
-  ]);
+    },
+    [
+      botError,
+      botId,
+      buildTelemetryEntry,
+      commitTelemetry,
+      controlledPlayerId,
+      deferCommandWork,
+      debugHistory,
+      enqueueEngineAnimation,
+      recordAnalyticsBatch,
+      refresh,
+      runtime,
+      strategy,
+    ],
+  );
 
-  // Local bot loop (no server). Step pacing uses the same one-command
-  // executor through the quick control and expanded configuration panel.
-  // The think-timer wait must not hold the match controls locked: bot steps
-  // re-read legal commands at execution time and every command is validated
-  // atomically by the runtime, so acting during the wait is safe — the effect
-  // re-runs on the new state version and re-delays the pending step.
-  useEffect(() => {
-    if (botPacing !== "auto" || !botAutomationReady) return;
-
-    const timer = window.setTimeout(() => {
-      runBotStep();
-    }, SIMULATOR_BOT_SPEED_MS[botSpeed]);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [botAutomationReady, botPacing, botSpeed, engineVersion, runBotStep]);
+  const runBotStep = useBackgroundBot({
+    identity: runtime.getState(),
+    getIdentity: () => runtime.getState(),
+    workerKey: runtime,
+    scope: `${activeBotStrategyId}:${controlledPlayerId}:${botPacing}`,
+    enabled: botAutomationReady,
+    auto: botPacing === "auto",
+    delayMs: SIMULATOR_BOT_SPEED_MS[botSpeed],
+    createWorker: createBotWorker,
+    context: () =>
+      createFabMatchContext(
+        runtime.getState().cardDefinitions,
+        runtime.getState().publicCardIdentities,
+      ),
+    input: () => ({
+      snapshot: runtime.snapshot(),
+      player: botId,
+      strategyId: activeBotStrategyId ?? DEFAULT_FAB_AUTOMATED_ACTION_STRATEGY_ID,
+      rngState: randomRef.current,
+    }),
+    decide: decideFabBot,
+    onError: setBotError,
+    commit: ({ choice, rngState }) => {
+      randomRef.current = rngState;
+      commitBotChoice(choice);
+    },
+  });
 
   const humanLegal = useMemo(() => {
     if (runtime.hasGameEnded()) return [] as FabLegalCommand[];

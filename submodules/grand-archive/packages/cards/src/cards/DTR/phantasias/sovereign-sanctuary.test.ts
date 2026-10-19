@@ -70,7 +70,7 @@ describe("Sovereign Sanctuary — repeatable prevention for controlled units", (
                 "Declare Raised Slash",
               );
               game.resolveCombatWithoutRetaliation();
-              expect(game.state.objects[target.objectId]!.damage).toBe(prevented ? 1 : 3);
+              expect(game.markedDamage(target.objectId)).toBe(prevented ? 1 : 3);
             } else {
               for (let hit = 1; hit <= 2; hit++) {
                 if (kind === "ability") {
@@ -86,7 +86,7 @@ describe("Sovereign Sanctuary — repeatable prevention for controlled units", (
                   });
                 }
                 passEffectsStack(game);
-                expect(game.state.objects[target.objectId]!.damage).toBe(
+                expect(game.markedDamage(target.objectId)).toBe(
                   hit * (kind === "unpreventable" ? 2 : prevented ? 0 : 1),
                 );
               }
@@ -196,7 +196,7 @@ describe("Sovereign Sanctuary — sacrifice and draw before recollection", () =>
           targets: { "target-unit": [hero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(active ? 0 : 1);
+        expect(game.markedDamage(hero.objectId)).toBe(active ? 0 : 1);
         advanceToRecollection(game, q.id);
         expect(game.state.stack).toHaveLength(0);
         expect(game.state.objects[source.objectId]!.zone).toBe(active ? "field" : "graveyard");
@@ -219,7 +219,7 @@ describe("Sovereign Sanctuary — sacrifice and draw before recollection", () =>
           targets: { "target-unit": [hero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(active ? 1 : 2);
+        expect(game.markedDamage(hero.objectId)).toBe(active ? 1 : 2);
         for (let step = 0; step < 12 && p.zone("memory").length > 0; step++) {
           const wait = game.waitState();
           if (wait.kind !== "opportunity")

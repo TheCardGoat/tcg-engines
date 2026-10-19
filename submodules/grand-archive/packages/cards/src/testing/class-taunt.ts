@@ -72,7 +72,7 @@ export function proveClassTaunt(card: GrandArchiveAnyCard<GrandArchiveAbilityDef
           game.resolveCombatWithoutRetaliation();
           if (defender === "domain")
             expect(game.state.objects[target.objectId]!.counters.durability).toBe(3);
-          else expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          else expect(game.markedDamage(target.objectId)).toBe(1);
         });
       }
 }

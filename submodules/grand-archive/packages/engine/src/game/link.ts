@@ -15,6 +15,15 @@ export const GRAND_ARCHIVE_LINK_TARGET_BINDING = "intrinsic-link-target";
 
 type GrandArchiveLinkKeyword = Extract<GrandArchiveKeyword, { readonly name: "link" }>;
 
+type LinkDerivationContext = Pick<
+  GrandArchiveEvaluationContext,
+  | "derivingProperties"
+  | "characteristicOverrides"
+  | "numericOverrides"
+  | "keywordOverrides"
+  | "skipCrossObjectKeywordDerivation"
+>;
+
 function linkTargetFilter(target: GrandArchiveLinkKeyword["target"]): GrandArchiveCardFilter {
   switch (target) {
     case "ally":
@@ -62,18 +71,21 @@ export function grandArchiveActiveLinkKeywords(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   object: GrandArchiveCardInstance,
+  context: LinkDerivationContext = {},
 ): readonly GrandArchiveLinkKeyword[] {
-  return grandArchiveObjectActiveKeywords(program, state, object).filter(
-    (keyword): keyword is GrandArchiveLinkKeyword => keyword.name === "link",
-  );
+  const keywords =
+    context.keywordOverrides?.get(object.id) ??
+    grandArchiveObjectActiveKeywords(program, state, object, context);
+  return keywords.filter((keyword): keyword is GrandArchiveLinkKeyword => keyword.name === "link");
 }
 
 function activeLinkFilter(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   object: GrandArchiveCardInstance,
+  context: LinkDerivationContext = {},
 ): GrandArchiveCardFilter | undefined {
-  const filters = grandArchiveActiveLinkKeywords(program, state, object).map((keyword) =>
+  const filters = grandArchiveActiveLinkKeywords(program, state, object, context).map((keyword) =>
     linkTargetFilter(keyword.target),
   );
   if (filters.length === 0) return undefined;
@@ -116,8 +128,9 @@ export function grandArchiveLinkIsLegal(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   object: GrandArchiveCardInstance,
+  context: LinkDerivationContext = {},
 ): boolean {
-  const filter = activeLinkFilter(program, state, object);
+  const filter = activeLinkFilter(program, state, object, context);
   if (!filter || object.zone !== "field" || !object.hostId) return false;
   const linked = state.objects[object.hostId];
   if (!linked || linked.zone !== "field" || linked.id === object.id) return false;
@@ -146,6 +159,11 @@ export function grandArchiveLinkIsLegal(
       return false;
   }
   const evaluation: GrandArchiveEvaluationContext = {
+    derivingProperties: context.derivingProperties,
+    characteristicOverrides: context.characteristicOverrides,
+    numericOverrides: context.numericOverrides,
+    keywordOverrides: context.keywordOverrides,
+    skipCrossObjectKeywordDerivation: context.skipCrossObjectKeywordDerivation,
     program,
     state,
     controllerId: object.controllerId,
@@ -155,6 +173,21 @@ export function grandArchiveLinkIsLegal(
     bindings: {},
   };
   return matchesGrandArchiveCardFilter(linked, filter, evaluation);
+}
+
+/** Linked / Linked to 1–2: a legal direct edge is bilateral, never transitive. */
+export function grandArchiveObjectsAreLinked(
+  first: GrandArchiveCardInstance,
+  second: GrandArchiveCardInstance,
+  context: GrandArchiveEvaluationContext,
+): boolean {
+  if (first.id === second.id || first.zone !== "field" || second.zone !== "field") return false;
+  return (
+    (first.hostId === second.id &&
+      grandArchiveLinkIsLegal(context.program, context.state, first, context)) ||
+    (second.hostId === first.id &&
+      grandArchiveLinkIsLegal(context.program, context.state, second, context))
+  );
 }
 
 function assertNever(value: never): never {
