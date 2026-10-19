@@ -96,10 +96,10 @@ export function proveUnitDamagePrevention({
           let remaining = expired ? 0 : capacity;
           let damage = combatOnly ? 1 : Math.max(0, 1 - remaining);
           if (!combatOnly) remaining = Math.max(0, remaining - 1);
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+          expect(game.markedDamage(target.objectId)).toBe(damage);
           q.declareAttack(giantTortoise, other);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[other.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(other.objectId)).toBe(1);
           for (const [attacker, power] of largeFirst
             ? ([
                 [blitzMage, 3],
@@ -113,7 +113,7 @@ export function proveUnitDamagePrevention({
             game.resolveCombatWithoutRetaliation();
             damage += Math.max(0, power - remaining);
             if (!everyInstance) remaining = Math.max(0, remaining - power);
-            expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+            expect(game.markedDamage(target.objectId)).toBe(damage);
           }
         });
 }

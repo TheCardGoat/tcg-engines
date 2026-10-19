@@ -2581,7 +2581,7 @@ describe("Grand Archive engine foundation", () => {
 
     expect(runtime.execute({ move: "pass" }, { playerId: p1 }).ok).toBe(true);
     expect(runtime.execute({ move: "pass" }, { playerId: p2 }).ok).toBe(true);
-    expect(runtime.state.objects[targetId]?.damage).toBe(2);
+    expect(runtime.state.objects[targetId]?.temporaryDamage).toBe(2);
     expect(runtime.state.stack.map((item) => item.kind)).toEqual(["activated-ability"]);
   });
 
@@ -3768,8 +3768,8 @@ describe("Grand Archive engine foundation", () => {
     expect(runtime.execute({ move: "pass" }, { playerId: p2 }).ok).toBe(true);
     expect(runtime.state.combat).toBeNull();
     expect(runtime.state.turn.phase).toBe("main");
-    expect(runtime.state.objects[attackerId]?.damage).toBe(2);
-    expect(runtime.state.objects[defenderId]?.damage).toBe(3);
+    expect(runtime.state.objects[attackerId]?.temporaryDamage).toBe(2);
+    expect(runtime.state.objects[defenderId]?.temporaryDamage).toBe(3);
     expect(runtime.state.objects[attackerId]?.states.has("attacking")).toBe(false);
     expect(runtime.state.objects[defenderId]?.states.has("retaliating")).toBe(false);
     expect(runtime.state.objects[attackerId]?.states.has("rested")).toBe(true);
@@ -3886,8 +3886,8 @@ describe("Grand Archive engine foundation", () => {
     expect(runtime.state.objects[defenderId]?.states.has("rested")).toBe(true);
     expect(runtime.execute({ move: "pass" }, { playerId: p1 }).ok).toBe(true);
     expect(runtime.execute({ move: "pass" }, { playerId: p2 }).ok).toBe(true);
-    expect(runtime.state.objects[attackerId]?.damage).toBe(5);
-    expect(runtime.state.objects[defenderId]?.damage).toBe(4);
+    expect(runtime.state.objects[attackerId]?.temporaryDamage).toBe(5);
+    expect(runtime.state.objects[defenderId]?.temporaryDamage).toBe(4);
   });
 
   it("applies a mandatory static replacement before combat damage commits", () => {
@@ -4527,7 +4527,7 @@ describe("Grand Archive engine foundation", () => {
         to: "field",
         hostId: allyId,
       },
-      { type: "damage-marked", objectId: allyId, amount: 2 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: allyId, amount: 2 },
     ]).state;
     const replacementKernel = new GrandArchiveTransactionKernel({
       collectReplacements: (state, event) =>
@@ -4559,7 +4559,7 @@ describe("Grand Archive engine foundation", () => {
       },
     ]).state;
     expect(destroyed.objects[allyId]?.zone).toBe("field");
-    expect(destroyed.objects[allyId]?.damage).toBe(0);
+    expect(destroyed.objects[allyId]?.temporaryDamage).toBe(0);
     expect(destroyed.objects[shieldId]?.zone).toBe("graveyard");
 
     const sacrificed = replacementKernel.transact(positioned, [
@@ -4572,11 +4572,11 @@ describe("Grand Archive engine foundation", () => {
       },
     ]).state;
     expect(sacrificed.objects[allyId]?.zone).toBe("field");
-    expect(sacrificed.objects[allyId]?.damage).toBe(2);
+    expect(sacrificed.objects[allyId]?.temporaryDamage).toBe(2);
     expect(sacrificed.objects[shieldId]?.zone).toBe("graveyard");
 
     const lethal = new GrandArchiveTransactionKernel().transact(positioned, [
-      { type: "damage-marked", objectId: allyId, amount: 3 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: allyId, amount: 3 },
     ]).state;
     const lethalEvents = collectGrandArchiveStateBasedEvents(program, lethal);
     expect(lethalEvents).toContainEqual(
@@ -4584,7 +4584,7 @@ describe("Grand Archive engine foundation", () => {
     );
     const savedFromLethal = replacementKernel.transact(lethal, lethalEvents).state;
     expect(savedFromLethal.objects[allyId]?.zone).toBe("field");
-    expect(savedFromLethal.objects[allyId]?.damage).toBe(0);
+    expect(savedFromLethal.objects[allyId]?.temporaryDamage).toBe(0);
     expect(savedFromLethal.objects[shieldId]?.zone).toBe("graveyard");
 
     const hostBanished = replacementKernel.transact(positioned, [
@@ -9046,10 +9046,10 @@ describe("Grand Archive engine foundation", () => {
         )
         .map((event) => (event.type === "damage-marked" ? event.sourceId : undefined)),
     ).toEqual([secondDefenderId, firstDefenderId]);
-    expect(runtime.state.objects[attackerId]?.damage).toBe(3);
+    expect(runtime.state.objects[attackerId]?.temporaryDamage).toBe(3);
     expect(runtime.state.objects[championId]?.damage).toBe(3);
-    expect(runtime.state.objects[firstDefenderId]?.damage).toBe(3);
-    expect(runtime.state.objects[secondDefenderId]?.damage).toBe(3);
+    expect(runtime.state.objects[firstDefenderId]?.temporaryDamage).toBe(3);
+    expect(runtime.state.objects[secondDefenderId]?.temporaryDamage).toBe(3);
     expect(runtime.state.objects[weaponId]?.counters.durability).toBe(2);
     expect(runtime.state.combat).toBeNull();
   });
@@ -9311,9 +9311,9 @@ describe("Grand Archive engine foundation", () => {
         { playerId: p1 },
       ).ok,
     ).toBe(true);
-    expect(runtime.state.objects[attackerId]?.damage).toBe(5);
-    expect(runtime.state.objects[p2DefenderId]?.damage).toBe(4);
-    expect(runtime.state.objects[p3DefenderId]?.damage).toBe(4);
+    expect(runtime.state.objects[attackerId]?.temporaryDamage).toBe(5);
+    expect(runtime.state.objects[p2DefenderId]?.temporaryDamage).toBe(4);
+    expect(runtime.state.objects[p3DefenderId]?.temporaryDamage).toBe(4);
     expect(runtime.state.objects[p3AmbusherId]?.damage).toBe(0);
     expect(runtime.state.combat).toBeNull();
   });
@@ -10423,7 +10423,7 @@ describe("Grand Archive engine foundation", () => {
         { playerId: p3 },
       ).ok,
     ).toBe(true);
-    expect(paidRuntime.state.objects[defenderId]?.damage).toBe(3);
+    expect(paidRuntime.state.objects[defenderId]?.temporaryDamage).toBe(3);
     expect(paidRuntime.state.objects[p2DiscardId]?.zone).toBe("graveyard");
     for (const objectId of p3DiscardIds) {
       expect(paidRuntime.state.objects[objectId]?.zone).toBe("graveyard");
@@ -10460,7 +10460,7 @@ describe("Grand Archive engine foundation", () => {
         { playerId: p3 },
       ).ok,
     ).toBe(true);
-    expect(declinedRuntime.state.objects[defenderId]?.damage).toBe(6);
+    expect(declinedRuntime.state.objects[defenderId]?.temporaryDamage).toBe(6);
     expect(declinedRuntime.state.objects[p2DiscardId]?.zone).toBe("hand");
     for (const objectId of p3DiscardIds) {
       expect(declinedRuntime.state.objects[objectId]?.zone).toBe("hand");

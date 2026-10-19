@@ -100,7 +100,7 @@ describe("Nimue destroys action-targeted allies before resolution, only for its 
           expect(game.state.objects[foe.objectId]!.zone).toBe("field");
         }
         if (kind !== "ability" && kind !== "two-allies")
-          expect(game.state.objects[target.objectId]!.damage).toBe(expected ? 0 : 1);
+          expect(game.markedDamage(target.objectId)).toBe(expected ? 0 : 1);
       });
 });
 

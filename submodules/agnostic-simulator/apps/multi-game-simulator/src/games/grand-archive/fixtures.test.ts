@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { GRAND_ARCHIVE_NATIVE_FIXTURES } from "./native-fixtures";
 import { GRAND_ARCHIVE_VISUAL_FIXTURES } from "./fixtures";
 
 describe("Grand Archive visual fixtures", () => {
@@ -40,6 +41,7 @@ describe("Grand Archive visual fixtures", () => {
       "resolving",
       "zone-inspection",
       "game-over",
+      ...GRAND_ARCHIVE_NATIVE_FIXTURES.map((fixture) => fixture.id),
     ]);
     const inspection = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
       (fixture) => fixture.id === "zone-inspection",

@@ -112,18 +112,18 @@ export function proveClassBulwark(
             } else {
               p.activate(spell, options);
               passEffectsStack(game);
-              expect(game.state.objects[source.objectId]!.damage).toBe(2);
+              expect(game.markedDamage(source.objectId)).toBe(2);
             }
             expect(bulwark()).toBe(matching ? 1 : 0);
           }
           advanceToMain(game, q.id);
           // Ally damage clears at turn end; the Bulwark counter persists.
-          expect(game.state.objects[source.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(source.objectId)).toBe(0);
           for (const [index, attacker] of q.cards(giantTortoise).entries()) {
             q.declareAttack(attacker, source);
             game.resolveCombatWithoutRetaliation();
             if (index > 0 || !matching) damage++;
-            expect(game.state.objects[source.objectId]!.damage).toBe(damage);
+            expect(game.markedDamage(source.objectId)).toBe(damage);
             expect(bulwark()).toBe(0);
             expect(game.state.objects[source.objectId]!.zone).toBe("field");
           }
@@ -194,12 +194,12 @@ export function proveClassBulwark(
         }
         game.resolveCombatWithoutRetaliation();
         const damage = matching && !unpreventable ? 0 : 4;
-        expect(game.state.objects[source.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(source.objectId)).toBe(damage);
         expect(game.state.objects[source.objectId]!.counters.bulwark ?? 0).toBe(0);
         q.declareAttack(q.card(giantTortoise), source);
         game.resolveCombatWithoutRetaliation();
         const dies = damage + 1 >= printed.stats.life! + 4;
         expect(game.state.objects[source.objectId]!.zone).toBe(dies ? "graveyard" : "field");
-        if (!dies) expect(game.state.objects[source.objectId]!.damage).toBe(damage + 1);
+        if (!dies) expect(game.markedDamage(source.objectId)).toBe(damage + 1);
       });
 }

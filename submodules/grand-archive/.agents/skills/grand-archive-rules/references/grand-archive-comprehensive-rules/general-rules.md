@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules"
   relation: "current_index"
 ---
-
 # General Rules
 
 These topics are discussed in the following sections:

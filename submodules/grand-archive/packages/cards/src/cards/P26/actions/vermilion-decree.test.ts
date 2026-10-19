@@ -77,12 +77,10 @@ describe("Vermilion Decree — independent mode targets", () => {
         expect(game.state).toEqual(before);
         p.activate(source!, options);
         passEffectsStack(game);
-        expect(game.state.objects[championRef.objectId]!.damage).toBe(
+        expect(game.markedDamage(championRef.objectId)).toBe(
           omitChampion || !modeIds.includes("mode-1") ? 0 : 3,
         );
-        expect(game.state.objects[allyRef.objectId]!.damage).toBe(
-          modeIds.includes("mode-2") ? 2 : 0,
-        );
+        expect(game.markedDamage(allyRef.objectId)).toBe(modeIds.includes("mode-2") ? 2 : 0);
         expect(p.cards(giantTortoise, { zone: "hand" })).toHaveLength(
           modeIds.includes("mode-3") ? 1 : 0,
         );

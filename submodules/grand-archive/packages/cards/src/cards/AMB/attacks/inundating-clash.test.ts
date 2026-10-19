@@ -75,7 +75,7 @@ describe("Inundating Clash — Class Bonus rested target", () => {
       if (classBonus && rested) {
         expect(game.state.objects[ally.objectId]!.zone).toBe("graveyard");
       } else {
-        expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(ally.objectId)).toBe(1);
       }
     });
   }

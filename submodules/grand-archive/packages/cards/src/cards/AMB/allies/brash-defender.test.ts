@@ -105,6 +105,6 @@ describe("Brash Defender — Retort 3", () => {
     expect(retaliated).toBe(true);
     expect(game.state.combat).toBeNull();
     expect(opponent.zone("graveyard")).toContainEqual(attacker);
-    expect(game.state.objects[defender.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(defender.objectId)).toBe(2);
   });
 });

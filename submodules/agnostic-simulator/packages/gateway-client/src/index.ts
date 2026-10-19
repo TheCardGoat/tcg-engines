@@ -4,3 +4,5 @@ export * from "./manager.js";
 export * from "./debug.js";
 
 export * from "./preparation.js";
+
+export * from "./interaction-preview.js";

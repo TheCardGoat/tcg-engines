@@ -94,7 +94,7 @@ describe("Grand Archive simulator navigation", () => {
       target: { value: "recollection" },
     });
     expect(screen.getByTestId("ga-fixture-count").textContent).toContain(
-      `Showing 1 of ${GRAND_ARCHIVE_VISUAL_FIXTURES.length}`,
+      `Showing 4 of ${GRAND_ARCHIVE_VISUAL_FIXTURES.length}`,
     );
 
     fireEvent.click(

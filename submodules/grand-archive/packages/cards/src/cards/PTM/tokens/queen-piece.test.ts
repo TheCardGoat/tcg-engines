@@ -87,7 +87,7 @@ describe("Queen Piece — Alice and a controlled Pawn prevent each damage event"
               });
               passEffectsStack(game);
             }
-            expect(game.state.objects[queen.objectId]!.damage).toBe(expected);
+            expect(game.markedDamage(queen.objectId)).toBe(expected);
             expect(game.state.objects[queen.objectId]!.zone).toBe("field");
           }
         });
@@ -137,12 +137,12 @@ describe("Queen Piece — Alice and a controlled Pawn prevent each damage event"
         passEffectsStack(game);
       };
       cast(fireball, queen, 4);
-      expect(game.state.objects[queen.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(queen.objectId)).toBe(0);
       for (const [i, pawn] of pawns.entries()) {
         cast(sparkAlight, pawn, 2);
         expect(game.state.objects[pawn.objectId]).toBeUndefined();
         cast(fireball, queen, 4);
-        expect(game.state.objects[queen.objectId]!.damage).toBe(i === count - 1 ? 3 : 0);
+        expect(game.markedDamage(queen.objectId)).toBe(i === count - 1 ? 3 : 0);
       }
     });
 });

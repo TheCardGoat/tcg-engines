@@ -22,6 +22,7 @@ import {
   SimulatorSidebarTips,
 } from "../../simulator/participant-actions/SimulatorSidebarTips";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../simulator/useMatchIntroReady";
 import { useParams } from "react-router-dom";
 import { Button, Group, Modal, Text } from "@mantine/core";
 import {
@@ -298,6 +299,9 @@ function FabLiveRecoveryNotice({
 function LiveMatchPageContent() {
   const route = useSimulatorRoute();
   const session = route.session;
+  useMatchIntroReady(
+    Boolean(route.error) || session?.phase === "preparation" || session?.phase === "cancelled",
+  );
   const viewer = session?.viewer ?? route.matchPageData?.viewer;
   const viewerKey = viewer?.role === "player" ? `player:${viewer.actorId}` : "spectator";
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
@@ -371,6 +375,7 @@ function LiveGamePage() {
       presentationRegistry.getSnapshot().resolver,
     );
   });
+  useMatchIntroReady(Boolean(route.error || (bootstrap && gameId && viewerId && state)));
   const gameEnded = Boolean(state?.result);
   useLiveMatchDocumentTitle({
     game: "Flesh and Blood",

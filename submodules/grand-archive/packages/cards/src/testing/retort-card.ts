@@ -65,8 +65,8 @@ export function proveRetortCard(
       if (mode === "attack") {
         p.declareAttack(source, tortoise);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[tortoise.objectId]!.damage).toBe(1);
-        expect(game.state.objects[source.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(tortoise.objectId)).toBe(1);
+        expect(game.markedDamage(source.objectId)).toBe(0);
       } else {
         advanceToMain(game, q.id);
         q.declareAttack(tortoise, source);
@@ -87,14 +87,12 @@ export function proveRetortCard(
         }
         expect(chose).toBe(true);
         expect(game.state.combat).toBeNull();
-        expect(game.state.objects[source.objectId]!.damage).toBe(1);
-        expect(game.state.objects[tortoise.objectId]!.damage).toBe(
-          mode === "retaliate" ? 1 + bonus : 0,
-        );
+        expect(game.markedDamage(source.objectId)).toBe(1);
+        expect(game.markedDamage(tortoise.objectId)).toBe(mode === "retaliate" ? 1 + bonus : 0);
         advanceToMain(game, p.id);
         p.declareAttack(source, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
       }
     });
 }

@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones"
   relation: "current_index"
 ---
-
 # Game Mechanics - Game Zones
 
 #### General Rules:

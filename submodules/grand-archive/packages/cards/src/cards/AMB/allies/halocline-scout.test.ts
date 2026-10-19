@@ -96,13 +96,13 @@ describe("Halocline Scout — other allies attacking rested units", () => {
       }
       player.declareAttack(woodlandSquirrels, tortoise);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[tortoise.objectId]!.damage).toBe(rested ? 2 : 1);
+      expect(game.markedDamage(tortoise.objectId)).toBe(rested ? 2 : 1);
       const wait = game.waitState();
       if (wait.kind === "opportunity" && wait.playerId !== player.id)
         game.player(wait.playerId).pass();
       player.declareAttack(haloclineScout, tortoise);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[tortoise.objectId]!.damage).toBe((rested ? 2 : 1) + 1);
+      expect(game.markedDamage(tortoise.objectId)).toBe((rested ? 2 : 1) + 1);
     });
   }
 });

@@ -284,6 +284,8 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
         readonly preventable?: false;
         /** Damage to a Siegeable object is applied by removing durability instead of marking damage. */
         readonly asDurabilityLoss?: true;
+        /** Rule admission classifies damage to allies as temporary, not damage counters. */
+        readonly asTemporaryDamage?: true;
         /** Kernel-populated number of durability counters actually removed by this damage. */
         readonly durabilityRemoved?: number;
         /** Private Critical payments held until every replacement for this damage is settled. */
@@ -361,6 +363,7 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
         readonly previousDefenderId: GrandArchiveObjectId;
         readonly newDefenderId: GrandArchiveObjectId;
       }
+    | { readonly type: "combat-cleanup-started" }
     | { readonly type: "combat-ended" }
     | { readonly type: "phase-end-requested"; readonly phase: GrandArchivePhase }
     | { readonly type: "turn-end-requested" }

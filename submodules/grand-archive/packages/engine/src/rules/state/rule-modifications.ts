@@ -18,6 +18,7 @@ import {
   evaluateGrandArchiveCondition,
   grandArchiveCounterKey,
   grandArchiveDefinitionMatchesCardFilter,
+  grandArchiveMasteryMatchesSourceFilter,
   matchesGrandArchiveCardFilter,
   resolveGrandArchivePlayers,
   resolveGrandArchiveSubjectObjects,
@@ -34,6 +35,7 @@ import { grandArchiveObjectActiveAbilities } from "../abilities/intrinsic-keywor
 import type {
   GrandArchiveMatchState,
   GrandArchiveRuleModificationInstance,
+  GrandArchiveStackItem,
 } from "../../game/model.ts";
 import type { GrandArchiveMatchProgram } from "../../kernel/match-program.ts";
 import { observeGrandArchiveCommittedEvent } from "../../kernel/observed-events.ts";
@@ -50,7 +52,7 @@ export interface GrandArchiveAppliedRule {
   readonly order: number;
 }
 
-export interface GrandArchiveRuleRequest {
+interface GrandArchiveRuleRequestBase {
   readonly action: GrandArchiveRuleAction;
   readonly activationKind: "card" | "ability";
   readonly costComponent?: GrandArchiveRuleModification["costComponent"];
@@ -61,7 +63,6 @@ export interface GrandArchiveRuleRequest {
   readonly playerId: GrandArchivePlayerId;
   /** Player whose object or stack item is acted upon, when distinct from the actor. */
   readonly subjectPlayerId?: GrandArchivePlayerId;
-  readonly candidateId: GrandArchiveObjectId;
   /** Exact stack layer acted upon by stack-specific actions such as negation. */
   readonly stackItemId?: GrandArchiveStackItemId;
   /** Source responsible for the modified event, such as the object dealing damage. */
@@ -77,7 +78,6 @@ export interface GrandArchiveRuleRequest {
   readonly actorObjectId?: GrandArchiveObjectId;
   /** Destination object for transition rules such as champion level-up. */
   readonly destinationId?: GrandArchiveObjectId;
-  readonly fromZone: GrandArchiveZone;
   /** Objects explicitly used to perform this action, such as wielded weapons. */
   readonly usingIds?: readonly GrandArchiveObjectId[];
   /** Objects against which this action is performed, such as attack defenders. */
@@ -90,6 +90,20 @@ export interface GrandArchiveRuleRequest {
   readonly grantedKeyword?: GrandArchiveKeyword;
   readonly evaluation: GrandArchiveEvaluationContext;
 }
+
+export type GrandArchiveRuleRequest = GrandArchiveRuleRequestBase &
+  (
+    | {
+        readonly candidateId: GrandArchiveObjectId;
+        readonly fromZone: GrandArchiveZone;
+        readonly masterySource?: never;
+      }
+    | {
+        readonly candidateId?: never;
+        readonly fromZone?: never;
+        readonly masterySource: NonNullable<GrandArchiveStackItem["masterySource"]>;
+      }
+  );
 
 function stackItemAbilityIdentity(
   event: GrandArchiveCommittedEvent,
@@ -205,11 +219,12 @@ function ruleAppliesToCandidate(
   evaluation: GrandArchiveEvaluationContext,
   lockedSubjects?: ReadonlySet<GrandArchiveObjectId>,
 ): boolean {
-  const candidate = evaluation.state.objects[request.candidateId];
-  if (!candidate || effect.action !== request.action) return false;
+  const candidate = request.candidateId ? evaluation.state.objects[request.candidateId] : undefined;
+  if ((!candidate && !request.masterySource) || effect.action !== request.action) return false;
   if (
     effect.fromTopOfDeck &&
-    (candidate.zone !== "main-deck" ||
+    (!candidate ||
+      candidate.zone !== "main-deck" ||
       evaluation.state.zones[candidate.ownerId]["main-deck"][0] !== candidate.id)
   )
     return false;
@@ -316,12 +331,12 @@ function ruleAppliesToCandidate(
   } else if (
     effect.subject &&
     !(lockedSubjects
-      ? [candidate.id, request.actorObjectId, request.destinationId].some(
+      ? [candidate?.id, request.actorObjectId, request.destinationId].some(
           (objectId) => objectId !== undefined && lockedSubjects.has(objectId),
         )
       : resolveGrandArchiveSubjectObjects(effect.subject, evaluation).some(
           (object) =>
-            object.id === candidate.id ||
+            object.id === candidate?.id ||
             object.id === request.actorObjectId ||
             ((request.action === "retaliate" ||
               request.action === "intercept" ||
@@ -349,10 +364,17 @@ function ruleAppliesToCandidate(
   const filterCandidate = destination ?? candidate;
   return (
     (!effect.filter ||
-      matchesGrandArchiveCardFilter(filterCandidate, effect.filter, {
-        ...evaluation,
-        candidateId: filterCandidate.id,
-      })) &&
+      (filterCandidate
+        ? matchesGrandArchiveCardFilter(filterCandidate, effect.filter, {
+            ...evaluation,
+            candidateId: filterCandidate.id,
+          })
+        : !!request.masterySource &&
+          grandArchiveMasteryMatchesSourceFilter(
+            request.masterySource,
+            effect.filter,
+            evaluation,
+          ))) &&
     (effect.mode === "require" ||
       !effect.condition ||
       conditionEvaluations.some((conditionEvaluation) =>
@@ -456,8 +478,8 @@ function collectGrandArchiveRules(
   accepts: (effect: GrandArchiveRuleModification) => boolean,
 ): readonly GrandArchiveAppliedRule[] {
   const { evaluation } = request;
-  const candidate = evaluation.state.objects[request.candidateId];
-  if (!candidate) return [];
+  const candidate = request.candidateId ? evaluation.state.objects[request.candidateId] : undefined;
+  if (!candidate && !request.masterySource) return [];
   const actionBindings = { ...evaluation.bindings, eventActor: [request.playerId] };
   const rules: GrandArchiveAppliedRule[] = [];
   let order = 0;
@@ -466,7 +488,7 @@ function collectGrandArchiveRules(
     const statusEvaluation: GrandArchiveEvaluationContext = {
       ...evaluation,
       controllerId: playerId,
-      candidateId: request.destinationId ?? candidate.id,
+      candidateId: request.destinationId ?? candidate?.id,
       bindings: actionBindings,
     };
     if (
@@ -508,17 +530,18 @@ function collectGrandArchiveRules(
         controllerId: executionObject.controllerId,
         sourceId: executionObject.id,
         abilityBearerId: executionObject.id,
-        candidateId: request.destinationId ?? candidate.id,
+        candidateId: request.destinationId ?? candidate?.id,
         bindings: actionBindings,
       });
       const selfActivationRule =
-        source.id === candidate.id &&
+        source.id === candidate?.id &&
         (ability.functionalZones === undefined ||
           (request.activationKind === "card" &&
             source.zone === "effects-stack" &&
             (request.action === "activate" ||
               request.action === "play" ||
               request.action === "pay-cost") &&
+            request.fromZone !== undefined &&
             ability.functionalZones.includes(request.fromZone)));
       if (
         (!selfActivationRule && !grandArchiveAbilityIsFunctional(face, ability, source)) ||
@@ -555,7 +578,7 @@ function collectGrandArchiveRules(
       ...(instance.sourceId
         ? { sourceId: instance.sourceId, abilityBearerId: instance.sourceId }
         : {}),
-      candidateId: request.destinationId ?? candidate.id,
+      candidateId: request.destinationId ?? candidate?.id,
       bindings: { ...instance.bindings, ...actionBindings },
       variables: { ...instance.variables, ...evaluation.variables },
     };

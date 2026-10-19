@@ -1,9 +1,14 @@
 import type { GrandArchiveCounterKind } from "@tcg/grand-archive-types";
 import type { SimulatorEntityDecoration } from "@tcg/simulator-contract";
 
-type NamedKind = Extract<GrandArchiveCounterKind, string>;
+type NamedKind = Extract<GrandArchiveCounterKind, string> | "temporary-damage" | "damage-counters";
 const COUNTERS = {
   damage: ["Damage", "Damage already marked."],
+  "temporary-damage": ["Temporary damage", "Damage dealt to an ally. Clears during the end phase."],
+  "damage-counters": [
+    "Damage counters",
+    "These counters have no inherent effect on a non-champion.",
+  ],
   buff: ["Buff", "Each counter gives +1 power and +1 life to stats this object has."],
   debuff: ["Debuff", "Each counter gives −1 power and −1 life to stats this object has."],
   bulwark: [
@@ -32,14 +37,25 @@ function isKnownCounter(kind: string): kind is NamedKind {
   return Object.hasOwn(COUNTERS, kind);
 }
 
-/** Public presentation only. Damage has one authoritative storage field. */
+/** Permanent counters and temporary damage are separate rules properties. */
 export function grandArchiveCounterDecorations(input: {
   readonly damage: number;
+  readonly temporaryDamage: number;
   readonly counters: Readonly<Record<string, number>>;
   readonly damageLifetime?: "champion" | "ally";
 }): SimulatorEntityDecoration[] {
   const entries: [string, number][] = [
-    ...(input.damage > 0 ? [["damage", input.damage] satisfies [string, number]] : []),
+    ...(input.damage > 0
+      ? [
+          [
+            input.damageLifetime === "champion" ? "damage" : "damage-counters",
+            input.damage,
+          ] satisfies [string, number],
+        ]
+      : []),
+    ...(input.temporaryDamage > 0
+      ? [["temporary-damage", input.temporaryDamage] satisfies [string, number]]
+      : []),
     ...Object.entries(input.counters)
       .filter(
         ([kind, value]) =>
@@ -52,19 +68,18 @@ export function grandArchiveCounterDecorations(input: {
       ? COUNTERS[kind]
       : [kind.replace(/^named:/, ""), "Card-defined counter."];
     const lifetime =
-      kind === "damage"
-        ? input.damageLifetime === "ally"
-          ? " Clears during the end phase."
-          : input.damageLifetime === "champion"
-            ? " Persists until removed by an effect."
-            : ""
+      kind === "damage" || kind === "damage-counters"
+        ? " Persists until removed by an effect."
         : "";
     return {
       id: `ga:counter:${kind}`,
       slot: "bottom-end",
       content: { kind: "text", text: String(value) },
       ariaLabel: `${label}: ${value}. ${explanation}${lifetime}`,
-      tone: kind === "damage" || kind === "debuff" ? "negative" : "neutral",
+      tone:
+        kind === "damage" || kind === "temporary-damage" || kind === "debuff"
+          ? "negative"
+          : "neutral",
     };
   });
 }

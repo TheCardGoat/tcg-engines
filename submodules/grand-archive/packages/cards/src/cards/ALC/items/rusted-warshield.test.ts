@@ -39,14 +39,14 @@ describe("Rusted Warshield — shielding prevention and memory draw", () => {
     const ownChampion = player.card(champion, { zone: "field" });
     opponent.declareAttack(attackers[0]!, ally);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(ally.objectId)).toBe(2);
 
     opponent.declareAttack(attackers[1]!, ownChampion);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[ownChampion.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(ownChampion.objectId)).toBe(0);
 
     opponent.declareAttack(attackers[2]!, ownChampion);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[ownChampion.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(ownChampion.objectId)).toBe(2);
   });
 });

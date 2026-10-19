@@ -73,7 +73,7 @@ describe("The Constellatory Spire — negation trigger", () => {
       targets: { "target-1": [target.objectId] },
     });
     passEffectsStack(game);
-    expect(game.state.objects[target.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(target.objectId)).toBe(2);
     expect(
       game.state.objects[player.card(theConstellatorySpire).objectId]!.states.has("rested"),
     ).toBe(true);

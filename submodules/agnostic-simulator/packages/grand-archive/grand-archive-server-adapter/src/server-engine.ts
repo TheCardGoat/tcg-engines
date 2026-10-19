@@ -6,7 +6,6 @@ import {
 } from "./presentation.ts";
 import {
   decodeGrandArchiveCommand,
-  describeGrandArchiveStructuredDecision,
   GrandArchiveMatchRuntime,
   isGrandArchiveMoveName,
   projectGrandArchiveViewerState,
@@ -26,6 +25,8 @@ import {
   validateInteractionSubmission,
   type EngineInteractionView,
   type InteractionSubmission,
+  type InteractionPreviewRequest,
+  type InteractionPreviewResult,
 } from "@tcg/protocol";
 import { capUndoCheckpoints } from "@tcg/shared/game-engine";
 import type {
@@ -35,6 +36,11 @@ import type {
   EngineLogRecord,
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
+import {
+  GRAND_ARCHIVE_PREVIEW_REQUEST_PREFIX,
+  grandArchivePreviewView,
+  previewGrandArchiveInteraction,
+} from "./interaction-preview.ts";
 import {
   commandForGrandArchiveSubmission,
   grandArchiveCommandIncarnations,
@@ -141,29 +147,38 @@ function authorizedDecisionCardInstances(
   if (!decision || decision.playerId !== grandArchivePlayerId(viewerId)) {
     return { definitionIds: {}, ownerIds: {}, names: {} };
   }
-  const description = describeGrandArchiveStructuredDecision(program, state, decision);
-  if (
-    !description ||
-    description.kind === "option-selection" ||
-    description.kind === "boolean" ||
-    description.kind === "semantic"
-  ) {
-    return { definitionIds: {}, ownerIds: {}, names: {} };
-  }
-  const candidateIds =
-    description.kind === "allocation"
-      ? description.candidates.map((candidate) => candidate.id)
-      : description.candidateIds;
+  // The canonical interaction also covers semantic decisions such as Glimpse.
+  // Its candidates are already scoped to this viewer and native decision.
+  const view = projectGrandArchiveInteraction(
+    new GrandArchiveMatchRuntime(program, state),
+    viewerId,
+  ).view;
+  const candidateIds = [
+    ...new Set(
+      view.actions.flatMap((action) =>
+        action.inputs.flatMap((input) =>
+          "candidates" in input
+            ? input.candidates.map((candidate) => candidate.entity.instanceId)
+            : [],
+        ),
+      ),
+    ),
+  ];
   const candidates = candidateIds.flatMap((candidateId) => {
     const object = state.objects[grandArchiveObjectId(candidateId)];
     return !object || (object.facing === "face-down" && object.zone === "banishment")
       ? []
       : [object];
   });
+  const catalogCandidates = candidateIds.filter(
+    (id) =>
+      !state.objects[grandArchiveObjectId(id)] && program.cardsById[id]?.definitionKind === "card",
+  );
   return {
-    definitionIds: Object.fromEntries(
-      candidates.map((object) => [object.id, object.activeDefinitionId ?? object.definitionId]),
-    ),
+    definitionIds: Object.fromEntries([
+      ...candidates.map((object) => [object.id, object.activeDefinitionId ?? object.definitionId]),
+      ...catalogCandidates.map((id) => [id, id]),
+    ]),
     ownerIds: Object.fromEntries(candidates.map((object) => [object.id, object.ownerId])),
     names: Object.fromEntries(
       candidates.flatMap((object) =>
@@ -189,12 +204,14 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
     ),
     art: GrandArchiveFrozenArt = currentGrandArchiveArt(),
     undoState?: GrandArchiveUndoState,
+    readonly admissionPolicyVersion: string | null = null,
   ) {
     this.program = program;
     this.art = art;
     this.runtime = runtime;
     this.#replayJournal = replayJournal;
-    this.#undoState = undoState ?? emptyGrandArchiveUndoState(serializeGrandArchiveMatchSnapshot(runtime.state));
+    this.#undoState =
+      undoState ?? emptyGrandArchiveUndoState(serializeGrandArchiveMatchSnapshot(runtime.state));
   }
 
   getUndoState(): GrandArchiveUndoState {
@@ -203,28 +220,48 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
 
   canUndo(actorId: string): boolean {
     const checkpoint = this.#undoState.checkpoints.at(-1);
-    return Boolean(checkpoint && checkpoint.actorId === actorId &&
-      this.runtime.state.status === "playing" && this.runtime.state.turn.playerId === actorId &&
-      checkpoint.snapshot.turn.number === this.runtime.state.turn.number);
+    return Boolean(
+      checkpoint &&
+      checkpoint.actorId === actorId &&
+      this.runtime.state.status === "playing" &&
+      this.runtime.state.turn.playerId === actorId &&
+      checkpoint.snapshot.turn.number === this.runtime.state.turn.number,
+    );
   }
 
   canUndoToTurnStart(actorId: string): boolean {
-    return this.canUndo(actorId) && this.#undoState.turnStart?.actorId === actorId &&
-      this.#undoState.turnStart.snapshot.turn.number === this.runtime.state.turn.number;
+    return (
+      this.canUndo(actorId) &&
+      this.#undoState.turnStart?.actorId === actorId &&
+      this.#undoState.turnStart.snapshot.turn.number === this.runtime.state.turn.number
+    );
   }
 
-  #restoreUndo(actorId: string, context: DispatchContext, scope: "last_move" | "turn_start"): DispatchResult {
-    const checkpoint = scope === "last_move" ? this.#undoState.checkpoints.at(-1) : this.#undoState.turnStart;
-    const allowed = scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId);
+  #restoreUndo(
+    actorId: string,
+    context: DispatchContext,
+    scope: "last_move" | "turn_start",
+  ): DispatchResult {
+    const checkpoint =
+      scope === "last_move" ? this.#undoState.checkpoints.at(-1) : this.#undoState.turnStart;
+    const allowed =
+      scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId);
     if (!allowed || !checkpoint) {
-      return { success: false, error: "No action is available to undo.", errorCode: "undo_unavailable", stateID: this.getStateID() };
+      return {
+        success: false,
+        error: "No action is available to undo.",
+        errorCode: "undo_unavailable",
+        stateID: this.getStateID(),
+      };
     }
     const previousStateID = this.getStateID();
     const current = serializeGrandArchiveMatchSnapshot(this.runtime.state);
     const stateVersion = previousStateID + 1;
     const restored = grandArchiveUndoSnapshot(current, checkpoint.snapshot, stateVersion);
-    this.runtime = new GrandArchiveMatchRuntime(this.program,
-      restoreGrandArchiveMatchSnapshot(this.program, restored));
+    this.runtime = new GrandArchiveMatchRuntime(
+      this.program,
+      restoreGrandArchiveMatchSnapshot(this.program, restored),
+    );
     const restoredTurnStart = checkpoint.stateVersion === this.#undoState.turnStart?.stateVersion;
     if (scope === "turn_start") this.#undoState = emptyGrandArchiveUndoState(restored);
     else {
@@ -237,28 +274,61 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
     const moveId = scope === "turn_start" ? "undoToTurnStart" : "undo";
     this.#replayJournal = appendGrandArchiveReplayCommand(this.#replayJournal, {
       sequence: this.#replayJournal.commands.length,
-      actorId, expectedStateVersion: previousStateID, resultingStateVersion: stateVersion,
-      command: { move: moveId, checkpointStateVersion: checkpoint.stateVersion,
-        checkpointSnapshot: checkpoint.snapshot },
+      actorId,
+      expectedStateVersion: previousStateID,
+      resultingStateVersion: stateVersion,
+      command: {
+        move: moveId,
+        checkpointStateVersion: checkpoint.stateVersion,
+        checkpointSnapshot: checkpoint.snapshot,
+      },
       eventTypes: [],
     });
     const timestamp = Date.now();
     return {
-      success: true, stateID: stateVersion, state: this.runtime.state,
-      transition: "move", undoable: this.canUndo(actorId),
+      success: true,
+      stateID: stateVersion,
+      state: this.runtime.state,
+      transition: "move",
+      undoable: this.canUndo(actorId),
       acceptedMoveRecord: {
-        gameId: context.gameId, stateVersion, turnNumber: restored.turn.number, actorId,
-        moveId, input: { args: {} }, processedCommand: { move: moveId }, timestamp,
-        sourceAuthority: context.sourceAuthority, transitionType: "undo", newStateID: stateVersion,
-        undoneStateID: previousStateID, restoredCheckpointStateID: checkpoint.stateVersion,
+        gameId: context.gameId,
+        stateVersion,
+        turnNumber: restored.turn.number,
+        actorId,
+        moveId,
+        input: { args: {} },
+        processedCommand: { move: moveId },
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        transitionType: "undo",
+        newStateID: stateVersion,
+        undoneStateID: previousStateID,
+        restoredCheckpointStateID: checkpoint.stateVersion,
         ...(scope === "last_move" ? { undoneMoveId: checkpoint.moveId } : {}),
       },
-      engineLogRecords: [{
-        gameId: context.gameId, stateVersion, timestamp, sourceAuthority: context.sourceAuthority,
-        log: { moveType: moveId, playerId: actorId, timestamp, turnNumber: restored.turn.number,
-          public: [{ key: "grand-archive.undo", defaultMessage: scope === "turn_start"
-            ? "Undid the turn." : "Undid the last action." }], privateByPlayerId: {} },
-      }],
+      engineLogRecords: [
+        {
+          gameId: context.gameId,
+          stateVersion,
+          timestamp,
+          sourceAuthority: context.sourceAuthority,
+          log: {
+            moveType: moveId,
+            playerId: actorId,
+            timestamp,
+            turnNumber: restored.turn.number,
+            public: [
+              {
+                key: "grand-archive.undo",
+                defaultMessage:
+                  scope === "turn_start" ? "Undid the turn." : "Undid the last action.",
+              },
+            ],
+            privateByPlayerId: {},
+          },
+        },
+      ],
     };
   }
 
@@ -402,9 +472,7 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
     const interactionCommandNamesByActionId =
       viewer.role === "player"
         ? Object.fromEntries(
-            [
-              ...projectGrandArchiveInteraction(this.runtime, viewer.actorId).commandsByActionId,
-            ].map(([actionId, commands]) => [actionId, commands[0]?.command.move ?? "unknown"]),
+            projectGrandArchiveInteraction(this.runtime, viewer.actorId).commandNamesByActionId,
           )
         : {};
     if (viewer.role === "player") {
@@ -486,6 +554,13 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
     return projectGrandArchiveInteraction(this.runtime, actorId).view;
   }
 
+  previewInteraction(
+    actorId: string,
+    request: InteractionPreviewRequest,
+  ): InteractionPreviewResult {
+    return previewGrandArchiveInteraction(this.runtime, actorId, request).result;
+  }
+
   submitInteraction(
     actorId: string,
     submission: InteractionSubmission,
@@ -501,6 +576,55 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
         errorCode: "duplicate_interaction",
         stateID: this.getStateID(),
       };
+    }
+    if (
+      typeof submission.requestId === "string" &&
+      submission.requestId.startsWith(GRAND_ARCHIVE_PREVIEW_REQUEST_PREFIX)
+    ) {
+      const { result, command } = previewGrandArchiveInteraction(this.runtime, actorId, {
+        protocolVersion: submission.protocolVersion,
+        stateVersion: submission.stateVersion,
+        actionId: submission.actionId,
+        values: submission.values,
+      });
+      if (result.status !== "ready" || !command)
+        return {
+          success: false,
+          error:
+            "message" in result && result.message
+              ? result.message
+              : "Complete the declaration before submitting.",
+          errorCode:
+            submission.stateVersion !== this.getStateID()
+              ? "stale_interaction"
+              : "invalid_interaction_submission",
+          stateID: this.getStateID(),
+        };
+      // Validate the exact submitted draft against the recomputed form, including its
+      // request identity. Obsolete values are normalized by preview, never silently accepted.
+      const validation = validateInteractionSubmission(
+        grandArchivePreviewView(actorId, result),
+        submission,
+      );
+      if (!validation.ok)
+        return {
+          success: false,
+          error: validation.error,
+          errorCode: validation.issues.some(
+            (issue) => issue.code === "stale_state" || issue.code === "stale_request",
+          )
+            ? "stale_interaction"
+            : "invalid_interaction_submission",
+          stateID: this.getStateID(),
+        };
+      return this.execute(
+        command,
+        actorId,
+        submission.stateVersion,
+        context,
+        undefined,
+        submission.correlationId,
+      );
     }
     const view = this.getInteractionView(actorId);
     const validation = validateInteractionSubmission(view, submission);
@@ -582,14 +706,29 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
       };
     }
     const after = serializeGrandArchiveMatchSnapshot(transition.state);
-    if (hasGrandArchiveUndoBarrier(before, after, transition.events.map((event) => event.type), actorId)) {
-      this.#undoState = emptyGrandArchiveUndoState(after,
-        before.turn.number !== after.turn.number || before.status === "pregame");
+    if (
+      hasGrandArchiveUndoBarrier(
+        before,
+        after,
+        transition.events.map((event) => event.type),
+        actorId,
+      )
+    ) {
+      this.#undoState = emptyGrandArchiveUndoState(
+        after,
+        before.turn.number !== after.turn.number || before.status === "pregame",
+      );
     } else {
       const checkpoint: GrandArchiveUndoCheckpoint = {
-        actorId, moveId: command.move, stateVersion: before.stateVersion, snapshot: before,
+        actorId,
+        moveId: command.move,
+        stateVersion: before.stateVersion,
+        snapshot: before,
       };
-      if (this.#undoState.turnStartStateVersion === before.stateVersion && !this.#undoState.turnStart) {
+      if (
+        this.#undoState.turnStartStateVersion === before.stateVersion &&
+        !this.#undoState.turnStart
+      ) {
         this.#undoState.turnStart = checkpoint;
       }
       this.#undoState.checkpoints = capUndoCheckpoints([

@@ -63,11 +63,11 @@ export function proveClassBonusStealth(
               .cards(woodlandSquirrels, { zone: "hand" })
               .map((c) => ({ kind: "card", cardId: c.objectId })),
           });
-          expect(game.state.objects[defender.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(defender.objectId)).toBe(0);
           passEffectsStack(game);
         } else {
           q.declareAttack(attacker, defender);
-          expect(game.state.objects[defender.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(defender.objectId)).toBe(0);
           game.resolveCombatWithoutRetaliation();
         }
         const damage = mode === "true-sight" ? (matching ? 3 : 2) : 1;
@@ -75,6 +75,6 @@ export function proveClassBonusStealth(
         if (typeof life !== "number") throw new Error("Expected printed ally life");
         const after = game.state.objects[defender.objectId]!;
         expect(after.zone).toBe(damage >= life ? "graveyard" : "field");
-        expect(after.damage).toBe(damage >= life ? 0 : damage);
+        expect(game.markedDamage(defender.objectId)).toBe(damage >= life ? 0 : damage);
       });
 }

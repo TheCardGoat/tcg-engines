@@ -100,7 +100,7 @@ export class GrandArchivePlayerHandle {
     abilityId: string,
     options: Omit<
       Extract<GrandArchiveCommand, { move: "activate-ability" }>,
-      "move" | "sourceId" | "abilityId"
+      "move" | "sourceId" | "masteryName" | "abilityId"
     > = {},
   ): GrandArchiveCommandSuccess {
     const source = this.card(ref);

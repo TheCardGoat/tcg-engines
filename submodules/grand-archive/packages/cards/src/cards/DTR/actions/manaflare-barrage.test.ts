@@ -69,15 +69,15 @@ describe("Manaflare Barrage — discounted area damage and optional loading", ()
         expect(() => p.activate(source, { reservePayment: reservePayment.slice(1) })).toThrow();
         expect(game.state).toEqual(before);
         p.activate(source, { reservePayment });
-        for (const ally of allies) expect(game.state.objects[ally.objectId]!.damage).toBe(0);
+        for (const ally of allies) expect(game.markedDamage(ally.objectId)).toBe(0);
         if (distance === "response") makeDistant();
         passEffectsStack(game);
         const increased = distance === "self" || distance === "response",
           damage = increased ? 3 : 2;
-        for (const ally of allies) expect(game.state.objects[ally.objectId]!.damage).toBe(damage);
-        for (const ally of small) expect(game.state.objects[ally.objectId]!.damage).toBe(damage);
-        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(0);
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(damage);
+        for (const ally of allies) expect(game.markedDamage(ally.objectId)).toBe(damage);
+        for (const ally of small) expect(game.markedDamage(ally.objectId)).toBe(damage);
+        expect(game.markedDamage(p.card(champion).objectId)).toBe(0);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(damage);
         expect(game.state.objects[host.objectId]!.counters.durability).toBe(3);
         finishOptionalAetherwingLoad(game, source.objectId, host.objectId, increased, [
           q.card(trivariateDream).objectId,
@@ -87,7 +87,7 @@ describe("Manaflare Barrage — discounted area damage and optional loading", ()
         if (increased) {
           p.declareAttack(p.card(champion), q.card(champion), { weaponIds: [host.objectId] });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(damage + 2);
+          expect(game.markedDamage(q.card(champion).objectId)).toBe(damage + 2);
           expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
         }
       });

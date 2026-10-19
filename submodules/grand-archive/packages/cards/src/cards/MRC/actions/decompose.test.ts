@@ -90,7 +90,7 @@ describe("Decompose — Gather from the sacrificed ally's last life stat", () =>
             );
             passEffectsStack(game);
           }
-          expect(game.state.objects[paid.objectId]!.damage).toBe(mode === "damaged" ? 2 : 0);
+          expect(game.markedDamage(paid.objectId)).toBe(mode === "damaged" ? 2 : 0);
           const summoned = () =>
             p.zone("field").filter((c) => herbs.some((h) => h.canonicalId === c.definitionId));
           p.activate(decompose, { reservePayment: pay(), costSelections: [[paid.objectId]] });

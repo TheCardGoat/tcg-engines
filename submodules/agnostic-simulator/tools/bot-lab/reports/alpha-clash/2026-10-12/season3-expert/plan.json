@@ -1,0 +1,17 @@
+{
+  "candidateId": "expert-oracle",
+  "parentStrategyId": "meta-v1",
+  "informationPolicy": "oracle",
+  "hypothesis": "Native full-information turn search improves on the unchanged meta-v1 action-priority policy across all eight Season 3 decks.",
+  "changes": {},
+  "evaluation": {
+    "suiteId": "season3",
+    "seedBase": "alpha-clash-expert-v1-season3-holdout",
+    "minimumBlocks": 108,
+    "maximumBlocks": 108,
+    "batchSize": 108,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0.05,
+    "maximumCellRegression": 0.25
+  }
+}

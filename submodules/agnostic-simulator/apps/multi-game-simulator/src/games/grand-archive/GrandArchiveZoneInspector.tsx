@@ -35,6 +35,8 @@ export function GrandArchiveZoneInspector({
         <span>{label}</span>
       </button>
       <Modal
+        className="ga-zone-browser"
+        size="xl"
         opened={opened}
         returnFocus={false}
         onClose={() => setOpened(false)}
@@ -48,7 +50,12 @@ export function GrandArchiveZoneInspector({
             if (event.target instanceof Element && event.target.closest("button")) setOpened(false);
           }}
         >
-          {ordered.map((entity) => renderCard(entity))}
+          {ordered.map((entity) => (
+            <div key={entity.id} className="ga-zone-browser__card">
+              {renderCard(entity)}
+              <span>{entity.face === "public" ? entity.title : "Concealed card"}</span>
+            </div>
+          ))}
         </div>
         {name === "main-deck" || name === "material-deck" ? (
           <p className="ga-sandbox-private-note">

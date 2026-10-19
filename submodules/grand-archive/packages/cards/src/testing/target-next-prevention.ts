@@ -100,13 +100,13 @@ export function proveTargetNextPrevention({
               targets: { "target-1": [unrelated.objectId] },
             });
             passEffectsStack(game);
-            expect(game.state.objects[unrelated.objectId]!.damage).toBe(amount);
+            expect(game.markedDamage(unrelated.objectId)).toBe(amount);
             let damage = 0;
             if (noncombat && own) {
               q.declareAttack(woodlandSquirrels, target);
               game.resolveCombatWithoutRetaliation();
               damage = 1;
-              expect(game.state.objects[target.objectId]!.damage).toBe(1);
+              expect(game.markedDamage(target.objectId)).toBe(1);
             }
             const spells = q.cards(fireball, { zone: "hand" });
             for (let index = 0; index < 2; index++) {
@@ -123,7 +123,7 @@ export function proveTargetNextPrevention({
               expect(game.state.objects[target.objectId]!.zone).toBe(
                 destroyed ? "graveyard" : "field",
               );
-              if (!destroyed) expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+              if (!destroyed) expect(game.markedDamage(target.objectId)).toBe(damage);
             }
           });
 }

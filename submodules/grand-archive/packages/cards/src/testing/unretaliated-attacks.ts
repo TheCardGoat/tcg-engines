@@ -64,7 +64,7 @@ export function proveUnretaliatedAttacks(card: GrandArchiveAnyCard<GrandArchiveA
           }
           expect(game.state.combat).toBeNull();
           expect(offered).toBe(mode !== "source");
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(
+          expect(game.markedDamage(attacker.objectId)).toBe(
             mode === "source"
               ? 0
               : mode === "defending"
@@ -72,7 +72,7 @@ export function proveUnretaliatedAttacks(card: GrandArchiveAnyCard<GrandArchiveA
                 : 1,
           );
           if (mode !== "defending")
-            expect(game.state.objects[target.objectId]!.damage).toBe(
+            expect(game.markedDamage(target.objectId)).toBe(
               mode === "source" ? grandArchiveTestFace(card).stats.power : 1,
             );
         });

@@ -66,12 +66,12 @@ describe("Tidal Tirade — Human ally +1 LIFE and retort 2", () => {
     }
     expect(game.state.objects[first.objectId]!.zone).toBe("graveyard");
     expect(game.state.objects[human.objectId]!.zone).toBe("field");
-    expect(game.state.objects[human.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(human.objectId)).toBe(1);
 
     opponent.declareAttack(opponent.cards(woodlandSquirrels, { zone: "field" })[0]!, human);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[human.objectId]!.zone).toBe("field");
-    expect(game.state.objects[human.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(human.objectId)).toBe(2);
   });
 
   it("rejects a non-Human ally", () => {

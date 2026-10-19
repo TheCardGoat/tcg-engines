@@ -127,7 +127,7 @@ describe("Ciel, Mirage's Grave — omen-triggered unpreventable Spell damage", (
           });
         };
         trigger();
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         for (const invalid of [
           [q.card(enfeebledDagger).objectId],
           [q.card(aethercloakSentinel).objectId],
@@ -145,24 +145,24 @@ describe("Ciel, Mirage's Grave — omen-triggered unpreventable Spell damage", (
         answerDecision(game, "announce-triggered-ability", {
           targets: { "target-1": targetKind === "none" ? [] : [target.objectId] },
         });
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         passEffectsStack(game);
         const damage = targetKind === "none" ? 0 : 2;
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         p.pass();
         q.activateAbility(enfeebledDagger, "idpdon8f0h-a1", {
           targets: { "target-unit": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage + Number(!shield));
+        expect(game.markedDamage(target.objectId)).toBe(damage + Number(!shield));
         const wait = game.waitState();
         if (wait.kind === "opportunity" && wait.playerId === q.id) q.pass();
-        const previous = game.state.objects[enemyHero.objectId]!.damage;
+        const previous = game.markedDamage(enemyHero.objectId);
         trigger();
         answerDecision(game, "announce-triggered-ability", {
           targets: { "target-1": [enemyHero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[enemyHero.objectId]!.damage).toBe(previous + 2);
+        expect(game.markedDamage(enemyHero.objectId)).toBe(previous + 2);
       });
 });

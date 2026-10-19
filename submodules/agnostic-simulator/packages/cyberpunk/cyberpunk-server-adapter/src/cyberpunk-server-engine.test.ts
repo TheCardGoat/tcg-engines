@@ -50,7 +50,7 @@ describe("CyberpunkServerEngine timeout drop", () => {
 });
 
 describe("CyberpunkServerEngine interaction submission", () => {
-  it("returns a structured failure when the interaction view cannot be built", () => {
+  it("reports an engine fault when the interaction view cannot be built", () => {
     const engine = new CyberpunkServerEngine({
       getState: () => ({ ctx: { stateID: 4 }, G: { gameEnded: false } }),
       getPrompt: () => {
@@ -65,17 +65,14 @@ describe("CyberpunkServerEngine interaction submission", () => {
       values: {},
     };
 
-    expect(
+    expect(() =>
       engine.submitInteraction("p1", submission, {
         gameId: "g1",
         sourceAuthority: "server",
       }),
-    ).toEqual({
-      success: false,
-      error: "Mandatory target selection has no legal candidates.",
-      errorCode: "invalid_interaction_view",
-      stateID: 4,
-    });
+    ).toThrow(
+      expect.objectContaining({ code: "game_engine_failed", cause: expect.any(RangeError) }),
+    );
   });
 
   it("rejects invalid protocol values before native command dispatch", () => {

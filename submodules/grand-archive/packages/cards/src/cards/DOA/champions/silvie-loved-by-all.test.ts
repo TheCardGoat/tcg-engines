@@ -62,7 +62,7 @@ describe("Silvie gives controlled Animals and Beasts life and real interception"
       }
       game.resolveCombatWithoutRetaliation();
       expect(game.state.objects[unit.objectId]!.zone).toBe("field");
-      expect(game.state.objects[unit.objectId]!.damage).toBe(qualifies ? 1 : 0);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(qualifies ? 0 : 1);
+      expect(game.markedDamage(unit.objectId)).toBe(qualifies ? 1 : 0);
+      expect(game.markedDamage(hero.objectId)).toBe(qualifies ? 0 : 1);
     });
 });

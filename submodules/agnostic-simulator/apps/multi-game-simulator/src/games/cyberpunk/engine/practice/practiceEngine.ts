@@ -3,11 +3,8 @@ import {
   createMatchState,
   createPlayerId,
   DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
-  getSafeAutomatedActionStrategyOption,
-  withDeckProfile,
   type AIStrategy,
   type DeckList,
-  type DeckStrategyProfile,
 } from "@tcg/cyberpunk-engine";
 import { resolveDeckProfile } from "@tcg/cyberpunk-utils";
 import {
@@ -17,6 +14,7 @@ import {
 } from "./deckFixtures";
 import type { AISideConfig } from "../EngineProvider";
 import type { PracticeMatchConfig } from "./sessionStorage";
+import { createBrowserAiStrategy } from "../ai-worker-strategy";
 
 export function createPracticeEngine(config: PracticeMatchConfig): CyberpunkTestEngine {
   const playerDeck = resolvePlayerDeck(config);
@@ -92,14 +90,9 @@ function strategyForSeat(
   fixtureId: string | undefined,
   deck?: DeckList,
 ): AIStrategy {
-  const base = getSafeAutomatedActionStrategyOption(
-    strategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
-  ).strategy;
   const profile = resolveDeckProfile({
     deckId: fixtureId,
     cards: deck ? [...deck.legends, ...deck.mainDeck] : undefined,
   });
-  const strategy = profile ? withDeckProfile(base, profile as DeckStrategyProfile) : base;
-  // Keep the selected alias visible while "default" follows the recommended strategy.
-  return strategyId === "default" ? { ...strategy, name: "default" } : strategy;
+  return createBrowserAiStrategy(strategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID, profile);
 }

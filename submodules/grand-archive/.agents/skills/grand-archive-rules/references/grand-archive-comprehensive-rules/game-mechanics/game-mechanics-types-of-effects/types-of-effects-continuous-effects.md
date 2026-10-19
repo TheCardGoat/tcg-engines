@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects"
   relation: "current_index"
 ---
-
 # Types of Effects - Continuous Effects
 
 #### General Rules:

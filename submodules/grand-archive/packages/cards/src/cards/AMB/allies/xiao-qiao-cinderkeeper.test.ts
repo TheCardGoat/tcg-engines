@@ -41,7 +41,7 @@ describe("Xiao Qiao, Cinderkeeper — Class Bonus no retaliation", () => {
         else throw new Error(`Unexpected ${wait.kind}`);
       }
       expect(retaliated).toBe(!classBonus);
-      expect(game.state.objects[tortoise.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(tortoise.objectId)).toBe(1);
     });
   }
 });

@@ -578,7 +578,7 @@ describe("Grand Archive pre-commit replacement continuations", () => {
     if (!answered.ok) throw new Error(answered.message);
 
     expect(runtime.state.objects[defenderId]?.damage).toBe(1);
-    expect(runtime.state.objects[additionalUnit.id]?.damage).toBe(1);
+    expect(runtime.state.objects[additionalUnit.id]?.temporaryDamage).toBe(1);
     expect(runtime.state.objects[pump.id]?.counters.durability).toBe(1);
     expect(runtime.state.replacementPreCommit).toBeNull();
     expect(runtime.state.decision).toBeNull();

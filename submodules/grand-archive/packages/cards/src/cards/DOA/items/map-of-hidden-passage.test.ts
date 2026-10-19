@@ -80,9 +80,7 @@ describe("Map of Hidden Passage protects either player's stealth units for this 
             protectedAttack ? foe.objectId : guard.objectId,
           ]);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[foe.objectId]!.damage).toBe(protectedAttack ? 3 : 0);
-          expect(game.state.objects[guard.objectId]!.damage).toBe(
-            protectedAttack ? 0 : stealth ? 3 : 1,
-          );
+          expect(game.markedDamage(foe.objectId)).toBe(protectedAttack ? 3 : 0);
+          expect(game.markedDamage(guard.objectId)).toBe(protectedAttack ? 0 : stealth ? 3 : 1);
         });
 });

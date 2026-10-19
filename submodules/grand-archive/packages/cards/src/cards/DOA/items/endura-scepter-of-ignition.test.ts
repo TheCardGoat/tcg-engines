@@ -72,10 +72,10 @@ describe("Endura's slow-speed counter payment", () => {
         p.activateAbility(source, "SGsDKB9CN5-a1", { targets: { "target-1": [target.objectId] } });
         expect(game.state.objects[hero.objectId]!.counters.enlighten).toBe(1);
         expect(game.state.objects[source.objectId]!.states.has("rested")).toBe(true);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
-        expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(1);
+        expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(0);
         const rested = game.state;
         expect(() =>
           p.activateAbility(source, "SGsDKB9CN5-a1", {

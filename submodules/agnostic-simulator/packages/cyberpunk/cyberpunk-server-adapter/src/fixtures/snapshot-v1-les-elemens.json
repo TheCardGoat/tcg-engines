@@ -1,0 +1,959 @@
+{
+  "gameSlug": "cyberpunk",
+  "state": {
+    "G": {
+      "eventLogVersion": 2,
+      "players": {
+        "p1": {
+          "zones": {
+            "legendArea": ["ci_867899402", "ci_14361019", "ci_753553401"],
+            "field": [],
+            "hand": ["ci_639903271"],
+            "deck": ["ci_664721880", "ci_386093100"],
+            "trash": [],
+            "gigArea": [],
+            "eddieArea": [],
+            "removedFromGame": []
+          },
+          "combatPriority": "automatic",
+          "eddies": 5,
+          "spentEddies": 0,
+          "fixerArea": [
+            "gd_377613547",
+            "gd_438416591",
+            "gd_749532836",
+            "gd_105932882",
+            "gd_762785377",
+            "gd_722223878"
+          ],
+          "gigArea": [],
+          "soldThisTurn": false,
+          "calledLegendThisTurn": false,
+          "calledLegendThisRivalTurn": false,
+          "firstPlayer": true,
+          "mulliganDone": false,
+          "eddieCardIds": []
+        },
+        "p2": {
+          "zones": {
+            "legendArea": ["ci_411283475", "ci_274668412", "ci_570447895"],
+            "field": ["ci_70308493", "ci_17308252"],
+            "hand": [],
+            "deck": ["ci_415325708", "ci_964400272"],
+            "trash": [],
+            "gigArea": [],
+            "eddieArea": [],
+            "removedFromGame": []
+          },
+          "combatPriority": "automatic",
+          "eddies": 0,
+          "spentEddies": 0,
+          "fixerArea": [
+            "gd_941319521",
+            "gd_824768587",
+            "gd_95803996",
+            "gd_450925333",
+            "gd_989607504",
+            "gd_389368821"
+          ],
+          "gigArea": [],
+          "soldThisTurn": false,
+          "calledLegendThisTurn": false,
+          "calledLegendThisRivalTurn": false,
+          "firstPlayer": false,
+          "mulliganDone": false,
+          "eddieCardIds": []
+        }
+      },
+      "cardIndex": {
+        "ci_753553401": {
+          "instanceId": "ci_753553401",
+          "definitionId": "3f2e5d58-dea3-4090-8fe7-0f5f4af2d333",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_867899402": {
+          "instanceId": "ci_867899402",
+          "definitionId": "4acee220-f0ae-4bdc-85c9-f8e70ba99673",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_14361019": {
+          "instanceId": "ci_14361019",
+          "definitionId": "40502c1f-78a2-426a-a706-c60ebd4b31e3",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_386093100": {
+          "instanceId": "ci_386093100",
+          "definitionId": "f61b944a-32e3-4085-894b-7bd498325156",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "deck",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_639903271": {
+          "instanceId": "ci_639903271",
+          "definitionId": "c29aefc5-c8dd-4188-95d9-e46c5ee289eb",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "hand",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_664721880": {
+          "instanceId": "ci_664721880",
+          "definitionId": "619429c9-132f-496e-8aa0-414e850c87ec",
+          "ownerId": "p1",
+          "controllerId": "p1",
+          "zone": "deck",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_570447895": {
+          "instanceId": "ci_570447895",
+          "definitionId": "627186b3-cffb-4228-aed4-b3ee35235fb6",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_411283475": {
+          "instanceId": "ci_411283475",
+          "definitionId": "f090dc44-d7f0-4aec-a19e-9213155a6611",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_274668412": {
+          "instanceId": "ci_274668412",
+          "definitionId": "72358c7d-9f29-4ef6-a682-f5bfc72c7714",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "legendArea",
+          "meta": {
+            "spent": false,
+            "faceDown": true,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_17308252": {
+          "instanceId": "ci_17308252",
+          "definitionId": "3c4e7fcb-933d-4712-9ce7-6052a14f8e94",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "field",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_70308493": {
+          "instanceId": "ci_70308493",
+          "definitionId": "71652e73-984a-4630-be47-af947f87d5c1",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "field",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_964400272": {
+          "instanceId": "ci_964400272",
+          "definitionId": "f61b944a-32e3-4085-894b-7bd498325156",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "deck",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        },
+        "ci_415325708": {
+          "instanceId": "ci_415325708",
+          "definitionId": "619429c9-132f-496e-8aa0-414e850c87ec",
+          "ownerId": "p2",
+          "controllerId": "p2",
+          "zone": "deck",
+          "meta": {
+            "spent": false,
+            "faceDown": false,
+            "revealed": false,
+            "damage": 0,
+            "powerModifier": 0,
+            "powerMultiplier": 1,
+            "counters": {},
+            "attachedGearIds": [],
+            "attachedToId": null,
+            "hasLag": false,
+            "hasAttackedThisTurn": false,
+            "hasStolenGigThisTurn": false
+          }
+        }
+      },
+      "gigDice": {
+        "gd_377613547": {
+          "id": "gd_377613547",
+          "dieType": "d20",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_438416591": {
+          "id": "gd_438416591",
+          "dieType": "d12",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_749532836": {
+          "id": "gd_749532836",
+          "dieType": "d10",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_105932882": {
+          "id": "gd_105932882",
+          "dieType": "d8",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_762785377": {
+          "id": "gd_762785377",
+          "dieType": "d6",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_722223878": {
+          "id": "gd_722223878",
+          "dieType": "d4",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p1"
+        },
+        "gd_941319521": {
+          "id": "gd_941319521",
+          "dieType": "d20",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        },
+        "gd_824768587": {
+          "id": "gd_824768587",
+          "dieType": "d12",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        },
+        "gd_95803996": {
+          "id": "gd_95803996",
+          "dieType": "d10",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        },
+        "gd_450925333": {
+          "id": "gd_450925333",
+          "dieType": "d8",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        },
+        "gd_989607504": {
+          "id": "gd_989607504",
+          "dieType": "d6",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        },
+        "gd_389368821": {
+          "id": "gd_389368821",
+          "dieType": "d4",
+          "faceValue": 0,
+          "location": "fixerArea",
+          "ownerId": "p2"
+        }
+      },
+      "overtime": false,
+      "turnMetadata": {
+        "turnNumber": 1,
+        "activePlayerId": "p1",
+        "previousTurnBeganWithEmptyFixer": false,
+        "turnBeganWithEmptyFixer": false,
+        "gigTakenThisTurn": true,
+        "playedCardTypesThisTurn": {},
+        "overtimeActive": false,
+        "abilityFiredThisTurn": [],
+        "triggerQueue": [],
+        "nextTriggerId": 1
+      },
+      "activeEffects": [
+        {
+          "id": "static-ci_70308493-ci_70308493-0",
+          "sourceCardId": "ci_70308493",
+          "targetCardId": "ci_70308493",
+          "kind": "grantRule",
+          "rule": "cantAttack",
+          "duration": "continuous",
+          "origin": "static",
+          "abilityIndex": 1
+        }
+      ],
+      "nextEffectId": 0,
+      "effectBag": [],
+      "gamePhase": "main",
+      "attackState": null,
+      "gameEnded": false,
+      "winnerId": null,
+      "winReason": null
+    },
+    "ctx": {
+      "matchId": "match_release-compatibility",
+      "stateID": 0,
+      "playerIds": ["p1", "p2"],
+      "seed": "release-compatibility",
+      "rngState": {
+        "state": 975554590
+      }
+    }
+  },
+  "historyLength": 0,
+  "cardsMaps": {
+    "cardInstances": {},
+    "owners": {}
+  },
+  "metadata": {
+    "combatStateVersion": 3,
+    "continuation": {
+      "version": 1,
+      "undoStack": [],
+      "turnStartCheckpoint": {
+        "state": {
+          "G": {
+            "eventLogVersion": 2,
+            "players": {
+              "p1": {
+                "zones": {
+                  "legendArea": ["ci_867899402", "ci_14361019", "ci_753553401"],
+                  "field": [],
+                  "hand": ["ci_639903271"],
+                  "deck": ["ci_664721880", "ci_386093100"],
+                  "trash": [],
+                  "gigArea": [],
+                  "eddieArea": [],
+                  "removedFromGame": []
+                },
+                "combatPriority": "automatic",
+                "eddies": 5,
+                "spentEddies": 0,
+                "fixerArea": [
+                  "gd_377613547",
+                  "gd_438416591",
+                  "gd_749532836",
+                  "gd_105932882",
+                  "gd_762785377",
+                  "gd_722223878"
+                ],
+                "gigArea": [],
+                "soldThisTurn": false,
+                "calledLegendThisTurn": false,
+                "calledLegendThisRivalTurn": false,
+                "firstPlayer": true,
+                "mulliganDone": false,
+                "eddieCardIds": []
+              },
+              "p2": {
+                "zones": {
+                  "legendArea": ["ci_411283475", "ci_274668412", "ci_570447895"],
+                  "field": ["ci_70308493", "ci_17308252"],
+                  "hand": [],
+                  "deck": ["ci_415325708", "ci_964400272"],
+                  "trash": [],
+                  "gigArea": [],
+                  "eddieArea": [],
+                  "removedFromGame": []
+                },
+                "combatPriority": "automatic",
+                "eddies": 0,
+                "spentEddies": 0,
+                "fixerArea": [
+                  "gd_941319521",
+                  "gd_824768587",
+                  "gd_95803996",
+                  "gd_450925333",
+                  "gd_989607504",
+                  "gd_389368821"
+                ],
+                "gigArea": [],
+                "soldThisTurn": false,
+                "calledLegendThisTurn": false,
+                "calledLegendThisRivalTurn": false,
+                "firstPlayer": false,
+                "mulliganDone": false,
+                "eddieCardIds": []
+              }
+            },
+            "cardIndex": {
+              "ci_753553401": {
+                "instanceId": "ci_753553401",
+                "definitionId": "3f2e5d58-dea3-4090-8fe7-0f5f4af2d333",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_867899402": {
+                "instanceId": "ci_867899402",
+                "definitionId": "4acee220-f0ae-4bdc-85c9-f8e70ba99673",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_14361019": {
+                "instanceId": "ci_14361019",
+                "definitionId": "40502c1f-78a2-426a-a706-c60ebd4b31e3",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_386093100": {
+                "instanceId": "ci_386093100",
+                "definitionId": "f61b944a-32e3-4085-894b-7bd498325156",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "deck",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_639903271": {
+                "instanceId": "ci_639903271",
+                "definitionId": "c29aefc5-c8dd-4188-95d9-e46c5ee289eb",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "hand",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_664721880": {
+                "instanceId": "ci_664721880",
+                "definitionId": "619429c9-132f-496e-8aa0-414e850c87ec",
+                "ownerId": "p1",
+                "controllerId": "p1",
+                "zone": "deck",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_570447895": {
+                "instanceId": "ci_570447895",
+                "definitionId": "627186b3-cffb-4228-aed4-b3ee35235fb6",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_411283475": {
+                "instanceId": "ci_411283475",
+                "definitionId": "f090dc44-d7f0-4aec-a19e-9213155a6611",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_274668412": {
+                "instanceId": "ci_274668412",
+                "definitionId": "72358c7d-9f29-4ef6-a682-f5bfc72c7714",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "legendArea",
+                "meta": {
+                  "spent": false,
+                  "faceDown": true,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_17308252": {
+                "instanceId": "ci_17308252",
+                "definitionId": "3c4e7fcb-933d-4712-9ce7-6052a14f8e94",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "field",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_70308493": {
+                "instanceId": "ci_70308493",
+                "definitionId": "71652e73-984a-4630-be47-af947f87d5c1",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "field",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_964400272": {
+                "instanceId": "ci_964400272",
+                "definitionId": "f61b944a-32e3-4085-894b-7bd498325156",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "deck",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              },
+              "ci_415325708": {
+                "instanceId": "ci_415325708",
+                "definitionId": "619429c9-132f-496e-8aa0-414e850c87ec",
+                "ownerId": "p2",
+                "controllerId": "p2",
+                "zone": "deck",
+                "meta": {
+                  "spent": false,
+                  "faceDown": false,
+                  "revealed": false,
+                  "damage": 0,
+                  "powerModifier": 0,
+                  "powerMultiplier": 1,
+                  "counters": {},
+                  "attachedGearIds": [],
+                  "attachedToId": null,
+                  "hasLag": false,
+                  "hasAttackedThisTurn": false,
+                  "hasStolenGigThisTurn": false
+                }
+              }
+            },
+            "gigDice": {
+              "gd_377613547": {
+                "id": "gd_377613547",
+                "dieType": "d20",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_438416591": {
+                "id": "gd_438416591",
+                "dieType": "d12",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_749532836": {
+                "id": "gd_749532836",
+                "dieType": "d10",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_105932882": {
+                "id": "gd_105932882",
+                "dieType": "d8",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_762785377": {
+                "id": "gd_762785377",
+                "dieType": "d6",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_722223878": {
+                "id": "gd_722223878",
+                "dieType": "d4",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p1"
+              },
+              "gd_941319521": {
+                "id": "gd_941319521",
+                "dieType": "d20",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              },
+              "gd_824768587": {
+                "id": "gd_824768587",
+                "dieType": "d12",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              },
+              "gd_95803996": {
+                "id": "gd_95803996",
+                "dieType": "d10",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              },
+              "gd_450925333": {
+                "id": "gd_450925333",
+                "dieType": "d8",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              },
+              "gd_989607504": {
+                "id": "gd_989607504",
+                "dieType": "d6",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              },
+              "gd_389368821": {
+                "id": "gd_389368821",
+                "dieType": "d4",
+                "faceValue": 0,
+                "location": "fixerArea",
+                "ownerId": "p2"
+              }
+            },
+            "overtime": false,
+            "turnMetadata": {
+              "turnNumber": 1,
+              "activePlayerId": "p1",
+              "previousTurnBeganWithEmptyFixer": false,
+              "turnBeganWithEmptyFixer": false,
+              "gigTakenThisTurn": true,
+              "playedCardTypesThisTurn": {},
+              "overtimeActive": false,
+              "abilityFiredThisTurn": [],
+              "triggerQueue": [],
+              "nextTriggerId": 1
+            },
+            "activeEffects": [
+              {
+                "id": "static-ci_70308493-ci_70308493-0",
+                "sourceCardId": "ci_70308493",
+                "targetCardId": "ci_70308493",
+                "kind": "grantRule",
+                "rule": "cantAttack",
+                "duration": "continuous",
+                "origin": "static",
+                "abilityIndex": 1
+              }
+            ],
+            "nextEffectId": 0,
+            "effectBag": [],
+            "gamePhase": "main",
+            "attackState": null,
+            "gameEnded": false,
+            "winnerId": null,
+            "winReason": null
+          },
+          "ctx": {
+            "matchId": "match_release-compatibility",
+            "stateID": 0,
+            "playerIds": ["p1", "p2"],
+            "seed": "release-compatibility",
+            "rngState": {
+              "state": 975554590
+            }
+          }
+        },
+        "activePlayerId": "p1",
+        "turnNumber": 1,
+        "stackDepth": 0,
+        "signature": "{\"matchId\":\"match_release-compatibility\",\"playerIds\":[\"p1\",\"p2\"],\"playerZones\":{\"p1\":[\"deck\",\"eddieArea\",\"field\",\"gigArea\",\"hand\",\"legendArea\",\"removedFromGame\",\"trash\"],\"p2\":[\"deck\",\"eddieArea\",\"field\",\"gigArea\",\"hand\",\"legendArea\",\"removedFromGame\",\"trash\"]}}"
+      }
+    }
+  }
+}

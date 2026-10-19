@@ -15,7 +15,8 @@ export function AlphaClashHomePage() {
             <Stack gap={4}>
               <Text fw={600}>Live practice match</Text>
               <Text size="sm" c="dimmed">
-                Starter Titan versus Starter Warden — full rules enforced by the Alpha Clash engine.
+                Choose Clarity Hyper Aggro or The Absence from Makati, then play against the
+                recommended opponent or control both sides.
               </Text>
             </Stack>
             <Button component="a" href="/alpha-clash/simulator/play/practice">
@@ -27,8 +28,7 @@ export function AlphaClashHomePage() {
           Open TestEngine board fixtures
         </Button>
         <Text size="sm" c="dimmed">
-          Card catalog: 747 authored official cards (295 awaiting behavior authoring). Practice
-          Contenders use fully-authored fixture cards while official Contender behavior lands.
+          Local practice uses the same main decks as bot-lab. Sideboards are not used.
         </Text>
       </Stack>
     </main>

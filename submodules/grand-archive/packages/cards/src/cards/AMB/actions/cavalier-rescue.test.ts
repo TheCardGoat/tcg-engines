@@ -103,6 +103,6 @@ describe("Cavalier Rescue — +3 LIFE and wake a defender", () => {
     expect(game.state.objects[ally.objectId]!.states.has("rested")).toBe(false);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[ally.objectId]!.zone).toBe("field");
-    expect(game.state.objects[ally.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(ally.objectId)).toBe(3);
   });
 });

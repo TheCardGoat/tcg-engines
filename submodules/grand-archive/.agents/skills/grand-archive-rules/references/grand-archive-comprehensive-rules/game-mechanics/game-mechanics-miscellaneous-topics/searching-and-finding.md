@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/searching-and-finding"
   relation: "current_index"
 ---
-
 # Searching and Finding
 
 #### General Rules

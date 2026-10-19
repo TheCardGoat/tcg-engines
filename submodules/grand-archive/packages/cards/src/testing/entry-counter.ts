@@ -88,10 +88,10 @@ export function proveEntryCounter(
           attacker.declareAttack(attacker.card(giantTortoise, { zone: "field" }), target);
           game.resolveCombatWithoutRetaliation();
           expect(game.state.objects[target.objectId]!.counters.bulwark ?? 0).toBe(0);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           attacker.declareAttack(attacker.card(woodlandSquirrels, { zone: "field" }), target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
         }
         if (counter === "buff") {
           const evalContext = {

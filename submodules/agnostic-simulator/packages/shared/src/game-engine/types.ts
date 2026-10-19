@@ -5,6 +5,8 @@ import type {
   DropReasonCode,
   EngineInteractionView,
   InteractionSubmission,
+  InteractionPreviewRequest,
+  InteractionPreviewResult,
   TimeoutFacts,
 } from "@tcg/protocol";
 
@@ -348,6 +350,12 @@ export interface ServerGameEngine {
   /** Build the current prompt/action projection for a seated actor. */
   getInteractionView?(actorId: string): EngineInteractionView | undefined;
 
+  /** Recompute a partial action without mutating match, RNG, history or persistence. */
+  previewInteraction?(
+    actorId: string,
+    request: InteractionPreviewRequest,
+  ): InteractionPreviewResult;
+
   /** Actor ids that should receive player-specific interaction views after an interaction. */
   getInteractionActorIds?(): readonly string[];
 
@@ -364,6 +372,8 @@ export interface ServerGameEngine {
  * accepted-move and engine-log records they build.
  */
 export interface DispatchContext {
+  /** Authoritative session permission, supplied by the server command processor. */
+  readonly correctionModeEnabled?: boolean;
   gameId: string;
   sourceAuthority: MoveHistorySourceAuthority;
 }
@@ -445,6 +455,8 @@ export interface HistoricDecksForRestore {
  */
 export interface EngineSnapshot {
   gameSlug?: PlayableGameSlug;
+  /** Game-owned persisted-state schema, independent of the command/state counter. */
+  snapshotSchemaVersion?: number;
   /** Authoritative state payload — opaque to the play module. */
   state: unknown;
   /** Length of the move history at the time of snapshot. */

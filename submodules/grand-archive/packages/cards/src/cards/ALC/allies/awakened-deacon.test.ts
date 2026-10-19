@@ -83,11 +83,11 @@ describe("Awakened Deacon — conditional Intercept", () => {
             expect(game.state.combat?.targetIds).toEqual([
               redirected ? deacon.objectId : target.objectId,
             ]);
-            expect(game.state.objects[deacon.objectId]!.damage).toBe(0);
-            expect(game.state.objects[target.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(deacon.objectId)).toBe(0);
+            expect(game.markedDamage(target.objectId)).toBe(0);
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[deacon.objectId]!.damage).toBe(redirected ? 1 : 0);
-            expect(game.state.objects[target.objectId]!.damage).toBe(redirected ? 0 : 1);
+            expect(game.markedDamage(deacon.objectId)).toBe(redirected ? 1 : 0);
+            expect(game.markedDamage(target.objectId)).toBe(redirected ? 0 : 1);
             // The ability protects the champion, not another ally.
             const wait = game.waitState();
             if (wait.kind === "opportunity" && wait.playerId !== opponent.id)
@@ -117,7 +117,7 @@ describe("Awakened Deacon — conditional Intercept", () => {
     answerDecision(game, "resolve-optional-effect", true);
     passEffectsStack(game);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[player.card(awakenedDeacon).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(player.card(awakenedDeacon).objectId)).toBe(1);
     const wait = game.waitState();
     if (wait.kind === "opportunity" && wait.playerId !== player.id)
       game.player(wait.playerId).pass();
@@ -130,6 +130,6 @@ describe("Awakened Deacon — conditional Intercept", () => {
     opponent.declareAttack(attackers[1]!, target);
     expect(game.state.stack).toHaveLength(0);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(target.objectId)).toBe(1);
   });
 });

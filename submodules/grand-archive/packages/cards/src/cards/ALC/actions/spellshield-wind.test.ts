@@ -64,18 +64,18 @@ describe("Spellshield: Wind — next champion damage", () => {
 
       opponent.declareAttack(opponent.cards(automatedGardener, { zone: "field" })[0]!, buffTarget);
       resolveCombat();
-      expect(game.state.objects[buffTarget.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(buffTarget.objectId)).toBe(2);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(0);
 
       const attackers = opponent.cards(damagingAlly, { zone: "field" });
       opponent.declareAttack(attackers[damage === 2 ? 1 : 0]!, protectedChampion);
       resolveCombat();
-      expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(protectedChampion.objectId)).toBe(0);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(damage >= 3 ? 1 : 0);
 
       opponent.declareAttack(attackers[damage === 2 ? 2 : 1]!, protectedChampion);
       resolveCombat();
-      expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(damage);
+      expect(game.markedDamage(protectedChampion.objectId)).toBe(damage);
       expect(game.state.objects[buffTarget.objectId]!.counters.buff ?? 0).toBe(damage >= 3 ? 1 : 0);
     });
   }

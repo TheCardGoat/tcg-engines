@@ -301,6 +301,9 @@ export function grandArchiveEffectPerformsAsSpell(
       );
     case "attempt":
       return grandArchiveEffectPerformsAsSpell(effect.effect);
+    case "reflexive":
+      // The consequence is a separate stack item with its own targeting context.
+      return grandArchiveEffectPerformsAsSpell(effect.action);
     case "bind-value":
       return grandArchiveEffectPerformsAsSpell(effect.effect);
     case "select-modes":

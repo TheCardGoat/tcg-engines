@@ -1,3 +1,4 @@
+import { CardReference } from "@tcg/simulator-presentation/card-reference";
 import type { CSSProperties, HTMLAttributes } from "react";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import {
@@ -86,11 +87,14 @@ export function CardNameToken({
   }
 
   return (
-    <CardNameText
-      name={resolvedCard.name}
-      color={resolvedCard.color}
-      role="button"
-      tabIndex={0}
+    <CardReference
+      card={{
+        id: resolvedCard.cardId,
+        label: resolvedCard.name,
+        imageUrl: resolvedCard.imageUrl,
+        identity: [{ label: resolvedCard.color, color: CARD_ACCENT[resolvedCard.color] }],
+      }}
+      previewMode="external"
       className={className}
       onMouseEnter={showPreview}
       onMouseLeave={hide}

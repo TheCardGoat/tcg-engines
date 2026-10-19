@@ -147,7 +147,7 @@ export function proveMajesticPrevention() {
             expect(game.state.objects[target.objectId]!.zone).toBe(
               expected >= life ? "graveyard" : "field",
             );
-            if (expected < life) expect(game.state.objects[target.objectId]!.damage).toBe(expected);
+            if (expected < life) expect(game.markedDamage(target.objectId)).toBe(expected);
           });
         }
 }
@@ -198,7 +198,7 @@ export function proveMajesticDeparture() {
             targets: { "target-1": [target.objectId] },
           });
           settle(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(i * Math.floor(amount / 2));
+          expect(game.markedDamage(target.objectId)).toBe(i * Math.floor(amount / 2));
         }
         q.activate(disorientingWinds, {
           reservePayment: pay(6 - amount),

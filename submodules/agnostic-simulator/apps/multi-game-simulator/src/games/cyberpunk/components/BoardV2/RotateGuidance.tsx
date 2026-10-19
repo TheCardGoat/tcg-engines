@@ -1,4 +1,5 @@
 import { useMediaQuery } from "@mantine/hooks";
+import { LandscapeNotice } from "@tcg/simulator-ui";
 import { MoveHorizontal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ReturnToV1 } from "./version";
@@ -66,18 +67,15 @@ export function RotateGuidance() {
   }
 
   return (
-    <div ref={layerRef} className={classes.layer} data-testid="rotate-guidance">
-      <div className={classes.card} role="status">
-        <span className={classes.iconPlate} aria-hidden="true">
-          <MoveHorizontal size={28} strokeWidth={2.4} />
-        </span>
-        <p className={classes.eyebrow}>Orientation</p>
-        <h2 className={classes.title}>Rotate your device</h2>
-        <p className={classes.body}>
-          The board is built for landscape. Turn your phone sideways — your match keeps running
-          either way.
-        </p>
-        <div className={classes.actions}>
+    <LandscapeNotice
+      ref={layerRef}
+      className={classes.notice}
+      data-testid="rotate-guidance"
+      title="Rotate your device"
+      body="The board is built for landscape. Turn your phone sideways — your match keeps running either way."
+      detail={null}
+      actions={
+        <>
           <ReturnToV1 className={classes.primary} />
           <button
             type="button"
@@ -93,8 +91,8 @@ export function RotateGuidance() {
           >
             Peek at the board anyway
           </button>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    />
   );
 }

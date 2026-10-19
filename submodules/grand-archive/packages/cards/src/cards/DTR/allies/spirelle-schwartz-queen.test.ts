@@ -68,7 +68,7 @@ describe("Spirelle - Spell entry damage and optional private banishment", () => 
           p.activate(source, { reservePayment: payment });
           expect(p.zone("memory")).toHaveLength(3);
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           for (const invalid of [
             [],
             [target.objectId, target.objectId],
@@ -89,7 +89,7 @@ describe("Spirelle - Spell entry damage and optional private banishment", () => 
             targets: { "target-1": [target.objectId] },
           });
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(3);
+          expect(game.markedDamage(target.objectId)).toBe(3);
           answerDecision(game, "resolve-optional-effect", choice !== "decline");
           if (choice !== "decline") {
             const selected = p.card(backdash, { zone: choice });
@@ -268,14 +268,14 @@ describe("Spirelle - reveal linked banishment to negate matching cards", () => {
         targets: { "target-1": [q.card(champion).objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(6);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(6);
       answerDecision(game, "resolve-optional-effect", false);
       passEffectsStack(game);
       expect(game.state.objects[source.objectId]!.states.has("rested")).toBe(false);
       expect(game.state.objects[p.card(champion).objectId]!.states.has("distant")).toBe(cost !== 1);
       expect(game.state.objects[q.card(champion).objectId]!.states.has("distant")).toBe(false);
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(6);
-      expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(6);
+      expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
     });
 });
 
@@ -347,7 +347,7 @@ describe("Spirelle - negation protection and removal after resolution", () => {
         targets: { "target-1": [q.card(champion).objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(6);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(6);
       answerDecision(game, "resolve-optional-effect", false);
       passEffectsStack(game);
       expect(game.state.objects[source.objectId]!.zone).toBe(
@@ -434,7 +434,7 @@ it("a new Spirelle incarnation cannot reveal or retrieve the previous incarnatio
   passEffectsStack(game);
   answerDecision(game, "resolve-optional-effect", false);
   passEffectsStack(game);
-  expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(9);
+  expect(game.markedDamage(q.card(champion).objectId)).toBe(9);
 });
 
 /** @covers p2n1953som-a1 @covers p2n1953som-a2 */
@@ -494,7 +494,7 @@ describe("Spirelle - pending abilities after their source leaves", () => {
       });
       passEffectsStack(game);
       expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(3);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(3);
       if (duringEntry) {
         answerDecision(game, "resolve-optional-effect", true);
         answerDecision(game, "resolve-effect-choice", [stored.objectId]);
@@ -647,8 +647,8 @@ it("a new controller may reveal either linked card and returns all linked cards 
   passEffectsStack(game);
   answerDecision(game, "resolve-optional-effect", false);
   passEffectsStack(game);
-  expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(6);
-  expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(3);
+  expect(game.markedDamage(p.card(champion).objectId)).toBe(6);
+  expect(game.markedDamage(q.card(champion).objectId)).toBe(3);
 });
 
 /** @covers p2n1953som-a1 @covers p2n1953som-a2 */

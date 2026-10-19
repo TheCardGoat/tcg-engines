@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CHAT_PRESET_KEYS, MAX_CHAT_TEXT_LENGTH } from "./chat.js";
-import { InteractionSubmission } from "./interactions.js";
+import { InteractionSubmission, InteractionPreviewRequest } from "./interactions.js";
 import {
   RequestPreparationSyncMessage,
   ConfirmPreparationMessage,
@@ -65,6 +65,16 @@ export const SubmitInteractionMessage = z.object({
   submission: InteractionSubmission,
   correlationId: z.string().optional(),
 });
+
+/** Read-only draft evaluation. Actor identity comes only from authenticated seating. */
+export const PreviewInteractionMessage = z
+  .object({
+    type: z.literal("preview_interaction"),
+    gameId: z.string().min(1),
+    request: InteractionPreviewRequest,
+    correlationId: z.string().min(1),
+  })
+  .strict();
 
 export const ReconnectMessage = z.object({
   type: z.literal("reconnect"),
@@ -369,6 +379,7 @@ export const GatewayClientMessage = z.union([
   JoinGameMessage,
   ExecuteMoveMessage,
   SubmitInteractionMessage,
+  PreviewInteractionMessage,
   ReconnectMessage,
   LeaveGameMessage,
   SendChatMessage,
@@ -394,6 +405,7 @@ export const GatewayClientMessage = z.union([
 export type GatewayPingMsg = z.infer<typeof GatewayPingMessage>;
 export type JoinGameMsg = z.infer<typeof JoinGameMessage>;
 export type ExecuteMoveMsg = z.infer<typeof ExecuteMoveMessage>;
+export type PreviewInteractionMsg = z.infer<typeof PreviewInteractionMessage>;
 export type SubmitInteractionMsg = z.infer<typeof SubmitInteractionMessage>;
 export type ReconnectMsg = z.infer<typeof ReconnectMessage>;
 export type LeaveGameMsg = z.infer<typeof LeaveGameMessage>;

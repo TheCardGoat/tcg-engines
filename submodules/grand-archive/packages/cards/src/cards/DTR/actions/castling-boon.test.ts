@@ -99,11 +99,11 @@ describe("Castling Boon — current controlled allies and conditional replacemen
       expect(life(tortoise.objectId)).toBe(6);
       if (rook === "owned") {
         expect(game.state.objects[squirrel.objectId]!.zone).toBe("field");
-        expect(game.state.objects[squirrel.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(squirrel.objectId)).toBe(0);
         expect(life(squirrel.objectId)).toBe(1);
       }
       q.pass();
       burn(tortoise.objectId);
-      expect(game.state.objects[tortoise.objectId]!.damage).toBe(3);
+      expect(game.markedDamage(tortoise.objectId)).toBe(3);
     });
 });

@@ -20,6 +20,7 @@ describe("Cyberpunk demo fixture", () => {
     expect(config.botStrategyId).toBe("default");
     const opponent = createPracticeAiConfig(config).opponent;
     expect(opponent).not.toBeNull();
+    if (!opponent) throw new Error("Expected a practice opponent");
     expect(opponent?.name).toBe("default");
     expect(findStrategyDescriptor(opponent)?.label).toBe("Recommended");
     expect(boundDeckProfile(opponent)).toBeUndefined();

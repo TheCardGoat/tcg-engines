@@ -14,7 +14,6 @@ import {
   PREVIEW_DECKS,
   applyAction,
   createInitialState,
-  chooseAiAction,
   createPracticeState,
   deciderOf,
   previewDeckList,
@@ -33,7 +32,11 @@ import { practiceModeFromSearch, type PracticeMode } from "../../../simulator/pr
 const AI_SEAT: PlayerId = "p2";
 const AI_DELAY_MS = 450;
 
-type BotStrategy = "greedy" | "passive";
+import { decideNarutoBot, type BotStrategy } from "../bot-decision";
+import { useBackgroundBot } from "../../../simulator/bot/use-background-bot";
+const botWorkerKey = {};
+const createBotWorker = () =>
+  new Worker(new URL("../bot-decision.worker.ts", import.meta.url), { type: "module" });
 
 interface PracticeSetup {
   readonly deckKey: string;
@@ -92,25 +95,11 @@ function parseHandoffSeed(value: string | null): number | null {
   return Number.isSafeInteger(parsed) ? parsed : null;
 }
 
-function choosePracticeAiAction(
-  state: GameState,
-  player: PlayerId,
-  strategy: BotStrategy,
-): Action | null {
-  if (strategy === "greedy") return chooseAiAction(state, player);
-  if (state.pendingChoice || state.awaitingMulligan === player)
-    return chooseAiAction(state, player);
-  if (state.step === "counter" && state.priority === player) {
-    return { type: "PASS_COUNTER", player };
-  }
-  if (state.activePlayer === player && state.phase === "main") return { type: "END_TURN", player };
-  return null;
-}
-
 export function NarutoPracticePage() {
   const [setup, setSetup] = useState<PracticeSetup>(DEFAULT_SETUP);
   const [session, setSession] = useState<PracticeSession>({ state: null, history: [] });
   const [debugHistory, setDebugHistory] = useState<LocalSimulatorDebugHistoryRecorder | null>(null);
+  const [botError, setBotError] = useState<string | null>(null);
   const [startProblems, setStartProblems] = useState<readonly string[]>([]);
   const [pendingHandoffStart, setPendingHandoffStart] = useState(false);
   const { state, history } = session;
@@ -140,6 +129,7 @@ export function NarutoPracticePage() {
   );
 
   const undo = useCallback(() => {
+    setBotError(null);
     setSession((current) => {
       const previous = current.history[current.history.length - 1];
       if (!previous) return current;
@@ -158,6 +148,7 @@ export function NarutoPracticePage() {
   }, [debugHistory]);
 
   const startGame = useCallback(() => {
+    setBotError(null);
     const p1 = resolveDeck(setup, setup.useCustom ? "custom" : setup.deckKey);
     const p2 = resolveDeck(setup, setup.opponentDeckKey);
     const problems = [
@@ -242,17 +233,31 @@ export function NarutoPracticePage() {
     setSession({ state: null, history: [] });
   }, []);
 
-  // Greedy AI loop: whenever the AI seat must decide, pick and apply.
-  useEffect(() => {
-    if (!state || setup.mode !== "bot" || state.winner) return;
-    if (deciderOf(state) !== AI_SEAT) return;
-    const timer = window.setTimeout(() => {
+  useBackgroundBot({
+    identity: state,
+    getIdentity: () => state,
+    workerKey: botWorkerKey,
+    scope: `${setup.mode}:${setup.strategy}`,
+    enabled: Boolean(
+      state && !state.winner && setup.mode === "bot" && deciderOf(state) === AI_SEAT,
+    ),
+    auto: !botError,
+    delayMs: AI_DELAY_MS,
+    createWorker: createBotWorker,
+    context: () => null,
+    input: () => {
+      if (!state) throw new Error("No practice state");
+      return { state, player: AI_SEAT, strategy: setup.strategy };
+    },
+    decide: decideNarutoBot,
+    onError: setBotError,
+    commit: ({ action }) => {
+      if (!action) {
+        setBotError("The practice bot found no action.");
+        return;
+      }
       setSession((current) => {
-        if (!current.state || current.state.winner || deciderOf(current.state) !== AI_SEAT) {
-          return current;
-        }
-        const action = choosePracticeAiAction(current.state, AI_SEAT, setup.strategy);
-        if (!action) return current;
+        if (current.state !== state || !current.state) return current;
         const next = applyAction(current.state, action);
         if (next === current.state) return current;
         debugHistory?.record({
@@ -266,15 +271,10 @@ export function NarutoPracticePage() {
           timestamp: Date.now(),
           domainEvents: next.log.slice(current.state.log.length),
         });
-        // AI decisions are one side of the response to the player's move, not
-        // separate undo checkpoints. Keeping them out of history means Undo
-        // returns to a human decision boundary instead of restoring AI
-        // priority and immediately replaying the same automated action.
         return { state: next, history: current.history };
       });
-    }, AI_DELAY_MS);
-    return () => window.clearTimeout(timer);
-  }, [debugHistory, state, setup.mode, setup.strategy]);
+    },
+  });
 
   const viewer: PlayerId = useMemo(() => {
     if (!state || setup.mode === "bot") return "p1";
@@ -450,24 +450,27 @@ export function NarutoPracticePage() {
 
   return (
     <div className={classes.practiceGame} data-testid="naruto-practice-game">
-      <nav className={classes.gameBar} aria-label="Practice match controls">
-        <span role="status">
-          {setup.mode === "self"
-            ? `Play both sides · controlling ${viewer === "p1" ? "Player 1" : "Player 2"}`
-            : "Practice bot"}
-        </span>
-        <button
-          type="button"
-          data-testid="naruto-undo"
-          disabled={history.length === 0}
-          onClick={undo}
-        >
-          Undo ({history.length})
-        </button>
-        <button type="button" data-testid="naruto-quit" onClick={backToSetup}>
-          Setup
-        </button>
-      </nav>
+      <>
+        {botError && <p role="alert">{botError}</p>}
+        <nav className={classes.gameBar} aria-label="Practice match controls">
+          <span role="status">
+            {setup.mode === "self"
+              ? `Play both sides · controlling ${viewer === "p1" ? "Player 1" : "Player 2"}`
+              : "Practice bot"}
+          </span>
+          <button
+            type="button"
+            data-testid="naruto-undo"
+            disabled={history.length === 0}
+            onClick={undo}
+          >
+            Undo ({history.length})
+          </button>
+          <button type="button" data-testid="naruto-quit" onClick={backToSetup}>
+            Setup
+          </button>
+        </nav>
+      </>
       <NarutoBoard
         state={state}
         viewer={viewer}

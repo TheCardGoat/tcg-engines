@@ -1,4 +1,10 @@
 import { useLocation, useParams } from "react-router-dom";
+import { lazy, Suspense, useCallback } from "react";
+import { notifications } from "@mantine/notifications";
+import {
+  buildRivalTimeoutFixture,
+  timeoutFixtureConnections,
+} from "../testing/rival-timeout-fixture";
 import {
   getStrategyById,
   listScenarios,
@@ -14,6 +20,7 @@ import { NotFound } from "./Tests.page";
 
 const VALID_IDS: ReadonlySet<string> = new Set(listScenarios().map((s) => s.id));
 const DEFAULT_FIXTURE_STRATEGY_ID = "default";
+const DelayedCommandFixture = lazy(() => import("../testing/DelayedCommandFixture"));
 
 /**
  * Route that bootstraps the board with a specific fixture. URL shape:
@@ -25,6 +32,12 @@ export function TestFixturePage() {
   const params = useParams<{ fixtureId: string }>();
   const location = useLocation();
   const fixtureId = params.fixtureId ?? "";
+  const timeoutFixture =
+    import.meta.env.DEV && new URLSearchParams(location.search).get("rival-timeout") === "expired";
+  const buildTimeoutFixture = useCallback(
+    () => buildRivalTimeoutFixture(fixtureId as ScenarioId),
+    [fixtureId],
+  );
 
   if (fixtureId === "demo") {
     return <DemoFixturePage />;
@@ -36,6 +49,14 @@ export function TestFixturePage() {
 
   const aiOptions = resolveFixtureAiOptions(location.search);
 
+  if (import.meta.env.DEV && new URLSearchParams(location.search).has("command-feedback")) {
+    return (
+      <Suspense fallback={<p>Loading command feedback fixture…</p>}>
+        <DelayedCommandFixture key={fixtureId} scenarioId={fixtureId as ScenarioId} />
+      </Suspense>
+    );
+  }
+
   return (
     <>
       <BoardSharedPage
@@ -45,6 +66,13 @@ export function TestFixturePage() {
         initialAiMode={aiOptions.initialAiMode}
         initialAiSpeed={aiOptions.initialAiSpeed}
         autoResolveSingletonCardTargets={false}
+        initialEngineBuilder={timeoutFixture ? buildTimeoutFixture : undefined}
+        playerConnections={timeoutFixture ? timeoutFixtureConnections : undefined}
+        onClaimRivalDrop={
+          timeoutFixture
+            ? () => notifications.show({ message: "Local fixture: rival drop requested." })
+            : undefined
+        }
       />
     </>
   );

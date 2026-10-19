@@ -51,7 +51,7 @@ export const centralKeywordContracts = {
   preserve: "Preserve returns a destroyed ally to its owner's material deck",
   "link-shield": "Link Shield destroys the shield instead of its damaged linked ally",
   exalted:
-    "Exalted permits playing Exalted-element cards only while a champion enables another advanced element",
+    "Exalted permits playing Exalted-element cards while a champion enables any advanced element",
 } satisfies Partial<Record<GrandArchiveKeywordName, string>>;
 
 export function validateCentralKeywordEvidence(sources: Readonly<Record<string, string>>): void {

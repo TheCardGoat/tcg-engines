@@ -15,6 +15,7 @@ import {
   type InteractionSubmissionValue,
 } from "@tcg/protocol";
 import {
+  memo,
   useCallback,
   useLayoutEffect,
   useId,
@@ -168,7 +169,8 @@ interface CardProps {
   onCardClick?: (cardId: string | undefined) => void;
 }
 
-export function Card({
+// Zone animation phases must not rebuild unchanged interactive card bodies.
+export const Card = memo(function Card({
   imageUrl,
   name,
   definitionId,
@@ -1048,7 +1050,7 @@ export function Card({
       ) : null}
     </CardDragDropShell>
   );
-}
+});
 
 interface CardDragDropShellProps extends ComponentPropsWithoutRef<"div"> {
   readonly entityId?: string;

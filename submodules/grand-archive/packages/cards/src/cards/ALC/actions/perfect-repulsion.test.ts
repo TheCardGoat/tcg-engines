@@ -79,12 +79,12 @@ describe("Perfect Repulsion — exact snapshotted damage", () => {
 
     opponent.declareAttack(opponent.card(automatedGardener, { zone: "field" }), target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(target.objectId)).toBe(0);
     expect(player.zone("hand")).toHaveLength(1);
 
     opponent.declareAttack(opponent.card(ferventBeastmaster, { zone: "field" }), target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(target.objectId)).toBe(3);
     expect(player.zone("hand")).toHaveLength(1);
   });
 });

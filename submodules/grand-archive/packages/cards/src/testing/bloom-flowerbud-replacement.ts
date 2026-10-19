@@ -128,7 +128,9 @@ export function proveBloomEveryOpponent(card: Card, flowers: readonly [Card, Car
       startingChampionDefinitionId: champion.canonicalId,
       mainDeck: [card, blossomingDenial, woodlandSquirrels].map((definition) => ({
         definitionId: definition.canonicalId,
-        count: 40,
+        // Sixty cards per player are ample for the ten setup turns. This test
+        // checks each-opponent resolution, not oversized-deck performance.
+        count: 20,
       })),
       materialDeck: [{ definitionId: champion.canonicalId, count: 1 }],
       pantheon: {

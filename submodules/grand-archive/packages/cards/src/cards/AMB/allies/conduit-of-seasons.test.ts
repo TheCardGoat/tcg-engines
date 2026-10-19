@@ -114,7 +114,7 @@ describe("Conduit of Seasons — West damage prevention", () => {
         targets: { "target-1": [conduit.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[conduit.objectId]!.damage).toBe(west ? 0 : 1);
+      expect(game.markedDamage(conduit.objectId)).toBe(west ? 0 : 1);
     });
   }
 });

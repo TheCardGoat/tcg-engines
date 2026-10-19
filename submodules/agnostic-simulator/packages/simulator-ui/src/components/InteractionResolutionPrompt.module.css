@@ -1543,8 +1543,8 @@
   }
 
   .root[data-partition-layout="direct-order"]:has(.directOrderLanes[data-route-count="2"]):not(
-      [data-minimized="true"]
-    ) {
+    [data-minimized="true"]
+  ) {
     max-height: min(78dvh, calc(100% - 1rem));
   }
 
@@ -2148,8 +2148,8 @@
 
 @media (max-height: 420px) and (min-width: 480px) {
   .root[data-partition-layout="direct-order"]:not([data-minimized="true"]):not(
-      [data-embedded="true"]
-    ) {
+    [data-embedded="true"]
+  ) {
     max-height: calc(100dvh - 1rem);
     width: min(48rem, calc(100% - 1rem));
   }
@@ -2174,4 +2174,41 @@
   line-height: 1.35;
   white-space: normal;
   overflow-wrap: anywhere;
+}
+
+.numberControl {
+  display: grid;
+  gap: 0.25rem;
+}
+.numberRange {
+  color: var(--interaction-muted);
+  font-size: 0.7rem;
+  text-align: center;
+}
+.numberControl input[aria-invalid="true"] {
+  outline: 2px solid var(--mantine-color-red-6, #e45b65);
+  outline-offset: -2px;
+}
+
+.allocationWorkspace[data-presentation="cards"] .allocationGrid {
+  grid-template-columns: repeat(auto-fit, minmax(135px, 170px));
+  justify-content: center;
+  max-height: none;
+  overflow: visible;
+  gap: 16px;
+}
+.allocationWorkspace[data-presentation="cards"] .allocationCard {
+  flex-direction: column;
+  align-items: stretch;
+}
+.allocationWorkspace[data-presentation="cards"] .allocationIdentity img {
+  max-width: 100%;
+  width: 100%;
+}
+.allocationWorkspace[data-presentation="cards"] .numberStepper {
+  flex: 0 0 auto;
+  min-height: 0;
+  height: auto;
+  align-self: center;
+  justify-content: center;
 }

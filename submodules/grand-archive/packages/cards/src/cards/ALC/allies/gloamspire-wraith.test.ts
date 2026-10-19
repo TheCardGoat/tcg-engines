@@ -67,7 +67,7 @@ describe("Gloamspire Wraith — distant hit recovery", () => {
           ],
         });
         passEffectsStack(game);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(6);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(6);
         const wait = game.waitState();
         if (wait.kind === "opportunity" && wait.playerId !== opponent.id)
           game.player(wait.playerId).pass();
@@ -89,7 +89,7 @@ describe("Gloamspire Wraith — distant hit recovery", () => {
             game.player(next.playerId).pass();
           }
         }
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(6);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(6);
         expect(
           game.state.stack.filter(
             (item) => item.kind === "triggered-ability" && item.ability.id === "granted-zjtwd7-a1",
@@ -97,7 +97,7 @@ describe("Gloamspire Wraith — distant hit recovery", () => {
         ).toHaveLength(1);
         passEffectsStack(game);
         // Ranged improves attacks, not retaliation; only three damage was dealt.
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(3);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(3);
         if (game.state.combat) game.resolveCombatWithoutRetaliation();
         expect(opponent.cards(attackerCard, { zone: "graveyard" })).toHaveLength(1);
         expect(player.cards(gloamspireWraith, { zone: "graveyard" })).toHaveLength(lethal ? 1 : 0);
@@ -159,7 +159,7 @@ describe("Gloamspire Wraith — distant hit recovery", () => {
           passEffectsStack(game);
         }
         const initialDamage = curses * (curses + 1);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(initialDamage);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(initialDamage);
         if (distance !== "none") {
           ready();
           player.activate(reposition, {
@@ -219,19 +219,19 @@ describe("Gloamspire Wraith — distant hit recovery", () => {
         const dealt = 3 + (classBonus && distant ? 2 : 0) - (targetKind === "shielded" ? 2 : 0);
         if (targetKind === "ally" && dealt >= 4)
           expect(opponent.zone("graveyard")).toContainEqual(target);
-        else expect(game.state.objects[target.objectId]!.damage).toBe(dealt);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(initialDamage);
+        else expect(game.markedDamage(target.objectId)).toBe(dealt);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(initialDamage);
         expect(
           game.state.stack.filter(
             (item) => item.kind === "triggered-ability" && item.ability.id === "granted-zjtwd7-a1",
           ),
         ).toHaveLength(distant ? 1 : 0);
         passEffectsStack(game);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(
+        expect(game.markedDamage(ownChampion.objectId)).toBe(
           distant ? Math.max(0, initialDamage - dealt) : initialDamage,
         );
         if (game.state.combat) game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[opposingChampion.objectId]!.damage).toBe(
+        expect(game.markedDamage(opposingChampion.objectId)).toBe(
           targetKind === "ally" ? 0 : dealt,
         );
       });

@@ -1,0 +1,16 @@
+{
+  "verifiedOn": "2026-10-12",
+  "durationSeconds": 1713.094664794922,
+  "blocksPerPair": 3,
+  "workers": 12,
+  "scheduledMatches": 384,
+  "reusedHistoricalMatches": 0,
+  "search": {
+    "maxNodes": 768,
+    "beamWidth": 5,
+    "depthLimit": 12,
+    "replyLines": 4
+  },
+  "shufflePolicy": "Adapter v4 removes the terminal -seat-1/-seat-2 suffix for native shuffling. Each seat pair keeps physical deck assignment and shuffle fixed while swapping policies.",
+  "scope": "Native engine games, exact main decks, full private information for both policies, no sideboarding, construction validation disabled. No hosted or browser proof."
+}

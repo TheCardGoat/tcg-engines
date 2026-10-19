@@ -99,10 +99,10 @@ export function proveFixedDamageAction({
           expect(game.state).toEqual(before);
         }
         p.activate(card, options);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         expect(p.zone("hand")).toHaveLength(0);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         expect(p.zone("hand")).toHaveLength(draw);
         expect(game.state.objects[p.card(champion).objectId]!.counters.preparation ?? 0).toBe(
           preparation,

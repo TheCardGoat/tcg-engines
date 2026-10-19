@@ -19,7 +19,11 @@ import {
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
+import {
+  createCanonicalEngineMoveLog,
+  createEngineLogMessage,
+  GameRuntimeError,
+} from "@tcg/shared/game-engine";
 import type {
   AcceptedMoveRecord,
   BotActionOptions,
@@ -221,12 +225,9 @@ export class CyberpunkServerEngine implements ServerGameEngine {
     try {
       view = this.getInteractionView(actorId);
     } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Interaction view unavailable.",
-        errorCode: "invalid_interaction_view",
-        stateID: currentStateID,
-      };
+      throw new GameRuntimeError("game_engine_failed", "Cyberpunk interaction view failed", {
+        cause: error,
+      });
     }
     const validation = validateInteractionSubmission(view, submission);
     if (!validation.ok) {
@@ -244,12 +245,9 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       const translated = cyberpunkSubmissionToPayload(submission);
       return this.dispatch(translated.moveType, actorId, translated.payload, context);
     } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Invalid interaction submission.",
-        errorCode: "invalid_interaction_submission",
-        stateID: currentStateID,
-      };
+      throw new GameRuntimeError("game_engine_failed", "Cyberpunk interaction execution failed", {
+        cause: error,
+      });
     }
   }
 

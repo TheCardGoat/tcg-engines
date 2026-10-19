@@ -1,0 +1,440 @@
+[
+  {
+    "stage": "roots",
+    "nodes": 7,
+    "roots": [
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-9:Triumphant Revitalization"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 53.36250000000001
+      },
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-24:Haven, Hiding in Plain Sight"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 50.8125
+      },
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-47:Valen Solariel"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 49.162499999999966
+      },
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-29:LINN, Adaptable Fighter"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 49.46249999999998
+      },
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-42:Flare, Explosive Combatant"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 50.26249999999999
+      },
+      {
+        "command": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-44:Flare, Explosive Combatant"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 50.26249999999999
+      },
+      {
+        "command": {
+          "type": "pass",
+          "playerId": "player-one"
+        },
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "score": 50.86250000000001
+      }
+    ]
+  },
+  {
+    "stage": "planned",
+    "nodes": 576,
+    "lines": [
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Valen Solariel",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-9:Triumphant Revitalization"
+        },
+        "score": 86.66249999999997,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Valen Solariel",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-24:Haven, Hiding in Plain Sight"
+        },
+        "score": 84.11250000000001,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 1,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "pass",
+          "playerId": "player-one"
+        },
+        "score": 75.8125,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 1,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-42:Flare, Explosive Combatant"
+        },
+        "score": 75.21249999999998,
+        "depth": 2
+      }
+    ]
+  },
+  {
+    "stage": "replies",
+    "nodes": 768,
+    "lines": [
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 1,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "pass",
+          "playerId": "player-one"
+        },
+        "score": 84.69999999999999,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Valen Solariel",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-9:Triumphant Revitalization"
+        },
+        "score": 84.66249999999997,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 1,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-42:Flare, Explosive Combatant"
+        },
+        "score": 84.09999999999997,
+        "depth": 2
+      },
+      {
+        "state": {
+          "phase": {
+            "name": "primary"
+          },
+          "turn": 5,
+          "clash": null,
+          "pending": 0,
+          "response": null,
+          "health": [20, 20],
+          "board": [
+            {
+              "name": "Haven, Hiding in Plain Sight",
+              "seat": "player-one",
+              "ready": true
+            },
+            {
+              "name": "Valen Solariel",
+              "seat": "player-one",
+              "ready": true
+            }
+          ]
+        },
+        "first": {
+          "type": "deployResource",
+          "playerId": "player-one",
+          "cardId": "player-one-24:Haven, Hiding in Plain Sight"
+        },
+        "score": 82.11250000000001,
+        "depth": 2
+      }
+    ]
+  }
+]

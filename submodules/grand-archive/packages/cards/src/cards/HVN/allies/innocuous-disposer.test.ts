@@ -74,7 +74,7 @@ describe("Innocuous Disposer — preparation-paid Human destruction", () => {
             expect(game.state.objects[target.objectId]!.zone).toBe(
               destroyed ? "graveyard" : "field",
             );
-            if (!destroyed) expect(game.state.objects[target.objectId]!.damage).toBe(1);
+            if (!destroyed) expect(game.markedDamage(target.objectId)).toBe(1);
             expect(game.state.objects[p.card(champion).objectId]!.counters.preparation ?? 0).toBe(
               (prepared ? 3 : 0) - (destroyed ? 1 : 0),
             );

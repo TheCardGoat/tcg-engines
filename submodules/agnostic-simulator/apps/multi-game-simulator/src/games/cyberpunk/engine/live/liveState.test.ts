@@ -24,6 +24,43 @@ import {
 import { visibleDeckCount } from "../zoneViews";
 
 describe("Cyberpunk live viewer projections", () => {
+  test.each(["gigArea", "fixerArea"] as const)(
+    "does not rehydrate a %s die as a card from a card zone or prompt",
+    (zone) => {
+      const source = getScenario("fightResultBeforeDefeats").build();
+      const projection = source.getFilteredView(P2);
+      const choice = projection.prompt.choice;
+      if (choice?.type !== "scry") throw new Error("Expected River scry");
+      const revealed = choice.payload.revealedCards?.[0];
+      if (!revealed) throw new Error("Expected a revealed card");
+      const die: FilteredCardView = {
+        ...revealed,
+        instanceId: "projected-die",
+        definitionId: "d6",
+        zone,
+        power: 4,
+      };
+      const player = projection.players[String(P2)]!;
+      player.zones[zone] = [die];
+      // A generic projection entry can carry either a card or a die. Even
+      // malformed card lists must not register that die in the card index.
+      player.zones.trash = [die];
+      choice.payload.revealedCards = [...(choice.payload.revealedCards ?? []), die];
+
+      const state = viewerProjectionToMatchState(projection);
+      expect(state.G.gigDice[die.instanceId]).toMatchObject({
+        dieType: "d6",
+        faceValue: 4,
+        location: zone,
+        ownerId: P2,
+      });
+      expect(state.G.players[String(P2)]![zone]).toContain(die.instanceId);
+      expect(state.G.cardIndex[die.instanceId]).toBeUndefined();
+      expect(state.G.players[String(P2)]!.zones.trash).not.toContain(die.instanceId);
+      expect(state.G.cardIndex[revealed.instanceId]?.definitionId).toBe(revealed.definitionId);
+    },
+  );
+
   test("shows both card and delayed effects after hydrating a live order choice", () => {
     const source = getScenario("pendingFightEffectOrder").build();
     const viewer = createLiveMatchViewerEngine(source.getFilteredView(P1), "pending-fight-order");

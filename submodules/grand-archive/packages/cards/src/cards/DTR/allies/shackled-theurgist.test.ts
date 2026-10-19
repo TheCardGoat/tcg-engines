@@ -51,7 +51,7 @@ describe("Shackled Theurgist — opponent's sacrifice choice and ephemeral reviv
       const initial = game.state;
       expect(() => p.declareAttack(source, foe)).toThrow();
       expect(game.state).toEqual(initial);
-      expect(game.state.objects[foe.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(foe.objectId)).toBe(0);
       const shoot = () => {
         const wait = game.waitState();
         if (wait.kind === "opportunity" && wait.playerId === p.id) p.pass();
@@ -96,18 +96,18 @@ describe("Shackled Theurgist — opponent's sacrifice choice and ephemeral reviv
       }
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
       expect(game.state.objects[source.objectId]!.states.has("ephemeral")).toBe(true);
-      expect(game.state.objects[source.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(source.objectId)).toBe(0);
       p.declareAttack(source, foe);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[foe.objectId]!.damage).toBe(4);
+      expect(game.markedDamage(foe.objectId)).toBe(4);
       shoot();
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
-      expect(game.state.objects[source.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(source.objectId)).toBe(2);
       // Damage and the temporary life bonus both expire at end of turn. The revived
       // ally must survive that cleanup, then die to two damage on the next turn.
       advanceToMain(game, q.id);
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
-      expect(game.state.objects[source.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(source.objectId)).toBe(0);
       shoot();
       expect(game.state.objects[source.objectId]!.zone).toBe("banishment");
       expect(p.cards(shackledTheurgist, { zone: "field" })).toHaveLength(0);

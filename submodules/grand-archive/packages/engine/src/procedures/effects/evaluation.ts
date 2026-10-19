@@ -40,8 +40,13 @@ import { grandArchiveCharacteristicsAreSiegeable } from "../../game/functional-s
 import { observeGrandArchiveCommittedEvent } from "../../kernel/observed-events.ts";
 import type { GrandArchiveObservedEvent } from "../../kernel/observed-events.ts";
 import { grandArchivePlayerHasState } from "../../rules/state/player-continuous.ts";
-import { grandArchiveMasteryCounterCount, grandArchivePlayerMastery } from "../../game/mastery.ts";
+import {
+  grandArchiveMasteryCounterCount,
+  grandArchiveMasteryDefinition,
+  grandArchivePlayerMastery,
+} from "../../game/mastery.ts";
 import { grandArchiveObjectHasState } from "../../game/object-state.ts";
+import { grandArchiveObjectsAreLinked } from "../../game/link.ts";
 
 export interface GrandArchiveObjectIdentityBinding {
   readonly kind: "object-identities";
@@ -281,17 +286,25 @@ function observedEventObject(
   const object = state.objects[id];
   if (!object) return undefined;
   const committed = observed.committedEvent;
-  if (committed.type === "object-moved" && observed.name === "object-entered-field") {
+  if (
+    committed.type === "object-moved" &&
+    committed.objectId === id &&
+    observed.name === "object-entered-field"
+  ) {
     return {
       ...object,
       controllerId:
         committed.newControllerId ?? committed.previousControllerId ?? object.controllerId,
     };
   }
-  if (committed.type === "champion-leveled-up" && id === committed.championId) {
+  if (
+    committed.type === "champion-leveled-up" &&
+    observed.name === "champion-leveled-up" &&
+    id === committed.championId
+  ) {
     return { ...object, activeDefinitionId: committed.previousActiveDefinitionId };
   }
-  return committed.type === "object-moved"
+  return committed.type === "object-moved" && committed.objectId === id
     ? (committed.previousObject ?? {
         ...object,
         controllerId: committed.previousControllerId ?? object.controllerId,
@@ -606,6 +619,37 @@ export function matchesGrandArchiveEventPattern(
   ) {
     return false;
   }
+  if (
+    "host" in pattern &&
+    pattern.host &&
+    (!observed.hostId ||
+      !grandArchiveEventSubjectMatches(
+        pattern.host,
+        { ...observed, subjectId: observed.hostId },
+        source,
+        context,
+      ))
+  ) {
+    return false;
+  }
+  if (pattern.name === "champion-leveled-up" && pattern.sameBaseLevel !== undefined) {
+    const event = observed.committedEvent;
+    if (event.type !== "champion-leveled-up") return false;
+    const previous = observedEventObject(
+      { ...observed, subjectId: event.championId },
+      context.state,
+    );
+    const next = context.state.objects[event.cardId];
+    if (!previous || !next) return false;
+    const previousLevel = grandArchiveActiveFace(context.program, previous).stats.level;
+    const nextLevel = grandArchiveActiveFace(context.program, next).stats.level;
+    if (
+      previousLevel === undefined ||
+      nextLevel === undefined ||
+      (previousLevel === nextLevel) !== pattern.sameBaseLevel
+    )
+      return false;
+  }
   if ("amountComparison" in pattern && pattern.amountComparison) {
     const amountContext = {
       ...context,
@@ -906,6 +950,91 @@ export function grandArchiveDefinitionMatchesCardFilter(
   context: GrandArchiveEvaluationContext,
 ): boolean {
   return startingDeckDefinitionMatchesFilter(definitionId, filter, context);
+}
+
+/** Masteries have printed source characteristics, but no card-object zone or state. */
+export function grandArchiveMasteryMatchesSourceFilter(
+  source: NonNullable<GrandArchiveStackItem["masterySource"]>,
+  filter: GrandArchiveCardFilter,
+  context: GrandArchiveEvaluationContext,
+): boolean {
+  const definition = grandArchiveMasteryDefinition(context.program, source.name);
+  if (!definition) return false;
+  switch (filter.kind) {
+    case "all":
+      return filter.filters.every((child) =>
+        grandArchiveMasteryMatchesSourceFilter(source, child, context),
+      );
+    case "any":
+      return filter.filters.some((child) =>
+        grandArchiveMasteryMatchesSourceFilter(source, child, context),
+      );
+    case "not":
+      return !grandArchiveMasteryMatchesSourceFilter(source, filter.filter, context);
+    case "not-source":
+      return (
+        context.bindings.masterySourceName !== source.name ||
+        !Array.isArray(context.bindings.masterySourcePlayer) ||
+        !context.bindings.masterySourcePlayer.includes(source.playerId)
+      );
+    case "not-subject":
+      if (filter.subject.kind === "source") {
+        return grandArchiveMasteryMatchesSourceFilter(source, { kind: "not-source" }, context);
+      }
+      if (filter.subject.kind === "mastery") {
+        return (
+          filter.subject.name !== source.name ||
+          !resolveGrandArchivePlayers(filter.subject.player, context).includes(source.playerId)
+        );
+      }
+      // The other subjects identify objects, players, or stack entries.
+      return true;
+    case "has-counter":
+      return (
+        grandArchiveMasteryCounterCount(
+          context.state,
+          source.playerId,
+          source.name,
+          filter.counter,
+        ) > 0
+      );
+    case "same-characteristic": {
+      if (filter.characteristic === "reserve-cost") return false;
+      const face =
+        definition.layout.kind === "single-faced"
+          ? definition.layout.face
+          : definition.layout.defaultFace;
+      const characteristic = filter.characteristic === "name" ? "card-name" : filter.characteristic;
+      const values = {
+        name: [face.name],
+        type: face.typeLine.types,
+        class: face.typeLine.classes,
+        element: face.elements,
+        subtype: face.typeLine.subtypes,
+      }[filter.characteristic];
+      return bindingObjects(filter.binding, context).some((reference) =>
+        matchesTrackedCharacteristic(
+          values,
+          characteristic,
+          deriveGrandArchiveCharacteristics(reference, context),
+        ),
+      );
+    }
+    case "zone":
+    case "facing":
+    case "numeric":
+    case "parity":
+    case "has-keyword":
+    case "object-state":
+    case "attacking-subject":
+    case "activation-state":
+    case "entered-field-this-turn":
+    case "leveled-up-this-turn":
+    case "linked":
+      return false;
+    default:
+      return grandArchiveDefinitionMatchesCardFilter(definition.canonicalId, filter, context);
+  }
 }
 
 function activePlayers(context: GrandArchiveEvaluationContext) {
@@ -1439,10 +1568,22 @@ function matchingAbilityStackEntries(
   GrandArchiveStackItemId,
   { readonly item: GrandArchiveStackItem; readonly index: number }
 > {
-  if (!context.sourceId || !context.abilityId) {
+  const masteryName = context.bindings.masterySourceName;
+  const masteryPlayers = context.bindings.masterySourcePlayer;
+  const masteryTimestamp = context.bindings.masterySourceTimestamp;
+  const masteryPlayer = Array.isArray(masteryPlayers) ? masteryPlayers[0] : undefined;
+  if (
+    (!context.sourceId &&
+      !(
+        typeof masteryName === "string" &&
+        masteryPlayer &&
+        typeof masteryTimestamp === "number"
+      )) ||
+    !context.abilityId
+  ) {
     throw new GrandArchiveUnsupportedRuleError("ability history without identity");
   }
-  const identityStart = sourceAbilityIdentityStartIndex(context);
+  const identityStart = context.sourceId ? sourceAbilityIdentityStartIndex(context) : 0;
   const entries = new Map<
     GrandArchiveStackItemId,
     { readonly item: GrandArchiveStackItem; readonly index: number }
@@ -1452,7 +1593,11 @@ function matchingAbilityStackEntries(
       index >= identityStart &&
       (event.type === "stack-item-added" || event.type === "stack-item-deferred") &&
       (event.item.kind === "activated-ability" || event.item.kind === "triggered-ability") &&
-      event.item.sourceId === context.sourceId &&
+      (context.sourceId
+        ? event.item.sourceId === context.sourceId
+        : event.item.masterySource?.name === masteryName &&
+          event.item.masterySource.playerId === masteryPlayer &&
+          event.item.bindings.masterySourceTimestamp === masteryTimestamp) &&
       event.item.ability.id === context.abilityId
     ) {
       entries.set(event.item.id, { item: event.item, index });
@@ -1853,6 +1998,8 @@ export function resolveGrandArchiveIterationIds(
 export function resolveGrandArchiveCollection(
   collection: GrandArchiveCollection,
   context: GrandArchiveEvaluationContext,
+  /** Membership queries may restrict evaluation before expensive characteristic filters. */
+  onlyObjectId?: GrandArchiveObjectId,
 ): readonly GrandArchiveCardInstance[] {
   const relationshipHosts = collection.host
     ? resolveGrandArchiveSubjectObjects(
@@ -1882,6 +2029,7 @@ export function resolveGrandArchiveCollection(
         ),
     ];
   }
+  if (onlyObjectId !== undefined) objects = objects.filter((object) => object.id === onlyObjectId);
   if (collection.zones)
     objects = objects.filter((object) => collection.zones?.includes(object.zone));
   if (collection.player) {
@@ -1913,6 +2061,10 @@ export function resolveGrandArchiveCollection(
         );
         break;
       case "linked-to":
+        objects = objects.filter((object) =>
+          relationshipHosts.some((host) => grandArchiveObjectsAreLinked(object, host, context)),
+        );
+        break;
       case "loaded-into":
       case "lineage-of":
       case "intent-of":
@@ -2140,7 +2292,13 @@ export function matchesGrandArchiveCardFilter(
       );
     }
     case "object-state":
-      return grandArchiveObjectHasState(context.state, object, filter.state);
+      return grandArchiveObjectHasState(
+        context.program,
+        context.state,
+        object,
+        filter.state,
+        context,
+      );
     case "activation-state":
       return object.activationStates.has(filter.state);
     case "token":
@@ -2530,7 +2688,13 @@ export function evaluateGrandArchiveCondition(
       return (
         objects.length > 0 &&
         objects.every((object) =>
-          grandArchiveObjectHasState(context.state, object, condition.state),
+          grandArchiveObjectHasState(
+            context.program,
+            context.state,
+            object,
+            condition.state,
+            context,
+          ),
         )
       );
     }
@@ -2619,6 +2783,18 @@ export function evaluateGrandArchiveCondition(
         : undefined;
       return source?.activationStates.has(condition.state) ?? false;
     }
+    case "event-origin":
+      return context.bindings.eventOrigin === condition.zone;
+    case "bound-activation-origin": {
+      const bound = context.bindings[condition.binding];
+      return (
+        Array.isArray(bound) &&
+        context.state.stack.some(
+          (item) =>
+            bound.includes(item.id) && "originZone" in item && item.originZone === condition.zone,
+        )
+      );
+    }
     case "source-activation-context": {
       const item = resolvingStackItem(context);
       if (!item || (context.sourceId !== undefined && item.sourceId !== context.sourceId)) {
@@ -2646,7 +2822,14 @@ export function evaluateGrandArchiveCondition(
         : undefined;
       return (
         source?.zone === condition.zone &&
-        (!condition.state || grandArchiveObjectHasState(context.state, source, condition.state))
+        (!condition.state ||
+          grandArchiveObjectHasState(
+            context.program,
+            context.state,
+            source,
+            condition.state,
+            context,
+          ))
       );
     }
     case "source-activation-zone": {
@@ -2770,7 +2953,7 @@ export function evaluateGrandArchiveCondition(
     case "ability-activation-count": {
       const windowStart = historyWindowStart(condition.window, context);
       const count = [...matchingAbilityStackEntries(context).values()].filter(
-        ({ index }) => index >= windowStart,
+        ({ item, index }) => index >= windowStart && (!item.masterySource || !item.isCopy),
       ).length;
       return compareGrandArchiveNumbers(
         count,
@@ -2824,7 +3007,7 @@ export function evaluateGrandArchiveCondition(
       const sources = condition.source
         ? new Set(resolveGrandArchiveSubjectObjects(condition.source, context).map(({ id }) => id))
         : undefined;
-      const count = observedHistoryEvents(condition.window, context).filter((observed) => {
+      const matched = observedHistoryEvents(condition.window, context).filter((observed) => {
         if (observed.name !== condition.event) return false;
         if (actors && (!observed.actorId || !actors.has(observed.actorId))) return false;
         if (stackControllers && (!observed.actorId || !stackControllers.has(observed.actorId)))
@@ -2885,8 +3068,13 @@ export function evaluateGrandArchiveCondition(
         )
           return false;
         return true;
-      }).length;
-      return count >= evaluateGrandArchiveAmount(condition.minimum ?? 1, context);
+      });
+      return (
+        matched.length >= evaluateGrandArchiveAmount(condition.minimum ?? 1, context) &&
+        (condition.totalAmountMinimum === undefined ||
+          matched.reduce((sum, event) => sum + (event.amount ?? 0), 0) >=
+            evaluateGrandArchiveAmount(condition.totalAmountMinimum, context))
+      );
     }
     case "starting-deck-count": {
       const definitions =

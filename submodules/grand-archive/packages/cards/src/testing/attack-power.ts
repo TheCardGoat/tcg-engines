@@ -129,13 +129,11 @@ export function proveAttackPower({
       }
     }
     expect(game.state.combat).toBeNull();
-    expect(game.state.objects[target.objectId]!.damage).toBe(power);
-    if (cleave) expect(game.state.objects[q.card(giantTortoise).objectId]!.damage).toBe(power);
+    expect(game.markedDamage(target.objectId)).toBe(power);
+    if (cleave) expect(game.markedDamage(q.card(giantTortoise).objectId)).toBe(power);
     if (retaliationAllowed !== undefined) {
       expect(offered).toBe(retaliationAllowed);
-      expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(
-        retaliationAllowed ? 1 : 0,
-      );
+      expect(game.markedDamage(p.card(champion).objectId)).toBe(retaliationAllowed ? 1 : 0);
     }
   });
 }

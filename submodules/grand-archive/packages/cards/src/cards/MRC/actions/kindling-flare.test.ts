@@ -67,7 +67,7 @@ describe("Kindling Flare — any number of Herbs pays for split damage", () => {
         expect(p.zone("memory")).toHaveLength(2);
         expect(p.cards(springleaf, { zone: "field" })).toHaveLength(4 - count);
         expect(game.state.objects[source.objectId]!.zone).toBe("effects-stack");
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(0);
         expect(
           game.state.stack[0]!.targets.find((t) => t.binding === "damage-targets")?.targetIds,
         ).toEqual(targets["damage-targets"]);
@@ -93,9 +93,9 @@ describe("Kindling Flare — any number of Herbs pays for split damage", () => {
           : [{ objectId: target, amount: total }];
         answerDecision(game, "resolve-distribution", { allocations });
         passEffectsStack(game);
-        expect(game.state.objects[target]!.damage).toBe(total - ownDamage);
-        expect(game.state.objects[self]!.damage).toBe(ownDamage);
-        expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target)).toBe(total - ownDamage);
+        expect(game.markedDamage(self)).toBe(ownDamage);
+        expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(0);
         expect(q.cards(springleaf, { zone: "field" })).toHaveLength(1);
         for (const id of selected) expect(game.state.objects[id]).toBeUndefined();
         expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
@@ -190,7 +190,7 @@ describe("Kindling Flare — announcement targets", () => {
       passEffectsStack(game);
       if (mode === "empty" || mode.startsWith("all-")) {
         expect(game.state.decision).toBeNull();
-        for (const victim of victims) expect(game.state.objects[victim.objectId]!.damage).toBe(0);
+        for (const victim of victims) expect(game.markedDamage(victim.objectId)).toBe(0);
       } else {
         const before = game.state;
         expect(() =>
@@ -209,7 +209,7 @@ describe("Kindling Flare — announcement targets", () => {
           answerDecision(game, "resolve-distribution", {
             allocations: victims.map((c) => ({ objectId: c.objectId, amount: 1 })),
           });
-          for (const victim of victims) expect(game.state.objects[victim.objectId]!.damage).toBe(1);
+          for (const victim of victims) expect(game.markedDamage(victim.objectId)).toBe(1);
         } else {
           expect(() =>
             answerDecision(game, "resolve-distribution", {
@@ -220,8 +220,8 @@ describe("Kindling Flare — announcement targets", () => {
           answerDecision(game, "resolve-distribution", {
             allocations: [{ objectId: victims[1]!.objectId, amount: 2 }],
           });
-          expect(game.state.objects[victims[0]!.objectId]!.damage).toBe(0);
-          expect(game.state.objects[victims[1]!.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(victims[0]!.objectId)).toBe(0);
+          expect(game.markedDamage(victims[1]!.objectId)).toBe(2);
         }
       }
       expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");

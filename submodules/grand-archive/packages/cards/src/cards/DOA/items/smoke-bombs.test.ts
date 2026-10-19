@@ -62,6 +62,6 @@ describe("Smoke Bombs' temporary targeted stealth", () => {
       advanceToMain(game, attacker.id);
       attacker.declareAttack(attacker.card(woodlandSquirrels, { zone: "field" }), target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(target.objectId)).toBe(1);
     });
 });

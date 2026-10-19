@@ -172,7 +172,7 @@ test("compact rows sit pulled together: rival at 170, local at 430", () => {
 
 test("compact five-unit rows keep their natural spacing in the wider band", () => {
   const field = units(5);
-  const [scale] = fieldRowScales([field], true);
+  const [scale] = fieldRowScales([field, []], true);
   expect(scale).toBe(1);
   const placed = fieldOf(place(field, false, true, scale));
   // 1.2× cards: the 1000px band fits five compact cards + gaps without overlap.

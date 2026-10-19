@@ -12,15 +12,6 @@ export function grandArchiveElementIsAdvanced(element: GrandArchiveElement): boo
   return element !== "NORM" && !BASIC_ELEMENTS.has(element);
 }
 
-function addChampionEnabledElement(
-  elements: Set<GrandArchiveElement>,
-  element: GrandArchiveElement,
-) {
-  // Exalted cannot enable itself. Its special rule requires another advanced
-  // element enabled by a champion before it is added below.
-  if (element !== "EXALTED") elements.add(element);
-}
-
 /** Authoritative special-element enablement for every play method. */
 export function grandArchivePlayerEnabledElements(
   program: GrandArchiveMatchProgram,
@@ -44,18 +35,18 @@ export function grandArchivePlayerEnabledElements(
     if (lineage.length > 0 && !champion.baseLineageCardId) {
       const base = grandArchiveObjectFace(program, { ...champion, activeDefinitionId: undefined });
       if (base.typeLine.types.includes("CHAMPION")) {
-        for (const element of base.elements) addChampionEnabledElement(elements, element);
+        for (const element of base.elements) elements.add(element);
       }
     }
     for (const element of grandArchiveObjectCurrentCharacteristics(program, state, champion)
       .elements) {
-      addChampionEnabledElement(elements, element);
+      elements.add(element);
     }
     for (const lineageCard of lineage) {
       const characteristics = grandArchiveObjectCurrentCharacteristics(program, state, lineageCard);
       if (!characteristics.types.includes("CHAMPION")) continue;
       for (const element of characteristics.elements) {
-        addChampionEnabledElement(elements, element);
+        elements.add(element);
       }
     }
   }
@@ -77,9 +68,7 @@ export function grandArchivePlayerEnabledElements(
   ) {
     for (const element of GRAND_ARCHIVE_ELEMENTS) elements.add(element);
   }
-  if (
-    [...elements].some((element) => element !== "EXALTED" && grandArchiveElementIsAdvanced(element))
-  ) {
+  if ([...elements].some(grandArchiveElementIsAdvanced)) {
     elements.add("EXALTED");
   }
   return elements;

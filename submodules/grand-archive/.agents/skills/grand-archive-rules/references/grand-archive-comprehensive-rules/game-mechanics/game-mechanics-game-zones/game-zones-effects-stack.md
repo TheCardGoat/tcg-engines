@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-effects-stack"
   relation: "current_index"
 ---
-
 # Game Zones - Effects Stack
 
 #### General Rules:

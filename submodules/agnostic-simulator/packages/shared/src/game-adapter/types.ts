@@ -474,7 +474,14 @@ export interface GamePresentationAdapter {
 }
 
 export interface GameAdapter {
+  /** Player-approved correction capabilities; rules and commands remain game-owned. */
+  readonly correctionModePolicy?: {
+    readonly moveTypes: readonly string[];
+    readonly pauseNormalPlay: boolean;
+  };
   presentation?: GamePresentationAdapter;
+  /** Require the authoritative snapshot and commit receipt to persist before acknowledging a move. */
+  readonly persistBeforeReply?: boolean;
   /** Schedule each bot decision after the preceding committed animation. */
   readonly botTurnScheduling?: {
     readonly kind: "continuation";

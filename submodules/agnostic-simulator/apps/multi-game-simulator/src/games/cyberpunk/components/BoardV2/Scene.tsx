@@ -380,8 +380,9 @@ function CardMesh({
             roughness={0.62}
           />
         </mesh>
-        <mesh position={[0, 0, 2]} receiveShadow geometry={faceGeometry}>
-          <meshStandardMaterial map={texture} roughness={0.86} metalness={0.03} color="#dedede" />
+        <mesh position={[0, 0, 2]} geometry={faceGeometry}>
+          {/* Printed art keeps its source colors, like the DOM cards in hand. */}
+          <meshBasicMaterial map={texture} toneMapped={false} />
         </mesh>
         {placed.lane === "field" && placed.card.spent && (
           <mesh position={[0, 0, 2.1]} geometry={faceGeometry}>
@@ -446,7 +447,8 @@ export default function Scene({
       aria-label="Live Cyberpunk 3D card components"
       shadows
       camera={{ position: [0, 0, 1000], near: 100, far: 4000 }}
-      dpr={[1, 2]}
+      // Supersample the small printed faces even on DPR-1 landscape screens.
+      dpr={2}
       frameloop="demand"
       gl={{ alpha: true, antialias: true }}
       onCreated={({ gl }) => {

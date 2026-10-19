@@ -1,0 +1,115 @@
+@import "./layers.css";
+/* ResolutionFocusCard: the shared "a card is holding — wait for it" stage.
+   One visual language for every waiting state (standby, resolving); prompts
+   render their own controls inside the panel beneath the featured card. */
+
+.tcg-resolution-focus {
+  position: absolute;
+  z-index: var(--tcg-layer-focus);
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow:
+    0 26px 60px #000d,
+    0 0 0 1px #0b141c,
+    0 0 34px #9fd8e83d;
+  pointer-events: none;
+}
+
+.tcg-resolution-focus img,
+.tcg-resolution-focus-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.tcg-resolution-focus-fallback {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  background: linear-gradient(180deg, #162b3a, #0c1a24);
+  border: 1px solid #9fd8e866;
+  color: #cdeaf2;
+  font-size: 13px;
+  text-align: center;
+}
+
+.tcg-resolution-focus-tag {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #0e2733f0;
+  border: 1px solid #9fd8e8aa;
+  color: #cdeaf2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tcg-resolution-focus[data-ready] .tcg-resolution-focus-tag {
+  border-color: #e0c37c;
+  color: #f3e9c8;
+}
+
+.tcg-resolution-focus-panel {
+  position: absolute;
+  z-index: var(--tcg-layer-focus);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #162b3aec, #0c1a24f2);
+  border: 1px solid #d9b36a59;
+  border-radius: 12px;
+  box-shadow:
+    0 12px 30px #000a,
+    inset 0 1px 0 #ffffff12;
+  backdrop-filter: blur(6px);
+  width: max-content;
+  max-width: min(400px, 62vw);
+}
+
+/* "left" placement sits beside the featured card instead of below it. */
+.tcg-resolution-focus-panel[data-side="left"] {
+  transform: translate(-100%, -50%);
+  margin-top: 0;
+}
+
+.tcg-resolution-focus-panel[data-ready] {
+  border-color: #e0c37c99;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tcg-resolution-focus {
+    animation: tcg-resolution-focus-in 180ms ease-out;
+  }
+
+  .tcg-resolution-focus-panel {
+    animation: tcg-resolution-panel-in 170ms ease-out;
+  }
+
+  @keyframes tcg-resolution-focus-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes tcg-resolution-panel-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+.tcg-resolution-focus[data-scene-card] {
+  box-shadow: none;
+}

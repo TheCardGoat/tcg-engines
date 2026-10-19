@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-damage-prevention"
   relation: "current_index"
 ---
-
 # Game Mechanics - Damage Prevention
 
 #### General Rules:

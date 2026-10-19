@@ -45,8 +45,8 @@ export function proveConditionalWeaponPower({
         .cards(woodlandSquirrels, { zone: "hand" })
         .map((ref) => ({ kind: "card", cardId: ref.objectId })),
     });
-    expect(game.state.objects[defender.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(defender.objectId)).toBe(0);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[defender.objectId]!.damage).toBe(expectedDamage);
+    expect(game.markedDamage(defender.objectId)).toBe(expectedDamage);
   });
 }

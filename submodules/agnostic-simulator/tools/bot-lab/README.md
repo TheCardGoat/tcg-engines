@@ -174,12 +174,27 @@ the default, commit code, or promote a strategy.
 
 ## Alpha Clash
 
-The `meta` suite preserves two published winning lists: Clarity Hyper Aggro
+The catalog stores all eight lists linked by the Season 3 recap plus the Makati
+winner. Imported pages are dated snapshots; some links changed after the event.
+The `season3` suite uses admitted recap lists (all eight after the 12 October card
+implementation), with mirrors and every cross match. All card behavior debt
+for these lists is resolved. The exact Kilimanjaro snapshot runs with its two
+Endless Cycle cards. Bot lab checks executable card support, not constructed
+deck validation. Use `examples/alpha-clash-season3-calibration-plan.json` to
+build a manifest for this suite.
+
+The existing `meta` suite preserves two published winning lists: Clarity Hyper Aggro
 (50 main / 10 side) and The Absence from Makati (60 main / 15 side). It includes
 both mirrors and the cross match; the shared scheduler swaps strategy seats
 and deck assignments. Sideboards are stored and audited but are not used in
 matches. Source links and exact quantities are in
-`src/adapters/alpha-clash/decks.ts`.
+`../../packages/alpha-clash/alpha-clash-server-adapter/src/practice-decks.ts`.
+
+Local Alpha Clash practice imports the same decks and heuristic through
+`@tcg/alpha-clash-server-adapter/practice`. Open
+`/alpha-clash/simulator/play/practice` to select decks and use the retained
+`meta-v1` baseline. See [local practice](../../docs/alpha-clash-local-practice.md)
+for launch parameters and validation limits.
 
 ```sh
 pnpm bot-lab doctor --game alpha-clash
@@ -205,12 +220,33 @@ Use `examples/alpha-clash-iteration-plan.json` to compare `meta-v3` with
 versioned candidate manifest; it does not run an optimizer. Engine, policy,
 evaluation core, catalog, and deck changes invalidate manifests.
 
+`expert-oracle` uses the Alpha Clash engine's full-information turn search. It is
+also selectable in local practice. Its settings are versioned in source; the
+meta heuristic override fields do not apply. The full 384-game Season 3 run
+uses all 36 matchups and three fresh seed blocks. From this package run
+`bun reports/alpha-clash/2026-10-12/season3-expert-v2/run.ts`; the runner saves
+per-match journals and rejects source/catalog drift on resume. Adapter v4 uses
+the same native shuffle across each swapped-controller pair.
+
+Expert version 2 repairs the War/Valen mirror search failures with timing-aware
+proposals, reusable legality probes, per-attacker coverage, resolved next-turn
+replies, and early resource value. The node budget remains 768. The v2 report
+also includes 48 archived v1 mirror controls on the same fresh shuffles; run
+`bun reports/alpha-clash/2026-10-12/season3-expert-v2/controls-v1.ts` after the
+main runner has written its schedule. See the report's investigation for the
+original native loss traces and development checks.
+The additional War/Valen check uses ten new seed blocks per deck for both bot
+versions: `bun reports/alpha-clash/2026-10-12/season3-expert-v2/confirm-mirrors.ts`.
+After all runs, regenerate the review with
+`python3 reports/alpha-clash/2026-10-12/season3-expert-v2/review.py`.
+
 All Alpha Clash lab strategies are marked oracle and are not eligible for
 production promotion. A report verdict of `promote` means the statistical
 lab gate passed; it does not change the simulator's policy.
 
 Admission rejects missing definitions and nested `kind: "unparsed"` behavior.
-Both main decks and sideboards now pass. Matches use main decks only.
+All nine stored lists pass. Constructed restrictions do not block bot lab;
+there are no missing or unparsed card behavior blockers in the stored lists. Matches use main decks only.
 See [`../../docs/alpha-clash-bot-lab.md`](../../docs/alpha-clash-bot-lab.md)
 for sources, rule coverage, saved results, and replay commands.
 

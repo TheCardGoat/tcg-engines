@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-10",
+  "browser": "Codex in-app Chrome 155.0.0.0",
+  "hardware": "Apple M5 Pro, 48 GiB RAM",
+  "build": "Vite development",
+  "viewport": "1366x768",
+  "action": "arena-crowded next hand page; 2-second rAF sample",
+  "sample": {
+    "result": {
+      "type": "object",
+      "value": {
+        "meanMs": 17.09486440677967,
+        "over33ms": 1,
+        "p95Ms": 18.299999999999272,
+        "samples": 118
+      }
+    }
+  }
+}

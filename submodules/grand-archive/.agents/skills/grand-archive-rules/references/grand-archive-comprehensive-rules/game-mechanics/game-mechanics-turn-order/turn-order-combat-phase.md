@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-combat-phase"
   relation: "current_index"
 ---
-
 # Turn Order - Combat Phase
 
 The combat phase has the following sections:

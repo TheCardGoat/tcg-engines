@@ -263,6 +263,7 @@ export function completeGrandArchiveCombatDamageTransition(
   if (
     state.status === "playing" &&
     !state.decision &&
+    !state.opportunity &&
     state.stack.length === 0 &&
     state.combat?.step === "end"
   ) {
@@ -646,14 +647,16 @@ export function grandArchiveRecollectionEvents(
   objectIds: readonly GrandArchiveObjectId[],
 ): readonly GrandArchiveProposedEvent[] {
   return [
-    ...objectIds.map((objectId): GrandArchiveProposedEvent => ({
-      type: "object-moved",
-      objectId,
-      from: "memory",
-      to: "hand",
-      actorId: playerId,
-      cause: { kind: "rule", rule: "recollection-turn-based-action" },
-    })),
+    ...objectIds.map(
+      (objectId): GrandArchiveProposedEvent => ({
+        type: "object-moved",
+        objectId,
+        from: "memory",
+        to: "hand",
+        actorId: playerId,
+        cause: { kind: "rule", rule: "recollection-turn-based-action" },
+      }),
+    ),
     {
       type: "cards-recollected",
       playerId,
@@ -721,13 +724,7 @@ function grandArchiveAllyDamageCleanupEvents(
 ): readonly GrandArchiveProposedEvent[] {
   const events: GrandArchiveProposedEvent[] = [];
   for (const object of Object.values(state.objects)) {
-    if (
-      object.zone === "field" &&
-      object.damage > 0 &&
-      grandArchiveObjectCurrentCharacteristics(context.getProgram(), state, object).types.includes(
-        "ALLY",
-      )
-    ) {
+    if (object.zone === "field" && object.temporaryDamage > 0) {
       events.push({
         type: "damage-cleared",
         objectId: object.id,

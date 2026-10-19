@@ -1,6 +1,6 @@
 import { omitUnmountedEntityStateChanges, projectV2CardOrientation } from "./v2-card-orientation";
 import { EffectConnectionsContext } from "@tcg/simulator-ui";
-import { useSearchParams } from "react-router";
+import { useCyberpunkUiV2 } from "../components/BoardV2/uiVersion";
 import { ProgramDataStreams } from "./DataStreamTargeting";
 import type { AnimationPlanV2, SimulatorAudioCueId } from "@tcg/protocol";
 import type { DieType } from "@tcg/cyberpunk-types";
@@ -8,7 +8,6 @@ import { logHandDebug, summarizeHandState } from "../engine/live/handVisibilityD
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import type { SimulatorExternalCommandGate } from "@tcg/simulator-runtime/animation";
 import {
-  AnimationInteractionBoundary,
   createSimulatorAnimationScope,
   projectSimulatorEntityForFace,
   useAnimationRuntime,
@@ -19,6 +18,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   type ReactNode,
@@ -30,7 +30,6 @@ import { useSimulatorAuth } from "../../../simulator/providers";
 import { Card } from "../components/GameBoard/Card";
 import { CardBackProvider, LEGEND_CARD_BACK } from "../components/GameBoard/CardImage";
 import { useCyberpunkBoardRuntime } from "../components/BoardRuntimeContext";
-import { useCardPreview } from "../components/CardPreview/CardPreviewContext";
 import { DieDisplay } from "../components/GameBoard/DieDisplay";
 import {
   PLAYER_SIDE_TO_ID,
@@ -60,11 +59,17 @@ import { CyberpunkThreeFeedbackLayer } from "./CyberpunkThreeFeedbackLayer";
 import { CyberpunkCardEffectFxLayer } from "./CyberpunkCardEffectFxLayer";
 import { omitCyberpunkOwnedAudioCues } from "./effect-fx";
 import { enhanceCyberpunkCardTransferTiming } from "./three-card-transfer-plan";
-import { CyberpunkAnimationActivityProvider } from "./CyberpunkAnimationActivityContext";
+import { CYBERPUNK_REFLOW_DURATION_MS, paceCyberpunkAnimationPlan } from "./responsive-timing";
+import { CyberpunkPresentationPendingProvider } from "./CyberpunkPresentationPendingContext";
+import { isCyberpunkPresentationPending } from "./input-readiness";
 import { CyberpunkDeckRevealMotion } from "./CyberpunkDeckRevealMotion";
 
 type CyberpunkMatchState = ReturnType<typeof useEngine>["matchState"];
 type CyberpunkRawEngineEventEntry = ReturnType<typeof useEngine>["rawEngineEvents"][number];
+
+const SPATIAL_TRANSFER_KINDS = ["card", "unit", "leader", "die"] as const;
+const SPATIAL_STATE_CHANGE_KINDS = ["card", "unit", "leader"] as const;
+const SUPPRESSED_OVERLAYS = ["valueDelta", "phaseChange"] as const;
 
 const CyberpunkAnimation = createSimulatorAnimationScope<CyberpunkMatchState>();
 
@@ -89,12 +94,11 @@ export function CyberpunkSharedAnimationLayer({
   commandGate: SimulatorExternalCommandGate;
 }) {
   const { humanSide, matchState } = useEngine();
-  const [params] = useSearchParams();
-  const isV2 = params.get("ui") === "v2";
+  const isV2 = useCyberpunkUiV2();
   const visual = useCyberpunkVisualSelection();
   const auth = useSimulatorAuth();
   const boardRuntime = useCyberpunkBoardRuntime();
-  const cardBackUrls = {
+  const resolvedCardBackUrls = {
     player: resolveCyberpunkSeatVisuals({
       side: "player",
       humanSide,
@@ -114,6 +118,10 @@ export function CyberpunkSharedAnimationLayer({
       localSubscriptionTier: auth.subscriptionTier,
     }).cardBackUrl,
   };
+  const cardBackUrls = useMemo(
+    () => resolvedCardBackUrls,
+    [resolvedCardBackUrls.player, resolvedCardBackUrls.opponent],
+  );
   const {
     settings: { animationSpeed },
   } = useSimulatorSettings();
@@ -175,18 +183,17 @@ export function CyberpunkSharedAnimationLayer({
           spatialTransferRenderer={
             threeCardTransfersEnabled ? CyberpunkThreeCardTransferLayer : undefined
           }
-          spatialTransferKinds={
-            threeCardTransfersEnabled ? ["card", "unit", "leader", "die"] : undefined
-          }
+          spatialTransferKinds={threeCardTransfersEnabled ? SPATIAL_TRANSFER_KINDS : undefined}
           spatialStateChangeRenderer={
             threeCardTransfersEnabled ? CyberpunkThreeCardStateChangeLayer : undefined
           }
           spatialStateChangeKinds={
-            threeCardTransfersEnabled ? ["card", "unit", "leader"] : undefined
+            threeCardTransfersEnabled ? SPATIAL_STATE_CHANGE_KINDS : undefined
           }
-          suppressedOverlayStepTypes={["valueDelta", "phaseChange"]}
+          suppressedOverlayStepTypes={SUPPRESSED_OVERLAYS}
           viewerSeatId={viewerSeatId}
           animationSpeed={animationSpeed}
+          layoutDurationMs={CYBERPUNK_REFLOW_DURATION_MS}
           onScheduleAudio={scheduleFxAwareAudio}
           onCancelAudio={cancelScheduledCues}
         >
@@ -220,7 +227,6 @@ function CyberpunkAnimationBridge({
   const status = CyberpunkAnimation.useStatus();
   const animationRuntime = useAnimationRuntime();
   const { playCue } = useSimulatorAudio();
-  const { hide: hideCardPreview } = useCardPreview();
   const processedRawEntryIdsRef = useRef<Set<number> | null>(null);
   const viewerSeatId = String(PLAYER_SIDE_TO_ID[humanSide]);
 
@@ -242,11 +248,17 @@ function CyberpunkAnimationBridge({
     });
   }, [matchState, humanSide, snapshot, status.isAnimating, rawEngineEvents]);
 
-  useEffect(() => {
-    commandGate.setBlocked(status.isAnimating);
-    if (status.isAnimating) hideCardPreview();
-    return () => commandGate.setBlocked(false);
-  }, [commandGate, hideCardPreview, status.isAnimating]);
+  const presentationPending = isCyberpunkPresentationPending(
+    snapshot.presentationVersion,
+    matchState.ctx.stateID,
+  );
+  // startActive publishes the committed board before running the visual clock.
+  // Only stale presentation needs a command gate; running/reflowing effects do
+  // not. Layout timing keeps dispatch and the painted board on the same version.
+  useLayoutEffect(() => {
+    commandGate.setBlocked(presentationPending);
+  }, [commandGate, presentationPending]);
+  useLayoutEffect(() => () => commandGate.setBlocked(false), [commandGate]);
 
   useEffect(() => {
     const currentIds = new Set(rawEngineEvents.map((entry) => entry.id));
@@ -290,7 +302,9 @@ function CyberpunkAnimationBridge({
             state: toState,
           });
       const plan = plans[0]
-        ? enhanceCyberpunkCardTransferTiming(plans[0], enhancedCardMotion)
+        ? paceCyberpunkAnimationPlan(
+            enhanceCyberpunkCardTransferTiming(plans[0], enhancedCardMotion),
+          )
         : null;
       enqueue({
         state: toState,
@@ -347,9 +361,13 @@ function CyberpunkAnimationBridge({
   );
 
   return (
-    <CyberpunkAnimationActivityProvider active={status.isAnimating}>
+    <CyberpunkPresentationPendingProvider pending={presentationPending}>
       <ResolvingProgramVisualsContext.Provider value={resolvingVisuals}>
-        <AnimationInteractionBoundary active={status.isAnimating}>
+        <div
+          data-cyberpunk-input-ready={!presentationPending}
+          data-cyberpunk-animation-phase={status.phase ?? "idle"}
+          data-cyberpunk-presentation-version={snapshot.presentationVersion}
+        >
           <EnginePresentationStateProvider
             state={snapshot.presentationState ?? snapshot.authoritativeState!}
           >
@@ -362,9 +380,9 @@ function CyberpunkAnimationBridge({
             />
             {children}
           </EnginePresentationStateProvider>
-        </AnimationInteractionBoundary>
+        </div>
       </ResolvingProgramVisualsContext.Provider>
-    </CyberpunkAnimationActivityProvider>
+    </CyberpunkPresentationPendingProvider>
   );
 }
 

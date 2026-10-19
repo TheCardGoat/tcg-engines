@@ -109,6 +109,6 @@ describe("Rose, Eternal Paragon — fast entry defense", () => {
     expect(game.state.combat?.targetIds).toEqual([rose.objectId]);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[rose.objectId]!.zone).toBe("field");
-    expect(game.state.objects[rose.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(rose.objectId)).toBe(2);
   });
 });

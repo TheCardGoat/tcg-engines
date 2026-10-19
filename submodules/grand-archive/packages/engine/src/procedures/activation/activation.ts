@@ -40,6 +40,8 @@ import {
   withGrandArchiveDerivedVariables,
   evaluateGrandArchiveCondition,
   grandArchiveDefinitionMatchesCardFilter,
+  grandArchiveEvaluationObject,
+  grandArchiveMasteryMatchesSourceFilter,
   matchesGrandArchiveCardFilter,
   resolveGrandArchivePlayers,
   resolveGrandArchiveSubjectObjects,
@@ -70,6 +72,7 @@ import type {
   GrandArchiveCardInstance,
   GrandArchiveDeclaredTarget,
   GrandArchiveMatchState,
+  GrandArchivePendingTrigger,
   GrandArchiveStackItem,
 } from "../../game/model.ts";
 import { grandArchiveObjectObeysController } from "../../game/obedience.ts";
@@ -95,6 +98,14 @@ import {
   type GrandArchiveRuleRequest,
 } from "../../rules/state/rule-modifications.ts";
 import { grandArchivePlayerZoneObjectIds } from "../../game/zone-ownership.ts";
+
+import {
+  grandArchiveActiveMasteryAbilities,
+  grandArchivePlayerMastery,
+  grandArchiveMasterySourceSubtypes,
+  grandArchiveMasteryAbilityActivationCount,
+} from "../../game/mastery.ts";
+import type { GrandArchiveMasteryState } from "../../game/model.ts";
 
 type ActivateCardCommand = Extract<GrandArchiveCommand, { readonly move: "activate-card" }>;
 type ActivateAbilityCommand = Extract<GrandArchiveCommand, { readonly move: "activate-ability" }>;
@@ -187,11 +198,11 @@ type ActivatedAbilityCostModifier = NonNullable<
 
 function activatedAbilityLimitUsageKey(
   state: GrandArchiveMatchState,
-  source: GrandArchiveCardInstance,
+  source: { readonly key: string; readonly controllerId: GrandArchivePlayerId },
   ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
 ): string | undefined {
   if (!ability.limit) return undefined;
-  const abilityKey = `object:${source.id}:${source.incarnation}:ability:${ability.id}`;
+  const abilityKey = `${source.key}:ability:${ability.id}`;
   switch (ability.limit.per) {
     case "source-instance":
       return `${abilityKey}:source-instance`;
@@ -206,7 +217,7 @@ function activatedAbilityLimitUsageKey(
 
 function assertActivatedAbilityLimitAvailable(
   state: GrandArchiveMatchState,
-  source: GrandArchiveCardInstance,
+  source: { readonly key: string; readonly controllerId: GrandArchivePlayerId },
   ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
 ): string | undefined {
   if (!ability.limit) return undefined;
@@ -855,6 +866,7 @@ function selectionCountBounds(
 }
 
 export { selectionCountBounds as grandArchiveSelectionCountBounds };
+export { selectionCountRequiresAll as grandArchiveSelectionRequiresAll };
 
 function selectionCountRequiresAll(
   declaration: { readonly count: GrandArchiveSelectionCount },
@@ -911,6 +923,64 @@ export interface GrandArchiveDeclaredModes {
     readonly key: string;
     readonly chosenIds: readonly string[];
   };
+}
+
+/** Preserve the same source, LKI and captured bindings for form projection and submission. */
+export function grandArchiveTriggerAnnouncementEvaluation(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  pending: GrandArchivePendingTrigger,
+  variables: Readonly<Partial<Record<"X" | "Y" | "Z", number>>> = {},
+): GrandArchiveEvaluationContext {
+  return {
+    program,
+    state,
+    controllerId: pending.controllerId,
+    ...(pending.sourceId
+      ? {
+          sourceId: pending.sourceId,
+          abilityBearerId: pending.sourceId,
+          sourceIdentityId: pending.sourceId,
+          sourceIncarnation: pending.sourceIncarnation,
+        }
+      : {}),
+    ...(pending.sourceLkiEventId
+      ? {
+          sourceLkiEventId: pending.sourceLkiEventId,
+          sourceInformationBasis: "last-known" as const,
+        }
+      : {}),
+    bindings: pending.bindings,
+    variables: { ...pending.variables, ...variables },
+  };
+}
+
+export function grandArchiveTriggerAnnouncementContext(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  pending: GrandArchivePendingTrigger,
+  variables: Readonly<Partial<Record<"X" | "Y" | "Z", number>>> = {},
+) {
+  const evaluation = grandArchiveTriggerAnnouncementEvaluation(program, state, pending, variables);
+  const source = pending.sourceId
+    ? grandArchiveEvaluationObject(pending.sourceId, evaluation, true)
+    : undefined;
+  const sourceSubtypes = source
+    ? grandArchiveObjectCurrentCharacteristics(program, state, source).subtypes
+    : grandArchiveMasterySourceSubtypes(program, pending.masterySource);
+  const modeDeclaration = getGrandArchiveAnnouncementModes(
+    pending.ability.modes,
+    pending.ability.effect,
+    evaluation,
+  );
+  const cascade = "cascade" in pending.ability ? pending.ability.cascade : undefined;
+  const cascadeModes = cascade
+    ? pending.selectedModeIds.flatMap((modeId) => {
+        const mode = cascade.modes.find((entry) => entry.id === modeId);
+        return mode ? [mode] : [];
+      })
+    : [];
+  return { evaluation, sourceSubtypes, modeDeclaration, cascade, cascadeModes };
 }
 
 function grandArchiveModeTrackingObjectId(
@@ -1174,9 +1244,10 @@ export function validateGrandArchiveChosenVariables(
     if (declaration.kind !== "chosen") continue;
     const value = evaluation.variables?.[declaration.symbol];
     const minimum = evaluateGrandArchiveAmount(declaration.minimum, evaluation);
-    const maximum = declaration.maximum
-      ? evaluateGrandArchiveAmount(declaration.maximum, evaluation)
-      : Number.POSITIVE_INFINITY;
+    const maximum =
+      declaration.maximum !== undefined
+        ? evaluateGrandArchiveAmount(declaration.maximum, evaluation)
+        : Number.POSITIVE_INFINITY;
     if (value === undefined || !Number.isSafeInteger(value) || value < minimum || value > maximum) {
       throw new Error(`Variable ${declaration.symbol} has not been legally declared`);
     }
@@ -1214,10 +1285,14 @@ function grandArchiveStackItemMatchesClassification(
   }
   if (classification.sourceFilter) {
     const source = item.sourceId ? evaluation.state.objects[item.sourceId] : undefined;
-    if (
-      !source ||
-      !matchesGrandArchiveCardFilter(source, classification.sourceFilter, evaluation)
-    ) {
+    const matches = item.masterySource
+      ? grandArchiveMasteryMatchesSourceFilter(
+          item.masterySource,
+          classification.sourceFilter,
+          evaluation,
+        )
+      : source && matchesGrandArchiveCardFilter(source, classification.sourceFilter, evaluation);
+    if (!matches) {
       return false;
     }
   }
@@ -1590,7 +1665,7 @@ export function declareGrandArchiveTargetsWithRandom(
   submitted: Readonly<Record<string, readonly GrandArchiveTargetId[]>> | undefined,
   evaluation: GrandArchiveEvaluationContext,
 ): GrandArchiveTargetDeclarationResult {
-  if (!declarations?.length) {
+  if (!declarations?.some((declaration) => declaration.method === "random")) {
     return { targets: declareGrandArchiveTargets(declarations, submitted, evaluation) };
   }
   const declaredIds = new Set(declarations.map((declaration) => declaration.id));
@@ -1600,6 +1675,7 @@ export function declareGrandArchiveTargetsWithRandom(
 
   const targets: GrandArchiveDeclaredTarget[] = [];
   const bindings: Record<string, readonly GrandArchiveTargetId[]> = {};
+  const alreadyTargeted = new Set<GrandArchiveTargetId>();
   let random = evaluation.state.random;
   let usedRandom = false;
   for (const declaration of declarations) {
@@ -1620,8 +1696,10 @@ export function declareGrandArchiveTargetsWithRandom(
           "random target declaration requires an exact finite count",
         );
       }
-      const eligible = potentialGrandArchiveTargetIds(evaluation.state).filter((targetId) =>
-        isGrandArchiveTargetCandidate(targetId, declaration, contextualEvaluation),
+      const eligible = potentialGrandArchiveTargetIds(evaluation.state).filter(
+        (targetId) =>
+          (declaration.allowRepeated || !alreadyTargeted.has(targetId)) &&
+          isGrandArchiveTargetCandidate(targetId, declaration, contextualEvaluation),
       );
       if (eligible.length < bounds.minimum) {
         throw new Error(`Random target ${declaration.id} has too few eligible candidates`);
@@ -1639,7 +1717,11 @@ export function declareGrandArchiveTargetsWithRandom(
     if (!declared) throw new Error(`Target ${declaration.id} was not declared`);
     targets.push(declared);
     bindings[declaration.id] = declared.targetIds;
+    declared.targetIds.forEach((id) => alreadyTargeted.add(id));
   }
+  // The per-step check above supplies dependent bindings; the complete check
+  // also enforces uniqueness across separately declared target groups.
+  declareGrandArchiveTargets(declarations, bindings, evaluation);
   return { targets, ...(usedRandom ? { random } : {}) };
 }
 
@@ -1977,9 +2059,10 @@ export function declareGrandArchiveResolutionChoice(
       throw new Error("Number choice requires a safe integer");
     }
     const minimum = evaluateGrandArchiveAmount(candidates.minimum, evaluation);
-    const maximum = candidates.maximum
-      ? evaluateGrandArchiveAmount(candidates.maximum, evaluation)
-      : Number.POSITIVE_INFINITY;
+    const maximum =
+      candidates.maximum !== undefined
+        ? evaluateGrandArchiveAmount(candidates.maximum, evaluation)
+        : Number.POSITIVE_INFINITY;
     if (answer < minimum || answer > maximum) throw new Error("Number choice is out of range");
     return answer;
   }
@@ -3979,13 +4062,57 @@ export function proposeGrandArchiveBoonBestowment(
   };
 }
 
+export type GrandArchiveAbilityActivationSource =
+  | { readonly kind: "object"; readonly object: GrandArchiveCardInstance }
+  | { readonly kind: "mastery"; readonly mastery: GrandArchiveMasteryState };
+export interface GrandArchiveResolvedAbilityActivationSource {
+  readonly state: GrandArchiveMatchState;
+  readonly command: ActivateAbilityCommand;
+  readonly ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>;
+  readonly source: GrandArchiveAbilityActivationSource;
+  /** Tentative source preparation, such as separating a base champion for Lineage Release. */
+  readonly events: readonly GrandArchiveProposedEvent[];
+}
+
 export function proposeGrandArchiveAbilityActivation(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   playerId: GrandArchivePlayerId,
   command: ActivateAbilityCommand,
 ): GrandArchiveActivationProposal {
+  const resolved = resolveGrandArchiveAbilityActivationSource(program, state, playerId, command);
+  const proposal = proposeAbilityFromSource(
+    program,
+    resolved.state,
+    playerId,
+    resolved.command,
+    resolved.ability,
+    resolved.source,
+  );
+  return { ...proposal, events: [...resolved.events, ...proposal.events] };
+}
+
+/** Resolves the live ability source without enumerating declarations or paying costs.
+ * This is source discovery, not proof that a completed activation is legal. */
+export function resolveGrandArchiveAbilityActivationSource(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: ActivateAbilityCommand,
+): GrandArchiveResolvedAbilityActivationSource {
   if (state.opportunity?.holderId !== playerId) throw new Error("Player does not have Opportunity");
+  if (command.masteryName !== undefined) {
+    const mastery = grandArchivePlayerMastery(state, playerId, command.masteryName);
+    if (!mastery) throw new Error("Player does not have the named mastery");
+    const ability = grandArchiveActiveMasteryAbilities(program, state, playerId).find(
+      (
+        candidate,
+      ): candidate is Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }> =>
+        candidate.kind === "activated" && candidate.id === command.abilityId,
+    );
+    if (!ability) throw new Error("Activated ability does not exist on the mastery");
+    return { state, command, ability, source: { kind: "mastery", mastery }, events: [] };
+  }
   const source = state.objects[command.sourceId];
   if (!source) throw new Error("Ability source does not exist");
   const face = grandArchiveObjectFace(program, source);
@@ -4028,6 +4155,7 @@ export function proposeGrandArchiveAbilityActivation(
         cascadeCounts: {},
         counters: {},
         damage: 0,
+        temporaryDamage: 0,
         incarnation: 1,
         objectVersion: 1,
       },
@@ -4035,11 +4163,11 @@ export function proposeGrandArchiveAbilityActivation(
       cause: { kind: "rule", rule: "separate-base-champion-card" },
     };
     const preview = new GrandArchiveTransactionKernel().transact(state, [separation]).state;
-    const proposal = proposeGrandArchiveAbilityActivation(program, preview, playerId, {
+    const resolved = resolveGrandArchiveAbilityActivationSource(program, preview, playerId, {
       ...command,
       sourceId: cardId,
     });
-    return { ...proposal, events: [separation, ...proposal.events] };
+    return { ...resolved, events: [separation, ...resolved.events] };
   }
   if (ability.keyword?.name === "lineage-release") {
     const host = source.hostId ? state.objects[source.hostId] : undefined;
@@ -4062,8 +4190,47 @@ export function proposeGrandArchiveAbilityActivation(
   }
   const executionObject = grandArchiveAbilityExecutionObject(state, source, ability);
   if (!executionObject) throw new Error("Ability execution source does not exist");
+  return {
+    state,
+    command,
+    ability,
+    source: { kind: "object", object: executionObject },
+    events: [],
+  };
+}
+
+export function grandArchiveAbilityActivationEvaluation(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: ActivateAbilityCommand,
+  ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
+  source: GrandArchiveAbilityActivationSource,
+) {
+  const executionObject = source.kind === "object" ? source.object : undefined;
+  const masterySource =
+    source.kind === "mastery" ? { playerId, name: source.mastery.name } : undefined;
+  const sourceBindings: GrandArchiveEvaluationContext["bindings"] =
+    source.kind === "mastery"
+      ? {
+          masterySourcePlayer: [playerId],
+          masterySourceName: source.mastery.name,
+          masterySourceTimestamp: source.mastery.timestamp,
+        }
+      : {};
+  const ruleSource =
+    source.kind === "object"
+      ? { candidateId: source.object.id, fromZone: source.object.zone }
+      : { masterySource: { playerId, name: source.mastery.name } };
   const evaluation: GrandArchiveEvaluationContext = {
-    ...baseEvaluation(program, state, playerId, executionObject.id, command.variables),
+    program,
+    state,
+    controllerId: playerId,
+    ...(executionObject
+      ? { sourceId: executionObject.id, abilityBearerId: executionObject.id }
+      : {}),
+    bindings: sourceBindings,
+    variables: command.variables ?? {},
     abilityId: ability.id,
   };
   const abilityIdentity = {
@@ -4072,12 +4239,48 @@ export function proposeGrandArchiveAbilityActivation(
       : {}),
     ...(ability.label ? { label: ability.label.name } : {}),
   };
+  return {
+    executionObject,
+    masterySource,
+    sourceBindings,
+    ruleSource,
+    evaluation,
+    abilityIdentity,
+  };
+}
+
+export function grandArchiveAbilityActivationCascade(
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
+  source: GrandArchiveAbilityActivationSource,
+) {
+  const cascadeCount = ability.cascade
+    ? (source.kind === "object"
+        ? (source.object.cascadeCounts[ability.id] ?? 0)
+        : grandArchiveMasteryAbilityActivationCount(state, playerId, source.mastery, ability.id)) +
+      1
+    : undefined;
+  const cascadeMode =
+    ability.cascade && cascadeCount !== undefined
+      ? ability.cascade.modes.find((mode) => mode.counts.includes(cascadeCount))
+      : undefined;
+  return { cascadeCount, cascadeModes: cascadeMode ? [cascadeMode] : [] };
+}
+
+export function assertGrandArchiveAbilityActivationAuthority(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
+  context: ReturnType<typeof grandArchiveAbilityActivationEvaluation>,
+): void {
+  const { executionObject, ruleSource, abilityIdentity, evaluation } = context;
   const actionRules = collectGrandArchiveActionRules({
     action: "activate",
     activationKind: "ability",
     playerId,
-    candidateId: executionObject.id,
-    fromZone: executionObject.zone,
+    ...ruleSource,
     abilityIdentity,
     evaluation,
   });
@@ -4086,26 +4289,62 @@ export function proposeGrandArchiveAbilityActivation(
     ruleGrantsPermissionToPlayer(rule, playerId),
   );
   if (
+    executionObject &&
     executionObject.controllerId !== playerId &&
     ability.activationAuthority !== "any-player" &&
     !hasGrantedAuthority
   ) {
     throw new Error("Player cannot activate an ability of this source");
   }
-  if (!grandArchiveObjectObeysController(program, state, executionObject)) {
+  if (executionObject && !grandArchiveObjectObeysController(program, state, executionObject)) {
     throw new Error("Player cannot activate an ability of a disobedient ally");
   }
+}
+
+export function prepareGrandArchiveAbilityActivationPayment(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: ActivateAbilityCommand,
+  ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
+  source:
+    | { readonly kind: "object"; readonly object: GrandArchiveCardInstance }
+    | { readonly kind: "mastery"; readonly mastery: GrandArchiveMasteryState },
+) {
+  const {
+    executionObject,
+    masterySource,
+    sourceBindings,
+    ruleSource,
+    evaluation,
+    abilityIdentity,
+  } = grandArchiveAbilityActivationEvaluation(program, state, playerId, command, ability, source);
+  assertGrandArchiveAbilityActivationAuthority(program, state, playerId, ability, {
+    executionObject,
+    masterySource,
+    sourceBindings,
+    ruleSource,
+    evaluation,
+    abilityIdentity,
+  });
   const activationLimitUsageKey = assertActivatedAbilityLimitAvailable(
     state,
-    executionObject,
+    source.kind === "object"
+      ? {
+          key: `object:${source.object.id}:${source.object.incarnation}`,
+          controllerId: source.object.controllerId,
+        }
+      : {
+          key: `mastery:${playerId}:${source.mastery.name}:${source.mastery.timestamp}`,
+          controllerId: playerId,
+        },
     ability,
   );
   const fastRules = collectGrandArchiveActionRules({
     action: "activate-fast",
     activationKind: "ability",
     playerId,
-    candidateId: executionObject.id,
-    fromZone: executionObject.zone,
+    ...ruleSource,
     abilityIdentity,
     evaluation,
   });
@@ -4136,17 +4375,16 @@ export function proposeGrandArchiveAbilityActivation(
   if (ability.cascade && (command.modeIds?.length ?? 0) > 0) {
     throw new Error("A Cascade mode is selected automatically and cannot be declared");
   }
-  const cascadeCount = ability.cascade
-    ? (executionObject.cascadeCounts[ability.id] ?? 0) + 1
-    : undefined;
-  const cascadeMode =
-    ability.cascade && cascadeCount !== undefined
-      ? ability.cascade.modes.find((mode) => mode.counts.includes(cascadeCount))
-      : undefined;
+  const { cascadeCount, cascadeModes } = grandArchiveAbilityActivationCascade(
+    state,
+    playerId,
+    ability,
+    source,
+  );
   const modes = ability.cascade
     ? {
-        ids: cascadeMode ? [cascadeMode.id] : [],
-        modes: cascadeMode ? [cascadeMode] : [],
+        ids: cascadeModes.map((mode) => mode.id),
+        modes: cascadeModes,
         random: undefined,
       }
     : declareGrandArchiveModes(
@@ -4162,22 +4400,26 @@ export function proposeGrandArchiveAbilityActivation(
       ...evaluation,
       targeting: grandArchiveTargetingContext(
         "activated-ability",
-        grandArchiveObjectCurrentCharacteristics(program, state, executionObject).subtypes,
+        executionObject
+          ? grandArchiveObjectCurrentCharacteristics(program, state, executionObject).subtypes
+          : grandArchiveMasterySourceSubtypes(program, masterySource),
         [ability.effect, ...modes.modes.map((mode) => mode.effect)],
       ),
     },
   );
   const paymentEvaluation: GrandArchiveEvaluationContext = {
     ...evaluation,
-    bindings: Object.fromEntries(targets.map((target) => [target.binding, target.targetIds])),
+    bindings: {
+      ...sourceBindings,
+      ...Object.fromEntries(targets.map((target) => [target.binding, target.targetIds])),
+    },
     declaredTargetIds: targets.flatMap((target) => target.targetIds),
   };
   const abilityCostRules = collectGrandArchiveCostRules({
     action: "activate",
     activationKind: "ability",
     playerId,
-    candidateId: executionObject.id,
-    fromZone: executionObject.zone,
+    ...ruleSource,
     abilityIdentity,
     evaluation: paymentEvaluation,
   });
@@ -4186,8 +4428,7 @@ export function proposeGrandArchiveAbilityActivation(
     activationKind: "ability",
     costComponent: "activation",
     playerId,
-    candidateId: executionObject.id,
-    fromZone: executionObject.zone,
+    ...ruleSource,
     abilityIdentity,
     evaluation: paymentEvaluation,
   });
@@ -4195,8 +4436,7 @@ export function proposeGrandArchiveAbilityActivation(
     action: "pay-cost",
     activationKind: "ability",
     playerId,
-    candidateId: executionObject.id,
-    fromZone: executionObject.zone,
+    ...ruleSource,
     abilityIdentity,
     evaluation: paymentEvaluation,
   });
@@ -4228,6 +4468,49 @@ export function proposeGrandArchiveAbilityActivation(
   if (!totalAbilityCost) {
     throw new GrandArchiveUnsupportedRuleError("activated ability without costs");
   }
+  return {
+    executionObject,
+    masterySource,
+    sourceBindings,
+    activationLimitUsageKey,
+    cascadeCount,
+    modes,
+    targets,
+    paymentEvaluation,
+    contribution,
+    totalAbilityCost,
+  };
+}
+
+function proposeAbilityFromSource(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  command: ActivateAbilityCommand,
+  ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "activated" }>,
+  source:
+    | { readonly kind: "object"; readonly object: GrandArchiveCardInstance }
+    | { readonly kind: "mastery"; readonly mastery: GrandArchiveMasteryState },
+): GrandArchiveActivationProposal {
+  const {
+    executionObject,
+    masterySource,
+    sourceBindings,
+    activationLimitUsageKey,
+    cascadeCount,
+    modes,
+    targets,
+    paymentEvaluation,
+    contribution,
+    totalAbilityCost,
+  } = prepareGrandArchiveAbilityActivationPayment(
+    program,
+    state,
+    playerId,
+    command,
+    ability,
+    source,
+  );
   const payment = payGrandArchiveAbilityCost(totalAbilityCost, command, paymentEvaluation);
   assertIndependentPaymentSourcesDistinct([contribution.events, payment.events]);
   const paymentEvents = [...contribution.events, ...payment.events];
@@ -4235,13 +4518,13 @@ export function proposeGrandArchiveAbilityActivation(
   const sourcePaymentZoneChanges = paymentEvents.filter(
     (event) =>
       event.type === "object-moved" &&
-      event.objectId === executionObject.id &&
+      event.objectId === executionObject?.id &&
       event.from !== event.to,
   ).length;
   // Choices made by this source must survive sacrificing it as an activation cost.
-  const tracked = state.trackedCharacteristics[executionObject.id];
+  const tracked = executionObject ? state.trackedCharacteristics[executionObject.id] : undefined;
   const trackedBindings =
-    tracked?.incarnation === executionObject.incarnation
+    tracked && executionObject && tracked.incarnation === executionObject.incarnation
       ? Object.fromEntries(
           Object.entries(tracked.values).map(([key, values]) => [`tracked:${key}`, values]),
         )
@@ -4250,8 +4533,12 @@ export function proposeGrandArchiveAbilityActivation(
     id: grandArchiveStackItemId(`stack-${state.nextStackOrdinal}`),
     kind: "activated-ability",
     controllerId: playerId,
-    sourceId: executionObject.id,
-    sourceIncarnation: executionObject.incarnation + sourcePaymentZoneChanges,
+    ...(executionObject
+      ? {
+          sourceId: executionObject.id,
+          sourceIncarnation: executionObject.incarnation + sourcePaymentZoneChanges,
+        }
+      : { masterySource }),
     selectedModeIds: modes.ids,
     ability,
     ...(activationLimitUsageKey ? { activationLimitUsageKey } : {}),
@@ -4265,7 +4552,12 @@ export function proposeGrandArchiveAbilityActivation(
     activationPayment,
     championLevelModifier: 0,
     variables: command.variables ?? {},
-    bindings: { ...trackedBindings, ...contribution.paidBindings, ...payment.paidBindings },
+    bindings: {
+      ...sourceBindings,
+      ...trackedBindings,
+      ...contribution.paidBindings,
+      ...payment.paidBindings,
+    },
   };
   return {
     stackItem,
@@ -4279,7 +4571,7 @@ export function proposeGrandArchiveAbilityActivation(
             },
           ]
         : []),
-      ...(cascadeCount !== undefined
+      ...(cascadeCount !== undefined && executionObject
         ? [
             {
               type: "cascade-advanced" as const,

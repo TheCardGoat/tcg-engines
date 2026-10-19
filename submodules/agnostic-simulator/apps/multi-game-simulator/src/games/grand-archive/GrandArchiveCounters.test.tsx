@@ -26,10 +26,13 @@ describe("Grand Archive counter inspection", () => {
     const select = vi.fn();
     render(card(ally, select));
     const inspect = screen.getByRole("button", { name: `Inspect counters on ${ally.title}` });
-    expect(inspect.textContent).toContain("+2");
+    expect(inspect.textContent).toContain("+3");
     await user.click(inspect);
     const region = await screen.findByRole("region", { name: `Counters on ${ally.title}` });
     expect(region.textContent).toContain("Buff: 2");
+    expect(region.textContent).toContain("Damage counters: 4");
+    expect(region.textContent).toContain("Temporary damage: 1");
+    expect(region.textContent).toContain("no inherent effect on a non-champion");
     expect(region.textContent).toContain("Bulwark: 1");
     expect(region.textContent).toContain("Static: 2");
     expect(region.textContent).toContain("Clears during the end phase");
@@ -79,11 +82,13 @@ describe("Grand Archive counter inspection", () => {
     rerender(
       card({
         ...entity,
-        decorations: entity.decorations!.filter((entry) => entry.id === "ga:counter:damage"),
+        decorations: entity.decorations!.filter(
+          (entry) => entry.id === "ga:counter:temporary-damage",
+        ),
       }),
     );
     const region = await screen.findByRole("region", { name: `Counters on ${ally.title}` });
-    expect(region.textContent).toContain("Damage: 1");
+    expect(region.textContent).toContain("Temporary damage: 1");
     expect(region.textContent).not.toContain("Buff");
   });
   it.each(["removed", "hidden", "incarnation"])(
@@ -122,11 +127,11 @@ describe("Grand Archive counter inspection", () => {
       expect(screen.queryByRole("button", { name: /Inspect counters/ })).toBeNull();
       const target = screen.getByRole("button");
       expect(target.getAttribute("aria-label")).toContain("Buff: 2");
-      expect(target.getAttribute("aria-label")).toContain("Damage: 1");
-      const pills = target.querySelectorAll("[data-decoration-id]");
+      expect(target.getAttribute("aria-label")).toContain("Temporary damage: 1");
+      const pills = target.querySelectorAll('[data-decoration-id^="ga:counter:"]');
       expect(pills).toHaveLength(1);
       expect(pills[0]?.textContent).toBe("1");
-      expect(pills[0]?.getAttribute("data-decoration-id")).toBe("ga:counter:damage");
+      expect(pills[0]?.getAttribute("data-decoration-id")).toBe("ga:counter:temporary-damage");
       await user.click(target);
       expect(select).toHaveBeenCalledOnce();
     },

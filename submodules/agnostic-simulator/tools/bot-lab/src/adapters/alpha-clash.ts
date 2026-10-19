@@ -15,8 +15,9 @@ import {
   ALPHA_CLASH_META_DECKS,
   auditAlphaClashDeck,
   resolveAlphaClashLabDeck,
-} from "./alpha-clash/decks.ts";
-import { validateAlphaClashOverrides } from "./alpha-clash/policy.ts";
+  ALPHA_CLASH_RECOMMENDED_PRACTICE_STRATEGY,
+} from "@tcg/alpha-clash-server-adapter/practice";
+import { validateAlphaClashOverrides } from "@tcg/alpha-clash-server-adapter/practice";
 import { runAlphaClashPracticeMatch } from "./alpha-clash/runner.ts";
 
 const ENGINE_ROOT = fileURLToPath(
@@ -26,17 +27,20 @@ const POLICY_ROOT = fileURLToPath(
   new URL("../../../../packages/alpha-clash/alpha-clash-server-adapter/src", import.meta.url),
 );
 const STRATEGY_ID = "practice-v1";
-const DEFAULT_STRATEGY_ID = "meta-v1";
+const DEFAULT_STRATEGY_ID = ALPHA_CLASH_RECOMMENDED_PRACTICE_STRATEGY;
 const descriptor = (id: string): BotStrategyDescriptorV1 | undefined =>
-  [STRATEGY_ID, "meta-v1", "meta-v2", "meta-v3"].includes(id)
+  [STRATEGY_ID, "meta-v1", "meta-v2", "meta-v3", "expert-oracle"].includes(id)
     ? strategyDescriptor({
         game: "alpha-clash",
         id,
         label:
-          id === STRATEGY_ID
-            ? "Existing practice policy (calibration only)"
-            : `Meta deck heuristic ${id}`,
-        strategyVersion: id === "meta-v3" ? "3" : id === "meta-v2" ? "2" : "1",
+          id === "expert-oracle"
+            ? "Expert (full information)"
+            : id === STRATEGY_ID
+              ? "Existing practice policy (calibration only)"
+              : `Meta deck heuristic ${id}`,
+        strategyVersion:
+          id === "meta-v3" ? "3" : ["meta-v2", "expert-oracle"].includes(id) ? "2" : "1",
         informationPolicy: "oracle",
         cardProfileVersion: "none",
         productionEligible: false,
@@ -63,13 +67,18 @@ function verifyCandidate(manifest: BotCandidateManifestV1): BotStrategyDescripto
   if (manifest.candidateId === STRATEGY_ID && Object.keys(manifest.changes).length) {
     throw new Error("Alpha Clash practice-v1 does not accept heuristic overrides");
   }
-  validateAlphaClashOverrides(manifest.changes);
+  if (manifest.candidateId === "expert-oracle") {
+    if (Object.keys(manifest.changes).length)
+      throw new Error(
+        "Expert uses versioned search settings; heuristic overrides are not supported",
+      );
+  } else validateAlphaClashOverrides(manifest.changes);
   return strategy;
 }
 
 export const alphaClashBotLabAdapter: BotLabAdapter = {
   game: "alpha-clash",
-  adapterVersion: "2",
+  adapterVersion: "4",
   getEngineRevision: () =>
     stableBotHash({
       engine: sourceTreeRevision(ENGINE_ROOT),
@@ -85,7 +94,21 @@ export const alphaClashBotLabAdapter: BotLabAdapter = {
   getCandidateDescriptor: verifyCandidate,
   getPromotionDeckPairs: (suiteId) => {
     if (suiteId === "meta" || suiteId === "smoke") return META_PAIRS;
-    throw new Error(`Unknown Alpha Clash BotLab suite: ${suiteId}. Known: meta, smoke`);
+    if (suiteId === "season3") {
+      const decks = ALPHA_CLASH_META_DECKS.filter(
+        (deck) =>
+          deck.resultSource.endsWith("/alpha-clash-online-league-season3-recap") &&
+          auditAlphaClashDeck(deck).ready,
+      );
+      return decks.flatMap((deck, index) =>
+        decks.slice(index).map((opponent) => ({
+          id: `${deck.id}-vs-${opponent.id}`,
+          deckA: deck.id,
+          deckB: opponent.id,
+        })),
+      );
+    }
+    throw new Error(`Unknown Alpha Clash BotLab suite: ${suiteId}. Known: meta, smoke, season3`);
   },
   runMatch: ({ scheduledMatch, candidateManifest, baselineStrategyId }) => {
     verifyCandidate(candidateManifest);
@@ -97,6 +120,7 @@ export const alphaClashBotLabAdapter: BotLabAdapter = {
       candidateSeat === "p1" ? scheduledMatch.p2DeckId : scheduledMatch.p1DeckId;
     return runAlphaClashPracticeMatch({
       ...scheduledMatch,
+      shuffleSeed: scheduledMatch.seed.replace(/-seat-[12]$/, ""),
       candidateSeat,
       candidateDeckId,
       baselineDeckId,
@@ -112,6 +136,7 @@ export const alphaClashBotLabAdapter: BotLabAdapter = {
     requireStrategy(report.baseline.id);
     return runAlphaClashPracticeMatch({
       ...record,
+      shuffleSeed: record.seed.replace(/-seat-[12]$/, ""),
       candidateStrategyId: report.manifest.candidateId,
       baselineStrategyId: report.baseline.id,
       candidateOverrides: validateAlphaClashOverrides(report.manifest.changes),

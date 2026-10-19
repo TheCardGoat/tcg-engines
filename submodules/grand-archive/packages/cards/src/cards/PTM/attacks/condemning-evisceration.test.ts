@@ -125,7 +125,7 @@ describe("Condemning Evisceration — prepared champion hit optionally banishes 
                 extra = eligible && accept;
               expect(optional).toBe(eligible ? 1 : 0);
               expect(choices).toBe(extra ? 1 : 0);
-              expect(game.state.objects[target.objectId]!.damage).toBe(extra ? 8 : 4);
+              expect(game.markedDamage(target.objectId)).toBe(extra ? 8 : 4);
               expect(p.cards(reclaim, { zone: "banishment" })).toHaveLength(extra ? 1 : 0);
               expect(p.cards(reclaim, { zone: "graveyard" })).toHaveLength(
                 (available ? 2 : 0) - (extra ? 1 : 0),

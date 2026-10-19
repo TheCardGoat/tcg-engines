@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/glossary/type-list"
   relation: "current_index"
 ---
-
 # Type List
 
 This section is dedicated to listing all valid options of categorical characteristics of cards (excluding play speeds of Fast and Slow. Stat-based characteristics are also excluded).

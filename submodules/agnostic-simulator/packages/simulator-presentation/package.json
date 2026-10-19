@@ -11,6 +11,7 @@
     "./canvas": "./src/SimulatorEffectCanvas.tsx",
     "./dom": "./src/dom.tsx",
     "./three": "./src/three.tsx",
+    "./counters": "./src/counters.tsx",
     "./styles.css": "./src/card.css",
     "./audio/*": "./src/audio/*.ts",
     "./opening": "./src/opening/index.ts",
@@ -24,7 +25,15 @@
     "./inspection": "./src/inspection.tsx",
     "./inspection-pose": "./src/inspection-pose.ts",
     "./target-modal": "./src/TargetModal.tsx",
-    "./choice-drag": "./src/choice-drag.tsx"
+    "./choice-drag": "./src/choice-drag.tsx",
+    "./card-reference": "./src/CardReference.tsx",
+    "./animation-scope": "./src/animation-scope.ts",
+    "./settings": "./src/presentation-settings.tsx",
+    "./effects": "./src/effects.ts",
+    "./activity": "./src/motion-activity.ts",
+    "./tabletop": "./src/TabletopCanvas.tsx",
+    "./focus": "./src/ResolutionFocusCard.tsx",
+    "./layers.css": "./src/layers.css"
   },
   "scripts": {
     "check-types": "tsc6 --noEmit",

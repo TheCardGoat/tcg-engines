@@ -89,8 +89,8 @@ export function proveAllyBuffAction({
     }
     expect(game.state.combat).toBeNull();
     expect(game.state.objects[first.objectId]!.zone).toBe("field");
-    expect(game.state.objects[first.objectId]!.damage).toBe(1);
-    expect(game.state.objects[q.card(giantTortoise).objectId]!.damage).toBe(1 + powerBonus);
+    expect(game.markedDamage(first.objectId)).toBe(1);
+    expect(game.markedDamage(q.card(giantTortoise).objectId)).toBe(1 + powerBonus);
     advanceToMain(game, q.id);
     expect(stat(first.objectId, "life")).toBe(permanent ? 1 + lifeBonus : 1);
     expect(stat(first.objectId, "power")).toBe(permanent ? 1 + powerBonus : 1);

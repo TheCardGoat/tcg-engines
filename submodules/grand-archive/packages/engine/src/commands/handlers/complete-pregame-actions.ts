@@ -99,6 +99,7 @@ export function handleGrandArchiveCompletePregameActions(
         cascadeCounts: {},
         counters: {},
         damage: 0,
+        temporaryDamage: 0,
         incarnation: 1,
         objectVersion: 1,
       };

@@ -14,7 +14,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { Popover } from "@mantine/core";
-import { IconArrowsMaximize, IconKeyboard, IconX } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconKeyboard, IconMaximize, IconX } from "@tabler/icons-react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import {
   AnimatedEntityCollection,
@@ -837,6 +837,7 @@ export function ClockDisplay({
   docked = false,
   combatSteps = false,
   overtimeBand = false,
+  onRivalClockClick,
 }: {
   compact?: boolean;
   docked?: boolean;
@@ -847,6 +848,7 @@ export function ClockDisplay({
    * overtime runs and a turn countdown once both Fixer areas empty.
    */
   overtimeBand?: boolean;
+  onRivalClockClick?: () => void;
 }) {
   const { activeSide, prioritySide, turnNumber, phase, gameEnded, overtimeActive } = useGameState();
   const clock = useGameClock();
@@ -957,6 +959,7 @@ export function ClockDisplay({
           tone="rival"
           urgent={rivalClock.urgent}
           critical={rivalClock.critical}
+          onClick={onRivalClockClick}
         />
         <ClockFace
           label="You"
@@ -978,6 +981,7 @@ function ClockFace({
   tone,
   urgent,
   critical,
+  onClick,
 }: {
   label: string;
   time: string;
@@ -985,7 +989,37 @@ function ClockFace({
   tone: "rival" | "friendly";
   urgent: boolean;
   critical: boolean;
+  onClick?: () => void;
 }) {
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={`clock-readout ${classes.clockFace} ${classes.clockFaceButton}`}
+        onClick={onClick}
+        aria-label="Rival time expired - show options"
+        title="Show rival timeout options"
+        data-active={active ? "true" : "false"}
+        data-urgency={critical ? "critical" : urgent ? "warning" : "normal"}
+        data-tone={tone}
+        data-urgent={urgent ? "true" : "false"}
+        data-critical={critical ? "true" : "false"}
+        data-sim-value={time}
+        data-timeout-action="true"
+      >
+        <span>{label}</span>
+        <IconMaximize
+          className={classes.clockTimeoutIcon}
+          size="1em"
+          stroke={2}
+          aria-hidden="true"
+        />
+        <strong className={classes.clockTime} data-testid={active ? "phase-clock-time" : undefined}>
+          {time}
+        </strong>
+      </button>
+    );
+  }
   return (
     <ClockReadout
       label={label}
@@ -1022,7 +1056,7 @@ export function PassTurnControl({
   const promptSkin = usePromptSkin();
   const { phase, advancePhase, activeSide, prioritySide, gameEnded, overtimeActive } =
     useGameState();
-  const { humanSide, matchState, dispatch, prompts } = useEngine();
+  const { humanSide, matchState, dispatch, prompts, hasPendingRemoteMove } = useEngine();
   const humanInteractionView = useEngineInteractionView(humanSide);
   const disabledPassReason = disabledPassPhaseReason(humanInteractionView);
   const confirmTitleId = useId();
@@ -1044,6 +1078,7 @@ export function PassTurnControl({
   const humanChoiceInProgress = humanInteractionView.status === "choosing";
   const isWaitingForRival = prioritySide !== humanSide;
   const controlsDisabled =
+    hasPendingRemoteMove ||
     phase === "SETUP" ||
     phase === "START" ||
     gameEnded ||

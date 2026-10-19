@@ -70,8 +70,8 @@ describe("Shock Therapy counts only its controller's enlighten at resolution", (
           expect(game.state.objects[target.objectId]!.zone).toBe(
             damage >= 6 ? "graveyard" : "field",
           );
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage >= 6 ? 0 : damage);
-          expect(game.state.objects[(own ? q : p).card(giantTortoise).objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(damage >= 6 ? 0 : damage);
+          expect(game.markedDamage((own ? q : p).card(giantTortoise).objectId)).toBe(0);
           expect(game.state.objects[p.card(champion).objectId]!.counters.enlighten ?? 0).toBe(
             damage,
           );

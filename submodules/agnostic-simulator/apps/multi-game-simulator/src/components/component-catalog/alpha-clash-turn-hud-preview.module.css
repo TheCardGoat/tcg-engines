@@ -1,0 +1,145 @@
+.preview {
+  margin-top: 20px;
+}
+.intro {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.eyebrow {
+  color: #9cbdcd;
+  font:
+    600 10px/1.4 system-ui,
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+.intro h3 {
+  margin: 7px 0 0;
+  font-size: clamp(19px, 2vw, 25px);
+  font-weight: 500;
+}
+.intro p {
+  color: #acbeca;
+  max-width: 38ch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.controls {
+  display: flex;
+  gap: 12px 20px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.controls label {
+  display: grid;
+  gap: 5px;
+  color: #b9c9d2;
+  font:
+    12px/1.3 system-ui,
+    sans-serif;
+}
+.controls select {
+  max-width: 100%;
+  min-height: 38px;
+  background: #15232e;
+  border: 1px solid #4d626f;
+  border-radius: 4px;
+  color: #edf5f9;
+  padding: 6px 10px;
+}
+.controls .check {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+}
+.check input {
+  accent-color: #86d9ee;
+  width: 16px;
+  height: 16px;
+}
+.stage {
+  position: relative;
+  min-height: 390px;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  padding: 30px 22px 22px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #425361;
+  border-radius: 7px;
+}
+.stageLabel {
+  position: absolute;
+  top: 15px;
+  left: 17px;
+  color: #b3c8d4;
+  font:
+    10px/1.3 system-ui,
+    sans-serif;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.dock {
+  width: 248px;
+  max-width: 100%;
+}
+.dock[data-compact] {
+  width: 236px;
+}
+.notice {
+  color: #a7b9c7;
+  font:
+    11px/1.5 system-ui,
+    sans-serif;
+  min-height: 17px;
+}
+.notes {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #344957;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+}
+.notes summary {
+  cursor: pointer;
+  color: #c2d7e2;
+}
+.references {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 0 28px;
+}
+.references p {
+  color: #a6bbc8;
+}
+.references strong {
+  color: #d3e2e9;
+}
+.references a {
+  color: #91dcee;
+  display: block;
+  margin-top: 6px;
+}
+@media (max-width: 600px) {
+  .stage {
+    padding: 34px 4px 12px;
+    min-height: 365px;
+  }
+  .intro {
+    gap: 8px;
+  }
+  .controls select {
+    width: 100%;
+  }
+  .controls > label:first-child {
+    width: 100%;
+  }
+}

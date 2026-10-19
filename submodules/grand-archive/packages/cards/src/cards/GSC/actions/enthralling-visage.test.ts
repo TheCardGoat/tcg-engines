@@ -73,14 +73,14 @@ describe("Enthralling Visage", () => {
         expect(p.zone("memory")).toHaveLength(2);
         passEffectsStack(game);
         expect(graveOwner.zone("graveyard")).toContainEqual(card);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(hero.objectId)).toBe(0);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(smallHit ? 0 : 1);
+        expect(game.markedDamage(hero.objectId)).toBe(smallHit ? 0 : 1);
         expect(graveOwner.zone("banishment").map((c) => c.objectId)).toContain(card.objectId);
         expect(graveOwner.zone("graveyard").map((c) => c.objectId)).not.toContain(card.objectId);
         q.declareAttack(smallHit ? blitzMage : woodlandSquirrels, hero);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(smallHit ? 3 : 2);
+        expect(game.markedDamage(hero.objectId)).toBe(smallHit ? 3 : 2);
         expect(game.state.stack).toHaveLength(0);
       });
     }
@@ -100,11 +100,11 @@ describe("Enthralling Visage", () => {
     passEffectsStack(game);
     q.declareAttack(woodlandSquirrels, p.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
     expect(q.zone("graveyard")).toContainEqual(card);
     q.declareAttack(blitzMage, ally);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(ally.objectId)).toBe(1);
     expect(q.zone("banishment").map((c) => c.objectId)).toContain(card.objectId);
   });
 
@@ -153,11 +153,11 @@ describe("Enthralling Visage", () => {
         .map((c) => ({ kind: "card", cardId: c.objectId })),
     });
     passEffectsStack(game);
-    expect(game.state.objects[hero.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(hero.objectId)).toBe(2);
     expect(q.zone("graveyard")).toContainEqual(card);
     q.declareAttack(woodlandSquirrels, hero);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[hero.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(hero.objectId)).toBe(3);
     expect(q.zone("graveyard")).toContainEqual(card);
     expect(q.zone("banishment")).toHaveLength(0);
   });
@@ -176,12 +176,12 @@ describe("Enthralling Visage", () => {
     passEffectsStack(game);
     q.declareAttack(woodlandSquirrels, p.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
     expect(p.zone("graveyard")).toContainEqual(card);
     advanceToMain(game, p.id);
     p.declareAttack(giantTortoise, protectedUnit);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[protectedUnit.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(protectedUnit.objectId)).toBe(1);
     expect(p.zone("graveyard")).toContainEqual(card);
     expect(p.zone("banishment")).toHaveLength(0);
   });

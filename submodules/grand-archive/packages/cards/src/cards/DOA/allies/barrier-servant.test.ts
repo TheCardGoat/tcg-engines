@@ -56,18 +56,18 @@ describe("Barrier Servant spends its controller's enlighten for one self shield"
       }
       q.declareAttack(woodlandSquirrels, other);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[other.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(other.objectId)).toBe(1);
       q.declareAttack(blitzMage, source);
       game.resolveCombatWithoutRetaliation();
       if (expired) {
         expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
         return;
       }
-      expect(game.state.objects[source.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(source.objectId)).toBe(0);
       expect(game.state.objects[source.objectId]!.zone).toBe("field");
       q.declareAttack(giantTortoise, source);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[source.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(source.objectId)).toBe(1);
       q.pass();
       const before = game.state;
       expect(() => p.activateAbility(source, ability)).toThrow();

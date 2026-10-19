@@ -71,7 +71,7 @@ describe("Axis Gale Scholar — North power", () => {
     const target = opponent.card(lineageTestChampion("Opponent", 0), { zone: "field" });
     player.declareAttack(axisGaleScholar, target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(target.objectId)).toBe(3);
   });
 });
 
@@ -88,7 +88,7 @@ describe("Axis Gale Scholar — South ally life", () => {
     opponent.declareAttack(woodlandSquirrels, squirrel);
     game.resolveCombatWithoutRetaliation();
     expect(player.cards(woodlandSquirrels, { zone: "field" })).toEqual([squirrel]);
-    expect(game.state.objects[squirrel.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(squirrel.objectId)).toBe(1);
   });
 });
 

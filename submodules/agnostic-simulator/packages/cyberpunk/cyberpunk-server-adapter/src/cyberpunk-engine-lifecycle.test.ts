@@ -241,7 +241,7 @@ describe("cyberpunk engine lifecycle", () => {
           player2Id: "p2",
         },
       ),
-    ).rejects.toThrow("Unsupported Cyberpunk combat snapshot version");
+    ).rejects.toMatchObject({ code: "game_state_incompatible", cause: expect.any(Error) });
   });
 });
 

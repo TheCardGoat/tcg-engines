@@ -77,7 +77,7 @@ describe("Grand Archive end-phase cleanup", () => {
     const prepared = new GrandArchiveTransactionKernel().transact(initial, [
       { type: "object-moved", objectId: allyId, from: "main-deck", to: "field" },
       { type: "damage-marked", objectId: championId, amount: 3 },
-      { type: "damage-marked", objectId: allyId, amount: 2 },
+      { type: "damage-marked", asTemporaryDamage: true, objectId: allyId, amount: 2 },
       { type: "phase-changed", phase: "end" },
     ]).state;
     const runtime = new GrandArchiveMatchRuntime(program, prepared);
@@ -87,7 +87,7 @@ describe("Grand Archive end-phase cleanup", () => {
       true,
     );
 
-    expect(runtime.state.objects[allyId]?.damage).toBe(0);
+    expect(runtime.state.objects[allyId]?.temporaryDamage).toBe(0);
     expect(runtime.state.objects[championId]?.damage).toBe(3);
   });
 });

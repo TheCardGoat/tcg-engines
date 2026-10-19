@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-banishment"
   relation: "current_index"
 ---
-
 # Game Zones - Banishment
 
 #### General Rules:

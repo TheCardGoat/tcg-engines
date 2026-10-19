@@ -29,7 +29,7 @@ describe("Whirlwind Vizier — Class Bonus life", () => {
       game.resolveCombatWithoutRetaliation();
       expect(player.cards(whirlwindVizier, { zone: "field" })).toHaveLength(classBonus ? 1 : 0);
       if (classBonus) {
-        expect(game.state.objects[vizier.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(vizier.objectId)).toBe(2);
         const wait = game.waitState();
         if (wait.kind === "opportunity" && wait.playerId !== opponent.id)
           game.player(wait.playerId).pass();

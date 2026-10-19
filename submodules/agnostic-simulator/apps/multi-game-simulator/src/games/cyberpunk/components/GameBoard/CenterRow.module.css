@@ -2424,6 +2424,27 @@
     0 0 10px rgb(74 217 255 / 13%);
 }
 
+.clockFaceButton {
+  font: inherit;
+  cursor: pointer;
+}
+
+.clockFaceButton:hover,
+.clockFaceButton:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+
+.clockTimeoutIcon {
+  position: absolute;
+  top: -0.35em;
+  right: 0.15em;
+  width: 0.85em;
+  height: 0.85em;
+  color: #f5e642;
+  pointer-events: none;
+}
+
 .clockTime {
   font-family: Rajdhani, sans-serif;
   font-weight: 700;

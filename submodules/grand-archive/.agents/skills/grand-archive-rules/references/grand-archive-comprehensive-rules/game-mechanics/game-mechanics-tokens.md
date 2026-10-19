@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-tokens"
   relation: "current_index"
 ---
-
 # Game Mechanics - Tokens
 
 #### General Rules:

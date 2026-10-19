@@ -15,7 +15,7 @@ describe("Molten Echo mastery counter", () => {
           targets: { "target-1": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         expect(game.state.players[p.id]!.mastery?.counters["named:sheen"]).toBe(1);
         expect(game.state.players[q.id]!.mastery).toBeUndefined();
       });

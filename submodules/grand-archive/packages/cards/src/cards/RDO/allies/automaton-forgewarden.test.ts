@@ -53,7 +53,7 @@ describe("Automaton Forgewarden — damage and token-loss survival", () => {
           targets: { "target-1": [source.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[source.objectId]!.damage).toBe(matching ? 4 : 1);
+        expect(game.markedDamage(source.objectId)).toBe(matching ? 4 : 1);
         expect(game.state.objects[source.objectId]!.zone).toBe("field");
         let remaining = count;
         for (const cell of p.cards(powercell, { zone: "field" })) {

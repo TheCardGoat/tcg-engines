@@ -1,4 +1,8 @@
 import {
+  assertGrandArchiveStandardLegality,
+  grandArchiveStandardLegalityVersion,
+} from "./standard-legality.ts";
+import {
   bindGrandArchiveArt,
   restoreGrandArchiveArt,
   type GrandArchiveArtPin,
@@ -123,18 +127,29 @@ async function createEngine(input: ServerEngineCreateInput): Promise<GrandArchiv
   const randomSeed = seedNumber(input.seed);
   const firstPlayerId =
     input.firstTurnPlayerId ?? ((randomSeed >>> 0) % 2 === 0 ? input.player1Id : input.player2Id);
+  const players: [GrandArchiveStandardPlayerSetup, GrandArchiveStandardPlayerSetup] = [
+    standardSetup(input.cardsMaps, input.player1Id),
+    standardSetup(input.cardsMaps, input.player2Id),
+  ];
+  for (const player of players)
+    assertGrandArchiveStandardLegality([
+      ...player.mainDeck,
+      ...player.materialDeck,
+      ...(player.sideboard ?? []),
+    ]);
   const state = createGrandArchiveMatchInitialState(program, {
     mode: "standard",
-    players: [
-      standardSetup(input.cardsMaps, input.player1Id),
-      standardSetup(input.cardsMaps, input.player2Id),
-    ],
+    players,
     firstPlayerId,
     randomSeed,
   });
   const engine = new GrandArchiveServerEngine(
     program,
     new GrandArchiveMatchRuntime(program, state),
+    undefined,
+    undefined,
+    undefined,
+    grandArchiveStandardLegalityVersion,
   );
   bindGrandArchiveArt(engine.art, input.cardsMaps, state.objects);
   return engine;
@@ -300,6 +315,12 @@ export const grandArchiveServerAdapter: GameAdapter = {
     };
     try {
       assertGrandArchiveDeckConstruction(program, formatId, setup);
+      if (formatId === "standard")
+        assertGrandArchiveStandardLegality([
+          ...setup.mainDeck,
+          ...setup.materialDeck,
+          ...setup.sideboard,
+        ]);
       return {
         formatId,
         label: formatId,
@@ -334,6 +355,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
       cardsMaps,
       metadata: {
         schemaVersion: 1,
+        admissionPolicyVersion: engine.admissionPolicyVersion,
         replayJournal: engine.replayJournal,
         undoCheckpoints: engine.getUndoState().checkpoints,
         turnStartCheckpoint: engine.getUndoState().turnStart,
@@ -361,6 +383,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
       replayJournal,
       await restoreGrandArchiveArt(metadata.presentation),
       readGrandArchiveUndoState(metadata, serializeGrandArchiveMatchSnapshot(state)),
+      metadata.admissionPolicyVersion ?? null,
     );
   },
   extractCardsMapsFromSnapshot(snapshot) {
@@ -371,6 +394,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
 
 interface GrandArchiveAdapterMetadataV1 {
   readonly schemaVersion: 1;
+  readonly admissionPolicyVersion?: string | null;
   readonly replayJournal: GrandArchiveReplayJournalV1;
   readonly undoCheckpoints?: readonly GrandArchiveUndoCheckpoint[];
   readonly turnStartCheckpoint?: GrandArchiveUndoCheckpoint | null;
@@ -385,6 +409,13 @@ function parseGrandArchiveAdapterMetadata(value: unknown): GrandArchiveAdapterMe
   const candidate = value as Partial<GrandArchiveAdapterMetadataV1>;
   if (candidate.schemaVersion !== 1 || !candidate.replayJournal) {
     throw new Error("Grand Archive adapter metadata has an unsupported schema");
+  }
+  if (
+    candidate.admissionPolicyVersion != null &&
+    (typeof candidate.admissionPolicyVersion !== "string" ||
+      !/^[a-f0-9]{64}$/.test(candidate.admissionPolicyVersion))
+  ) {
+    throw new Error("Grand Archive admission policy version is malformed");
   }
   return candidate as GrandArchiveAdapterMetadataV1;
 }

@@ -11,7 +11,10 @@ export function AnimatedEntityCollection({
   readonly mode?: "sync" | "popLayout";
 }) {
   const runtime = useOptionalAnimationRuntime();
-  if (!runtime?.activeTransition) return <>{children}</>;
+  // Keep the same parent for the collection throughout the match. Switching
+  // Fragment ↔ AnimatePresence on every move remounted every card at prepare
+  // and finish, resetting focus and rebuilding drag/geometry registrations.
+  if (!runtime) return <>{children}</>;
 
   return (
     <AnimatePresence initial={false} mode={mode}>

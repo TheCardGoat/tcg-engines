@@ -32,9 +32,9 @@ describe("Palace Guard — Class Bonus Retort 2", () => {
       }
       answerDecision(game, "choose-retaliators", [guard.objectId]);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[guard.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(guard.objectId)).toBe(2);
       expect(game.state.objects[gardener.objectId]!.zone).toBe(classBonus ? "graveyard" : "field");
-      if (!classBonus) expect(game.state.objects[gardener.objectId]!.damage).toBe(1);
+      if (!classBonus) expect(game.markedDamage(gardener.objectId)).toBe(1);
     });
   }
 });

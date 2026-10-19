@@ -61,16 +61,16 @@ describe("Aenean Spark Alight", () => {
           });
           passEffectsStack(game);
           const damage = matching && level >= 3 ? 3 : 2;
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+          expect(game.markedDamage(target.objectId)).toBe(damage);
           expect(q.zone("memory")).toHaveLength(matching && level >= 6 ? 3 : 2);
           expect(q.zone("memory").some((ref) => ref.objectId === drawn.objectId)).toBe(
             matching && level >= 6,
           );
           q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+          expect(game.markedDamage(target.objectId)).toBe(damage);
           q.declareAttack(blitzMage, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(damage + 2);
+          expect(game.markedDamage(target.objectId)).toBe(damage + 2);
         });
 });

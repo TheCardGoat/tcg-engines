@@ -137,7 +137,9 @@ export function createGrandArchiveMatchProgram(
   const identities = Object.keys(cardsById).sort();
   return Object.freeze({
     schemaVersion: 1,
-    fingerprint: `ga-program-v1-${hashText(
+    // v2 separates permanent damage counters from temporary ally damage. Old
+    // snapshots must fail closed rather than reinterpret the former mixed field.
+    fingerprint: `ga-program-v2-${hashText(
       identities.map((identity) => stableSerialize(cardsById[identity])).join("\n"),
     )}`,
     cardsById: deepFreeze(cardsById),

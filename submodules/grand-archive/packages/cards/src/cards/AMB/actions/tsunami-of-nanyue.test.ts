@@ -37,6 +37,6 @@ describe("Tsunami of Nanyue — rested ally damage", () => {
     passEffectsStack(game);
     expect(game.state.objects[own.objectId]!.zone).toBe("graveyard");
     expect(game.state.objects[theirs.objectId]!.zone).toBe("field");
-    expect(game.state.objects[theirs.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(theirs.objectId)).toBe(1);
   });
 });

@@ -45,12 +45,12 @@ describe("Frozen Nova's damage, rest, and each controller's skipped wake", () =>
     });
     passEffectsStack(game);
     for (const player of [p, q]) {
-      expect(game.state.objects[player.card(giantTortoise).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(player.card(giantTortoise).objectId)).toBe(1);
       expect(game.state.objects[player.card(giantTortoise).objectId]!.states.has("rested")).toBe(
         true,
       );
       expect(player.cards(woodlandSquirrels, { zone: "graveyard" })).toHaveLength(1);
-      expect(game.state.objects[player.card(champion).objectId]!.damage).toBe(0);
+      expect(game.markedDamage(player.card(champion).objectId)).toBe(0);
     }
     advanceToMain(game, q.id);
     expect(game.state.objects[foe.objectId]!.states.has("rested")).toBe(true);
@@ -65,10 +65,10 @@ describe("Frozen Nova's damage, rest, and each controller's skipped wake", () =>
     advanceToMain(game, q.id);
     q.declareAttack(foe, p.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
     advanceToMain(game, p.id);
     p.declareAttack(own, q.card(champion));
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(1);
+    expect(game.markedDamage(q.card(champion).objectId)).toBe(1);
   });
 });

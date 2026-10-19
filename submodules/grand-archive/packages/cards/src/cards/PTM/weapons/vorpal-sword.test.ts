@@ -211,14 +211,14 @@ describe("Vorpal Sword — once-per-turn preparation-paid attacker wake", () => 
             expect(game.state.objects[hero.objectId]!.counters.preparation ?? 0).toBe(
               (prepared ? 3 : 0) - (wakes ? 1 : 0),
             );
-            expect(game.state.objects[target.objectId]!.damage).toBe(3);
+            expect(game.markedDamage(target.objectId)).toBe(3);
             expect(game.state.objects[sword.objectId]!.counters.durability).toBe(2);
             if (wakes) {
               attack(second!);
               expect(finishSwordCombat(game, true)).toBe(0);
               expect(game.state.objects[hero.objectId]!.states.has("rested")).toBe(true);
               expect(game.state.objects[hero.objectId]!.counters.preparation).toBe(2);
-              expect(game.state.objects[second!.objectId]!.damage).toBe(3);
+              expect(game.markedDamage(second!.objectId)).toBe(3);
             } else {
               const before = game.state;
               expect(() => attack(second!)).toThrow();

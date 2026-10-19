@@ -74,9 +74,7 @@ export function proveTargetStateDamage(card: Card, damaged: boolean, units = fal
           expect(game.state).toEqual(before);
         }
         p.activate(card, { reservePayment: pay(cost), targets: { "target-1": [target.objectId] } });
-        expect(game.state.objects[target.objectId]!.damage).toBe(
-          damaged && mode === "active" ? 2 : 0,
-        );
+        expect(game.markedDamage(target.objectId)).toBe(damaged && mode === "active" ? 2 : 0);
         if (mode === "response") setState(target);
         if (mode === "wake-response")
           p.activate(secondWind, {
@@ -85,13 +83,11 @@ export function proveTargetStateDamage(card: Card, damaged: boolean, units = fal
           });
         passEffectsStack(game);
         const increased = mode === "active" || mode === "response";
-        expect(game.state.objects[target.objectId]!.damage).toBe(
+        expect(game.markedDamage(target.objectId)).toBe(
           damaged && increased ? 8 : increased ? 3 : 2,
         );
         expect(game.state.objects[target.objectId]!.zone).toBe("field");
-        expect(game.state.objects[other.objectId]!.damage).toBe(
-          damaged && mode === "other" ? 2 : 0,
-        );
+        expect(game.markedDamage(other.objectId)).toBe(damaged && mode === "other" ? 2 : 0);
         if (!damaged)
           expect(game.state.objects[target.objectId]!.states.has("rested")).toBe(increased);
         expect(p.cards(card, { zone: "graveyard" })).toHaveLength(1);
@@ -135,7 +131,7 @@ export function proveTargetStateDamage(card: Card, damaged: boolean, units = fal
             targets: { "target-1": [target.objectId] },
           });
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(rested ? 3 : 2);
-          expect(game.state.objects[defending.card(champion).objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(rested ? 3 : 2);
+          expect(game.markedDamage(defending.card(champion).objectId)).toBe(0);
         });
 }

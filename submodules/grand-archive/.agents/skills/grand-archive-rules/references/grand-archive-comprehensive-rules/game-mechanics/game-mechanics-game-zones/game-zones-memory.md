@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-memory"
   relation: "current_index"
 ---
-
 # Game Zones - Memory
 
 #### General Rules:

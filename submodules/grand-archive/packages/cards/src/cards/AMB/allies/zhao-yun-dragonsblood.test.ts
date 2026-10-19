@@ -44,9 +44,9 @@ describe("Zhao Yun, Dragonsblood — Class Bonus On Attack", () => {
           answerDecision(game, "resolve-optional-effect", accept);
           passEffectsStack(game);
         }
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(classBonus && accept ? 2 : 0);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(classBonus && accept ? 2 : 0);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(classBonus && accept ? 4 : 2);
+        expect(game.markedDamage(target.objectId)).toBe(classBonus && accept ? 4 : 2);
       });
     }
   }
@@ -96,7 +96,7 @@ describe("Zhao Yun, Dragonsblood — Class Bonus On Kill immortality", () => {
       game.resolveCombatWithoutRetaliation();
       if (classBonus) {
         expect(game.state.objects[zhao.objectId]!.zone).toBe("field");
-        expect(game.state.objects[zhao.objectId]!.damage).toBeGreaterThanOrEqual(3);
+        expect(game.markedDamage(zhao.objectId)).toBeGreaterThanOrEqual(3);
       } else {
         expect(game.state.objects[zhao.objectId]!.zone).toBe("graveyard");
       }

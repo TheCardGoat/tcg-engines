@@ -167,6 +167,7 @@ function damageAndCollect(fixture: StaticFixture, sourceId = fixture.arcaneUnitI
   const damage = new GrandArchiveTransactionKernel().transact(fixture.state, [
     {
       type: "damage-marked",
+      asTemporaryDamage: true,
       objectId: fixture.targetId,
       amount: 2,
       sourceId,
@@ -246,6 +247,7 @@ describe("Grand Archive Static counter inherent ability", () => {
     const nonArcane = new GrandArchiveTransactionKernel().transact(fixture.state, [
       {
         type: "damage-marked",
+        asTemporaryDamage: true,
         objectId: fixture.targetId,
         amount: 2,
         sourceId: fixture.p1ChampionId,
@@ -265,6 +267,7 @@ describe("Grand Archive Static counter inherent ability", () => {
     const nonCombat = new GrandArchiveTransactionKernel().transact(fixture.state, [
       {
         type: "damage-marked",
+        asTemporaryDamage: true,
         objectId: fixture.targetId,
         amount: 2,
         sourceId: fixture.arcaneUnitId,
@@ -294,7 +297,7 @@ describe("Grand Archive Static counter inherent ability", () => {
     const accepted = answerOptional(runtime, true);
     if (!accepted.ok) throw new Error(accepted.message);
     expect(runtime.state.objects[fixture.coordinatorId]?.counters.static).toBe(2);
-    expect(runtime.state.objects[fixture.targetId]?.damage).toBe(3);
+    expect(runtime.state.objects[fixture.targetId]?.temporaryDamage).toBe(3);
     expect(
       accepted.events.find(
         (event) =>
@@ -328,7 +331,7 @@ describe("Grand Archive Static counter inherent ability", () => {
 
     expect(runtime.state.decision).toBeNull();
     expect(runtime.state.objects[fixture.fulminatorId]?.counters.static ?? 0).toBe(0);
-    expect(runtime.state.objects[fixture.targetId]?.damage).toBe(2);
+    expect(runtime.state.objects[fixture.targetId]?.temporaryDamage).toBe(2);
     expect(
       second.events.some(
         (event) => event.type === "damage-marked" && event.sourceId === fixture.fulminatorId,

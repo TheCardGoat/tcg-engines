@@ -71,21 +71,21 @@ describe("Enfeebled Dagger — targeted damage and class-restricted source reduc
             targets: { "target-unit": [target.objectId] },
           });
           expect(game.state.objects[source.objectId]!.zone).toBe("banishment");
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
           const options = championTarget ? { weaponIds: [owner.card(trainingSword).objectId] } : {};
           owner.declareAttack(target, victim, options);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[victim.objectId]!.damage).toBe(matching ? 0 : 1);
+          expect(game.markedDamage(victim.objectId)).toBe(matching ? 0 : 1);
           owner.declareAttack(owner.card(trainedHawk), victim);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[victim.objectId]!.damage).toBe(matching ? 2 : 3);
+          expect(game.markedDamage(victim.objectId)).toBe(matching ? 2 : 3);
           advanceToMain(game, foe.id);
           advanceToMain(game, owner.id);
           owner.declareAttack(target, victim, options);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[victim.objectId]!.damage).toBe(matching ? 3 : 4);
+          expect(game.markedDamage(victim.objectId)).toBe(matching ? 3 : 4);
         });
 
   for (const matching of [false, true])
@@ -124,7 +124,7 @@ describe("Enfeebled Dagger — targeted damage and class-restricted source reduc
       passEffectsStack(game);
       q.declareAttack(q.card(giantTortoise), hero);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(hero.objectId)).toBe(1);
       for (const expired of [false, true]) {
         if (expired) {
           advanceToMain(game, p.id);
@@ -136,11 +136,11 @@ describe("Enfeebled Dagger — targeted damage and class-restricted source reduc
           targets: { "target-1": [hero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
+        expect(game.markedDamage(hero.objectId)).toBe(
           expired ? (matching ? 4 : 9) : matching ? 1 : 3,
         );
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
+        expect(game.markedDamage(hero.objectId)).toBe(
           expired ? (matching ? 8 : 13) : matching ? 2 : 7,
         );
       }

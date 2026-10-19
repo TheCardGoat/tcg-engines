@@ -1,0 +1,6 @@
+.tcg-seat-pass {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: radial-gradient(circle at 50% 46%, #0b1520d9, #050a10ee);
+}

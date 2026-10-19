@@ -136,6 +136,7 @@ export const hectorPraetorianGuard: GrandArchiveCard<GrandArchiveAbilityDefiniti
                   },
                 },
               },
+              consumptionScope: "source-game-event",
               operation: {
                 kind: "prevent",
                 amount: {
@@ -146,7 +147,6 @@ export const hectorPraetorianGuard: GrandArchiveCard<GrandArchiveAbilityDefiniti
               duration: {
                 kind: "while-source-on-field",
               },
-              consumptionScope: "source-game-event",
               limit: {
                 count: 1,
                 per: "turn",

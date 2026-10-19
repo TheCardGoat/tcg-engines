@@ -12,8 +12,8 @@ export interface GrandArchivePose {
   readonly scale: number;
 }
 
-/** One portrait composition at every viewport; controls sit on the perimeter. */
-export const GRAND_ARCHIVE_ARENA = Object.freeze({ width: 13.2, height: 17 });
+/** One landscape composition at every viewport; only the camera fit changes. */
+export const GRAND_ARCHIVE_ARENA = Object.freeze({ width: 22, height: 10 });
 export const GRAND_ARCHIVE_CARD_ASPECT = 2.5 / 3.5;
 export const GRAND_ARCHIVE_FIELD_CAPACITY = 5;
 
@@ -54,28 +54,28 @@ export function grandArchiveLayout(
     switch (card.zone) {
       case "field": {
         if (card.role === "champion") {
-          x = (index - (zone.length - 1) / 2) * 1.2;
-          z = 4.45;
-          scale = 2;
+          x = -8 * sign + (index - (zone.length - 1) / 2) * 0.4;
+          z = 2.35;
+          scale = 1.9;
           break;
         }
         if (index >= GRAND_ARCHIVE_FIELD_CAPACITY) continue;
         const visibleCount = Math.min(zone.length, GRAND_ARCHIVE_FIELD_CAPACITY);
-        // Crowded fields use one readable row; the complete field remains in
-        // Cards & actions. Full Power/Life captions need space between zones.
-        x = (index - (visibleCount - 1) / 2) * Math.min(2.15, 9.4 / visibleCount);
-        z = 1.65;
-        scale = visibleCount === 5 ? 1.62 : 2.05;
+        // Keep a central decision strip between both field rows. Crowded
+        // fields remain in one row; Cards & actions exposes overflow.
+        x = (index - (visibleCount - 1) / 2) * 2.05 - 1.2 * sign;
+        z = 2.35;
+        scale = 1.8;
         y += index * 0.003;
         break;
       }
       case "hand": {
         const offset = index - (zone.length - 1) / 2;
-        x = offset * Math.min(1.38, 9 / Math.max(1, zone.length - 1));
-        z = 7.95 + Math.abs(x) * 0.025;
+        x = offset * Math.min(1.2, 8 / Math.max(1, zone.length - 1)) - 1.2 * sign;
+        z = 4.65;
         y = 0.12 + index * 0.005;
         turn = -x * 0.027;
-        scale = 2.2;
+        scale = 1.3;
         break;
       }
       case "memory":
@@ -83,13 +83,13 @@ export function grandArchiveLayout(
           (4.45 +
             (index - (zone.length - 1) / 2) * Math.min(0.32, 1.8 / Math.max(1, zone.length - 1))) *
           sign;
-        z = 5.7;
+        z = 4.3;
         y = 0.16 + index * 0.003;
         scale = 0.42;
         break;
       case "material-deck":
-        x = -5.65;
-        z = 2.35;
+        x = -9.8 * sign;
+        z = 4.55;
         scale = 0.88;
         y += index * 0.022;
         break;
@@ -101,33 +101,33 @@ export function grandArchiveLayout(
         const pileIndex = card.faceDown
           ? backIndex - Math.max(0, backs.length - 3)
           : Math.min(3, backs.length) + faces.findIndex((entry) => entry.id === card.id);
-        x = 5.65 + pileIndex * 0.035;
-        z = 2.85;
-        scale = 1.05;
+        x = 8.75 * sign + pileIndex * 0.035;
+        z = 2.55;
+        scale = 1.35;
         y = 0.18 + pileIndex * 0.025;
         break;
       }
       case "graveyard":
-        x = -5.4;
-        z = 4.15;
+        x = -8.55 * sign;
+        z = 4.55;
         scale = 0.88;
         y += index * 0.018;
         break;
       case "banished":
-        x = -4.2;
-        z = 4.15;
+        x = -7.3 * sign;
+        z = 4.55;
         scale = 0.88;
         y += index * 0.018;
         break;
       case "effects-stack":
-        x = -5.65 * sign;
+        x = -9.8 * sign;
         z = 0;
         scale = 0.64;
         y += index * 0.025;
         break;
       case "intent":
-        x = 3.1;
-        z = 0.65;
+        x = 5.25 * sign;
+        z = 2.35;
         scale = 0.64;
         y += index * 0.025;
         break;

@@ -33,6 +33,7 @@ import {
   evaluateGrandArchiveAmount,
   evaluateGrandArchiveCondition,
   resolveGrandArchivePlayers,
+  resolveGrandArchiveCollection,
   resolveGrandArchiveSubjectObjects,
   GrandArchiveUnsupportedRuleError,
   withGrandArchiveDerivedVariables,
@@ -264,7 +265,25 @@ function numericModifierDependsOn(
   return before.applies !== after.applies || (before.applies && before.amount !== after.amount);
 }
 
+const objectTimestampsByState = new WeakMap<object, WeakMap<GrandArchiveCardInstance, number>>();
+
 export function grandArchiveObjectTimestamp(
+  object: GrandArchiveCardInstance,
+  context: GrandArchiveEvaluationContext,
+): number {
+  let timestamps = objectTimestampsByState.get(context.state);
+  if (!timestamps) {
+    timestamps = new WeakMap();
+    objectTimestampsByState.set(context.state, timestamps);
+  }
+  const cached = timestamps.get(object);
+  if (cached !== undefined) return cached;
+  const timestamp = readGrandArchiveObjectTimestamp(object, context);
+  timestamps.set(object, timestamp);
+  return timestamp;
+}
+
+function readGrandArchiveObjectTimestamp(
   object: GrandArchiveCardInstance,
   context: GrandArchiveEvaluationContext,
 ) {
@@ -341,6 +360,9 @@ export function grandArchiveContinuousEffectAffectsObject(
       affectedObjectIncarnations[object.id] === object.incarnation
     );
   }
+  if (effect.subjects.kind === "each") {
+    return resolveGrandArchiveCollection(effect.subjects.collection, context, object.id).length > 0;
+  }
   return resolveGrandArchiveSubjectObjects(effect.subjects, context).some(
     (candidate) => candidate.id === object.id,
   );
@@ -393,19 +415,9 @@ const printedStaticSourcesByState = new WeakMap<
   WeakMap<object, readonly GrandArchiveCardInstance[]>
 >();
 
-function continuousStaticSources(
-  context: GrandArchiveEvaluationContext,
+export function grandArchiveContinuousStaticSources(
+  context: Pick<GrandArchiveEvaluationContext, "program" | "state">,
 ): readonly GrandArchiveCardInstance[] {
-  // Granted/copied abilities can make any source relevant, and their applicability
-  // depends on the current layer context. Retain the full derivation in that case.
-  if (
-    context.state.continuousEffects.some(
-      (instance) =>
-        isObjectContinuousEffect(instance.effect) &&
-        isStaticAbilityLayerChange(instance.effect.change),
-    )
-  )
-    return Object.values(context.state.objects);
   let programs = printedStaticSourcesByState.get(context.state);
   if (!programs) {
     programs = new WeakMap();
@@ -413,7 +425,25 @@ function continuousStaticSources(
   }
   const existing = programs.get(context.program);
   if (existing) return existing;
+  const additionalSources = new Set<string>();
+  for (const instance of context.state.continuousEffects) {
+    if (
+      !isObjectContinuousEffect(instance.effect) ||
+      !isStaticAbilityLayerChange(instance.effect.change) ||
+      instance.effect.change.kind === "remove-abilities"
+    )
+      continue;
+    // Keep a context-independent superset. Applicability is still derived below;
+    // a locked grant or copy can only add abilities to its recorded recipients.
+    if (instance.effect.affectedSet !== "locked") {
+      const sources = Object.values(context.state.objects);
+      programs.set(context.program, sources);
+      return sources;
+    }
+    for (const id of instance.affectedObjectIds) additionalSources.add(id);
+  }
   const sources = Object.values(context.state.objects).filter((source) => {
+    if (additionalSources.has(source.id)) return true;
     const face = grandArchiveObjectFace(context.program, source);
     return grandArchiveObjectPrintedAbilities(context.program, source, context.state).some(
       (ability) =>
@@ -424,6 +454,15 @@ function continuousStaticSources(
   });
   programs.set(context.program, sources);
   return sources;
+}
+
+function continuousStaticSources(
+  context: GrandArchiveEvaluationContext,
+): readonly GrandArchiveCardInstance[] {
+  // A locked ability grant can only introduce static effects on its recorded
+  // recipients. The shared source index retains those plus printed sources;
+  // dynamic grants conservatively retain every object.
+  return grandArchiveContinuousStaticSources(context);
 }
 
 function collectNumericModifiers(
@@ -775,12 +814,50 @@ function objectHasAbilityLayerModifier(
   });
 }
 
+function abilityMayModifyCharacteristics(
+  ability: import("@tcg/grand-archive-types").GrandArchiveExecutableAbility,
+): boolean {
+  return flattenGrandArchiveAbilities([ability]).some(
+    (candidate) =>
+      candidate.kind === "static" &&
+      candidate.staticKind === "effects" &&
+      candidate.effects.some(
+        (effect) =>
+          effect.kind === "continuous" &&
+          (isCharacteristicChange(effect.change) ||
+            abilityChangeMayModifyCharacteristics(effect.change)),
+      ),
+  );
+}
+
+function abilityChangeMayModifyCharacteristics(change: GrandArchiveCharacteristicChange): boolean {
+  if (change.kind === "grant-ability") return abilityMayModifyCharacteristics(change.ability);
+  // Copies and transformations can expose characteristics from another object.
+  return (
+    change.kind === "copy-abilities" ||
+    change.kind === "copy-abilities-from-collection" ||
+    change.kind === "transform-abilities"
+  );
+}
+
 function collectCharacteristicModifiers(
   object: GrandArchiveCardInstance,
   context: GrandArchiveEvaluationContext,
 ): readonly CharacteristicModifier[] {
   const modifiers: CharacteristicModifier[] = [];
   for (const source of continuousStaticSources(context)) {
+    const printed = grandArchiveObjectPrintedAbilities(context.program, source, context.state);
+    if (
+      !printed.some(abilityMayModifyCharacteristics) &&
+      !context.state.continuousEffects.some(
+        (instance) =>
+          isObjectContinuousEffect(instance.effect) &&
+          abilityChangeMayModifyCharacteristics(instance.effect.change) &&
+          (instance.effect.affectedSet !== "locked" ||
+            instance.affectedObjectIds.includes(source.id)),
+      )
+    )
+      continue;
     const face = grandArchiveObjectFace(context.program, source);
     // Earlier characteristic layers still use printed static effects even if Layer D removes
     // their abilities. Granted/copied abilities are added so their static effects can apply on

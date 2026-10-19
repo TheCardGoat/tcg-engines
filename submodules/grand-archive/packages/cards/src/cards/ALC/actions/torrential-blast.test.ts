@@ -44,9 +44,7 @@ describe("Torrential Blast — restricted mill and graveyard-scaled damage", () 
         passEffectsStack(game);
 
         expect(player.zone("main-deck")).toEqual(classBonus ? deck.slice(2) : deck);
-        expect(game.state.objects[target.objectId]!.damage).toBe(
-          waterInGraveyard + (classBonus ? 1 : 0),
-        );
+        expect(game.markedDamage(target.objectId)).toBe(waterInGraveyard + (classBonus ? 1 : 0));
       });
     }
   }
@@ -64,6 +62,6 @@ describe("Torrential Blast — restricted mill and graveyard-scaled damage", () 
     });
     passEffectsStack(game);
     expect(player.zone("main-deck")).toEqual(deck.slice(2));
-    expect(game.state.objects[target.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(target.objectId)).toBe(0);
   });
 });

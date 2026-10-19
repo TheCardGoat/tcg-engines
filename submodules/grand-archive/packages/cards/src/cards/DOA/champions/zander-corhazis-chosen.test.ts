@@ -77,15 +77,15 @@ describe("Zander Corhazi's Chosen's entry protection", () => {
         expect(game.state).toEqual(before);
         q.declareAttack(stillwaterPatrol, hero);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(3);
+        expect(game.markedDamage(hero.objectId)).toBe(3);
         q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), other);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[other.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(other.objectId)).toBe(1);
         advanceToMain(game, p.id);
         advanceToMain(game, q.id);
         q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), hero);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(4);
+        expect(game.markedDamage(hero.objectId)).toBe(4);
       } else {
         expect(() =>
           q.activate(q.cards(fireball, { zone: "hand" })[0]!, {
@@ -99,7 +99,7 @@ describe("Zander Corhazi's Chosen's entry protection", () => {
           targets: { "target-1": [other.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[other.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(other.objectId)).toBe(1);
         advanceToMain(game, p.id);
         p.pass();
         q.activate(q.card(fireball, { zone: "hand" }), {
@@ -107,7 +107,7 @@ describe("Zander Corhazi's Chosen's entry protection", () => {
           targets: { "target-1": [hero.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(hero.objectId)).toBe(1);
       }
       expect(game.state.objects[hero.objectId]!.counters.preparation).toBe(1);
     });

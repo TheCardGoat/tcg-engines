@@ -1,0 +1,7 @@
+{
+  "baseCommit": "a8d37bf911176fef89c1fa4ef10fccda14b4b1db",
+  "recordedEngineRevision": "fnv1a32:7c39c5b7",
+  "publishedEngineRevision": "fnv1a32:b002e0ef",
+  "cardCatalogHash": "fnv1a32:054bba93",
+  "method": "Preserve the recorded benchmark manifest. Replay the same ten records against the scoped PR source after integration with current main, and compare complete canonical records."
+}

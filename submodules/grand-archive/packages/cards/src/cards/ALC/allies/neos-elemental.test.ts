@@ -152,7 +152,7 @@ describe("Neos Elemental — Steadfast, Taunt, True Sight, and Vigor", () => {
           // Rested Taunt does not protect the champion.
           opponent.declareAttack(attackers[0]!, player.card(champion));
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[player.card(champion).objectId]!.damage).toBe(1);
+          expect(game.markedDamage(player.card(champion).objectId)).toBe(1);
           const wait = game.waitState();
           if (wait.kind === "opportunity" && wait.playerId !== opponent.id)
             game.player(wait.playerId).pass();
@@ -180,7 +180,7 @@ describe("Neos Elemental — Steadfast, Taunt, True Sight, and Vigor", () => {
         expect(retaliated).toBe(true);
         expect(game.state.combat).toBeNull();
         expect(opponent.zone("graveyard")).toContainEqual(attacker);
-        expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(ally.objectId)).toBe(1);
         expect(game.state.objects[ally.objectId]!.states.has("rested")).toBe(rested);
       });
     }
@@ -225,14 +225,14 @@ describe("Neos Elemental — dynamic token power and life", () => {
         reachMain(game);
         player.declareAttack(ally, opponent.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[opponent.card(champion).objectId]!.damage).toBe(tokens ? 3 : 1);
+        expect(game.markedDamage(opponent.card(champion).objectId)).toBe(tokens ? 3 : 1);
         advanceToRecollection(game, opponent.id);
         reachMain(game);
         opponent.declareAttack(tokens ? automatedGardener : woodlandSquirrels, ally);
         game.resolveCombatWithoutRetaliation();
         expect(player.cards(neosElemental, { zone: "field" })).toHaveLength(tokens ? 1 : 0);
         if (tokens) {
-          expect(game.state.objects[ally.objectId]!.damage).toBe(2);
+          expect(game.markedDamage(ally.objectId)).toBe(2);
           const wait = game.waitState();
           if (wait.kind === "opportunity" && wait.playerId !== player.id)
             game.player(wait.playerId).pass();

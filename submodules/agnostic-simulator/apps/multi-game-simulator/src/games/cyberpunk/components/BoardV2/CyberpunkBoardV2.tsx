@@ -7,6 +7,7 @@ import {
   lazy,
   Suspense,
   useCallback,
+  useEffect,
   useContext,
   useMemo,
   useRef,
@@ -241,7 +242,7 @@ function Board({
   const matchUtilities = useContext(MatchUtilitiesContext);
   const engine = useEngine();
   const animation = useOptionalAnimationRuntime();
-  const { humanSide, prioritySide, activeSide, hasPendingRemoteMove } = engine;
+  const { humanSide, prioritySide, activeSide } = engine;
   const {
     canUndo,
     canUndoToTurnStart,
@@ -279,6 +280,10 @@ function Board({
     gameEnded: engine.matchState.G.gameEnded,
     rivalSeconds: clock[rivalSide].seconds,
   });
+  const [rivalOverlayMinimized, setRivalOverlayMinimized] = useState(false);
+  useEffect(() => {
+    if (!isRivalTimeoutExpired) setRivalOverlayMinimized(false);
+  }, [isRivalTimeoutExpired]);
   const ref = useRef<HTMLDivElement>(null);
   const flatLayout = useFlatBoardLayout(ref);
   const compact = flatLayout.compact;
@@ -289,11 +294,9 @@ function Board({
   const hasHover = useHasHover();
   const touchSurface = compact && !hasHover;
   const mobileInteractionSurface = touchSurface ? "mobile" : "desktop";
-  // Phones render the table under half scale, so the fixed-pixel utility
-  // plates shrink with it (hit targets included) instead of dwarfing the
-  // instruments. The rival column inset tracks the same zoom.
-  const utilitiesZoom = Math.max(0.72, Math.min(1, flatLayout.scale * 1.6));
-  const utilitiesInset = rivalTopInset(flatLayout.scale, utilitiesZoom);
+  // Keep utility touch targets at screen size. Reserve their height in the
+  // scaled rival column instead of shrinking the controls with the table.
+  const utilitiesInset = rivalTopInset(flatLayout.scale);
   const reduced = Boolean(useMediaQuery("(prefers-reduced-motion: reduce)"));
   const [localPages, setLocalPages] = useState<Pages>(firstPages);
   const [rivalPages, setRivalPages] = useState<Pages>(firstPages);
@@ -508,14 +511,7 @@ function Board({
         </defs>
       </svg>
       <div className={classes.utilitiesSlot}>
-        {/* The zoom wrapper sits inside the slot so the slot's safe-area
-            offsets stay unscaled while the plates themselves shrink. */}
-        <div className={classes.utilitiesStack} style={{ zoom: utilitiesZoom }}>
-          {matchUtilities}
-          <span className={classes.connection} role="status">
-            {hasPendingRemoteMove ? "Sending action…" : ""}
-          </span>
-        </div>
+        <div className={classes.utilitiesStack}>{matchUtilities}</div>
       </div>
       <BoardAlertStack>
         {artworkFailed && (
@@ -800,7 +796,14 @@ function Board({
               className={classes.clock}
               style={at(anchoredRect(clockRect(compact), -1, 0, flatLayout.anchors))}
             >
-              <ClockDisplay compact combatSteps overtimeBand />
+              <ClockDisplay
+                compact
+                combatSteps
+                overtimeBand
+                onRivalClockClick={
+                  isRivalTimeoutExpired ? () => setRivalOverlayMinimized(false) : undefined
+                }
+              />
             </div>
             <div className={classes.localPages}>
               <PagesControl zones={local} pages={localPages} setPages={setLocalPages} />
@@ -889,6 +892,8 @@ function Board({
             claimAvailable={Boolean(runtime.onClaimRivalDrop)}
             timeoutExpired={isRivalTimeoutExpired}
             dropEligibility={runtime.dropEligibility}
+            minimized={rivalOverlayMinimized}
+            onMinimizedChange={setRivalOverlayMinimized}
           />
         </div>
       </div>
@@ -1105,7 +1110,12 @@ export function SeatStatus({
   // Eddie cards with a receipt already render as their revealed face, so they
   // are not duplicated as a second, face-down copy.
   const saleIds = new Set(sales.map((sale) => sale.cardId));
+  const eddiesById = new Map(zones.eddieCards.map((card) => [card.cardId, card]));
   const eddieMiniCount = Math.max(0, zones.eddieCardCount - zones.eddieCards.length);
+  const hiddenSpentCount = Math.max(
+    0,
+    zones.spentEddies - zones.eddieCards.filter((card) => card.spent).length,
+  );
   return (
     <div
       className={`${classes.status} ${rival ? classes.rivalStatus : classes.localStatus}`}
@@ -1145,6 +1155,7 @@ export function SeatStatus({
         {[...sales].reverse().map((sale) => {
           const eligible = paymentEligible(sale.cardId);
           const picked = paymentPicked(sale.cardId);
+          const spent = eddiesById.get(sale.cardId)?.spent ?? false;
           return (
             <button
               key={sale.cardId}
@@ -1153,11 +1164,12 @@ export function SeatStatus({
               aria-label={
                 eligible
                   ? `${picked ? "Remove" : "Select"} ${sale.cardName} for payment`
-                  : `Sold ${sale.cardName}. Preview card.`
+                  : `Sold ${sale.cardName}. ${spent ? "Spent" : "Ready"} Eddie. Preview card.`
               }
               aria-pressed={eligible ? picked : undefined}
               title={sale.cardName}
               data-sold-card-id={sale.cardId}
+              data-resource-state={spent ? "spent" : "ready"}
               data-payment-source={eligible || undefined}
               data-payment-selected={picked || undefined}
               data-sale-moving={movingIds.has(sale.cardId) ? "true" : undefined}
@@ -1183,6 +1195,7 @@ export function SeatStatus({
                 className={classes.eddieMini}
                 aria-label={`${picked ? "Remove" : "Select"} Eddie for payment`}
                 aria-pressed={picked}
+                data-resource-state={card.spent ? "spent" : "ready"}
                 data-payment-source="true"
                 data-payment-selected={picked || undefined}
                 data-sale-moving={movingIds.has(card.cardId) ? "true" : undefined}
@@ -1194,6 +1207,8 @@ export function SeatStatus({
               <span
                 key={card.cardId}
                 className={classes.eddieMini}
+                data-resource-state={card.spent ? "spent" : "ready"}
+                title={card.spent ? "Spent Eddie" : "Ready Eddie"}
                 data-sale-moving={movingIds.has(card.cardId) ? "true" : undefined}
               >
                 {mini}
@@ -1201,7 +1216,12 @@ export function SeatStatus({
             );
           })}
         {Array.from({ length: eddieMiniCount }, (_, index) => (
-          <span key={`eddie-hidden-${index}`} className={classes.eddieMini}>
+          <span
+            key={`eddie-hidden-${index}`}
+            className={classes.eddieMini}
+            data-resource-state={index < hiddenSpentCount ? "spent" : "ready"}
+            title={index < hiddenSpentCount ? "Spent Eddie" : "Ready Eddie"}
+          >
             <CardImage faceDown side={side} alt="Eddie" />
           </span>
         ))}

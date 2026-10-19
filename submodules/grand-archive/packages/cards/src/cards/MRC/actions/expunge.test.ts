@@ -76,7 +76,7 @@ describe("Expunge discards one lineage Curse and uses its reserve cost", () => {
             p.card(giantTortoise),
             q.card(giantTortoise),
           ];
-          const previous = survivors.map((c) => game.state.objects[c.objectId]!.damage);
+          const previous = survivors.map((c) => game.markedDamage(c.objectId));
           const squirrels = [
             p.card(woodlandSquirrels, { zone: "field" }),
             q.card(woodlandSquirrels, { zone: "field" }),
@@ -87,7 +87,7 @@ describe("Expunge discards one lineage Curse and uses its reserve cost", () => {
           passEffectsStack(game);
           const damage = curse === umbraSight ? 0 : 2;
           survivors.forEach((c, i) =>
-            expect(game.state.objects[c.objectId]!.damage).toBe(previous[i]! + damage),
+            expect(game.markedDamage(c.objectId)).toBe(previous[i]! + damage),
           );
           for (const squirrel of squirrels)
             expect(game.state.objects[squirrel.objectId]!.zone).toBe(

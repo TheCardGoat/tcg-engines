@@ -4,6 +4,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { grandArchiveCards } from "../src/generated/grand-archive-card-registry.ts";
+import { assertGrandArchiveFullCatalogCoverage } from "./card-coverage/full-catalog.ts";
 import {
   centralKeywordEvidence,
   centralKeywordSuites,
@@ -399,6 +400,7 @@ async function main(): Promise<void> {
     }
   }
   process.stdout.write(`${JSON.stringify(report.totals, null, 2)}\n`);
+  if (args.has("--complete")) assertGrandArchiveFullCatalogCoverage(report.totals);
 }
 
 await main();

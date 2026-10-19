@@ -77,7 +77,7 @@ describe("Sleight of Hand — Suited ally protection and class-restricted memory
         expect(game.state.objects[top.objectId]!.zone).toBe(matching ? "memory" : "main-deck");
         expect(p.zone("memory")).toHaveLength(matching ? 3 : 2);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(trueSight ? 2 : 0);
+        expect(game.markedDamage(target.objectId)).toBe(trueSight ? 2 : 0);
         const beforeAttack = game.state;
         expect(() => q.declareAttack(q.card(fiveOfSpades), target)).toThrow();
         expect(game.state).toEqual(beforeAttack);
@@ -85,6 +85,6 @@ describe("Sleight of Hand — Suited ally protection and class-restricted memory
         advanceToMain(game, q.id);
         q.declareAttack(q.card(giantTortoise), target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
       });
 });

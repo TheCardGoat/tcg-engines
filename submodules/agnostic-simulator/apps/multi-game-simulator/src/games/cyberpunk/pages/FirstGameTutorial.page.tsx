@@ -2,6 +2,10 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type { ScenarioId, LocalCommandCommit } from "../engine";
 import { BoardSharedPage } from "./BoardShared.page";
 import {
+  readCyberpunkUiPreference,
+  resolveCyberpunkUiVersion,
+} from "../components/BoardV2/uiVersion";
+import {
   firstGameTutorialMessages,
   handsOnTutorialMessages,
   resolveTutorialLocale,
@@ -55,7 +59,10 @@ const v2Lessons: readonly Lesson[] = [
 
 function readBoardVersion(): "v1" | "v2" {
   if (typeof window === "undefined") return "v1";
-  return new URLSearchParams(window.location.search).get("ui") === "v2" ? "v2" : "v1";
+  return resolveCyberpunkUiVersion(
+    new URLSearchParams(window.location.search),
+    readCyberpunkUiPreference(),
+  );
 }
 
 type SpotlightRect = { top: number; left: number; width: number; height: number };

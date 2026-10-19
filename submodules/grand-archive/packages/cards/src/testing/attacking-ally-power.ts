@@ -55,13 +55,13 @@ export function proveAttackingAllyPower({
           }
         }
         expect(game.state.combat).toBeNull();
-        expect(game.state.objects[tortoise.objectId]!.damage).toBe(basePower);
+        expect(game.markedDamage(tortoise.objectId)).toBe(basePower);
       } else {
         const target = mode === "champion" ? q.card(champion) : tortoise;
         p.declareAttack(ally, target);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(
+        expect(game.markedDamage(target.objectId)).toBe(
           basePower +
             (mode !== "champion" && (!requiresRested || mode === "rested-ally") ? bonus : 0),
         );

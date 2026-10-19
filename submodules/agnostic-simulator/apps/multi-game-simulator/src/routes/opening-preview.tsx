@@ -2,6 +2,8 @@ import { useEffect, useState, type ComponentType } from "react";
 import { useParams } from "react-router";
 import { OpeningFixturePage } from "../simulator/opening/OpeningFixturePage";
 import { grandArchiveOpening } from "../games/grand-archive/opening-fixture";
+import { SimulatorSettingsProvider } from "../simulator/settings";
+import { SimulatorAudioProvider } from "../simulator/audio";
 
 export default function OpeningPreviewRoute() {
   const { gameSlug } = useParams();
@@ -38,5 +40,11 @@ function AlphaClashOpeningPreview() {
         {error ?? "Preparing the opening hands…"}
       </main>
     );
-  return <FixturePage fixtureId="opening-preview" />;
+  return (
+    <SimulatorSettingsProvider>
+      <SimulatorAudioProvider>
+        <FixturePage fixtureId="opening-preview" />
+      </SimulatorAudioProvider>
+    </SimulatorSettingsProvider>
+  );
 }

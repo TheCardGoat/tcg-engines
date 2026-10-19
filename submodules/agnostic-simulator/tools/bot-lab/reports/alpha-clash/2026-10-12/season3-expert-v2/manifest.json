@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "game": "alpha-clash",
+  "candidateId": "expert-oracle",
+  "parentStrategyId": "meta-v1",
+  "informationPolicy": "oracle",
+  "hypothesis": "Version 2 resolves more native effects within the same budget, fairly samples attackers, models next-turn replies, and values early resources; compare with unchanged meta-v1 on fresh Season 3 seeds.",
+  "engineRevision": "fnv1a32:7c39c5b7",
+  "cardCatalogHash": "fnv1a32:054bba93",
+  "adapterVersion": "4",
+  "changes": {},
+  "evaluation": {
+    "suiteId": "season3",
+    "seedBase": "alpha-clash-expert-v2-season3-holdout",
+    "minimumBlocks": 108,
+    "maximumBlocks": 108,
+    "batchSize": 108,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0.05,
+    "maximumCellRegression": 0.25
+  }
+}

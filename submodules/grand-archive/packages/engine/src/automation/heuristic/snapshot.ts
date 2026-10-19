@@ -1,3 +1,4 @@
+import { grandArchiveObjectMarkedDamage } from "../../game/object-state.ts";
 import { grandArchiveObjectFace } from "../../game/card-runtime.ts";
 import {
   deriveGrandArchiveNumericProperty,
@@ -190,7 +191,7 @@ function heuristicCard(
     subtypes: characteristics.subtypes,
     elements: characteristics.elements,
     keywords: grandArchiveObjectActiveKeywords(program, state, object),
-    states: grandArchiveObjectEffectiveStates(state, object),
+    states: grandArchiveObjectEffectiveStates(program, state, object),
     activationStates: object.activationStates,
     counters: object.counters,
     costKind: face.cost.kind,
@@ -200,7 +201,7 @@ function heuristicCard(
     power: numeric("power"),
     life: numeric("life"),
     durability: numeric("durability"),
-    damage: object.damage,
-    ready: grandArchiveObjectHasState(state, object, "awake"),
+    damage: grandArchiveObjectMarkedDamage(program, state, object),
+    ready: grandArchiveObjectHasState(program, state, object, "awake"),
   };
 }

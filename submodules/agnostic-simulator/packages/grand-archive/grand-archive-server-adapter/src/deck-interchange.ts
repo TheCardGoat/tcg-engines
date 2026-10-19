@@ -1,3 +1,4 @@
+import { assertGrandArchiveStandardLegality } from "./standard-legality.ts";
 import { grandArchiveCardsByCanonicalId } from "@tcg/grand-archive-cards";
 import type { DeckDocumentDiagnostic, DeckDocumentV2 } from "@tcg/game-page-contract";
 import { defineGameDeckInterchangeAdapter } from "@tcg/shared/game-adapter";
@@ -93,6 +94,24 @@ function validateGrandArchiveExtensions(
 ): DeckDocumentDiagnostic[] {
   const diagnostics: DeckDocumentDiagnostic[] = [];
   if (options.validationMode === "registration") {
+    if (document.formatId === "standard") {
+      try {
+        assertGrandArchiveStandardLegality(
+          Object.values(document.sections).flatMap((section) =>
+            (section ?? []).map((entry) => ({
+              definitionId: entry.card.canonicalId,
+              count: entry.card.quantity,
+            })),
+          ),
+        );
+      } catch (error) {
+        diagnostics.push({
+          kind: "malformed",
+          path: "sections",
+          message: error instanceof Error ? error.message : "Invalid Standard legality",
+        });
+      }
+    }
     const startingChampionId = document.declarations?.startingChampionId;
     if (typeof startingChampionId === "string") {
       const card = grandArchiveCardsByCanonicalId.get(startingChampionId);

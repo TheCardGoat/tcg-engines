@@ -13,7 +13,20 @@ it("projects Distract and excludes that card from Obstruct candidates", () => {
   });
   const card = game.playerTwo.at(target, "clash");
   game.playerOne.play(bean, card);
-  game.playerTwo.pass();
+  for (let n = 0; game.state.responseWindow && n < 10; n++) {
+    (game.state.responseWindow.openFor === "player-one" ? game.playerOne : game.playerTwo).pass();
+  }
+  const choice = game.state.pendingChoices[0];
+  expect(choice?.kind).toBe("target");
+  game.run({
+    type: "resolveChoice",
+    playerId: "player-one",
+    choiceId: choice.id,
+    optionId: card.instanceId,
+  });
+  for (let n = 0; game.state.responseWindow && n < 10; n++) {
+    (game.state.responseWindow.openFor === "player-one" ? game.playerOne : game.playerTwo).pass();
+  }
   game.playerOne.attack(game.playerOne.contender(), game.playerTwo.contender());
   game.playerTwo.pass();
   const projection = projectState(game.state, "player-two");

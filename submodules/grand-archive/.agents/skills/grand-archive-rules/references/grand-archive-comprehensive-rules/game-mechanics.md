@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics"
   relation: "current_index"
 ---
-
 # Game Mechanics
 
 The following pages will discuss these topics:&#x20;

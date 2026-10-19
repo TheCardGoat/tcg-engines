@@ -1,5 +1,13 @@
 import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
+import { isRuntimeRecoveryCode } from "@tcg/protocol";
+import { LiveRuntimeRecoveryBanner } from "../../../simulator/recovery/LiveRuntimeRecoveryBanner";
+import {
+  startRuntimeRecovery,
+  reconcileRuntimeRecovery,
+  type LiveRuntimeRecovery,
+} from "../../../simulator/recovery/liveRuntimeRecovery";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMatchIntroReady } from "../../../simulator/useMatchIntroReady";
 import { useLocation, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import {
@@ -265,6 +273,9 @@ export function liveTitlePriority(
 
 export function LiveMatchPage() {
   const { session, error } = useSimulatorRoute();
+  useMatchIntroReady(
+    Boolean(error) || session?.phase === "preparation" || session?.phase === "cancelled",
+  );
   const location = useLocation();
   if (error) return <SimulatorRouteStatus title="Match unavailable" message={error} />;
   if (session?.phase === "cancelled") {
@@ -292,6 +303,7 @@ function LiveGamePage() {
   const gameId = simulatorRoute.gameId ?? params.gameId ?? "";
   const location = useLocation();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
+  useMatchIntroReady(clientReady && (loadState.status === "ready" || loadState.status === "error"));
   const [gatewayJoin, setGatewayJoin] = useState<GatewayJoinState | null>(null);
   const [playerConnections, setPlayerConnections] = useState<PlayerConnectionBySide>({});
   const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
@@ -309,6 +321,13 @@ function LiveGamePage() {
     null,
   );
   const [sessionJoined, setSessionJoined] = useState(false);
+  const [runtimeRecovery, setRuntimeRecovery] = useState<LiveRuntimeRecovery | null>(null);
+  const runtimeRecoveryRef = useRef<LiveRuntimeRecovery | null>(null);
+  const updateRuntimeRecovery = useCallback((next: LiveRuntimeRecovery | null) => {
+    runtimeRecoveryRef.current = next;
+    setRuntimeRecovery(next);
+  }, []);
+  useEffect(() => updateRuntimeRecovery(null), [gameId, updateRuntimeRecovery]);
   const [sessionJoinedRole, setSessionJoinedRole] = useState<"player" | "spectator" | null>(null);
   const [knownServerVersion, setKnownServerVersion] = useState<number | null>(null);
   const [activeProposal, setActiveProposal] = useState<ActiveProposal | null>(null);
@@ -758,6 +777,27 @@ function LiveGamePage() {
   }, []);
 
   useEffect(() => {
+    if (runtimeRecovery?.phase !== "syncing") return;
+    let attempts = 0;
+    const check = () => {
+      const recovery = runtimeRecoveryRef.current;
+      if (recovery !== runtimeRecovery) return;
+      if (attempts >= 3) {
+        updateRuntimeRecovery({ ...recovery, phase: "blocked" });
+        return;
+      }
+      attempts += 1;
+      requestLiveStateSync(recovery.version);
+    };
+    const first = setTimeout(check, 0);
+    const timer = setInterval(check, 3_000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(timer);
+    };
+  }, [runtimeRecovery, requestLiveStateSync, updateRuntimeRecovery]);
+
+  useEffect(() => {
     if (!pendingOptimisticMove) {
       return;
     }
@@ -766,8 +806,18 @@ function LiveGamePage() {
       readPending: () => pendingOptimisticMoveRef.current,
       readStateVersion: () => latestContextRef.current?.game.version ?? null,
       requestStateSync: requestLiveStateSync,
+      onExhausted: () => {
+        const version = latestContextRef.current?.game.version;
+        if (version !== undefined)
+          updateRuntimeRecovery({
+            code: "game_operation_failed",
+            version,
+            phase: "blocked",
+            incidentId: pendingOptimisticMove.correlationId,
+          });
+      },
     });
-  }, [pendingOptimisticMove, requestLiveStateSync]);
+  }, [pendingOptimisticMove, requestLiveStateSync, updateRuntimeRecovery]);
 
   // Recovery hook for the missed-setup-update affordance: re-request the
   // authoritative snapshot for the currently loaded game.
@@ -879,6 +929,36 @@ function LiveGamePage() {
         );
       }
       if (message.type === "gateway_error" || message.type === "error") {
+        const pendingMove = pendingOptimisticMoveRef.current;
+        // Older servers use a generic operation code. Recover only when its
+        // correlation identifies the pending game action, not chat or proposals.
+        const legacyGameplayFailure =
+          message.code !== "match_operation_failed" ||
+          (pendingMove !== null && message.correlationId === pendingMove.correlationId);
+        if (isRuntimeRecoveryCode(message.code) && legacyGameplayFailure) {
+          const context = latestContextRef.current;
+          const pending = pendingOptimisticMoveRef.current;
+          // Ignore delayed failures belonging to a previous action/game.
+          if (
+            message.correlationId &&
+            pending &&
+            !matchesPendingCorrelation(pending, message.correlationId) &&
+            runtimeRecoveryRef.current?.phase !== "syncing"
+          )
+            return;
+          if (context) {
+            clearPendingOptimisticMove(message.correlationId);
+            updateRuntimeRecovery(
+              startRuntimeRecovery(
+                message.code,
+                context.game.version,
+                runtimeRecoveryRef.current,
+                message.correlationId,
+              ),
+            );
+          }
+          return;
+        }
         if (message.code?.startsWith("proposal_")) {
           setActiveProposal(null);
         }
@@ -1044,6 +1124,25 @@ function LiveGamePage() {
             updateVersion: message.stateVersion,
           });
         }
+        if (
+          message.type === "state_update" ||
+          message.type === "state_sync" ||
+          message.type === "move_accepted"
+        ) {
+          if (typeof message.stateVersion === "number") {
+            const recovery = runtimeRecoveryRef.current;
+            const nextRecovery = reconcileRuntimeRecovery(
+              recovery,
+              message.stateVersion,
+              Boolean(
+                message.state &&
+                message.interactionView &&
+                !message.interactionView.projectionFailure,
+              ),
+            );
+            if (nextRecovery !== recovery) updateRuntimeRecovery(nextRecovery);
+          }
+        }
         if (message.type === "state_update" || message.type === "state_sync") {
           const pending = pendingOptimisticMoveRef.current;
           if (shouldClearPendingAfterAuthoritativeState(pending, message)) {
@@ -1110,6 +1209,7 @@ function LiveGamePage() {
       recordGatewayDiagnostic,
       rejectPendingOptimisticMove,
       requestLiveStateSync,
+      updateRuntimeRecovery,
     ],
   );
 
@@ -1385,6 +1485,7 @@ function LiveGamePage() {
       submission: InteractionSubmission,
       optimisticResult?: CommandSuccess,
     ): boolean => {
+      if (runtimeRecoveryRef.current && runtimeRecoveryRef.current.phase !== "review") return false;
       if (pendingOptimisticMoveRef.current) {
         return false;
       }
@@ -1974,6 +2075,20 @@ function LiveGamePage() {
       </button>
     </div>
   ) : null;
+  const runtimeRecoveryBanner = runtimeRecovery ? (
+    <LiveRuntimeRecoveryBanner
+      recovery={runtimeRecovery}
+      onRetry={() => {
+        const pending = pendingOptimisticMoveRef.current;
+        if (pending) {
+          const awaiting = markPendingMoveAwaitingRecoverySync(pending);
+          pendingOptimisticMoveRef.current = awaiting;
+          setPendingOptimisticMove(awaiting);
+        }
+        updateRuntimeRecovery({ ...runtimeRecovery, phase: "syncing" });
+      }}
+    />
+  ) : null;
   const projectionFailureBanner = readyContext?.game.interactionView?.projectionFailure ? (
     <div role="alert" className={classes.lead}>
       <p>The server could not build the current action list.</p>
@@ -1992,7 +2107,7 @@ function LiveGamePage() {
     return (
       <>
         {proposalBanner}
-        {recoveryBanner}
+        {runtimeRecoveryBanner ?? recoveryBanner}
         {projectionFailureBanner}
         {content}
         {attention}
@@ -2014,7 +2129,7 @@ function LiveGamePage() {
     >
       <CyberpunkLiveConnectionBridge onState={handleLiveConnectionState} />
       {proposalBanner}
-      {recoveryBanner}
+      {runtimeRecoveryBanner ?? recoveryBanner}
       {projectionFailureBanner}
       {showLiveSyncing ? (
         <p role="status" className={classes.liveSyncStatus}>

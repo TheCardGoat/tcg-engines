@@ -66,7 +66,7 @@ describe("Magebane Lash — entry counters and current power", () => {
     reachMain(game);
     player.declareAttack(attacker, target, { weaponIds: [first.objectId] });
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(target.objectId)).toBe(2);
   });
   for (const classBonus of [false, true]) {
     it(`adds its counter on separate entry resolution with Class Bonus ${classBonus}`, () => {
@@ -111,7 +111,7 @@ describe("Magebane Lash — entry counters and current power", () => {
       const weapon = player.card(magebaneLash, { zone: "field" });
       player.declareAttack(attacker, target, { weaponIds: [weapon.objectId] });
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(classBonus ? 1 : 0);
+      expect(game.markedDamage(target.objectId)).toBe(classBonus ? 1 : 0);
     });
   }
 });
@@ -143,7 +143,7 @@ describe("Magebane Lash — Nico non-combat recovery", () => {
         const deck = player.zone("main-deck");
         player.activateAbility(condensedSupernova, "14m4c8ljye-a2");
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         answerDecision(game, "resolve-glimpse", {
           kind: "reorder",
           top: deck.map((ref) => ref.objectId),
@@ -154,13 +154,11 @@ describe("Magebane Lash — Nico non-combat recovery", () => {
             (item) => item.kind === "triggered-ability" && item.ability.id === "oh300z2sns-a3",
           ),
         ).toBe(nico && damage > 0);
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(
-          nico ? Math.max(0, damage - 2) : damage,
-        );
-        expect(game.state.objects[opposing.objectId]!.damage).toBe(damage);
-        expect(game.state.objects[ally.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(target.objectId)).toBe(nico ? Math.max(0, damage - 2) : damage);
+        expect(game.markedDamage(opposing.objectId)).toBe(damage);
+        expect(game.markedDamage(ally.objectId)).toBe(damage);
       });
     }
   }
@@ -176,7 +174,7 @@ describe("Magebane Lash — Nico non-combat recovery", () => {
     const target = player.card(champion, { zone: "field" });
     game.player("player-two").declareAttack(automatedGardener, target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(target.objectId)).toBe(2);
     expect(game.state.stack).toHaveLength(0);
   });
 });

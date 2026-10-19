@@ -218,7 +218,13 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     const playTriggerIds = state.G.turnMetadata.triggerQueue
       .filter((t) => !triggersBeforePlay.has(t.id))
       .map((t) => t.id);
-    for (const trigger of paymentTriggers) trigger.waitForTriggerIds = playTriggerIds;
+    // CR 4.14: a Program's effects finish as part of playing it, before payment
+    // triggers resolve. A Unit's PLAY ability instead enters pending (11.20.2)
+    // alongside spend triggers, so its controller chooses their order (10.12;
+    // general FAQ 3d7dd7c9-f7aa-4540-a1e7-fd65f2ea474d).
+    if (def.type === "program") {
+      for (const trigger of paymentTriggers) trigger.waitForTriggerIds = playTriggerIds;
+    }
     continueTriggerResolution(state as import("../types/match-state.ts").MatchState, operations);
   },
 };

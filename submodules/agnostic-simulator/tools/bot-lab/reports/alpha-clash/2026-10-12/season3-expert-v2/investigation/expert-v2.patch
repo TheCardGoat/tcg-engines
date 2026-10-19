@@ -1,0 +1,309 @@
+--- a/submodules/alpha-clash/packages/engine/src/automation/candidates.ts
++++ b/submodules/alpha-clash/packages/engine/src/automation/candidates.ts
+@@ -71,6 +71,83 @@
+     cards.filter((card) => card.controller === seat && card.zone === zone);
+   const hand = own("hand");
+   const commands: AcCommand[] = [];
++  const addActivations = () => {
++    for (const source of cards.filter(
++      (card) =>
++        card.controller === seat &&
++        ["contender", "clash", "clashground", "accessory", "hand", "oblivion"].includes(card.zone),
++    )) {
++      for (const [abilityIndex, ability] of [
++        ...abilitiesOf(state.definitions[source.definitionId]),
++        ...grantedActivatedAbilities(state, source.instanceId),
++      ].entries()) {
++        if (ability.kind !== "activated") continue;
++        const counterKind =
++          ability.counter === "play"
++            ? "counter-play"
++            : ability.counter === "trap"
++              ? "counter-trap"
++              : "counter-attack";
++        if (state.responseWindow) {
++          if (
++            !ability.counter ||
++            state.responseWindow.kind !== counterKind ||
++            state.standby.at(-1)?.controller === seat
++          )
++            continue;
++        } else {
++          if (ability.counter) continue;
++          if (ability.phase === "resource") {
++            if (state.phase.name !== "expansion" || state.phase.step !== "resource") continue;
++          } else if (
++            state.phase.name !== "primary" &&
++            !(
++              state.clash?.step === "beforeDamage" &&
++              state.activePlayer === seat &&
++              ability.phase !== "primary"
++            )
++          )
++            continue;
++        }
++        for (let costIndex = 0; costIndex <= (ability.alternateCosts?.length ?? 0); costIndex++) {
++          const cost = costIndex === 0 ? ability.cost : ability.alternateCosts?.[costIndex - 1];
++          const fromHand = cost?.kind === "discardSelf" || ability.activation === "hand";
++          const zone = fromHand
++            ? "hand"
++            : ability.activation === "oblivion"
++              ? "oblivion"
++              : undefined;
++          if (
++            zone
++              ? source.zone !== zone
++              : !["contender", "clash", "clashground", "accessory"].includes(source.zone)
++          )
++            continue;
++          const targets = ability.requiredTargets
++            ? combinations(
++                resolveEffectTargets(state, ability.requiredTargets.target, {
++                  state,
++                  playerId: seat,
++                  sourceId: source.instanceId,
++                }),
++                (state.portalOpen ? ability.requiredTargets.portalAmount : undefined) ??
++                  ability.requiredTargets.amount,
++              )
++            : targetOptions(state, seat, source.instanceId, ability.effects);
++          for (const ids of targets)
++            commands.push({
++              type: "activateAbility",
++              playerId: seat,
++              cardId: source.instanceId,
++              abilityIndex,
++              costIndex,
++              targetId: ids[0],
++              targetIds: ids.slice(1),
++            });
++        }
++      }
++    }
++  };
+   const choice = state.pendingChoices[0];
+   if (choice) {
+     const base = { type: "resolveChoice" as const, playerId: seat, choiceId: choice.id };
+@@ -142,6 +219,7 @@
+       commands.push({ type: "declareMulligan", playerId: seat, take: false });
+     else commands.push({ type: "mulligan", playerId: seat, cardIds: [] });
+   } else if (state.phase.name === "expansion" && state.phase.step === "resource") {
++    addActivations();
+     commands.push(
+       ...[...hand]
+         .sort((a, b) => alphaClashCardValue(state, a) - alphaClashCardValue(state, b))
+@@ -168,51 +246,8 @@
+       (!state.responseWindow &&
+         !!state.clash &&
+         ["attackerBuff", "defenderBuff"].includes(state.clash.step));
++    if (primary || state.responseWindow || state.clash?.step === "beforeDamage") addActivations();
+     if (playing || state.responseWindow) {
+-      for (const source of cards.filter(
+-        (card) =>
+-          card.controller === seat &&
+-          ["contender", "clash", "clashground", "accessory", "oblivion", "hand"].includes(
+-            card.zone,
+-          ),
+-      )) {
+-        for (const [abilityIndex, ability] of [
+-          ...abilitiesOf(state.definitions[source.definitionId]),
+-          ...grantedActivatedAbilities(state, source.instanceId),
+-        ].entries()) {
+-          if (ability.kind !== "activated") continue;
+-          const targets = ability.requiredTargets
+-            ? combinations(
+-                resolveEffectTargets(state, ability.requiredTargets.target, {
+-                  state,
+-                  playerId: seat,
+-                  sourceId: source.instanceId,
+-                }),
+-                (state.portalOpen ? ability.requiredTargets.portalAmount : undefined) ??
+-                  ability.requiredTargets.amount,
+-              )
+-            : targetOptions(state, seat, source.instanceId, ability.effects);
+-          for (const ids of targets) {
+-            const groups = [ids];
+-            for (const group of groups) {
+-              for (
+-                let costIndex = 0;
+-                costIndex <= (ability.alternateCosts?.length ?? 0);
+-                costIndex++
+-              )
+-                commands.push({
+-                  type: "activateAbility",
+-                  playerId: seat,
+-                  cardId: source.instanceId,
+-                  abilityIndex,
+-                  costIndex,
+-                  targetId: group[0],
+-                  targetIds: group.slice(1),
+-                });
+-            }
+-          }
+-        }
+-      }
+       const playable = playing
+         ? [
+             ...hand,
+@@ -227,6 +262,17 @@
+       const plays: AcCommand[][] = [];
+       for (const card of playable) {
+         const def = state.definitions[card.definitionId];
++        const ambush = "ambush" in def ? def.ambush : undefined;
++        if (state.responseWindow) {
++          const tags = ambush?.counterTags ?? ("counterTags" in def ? def.counterTags : []) ?? [];
++          if (
++            !tags.includes(state.responseWindow.kind) ||
++            state.standby.at(-1)?.controller === seat ||
++            (card.faceDown && card.setOnTurn === state.turnNumber)
++          )
++            continue;
++        } else if (!primary && (def.cardType !== "action" || def.subtype !== "clash-buff"))
++          continue;
+         const group: AcCommand[] = [];
+         const modes =
+           def.cardType === "action" || (def.cardType === "accessory" && def.subtype === "trap")
+@@ -239,12 +285,18 @@
+             ).map((ids) => ids.map(Number))
+           : [undefined];
+         for (const modeIndices of selections) {
++          const counterEffects =
++            def.cardType === "accessory" && def.subtype === "trap" ? def.counterEffects : undefined;
+           const effects =
+-            modeIndices && modes
+-              ? modeIndices.flatMap((index) => modes[index].effects)
+-              : "effects" in def
+-                ? (def.effects ?? [])
+-                : [];
++            state.responseWindow && ambush
++              ? ambush.effects
++              : state.responseWindow && counterEffects
++                ? (counterEffects[state.responseWindow.kind] ?? [])
++                : modeIndices && modes
++                  ? modeIndices.flatMap((index) => modes[index].effects)
++                  : "effects" in def
++                    ? (def.effects ?? [])
++                    : [];
+           let targets = targetOptions(state, seat, card.instanceId, effects);
+           if (def.cardType === "action" && def.targetDeclaration) {
+             const declaration = def.targetDeclaration;
+@@ -278,6 +330,12 @@
+           for (const ids of targets)
+             for (const discardCostIds of discards) {
+               if (playing) {
++                if (
++                  primary &&
++                  ((def.cardType === "action" && ["quick", "clash-buff"].includes(def.subtype)) ||
++                    (def.cardType === "accessory" && def.subtype === "trap"))
++                )
++                  continue;
+                 const base = {
+                   type: "playCard" as const,
+                   playerId: seat,
+--- a/submodules/alpha-clash/packages/engine/src/automation/evaluate.ts
++++ b/submodules/alpha-clash/packages/engine/src/automation/evaluate.ts
+@@ -34,7 +34,11 @@
+       );
+     };
+     let score = health * 12 - Math.max(0, 12 - health) ** 2 * 2;
+-    score += resources.length * 7 + resources.filter((card) => card.ready).length * 2;
++    // Early resources enable future turns even after they have paid this turn's cost.
++    // A flat value below one hand card made the planner stall its resource curve.
++    const resourceCurve = [18, 18, 18, 16, 14, 12, 9];
++    score += resources.reduce((sum, _, index) => sum + (resourceCurve[index] ?? 7), 0);
++    score += resources.filter((card) => card.ready).length * 2;
+     // A second color can enable a hand even when the resource count is unchanged.
+     const colors = new Set(
+       resources.flatMap((card) => [...state.definitions[card.definitionId].colors]),
+--- a/submodules/alpha-clash/packages/engine/src/automation/expert-oracle.ts
++++ b/submodules/alpha-clash/packages/engine/src/automation/expert-oracle.ts
+@@ -38,7 +38,15 @@
+ function fairCandidates(commands: AcCommand[]): AcCommand[] {
+   const groups = new Map<string, AcCommand[]>();
+   for (const command of commands) {
+-    const family = `${command.type}/${"cardId" in command ? command.cardId : ""}`;
++    const source =
++      "cardId" in command
++        ? command.cardId
++        : "attackerId" in command
++          ? command.attackerId
++          : "weaponId" in command
++            ? command.weaponId
++            : "";
++    const family = `${command.type}/${source}`;
+     const group = groups.get(family) ?? [];
+     group.push(command);
+     groups.set(family, group);
+@@ -69,6 +77,15 @@
+         cycles = 0;
+       const planningLimit = Math.max(1, Math.floor(maxNodes * 0.75));
+       const cache = new WeakMap<MatchState, Edge[]>();
++      const partial = new WeakMap<
++        MatchState,
++        {
++          commands: AcCommand[];
++          edges: Edge[];
++          seen: Set<string>;
++          tried: number;
++        }
++      >();
+       const scores = new WeakMap<MatchState, number>();
+       const score = (position: MatchState) => {
+         let value = scores.get(position);
+@@ -91,14 +108,21 @@
+         if (saved) return saved;
+         const actor = alphaClashSearchActor(from);
+         if (!actor) return [];
+-        const commands = fairCandidates(alphaClashExpertCandidates(from, actor));
+-        const edges: Edge[] = [],
+-          seen = new Set<string>();
+-        let tried = 0;
+-        for (const command of commands) {
+-          if (nodes >= limit || tried >= 96 || edges.length >= 24) break;
++        let entry = partial.get(from);
++        if (!entry) {
++          entry = {
++            commands: fairCandidates(alphaClashExpertCandidates(from, actor)),
++            edges: [],
++            seen: new Set<string>(),
++            tried: 0,
++          };
++          partial.set(from, entry);
++        }
++        const { commands, edges, seen } = entry;
++        while (entry.tried < commands.length) {
++          if (nodes >= limit || entry.tried >= 96 || edges.length >= 24) break;
++          const command = commands[entry.tried++];
+           nodes++;
+-          tried++;
+           const result = applyCommand(forkAlphaClashState(from), command);
+           if (!result.success) continue;
+           commands.push(...alphaClashPaymentVariants(from, command, result.state));
+@@ -109,7 +133,7 @@
+           edges.push({ command, state: result.state, key });
+         }
+         // Only a fully enumerated list can establish that an action is forced.
+-        if (tried === commands.length) cache.set(from, edges);
++        if (entry.tried === commands.length) cache.set(from, edges);
+         return edges;
+       };
+       const boundary = (position: MatchState) =>
+@@ -122,7 +146,17 @@
+         seen: ReadonlySet<string>,
+       ): MatchState => {
+         const visited = new Set(seen);
+-        for (let step = 0; step < 20 && nodes < limit && !boundary(position); step++) {
++        // Replies on the next turn must also resolve before they are evaluated.
++        // Using the root turn here made opposing plays look like costs with no effects.
++        const turn = position.turnNumber;
++        for (
++          let step = 0;
++          step < 20 &&
++          nodes < limit &&
++          position.phase.name !== "complete" &&
++          position.turnNumber === turn;
++          step++
++        ) {
+           const next = children(position, limit);
+           if (next.length !== 1 || !cache.has(position)) break;
+           const edge = next[0];

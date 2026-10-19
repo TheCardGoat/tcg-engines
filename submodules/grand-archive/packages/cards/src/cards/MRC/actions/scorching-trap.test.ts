@@ -67,9 +67,9 @@ describe("Scorching Trap — memory reaction", () => {
         }
         activate();
         expect(game.state.objects[self.objectId]!.counters.preparation).toBe(2);
-        expect(game.state.objects[attacker.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(attacker.objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[attacker.objectId]!.damage).toBe(2);
+        expect(game.markedDamage(attacker.objectId)).toBe(2);
         expect(p.cards(scorchingTrap, { zone: "graveyard" })).toHaveLength(1);
       });
 });

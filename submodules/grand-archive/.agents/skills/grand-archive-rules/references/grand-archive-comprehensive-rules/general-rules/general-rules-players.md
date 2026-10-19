@@ -4,8 +4,9 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-players"
   relation: "current_index"
 ---
-
 # General Rules - Players
+
+Basic rules covering the "player" role in Grand Archive
 
 During a turn in a game of Grand Archive, players are designated as the turn player and non-turn players.
 

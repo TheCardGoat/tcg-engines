@@ -394,6 +394,7 @@ function objectGraphIsValid(
       !isSafeNonNegativeInteger(value.incarnation) ||
       !isSafeNonNegativeInteger(value.objectVersion) ||
       !isSafeNonNegativeInteger(value.damage) ||
+      !isSafeNonNegativeInteger(value.temporaryDamage) ||
       !isUniqueStringArray(value.states) ||
       !isUniqueStringArray(value.activationStates) ||
       !isRecord(value.counters) ||

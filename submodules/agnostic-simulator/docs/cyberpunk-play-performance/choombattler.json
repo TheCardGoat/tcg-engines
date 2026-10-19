@@ -1,0 +1,17 @@
+{
+  "url": "https://choombattler.com/board?deck1=00000000-0000-4000-8000-000000000003&deck2=00000000-0000-4000-8000-000000000004&bot=expert",
+  "elapsed": 50634,
+  "longTasks": [],
+  "totalBlockingMs": 0,
+  "clicks": [
+    {
+      "name": "click",
+      "duration": 216,
+      "delay": 1.7999999970197678
+    }
+  ],
+  "frames": 2989,
+  "frameP95": 16.70000000001164,
+  "maxFrameMs": 216.59999999997672,
+  "text": "EXPERT BOT\nPLAYER 1\nPLAYING\nturn 3 \u00b7 Player 1 \u00b7 start phase\n\nRival speed\n\n0.5\u00d7\n1\u00d7\n1.5\u00d7\nEnd turn\nRestart\n\nGAME LOG\n\n15\nPRE-GAME\nPlayer 1 goes first\nKept their hand\nMulliganed\nTURN 1\n\u00b7 PLAYER 1\nGame started\nDrew a card\nRolled a d4 for 1\nTURN 2\n\u00b7 EXPERT BOT\nDrew a card\nRolled a d12 for 4\nSold a card for 1 Eddie\nPlayed a Unit (cost 3) \u00b7 Dexter DeShawn: One Last Chance\nDexter DeShawn: One Last Chance \u00b7 Adjusted a Gig by 1\nCalled a Legend \u00b7 Viktor Vektor: Sit Down and Relax\nViktor Vektor: Sit Down and Relax \u00b7 Bottom-decked 5 cards\nViktor Vektor: Sit Down and Relax \u00b7 No effect\nTURN 3\n\u00b7 PLAYER 1\nDrew a card\n\nGain a Gig from your Fixer to begin your main phase.\n\nFIXER\n4\n4\n6\n6\n8\n8\n10\n10\n5 cards\nLEGEND"
+}

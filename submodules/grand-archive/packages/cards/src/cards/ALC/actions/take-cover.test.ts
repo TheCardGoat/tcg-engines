@@ -92,7 +92,7 @@ describe("Take Cover — Stealth and distant duration", () => {
       expect(game.state.objects[target.objectId]!.states.has("distant")).toBe(false);
       opponent.declareAttack(attacker, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(target.objectId)).toBe(1);
     });
   }
 

@@ -52,9 +52,9 @@ describe("Gemini Starbearer — Astral Shard damage", () => {
         expect(game.state).toEqual(before);
         p.activateAbility(source, "NyPQW7hkAq-a2", { targets: { "target-1": [target.objectId] } });
         expect(game.state.objects[source.objectId]!.states.has("rested")).toBe(true);
-        expect(game.state.objects[target.objectId]!.damage).toBe(0);
+        expect(game.markedDamage(target.objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(count);
+        expect(game.markedDamage(target.objectId)).toBe(count);
         expect(() =>
           p.activateAbility(source, "NyPQW7hkAq-a2", {
             targets: { "target-1": [target.objectId] },

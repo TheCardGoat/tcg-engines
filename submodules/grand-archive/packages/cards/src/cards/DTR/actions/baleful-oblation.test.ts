@@ -123,12 +123,12 @@ describe("Baleful Oblation — lowest owned omen cost and excluded champion", ()
         ];
         p.activate(balefulOblation, { reservePayment: payment(p, ciel ? 3 : 5) });
         for (const card of [...bigAllies, otherChampion])
-          expect(game.state.objects[card.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(card.objectId)).toBe(0);
         passEffectsStack(game);
-        expect(game.state.objects[ownChampion.objectId]!.damage).toBe(0);
-        expect(game.state.objects[otherChampion.objectId]!.damage).toBe(scenario.damage);
+        expect(game.markedDamage(ownChampion.objectId)).toBe(0);
+        expect(game.markedDamage(otherChampion.objectId)).toBe(scenario.damage);
         for (const card of bigAllies)
-          expect(game.state.objects[card.objectId]!.damage).toBe(scenario.damage);
+          expect(game.markedDamage(card.objectId)).toBe(scenario.damage);
         for (const card of smallAllies)
           expect(game.state.objects[card.objectId]!.zone).toBe(
             scenario.damage ? "graveyard" : "field",
@@ -181,10 +181,10 @@ describe("Baleful Oblation — lowest owned omen cost and excluded champion", ()
       ]);
       passEffectsStack(game);
       for (const player of [p, q])
-        expect(
-          game.state.objects[player.card(giantTortoise, { zone: "field" }).objectId]!.damage,
-        ).toBe(lower.damage);
-      expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(0);
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(lower.damage);
+        expect(game.markedDamage(player.card(giantTortoise, { zone: "field" }).objectId)).toBe(
+          lower.damage,
+        );
+      expect(game.markedDamage(p.card(champion).objectId)).toBe(0);
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(lower.damage);
     });
 });

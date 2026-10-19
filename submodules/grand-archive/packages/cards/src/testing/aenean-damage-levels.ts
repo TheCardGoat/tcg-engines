@@ -101,7 +101,7 @@ export function proveAeneanDamageLevels(
             expect(hits[0]!.amount).toBe(damage);
             const died = ally && damage >= 6;
             expect(game.state.objects[target.objectId]!.zone).toBe(died ? "graveyard" : "field");
-            expect(game.state.objects[target.objectId]!.damage).toBe(died ? 0 : damage);
+            expect(game.markedDamage(target.objectId)).toBe(died ? 0 : damage);
             expect(p.cards(card, { zone: "graveyard" })).toHaveLength(1);
           });
 }

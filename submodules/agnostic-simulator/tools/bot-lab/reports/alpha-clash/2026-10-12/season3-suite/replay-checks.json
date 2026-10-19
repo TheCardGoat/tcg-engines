@@ -1,0 +1,329 @@
+{
+  "scope": "One mirror per deck, shortest and longest games, and all abnormal terminations; exact match-record comparisons, not every frame or every suite game.",
+  "checks": [
+    {
+      "matchId": "clarity-hyper-aggro-vs-clarity-hyper-aggro/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "clarity-hyper-aggro-vs-clarity-hyper-aggro/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/clarity-hyper-aggro-vs-clarity-hyper-aggro/clarity-hyper-aggro-vs-clarity-hyper-aggro/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "clarity-hyper-aggro",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 14,
+        "actionCount": 473,
+        "finalStateHash": "fnv1a32:043f36be",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "clarity-hyper-aggro-vs-clarity-hyper-aggro/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/clarity-hyper-aggro-vs-clarity-hyper-aggro/clarity-hyper-aggro-vs-clarity-hyper-aggro/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "clarity-hyper-aggro",
+        "baselineDeckId": "clarity-hyper-aggro",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 14,
+        "actionCount": 473,
+        "finalStateHash": "fnv1a32:043f36be",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-undefendable-clarity-vs-season3-undefendable-clarity/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-undefendable-clarity-vs-season3-undefendable-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-undefendable-clarity-vs-season3-undefendable-clarity/season3-undefendable-clarity-vs-season3-undefendable-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-undefendable-clarity",
+        "baselineDeckId": "season3-undefendable-clarity",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 322,
+        "finalStateHash": "fnv1a32:fc5c2a1b",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-undefendable-clarity-vs-season3-undefendable-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-undefendable-clarity-vs-season3-undefendable-clarity/season3-undefendable-clarity-vs-season3-undefendable-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-undefendable-clarity",
+        "baselineDeckId": "season3-undefendable-clarity",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 322,
+        "finalStateHash": "fnv1a32:fc5c2a1b",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-fexar-clarity-vs-season3-fexar-clarity/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-fexar-clarity-vs-season3-fexar-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-fexar-clarity-vs-season3-fexar-clarity/season3-fexar-clarity-vs-season3-fexar-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-fexar-clarity",
+        "baselineDeckId": "season3-fexar-clarity",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 331,
+        "finalStateHash": "fnv1a32:e4854387",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-fexar-clarity-vs-season3-fexar-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-fexar-clarity-vs-season3-fexar-clarity/season3-fexar-clarity-vs-season3-fexar-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-fexar-clarity",
+        "baselineDeckId": "season3-fexar-clarity",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 331,
+        "finalStateHash": "fnv1a32:e4854387",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-xiii-war-vs-season3-xiii-war/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-xiii-war-vs-season3-xiii-war/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-xiii-war-vs-season3-xiii-war/season3-xiii-war-vs-season3-xiii-war/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-xiii-war",
+        "baselineDeckId": "season3-xiii-war",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 206,
+        "finalStateHash": "fnv1a32:f8ebaa47",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-xiii-war-vs-season3-xiii-war/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-xiii-war-vs-season3-xiii-war/season3-xiii-war-vs-season3-xiii-war/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-xiii-war",
+        "baselineDeckId": "season3-xiii-war",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 206,
+        "finalStateHash": "fnv1a32:f8ebaa47",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-sloppy-valen-vs-season3-sloppy-valen/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-sloppy-valen-vs-season3-sloppy-valen/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-sloppy-valen-vs-season3-sloppy-valen/season3-sloppy-valen-vs-season3-sloppy-valen/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-sloppy-valen",
+        "baselineDeckId": "season3-sloppy-valen",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 14,
+        "actionCount": 341,
+        "finalStateHash": "fnv1a32:86d3128e",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-sloppy-valen-vs-season3-sloppy-valen/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-sloppy-valen-vs-season3-sloppy-valen/season3-sloppy-valen-vs-season3-sloppy-valen/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-sloppy-valen",
+        "baselineDeckId": "season3-sloppy-valen",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 14,
+        "actionCount": 341,
+        "finalStateHash": "fnv1a32:86d3128e",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-silou-death-vs-season3-silou-death/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-silou-death-vs-season3-silou-death/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-death-vs-season3-silou-death/season3-silou-death-vs-season3-silou-death/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-death",
+        "baselineDeckId": "season3-silou-death",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 250,
+        "finalStateHash": "fnv1a32:6d85680e",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-silou-death-vs-season3-silou-death/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-death-vs-season3-silou-death/season3-silou-death-vs-season3-silou-death/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-death",
+        "baselineDeckId": "season3-silou-death",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 250,
+        "finalStateHash": "fnv1a32:6d85680e",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-silou-clarity-vs-season3-silou-clarity/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-silou-clarity-vs-season3-silou-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-clarity-vs-season3-silou-clarity/season3-silou-clarity-vs-season3-silou-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "season3-silou-clarity",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 7,
+        "actionCount": 167,
+        "finalStateHash": "fnv1a32:59514985",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-silou-clarity-vs-season3-silou-clarity/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-clarity-vs-season3-silou-clarity/season3-silou-clarity-vs-season3-silou-clarity/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "season3-silou-clarity",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 7,
+        "actionCount": 167,
+        "finalStateHash": "fnv1a32:59514985",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-0/a-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-avalogaming-kilimanjaro",
+        "baselineDeckId": "season3-avalogaming-kilimanjaro",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 8,
+        "actionCount": 180,
+        "finalStateHash": "fnv1a32:c80007b9",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-0",
+        "legId": "a-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-0/a-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-avalogaming-kilimanjaro",
+        "baselineDeckId": "season3-avalogaming-kilimanjaro",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 8,
+        "actionCount": 180,
+        "finalStateHash": "fnv1a32:c80007b9",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    },
+    {
+      "matchId": "season3-silou-death-vs-season3-silou-clarity/block-0/b-seat-1",
+      "exact": true,
+      "original": {
+        "blockId": "season3-silou-death-vs-season3-silou-clarity/block-0",
+        "legId": "b-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-death-vs-season3-silou-clarity/season3-silou-death-vs-season3-silou-clarity/block-0/b-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "season3-silou-death",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 9,
+        "actionCount": 146,
+        "finalStateHash": "fnv1a32:a0a81801",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      },
+      "replayed": {
+        "blockId": "season3-silou-death-vs-season3-silou-clarity/block-0",
+        "legId": "b-seat-1",
+        "seed": "alpha-clash-season3-calibration-v1/season3-silou-death-vs-season3-silou-clarity/season3-silou-death-vs-season3-silou-clarity/block-0/b-seat-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "season3-silou-clarity",
+        "baselineDeckId": "season3-silou-death",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 9,
+        "actionCount": 146,
+        "finalStateHash": "fnv1a32:a0a81801",
+        "diagnostics": {
+          "illegalProposals": 0
+        }
+      }
+    }
+  ]
+}

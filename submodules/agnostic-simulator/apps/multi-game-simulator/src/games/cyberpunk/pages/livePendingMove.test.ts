@@ -81,6 +81,24 @@ function moveAccepted(
 }
 
 describe("LiveMatch pending remote move guards", () => {
+  test("stops automatic sync after three attempts without resending a move", () => {
+    vi.useFakeTimers();
+    const requestStateSync = vi.fn();
+    const onExhausted = vi.fn();
+    const stop = startPendingMoveStateSyncWatchdog({
+      correlationId: pendingRemoteMove.correlationId,
+      readPending: () => pendingRemoteMove,
+      readStateVersion: () => 7,
+      requestStateSync,
+      onExhausted,
+      retryMs: 100,
+    });
+    vi.advanceTimersByTime(60_000);
+    expect(requestStateSync).toHaveBeenCalledTimes(3);
+    expect(onExhausted).toHaveBeenCalledTimes(1);
+    stop();
+    vi.useRealTimers();
+  });
   test("clears only after the matching move response carries authoritative state", () => {
     expect(
       shouldClearPendingAfterAuthoritativeMoveAccepted(pendingRemoteMove, moveAccepted({})),
@@ -200,6 +218,19 @@ describe("LiveMatch pending remote move guards", () => {
 
   test("clears after the requested recovery sync confirms the same authoritative version", () => {
     const rejectedPending = markPendingMoveAwaitingRecoverySync(pendingRemoteMove);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        rejectedPending,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: 8,
+          interactionView: {
+            ...interactionViewStub(8, []),
+            projectionFailure: { code: "projection_failed", retryable: true },
+          },
+        }),
+      ),
+    ).toBe(false);
     expect(
       shouldClearPendingAfterAuthoritativeState(
         rejectedPending,

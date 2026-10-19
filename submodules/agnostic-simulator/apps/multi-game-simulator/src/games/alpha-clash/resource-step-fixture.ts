@@ -1,14 +1,16 @@
+import { parseProjectedState } from "./pages/LiveMatch.page";
+import { nativeFixtureState } from "./native-fixture-state";
 import { getCard } from "@tcg/alpha-clash-cards";
 import { applyCommand, projectState } from "@tcg/alpha-clash-engine";
-import { AcTestEngine } from "@tcg/alpha-clash-engine/testing";
 import { AlphaClashServerEngine } from "@tcg/alpha-clash-server-adapter";
 import { INTERACTION_PROTOCOL_VERSION } from "@tcg/protocol";
 
-/** Deliberate rule-edge fixture, not a constructed tournament deck. */
+/** Official-card arrangement for native Rivaled and Bound eligibility. */
 export function createResourceStepFixture() {
-  const game = AcTestEngine.fromFixture({
+  const game = nativeFixtureState({
     id: "resource-step-qa",
-    turnNumber: 3,
+    // Player 2 has completed two Resource Steps; Player 1 has not used this one.
+    turnNumber: 5,
     phase: { name: "expansion", step: "resource" },
     playerOne: {
       contender: getCard("ac-st-001"),
@@ -27,7 +29,9 @@ export function createResourceStepFixture() {
 }
 export function resourceBoard(engine: AlphaClashServerEngine) {
   const projected = projectState(engine.state, "player-one");
-  return { ...projected, phaseName: projected.phase.name, standbyCount: projected.standby.length };
+  const board = parseProjectedState(projected);
+  if (!board) throw new Error("Invalid resource fixture projection");
+  return board;
 }
 /** Fixture-only dry runs use isolated native state; UI never owns the rules. */
 export function resourceCandidates(engine: AlphaClashServerEngine) {

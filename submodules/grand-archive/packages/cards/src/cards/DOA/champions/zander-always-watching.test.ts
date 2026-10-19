@@ -61,15 +61,15 @@ describe("Zander Always Watching's inherited rested-target attack bonus", () => 
         expect(game.state.objects[target.objectId]!.states.has("rested")).toBe(rested);
         p.declareAttack(p.card(woodlandSquirrels, { zone: "field" }), target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         p.declareAttack(hero, target, { weaponIds: [p.card(trainingSword).objectId] });
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(
+        expect(game.markedDamage(target.objectId)).toBe(
           position !== "material-deck" && rested ? 3 : 2,
         );
         advanceToMain(game, q.id);
         q.declareAttack(target, hero);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[hero.objectId]!.damage).toBe(rested ? 2 : 1);
+        expect(game.markedDamage(hero.objectId)).toBe(rested ? 2 : 1);
       });
 });

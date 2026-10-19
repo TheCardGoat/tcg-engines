@@ -52,7 +52,7 @@ describe("Imperial Accord — Exalted and Water requirements", () => {
           .cards(woodlandSquirrels)
           .map((c) => ({ kind: "card" as const, cardId: c.objectId })),
       };
-      if (elements.length === 2 && elements[1] === "UMBRA") {
+      if (elements.length === 2) {
         p.activate(imperialAccord, options);
         passEffectsStack(game);
         answerDecision(game, "resolve-effect-payment", false);

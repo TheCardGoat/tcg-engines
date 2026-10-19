@@ -3,13 +3,13 @@ import {
   type GrandArchiveTextDeckInput,
 } from "@tcg/grand-archive-engine/automation";
 
-// Official Print & Play 1.4 starter lists. Card identities resolve against the current catalog.
+// Based on the official Print & Play 1.4 starters; adapted where needed for current Standard.
 // https://www.gatcg.com/lorraine-pnp.pdf
 // https://www.gatcg.com/rai-pnp.pdf
 export const grandArchivePracticeDecks = [
   {
     id: "lorraine-pnp-1-4",
-    name: "Lorraine — Print & Play 1.4",
+    name: "Lorraine — Standard practice (adapted P&P 1.4)",
     deck: {
       startingChampion: "Spirit of Wind",
       materialDeck: `1x Spirit of Wind
@@ -36,9 +36,8 @@ export const grandArchivePracticeDecks = [
 3x Favorable Winds
 2x Inspiring Call
 4x Scry the Skies
-2x Spirit Blade: Ascension
 1x Spirit Blade: Dispersion
-2x Spirit Blade: Infusion
+4x Spirit Blade: Infusion
 3x Spirit's Blessing
 2x Hurricane Sweep
 4x Spirit Blade: Ghost Strike
@@ -49,7 +48,7 @@ export const grandArchivePracticeDecks = [
   },
   {
     id: "rai-pnp-1-4",
-    name: "Rai — Print & Play 1.4",
+    name: "Rai — Standard practice (adapted P&P 1.4)",
     deck: {
       startingChampion: "Spirit of Fire",
       materialDeck: `1x Spirit of Fire
@@ -62,7 +61,7 @@ export const grandArchivePracticeDecks = [
 1x Surveillance Stone
 1x Mana Limiter
 1x Life Essence Amulet
-1x Crystal of Empowerment
+1x Fire Resonance Bauble
 1x Arcanist's Prism`,
       mainDeck: `2x Blitz Mage
 2x Dungeon Guide

@@ -89,8 +89,8 @@ describe("Trump Set — chosen Suited ally receives conditional turn bonuses", (
         if (attack) {
           expect(game.state.combat!.targetIds).toEqual([ally.objectId]);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-          expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(hero.objectId)).toBe(0);
+          expect(game.markedDamage(ally.objectId)).toBe(1);
         }
         advanceToMain(game, attack ? p.id : q.id);
         expect(stat("power")).toBe(beforePower);

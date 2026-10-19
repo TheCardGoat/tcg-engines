@@ -197,7 +197,7 @@ describe("Viridescent Aetherstreak — exactly two modes", () => {
         );
         for (let i = 1; i <= 3; i++) {
           hit(target.objectId);
-          expect(game.state.objects[target.objectId]!.damage).toBe(
+          expect(game.markedDamage(target.objectId)).toBe(
             modes.includes("prevent-damage") && selected.length ? Math.max(0, i - 2) : i,
           );
         }
@@ -210,12 +210,12 @@ describe("Viridescent Aetherstreak — exactly two modes", () => {
             }),
           ).toThrow();
           expect(game.state).toEqual(before);
-          const priorDamage = game.state.objects[otherHero.objectId]!.damage;
+          const priorDamage = game.markedDamage(otherHero.objectId);
           p.declareAttack(ownHero, otherHero, {
             weaponIds: [p.cards(trivariateDream)[0]!.objectId],
           });
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[otherHero.objectId]!.damage).toBe(priorDamage + 2);
+          expect(game.markedDamage(otherHero.objectId)).toBe(priorDamage + 2);
           expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
         }
         advanceToMain(game, q.id);
@@ -251,14 +251,14 @@ describe("Viridescent Aetherstreak — independent shields, damage types and exp
         targets: { "target-1": [ownHero.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[ownHero.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(ownHero.objectId)).toBe(2);
       for (const card of [ownHero, otherHero, ...allies]) {
         const initial = card.objectId === ownHero.objectId ? 2 : 0;
         hit(card.objectId);
         hit(card.objectId);
-        expect(game.state.objects[card.objectId]!.damage).toBe(initial);
+        expect(game.markedDamage(card.objectId)).toBe(initial);
         hit(card.objectId);
-        expect(game.state.objects[card.objectId]!.damage).toBe(initial + 1);
+        expect(game.markedDamage(card.objectId)).toBe(initial + 1);
       }
       const ordinary = p.card(woodlandSquirrels, { zone: "field" });
       hit(ordinary.objectId);
@@ -278,7 +278,7 @@ describe("Viridescent Aetherstreak — independent shields, damage types and exp
       advanceToMain(game, opposingTurn ? p.id : q.id, game.state.turn.number);
       expect(game.state.objects[target.objectId]!.states.has("distant")).toBe(true);
       hit(target.objectId);
-      expect(game.state.objects[target.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(target.objectId)).toBe(1);
     });
   it("spends the shield on combat damage while loading and later allows noncombat damage", () => {
     const { game, p, q, ownHero, otherHero, pay, opportunity, distant, hit } = fixture();
@@ -292,10 +292,10 @@ describe("Viridescent Aetherstreak — independent shields, damage types and exp
     passEffectsStack(game);
     p.declareAttack(ownHero, otherHero, { weaponIds: [weapon.objectId] });
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[otherHero.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(otherHero.objectId)).toBe(0);
     expect(game.state.objects[source.objectId]!.zone).toBe("graveyard");
     hit(otherHero.objectId);
-    expect(game.state.objects[otherHero.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(otherHero.objectId)).toBe(1);
   });
   it("resolves the other chosen mode when there is no controlled Aetherwing to load", () => {
     const { game, p, ownHero, pay } = fixture(true, false, false);

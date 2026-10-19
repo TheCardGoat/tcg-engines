@@ -74,7 +74,10 @@ export interface GrandArchiveCardInstance {
   /** Per-ability Cascade progress for this object instance; reset by every zone change. */
   readonly cascadeCounts: Readonly<Record<string, number>>;
   readonly counters: Readonly<Record<string, number>>;
+  /** Permanent damage counters; counters on non-champions have no inherent effect. */
   readonly damage: number;
+  /** Temporary damage marked on allies, distinct from damage counters. */
+  readonly temporaryDamage: number;
   /** Changes only when this card changes zones and becomes a new rules object. */
   readonly incarnation: number;
   /** Changes when this object's represented characteristics or facing changes. */
@@ -719,6 +722,7 @@ export type GrandArchiveResolutionFrame =
   | {
       readonly kind: "finish-reflexive";
       readonly actionAlreadyPerformed?: true;
+      readonly requiredResult?: { readonly kind: "destroyed"; readonly binding: string };
       readonly startedEventHistoryIndex: number;
       readonly targets?: readonly import("@tcg/grand-archive-types").GrandArchiveTargetDeclaration[];
       readonly cardinality?: "each-result-object";
@@ -967,9 +971,8 @@ export type GrandArchivePendingTrigger = GrandArchivePendingTriggerBase &
       }
   );
 
-export interface GrandArchiveGeneratedTrigger {
+interface GrandArchiveGeneratedTriggerBase {
   readonly id: string;
-  readonly sourceId: GrandArchiveObjectId;
   readonly controllerId: GrandArchivePlayerId;
   readonly ability: Extract<GrandArchiveExecutableAbility, { readonly kind: "triggered" }>;
   readonly bindings: Readonly<
@@ -978,6 +981,15 @@ export interface GrandArchiveGeneratedTrigger {
   readonly variables: Readonly<Partial<Record<"X" | "Y" | "Z", number>>>;
   readonly createdAtVersion: number;
 }
+
+export type GrandArchiveGeneratedTrigger = GrandArchiveGeneratedTriggerBase &
+  (
+    | { readonly sourceId: GrandArchiveObjectId; readonly masterySource?: never }
+    | {
+        readonly sourceId?: never;
+        readonly masterySource: NonNullable<GrandArchiveStackItem["masterySource"]>;
+      }
+  );
 
 export interface GrandArchiveDelayedTriggerInstance {
   readonly id: string;
@@ -1016,6 +1028,8 @@ export interface GrandArchiveCombatState {
   readonly weaponIds: readonly GrandArchiveObjectId[];
   readonly intentIds: readonly GrandArchiveObjectId[];
   readonly step: "declaration" | "retaliation" | "damage" | "end";
+  /** Cleanup is dispatched once; replacements can suspend its event continuation. */
+  readonly cleanupStarted?: true;
 }
 
 /** A resolving effect finishes before this requested rules procedure is applied. */

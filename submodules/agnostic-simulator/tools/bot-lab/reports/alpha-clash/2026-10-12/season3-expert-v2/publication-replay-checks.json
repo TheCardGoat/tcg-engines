@@ -1,0 +1,62 @@
+[
+  {
+    "key": "clarity-hyper-aggro-vs-clarity-hyper-aggro/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:45e7434c",
+    "actualHash": "fnv1a32:45e7434c"
+  },
+  {
+    "key": "season3-silou-death-vs-season3-silou-death/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:e97f263e",
+    "actualHash": "fnv1a32:e97f263e"
+  },
+  {
+    "key": "season3-xiii-war-vs-season3-xiii-war/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:2c16101a",
+    "actualHash": "fnv1a32:2c16101a"
+  },
+  {
+    "key": "season3-sloppy-valen-vs-season3-sloppy-valen/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:0636460d",
+    "actualHash": "fnv1a32:0636460d"
+  },
+  {
+    "key": "season3-xiii-war-vs-season3-sloppy-valen/block-0/b-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:8e190a25",
+    "actualHash": "fnv1a32:8e190a25"
+  },
+  {
+    "key": "season3-avalogaming-kilimanjaro-vs-season3-avalogaming-kilimanjaro/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:58340e31",
+    "actualHash": "fnv1a32:58340e31"
+  },
+  {
+    "key": "season3-fexar-clarity-vs-season3-silou-clarity/block-1/b-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:f9dddb38",
+    "actualHash": "fnv1a32:f9dddb38"
+  },
+  {
+    "key": "season3-fexar-clarity-vs-season3-fexar-clarity/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:95ca0196",
+    "actualHash": "fnv1a32:95ca0196"
+  },
+  {
+    "key": "season3-undefendable-clarity-vs-season3-undefendable-clarity/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:3a7a26d7",
+    "actualHash": "fnv1a32:3a7a26d7"
+  },
+  {
+    "key": "season3-silou-clarity-vs-season3-silou-clarity/block-2/a-seat-1",
+    "matches": true,
+    "expectedHash": "fnv1a32:2a43b3a7",
+    "actualHash": "fnv1a32:2a43b3a7"
+  }
+]

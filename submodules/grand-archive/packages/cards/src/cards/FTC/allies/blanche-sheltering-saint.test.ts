@@ -96,7 +96,7 @@ describe("Blanche — current memory prevents each noncombat hit to another cont
             const dies = expected * hit >= life;
             expect(game.state.objects[target.objectId]!.zone).toBe(dies ? "graveyard" : "field");
             if (dies) break;
-            expect(game.state.objects[target.objectId]!.damage).toBe(expected * hit);
+            expect(game.markedDamage(target.objectId)).toBe(expected * hit);
           }
         });
   it("uses memory added by payment and continues after unpreventable damage", () => {
@@ -130,7 +130,7 @@ describe("Blanche — current memory prevents each noncombat hit to another cont
       });
       expect(p.zone("memory")).toHaveLength((i + 1) * 2);
       passEffectsStack(game);
-      expect(game.state.objects[hero.objectId]!.damage).toBe(i === 0 ? 0 : 2);
+      expect(game.markedDamage(hero.objectId)).toBe(i === 0 ? 0 : 2);
     }
   });
 });

@@ -112,7 +112,7 @@ describe("PR review: conditional damage retains its announced recipient", () => 
         targets: { "target-1": [target.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[target.objectId]?.damage).toBe(damage);
+      expect(game.markedDamage(target.objectId)).toBe(damage);
       expect(game.state.stack).toHaveLength(0);
     });
   }
@@ -170,7 +170,7 @@ it("Hector derives prevention from controlled tokens and applies it only once pe
         targets: { "target-1": [target.objectId] },
       });
     passEffectsStack(game);
-    expect(game.state.objects[target.objectId]?.damage).toBe(damage);
+    expect(game.markedDamage(target.objectId)).toBe(damage);
   }
 });
 

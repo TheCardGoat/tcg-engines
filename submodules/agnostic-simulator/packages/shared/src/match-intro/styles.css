@@ -1,0 +1,527 @@
+/* Both independently deployed documents import this file in their root layout. */
+@view-transition {
+  navigation: auto;
+}
+
+#tcg-match-intro {
+  --intro-ink: #080c16;
+  --intro-gold: #e5bf72;
+  --intro-paper: #f6f1e6;
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  color: var(--intro-paper);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  isolation: isolate;
+  overflow: hidden;
+  direction: ltr;
+}
+html[data-tcg-match-intro] #tcg-match-intro {
+  display: block;
+  view-transition-name: tcg-match-intro;
+}
+.match-intro-door {
+  position: absolute;
+  inset-block: 0;
+  width: 50.1%;
+  background:
+    radial-gradient(ellipse at 100% 45%, #39545e 0%, transparent 65%),
+    linear-gradient(135deg, #14202b, var(--intro-ink));
+}
+.match-intro-door::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 100px, #e5bf7205 101px 102px),
+    radial-gradient(ellipse at center, #e5bf7212, transparent 70%);
+}
+.match-intro-door-left {
+  left: 0;
+}
+.match-intro-door-right {
+  right: 0;
+  background:
+    radial-gradient(ellipse at 0% 45%, #74512f 0%, transparent 65%),
+    linear-gradient(225deg, #302520, var(--intro-ink));
+}
+.match-intro-seam {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(transparent, var(--intro-gold) 30% 70%, transparent);
+  box-shadow: 0 0 36px #e5bf7240;
+}
+.match-intro-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5vh 6vw 10vh;
+}
+.match-intro-content header {
+  text-align: center;
+  margin-bottom: clamp(20px, 5vh, 65px);
+}
+.match-intro-content header p {
+  margin: 0 0 12px;
+  font:
+    600 12px/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--intro-gold);
+}
+.match-intro-content h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 50px);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  font-weight: 600;
+}
+.match-intro-versus {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
+  align-items: center;
+  width: min(840px, 100%);
+  margin-inline: auto;
+}
+.match-intro-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 3vh, 32px);
+  min-width: 0;
+}
+.match-intro-player p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(18px, 2.8vw, 30px);
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.match-intro-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(110px, 16vw, 208px);
+  aspect-ratio: 5 / 7;
+  border: 1px solid #e5bf7270;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 40% 20%, #354459, #141d2d 55%, #0d121f);
+  box-shadow:
+    0 20px 60px #0008,
+    inset 0 0 0 7px #080c16,
+    inset 0 0 0 8px #e5bf7233;
+  clip-path: polygon(0 0, 100% 0, 100% 87%, 50% 100%, 0 87%);
+  padding-bottom: 12%;
+}
+.match-intro-card::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid #e5bf7233;
+  border-radius: 5px;
+}
+.match-intro-card::after {
+  content: "";
+  position: absolute;
+  width: 57%;
+  aspect-ratio: 1;
+  border: 1px solid #e5bf7255;
+  transform: rotate(45deg);
+}
+.match-intro-card span {
+  font-size: clamp(38px, 6vw, 76px);
+  color: var(--intro-gold);
+  font-weight: 500;
+}
+.match-intro-player-right .match-intro-card {
+  border-color: #e5bf72a0;
+  background: radial-gradient(ellipse at 60% 20%, #514032, #281e1a 55%, #181316);
+}
+.match-intro-vs {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid var(--intro-gold);
+  border-radius: 50%;
+  background: radial-gradient(circle, #354044, var(--intro-ink) 75%);
+  box-shadow:
+    0 0 0 5px #e5bf7218,
+    0 0 0 7px #e5bf7255,
+    0 0 50px #e5bf7230;
+  color: var(--intro-gold);
+  font-size: clamp(24px, 4vw, 44px);
+  font-style: italic;
+  font-weight: 700;
+}
+.match-intro-status {
+  position: absolute;
+  bottom: max(34px, env(safe-area-inset-bottom));
+  left: 20px;
+  right: 20px;
+  text-align: center;
+  color: #c5c9d2;
+  font:
+    400 13px/1.5 system-ui,
+    sans-serif;
+  opacity: 0;
+  margin: 0;
+}
+.match-intro-skip {
+  position: absolute;
+  right: max(24px, env(safe-area-inset-right));
+  top: max(24px, env(safe-area-inset-top));
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #e5bf7240;
+  border-radius: 6px;
+  background: #080c16;
+  color: var(--intro-paper);
+  font:
+    500 13px/1.4 system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+.match-intro-skip:hover {
+  border-color: var(--intro-gold);
+}
+.match-intro-skip:focus-visible {
+  outline: 2px solid var(--intro-gold);
+  outline-offset: 4px;
+}
+html[data-tcg-match-intro="versus"] .match-intro-player-left {
+  animation: intro-left 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+html[data-tcg-match-intro="versus"] .match-intro-player-right {
+  animation: intro-right 650ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
+}
+html[data-tcg-match-intro="versus"] .match-intro-content header,
+html[data-tcg-match-intro="versus"] .match-intro-vs {
+  animation: intro-title 550ms ease-out 180ms both;
+}
+html[data-tcg-match-intro="closing"] .match-intro-content {
+  animation: intro-close 450ms ease-in both;
+}
+html[data-tcg-match-intro="closing"] .match-intro-vs {
+  animation: intro-emblem 450ms ease-in both;
+}
+.match-intro-sweep {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 32%,
+    #a4e5e944 43%,
+    #fff1cecc 50%,
+    #e5bf7266 57%,
+    transparent 68%
+  );
+}
+html[data-tcg-match-intro="revealing"] .match-intro-sweep {
+  animation: intro-sweep 700ms ease-out both;
+}
+html[data-tcg-match-intro="holding"] .match-intro-content,
+html[data-tcg-match-intro="handoff"] .match-intro-content,
+html[data-tcg-match-intro="revealing"] .match-intro-content {
+  visibility: hidden;
+}
+html[data-tcg-match-intro="handoff"] .match-intro-skip {
+  visibility: hidden;
+}
+.match-intro-skip:empty {
+  display: none;
+}
+html[data-tcg-match-intro="holding"] .match-intro-status {
+  opacity: 1;
+}
+html[data-tcg-match-intro="revealing"] .match-intro-door-left {
+  animation: intro-door-left 700ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html[data-tcg-match-intro="revealing"] .match-intro-door-right {
+  animation: intro-door-right 700ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+html[data-tcg-match-intro="revealing"] .match-intro-seam,
+html[data-tcg-match-intro="revealing"] .match-intro-skip {
+  opacity: 0;
+}
+::view-transition-group(tcg-match-intro) {
+  animation-duration: 160ms;
+  z-index: 1;
+}
+::view-transition-old(tcg-match-intro),
+::view-transition-new(tcg-match-intro) {
+  mix-blend-mode: normal;
+}
+@keyframes intro-left {
+  from {
+    opacity: 0;
+    transform: translateX(-25vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes intro-right {
+  from {
+    opacity: 0;
+    transform: translateX(25vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes intro-title {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes intro-close {
+  to {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+@keyframes intro-emblem {
+  to {
+    transform: scale(1.6) rotate(12deg);
+  }
+}
+@keyframes intro-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-45%);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(45%);
+  }
+}
+@keyframes intro-door-left {
+  to {
+    transform: translateX(-101%);
+  }
+}
+@keyframes intro-door-right {
+  to {
+    transform: translateX(101%);
+  }
+}
+@media (max-width: 520px) {
+  .match-intro-versus {
+    grid-template-columns: minmax(0, 1fr) 46px minmax(0, 1fr);
+  }
+  .match-intro-player p {
+    font-size: 17px;
+  }
+  .match-intro-content {
+    padding-inline: 20px;
+  }
+  .match-intro-skip {
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+  }
+}
+@media (max-height: 540px) {
+  .match-intro-content {
+    padding-block: 50px 28px;
+  }
+  .match-intro-content header {
+    margin-bottom: 12px;
+  }
+  .match-intro-content h1 {
+    font-size: 24px;
+  }
+  .match-intro-card {
+    width: 75px;
+  }
+  .match-intro-card span {
+    font-size: 30px;
+  }
+  .match-intro-player {
+    gap: 12px;
+  }
+  .match-intro-player p {
+    font-size: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #tcg-match-intro *,
+  ::view-transition-group(tcg-match-intro),
+  ::view-transition-old(tcg-match-intro),
+  ::view-transition-new(tcg-match-intro) {
+    animation: none !important;
+  }
+  html[data-tcg-match-intro="revealing"] #tcg-match-intro {
+    display: none;
+  }
+}
+
+/* Optional hanging-banner presentation. Selected by a game, with no game rules here. */
+html[data-tcg-match-intro-variant="banners"] #tcg-match-intro {
+  --intro-gold: #e9c989;
+  --intro-paper: #fff7e5;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-door {
+  background:
+    radial-gradient(ellipse at 90% 70%, #26767f88, transparent 65%),
+    repeating-conic-gradient(from 20deg at 90% 70%, #72cad910 0deg 8deg, transparent 8deg 22deg),
+    linear-gradient(135deg, #080f18, #182d38);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-door-right {
+  background:
+    radial-gradient(ellipse at 10% 70%, #ad643b88, transparent 65%),
+    repeating-conic-gradient(from -20deg at 10% 70%, #ffd09710 0deg 8deg, transparent 8deg 22deg),
+    linear-gradient(225deg, #140e18, #382526);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-content {
+  padding: 4vh 6vw 7vh;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-content header {
+  margin-bottom: 3vh;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-content h1 {
+  font-size: clamp(18px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-versus {
+  width: min(1000px, 100%);
+  grid-template-columns: minmax(0, 1fr) clamp(54px, 9vw, 110px) minmax(0, 1fr);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-player {
+  position: relative;
+  gap: 0;
+  filter: drop-shadow(0 25px 30px #0009);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card {
+  width: clamp(125px, 25vw, 300px);
+  height: min(56vh, 430px);
+  aspect-ratio: auto;
+  padding: 0 0 12%;
+  background:
+    repeating-linear-gradient(90deg, #0000 0 3px, #ffffff03 3px 4px),
+    radial-gradient(ellipse at 50% 0%, #3b6a79, #132632 52%, #060b12);
+  border-top: 5px solid var(--intro-gold);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-player-right .match-intro-card {
+  background:
+    repeating-linear-gradient(90deg, #0000 0 3px, #ffffff03 3px 4px),
+    radial-gradient(ellipse at 50% 0%, #855349, #392331 52%, #100b15);
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card::before {
+  inset: 10px 12px 20%;
+  border-radius: 0;
+  border-color: #e9c98970;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card::after {
+  width: 52%;
+  border: 3px double #e9c98999;
+  box-shadow:
+    0 0 0 10px #e9c9890c,
+    0 0 50px #e9c98918;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card span {
+  font-family: Georgia, serif;
+  font-size: clamp(55px, 8vw, 100px);
+  text-shadow: 0 3px 12px #0009;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-player p {
+  position: absolute;
+  bottom: 17%;
+  width: 105%;
+  padding: 12px 10px;
+  border-block: 1px solid #e9c98988;
+  background: linear-gradient(90deg, transparent, #090e19 15% 85%, transparent);
+  font-size: clamp(16px, 2.3vw, 27px);
+  font-family: Georgia, serif;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-sweep {
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    #8de5ea99 35%,
+    #fff7e8 50%,
+    #eec78ca0 65%,
+    transparent 80%
+  );
+}
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="closing"] .match-intro-seam {
+  animation: intro-flare 450ms ease-in both;
+}
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="holding"] .match-intro-seam,
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="handoff"] .match-intro-seam {
+  width: 10vw;
+  margin-left: -5vw;
+  background: linear-gradient(90deg, transparent, #fff2d4bb, transparent);
+  box-shadow: 0 0 100px #92e3e855;
+}
+@keyframes intro-flare {
+  to {
+    transform: scaleX(80);
+    opacity: 0.8;
+  }
+}
+@media (max-height: 540px) {
+  html[data-tcg-match-intro-variant="banners"] .match-intro-card {
+    height: 52vh;
+  }
+  html[data-tcg-match-intro-variant="banners"] .match-intro-content {
+    padding-block: 20px;
+  }
+  html[data-tcg-match-intro-variant="banners"] .match-intro-content header p {
+    margin-bottom: 4px;
+  }
+}
+
+/* Public contender cards keep their printed aspect ratio inside each pennant. */
+.match-intro-card img {
+  position: absolute;
+  inset: 4% 8% 19%;
+  width: 84%;
+  height: 77%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px #0009);
+  z-index: 1;
+}
+.match-intro-card img[hidden],
+.match-intro-card span[hidden] {
+  display: none;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card:has(img:not([hidden]))::after {
+  display: none;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-card span {
+  font-size: clamp(16px, 2.5vw, 28px);
+  text-align: center;
+  padding: 20px;
+}
+html[data-tcg-match-intro-variant="banners"] .match-intro-player p {
+  z-index: 2;
+}
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="closing"] .match-intro-content,
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="closing"] .match-intro-vs,
+html[data-tcg-match-intro-variant="banners"][data-tcg-match-intro="closing"] .match-intro-seam {
+  animation-duration: 250ms;
+}

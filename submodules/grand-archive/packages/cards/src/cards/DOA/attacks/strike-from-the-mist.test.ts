@@ -71,8 +71,8 @@ describe("Strike from the Mist requires paid preparation and matching class", ()
           bonus && prepared ? foe.objectId : guard.objectId,
         ]);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[foe.objectId]!.damage).toBe(bonus && prepared ? 2 : 0);
-        expect(game.state.objects[guard.objectId]!.damage).toBe(bonus && prepared ? 0 : 2);
+        expect(game.markedDamage(foe.objectId)).toBe(bonus && prepared ? 2 : 0);
+        expect(game.markedDamage(guard.objectId)).toBe(bonus && prepared ? 0 : 2);
         expect(p.card(strikeFromTheMist, { zone: "graveyard" })).toBeDefined();
       });
 });

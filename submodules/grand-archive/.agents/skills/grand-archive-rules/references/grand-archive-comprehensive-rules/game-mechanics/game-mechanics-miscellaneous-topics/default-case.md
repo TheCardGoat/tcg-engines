@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/default-case"
   relation: "current_index"
 ---
-
 # Default Case
 
 #### General Rules:

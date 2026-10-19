@@ -105,7 +105,7 @@ describe("Excalibur — True Sight, Spellshroud, and Merlin's power", () => {
           game.resolveCombatWithoutRetaliation();
           if (stealth && merlin)
             expect(game.state.objects[target.objectId]!.zone).toBe("graveyard");
-          else expect(game.state.objects[target.objectId]!.damage).toBe(merlin ? 2 : 1);
+          else expect(game.markedDamage(target.objectId)).toBe(merlin ? 2 : 1);
           expect(game.state.objects[sword.objectId]!.counters.durability).toBe(1);
           // The same Spell remains legal against an ordinary weapon.
           p.activate(nocturnesOblivion, {
@@ -241,7 +241,7 @@ describe("Excalibur — destruction copies only eligible controlled Regalia", ()
         advanceToMain(game, p.id, game.state.turn.number);
         p.declareAttack(p.card(champion), q.card(champion), { weaponIds: [copy.objectId] });
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(5);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(5);
         expect(game.state.objects[copy.objectId]!.counters.durability).toBe(1);
         p.activate(nocturnesOblivion, {
           reservePayment: pay(3),

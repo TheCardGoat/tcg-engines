@@ -5,5 +5,5 @@ import { createGrandArchiveMatchProgram } from "../kernel/match-program.ts";
 it("admits every generated catalog card into one executable match program", () => {
   const program = createGrandArchiveMatchProgram(grandArchiveCards);
   expect(Object.keys(program.cardsById)).toHaveLength(grandArchiveCards.length);
-  expect(program.fingerprint).toMatch(/^ga-program-v1-[0-9a-f]{8}$/);
+  expect(program.fingerprint).toMatch(/^ga-program-v2-[0-9a-f]{8}$/);
 });

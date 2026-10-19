@@ -44,10 +44,8 @@ export default function InteractionCatalogPage() {
           >
             Grand Archive: materialization
           </a>
-          <a
-            href={`${buildMountedHref("/simulator-ui-fixtures/game-interactions/alpha-clash")}?mode=self`}
-          >
-            Alpha Clash: play both sides
+          <a href={buildMountedHref("/simulator-ui-fixtures/game-interactions/alpha-clash")}>
+            Alpha Clash: bot practice
           </a>
         </div>
         <h2>Shared game prompts</h2>

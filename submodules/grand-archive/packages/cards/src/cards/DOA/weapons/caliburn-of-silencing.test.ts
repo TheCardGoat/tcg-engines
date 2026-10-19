@@ -78,9 +78,7 @@ describe("Caliburn silences the hit champion through the opponent turn even afte
           expect(game.state.combat?.targetIds).toEqual([guard.objectId]);
         }
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[foe.objectId]!.damage).toBe(
-          (championHit ? 1 : 0) + (silenced ? 1 : 0),
-        );
+        expect(game.markedDamage(foe.objectId)).toBe((championHit ? 1 : 0) + (silenced ? 1 : 0));
         advanceToMain(game, q.id);
         expect(life()).toBe(silenced ? 1 : 2);
         advanceToMain(game, p.id);
@@ -92,6 +90,6 @@ describe("Caliburn silences the hit champion through the opponent turn even afte
         expect(game.state.combat?.targetIds).toEqual([guard.objectId]);
         game.resolveCombatWithoutRetaliation();
         expect(game.state.objects[guard.objectId]!.zone).toBe("field");
-        expect(game.state.objects[guard.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(guard.objectId)).toBe(1);
       });
 });

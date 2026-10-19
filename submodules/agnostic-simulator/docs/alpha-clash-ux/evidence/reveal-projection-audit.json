@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-10",
+  "fixture": "destination-reveal",
+  "method": "Native attack, Shield Counter, response passes, Foretell and Done via production adapter; no state mutation after arrangement",
+  "before": {
+    "player-one": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": []
+    },
+    "player-two": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": []
+    },
+    "spectator": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": []
+    }
+  },
+  "during": {
+    "player-one": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    },
+    "player-two": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": "ac-ac1-028",
+        "name": "Magnate, Cunning Planner",
+        "clashDamage": 0,
+        "phaseDamage": 0,
+        "counters": {},
+        "attack": 1,
+        "defense": 1
+      },
+      "visibleDeckCount": 1,
+      "pendingChoiceCount": 1,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    },
+    "spectator": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    }
+  },
+  "after": {
+    "player-one": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    },
+    "player-two": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    },
+    "spectator": {
+      "top": {
+        "instanceId": "player-two-60",
+        "zone": "deck",
+        "controller": "player-two",
+        "owner": "player-two",
+        "ready": true,
+        "exhausted": false,
+        "faceDown": false,
+        "definitionId": null,
+        "name": null,
+        "clashDamage": 0,
+        "phaseDamage": 0
+      },
+      "visibleDeckCount": 0,
+      "pendingChoiceCount": 0,
+      "publicRevealLog": [
+        "Magnate, Cunning Planner is revealed."
+      ]
+    }
+  },
+  "limitation": "Diagnostic snapshot of current behavior, not acceptance of public reveal visibility. Rule 703.8a requires all players; current non-acting projection is missing the face."
+}

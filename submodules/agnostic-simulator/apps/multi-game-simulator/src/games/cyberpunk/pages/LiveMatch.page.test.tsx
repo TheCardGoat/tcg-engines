@@ -16,7 +16,6 @@ const mocks = vi.hoisted(() => ({
   release: vi.fn(),
   route: vi.fn(),
   captureGameEvent: vi.fn(),
-  requestStateSyncIfDue: vi.fn(),
   connection: {
     status: "connected" as "connected" | "reconnecting" | "disconnected",
     authenticated: true,
@@ -523,6 +522,155 @@ describe("Cyberpunk live pending move lifecycle", () => {
     });
 
     await waitFor(() => expect(screen.getByLabelText("Pending move").textContent).toBe("ready"));
+  });
+
+  it("keeps unrelated operation failures out of board recovery, including while a move is pending", async () => {
+    const { bootstrap } = liveBootstrap();
+    mocks.route.mockReturnValue({
+      error: null,
+      matchId: "match-1",
+      gameId: "game-1",
+      matchPageData: bootstrap,
+    });
+    render(
+      <MantineProvider env="test">
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    const submit = await screen.findByRole("button", { name: "Submit live action" });
+    mocks.connection.requestStateSyncIfDue.mockClear();
+    const chatFailure = () =>
+      latestGameEvent()("error", {
+        code: "match_operation_failed",
+        message: "The server could not complete this request. Try again.",
+        correlationId: "chat-1",
+      });
+    act(chatFailure);
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(mocks.notificationShow).toHaveBeenCalled();
+    expect(mocks.connection.requestStateSyncIfDue).not.toHaveBeenCalled();
+    fireEvent.click(submit);
+    act(chatFailure);
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(screen.getByLabelText("Pending move").textContent).toBe("pending");
+    expect(mocks.connection.requestStateSyncIfDue).not.toHaveBeenCalled();
+    act(() =>
+      latestGameEvent()("error", {
+        code: "match_operation_failed",
+        message: "Could not confirm the action",
+        correlationId: "correlation-1",
+      }),
+    );
+    expect(screen.getByRole("alert").textContent).toContain("Server problem");
+    await waitFor(() => expect(mocks.connection.requestStateSyncIfDue).toHaveBeenCalled());
+  });
+
+  it("recovers a server fault by refreshing once, without replaying the action", async () => {
+    const { bootstrap, state, interactionView } = liveBootstrap();
+    mocks.route.mockReturnValue({
+      error: null,
+      matchId: "match-1",
+      gameId: "game-1",
+      matchPageData: bootstrap,
+    });
+    render(
+      <MantineProvider env="test">
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    fireEvent.click(await screen.findByRole("button", { name: "Submit live action" }));
+    const submissions = () =>
+      mocks.emit.mock.calls.filter(([event]) => event === "submit_interaction");
+    expect(submissions()).toHaveLength(1);
+    act(() =>
+      latestGameEvent()("error", {
+        code: "game_engine_failed",
+        message: "The server could not process your action.",
+        correlationId: "correlation-1",
+      }),
+    );
+    expect(screen.getByRole("alert").textContent).toContain("Server problem");
+    expect(screen.getByRole("alert").textContent).toContain("Support reference: correlation-1");
+    await waitFor(() => expect(mocks.connection.requestStateSyncIfDue).toHaveBeenCalled());
+    expect(submissions()).toHaveLength(1);
+    act(() =>
+      latestGameEvent()("state_sync", {
+        gameId: "game-1",
+        stateVersion: state.ctx.stateID,
+        engineLogs: [],
+        animationPlan: null,
+        state,
+        interactionView,
+      }),
+    );
+    expect(screen.getByRole("alert").textContent).toContain("Board refreshed");
+    expect(screen.getByLabelText("Pending move").textContent).toBe("ready");
+    fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
+    expect(submissions()).toHaveLength(2);
+    act(() =>
+      latestGameEvent()("error", {
+        code: "game_engine_failed",
+        message: "The server could not process your action.",
+        correlationId: "correlation-1",
+      }),
+    );
+    expect(screen.getByRole("button", { name: "Retry board refresh" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
+    expect(submissions()).toHaveLength(2);
+    act(() =>
+      latestGameEvent()("move_accepted", {
+        gameId: "game-1",
+        stateVersion: state.ctx.stateID + 1,
+        patches: [],
+        engineLogs: [],
+        animationPlan: null,
+        moveType: "interaction:playCard",
+        actorId: "p1",
+        correlationId: "correlation-1",
+        state: { ...state, ctx: { ...state.ctx, stateID: state.ctx.stateID + 1 } },
+        interactionView: { ...interactionView, stateVersion: state.ctx.stateID + 1 },
+      }),
+    );
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+
+  it("keeps an incompatible game blocked until an explicit successful refresh", async () => {
+    const { bootstrap, state, interactionView } = liveBootstrap();
+    mocks.route.mockReturnValue({
+      error: null,
+      matchId: "match-1",
+      gameId: "game-1",
+      matchPageData: bootstrap,
+    });
+    render(
+      <MantineProvider env="test">
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    fireEvent.click(await screen.findByRole("button", { name: "Submit live action" }));
+    mocks.connection.requestStateSyncIfDue.mockClear();
+    act(() =>
+      latestGameEvent()("error", {
+        code: "game_state_incompatible",
+        message: "Update required",
+        correlationId: "correlation-1",
+      }),
+    );
+    expect(screen.getByRole("alert").textContent).toContain("Game update required");
+    expect(mocks.connection.requestStateSyncIfDue).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Retry board refresh" }));
+    await waitFor(() => expect(mocks.connection.requestStateSyncIfDue).toHaveBeenCalled());
+    act(() =>
+      latestGameEvent()("state_sync", {
+        gameId: "game-1",
+        stateVersion: state.ctx.stateID,
+        engineLogs: [],
+        animationPlan: null,
+        state,
+        interactionView,
+      }),
+    );
+    expect(screen.getByRole("alert").textContent).toContain("Board refreshed");
   });
 
   it("marks an equal-version illegal rejection for recovery through the page event path", async () => {

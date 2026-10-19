@@ -83,13 +83,13 @@ describe("Obelisk of Protection — Domain discount and shielding", () => {
       const unrelated = player.card(supplyDrone, { zone: "field" });
       opponent.declareAttack(attackers[0]!, unrelated);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[unrelated.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(unrelated.objectId)).toBe(2);
       opponent.declareAttack(attackers[1]!, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(0);
+      expect(game.markedDamage(target.objectId)).toBe(0);
       opponent.declareAttack(attackers[2]!, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(target.objectId)).toBe(2);
     });
   }
 });

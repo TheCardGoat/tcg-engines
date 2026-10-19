@@ -86,7 +86,7 @@ describe("Diffusive Block — bounded damage prevention", () => {
       });
       passEffectsStack(game);
     }
-    expect(game.state.objects[target.objectId]!.damage).toBe(4);
+    expect(game.markedDamage(target.objectId)).toBe(4);
   });
 });
 

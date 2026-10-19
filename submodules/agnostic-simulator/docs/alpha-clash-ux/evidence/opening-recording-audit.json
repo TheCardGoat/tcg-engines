@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "fixture": "opening-preview",
+  "flow": "Fresh native seeded opening. Enter Begin opening, Take mulligan with bot keeping, select Captain Maxine Riggins and Lord Krung, Enter Replace 2, accepted native deal, Enter Begin game and Enter Skip resource. Both seats end with hand eight, deck 42, health 30; turn one Primary.",
+  "runs": [
+    {
+      "variant": "normal",
+      "file": "opening-native-audio.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 447,
+      "captureAudioMs": 11547,
+      "audioAlignmentSeconds": 0.020718812942504883,
+      "decodedAudioSeconds": 11.497041666666666,
+      "masterGain": 0.5625,
+      "peak": 0.2398577332496643,
+      "rms": 0.011334191984286889,
+      "peakDbfs": -12.400925497806583,
+      "rmsDbfs": -38.91218870664454
+    },
+    {
+      "variant": "muted-reduced",
+      "file": "opening-native-muted-reduced.mp4",
+      "viewport": "1366x768",
+      "captureFrames": 56,
+      "captureAudioMs": 3914,
+      "audioAlignmentSeconds": 0.03505992889404297,
+      "decodedAudioSeconds": 3.863875,
+      "masterGain": 0,
+      "peak": 0.0,
+      "rms": 0.0,
+      "peakDbfs": null,
+      "rmsDbfs": null
+    }
+  ],
+  "capture": "Application-output Howler branch only, no microphone or replacement audio; temporary branch disconnected and tracks stopped. Audio packet gaps retain silence. Change frames encoded at 30 FPS.",
+  "limits": [
+    "Only two-card actor replacement against a keeping bot recorded; not both-replace, zero/all or opponent view.",
+    "Audio presence/silence does not establish perceptual mix, separate opening cue or cue synchronization.",
+    "Frame count/encoding FPS do not measure renderer performance.",
+    "Matched viewport/commands; different input pacing cannot establish individual motion duration."
+  ]
+}

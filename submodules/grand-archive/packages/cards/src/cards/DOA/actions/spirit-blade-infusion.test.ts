@@ -155,7 +155,7 @@ describe("Infusion strengthens either player's Sword and gives its controller on
           top = owner.zone("main-deck")[0]!;
         owner.declareAttack(owner.card(champion), target, { weaponIds: [sword.objectId] });
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(4);
+        expect(game.markedDamage(target.objectId)).toBe(4);
         expect(owner.zone("hand")).toHaveLength(hand + (championHit ? 1 : 0));
         expect(game.state.objects[top.objectId]!.zone).toBe(championHit ? "hand" : "main-deck");
         expect(other.zone("hand")).toHaveLength(0);
@@ -165,6 +165,6 @@ describe("Infusion strengthens either player's Sword and gives its controller on
         owner.declareAttack(owner.card(champion), target, { weaponIds: [sword.objectId] });
         game.resolveCombatWithoutRetaliation();
         expect(owner.zone("hand")).toHaveLength(later);
-        expect(game.state.objects[target.objectId]!.damage).toBe(championHit ? 5 : 1);
+        expect(game.markedDamage(target.objectId)).toBe(championHit ? 5 : 1);
       });
 });

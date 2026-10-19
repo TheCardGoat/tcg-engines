@@ -12,7 +12,7 @@
   "abilityCount": 4544,
   "outputFingerprint": {
     "algorithm": "sha256",
-    "value": "6db0495483150d92781eb9124428a7accd2489b6b9ca573a28c0f93ee069b1b9",
+    "value": "6d38cb46beaaf259b513d62524d7a9d375a3b361436c0ddfc3647bb409414f44",
     "files": [
       "packages/cards/src/cards/ALC/actions/assemble-the-ancients.ts",
       "packages/cards/src/cards/ALC/actions/astra-sight.ts",

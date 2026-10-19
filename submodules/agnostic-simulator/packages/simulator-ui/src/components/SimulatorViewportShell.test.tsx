@@ -142,6 +142,22 @@ describe("SimulatorViewportShell", () => {
     ).toBe("true");
   });
 
+  test.each([
+    [844, 390, "mobile"],
+    [1024, 520, "mobile"],
+    [1024, 768, "desktop"],
+    [1280, 500, "desktop"],
+  ] as const)("uses available space at %s×%s without requiring touch input", (width, height, layout) => {
+    setViewport(width, height);
+    renderShell();
+    expect(container!.querySelector("[data-active-shell]")?.getAttribute("data-layout")).toBe(layout);
+    if (layout === "mobile") {
+      expect(container!.textContent).not.toContain("Sidebar content");
+      act(() => (container!.querySelector("header button") as HTMLButtonElement).click());
+      expect(container!.querySelector('[role="dialog"]')?.textContent).toContain("Activity content");
+    }
+  });
+
   test("honors an explicit desktop layout override and exposes it to board content", () => {
     setViewport(320);
     renderShell("desktop");

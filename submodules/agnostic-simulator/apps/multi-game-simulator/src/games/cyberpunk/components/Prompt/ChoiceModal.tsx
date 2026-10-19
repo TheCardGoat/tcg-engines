@@ -55,7 +55,7 @@ import {
 } from "./choiceModalState";
 import { booleanInput, entityInput, numberInput, optionInput } from "./interactionInputs";
 import { playCardPromptCopy, unaffordablePlayReason } from "./playCardAffordability";
-import { useCyberpunkAnimationActive } from "../../animation/CyberpunkAnimationActivityContext";
+import { useCyberpunkPresentationPending } from "../../animation/CyberpunkPresentationPendingContext";
 import { usePaymentSelection } from "../PaymentSelection/PaymentSelectionContext";
 import { buildAdjustGigOptions } from "../adjustGigOptions";
 import classes from "./ChoiceModal.module.css";
@@ -82,7 +82,7 @@ type ChoiceModalPlacement = "top" | "bottom";
 export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const promptSkin = usePromptSkin();
   const [placement, setPlacement] = useState<ChoiceModalPlacement>("bottom");
-  const animationActive = useCyberpunkAnimationActive();
+  const presentationPending = useCyberpunkPresentationPending();
   const { humanSide, matchState, hasPendingRemoteMove } = useEngine();
   const interactionView = useEngineInteractionView(side);
   const prompt = useNativePromptPresentation(side);
@@ -138,7 +138,7 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
     Boolean(autoAction && !isTargetChoiceModalAction(autoAction)) ||
     spatialChoiceOpened;
   const canAutoOpenChoice = Boolean(
-    !animationActive &&
+    !presentationPending &&
     canRenderChoice &&
     requestId &&
     targetPromptPresentation.presentation === "drawer" &&
@@ -216,7 +216,7 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   }, [currentRequestId, hasRenderableModalContent, side, storedOpened, shouldRenderEmptyDrawer]);
 
   if (
-    animationActive ||
+    presentationPending ||
     hasPendingRemoteMove ||
     side !== humanSide ||
     !canRenderChoice ||

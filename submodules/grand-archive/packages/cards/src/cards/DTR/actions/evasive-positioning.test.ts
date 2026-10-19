@@ -80,20 +80,20 @@ describe("Evasive Positioning — shared shield capacity and champion-only dista
           };
           if (!unused) {
             burn();
-            expect(game.state.objects[target.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(target.objectId)).toBe(0);
             if (!own) {
               p.declareAttack(p.card(giantTortoise, { zone: "field" }), target);
               game.resolveCombatWithoutRetaliation();
             } else burn();
-            expect(game.state.objects[target.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(target.objectId)).toBe(0);
             burn();
-            expect(game.state.objects[target.objectId]!.damage).toBe(1);
+            expect(game.markedDamage(target.objectId)).toBe(1);
           }
           advanceToMain(game, q.id);
           expect(game.state.objects[target.objectId]!.states.has("distant")).toBe(!ally && !own);
           q.pass();
           burn();
-          expect(game.state.objects[target.objectId]!.damage).toBe(!unused && !ally ? 2 : 1);
+          expect(game.markedDamage(target.objectId)).toBe(!unused && !ally ? 2 : 1);
           advanceToMain(game, p.id);
           expect(game.state.objects[target.objectId]!.states.has("distant")).toBe(false);
         });

@@ -1,5 +1,22 @@
+import { sacrificeDeclaration, sacrificeRoute } from "./sacrifice-reductions";
+import { costRouteInputs, costRoutePayload } from "./cost-routes";
+import { cardDestination, destination } from "./card-destination";
+import { paymentFromOptionIds } from "./resource-payment";
+import {
+  optionalDiscountInput,
+  optionalDiscountRoute,
+  optionalDiscountDeclaration,
+} from "./optional-discounts";
+import { openingActionFor } from "./opening";
 import { getCard } from "@tcg/alpha-clash-cards";
-import type { AcCardDefinition, AcCardType, AcEffect, AcTarget } from "@tcg/alpha-clash-types";
+import type {
+  AcAbility,
+  AcCardDefinition,
+  AcCardType,
+  AcEffect,
+  AcTarget,
+} from "@tcg/alpha-clash-types";
+import { deckOrderOptions, collectChosenSelectorEntries } from "@tcg/alpha-clash-engine";
 import type { ProjectedState } from "@tcg/alpha-clash-engine";
 import {
   INTERACTION_PROTOCOL_VERSION,
@@ -14,6 +31,7 @@ import {
 
 type NativePayload = Record<string, unknown>;
 type Seat = "player-one" | "player-two";
+type TargetResolver = (target: AcTarget, sourceId: string) => readonly string[];
 
 const IN_PLAY_ZONES: readonly string[] = ["contender", "clashground", "clash", "accessory"];
 
@@ -26,47 +44,110 @@ const IN_PLAY_ZONES: readonly string[] = ["contender", "clashground", "clash", "
 export function buildAlphaClashInteractionView(input: {
   actorId: string;
   seat: Seat;
+  decisionSeat?: Seat;
   stateVersion: number;
   playerView: ProjectedState;
   /** Native engine resource eligibility, before presentation. */
   resourceCandidateIds?: readonly string[];
+  /** Native Voice Action permission, including its health and once-per-turn limits. */
+  banishedPlayCardIds?: readonly string[];
+  resolveTargetCandidates?: TargetResolver;
+  definitionForCard?: (cardId: string) => AcCardDefinition | undefined;
+  /** Same indices and active grants as the native activateAbility command. */
+  activationAbilitiesForCard?: (cardId: string) => readonly AcAbility[];
+  /** Native-validated targets for each attacker; declarations can have different legal sets. */
+  clashTargets?: Readonly<Record<string, readonly string[]>>;
+  obstructorSelection?: { candidateIds: readonly string[]; min: number };
 }): EngineInteractionView {
   const { seat, playerView, stateVersion } = input;
+  if (playerView.phase.name === "complete")
+    return {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "alpha-clash",
+      actorId: input.actorId,
+      stateVersion,
+      status: "game-over",
+      actions: [],
+    };
+  if (playerView.pendingOrderingPlayer && playerView.pendingOrderingPlayer !== seat)
+    return {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "alpha-clash",
+      actorId: input.actorId,
+      stateVersion,
+      status: "waiting",
+      actions: [concedeAction(stateVersion)],
+    };
   const other = seat === "player-one" ? "player-two" : "player-one";
   const actions: InteractionAction[] = [];
   const isActive = playerView.activePlayer === seat;
   const windowOpenForSeat = playerView.responseWindow?.openFor === seat;
   const phase = playerView.phase;
+  const hasPendingChoice = Boolean(
+    playerView.pendingChoicePlayerId || playerView.pendingChoices.length,
+  );
 
   // 1. Pending choices (rule 608) always come first; the engine's
   //    guardCommand blocks everything else while one is open.
   for (const choice of playerView.pendingChoices) {
     if (choice.playerId !== seat) continue;
-    actions.push(choiceAction(choice, stateVersion));
+    if (choice.kind === "option" && choice.effectPlay) {
+      for (const option of choice.options) {
+        const id = `resolveEffectPlay:${choice.id}:${option.id}`;
+        if (option.id === "decline") {
+          actions.push(simpleAction(id, "choose-option", "Decline recovery play", stateVersion));
+          continue;
+        }
+        const card = playerView.cards.find((card) => card.instanceId === option.id);
+        const definition =
+          input.definitionForCard?.(option.id) ??
+          (card?.definitionId ? safeDefinition(card.definitionId) : undefined);
+        if (!card || definition?.cardType !== "clash") continue;
+        // This permission requires paying resources; native rejects alternate sacrifice costs.
+        const inputs = playInputs(
+          { ...definition, alternateCost: undefined },
+          playerView,
+          seat,
+          option.id,
+          input.resolveTargetCandidates,
+        );
+        actions.push({
+          ...simpleAction(id, "play-card", `Play ${definition.name} from Oblivion`, stateVersion),
+          source: entityRef(option.id),
+          enabled: !inputs.some(requiredInputEmpty),
+          inputs,
+        });
+      }
+      continue;
+    }
+    const action = choiceAction(choice, stateVersion, playerView);
+    const destination = retrievalDestination(choice, playerView);
+    actions.push(destination ? { ...action, inputs: [...action.inputs, destination] } : action);
   }
 
-  // 2. Setup: mulligan once, then start the game (rule 103.5). The mulligan
-  //    action disappears once this seat has taken it — the engine rejects a
-  //    second mulligan, so the view must not advertise one.
-  if (phase.name === "setup") {
-    if (playerView.players[seat].hasMulliganed !== true) {
+  // 2. Setup: ordered declarations, private selections, then start (103.5).
+  if (phase.name === "setup" && !hasPendingChoice) {
+    const step = openingActionFor(playerView, seat);
+    if (step === "declare") {
+      actions.push(
+        simpleAction("declareMulligan:keep", "activate", "Keep hand", stateVersion),
+        simpleAction("declareMulligan:take", "activate", "Take mulligan", stateVersion),
+      );
+    }
+    if (step === "select") {
       const input = handSelectionInput(playerView, seat, "cardIds", "Choose cards to replace");
       if (input?.kind === "entity-selection")
         actions.push({
           ...simpleAction("mulligan", "mulligan", "Replace selected cards", stateVersion),
-          inputs: [{ ...input, max: input.candidates.length }],
+          inputs: [{ ...input, min: 0, max: input.candidates.length, confirmBeforeSubmit: true }],
         });
     }
-    actions.push(simpleAction("startGame", "activate", "Start the game", stateVersion));
+    if (step === "start")
+      actions.push(simpleAction("startGame", "activate", "Begin game", stateVersion));
   }
 
   // 3. Expansion Phase, Resource Step (408.1): deploy one card or pass.
-  if (
-    phase.name === "expansion" &&
-    phase.step === "resource" &&
-    isActive &&
-    playerView.pendingChoices.length === 0
-  ) {
+  if (phase.name === "expansion" && phase.step === "resource" && isActive && !hasPendingChoice) {
     const handInput = handSelectionInput(playerView, seat, "cardId", "Choose a card to deploy");
     if (handInput?.kind === "entity-selection") {
       const candidates = handInput.candidates.map((candidate) => ({
@@ -85,40 +166,102 @@ export function buildAlphaClashInteractionView(input: {
       });
     }
     actions.push(simpleAction("passResource", "pass", "Skip the Resource Step", stateVersion));
+    actions.push(
+      ...activatedAbilityActions(
+        playerView,
+        seat,
+        stateVersion,
+        false,
+        input.resolveTargetCandidates,
+        input.activationAbilitiesForCard,
+        input.definitionForCard,
+      ),
+    );
   }
 
   // 4. Primary Phase (503): the main decision surface.
-  if (phase.name === "primary" && isActive && playerView.pendingChoices.length === 0) {
+  if (phase.name === "primary" && isActive && !playerView.responseWindow && !hasPendingChoice) {
     actions.push(simpleAction("endTurn", "pass", "End turn", stateVersion));
-    if (!playerView.portalOpen) {
+    {
       actions.push(
         simpleAction(
           "activatePortal",
           "activate",
-          "Activate the Portal (2 resources)",
+          playerView.portalOpen ? "Close the Portal" : "Open the Portal",
           stateVersion,
         ),
       );
     }
-    const clashAction = initiateClashAction(playerView, seat, other, stateVersion);
+    const clashAction = initiateClashAction(
+      playerView,
+      seat,
+      other,
+      stateVersion,
+      input.clashTargets,
+    );
     if (clashAction) actions.push(clashAction);
-    actions.push(...handPlayActions(playerView, seat, stateVersion, { window: false }));
-    actions.push(...accessoryActions(playerView, seat, stateVersion));
+    actions.push(
+      ...handPlayActions(playerView, seat, stateVersion, {
+        window: false,
+        banishedPlayCardIds: input.banishedPlayCardIds,
+        resolveTargets: input.resolveTargetCandidates,
+      }),
+    );
+    actions.push(...accessoryActions(playerView, seat, stateVersion, input.definitionForCard));
+    actions.push(
+      ...activatedAbilityActions(
+        playerView,
+        seat,
+        stateVersion,
+        false,
+        input.resolveTargetCandidates,
+        input.activationAbilitiesForCard,
+        input.definitionForCard,
+      ),
+    );
   }
 
   // 5. Response windows (114.3): respond with Counter-tagged cards or pass.
-  if (windowOpenForSeat && playerView.pendingChoices.length === 0) {
+  if (windowOpenForSeat && !hasPendingChoice) {
     actions.push(simpleAction("passCounter", "pass", "Pass", stateVersion));
-    actions.push(...handPlayActions(playerView, seat, stateVersion, { window: true }));
-    actions.push(...counterAbilityActions(playerView, seat, stateVersion));
+    actions.push(
+      ...handPlayActions(playerView, seat, stateVersion, {
+        window: true,
+        resolveTargets: input.resolveTargetCandidates,
+      }),
+    );
+    actions.push(
+      ...activatedAbilityActions(
+        playerView,
+        seat,
+        stateVersion,
+        true,
+        input.resolveTargetCandidates,
+        input.activationAbilitiesForCard,
+        input.definitionForCard,
+      ),
+    );
   }
 
   // 6. Clash steps the defender owes a decision (504.2c).
-  if (phase.name === "clash" && playerView.clash && playerView.clash.step === "obstruct") {
+  if (
+    !hasPendingChoice &&
+    phase.name === "clash" &&
+    playerView.clash &&
+    playerView.clash.step === "obstruct"
+  ) {
     const defender = playerView.cards.find(
       (card) => card.instanceId === playerView.clash?.targetId,
     )?.controller;
     if (defender === seat) {
+      const obstructors =
+        input.obstructorSelection?.candidateIds.map(candidateRef) ??
+        readyClashCandidates(playerView, seat).filter(
+          (candidate) =>
+            !playerView.cards.find((card) => card.instanceId === candidate.entity.instanceId)
+              ?.distracted,
+        );
+      const minimum = input.obstructorSelection?.min ?? 0;
       actions.push({
         id: "declareObstructors",
         requestId: requestId(stateVersion, "declareObstructors"),
@@ -130,27 +273,13 @@ export function buildAlphaClashInteractionView(input: {
             kind: "entity-selection",
             id: "obstructorIds",
             text: { key: "Choose ready Clash cards to obstruct" },
-            required: false,
+            required: minimum > 0,
             role: "defender",
             entityKinds: ["card"],
-            min: 0,
-            // The schema requires max to fit the enabled candidates; a
-            // defender with fewer than 8 ready Clash cards would otherwise
-            // get an unparsable view and be unable to act (rule 504.2c).
-            max: Math.min(
-              8,
-              readyClashCandidates(playerView, seat).filter(
-                (candidate) =>
-                  !playerView.cards.find((card) => card.instanceId === candidate.entity.instanceId)
-                    ?.distracted,
-              ).length,
-            ),
+            min: minimum,
+            max: obstructors.length,
             ordered: false,
-            candidates: readyClashCandidates(playerView, seat).filter(
-              (candidate) =>
-                !playerView.cards.find((card) => card.instanceId === candidate.entity.instanceId)
-                  ?.distracted,
-            ),
+            candidates: obstructors,
           },
         ],
       });
@@ -163,13 +292,27 @@ export function buildAlphaClashInteractionView(input: {
     phase.name === "clash" &&
     playerView.clash &&
     ["counter", "attackerBuff", "defenderBuff", "beforeDamage"].includes(playerView.clash.step) &&
-    pendingChoicesForSeat(playerView, seat).length === 0
+    !hasPendingChoice
   ) {
     if (playerView.clash.step === "beforeDamage") {
       // Rule 504.2f (v8.0): the attacking player has priority for effects
       // before damage; both seats may pass and the engine validates the
       // order (damage only after the attacker has passed).
-      actions.push(simpleAction("passClashStep", "pass", "Pass", stateVersion));
+      if (!input.decisionSeat || input.decisionSeat === seat) {
+        actions.push(simpleAction("passClashStep", "pass", "Pass", stateVersion));
+        if (isActive && !playerView.responseWindow)
+          actions.push(
+            ...activatedAbilityActions(
+              playerView,
+              seat,
+              stateVersion,
+              false,
+              input.resolveTargetCandidates,
+              input.activationAbilitiesForCard,
+              input.definitionForCard,
+            ),
+          );
+      }
     } else {
       const stepSeat =
         playerView.clash.step === "attackerBuff"
@@ -178,13 +321,28 @@ export function buildAlphaClashInteractionView(input: {
           : playerView.cards.find((card) => card.instanceId === playerView.clash?.targetId)
               ?.controller;
       if (stepSeat === seat) {
-        actions.push(...clashBuffActions(playerView, seat, stateVersion));
+        actions.push(
+          ...clashBuffActions(playerView, seat, stateVersion, input.resolveTargetCandidates),
+        );
         actions.push(simpleAction("passClashStep", "pass", "Pass", stateVersion));
       }
     }
   }
 
-  actions.push({
+  actions.push(concedeAction(stateVersion));
+
+  return {
+    protocolVersion: INTERACTION_PROTOCOL_VERSION,
+    gameSlug: "alpha-clash",
+    actorId: input.actorId,
+    stateVersion,
+    status: statusFor(playerView, seat, input.decisionSeat),
+    actions,
+  };
+}
+
+function concedeAction(stateVersion: number): InteractionAction {
+  return {
     id: "concede",
     requestId: requestId(stateVersion, "concede"),
     intent: "concede",
@@ -194,21 +352,12 @@ export function buildAlphaClashInteractionView(input: {
       {
         kind: "boolean",
         id: "confirm",
-        text: { key: "Concede the match?" },
+        text: { key: "Concede this game?" },
         required: true,
         trueText: { key: "Concede" },
         falseText: { key: "Cancel" },
       },
     ],
-  });
-
-  return {
-    protocolVersion: INTERACTION_PROTOCOL_VERSION,
-    gameSlug: "alpha-clash",
-    actorId: input.actorId,
-    stateVersion,
-    status: statusFor(playerView, seat),
-    actions,
   };
 }
 
@@ -216,7 +365,16 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
   moveType: string;
   payload: NativePayload;
 } {
-  const values = submission.values;
+  const mode = singleEntity(submission.values.modeSelection);
+  const modePrefix = mode === undefined ? undefined : `mode:${mode}:`;
+  const values = {
+    ...submission.values,
+    ...Object.fromEntries(
+      Object.entries(submission.values)
+        .filter(([key]) => modePrefix !== undefined && key.startsWith(modePrefix))
+        .map(([key, value]) => [key.slice(modePrefix!.length), value]),
+    ),
+  };
   const [moveType, ...args] = submission.actionId.split(":");
 
   const targetId = singleEntity(values.targetId);
@@ -229,10 +387,26 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
   };
 
   switch (moveType) {
+    case "resolveEffectPlay": {
+      const [choiceId, ...cardParts] = args;
+      const optionId = cardParts.join(":");
+      if (optionId === "decline")
+        return { moveType: "resolveChoice", payload: { choiceId, optionId } };
+      const translated = alphaClashSubmissionToPayload({
+        ...submission,
+        actionId: `playCard:${optionId}`,
+      });
+      const { cardId: _cardId, ...play } = translated.payload;
+      return { moveType: "resolveChoice", payload: { choiceId, optionId, play } };
+    }
     case "resolveChoice": {
       const choiceId = args.join(":");
       const payload: NativePayload = { choiceId };
-      if (typeof values.confirm === "boolean") {
+      if (values.deckOrder !== undefined) {
+        payload.deckOrder = values.deckOrder;
+      } else if (Array.isArray(values.order)) {
+        payload.orderedIds = stringList("order");
+      } else if (typeof values.confirm === "boolean") {
         payload.optionId = values.confirm ? "yes" : "no";
       } else if (
         typeof values.selection === "string" ||
@@ -243,21 +417,48 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
       } else if (Array.isArray(values.selection)) {
         payload.optionId = singleEntity(values.selection);
       } else if (typeof values.count === "number") {
-        payload.optionId = String(Math.trunc(values.count));
+        payload.optionId = String(values.count);
       } else if (values.allocation !== undefined) {
         payload.division = allocationDivision(values.allocation);
+      }
+      if (values.confirm === true) {
+        const payment = paymentFromOptionIds(values.resourcePayment);
+        if (payment) payload.resourcePayment = payment;
       }
       return { moveType, payload };
     }
     case "playCard":
     case "respond": {
-      const payload: NativePayload = { cardId: args[0] ?? "" };
+      const payload: NativePayload = { cardId: args[0] ?? "", ...costRoutePayload(values) };
+      const sacrifices = sacrificeDeclaration(values);
+      if (sacrifices) payload.costReductionSacrificeIds = sacrifices;
+      const discountRoute = optionalDiscountRoute(values);
+      if (discountRoute) Object.assign(payload, optionalDiscountDeclaration(discountRoute));
+      if (mode !== undefined) {
+        const indices = mode.split(",").map(Number);
+        if (indices.length === 1) payload.modeIndex = indices[0];
+        else payload.modeIndices = indices;
+      }
+      if (singleEntity(values.manifestRoute) === "manifest") payload.manifest = true;
       if (targetId) payload.targetId = targetId;
-      const targetIds = stringList("targetIds");
+      const targetIds = remainingTargets(values);
       if (targetIds) payload.targetIds = targetIds;
       if (xValue !== undefined) payload.xValue = xValue;
+      if (typeof values.healthReduction === "number")
+        payload.healthReduction = values.healthReduction;
+      const paymentKey = sacrifices?.length
+        ? `sacrificeResourcePayment:${sacrificeRoute(values)}`
+        : discountRoute && discountRoute !== "all"
+          ? `discountResourcePayment:${discountRoute}`
+          : typeof values.healthReduction === "number" && values.healthReduction > 0
+            ? `healthResourcePayment:${values.healthReduction}`
+            : "resourcePayment";
+      const payment = paymentFromOptionIds(
+        values.xResourcePayment !== undefined ? values.xResourcePayment : values[paymentKey],
+      );
+      if (payment && payload.manifest !== true) payload.resourcePayment = payment;
       const alternate = stringList("alternateCostCardIds");
-      if (alternate) payload.alternateCostCardIds = alternate;
+      if (alternate && values.costRoute === undefined) payload.alternateCostCardIds = alternate;
       return { moveType, payload };
     }
     case "setCard":
@@ -269,21 +470,28 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
         payload: {
           cardId: args[0] ?? "",
           abilityIndex: Number.parseInt(args[1] ?? "0", 10) || 0,
+          ...(args[2] !== undefined ? { costIndex: Number(args[2]) } : {}),
+          ...(stringList("sendCostCardIds")
+            ? { sendCostCardIds: stringList("sendCostCardIds") }
+            : {}),
           ...(targetId ? { targetId } : {}),
-          ...(stringList("targetIds") ? { targetIds: stringList("targetIds") } : {}),
+          ...(remainingTargets(values) ? { targetIds: remainingTargets(values) } : {}),
           ...(xValue !== undefined ? { xValue } : {}),
         },
       };
     case "attachWeapon":
-      return { moveType, payload: { weaponId: args[0] ?? "", targetId: targetId ?? "" } };
+      return { moveType, payload: { cardId: args[0] ?? "", targetId: targetId ?? "" } };
     case "detachWeapon":
-      return { moveType, payload: { weaponId: args[0] ?? "" } };
+      return { moveType, payload: { cardId: args[0] ?? "" } };
     case "initiateClash":
       return {
         moveType,
         payload: {
           attackerId: singleEntity(values.attackerId) ?? "",
-          targetId: singleEntity(values.targetId) ?? "",
+          targetId:
+            singleEntity(values[`targetId:${singleEntity(values.attackerId)}`]) ??
+            singleEntity(values.targetId) ??
+            "",
         },
       };
     case "declareObstructors":
@@ -296,6 +504,8 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
       }
       return { moveType, payload: {} };
     }
+    case "declareMulligan":
+      return { moveType, payload: { take: args[0] === "take" } };
     case "mulligan":
       return { moveType, payload: { cardIds: stringList("cardIds") ?? [] } };
     case "startGame":
@@ -318,17 +528,219 @@ export function alphaClashSubmissionToPayload(submission: InteractionSubmission)
 
 type PendingChoice = ProjectedState["pendingChoices"][number];
 
-function choiceAction(choice: PendingChoice, stateVersion: number): InteractionAction {
+/** Fixed destinations come from native effects, never from UI guesses or card names. */
+function retrievalDestination(
+  choice: PendingChoice,
+  view: ProjectedState,
+): InteractionInput | undefined {
+  const destinationOf = (effects: readonly AcEffect[]): string | undefined => {
+    for (const effect of effects) {
+      if (effect.type === "returnToHand") return "hand";
+      if (effect.type === "tutor" && effect.controller === "friendly") {
+        return effect.destination === "accessoryZone"
+          ? "accessory"
+          : effect.destination === "topOfDeck" || effect.destination === "bottomOfDeck"
+            ? "deck"
+            : effect.destination;
+      }
+    }
+    return undefined;
+  };
+  let destination: string | undefined;
+  let optionIds: string[] | undefined;
+  if (choice.kind === "modal") {
+    const selections = choice.options.flatMap((option) => {
+      const selection = option.effects.find((effect) => effect.type === "selectCards");
+      const id = selection?.selected?.at(-1);
+      const card = view.cards.find((card) => card.instanceId === id);
+      const to = selection && destinationOf(selection.then);
+      // Multi-card selections must finish their native sequence before placement.
+      return card &&
+        card.owner === choice.playerId &&
+        ["deck", "oblivion"].includes(card.zone) &&
+        to &&
+        selection?.max === 1
+        ? [{ id: option.id, to }]
+        : [];
+    });
+    if (selections.length && selections.every((entry) => entry.to === selections[0].to)) {
+      destination = selections[0].to;
+      optionIds = selections.map((entry) => entry.id);
+    }
+  } else if (
+    choice.kind === "target" &&
+    choice.candidates.length &&
+    choice.candidates.every((id) =>
+      view.cards.some(
+        (card) =>
+          card.instanceId === id &&
+          card.owner === choice.playerId &&
+          ["deck", "oblivion"].includes(card.zone),
+      ),
+    )
+  )
+    // The selected candidate belongs to the first effect. Later effects can
+    // move an earlier declared card (Trugg), not this choice's candidate.
+    destination = destinationOf(choice.effects.slice(0, 1));
+  if (!destination) return undefined;
+  const label =
+    destination === "accessory"
+      ? "Accessory Zone"
+      : destination === "clash"
+        ? "Clash Zone"
+        : destination;
+  return {
+    kind: "entity-selection",
+    id: "destination",
+    text: { key: `Place the selected card in your ${label}` },
+    required: !optionIds,
+    ...(optionIds
+      ? { requiredWhen: optionIds.map((id) => ({ all: [{ inputId: "selection", value: [id] }] })) }
+      : {}),
+    role: "destination",
+    entityKinds: ["zone"],
+    min: 1,
+    max: 1,
+    ordered: false,
+    candidates: [
+      {
+        entity: { kind: "zone", instanceId: `${choice.playerId}:${destination}` },
+        text: { key: `Your ${label}` },
+        enabled: true,
+      },
+    ],
+  };
+}
+
+function choiceAction(
+  choice: PendingChoice,
+  stateVersion: number,
+  playerView: ProjectedState,
+): InteractionAction {
   const id = `resolveChoice:${choice.id}`;
+  // Public reveal references identify the card this decision concerns. Read
+  // its face from the viewer projection, never from the hidden deck registry.
+  const revealedCards = [...new Set((choice.publicReveals ?? []).map((ref) => ref.cardId))]
+    .map((id) => playerView.cards.find((card) => card.instanceId === id))
+    .flatMap((card) => {
+      if (!card?.name || !card.definitionId) return [];
+      const definition = safeDefinition(card.definitionId);
+      return [
+        definition && definition.cardType !== "contender"
+          ? `${card.name} (cost ${costLabel(definition)})`
+          : card.name,
+      ];
+    });
+  const prompt = revealedCards.length
+    ? `${choice.prompt}. Revealed: ${revealedCards.join(", ")}.`
+    : choice.prompt;
   const base = {
     id,
     requestId: requestId(stateVersion, id),
     intent: "choose-option" as const,
-    text: { key: choice.prompt },
+    text: { key: prompt },
+    source: entityRef(choice.sourceId),
     enabled: true,
   };
+  const ordering = deckOrderOptions(choice);
+  if (ordering.length) {
+    const ids = [...new Set(ordering.map((option) => option.cardId))];
+    return {
+      ...base,
+      text: { key: "Order the looked-at cards" },
+      inputs: [
+        {
+          kind: "entity-partition",
+          id: "deckOrder",
+          required: true,
+          text: {
+            key: ordering.every((option) => option.destination === "top")
+              ? "Place each card in Top, then set the order."
+              : ordering.every((option) => option.destination === "bottom")
+                ? "Place each card in Bottom, then set the order."
+                : "Place each card in Top or Bottom, then set the order.",
+          },
+          candidateSetText: { key: "Looked-at cards" },
+          entityKind: "card",
+          assignment: "exhaustive",
+          candidates: ids.map((id) => ({
+            ...candidateRef(id),
+            text: { key: playerView.cards.find((card) => card.instanceId === id)?.name ?? "Card" },
+          })),
+          routes: (["top", "bottom"] as const)
+            .filter((destination) => ordering.some((option) => option.destination === destination))
+            .map((destination) => ({
+              id: destination,
+              text: { key: destination === "top" ? "Top" : "Bottom" },
+              kind: "destination",
+              ordered: true,
+              orderDirection: "top-first",
+              min: 0,
+              max: ids.length,
+              candidateIds: ordering
+                .filter((option) => option.destination === destination)
+                .map((option) => option.cardId),
+            })),
+        },
+      ],
+    };
+  }
   switch (choice.kind) {
+    case "ordering":
+      return {
+        ...base,
+        inputs: [
+          {
+            kind: "ordering",
+            id: "order",
+            text: { key: choice.prompt },
+            required: true,
+            entityKind: choice.purpose === "triggers" ? "effect" : "card",
+            min: choice.candidates.length,
+            max: choice.candidates.length,
+            candidates: choice.candidates.map((candidate) => ({
+              entity: {
+                kind: choice.purpose === "triggers" ? "effect" : "card",
+                instanceId: candidate.id,
+                definitionId:
+                  playerView.cards.find((card) => card.instanceId === candidate.cardId)
+                    ?.definitionId ?? undefined,
+              },
+              enabled: true,
+              text: {
+                key: candidate.label,
+              },
+            })),
+          },
+        ],
+      };
     case "option":
+      // Only native yes/no decisions can use boolean submission. Prevention
+      // precedence carries actual barrier IDs, which must survive unchanged.
+      if (
+        choice.options.length !== 2 ||
+        !choice.options.some((option) => option.id === "yes") ||
+        !choice.options.some((option) => option.id === "no")
+      ) {
+        return {
+          ...base,
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "selection",
+              text: { key: prompt },
+              required: true,
+              min: 1,
+              max: 1,
+              options: choice.options.map((option) => ({
+                id: option.id,
+                text: { key: option.label },
+                enabled: true,
+              })),
+            },
+          ],
+        };
+      }
       return {
         ...base,
         inputs: [
@@ -337,30 +749,86 @@ function choiceAction(choice: PendingChoice, stateVersion: number): InteractionA
             id: "confirm",
             text: { key: choice.prompt },
             required: true,
-            trueText: { key: choice.options.find((option) => option.id === "yes")?.label ?? "Yes" },
-            falseText: { key: choice.options.find((option) => option.id === "no")?.label ?? "No" },
+            trueText: { key: "Use" },
+            falseText: { key: "Decline" },
           },
         ],
       };
-    case "modal":
+    case "modal": {
+      // A simultaneous-trigger order renders as the numbered tray and submits
+      // the controller's whole remaining order through orderedIds.
+      const order = choice.triggerOrder;
+      if (order) {
+        return {
+          ...base,
+          inputs: [
+            {
+              kind: "ordering",
+              id: "order",
+              text: { key: choice.prompt },
+              required: true,
+              entityKind: "effect",
+              min: choice.options.length,
+              max: choice.options.length,
+              candidates: choice.options.map((option) => {
+                const sourceId = order.batch.find((trigger) => trigger.id === option.id)?.context
+                  .sourceId;
+                return {
+                  entity: {
+                    kind: "effect" as const,
+                    instanceId: option.id,
+                    definitionId:
+                      playerView.cards.find((card) => card.instanceId === sourceId)?.definitionId ??
+                      undefined,
+                  },
+                  enabled: true,
+                  text: { key: option.label },
+                };
+              }),
+            },
+          ],
+        };
+      }
       return {
         ...base,
         inputs: [
           {
             kind: "option-selection",
             id: "selection",
-            text: { key: choice.prompt },
+            text: { key: prompt },
             required: true,
             min: 1,
             max: 1,
-            options: choice.options.map((option): InteractionOption => ({
-              id: option.id,
-              text: { key: option.label },
-              enabled: true,
-            })),
+            cardDestination: cardDestination(
+              choice.options
+                .flatMap((option) => option.effects)
+                .filter((effect) => effect.type === "selectCards"),
+            ),
+            options: choice.options.map(
+              (option): InteractionOption => ({
+                id: option.id,
+                text: { key: option.label },
+                entity: (() => {
+                  const selection = option.effects.find((effect) => effect.type === "selectCards");
+                  const resolved = option.effects.find(
+                    (effect) => effect.type === "resolveSelected",
+                  );
+                  // Compound source-and-partner moves identify the selected partner,
+                  // so same-name copies remain distinguishable in the card picker.
+                  const partners = resolved?.cardIds.filter((id) => id !== choice.sourceId) ?? [];
+                  const cardId =
+                    option.cardId ??
+                    selection?.selected?.at(-1) ??
+                    (partners.length === 1 ? partners[0] : undefined);
+                  return cardId ? entityRef(cardId) : undefined;
+                })(),
+                enabled: true,
+              }),
+            ),
           },
         ],
       };
+    }
     case "target":
       return {
         ...base,
@@ -369,23 +837,62 @@ function choiceAction(choice: PendingChoice, stateVersion: number): InteractionA
             kind: "entity-selection",
             id: "selection",
             text: { key: choice.prompt },
-            required: true,
+            required: !choice.optional,
             role: "target",
-            entityKinds: ["card"],
-            min: 1,
+            entityKinds: ["card", "player"],
+            min: choice.optional ? 0 : 1,
             max: 1,
+            ...(choice.optional ? { confirmBeforeSubmit: true } : {}),
             ordered: false,
-            candidates: choice.candidates.map(candidateRef),
+            candidates: choice.candidates.map((id) => ({
+              ...candidateRef(id),
+              ...(id === "player-one" || id === "player-two"
+                ? { text: { key: id === choice.playerId ? "You" : "Opponent" } }
+                : {}),
+            })),
+            cardDestination: choice.discard
+              ? destination("Oblivion", "Discard card")
+              : cardDestination(choice.effects),
           },
         ],
       };
-    case "count":
+    case "count": {
+      const transfer = choice.then.find((effect) => effect.type === "moveCounters");
+      const visibleName = (id: string | undefined) =>
+        playerView.cards.find((card) => card.instanceId === id)?.name ?? "card";
+      const sourceId =
+        transfer?.source.type === "bound" ? choice.bindings?.[transfer.source.binding] : undefined;
+      const destinationId =
+        transfer?.target.type === "selected" ? choice.selectedCardIds?.[0] : undefined;
       return {
         ...base,
         inputs: [
           {
             kind: "number",
             id: "count",
+            ...(transfer && sourceId && destinationId
+              ? {
+                  presentation: {
+                    contextText: {
+                      key: `From ${visibleName(sourceId)} to ${visibleName(destinationId)}`,
+                    },
+                    contextParts: [
+                      { kind: "text" as const, text: { key: "From " } },
+                      { kind: "card" as const, entity: entityRef(sourceId) },
+                      { kind: "text" as const, text: { key: " to " } },
+                      { kind: "card" as const, entity: entityRef(destinationId) },
+                    ],
+                    confirmText: { key: "Move counters" },
+                    cancel: {
+                      value: 0,
+                      text: { key: "Cancel transfer" },
+                      description: {
+                        key: "Cancel moves no counters. The ability remains used this turn.",
+                      },
+                    },
+                  },
+                }
+              : {}),
             text: { key: choice.prompt },
             required: true,
             min: 0,
@@ -394,28 +901,36 @@ function choiceAction(choice: PendingChoice, stateVersion: number): InteractionA
           },
         ],
       };
-    case "division":
+    }
+    case "division": {
+      const prevention =
+        choice.sharedPrevention?.targetAmounts ??
+        choice.sharedClashPrevention?.amounts ??
+        choice.prevention?.sourceAmounts;
       return {
         ...base,
         inputs: [
           {
             kind: "entity-allocation",
             id: "allocation",
-            text: { key: `${choice.prompt} (divide ${choice.total} damage)` },
+            text: { key: choice.prompt },
             required: true,
             role: "target",
             entityKinds: ["card"],
             totalMin: choice.total,
             totalMax: choice.total,
+            allowEmpty: !prevention,
+            maxRecipients: choice.maxTargets,
             candidates: choice.candidates.map((candidateId) => ({
               entity: entityRef(candidateId),
               enabled: true,
-              min: 1,
-              max: Math.max(1, choice.total),
+              min: 0,
+              max: prevention?.[candidateId] ?? choice.total,
             })),
           },
         ],
       };
+    }
     default:
       return { ...base, inputs: [] };
   }
@@ -441,7 +956,11 @@ function handPlayActions(
   playerView: ProjectedState,
   seat: Seat,
   stateVersion: number,
-  options: { window: boolean },
+  options: {
+    window: boolean;
+    resolveTargets?: TargetResolver;
+    banishedPlayCardIds?: readonly string[];
+  },
 ): InteractionAction[] {
   const actions: InteractionAction[] = [];
   for (const card of playerView.cards.filter(
@@ -452,7 +971,10 @@ function handPlayActions(
           card.zone === "accessory" &&
           card.faceDown &&
           card.setOnTurn !== playerView.turnNumber) ||
-        (!options.window && card.zone === "oblivion")),
+        (!options.window && card.zone === "oblivion") ||
+        (!options.window &&
+          card.zone === "banished" &&
+          options.banishedPlayCardIds?.includes(card.instanceId))),
   )) {
     if (!card.definitionId) continue;
     const definition = safeDefinition(card.definitionId);
@@ -471,9 +993,10 @@ function handPlayActions(
       // activations, and Ambush entrances (304.7, 704.17h).
       const tag = counterTagForWindow(playerView);
       if (!tag) continue;
-      const tags = (definition as { counterTags?: readonly AcCounterTag[] }).counterTags;
-      const isAmbush =
-        definition.cardType === "clash" && definition.keywords?.includes("ambush") === true;
+      const tags =
+        ("ambush" in definition ? definition.ambush?.counterTags : undefined) ??
+        (definition as { counterTags?: readonly AcCounterTag[] }).counterTags;
+      const isAmbush = isAmbushCard(definition);
       const usable =
         (definition.cardType === "action" &&
           definition.subtype === "quick" &&
@@ -481,17 +1004,25 @@ function handPlayActions(
         (definition.cardType === "accessory" &&
           (definition.subtype === "trap" || isAmbushCard(definition)) &&
           tags?.includes(tag) === true) ||
-        isAmbush;
+        (isAmbush && tags?.includes(tag) === true);
       if (!usable) continue;
       if (card.zone === "hand" && (definition.cardType === "accessory" || isAmbush)) continue;
       if (!responseConditionMatches(definition, playerView, seat)) continue;
-      const inputs = chosenTargetInputs(definition, playerView, seat, { hand: true });
+      const inputs = playInputs(
+        definition,
+        playerView,
+        seat,
+        card.instanceId,
+        options.resolveTargets,
+        "ambush" in definition ? definition.ambush?.effects : undefined,
+      );
       if (inputs.some((candidate) => requiredInputEmpty(candidate))) continue;
       actions.push({
         id: `respond:${card.instanceId}`,
         requestId: requestId(stateVersion, `respond:${card.instanceId}`),
         intent: "play-card",
         text: { key: isAmbush ? `Ambush ${definition.name}` : `Counter with ${definition.name}` },
+        source: entityRef(card.instanceId),
         enabled: true,
         inputs,
       });
@@ -499,10 +1030,33 @@ function handPlayActions(
     }
 
     if (definition.cardType === "contender") continue;
-    const inputs = playInputs(definition, playerView, seat);
+    if (card.zone === "hand" && canSet(definition))
+      actions.push({
+        ...simpleAction(
+          `setCard:${card.instanceId}`,
+          "move-card",
+          `Set ${definition.name} face down`,
+          stateVersion,
+        ),
+        source: entityRef(card.instanceId),
+      });
+    if (
+      (definition.cardType === "action" &&
+        (definition.subtype === "quick" || definition.subtype === "clash-buff")) ||
+      (definition.cardType === "accessory" && definition.subtype === "trap")
+    )
+      continue;
+    const inputs = playInputs(
+      definition,
+      playerView,
+      seat,
+      card.instanceId,
+      options.resolveTargets,
+    );
     if (inputs.some((candidate) => requiredInputEmpty(candidate))) continue;
     actions.push({
       id: `playCard:${card.instanceId}`,
+      source: entityRef(card.instanceId),
       requestId: requestId(stateVersion, `playCard:${card.instanceId}`),
       intent: "play-card",
       text: {
@@ -511,16 +1065,6 @@ function handPlayActions(
       enabled: true,
       inputs,
     });
-    if (card.zone === "hand" && canSet(definition)) {
-      actions.push({
-        id: `setCard:${card.instanceId}`,
-        requestId: requestId(stateVersion, `setCard:${card.instanceId}`),
-        intent: "move-card",
-        text: { key: `Set ${definition.name} face down` },
-        enabled: true,
-        inputs: [],
-      });
-    }
   }
   return actions;
 }
@@ -565,13 +1109,54 @@ function responseConditionMatches(
   return true;
 }
 
-function playInputs(
+/** A declared cost, not a resolution choice: cancelling the draft pays nothing. */
+function healthPaymentInputs(
   definition: AcCardDefinition,
   playerView: ProjectedState,
   seat: Seat,
 ): InteractionInput[] {
-  const inputs = chosenTargetInputs(definition, playerView, seat, { hand: true });
-  if (definition.cardType === "clash" && "cost" in definition && definition.cost?.x) {
+  if (definition.cardType !== "action" || !definition.healthCostReduction) return [];
+  const max = Math.max(
+    0,
+    Math.min(definition.healthCostReduction.max, playerView.players[seat].health),
+  );
+  return [
+    {
+      kind: "number",
+      id: "healthReduction",
+      text: { key: "Choose health payment" },
+      required: true,
+      min: 0,
+      max,
+      step: 1,
+      presentation: {
+        contextText: {
+          key: "Pay health to reduce the resource cost; zero pays no health and cancel pays nothing",
+        },
+        confirmText: { key: "Confirm health payment" },
+      },
+    },
+  ];
+}
+
+function playInputs(
+  definition: AcCardDefinition,
+  playerView: ProjectedState,
+  seat: Seat,
+  sourceId: string,
+  resolveTargets?: TargetResolver,
+  responseEffects?: readonly AcEffect[],
+): InteractionInput[] {
+  const inputs = chosenTargetInputs(definition, playerView, seat, {
+    sourceId,
+    resolveTargets,
+    abilityIndex: null,
+    effects: responseEffects,
+  });
+  inputs.push(...healthPaymentInputs(definition, playerView, seat));
+  const discount = optionalDiscountInput(definition);
+  if (discount) inputs.push(discount);
+  if ("cost" in definition && definition.cost?.x) {
     inputs.push({
       kind: "number",
       id: "xValue",
@@ -581,59 +1166,136 @@ function playInputs(
       step: 1,
     });
   }
-  if (definition.cardType === "clash" && definition.alternateCost) {
-    inputs.push({
-      kind: "entity-selection",
-      id: "alternateCostCardIds",
-      text: {
-        key: definition.alternateCost.text,
-      },
-      required: false,
-      role: "cost",
-      entityKinds: ["card"],
-      min: definition.alternateCost.payments.reduce((sum, payment) => sum + payment.amount, 0),
-      max: definition.alternateCost.payments.reduce((sum, payment) => sum + payment.amount, 0),
-      ordered: false,
-      candidates: definition.alternateCost.payments
-        .flatMap((payment) => candidatesForTarget(playerView, seat, payment.target))
-        .filter(
-          (candidate, index, candidates) =>
-            candidates.findIndex(
-              (other) => other.entity.instanceId === candidate.entity.instanceId,
-            ) === index,
-        ),
-    });
-  }
+  inputs.unshift(
+    ...costRouteInputs(definition, playerView, seat, sourceId, (target) =>
+      resolveTargets
+        ? resolveTargets(target, sourceId).map(candidateRef)
+        : target.type === "card" ||
+            target.type === "contender" ||
+            target.type === "contenderOrClash"
+          ? candidatesForTarget(playerView, seat, target)
+          : [],
+    ),
+  );
   return inputs;
 }
 
-/** Chosen card selectors need play-time candidates (rule 113.6b). */
-function chosenTargetInputs(
+/** Chosen card selectors need play-time candidates (rule 113.6b). Triggered
+ *  abilities declare later (603.3d), so callers scope the tree via abilityIndex. */
+export function chosenTargetInputs(
   definition: AcCardDefinition,
   playerView: ProjectedState,
   seat: Seat,
-  _context: { hand: boolean },
+  context: {
+    sourceId: string;
+    resolveTargets?: TargetResolver;
+    abilityIndex: number | null;
+    effects?: readonly AcEffect[];
+    ability?: Extract<AcAbility, { kind: "activated" }>;
+  },
 ): InteractionInput[] {
-  const inputs: InteractionInput[] = [];
-  const targets = chosenTargetsOf(definition);
-  let index = 0;
-  for (const target of targets) {
-    const id = index === 0 ? "targetId" : `targetIds`;
-    inputs.push({
-      kind: "entity-selection",
-      id,
-      text: { key: target.label ?? "Choose a target" },
-      required: true,
-      role: "target",
-      entityKinds: ["card"],
-      min: 1,
-      max: 1,
-      ordered: false,
-      candidates: candidatesForTarget(playerView, seat, target),
-    });
-    index += 1;
+  const ability =
+    context.ability ??
+    (context.abilityIndex === null ? undefined : definition.abilities?.[context.abilityIndex]);
+  const groups = new Map<number, AcTarget[]>();
+  let requiredCount: number | undefined;
+  const declaration =
+    context.abilityIndex === null && "targetDeclaration" in definition
+      ? definition.targetDeclaration
+      : undefined;
+  if (declaration) {
+    requiredCount = declaration.max;
+    groups.set(0, [declaration.target]);
+  } else if (ability?.kind === "activated" && ability.requiredTargets) {
+    const requirement = ability.requiredTargets;
+    requiredCount = playerView.portalOpen
+      ? (requirement.portalAmount ?? requirement.amount)
+      : requirement.amount;
+    groups.set(0, [requirement.target]);
+  } else {
+    for (const tree of context.effects
+      ? [{ abilityIndex: context.abilityIndex, effects: context.effects }]
+      : effectTreesOf(definition)) {
+      if (tree.abilityIndex !== context.abilityIndex) continue;
+      // Action effects share native declared indices; activated top-level effects
+      // consume declarations in order (including attachment host declarations).
+      const entries =
+        context.abilityIndex === null
+          ? collectChosenSelectorEntries(tree.effects)
+          : tree.effects
+              .flatMap((effect) =>
+                collectChosenSelectorEntries([effect]).slice(0, effect.type === "attach" ? 2 : 1),
+              )
+              .map((entry, index) => ({ ...entry, index }));
+      for (const entry of entries)
+        groups.set(entry.index, [...(groups.get(entry.index) ?? []), entry.target]);
+    }
   }
-  return inputs;
+  return [...groups.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([index, targets]) => {
+      const sets = targets.map((target) => {
+        if (context.resolveTargets) return context.resolveTargets(target, context.sourceId);
+        const selector = target.type === "declared" ? target.selector : target;
+        if (selector.type === "player") {
+          if (selector.controller === "any") return ["player-one", "player-two"];
+          if (selector.controller === "friendly") return [seat];
+          if (selector.controller === "opponent")
+            return [seat === "player-one" ? "player-two" : "player-one"];
+          if (selector.controller === "active") return [playerView.activePlayer];
+          return [];
+        }
+        return selector.type === "card" ||
+          selector.type === "contender" ||
+          selector.type === "contenderOrClash"
+          ? candidatesForTarget(playerView, seat, selector).map((c) => c.entity.instanceId!)
+          : [];
+      });
+      const candidates = (sets[0] ?? [])
+        .filter((id) => sets.every((set) => set.includes(id)))
+        .map(
+          (id): EntityCandidate =>
+            id === "player-one" || id === "player-two"
+              ? {
+                  entity: { kind: "player", instanceId: id },
+                  text: { key: id === seat ? "You" : "Opponent" },
+                  enabled: true,
+                }
+              : candidateRef(id),
+        );
+      const optional = targets.every((target) => target.type === "declared" && target.optional);
+      const count = requiredCount ?? 1;
+      return {
+        kind: "entity-selection",
+        id:
+          requiredCount && requiredCount > 1
+            ? "targetIds"
+            : index === 0
+              ? "targetId"
+              : index === 1
+                ? "targetIds"
+                : `targetIds:${index}`,
+        text: { key: count > 1 ? `Choose ${count} targets` : "Choose a target" },
+        required: true,
+        role: "target",
+        entityKinds: [...new Set(candidates.map((candidate) => candidate.entity.kind))],
+        min: declaration?.min ?? (optional ? 0 : count),
+        max: count,
+        ordered: count > 1,
+        candidates,
+        cardDestination:
+          definition.cardType === "action"
+            ? cardDestination(
+                definition.effects.filter(
+                  (effect) =>
+                    "target" in effect &&
+                    effect.target !== undefined &&
+                    targets.includes(effect.target),
+                ),
+              )
+            : undefined,
+      };
+    });
 }
 
 function initiateClashAction(
@@ -641,13 +1303,62 @@ function initiateClashAction(
   seat: Seat,
   other: Seat,
   stateVersion: number,
+  nativeTargets?: Readonly<Record<string, readonly string[]>>,
 ): InteractionAction | null {
-  const targets: EntityCandidate[] = [
+  const fallbackTargets = [
     ...contenderCandidates(playerView, other),
-    ...readyClashCandidates(playerView, other),
+    ...cardsWhere(
+      playerView,
+      (card, definition) =>
+        card.controller === other && card.zone === "clash" && definition.cardType === "clash",
+    ),
   ];
-  const attackers = readyClashCandidates(playerView, seat);
-  if (attackers.length === 0 || targets.length === 0) return null;
+  // Native legality includes runtime definitions such as tokens, which are
+  // absent from the printed catalog used by the fallback candidates.
+  const possibleAttackers = nativeTargets
+    ? playerView.cards
+        .filter(
+          (card) =>
+            card.controller === seat &&
+            card.ready &&
+            (card.zone === "clash" || card.zone === "contender"),
+        )
+        .map((card) => candidateRef(card.instanceId))
+    : [
+        ...readyClashCandidates(playerView, seat),
+        ...contenderCandidates(playerView, seat).filter(
+          (candidate) =>
+            playerView.cards.find((card) => card.instanceId === candidate.entity.instanceId)?.ready,
+        ),
+      ];
+  const attackers = possibleAttackers.filter(
+    (candidate) =>
+      nativeTargets === undefined || (nativeTargets[candidate.entity.instanceId]?.length ?? 0) > 0,
+  );
+  if (attackers.length === 0) return null;
+  const targetsFor = (id: string) =>
+    nativeTargets?.[id] ?? fallbackTargets.map((candidate) => candidate.entity.instanceId);
+  const firstTargets = targetsFor(attackers[0].entity.instanceId);
+  if (firstTargets.length === 0) return null;
+  const sameTargets = attackers.every(
+    (candidate) =>
+      JSON.stringify(targetsFor(candidate.entity.instanceId)) === JSON.stringify(firstTargets),
+  );
+  const targetInput = (ids: readonly string[], attackerId?: string): InteractionInput => ({
+    kind: "entity-selection",
+    id: attackerId ? `targetId:${attackerId}` : "targetId",
+    text: { key: "Choose the clash target" },
+    required: !attackerId,
+    ...(attackerId
+      ? { requiredWhen: [{ all: [{ inputId: "attackerId", value: [attackerId] }] }] }
+      : {}),
+    role: "defender",
+    entityKinds: ["card"],
+    min: 1,
+    max: 1,
+    ordered: false,
+    candidates: ids.map(candidateRef),
+  });
   return {
     id: "initiateClash",
     requestId: requestId(stateVersion, "initiateClash"),
@@ -658,27 +1369,20 @@ function initiateClashAction(
       {
         kind: "entity-selection",
         id: "attackerId",
-        text: { key: "Choose an engaged attacker" },
+        text: { key: "Choose a ready attacker" },
         required: true,
         role: "attacker",
         entityKinds: ["card"],
         min: 1,
         max: 1,
         ordered: false,
-        candidates: readyClashCandidates(playerView, seat),
+        candidates: attackers,
       },
-      {
-        kind: "entity-selection",
-        id: "targetId",
-        text: { key: "Choose the clash target" },
-        required: true,
-        role: "defender",
-        entityKinds: ["card"],
-        min: 1,
-        max: 1,
-        ordered: false,
-        candidates: targets,
-      },
+      ...(sameTargets
+        ? [targetInput(firstTargets)]
+        : attackers.map((candidate) =>
+            targetInput(targetsFor(candidate.entity.instanceId), candidate.entity.instanceId),
+          )),
     ],
   };
 }
@@ -688,16 +1392,18 @@ function clashBuffActions(
   playerView: ProjectedState,
   seat: Seat,
   stateVersion: number,
+  resolveTargets?: TargetResolver,
 ): InteractionAction[] {
   const actions: InteractionAction[] = [];
   for (const card of handCards(playerView, seat)) {
     if (!card.definitionId) continue;
     const definition = safeDefinition(card.definitionId);
     if (definition?.cardType !== "action" || definition.subtype !== "clash-buff") continue;
-    const inputs = playInputs(definition, playerView, seat);
+    const inputs = playInputs(definition, playerView, seat, card.instanceId, resolveTargets);
     if (inputs.some((candidate) => requiredInputEmpty(candidate))) continue;
     actions.push({
       id: `playCard:${card.instanceId}`,
+      source: entityRef(card.instanceId),
       requestId: requestId(stateVersion, `playCard:${card.instanceId}`),
       intent: "play-card",
       text: { key: `Clash Buff: ${definition.name}` },
@@ -712,21 +1418,43 @@ function accessoryActions(
   playerView: ProjectedState,
   seat: Seat,
   stateVersion: number,
+  definitionForCard?: (cardId: string) => AcCardDefinition | undefined,
 ): InteractionAction[] {
   const actions: InteractionAction[] = [];
   for (const card of playerView.cards) {
-    if (card.controller !== seat || card.zone !== "accessory" || card.faceDown) continue;
-    const definition = card.definitionId ? safeDefinition(card.definitionId) : undefined;
+    if (
+      card.controller !== seat ||
+      card.faceDown ||
+      (card.zone !== "accessory" && !card.attachedTo)
+    )
+      continue;
+    const definition =
+      definitionForCard?.(card.instanceId) ??
+      (card.definitionId ? safeDefinition(card.definitionId) : undefined);
     if (!definition) continue;
+    if (card.attachedTo && definition.cardType === "accessory" && definition.attachCost) {
+      actions.push({
+        ...simpleAction(
+          `detachWeapon:${card.instanceId}`,
+          "activate",
+          `Detach ${definition.name}`,
+          stateVersion,
+        ),
+        source: entityRef(card.instanceId),
+      });
+    }
     if (definition.cardType === "accessory" && definition.subtype === "weapon") {
       const candidates = cardsWhere(
         playerView,
-        (owned, def) => def.cardType === "clash" && owned.controller === seat,
+        (owned, def) =>
+          def.cardType === "clash" && owned.controller === seat && owned.zone === "clash",
+        definitionForCard,
       );
       if (candidates.length === 0) continue;
       actions.push({
         id: `attachWeapon:${card.instanceId}`,
         requestId: requestId(stateVersion, `attachWeapon:${card.instanceId}`),
+        source: entityRef(card.instanceId),
         intent: "choose-targets",
         text: { key: `Attach ${definition.name}` },
         enabled: true,
@@ -750,6 +1478,7 @@ function accessoryActions(
       actions.push({
         id: `attachWeapon:${card.instanceId}`,
         requestId: requestId(stateVersion, `attachWeapon:${card.instanceId}`),
+        source: entityRef(card.instanceId),
         intent: "choose-targets",
         text: { key: `Attach ${definition.name} to your Contender` },
         enabled: true,
@@ -773,33 +1502,46 @@ function accessoryActions(
   return actions;
 }
 
-function counterAbilityActions(
+function activatedAbilityActions(
   playerView: ProjectedState,
   seat: Seat,
   stateVersion: number,
+  counterWindow = false,
+  resolveTargets?: TargetResolver,
+  resolveAbilities?: (cardId: string) => readonly AcAbility[],
+  resolveDefinition?: (cardId: string) => AcCardDefinition | undefined,
 ): InteractionAction[] {
   const actions: InteractionAction[] = [];
   const tag = counterTagForWindow(playerView);
-  if (!tag) return actions;
+  if (counterWindow && !tag) return actions;
   for (const card of playerView.cards) {
     if (card.controller !== seat || !card.definitionId) continue;
-    const definition = safeDefinition(card.definitionId);
+    const definition = resolveDefinition?.(card.instanceId) ?? safeDefinition(card.definitionId);
     if (!definition) continue;
-    // Activated abilities exist on Contenders, Clash cards, Clashgrounds,
-    // and Accessories; Actions resolve through play/respond instead.
-    const abilities = definition.cardType === "action" ? [] : (definition.abilities ?? []);
-    const abilityCounter = windowTagToAbilityCounter(tag);
+    const abilities = resolveAbilities?.(card.instanceId) ?? definition.abilities ?? [];
+    const abilityCounter = tag ? windowTagToAbilityCounter(tag) : undefined;
     abilities.forEach((ability, abilityIndex) => {
       if (ability.kind !== "activated") return;
-      if (ability.counter !== abilityCounter) return;
+      if (counterWindow ? ability.counter !== abilityCounter : ability.counter !== undefined)
+        return;
+      const resourceStep =
+        playerView.phase.name === "expansion" && playerView.phase.step === "resource";
+      if (!counterWindow && resourceStep !== (ability.phase === "resource")) return;
       const fromHere =
         card.zone === "hand"
-          ? ability.activation === "hand"
+          ? ability.activation === "hand" ||
+            [ability.cost, ...(ability.alternateCosts ?? [])].some(
+              (cost) => cost?.kind === "discardSelf",
+            )
           : IN_PLAY_ZONES.includes(card.zone) ||
             (card.zone === "oblivion" && ability.activation === "oblivion");
       if (!fromHere) return;
       const inputs = chosenTargetInputs(definition, playerView, seat, {
-        hand: card.zone === "hand",
+        sourceId: card.instanceId,
+        resolveTargets,
+        abilityIndex,
+        ability,
+        effects: ability.effects,
       });
       if (inputs.some((candidate) => requiredInputEmpty(candidate))) return;
       actions.push({
@@ -807,6 +1549,7 @@ function counterAbilityActions(
         requestId: requestId(stateVersion, `activateAbility:${card.instanceId}:${abilityIndex}`),
         intent: "activate",
         text: { key: ability.text },
+        source: entityRef(card.instanceId),
         enabled: true,
         inputs,
       });
@@ -903,47 +1646,38 @@ type PlayTarget = Extract<AcTarget, { type: "card" | "contender" | "contenderOrC
   label?: string;
 };
 
-function chosenTargetsOf(definition: AcCardDefinition): PlayTarget[] {
-  const found: PlayTarget[] = [];
-  for (const effects of effectTreesOf(definition)) {
-    for (const effect of effects) {
-      if (!("target" in effect)) continue;
-      const target = effect.target;
-      if (!target) continue;
-      if (
-        (target.type === "card" ||
-          target.type === "contender" ||
-          target.type === "contenderOrClash") &&
-        target.chosen
-      )
-        found.push(target);
-    }
-  }
-  return found;
-}
-
-/** Effect trees carried by a definition: Actions carry one top-level tree. */
-function effectTreesOf(definition: AcCardDefinition): readonly (readonly AcEffect[])[] {
-  if (definition.cardType === "action") return [definition.effects];
-  const trees: (readonly AcEffect[])[] = [];
-  if (definition.cardType === "accessory" && definition.effects) trees.push(definition.effects);
-  for (const ability of definition.abilities ?? []) {
-    if ("effects" in ability && Array.isArray(ability.effects)) {
-      trees.push(ability.effects);
-    }
-  }
+/** Effect trees carried by a definition, tagged with their owning ability. */
+function effectTreesOf(
+  definition: AcCardDefinition,
+): readonly { abilityIndex: number | null; effects: readonly AcEffect[] }[] {
+  const trees: { abilityIndex: number | null; effects: readonly AcEffect[] }[] = [];
+  if (definition.cardType === "action")
+    trees.push({ abilityIndex: null, effects: definition.effects });
+  if (definition.cardType === "accessory" && definition.effects)
+    trees.push({ abilityIndex: null, effects: definition.effects });
+  (definition.abilities ?? []).forEach((ability, abilityIndex) => {
+    if ("effects" in ability && Array.isArray(ability.effects))
+      trees.push({ abilityIndex, effects: ability.effects });
+  });
   return trees;
 }
 
 function cardsWhere(
   playerView: ProjectedState,
   predicate: (card: ProjectedState["cards"][number], definition: AcCardDefinition) => boolean,
+  definitionForCard?: (cardId: string) => AcCardDefinition | undefined,
 ): EntityCandidate[] {
   const candidates: EntityCandidate[] = [];
   for (const card of playerView.cards) {
-    if (!IN_PLAY_ZONES.includes(card.zone) && card.zone !== "hand") continue;
+    if (
+      !IN_PLAY_ZONES.includes(card.zone) &&
+      card.zone !== "hand" &&
+      card.zone !== "oblivion" &&
+      card.zone !== "banished"
+    )
+      continue;
     if (!card.definitionId) continue;
-    const definition = safeDefinition(card.definitionId);
+    const definition = definitionForCard?.(card.instanceId) ?? safeDefinition(card.definitionId);
     if (!definition) continue;
     if (predicate(card, definition)) {
       candidates.push(candidateRef(card.instanceId));
@@ -1002,15 +1736,19 @@ function handSelectionInput(
 /** A required entity selection with no legal candidates cannot be offered. */
 function requiredInputEmpty(input: InteractionInput): boolean {
   return (
-    input.kind === "entity-selection" && input.required === true && input.candidates.length === 0
+    input.kind === "entity-selection" &&
+    input.required === true &&
+    input.candidates.filter((candidate) => candidate.enabled).length < input.min
   );
 }
 
 function isAmbushCard(definition: AcCardDefinition): boolean {
-  return definition.cardType === "clash" && definition.keywords?.includes("ambush") === true;
+  return "keywords" in definition && definition.keywords?.includes("ambush") === true;
 }
 
 function candidateRef(instanceId: string): EntityCandidate {
+  if (instanceId === "player-one" || instanceId === "player-two")
+    return { entity: { kind: "player", instanceId }, enabled: true };
   return { entity: entityRef(instanceId), enabled: true };
 }
 
@@ -1035,9 +1773,10 @@ function costLabel(definition: AcCardDefinition): string {
 }
 
 function canSet(definition: AcCardDefinition): boolean {
-  if (definition.cardType === "accessory") return definition.subtype === "trap";
-  if (definition.cardType === "clash") return definition.keywords?.includes("ambush") === true;
-  return false;
+  return (
+    (definition.cardType === "accessory" && definition.subtype === "trap") ||
+    isAmbushCard(definition)
+  );
 }
 
 type AcCounterTag = "counter-attack" | "counter-play" | "counter-trap";
@@ -1081,12 +1820,23 @@ function allocationDivision(value: unknown): Record<string, number> {
   return division;
 }
 
-function statusFor(playerView: ProjectedState, seat: Seat): EngineInteractionView["status"] {
+function statusFor(
+  playerView: ProjectedState,
+  seat: Seat,
+  decisionSeat?: Seat,
+): EngineInteractionView["status"] {
   if (playerView.phase.name === "complete") return "game-over";
+  if (playerView.phase.name === "setup") {
+    const step = openingActionFor(playerView, seat);
+    return step === "wait" ? "waiting" : step === "start" ? "ready" : "choosing";
+  }
   if (pendingChoicesForSeat(playerView, seat).length > 0) return "choosing";
-  if (playerView.pendingChoices.length > 0) return "waiting";
+  if (playerView.pendingChoicePlayerId || playerView.pendingChoices.length > 0) return "waiting";
+  if (decisionSeat) return decisionSeat === seat ? "ready" : "waiting";
+  if (playerView.responseWindow)
+    return playerView.responseWindow.openFor === seat ? "ready" : "waiting";
   const isActive = playerView.activePlayer === seat;
-  if (isActive || playerView.responseWindow?.openFor === seat) return "ready";
+  if (isActive) return "ready";
   return "waiting";
 }
 
@@ -1095,3 +1845,15 @@ function requestId(stateVersion: number, id: string): string {
 }
 
 export type { AcCardType };
+
+function remainingTargets(values: InteractionSubmission["values"]): string[] | undefined {
+  const keys = Object.keys(values)
+    .filter((key) => key === "targetIds" || /^targetIds:\d+$/.test(key))
+    .sort((a, b) => Number(a.split(":")[1] ?? 1) - Number(b.split(":")[1] ?? 1));
+  if (!keys.length) return undefined;
+  return keys.flatMap((key) =>
+    Array.isArray(values[key])
+      ? values[key].filter((id): id is string => typeof id === "string")
+      : [],
+  );
+}

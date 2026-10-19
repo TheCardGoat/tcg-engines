@@ -1,0 +1,114 @@
+{
+  "matches": 384,
+  "valid": 384,
+  "wins": 332,
+  "win_rate": 0.8645833333333334,
+  "bootstrap_interval": [0.8315217391304348, 0.8959390862944162],
+  "hard_failures": [],
+  "by_deck": [
+    {
+      "id": "clarity-hyper-aggro",
+      "name": "Clarity Hyper Aggro",
+      "games": 48,
+      "wins": 42,
+      "mirror_games": 6,
+      "mirror_wins": 6,
+      "by_seat": {
+        "p1": [22, 24],
+        "p2": [20, 24]
+      }
+    },
+    {
+      "id": "season3-undefendable-clarity",
+      "name": "Clarity \u2014 undefendable (Season 3 link)",
+      "games": 48,
+      "wins": 45,
+      "mirror_games": 6,
+      "mirror_wins": 5,
+      "by_seat": {
+        "p1": [22, 24],
+        "p2": [23, 24]
+      }
+    },
+    {
+      "id": "season3-fexar-clarity",
+      "name": "Clarity \u2014 fexar (Season 3 link)",
+      "games": 48,
+      "wins": 44,
+      "mirror_games": 6,
+      "mirror_wins": 6,
+      "by_seat": {
+        "p1": [24, 24],
+        "p2": [20, 24]
+      }
+    },
+    {
+      "id": "season3-xiii-war",
+      "name": "War \u2014 xiii (Season 3 link)",
+      "games": 48,
+      "wins": 41,
+      "mirror_games": 6,
+      "mirror_wins": 2,
+      "by_seat": {
+        "p1": [22, 24],
+        "p2": [19, 24]
+      }
+    },
+    {
+      "id": "season3-sloppy-valen",
+      "name": "Valen \u2014 sloppy (Season 3 link)",
+      "games": 48,
+      "wins": 40,
+      "mirror_games": 6,
+      "mirror_wins": 3,
+      "by_seat": {
+        "p1": [22, 24],
+        "p2": [18, 24]
+      }
+    },
+    {
+      "id": "season3-silou-death",
+      "name": "Death \u2014 silou (Season 3 link)",
+      "games": 48,
+      "wins": 39,
+      "mirror_games": 6,
+      "mirror_wins": 5,
+      "by_seat": {
+        "p1": [19, 24],
+        "p2": [20, 24]
+      }
+    },
+    {
+      "id": "season3-silou-clarity",
+      "name": "Clarity \u2014 silou (Season 3 link)",
+      "games": 48,
+      "wins": 42,
+      "mirror_games": 6,
+      "mirror_wins": 6,
+      "by_seat": {
+        "p1": [22, 24],
+        "p2": [20, 24]
+      }
+    },
+    {
+      "id": "season3-avalogaming-kilimanjaro",
+      "name": "Kilimanjaro \u2014 avalogaming (Season 3 link)",
+      "games": 48,
+      "wins": 39,
+      "mirror_games": 6,
+      "mirror_wins": 4,
+      "by_seat": {
+        "p1": [21, 24],
+        "p2": [18, 24]
+      }
+    }
+  ],
+  "termination_counts": {
+    "rules-win": 384
+  },
+  "committed_rejections": 0,
+  "expert_decisions": 45944,
+  "expert_nodes": 11740857,
+  "expert_max_nodes": 768,
+  "expert_cycles": 0
+}

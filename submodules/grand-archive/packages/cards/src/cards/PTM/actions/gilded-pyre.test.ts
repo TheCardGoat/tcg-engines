@@ -67,12 +67,12 @@ describe("Gilded Pyre — buff-dependent damage", () => {
               targets: { "target-1": [target.objectId] },
               reservePayment: pay(2),
             });
-            expect(game.state.objects[target.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(target.objectId)).toBe(0);
             if (response) for (let n = 0; n < buffs; n++) buff();
             passEffectsStack(game);
-            expect(game.state.objects[target.objectId]!.damage).toBe(buffs ? 4 : 2);
+            expect(game.markedDamage(target.objectId)).toBe(buffs ? 4 : 2);
             expect(game.state.objects[target.objectId]!.counters.buff ?? 0).toBe(buffs);
-            expect(game.state.objects[other.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(other.objectId)).toBe(0);
           });
         }
   for (const own of [false, true])
@@ -97,6 +97,6 @@ describe("Gilded Pyre — buff-dependent damage", () => {
           .map((c) => ({ kind: "card", cardId: c.objectId })),
       });
       passEffectsStack(game);
-      expect(game.state.objects[target.objectId]!.damage).toBe(2);
+      expect(game.markedDamage(target.objectId)).toBe(2);
     });
 });

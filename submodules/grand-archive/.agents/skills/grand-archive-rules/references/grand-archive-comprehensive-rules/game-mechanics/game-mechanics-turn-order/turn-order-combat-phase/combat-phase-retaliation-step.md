@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-retaliation-step"
   relation: "current_index"
 ---
-
 # Combat Phase - Retaliation Step
 
 #### General Rules:

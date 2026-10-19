@@ -1,4 +1,5 @@
-import type { GrandArchiveAnyCard } from "@tcg/grand-archive-types";
+import type { GrandArchiveAnyCard, GrandArchiveAbilityDefinition } from "@tcg/grand-archive-types";
+import { GrandArchiveTestEngine } from "../testing/test-engine.ts";
 import { describe, expect, it } from "vitest";
 import { grandArchivePlayerId } from "./identity.ts";
 import {
@@ -15,7 +16,8 @@ import { grandArchivePlayerZoneObjectIds } from "./zone-ownership.ts";
 function card(
   canonicalId: string,
   type: "ACTION" | "ALLY" | "ATTACK" | "CHAMPION",
-): GrandArchiveAnyCard {
+  abilities: readonly GrandArchiveAbilityDefinition[] = [],
+): GrandArchiveAnyCard<GrandArchiveAbilityDefinition> {
   return {
     canonicalId,
     slug: canonicalId,
@@ -39,7 +41,7 @@ function card(
                 ? { power: 1 }
                 : {},
         rulesText: "",
-        abilities: [],
+        abilities,
       },
     },
   };
@@ -92,6 +94,39 @@ function setup() {
 }
 
 describe("Grand Archive shared and hosted zone control", () => {
+  it("gives a card entering an opposing Intent to that champion's controller", () => {
+    const transfer = card("transfer-to-opposing-intent", "ACTION", [
+      {
+        id: "transfer-to-opposing-intent-a1",
+        kind: "card-resolution",
+        text: "Put this card into your opponent's Intent.",
+        effect: {
+          kind: "move",
+          subject: { kind: "source" },
+          destination: { zone: "intent", host: { kind: "champion", player: "opponent" } },
+        },
+      },
+    ]);
+    const game = GrandArchiveTestEngine.startFixture({
+      playerOne: { champion, zones: { hand: [transfer], "main-deck": [ally] } },
+      playerTwo: { champion, zones: { "main-deck": [ally] } },
+    });
+    const player = game.player("player-one");
+    const transferred = player.card(transfer);
+    player.activate(transfer);
+    for (let n = 0; game.state.stack.length && n < 10; n++) {
+      const wait = game.waitState();
+      if (wait.kind !== "opportunity") throw new Error(`Unexpected wait: ${wait.kind}`);
+      game.player(wait.playerId).execute({ move: "pass" });
+    }
+    expect(game.state.stack).toHaveLength(0);
+    expect(game.state.objects[transferred.objectId]).toMatchObject({
+      zone: "intent",
+      ownerId: player.id,
+      controllerId: game.player("player-two").id,
+      baseControllerId: game.player("player-two").id,
+    });
+  });
   it("offers a controlled opposing-owned field object to its controller", () => {
     const fixture = setup();
     const controlled = new GrandArchiveTransactionKernel().transact(fixture.state, [
@@ -129,7 +164,12 @@ describe("Grand Archive shared and hosted zone control", () => {
       fixture.p2AllyId,
     );
     expect(
-      grandArchiveObjectHasState(controlled, controlled.objects[fixture.p2AllyId]!, "awake"),
+      grandArchiveObjectHasState(
+        fixture.program,
+        controlled,
+        controlled.objects[fixture.p2AllyId]!,
+        "awake",
+      ),
     ).toBe(true);
     expect(attackCommands.some((command) => command.attackerId === fixture.p2AllyId)).toBe(true);
   });
@@ -153,6 +193,7 @@ describe("Grand Archive shared and hosted zone control", () => {
       },
     ]).state;
     const view = projectGrandArchiveViewerState(fixture.program, positioned, fixture.p1);
+    expect(positioned.objects[fixture.p2AttackId]?.controllerId).toBe(fixture.p1);
     const p1View = view.players.find((player) => player.id === fixture.p1)!;
     const p2View = view.players.find((player) => player.id === fixture.p2)!;
     if (

@@ -235,3 +235,31 @@
     translate: 0 100%;
   }
 }
+
+/* Games with a landscape board can retain the shared drawer without spending
+   two rows of the short viewport on chrome. Empty portal hosts stay mounted. */
+.mobileOverlay {
+  grid-template-rows: minmax(0, 1fr);
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+.mobileOverlay > .mobileTopRail,
+.mobileOverlay > .mobileBottomRail {
+  position: absolute;
+  right: max(8px, env(safe-area-inset-right, 0px));
+  width: max-content;
+  max-width: calc(100% - 16px);
+  overflow: visible;
+  background: transparent;
+  padding: 0;
+}
+.mobileOverlay > .mobileTopRail {
+  top: max(8px, env(safe-area-inset-top, 0px));
+}
+.mobileOverlay > .mobileBottomRail {
+  bottom: max(8px, env(safe-area-inset-bottom, 0px));
+}
+.mobileOverlay > .mobileTopRail:empty,
+.mobileOverlay > .mobileBottomRail:empty {
+  display: none;
+}

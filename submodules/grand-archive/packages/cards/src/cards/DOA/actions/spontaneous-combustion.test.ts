@@ -62,7 +62,7 @@ describe("Spontaneous Combustion requires an ally attacking your champion", () =
           ).toThrow();
           expect(game.state).toEqual(attacking);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
           return;
         }
         const bystander = q.card(attackerKind === "small-ally" ? giantTortoise : woodlandSquirrels);
@@ -91,11 +91,9 @@ describe("Spontaneous Combustion requires an ally attacking your champion", () =
           game.resolveCombatWithoutRetaliation();
           expect(game.state.combat).toBeNull();
         } else {
-          expect(game.state.objects[attacker.objectId]!.damage).toBe(4);
+          expect(game.markedDamage(attacker.objectId)).toBe(4);
           game.resolveCombatWithoutRetaliation();
         }
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
-          attackerKind === "small-ally" ? 0 : 1,
-        );
+        expect(game.markedDamage(hero.objectId)).toBe(attackerKind === "small-ally" ? 0 : 1);
       });
 });

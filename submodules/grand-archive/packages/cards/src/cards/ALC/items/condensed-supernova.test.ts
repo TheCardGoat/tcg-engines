@@ -76,7 +76,7 @@ describe("Condensed Supernova — non-Astra units then Glimpse 4", () => {
         passEffectsStack(game);
         expect(game.state.objects[normChampion.objectId]?.damage).toBe(level);
         for (const squirrel of squirrels) {
-          expect(game.state.objects[squirrel.objectId]?.damage).toBe(level);
+          expect(game.markedDamage(squirrel.objectId)).toBe(level);
         }
         for (const p of [player, opponent]) {
           expect(

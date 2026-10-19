@@ -67,11 +67,11 @@ describe("False Step — persistent prevention and optional distance", () => {
     }
 
     castBlast(ally.objectId);
-    expect(game.state.objects[ally.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(ally.objectId)).toBe(3);
     expect(game.state.decision).toBeNull();
 
     castBlast(protectedChampion.objectId);
-    expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(protectedChampion.objectId)).toBe(1);
     expect(game.state.objects[protectedChampion.objectId]!.states.has("distant")).toBe(true);
     expect(game.state.objects[ally.objectId]!.states.has("distant")).toBe(false);
     answerDecision(game, "resolve-optional-effect", true);
@@ -92,7 +92,7 @@ describe("False Step — persistent prevention and optional distance", () => {
     expect(game.state.objects[ally.objectId]!.states.has("distant")).toBe(true);
 
     castBlast(protectedChampion.objectId);
-    expect(game.state.objects[protectedChampion.objectId]!.damage).toBe(2);
+    expect(game.markedDamage(protectedChampion.objectId)).toBe(2);
     answerDecision(game, "resolve-optional-effect", false);
     passEffectsStack(game);
     expect(game.state.objects[ally.objectId]!.states.has("distant")).toBe(true);

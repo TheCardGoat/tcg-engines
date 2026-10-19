@@ -466,6 +466,7 @@ export function createGrandArchiveMatchInitialState(
           ? { durability: face.stats.durability }
           : {},
       damage: 0,
+      temporaryDamage: 0,
       incarnation: 1,
       objectVersion: 1,
     };

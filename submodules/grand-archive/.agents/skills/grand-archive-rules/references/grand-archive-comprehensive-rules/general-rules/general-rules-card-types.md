@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-types"
   relation: "current_index"
 ---
-
 # General Rules - Card Types
 
 The following pages cover these topics:

@@ -93,15 +93,15 @@ describe("Froglet Footman — optional buff and per-instance damage prevention",
       expect(game.state.decision).toBeNull();
       p.declareAttack(source, q.card(opponent));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(opponent).objectId]!.damage).toBe(mode === "accept" ? 2 : 1);
+      expect(game.markedDamage(q.card(opponent).objectId)).toBe(mode === "accept" ? 2 : 1);
       advanceToMain(game, q.id);
       const attackers = q.cards(woodlandSquirrels, { zone: "field" });
       q.declareAttack(attackers[0]!, other);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[other.objectId]!.damage).toBe(1);
+      expect(game.markedDamage(other.objectId)).toBe(1);
       q.declareAttack(attackers[1]!, source);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[source.objectId]!.damage).toBe(mode === "accept" ? 0 : 1);
+      expect(game.markedDamage(source.objectId)).toBe(mode === "accept" ? 0 : 1);
       for (let cast = 0; cast < (mode === "accept" ? 2 : 1); cast++) {
         q.activate(q.cards(fireball, { zone: "hand" })[0]!, {
           targets: { "target-1": [source.objectId] },
@@ -115,7 +115,7 @@ describe("Froglet Footman — optional buff and per-instance damage prevention",
           mode === "accept" ? "field" : "graveyard",
         );
         if (mode === "accept") {
-          expect(game.state.objects[source.objectId]!.damage).toBe(cast + 1);
+          expect(game.markedDamage(source.objectId)).toBe(cast + 1);
           expect(game.state.objects[source.objectId]!.counters.buff).toBe(1);
         }
       }

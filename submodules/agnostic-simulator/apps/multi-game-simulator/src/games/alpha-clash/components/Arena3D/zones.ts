@@ -1,4 +1,5 @@
 import type { AcSeat, LiveBoardState } from "../board-types";
+import { CARD_RATIO, fieldCardHeight, arenaRows, supportRails } from "./layout";
 
 export type ArenaZoneName =
   | "clash"
@@ -8,6 +9,7 @@ export type ArenaZoneName =
   | "clashground"
   | "deck"
   | "oblivion"
+  | "banished"
   | "hand";
 export interface ArenaZone {
   id: string;
@@ -36,7 +38,9 @@ export function arenaZones(
   const rival: AcSeat = viewer === "player-one" ? "player-two" : "player-one";
   return [rival, viewer].flatMap((seat) => {
     const own = seat === viewer;
+    const rails = supportRails(board, seat, clashWidth);
     const sign = own ? -1 : 1;
+    const rows = arenaRows(compact, own);
     const add = (
       zone: ArenaZoneName,
       name: string,
@@ -75,60 +79,70 @@ export function arenaZones(
         "clash",
         "Clash zone",
         0,
-        compact ? 145 : 132,
+        rows.fieldCenter,
         clashWidth,
-        compact ? 246 : 214,
-        compact ? 278 : 247,
+        fieldCardHeight(compact),
+        rows.separator,
       ),
       add(
         "accessory",
         "Accessories",
-        compact ? -160 : -310,
-        compact ? 294 : 296,
-        compact ? 220 : 254,
-        compact ? 44 : 112,
-        compact ? 294 : own ? 340 : 362,
+        rails.accessory.center,
+        rows.railCenter,
+        rails.accessory.width,
+        rows.railHeight,
+        rows.railCenter,
         false,
         compact,
       ),
       add(
         "resource",
         "Resources",
-        160,
-        compact ? 294 : 296,
-        compact ? 220 : 424,
-        compact ? 44 : 112,
-        compact ? 294 : own ? 340 : 362,
+        rails.resource.center,
+        rows.railCenter,
+        rails.resource.width,
+        rows.railHeight,
+        rows.railCenter,
         false,
         true,
       ),
-      add("contender", "Contender", -730, 140, 160, 216, own ? 310 : 276, true),
-      add("clashground", "Clashground", 730, 140, 120, 158, 242, true),
-      add("deck", "Deck", 650, compact ? 272 : 300, 120, 52, compact ? 272 : 300, true, true),
       add(
-        "oblivion",
-        "Oblivion",
-        810,
-        compact ? 272 : 300,
-        120,
-        52,
-        compact ? 272 : 300,
-        true,
+        "contender",
+        "Contender",
+        -730,
+        rows.fieldCenter,
+        fieldCardHeight(compact) * CARD_RATIO,
+        fieldCardHeight(compact),
+        own ? 310 : 276,
         true,
       ),
+      add(
+        "clashground",
+        "Clashground",
+        730,
+        rows.fieldCenter,
+        fieldCardHeight(compact) * CARD_RATIO,
+        fieldCardHeight(compact),
+        265,
+        true,
+      ),
+      add("deck", "Deck", -860, rows.railCenter, 120, 52, rows.railCenter, true, true),
+      add("oblivion", "Oblivion", -730, rows.railCenter, 120, 52, rows.railCenter, true, true),
+      add("banished", "Banished", -600, rows.railCenter, 120, 52, rows.railCenter, true, true),
     ];
-    if (!own)
-      zones.push(
-        add(
-          "hand",
-          "Hand",
-          0,
-          compact ? 393 : 458,
-          Math.max(120, Math.min(8, board.players[seat].handSize) * 36 + 40),
-          84,
-          compact ? 337 : 399,
-        ),
-      );
+    zones.push(
+      add(
+        "hand",
+        "Hand",
+        0,
+        own ? (compact ? 425 : 475) : compact ? 393 : 458,
+        own
+          ? clashWidth * 0.75
+          : Math.max(120, Math.min(8, board.players[seat].handSize) * 36 + 40),
+        own ? 120 : 84,
+        compact ? 337 : 399,
+      ),
+    );
     return zones;
   });
 }

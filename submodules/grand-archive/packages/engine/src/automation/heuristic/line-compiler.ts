@@ -92,6 +92,12 @@ function scoreCommand(
         targets: move.targets,
       });
     case "activate-ability":
+      if (move.masteryName !== undefined)
+        return line("ability", command, ABILITY_BASE, null, {
+          abilityId: move.abilityId,
+          modeIds: move.modeIds,
+          targets: move.targets,
+        });
       return scoreObjectAction(snapshot, command, "ability", move.sourceId, ABILITY_BASE, {
         abilityId: move.abilityId,
         modeIds: move.modeIds,

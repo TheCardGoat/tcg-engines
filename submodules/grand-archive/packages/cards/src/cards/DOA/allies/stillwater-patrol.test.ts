@@ -32,6 +32,6 @@ describe("Stillwater Patrol's attack-specific power", () => {
       }
       p.declareAttack(stillwaterPatrol, target);
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[target.objectId]!.damage).toBe(stealth ? 3 : 2);
+      expect(game.markedDamage(target.objectId)).toBe(stealth ? 3 : 2);
     });
 });

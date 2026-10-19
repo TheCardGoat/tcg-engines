@@ -62,7 +62,7 @@ describe("Clarent spends durability on separate one-damage non-combat buffers", 
         }
         q.declareAttack(q.card(woodlandSquirrels, { zone: "field" }), ally);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[ally.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(ally.objectId)).toBe(1);
         const targets = [foe, hero, ally, hero, ally];
         for (let index = 0; index < targets.length; index++) {
           const target = targets[index]!;
@@ -74,12 +74,12 @@ describe("Clarent spends durability on separate one-damage non-combat buffers", 
             targets: { "target-1": [target.objectId] },
           });
           passEffectsStack(game);
-          if (index === 0) expect(game.state.objects[foe.objectId]!.damage).toBe(1);
-          if (index === 1) expect(game.state.objects[hero.objectId]!.damage).toBe(expired ? 1 : 0);
-          if (index === 2) expect(game.state.objects[ally.objectId]!.damage).toBe(expired ? 2 : 1);
+          if (index === 0) expect(game.markedDamage(foe.objectId)).toBe(1);
+          if (index === 1) expect(game.markedDamage(hero.objectId)).toBe(expired ? 1 : 0);
+          if (index === 2) expect(game.markedDamage(ally.objectId)).toBe(expired ? 2 : 1);
         }
-        expect(game.state.objects[hero.objectId]!.damage).toBe(expired ? 2 : 1);
-        expect(game.state.objects[ally.objectId]!.damage).toBe(expired ? 3 : 2);
+        expect(game.markedDamage(hero.objectId)).toBe(expired ? 2 : 1);
+        expect(game.markedDamage(ally.objectId)).toBe(expired ? 3 : 2);
         expect(game.state.objects[sword.objectId]!.counters.durability).toBe(1);
       });
 });

@@ -120,7 +120,7 @@ function fixture() {
 }
 
 describe("Grand Archive element enablement", () => {
-  it("enables Norm by default and does not let Exalted enable itself", () => {
+  it("enables Norm by default and lets an Exalted champion enable Exalted", () => {
     const norm = fixture();
     expect(grandArchivePlayerEnabledElements(norm.program, norm.state, norm.p1)).toContain("NORM");
 
@@ -146,13 +146,12 @@ describe("Grand Archive element enablement", () => {
       exalted.p1,
     );
     expect(enabled).toContain("NORM");
-    expect(enabled).not.toContain("EXALTED");
+    expect(enabled).toContain("EXALTED");
     const activation = new GrandArchiveMatchRuntime(exalted.program, selfEnablingLineage).execute(
       { move: "activate-card", cardId: exalted.exaltedActionId },
       { playerId: exalted.p1 },
     );
-    expect(activation.ok).toBe(false);
-    if (!activation.ok) expect(activation.message).toContain("every required element");
+    expect(activation.ok).toBe(true);
   });
 
   it("unlocks Exalted only from advanced-element champion cards in the lineage", () => {

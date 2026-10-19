@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/special-game-actions-and-turn-based-actions"
   relation: "current_index"
 ---
-
 # Special Game Actions and Turn-based Actions
 
 #### General Rules:

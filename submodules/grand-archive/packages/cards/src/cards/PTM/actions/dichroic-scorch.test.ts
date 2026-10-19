@@ -79,13 +79,13 @@ describe("Dichroic Scorch — additional discard and all-unit sheen removal", ()
         expect(game.state.objects[discard.objectId]!.zone).toBe("graveyard");
         passEffectsStack(game);
         const damage = distributed * 3;
-        expect(game.state.objects[hero.objectId]!.damage).toBe(0);
-        expect(game.state.objects[enemy.objectId]!.damage).toBe(damage);
+        expect(game.markedDamage(hero.objectId)).toBe(0);
+        expect(game.markedDamage(enemy.objectId)).toBe(damage);
         for (const unit of [hero, enemy, ownAlly, otherAlly])
           expect(game.state.objects[unit.objectId]!.counters["named:sheen"] ?? 0).toBe(0);
         for (const ally of [ownAlly, otherAlly]) {
           expect(game.state.objects[ally.objectId]!.zone).toBe(damage >= 6 ? "graveyard" : "field");
-          expect(game.state.objects[ally.objectId]!.damage).toBe(damage >= 6 ? 0 : damage);
+          expect(game.markedDamage(ally.objectId)).toBe(damage >= 6 ? 0 : damage);
         }
       });
 });

@@ -85,7 +85,7 @@ describe("Expose Darkness — conditional draw and temporary Stealth removal", (
         }
         attacker.declareAttack(attackSource, target);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         advanceToMain(game, owner.id);
         advanceToMain(game, attacker.id);
         if (kind === "stealth") {
@@ -95,7 +95,7 @@ describe("Expose Darkness — conditional draw and temporary Stealth removal", (
         } else {
           attacker.declareAttack(attackSource, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(kind === "champion" ? 2 : 1);
+          expect(game.markedDamage(target.objectId)).toBe(kind === "champion" ? 2 : 1);
         }
       });
 });

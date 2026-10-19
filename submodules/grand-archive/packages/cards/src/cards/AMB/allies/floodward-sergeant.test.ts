@@ -23,12 +23,12 @@ describe("Floodward Sergeant — once-per-turn damage prevention", () => {
     const attackers = opponent.cards(woodlandSquirrels, { zone: "field" });
     opponent.declareAttack(attackers[0]!, sergeant);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[sergeant.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(sergeant.objectId)).toBe(0);
     const wait = game.waitState();
     if (wait.kind === "opportunity" && wait.playerId !== opponent.id)
       game.player(wait.playerId).pass();
     opponent.declareAttack(attackers[1]!, sergeant);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[sergeant.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(sergeant.objectId)).toBe(1);
   });
 });

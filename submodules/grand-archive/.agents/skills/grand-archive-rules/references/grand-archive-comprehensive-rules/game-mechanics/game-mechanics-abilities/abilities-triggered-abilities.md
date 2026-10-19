@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-triggered-abilities"
   relation: "current_index"
 ---
-
 # Abilities - Triggered Abilities
 
 #### General Rules:
@@ -30,7 +29,7 @@ E.g., Lorraine, Wandering Warrior has “On Enter: Materialize a weapon card wit
    2. "Depending on" effects describe modes that are dependent upon the game state or a certain condition. The valid mode of that ability will occur as the ability resolves, rather than when it is placed onto the Effects Stack. Unlike a "choose one" effect, the player does not get to decide which mode resolves; this is determined by the game state.
 
 {% hint style="info" %}
-![](/files/9v7s69589K7hqyapGgZq)\
+![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FqLH9tEG2Z7PnL4GT5N7p%2Fserve.jpg?alt=media\&token=6a07048e-5cb6-4ac0-86ad-53c4fe35fb76)\
 \
 E.g., Ciel's mastery, Servile Possessions, has a triggered ability that describes separate modes that resolve depending on the game state. The trigger is placed onto the Effects Stack after the champion attacks, and the ability's option/mode is determined as it resolves.
 {% endhint %}
@@ -43,7 +42,7 @@ E.g., Ciel's mastery, Servile Possessions, has a triggered ability that describe
 11. If a trigger is generated while another effect or activation is resolving, the trigger will be placed onto the Effects Stack only after that effect/activation is completely resolved. If a card generates its own trigger as it resolves or while it is resolving due to a condition, this is known as a [reflexive trigger](/glossary/game-terms.md#reflexive-trigger).
 12. Triggered abilities will have the same typing, element, and other relevant characteristics as their source.
 
-{% hint style="warning" %} <img src="/files/teupiYqdXfwyO7gxx1Wy" alt="" data-size="original"> \
+{% hint style="warning" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FEiEL8BQLXnTeDXKH90rJ%2Fstrategem-of-myriad-ice-amb.jpg?alt=media&amp;token=197edfc9-dce7-48cb-8628-c2fda52c9a53" alt="" data-size="original"> \
 \
 The triggers sourced from Stratagem of Myriad Ice are also considered of the Water element and of a Mage Spell typing. These triggers will not be able to target any objects with Spellshroud.
 {% endhint %}

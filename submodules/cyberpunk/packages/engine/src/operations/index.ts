@@ -602,6 +602,7 @@ export function createOperations(
 
       G.turnMetadata.abilityFiredThisTurn = [];
       G.turnMetadata.firstTimeEventsThisTurn = [];
+      delete G.turnMetadata.legacyFirstTimeLimitsUntilNextTurn;
       G.turnMetadata.triggerQueue = [];
       G.turnMetadata.currentTrigger = undefined;
 

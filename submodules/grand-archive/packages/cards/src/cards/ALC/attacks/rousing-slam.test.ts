@@ -122,7 +122,7 @@ describe("Rousing Slam — restricted Vigor and Taunt grant", () => {
     ).toBe(true);
     passEffectsStack(game);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(4);
+    expect(game.markedDamage(target.objectId)).toBe(4);
     expect(game.state.objects[attacker.objectId]!.states.has("rested")).toBe(true);
 
     for (
@@ -147,13 +147,13 @@ describe("Rousing Slam — restricted Vigor and Taunt grant", () => {
     expect(game.state).toEqual(beforeIgnoredTaunt);
     opponent.declareAttack(firstOpponentAttacker!, attacker);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[attacker.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(attacker.objectId)).toBe(1);
 
     const firstOpponentTurn = game.state.turn.number;
     advanceToMain(game, opponent.id, firstOpponentTurn);
     opponent.declareAttack(secondOpponentAttacker!, alternateTarget);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[alternateTarget.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(alternateTarget.objectId)).toBe(1);
   });
 
   for (const [level, classMatches] of [

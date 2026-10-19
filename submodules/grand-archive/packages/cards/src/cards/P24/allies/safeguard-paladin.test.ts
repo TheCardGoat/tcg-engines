@@ -94,7 +94,7 @@ describe("Safeguard Paladin — non-combat damage prevention", () => {
         if (mode === "combat") {
           q.declareAttack(q.cards(woodlandSquirrels, { zone: "field" })[0]!, target);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[target.objectId]!.damage).toBe(1);
+          expect(game.markedDamage(target.objectId)).toBe(1);
           q.declareAttack(q.cards(woodlandSquirrels, { zone: "field" })[1]!, target);
           game.resolveCombatWithoutRetaliation();
         } else {

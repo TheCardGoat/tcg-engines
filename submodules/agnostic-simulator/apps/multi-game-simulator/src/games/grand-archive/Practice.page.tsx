@@ -1,12 +1,15 @@
+import { useBackgroundBot } from "../../simulator/bot/use-background-bot";
+import { decideGrandArchiveBot } from "./bot-decision";
+const createBotWorker = () =>
+  new Worker(new URL("./bot-decision.worker.ts", import.meta.url), { type: "module" });
 import { GrandArchivePreparation } from "./GrandArchivePreparation";
 import {
   practicePreparationPool,
   confirmPracticePreparation,
   restartPracticePreparation,
 } from "./practice-preparation";
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import {
-  chooseGrandArchiveAutomatedAction,
   DEFAULT_GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGY_ID,
   getSafeGrandArchiveAutomatedActionStrategyOption,
   GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGIES,
@@ -202,43 +205,43 @@ function GrandArchivePracticeGame({
   const canStepBot =
     !selfPlay && !server.hasGameEnded() && activeActor === botId && !takeoverActive;
 
-  const runBotMove = useCallback(() => {
-    if (selfPlay || server.hasGameEnded() || takeoverActive || server.getActivePlayerId() !== botId)
-      return;
-    const legal = chooseGrandArchiveAutomatedAction(
-      server.program,
-      server.runtime.state,
-      grandArchivePlayerId(botId),
-      strategyOption.strategy,
-    );
-    if (!legal) {
-      setBotError("The selected strategy found no authoritative legal action.");
-      return;
-    }
-    const { move, ...commandPayload } = legal.command;
-    const result = server.dispatch(
-      move,
-      botId,
-      {
-        ...commandPayload,
-        expectedStateVersion: legal.stateVersion,
-        objectIncarnations: grandArchiveCommandIncarnations(server.runtime, legal.command),
-      },
-      { gameId: "grand-archive-local-standard", sourceAuthority: "client" },
-    );
-    if (!result.success) {
-      setBotError(result.error ?? "Grand Archive bot action was rejected.");
-      return;
-    }
-    setBotError(null);
-    refresh();
-  }, [botId, selfPlay, server, strategyOption.strategy, takeoverActive]);
-
-  useEffect(() => {
-    if (botPacing !== "auto" || !canStepBot) return;
-    const timeout = window.setTimeout(runBotMove, SIMULATOR_BOT_SPEED_MS.balanced);
-    return () => window.clearTimeout(timeout);
-  }, [botPacing, canStepBot, runBotMove, stateVersion]);
+  const runBotMove = useBackgroundBot({
+    identity: server.runtime.state,
+    getIdentity: () => server.runtime.state,
+    workerKey: server.program,
+    scope: `${strategyId}:${takeoverActive}:${selfPlay}`,
+    enabled: canStepBot,
+    auto: botPacing === "auto" && !botError,
+    delayMs: SIMULATOR_BOT_SPEED_MS.balanced,
+    createWorker: createBotWorker,
+    context: () => server.program,
+    input: () => ({ state: server.runtime.state, player: botId, strategyId }),
+    decide: decideGrandArchiveBot,
+    onError: setBotError,
+    commit: ({ choice: legal }) => {
+      if (!legal) {
+        setBotError("The selected strategy found no authoritative legal action.");
+        return;
+      }
+      const { move, ...commandPayload } = legal.command;
+      const result = server.dispatch(
+        move,
+        botId,
+        {
+          ...commandPayload,
+          expectedStateVersion: legal.stateVersion,
+          objectIncarnations: grandArchiveCommandIncarnations(server.runtime, legal.command),
+        },
+        { gameId: "grand-archive-local-standard", sourceAuthority: "client" },
+      );
+      if (!result.success) {
+        setBotError(result.error ?? "Grand Archive bot action was rejected.");
+        return;
+      }
+      setBotError(null);
+      refresh();
+    },
+  });
 
   useEffect(() => {
     const saved = persistGrandArchivePracticeSession(server, strategyId, botPacing, chatMessages);
@@ -418,6 +421,9 @@ function GrandArchivePracticeGame({
         errorMessage={botError ?? undefined}
         canUndo={server.replayJournal.commands.some((command) => command.actorId === humanId)}
         onUndo={undoLastMove}
+        onPreviewProtocolInteraction={async (request) =>
+          server.previewInteraction(seatedViewer, request)
+        }
         onSubmitProtocolInteraction={(submission) => {
           const result = server.submitInteraction(seatedViewer, submission, {
             gameId: "grand-archive-local-standard",

@@ -63,9 +63,9 @@ export function provePhantasiaCountDamage({
           ).toThrow();
           expect(game.state).toEqual(before);
           p.activate(card, { reservePayment, targets: { "target-1": [target.objectId] } });
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
-          expect(game.state.objects[target.objectId]!.damage).toBe(base + count);
+          expect(game.markedDamage(target.objectId)).toBe(base + count);
           expect(p.cards(card, { zone: "graveyard" })).toHaveLength(1);
         });
 }

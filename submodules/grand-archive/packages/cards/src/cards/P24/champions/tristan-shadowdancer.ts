@@ -101,7 +101,7 @@ export const tristanShadowdancer: GrandArchiveCard<GrandArchiveAbilityDefinition
             then: {
               kind: "choose",
               selection: {
-                id: "target-1",
+                id: "chosen-redirect-ally",
                 kind: "choice",
                 declared: "resolution",
                 chooser: "controller",
@@ -137,7 +137,7 @@ export const tristanShadowdancer: GrandArchiveCard<GrandArchiveAbilityDefinition
                 chooser: "controller",
                 newTarget: {
                   kind: "bound",
-                  binding: "target-1",
+                  binding: "chosen-redirect-ally",
                 },
               },
             },

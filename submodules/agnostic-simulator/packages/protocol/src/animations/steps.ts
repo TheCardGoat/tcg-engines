@@ -20,6 +20,8 @@ export const SimulatorAudioCueIdSchema = z.enum([
   "resource.gain",
   "resource.spend",
   "resource.steal",
+  "counter.move",
+  "counter.land",
   "life.gain",
   "life.loss",
   "combat.start",

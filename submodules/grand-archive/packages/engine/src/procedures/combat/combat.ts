@@ -177,9 +177,11 @@ function legalSingleAttackTarget(
       object.zone === "field" &&
       object.controllerId === target.controllerId &&
       !object.states.has("rested") &&
-      isUnit(program, state, object) &&
+      isAttackable(program, state, object) &&
       objectHasKeyword(program, state, object, "taunt") &&
-      (!objectHasKeyword(program, state, object, "stealth") || trueSight),
+      (!isUnit(program, state, object) ||
+        !objectHasKeyword(program, state, object, "stealth") ||
+        trueSight),
   );
   return (
     attackableTaunts.length === 0 ||
@@ -1175,15 +1177,17 @@ export function proposeGrandArchiveAttackDeclaration(
     ...weaponActionResultEvents(
       weaponParticipations.flatMap((participation) => participation.useWeaponRules),
     ),
-    ...loadedCards.map((loadedCard): GrandArchiveProposedEvent => ({
-      type: "object-moved",
-      objectId: loadedCard.id,
-      from: "loaded",
-      to: "intent",
-      hostId: attacker.id,
-      actorId: playerId,
-      cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
-    })),
+    ...loadedCards.map(
+      (loadedCard): GrandArchiveProposedEvent => ({
+        type: "object-moved",
+        objectId: loadedCard.id,
+        from: "loaded",
+        to: "intent",
+        hostId: attacker.id,
+        actorId: playerId,
+        cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
+      }),
+    ),
     ...(options.resolvedAttack || effectGranted
       ? []
       : [
@@ -1196,14 +1200,16 @@ export function proposeGrandArchiveAttackDeclaration(
             cause: declarationCause,
           },
         ]),
-    ...weapons.map((weapon): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: weapon.id,
-      state: "wielded",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...weapons.map(
+      (weapon): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: weapon.id,
+        state: "wielded",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "object-state-changed",
       objectId: attacker.id,
@@ -1212,14 +1218,16 @@ export function proposeGrandArchiveAttackDeclaration(
       actorId: playerId,
       cause: declarationCause,
     },
-    ...targets.map((target): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: target.id,
-      state: "defending",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...targets.map(
+      (target): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: target.id,
+        state: "defending",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "combat-started",
       combat,
@@ -1593,14 +1601,16 @@ export function proposeGrandArchiveCombatDamage(
     ...damageEvents
       .filter((pending) => pending.amount > 0)
       .map((pending) => proposedDamageEvent(pending, pending.amount)),
-    ...spentWeaponIds.map((objectId): GrandArchiveProposedEvent => ({
-      type: "counter-changed",
-      objectId,
-      counter: "durability",
-      delta: -1,
-      actorId: combat.attackingPlayerId,
-      cause: { kind: "rule", rule: "wielded-weapon-durability" },
-    })),
+    ...spentWeaponIds.map(
+      (objectId): GrandArchiveProposedEvent => ({
+        type: "counter-changed",
+        objectId,
+        counter: "durability",
+        delta: -1,
+        actorId: combat.attackingPlayerId,
+        cause: { kind: "rule", rule: "wielded-weapon-durability" },
+      }),
+    ),
     {
       type: "combat-step-changed",
       step: "end",
@@ -1625,19 +1635,25 @@ function proposedDamageEvent(
   };
 }
 
-export function proposeGrandArchiveCombatCleanup(
+/** End-step turn-based actions occur before players can respond to damage/death triggers. */
+export function proposeGrandArchiveEndCombatStepCleanup(
   state: GrandArchiveMatchState,
-  options: { readonly suppressOpportunity?: true } = {},
 ): readonly GrandArchiveProposedEvent[] {
   const combat = state.combat;
   if (!combat || combat.step !== "end") throw new Error("Combat is not ready for cleanup");
+  if (combat.cleanupStarted) return [];
   const roleIds = new Set([
     combat.attackerId,
     ...combat.targetIds,
     ...combat.retaliatorIds,
     ...combat.weaponIds,
   ]);
-  const events: GrandArchiveProposedEvent[] = [];
+  const events: GrandArchiveProposedEvent[] = [
+    {
+      type: "combat-cleanup-started",
+      cause: { kind: "rule", rule: "end-of-combat-turn-based-cleanup" },
+    },
+  ];
   for (const objectId of roleIds) {
     const object = state.objects[objectId];
     if (!object) continue;
@@ -1676,6 +1692,15 @@ export function proposeGrandArchiveCombatCleanup(
       });
     }
   }
+  return events;
+}
+
+/** Leave Combat after its end-step effects and response opportunities have finished. */
+export function proposeGrandArchiveCombatCleanup(
+  state: GrandArchiveMatchState,
+  options: { readonly suppressOpportunity?: true } = {},
+): readonly GrandArchiveProposedEvent[] {
+  const events: GrandArchiveProposedEvent[] = [...proposeGrandArchiveEndCombatStepCleanup(state)];
   events.push({
     type: "combat-ended",
     cause: { kind: "rule", rule: "combat-cleanup-complete" },

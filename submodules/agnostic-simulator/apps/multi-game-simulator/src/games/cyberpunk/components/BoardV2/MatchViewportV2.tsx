@@ -33,7 +33,9 @@ export function MatchViewportV2({
   className,
 }: SimulatorViewportShellProps) {
   const [opened, setOpened] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [toolbarOverride, setToolbarOverride] = useState<boolean | null>(null);
+  const compactControls = useMediaQuery("(max-width: 600px), (max-height: 540px)");
+  const collapsed = toolbarOverride ?? compactControls;
   const toolbarId = useId();
   const creator = useContext(CreatorMenuContext);
   const mobile = useMediaQuery("(max-width: 600px)");
@@ -58,7 +60,7 @@ export function MatchViewportV2({
               title={collapsed ? "Show match controls" : "Hide match controls"}
               aria-expanded={!collapsed}
               aria-controls={toolbarId}
-              onClick={() => setCollapsed((value) => !value)}
+              onClick={() => setToolbarOverride(!collapsed)}
             >
               {collapsed ? (
                 <SlidersHorizontal size={18} aria-hidden="true" />

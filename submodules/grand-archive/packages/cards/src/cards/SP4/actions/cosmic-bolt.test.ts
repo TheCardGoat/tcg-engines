@@ -43,10 +43,10 @@ describe("Cosmic Bolt damage", () => {
               .map((ref) => ({ kind: "card" as const, cardId: ref.objectId })),
             targets: { "target-1": [target.objectId] },
           });
-          expect(game.state.objects[target.objectId]!.damage).toBe(0);
+          expect(game.markedDamage(target.objectId)).toBe(0);
           passEffectsStack(game);
           const damage = 4 + 2 * (graveyard + banishment);
-          expect(game.state.objects[target.objectId]!.damage).toBe(
+          expect(game.markedDamage(target.objectId)).toBe(
             targetKind === "ally" && damage >= 6 ? 0 : damage,
           );
           expect(q.cards(giantTortoise, { zone: "graveyard" })).toHaveLength(

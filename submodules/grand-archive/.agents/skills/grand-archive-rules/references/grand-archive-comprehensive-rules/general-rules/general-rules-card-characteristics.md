@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-characteristics"
   relation: "current_index"
 ---
-
 # General Rules - Card Characteristics
 
 #### General Rules

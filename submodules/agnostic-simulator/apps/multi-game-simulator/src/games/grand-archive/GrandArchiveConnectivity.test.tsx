@@ -207,7 +207,15 @@ it("keeps a rejected pregame completion visible and retryable", () => {
   expect(submit).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole("button", { name: "Continue to starting champions" }));
   expect(submit).toHaveBeenCalled();
-  expect(screen.getByTestId("interaction-resolution-prompt")).toBeTruthy();
+  expect(submit).toHaveBeenCalledTimes(1);
+  const retry = within(screen.getByRole("region", { name: "Current game prompt" })).getByRole(
+    "button",
+    { name: "Retry choice" },
+  );
+  expect(retry.hasAttribute("disabled")).toBe(false);
+  fireEvent.click(retry);
+  expect(submit).toHaveBeenCalledTimes(2);
+  expect(submit.mock.calls[1]).toEqual(submit.mock.calls[0]);
 });
 
 it("allows retrying a pregame action rejected asynchronously at the same state version", () => {

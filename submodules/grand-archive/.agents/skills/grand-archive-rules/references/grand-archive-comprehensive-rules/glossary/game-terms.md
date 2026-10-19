@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/glossary/game-terms"
   relation: "current_index"
 ---
-
 # Game Terms
 
 #### Activate/Activating
@@ -229,6 +228,12 @@ Combat damage is any damage dealt directly by units during combat based on attac
 
 1. A lineage is the entire group of cards dedicated to representing a champion. A lineage includes all cards including the [inner lineage](/game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#inner-lineage) as well as the topmost card (i.e. the representative champion).
 2. The name of a lineage follows the name (excluding titles or monikers) of the topmost card and any leveling restrictions or champion restriction abilities will use that name as a basis.&#x20;
+
+#### Linked / Linked to
+
+1. Linked is a game term that describes when one object has a [Link](/glossary/keywords-and-abilities.md#link) to another object.
+   1. These objects are said to be *linked to* eachother.
+2. Each link ability can only directly link one object to another. If the other object in the link also has one or more links to other objects (due to other Link abilities), those objects would not also become linked to the new linked object. E.g., If objects A and B are linked, and objects B and C are linked, objects A and C do not become linked; there is no implied link between objects A and C.
 
 #### Load
 

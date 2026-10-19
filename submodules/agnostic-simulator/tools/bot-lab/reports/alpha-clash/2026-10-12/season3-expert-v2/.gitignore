@@ -1,0 +1,10 @@
+/investigation/*-mirror-*.json
+/report.json
+/schedule.json
+/matches.jsonl
+/confirm-report.json
+
+/publication-replay-checks-[0-9]*.json
+/controls-v1.json
+/confirm-plan.json
+/decks.json

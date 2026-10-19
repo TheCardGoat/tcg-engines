@@ -16,6 +16,15 @@ export function grandArchiveMasteryDefinition(program: GrandArchiveMatchProgram,
   );
 }
 
+/** The source survives on the stack even after its controller replaces their mastery. */
+export function grandArchiveMasterySourceSubtypes(
+  program: GrandArchiveMatchProgram,
+  source: { readonly name: string } | undefined,
+): readonly string[] {
+  const definition = source && grandArchiveMasteryDefinition(program, source.name);
+  return definition ? defaultFace(definition).typeLine.subtypes : [];
+}
+
 export function grandArchivePlayerMastery(
   state: GrandArchiveMatchState,
   playerId: GrandArchivePlayerId,
@@ -55,4 +64,27 @@ export function grandArchiveMasteryTimestamp(
   playerId: GrandArchivePlayerId,
 ): number {
   return state.players[playerId]?.mastery?.timestamp ?? 0;
+}
+
+/** Original activations of this exact non-object mastery instance; copies never advance Cascade. */
+export function grandArchiveMasteryAbilityActivationCount(
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  mastery: GrandArchiveMasteryState,
+  abilityId: string,
+): number {
+  const ids = new Set<string>();
+  for (const event of state.eventHistory) {
+    if (
+      (event.type === "stack-item-added" || event.type === "stack-item-deferred") &&
+      event.item.kind === "activated-ability" &&
+      !event.item.isCopy &&
+      event.item.masterySource?.playerId === playerId &&
+      event.item.masterySource.name === mastery.name &&
+      event.item.bindings.masterySourceTimestamp === mastery.timestamp &&
+      event.item.ability.id === abilityId
+    )
+      ids.add(event.item.id);
+  }
+  return ids.size;
 }

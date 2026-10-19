@@ -49,7 +49,7 @@ describe("Aqueous Armor — Ally Link and Class Bonus life", () => {
     });
     passEffectsStack(game);
     expect(game.state.objects[ally.objectId]!.zone).toBe("field");
-    expect(game.state.objects[ally.objectId]!.damage).toBe(3);
+    expect(game.markedDamage(ally.objectId)).toBe(3);
 
     player.pass();
     opponent.activate(opponent.card(nascentBlast, { zone: "hand" }), {

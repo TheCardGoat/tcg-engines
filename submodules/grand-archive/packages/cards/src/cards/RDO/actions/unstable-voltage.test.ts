@@ -75,9 +75,9 @@ describe("Unstable Voltage rolls two independent six-sided dice on resolution", 
         expect(hits).toHaveLength(1);
         expect(hits[0]).toMatchObject({ objectId: target.objectId, amount: damage });
         expect(game.state.objects[target.objectId]!.zone).toBe(damage >= 6 ? "graveyard" : "field");
-        expect(game.state.objects[target.objectId]!.damage).toBe(damage >= 6 ? 0 : damage);
+        expect(game.markedDamage(target.objectId)).toBe(damage >= 6 ? 0 : damage);
         expect(
-          game.state.objects[(own ? q : p).card(giantTortoise, { zone: "field" }).objectId]!.damage,
+          game.markedDamage((own ? q : p).card(giantTortoise, { zone: "field" }).objectId),
         ).toBe(0);
       });
 });

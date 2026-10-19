@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-card-characteristics/double-faced-cards"
   relation: "current_index"
 ---
-
 # Double-faced Cards
 
 In Grand Archive, some cards exist that have two faces, or two sides, each with separate characteristics as opposed to a single side of information and rules text with an information-less card back. There is only one type of double-faced card in Grand Archive, currently.
@@ -22,7 +21,7 @@ General Rules:&#x20;
 
 {% hint style="info" %}
 E.g., If Seiryuu, an ally with a reserve cost is destroyed by any effect, the default side of the card, Fabled Azurite Fatestone, is examined when determining which zone the card would be placed in. In this context, "Seiryuu" would be placed in Banishment, flipped back to its default side as the Fatestone. Similarly, if an effect attempts to move Seiryuu to the hand, memory, or main deck, it will instead be returned to the material deck as Fabled Azurite Fatestone, a regalia item.\
-\ <img src="/files/OhSWWuB0XKIe1MrOOS3C" alt="" data-size="original"><img src="/files/3Dj9DhWYlBfHbi8eewSL" alt="" data-size="original"><br>
+\ <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FL8BnM5jUkJtcWmrXlLZe%2Ffabled-azurite-fatestone-rec-hvf.jpg?alt=media&amp;token=cc579cba-f395-487f-9c22-17a946ae3767" alt="" data-size="original"><img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FE8xxnaZEpEe2hUmuV2yK%2Fseiryuu-azure-dragon-rec-hvf.jpg?alt=media&amp;token=b881b04f-201a-4a48-a149-3a471e380aea" alt="" data-size="original"><br>
 {% endhint %}
 
 5. If a player has knowledge permissions associated with a double-faced card (i.e., that card is either public or private to that player), they may examine either side of the card by flipping it.
@@ -31,7 +30,7 @@ E.g., If Seiryuu, an ally with a reserve cost is destroyed by any effect, the de
    1. If a card copies the characteristics of a transformed card, the copy will share the characteristics of that card in its transformed state.
    2. Copies of double-faced cards cannot themselves transform. If a player attempts to transform a copy of a card that is either transformed or can be transformed, nothing will happen, and the action is skipped. Any costs paid will not be "refunded."
 
-{% hint style="danger" %} <img src="/files/kX9jPuKbrPBhsDAQ11hb" alt="" data-size="original"><img src="/files/du0i3Mr3zq8oPk9dl71f" alt="" data-size="original">\
+{% hint style="danger" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FHoty14uN3fR9CHqZNm6w%2Fclockwork-amalgam-alc.jpg?alt=media&amp;token=a7c9b961-08d9-4682-8a22-b69d0e625ec3" alt="" data-size="original"><img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FlIHxbq1CA5xeKonkcH8h%2Fsuzaku-vermillion-phoenix-hvn1e.jpg?alt=media&amp;token=93255c26-2e1c-467e-bcd7-50eca7d1baac" alt="" data-size="original">\
 \
 E.g., If a player banishes a Clockwork Amalgam that has copied Suzaku, a transformed ally, and opts to pay for the On Banish ability, Clockwork Amalgam will stay banished as it is not itself a double-faced card and can't transform.
 {% endhint %}

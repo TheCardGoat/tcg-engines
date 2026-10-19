@@ -1,0 +1,180 @@
+.preview {
+  margin: 22px 0 40px;
+  color: #e1ebef;
+}
+.intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.eyebrow {
+  font:
+    600 10px/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #9cbdcd;
+}
+.intro h3 {
+  font-size: clamp(21px, 2vw, 27px);
+  font-weight: 500;
+  margin: 5px 0 0;
+}
+.intro p {
+  margin: 0;
+  color: #adbfca;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.stage {
+  --signal: #9aeeff;
+  --gold: #f3d298;
+  border: 1px solid #425361;
+  border-radius: 8px;
+  padding: 22px 28px 10px;
+  background-size: cover;
+  background-position: center;
+}
+.reference {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid #849caa30;
+  padding-bottom: 14px;
+}
+.reference p {
+  font-size: 11px;
+  color: #b4c8d2;
+  margin: 5px 0 0;
+}
+.columnLabels,
+.row {
+  display: grid;
+  grid-template-columns: 140px repeat(4, minmax(100px, 1fr));
+  align-items: center;
+}
+.columnLabels {
+  color: #b4c8d2;
+  text-align: center;
+  font:
+    500 11px/1.3 system-ui,
+    sans-serif;
+  padding-top: 20px;
+}
+.row {
+  min-height: 118px;
+  border-bottom: 1px solid #809dad20;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.rowLabel {
+  display: grid;
+  gap: 5px;
+}
+.rowLabel strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.rowLabel small {
+  font-size: 10px;
+  color: #9aacb7;
+}
+.cell {
+  display: grid;
+  place-items: center;
+}
+.mobileLabel {
+  display: none;
+}
+.indicator {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 9px;
+}
+.indicator:focus-visible {
+  outline: 2px solid #9aeeff;
+  outline-offset: 4px;
+}
+.indicator:hover > span,
+.indicator:focus-visible > span {
+  filter: brightness(1.2);
+}
+.help {
+  background: #10212c;
+  color: #e1edf3;
+  border-color: #607b8c;
+  font-size: 12px;
+}
+.help p {
+  margin: 7px 0;
+  line-height: 1.5;
+}
+.help small {
+  color: #a3b6c2;
+}
+.notice,
+.note {
+  color: #b6c9d3;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+}
+.notice {
+  min-height: 18px;
+}
+.note {
+  color: #8fa6b4;
+  font-size: 11px;
+  max-width: 90ch;
+}
+@media (max-width: 750px) {
+  .stage {
+    padding: 18px 12px 8px;
+  }
+  .columnLabels {
+    display: none;
+  }
+  .row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 16px 0;
+  }
+  .rowLabel {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .mobileLabel {
+    display: block;
+    font-size: 10px;
+    color: #a7bdc9;
+    text-align: center;
+  }
+  .reference {
+    justify-content: center;
+  }
+}
+@media (max-width: 440px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 0;
+  }
+  .intro {
+    gap: 10px;
+  }
+}
+/* This sample compares phase materials; action controls live in the preview below. */
+.reference footer {
+  display: none;
+}

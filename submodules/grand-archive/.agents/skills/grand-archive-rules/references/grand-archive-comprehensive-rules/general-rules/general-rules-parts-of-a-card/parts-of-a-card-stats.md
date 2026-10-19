@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats"
   relation: "current_index"
 ---
-
 # Parts of a Card - Stats
 
 #### Durability

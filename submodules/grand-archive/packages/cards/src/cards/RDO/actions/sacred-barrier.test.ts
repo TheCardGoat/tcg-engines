@@ -55,7 +55,7 @@ describe("Sacred Barrier", () => {
       }
       q.declareAttack(giantTortoise, p.card(giantTortoise));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(1);
+      expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(1);
       for (let hit = 1; hit <= 2; hit++) {
         q.activate(q.cards(pyroclasticFlow, { zone: "hand" })[0]!, {
           reservePayment: q
@@ -65,8 +65,8 @@ describe("Sacred Barrier", () => {
         });
         passEffectsStack(game);
         for (const player of [p, q]) {
-          expect(game.state.objects[player.card(champion).objectId]!.damage).toBe(2 * hit);
-          expect(game.state.objects[player.card(giantTortoise).objectId]!.damage).toBe(
+          expect(game.markedDamage(player.card(champion).objectId)).toBe(2 * hit);
+          expect(game.markedDamage(player.card(giantTortoise).objectId)).toBe(
             (player.id === p.id ? 1 : 0) + (expired ? 2 * hit : 2 * (hit - 1)),
           );
         }

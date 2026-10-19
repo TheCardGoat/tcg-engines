@@ -36,13 +36,13 @@ describe("Ominous Shadow — prevent 3 damage", () => {
     const source = defender.card(ominousShadow);
     attacker.declareAttack(woodlandSquirrels, source);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[source.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(source.objectId)).toBe(0);
     const wait = game.waitState();
     if (wait.kind === "opportunity" && wait.playerId !== attacker.id)
       game.player(wait.playerId).pass();
     attacker.declareAttack(utherIllustriousKing, source);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[source.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(source.objectId)).toBe(1);
   });
 });
 

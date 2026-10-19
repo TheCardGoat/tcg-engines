@@ -71,7 +71,7 @@ describe("Elyan, Lustre Loyalty — recovery scaling", () => {
       }
       game.resolveCombatWithoutRetaliation();
       const defender = amount < 4 ? opponent.card(waveriderProtector) : target;
-      expect(game.state.objects[defender.objectId]!.damage).toBe(2 + amount);
+      expect(game.markedDamage(defender.objectId)).toBe(2 + amount);
     });
   }
 });

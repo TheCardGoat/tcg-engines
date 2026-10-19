@@ -1,3 +1,9 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-playing-cards/playing-cards-bestowing-boons"
+  relation: "current_index"
+---
 # Playing Cards - Bestowing Boons
 
 #### General Rules:

@@ -83,7 +83,7 @@ export function proveDamageAndOptionalAetherwingLoad(
               });
               expect(game.state.objects[target.objectId]?.damage).toBe(0);
               passEffectsStack(game);
-              expect(game.state.objects[target.objectId]?.damage).toBe(prevented ? 0 : damage);
+              expect(game.markedDamage(target.objectId)).toBe(prevented ? 0 : damage);
               if (load !== "unavailable") {
                 expect(game.state.objects[source.objectId]?.zone).toBe("effects-stack");
                 expect(game.state.decision).toMatchObject({
@@ -122,7 +122,7 @@ export function proveDamageAndOptionalAetherwingLoad(
                 expect(game.state.objects[source.objectId]?.zone).toBe("graveyard");
               expect(game.state.decision).toBeNull();
               expect(game.state.stack).toHaveLength(0);
-              expect(game.state.objects[target.objectId]?.damage).toBe(prevented ? 0 : damage);
+              expect(game.markedDamage(target.objectId)).toBe(prevented ? 0 : damage);
               expect(p.zone("memory")).toHaveLength(damage + (prevented ? 2 : 0));
             });
 }

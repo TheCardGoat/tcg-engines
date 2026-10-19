@@ -108,7 +108,7 @@ export function proveSubtypeRetaliationRestriction(kind: "disposer" | "sword") {
                 selfAttacks && damage > 0 ? "graveyard" : "field",
               );
               if (!selfAttacks || damage === 0)
-                expect(game.state.objects[attacker.objectId]!.damage).toBe(damage);
+                expect(game.markedDamage(attacker.objectId)).toBe(damage);
             });
           }
 }

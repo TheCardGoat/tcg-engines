@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-10",
+  "baseCommit": "3a3d7fd803",
+  "route": "/alpha-clash/simulator/tests/board-actions",
+  "viewport": [
+    1366,
+    768
+  ],
+  "input": "Your Oblivion > Next card > native Rizlac ability; auto-pay already enabled",
+  "capture": "CDP JPEG screencast plus temporary Howler masterGain MediaStreamDestination, MediaRecorder Opus; no microphone or synthetic sound; capture branch disconnected afterward",
+  "encoding": "H264 30fps plus AAC; timestamp durations, up to 2s final hold; not a performance benchmark",
+  "result": {
+    "resourcesReady": [
+      9,
+      7
+    ],
+    "clash": [
+      2,
+      3
+    ],
+    "oblivion": [
+      2,
+      1
+    ],
+    "hand": [
+      3,
+      3
+    ],
+    "deck": [
+      32,
+      32
+    ]
+  },
+  "limitations": [
+    "Before the small Settings icon repair; final screenshot shows the repaired header.",
+    "No manual payment, leave-play replacement, opponent transition or other viewport proof.",
+    "Measured audio presence/mute, not a full perceptual mix or overlap acceptance test."
+  ],
+  "runs": [
+    {
+      "file": "rizlac-activation-audio.mp4",
+      "reducedMotion": false,
+      "masterGain": 0.5625,
+      "capturedFrameCount": 46,
+      "capturedFrameSpanSeconds": 2.722938060760498,
+      "audioOffsetSeconds": 0.031134843826293945,
+      "meanDbfs": -39.6,
+      "peakDbfs": -11.3,
+      "frameTimestamps": [
+        1791646077.525235,
+        1791646078.207282,
+        1791646078.222015,
+        1791646078.228896,
+        1791646078.273401,
+        1791646078.309983,
+        1791646078.319296,
+        1791646078.353981,
+        1791646078.368144,
+        1791646078.524059,
+        1791646078.537561,
+        1791646078.554857,
+        1791646078.571028,
+        1791646078.588098,
+        1791646078.60099,
+        1791646078.620473,
+        1791646078.634004,
+        1791646078.650089,
+        1791646078.66777,
+        1791646078.682693,
+        1791646078.902504,
+        1791646078.919353,
+        1791646078.93835,
+        1791646078.954062,
+        1791646078.970856,
+        1791646078.984291,
+        1791646079.000985,
+        1791646079.020875,
+        1791646079.036998,
+        1791646079.055049,
+        1791646079.074724,
+        1791646079.087941,
+        1791646079.142572,
+        1791646079.144182,
+        1791646079.161362,
+        1791646079.173357,
+        1791646079.200405,
+        1791646079.215631,
+        1791646079.237925,
+        1791646079.248852,
+        1791646079.265974,
+        1791646079.281971,
+        1791646079.297732,
+        1791646079.316213,
+        1791646079.332381,
+        1791646080.248173
+      ]
+    },
+    {
+      "file": "rizlac-activation-muted-reduced.mp4",
+      "reducedMotion": true,
+      "masterGain": 0,
+      "capturedFrameCount": 13,
+      "capturedFrameSpanSeconds": 0.6821959018707275,
+      "audioOffsetSeconds": 0.028702974319458008,
+      "meanDbfs": -91,
+      "peakDbfs": -91,
+      "frameTimestamps": [
+        1791646136.783103,
+        1791646137.285295,
+        1791646137.298938,
+        1791646137.314189,
+        1791646137.332489,
+        1791646137.348956,
+        1791646137.366652,
+        1791646137.380094,
+        1791646137.397987,
+        1791646137.415926,
+        1791646137.432011,
+        1791646137.447753,
+        1791646137.465299
+      ]
+    }
+  ]
+}

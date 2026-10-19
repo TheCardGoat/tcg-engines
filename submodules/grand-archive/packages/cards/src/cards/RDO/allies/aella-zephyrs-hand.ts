@@ -54,7 +54,7 @@ export const aellaZephyrsHand: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                 kind: "ability-activation-count",
                 ability: "this",
                 scope: "source-instance",
-                window: "this-turn",
+                window: "game",
                 operator: "eq",
                 value: 0,
               },

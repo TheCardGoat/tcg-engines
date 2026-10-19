@@ -98,7 +98,7 @@ describe("Relentless Outburst — damage for every six counters", () => {
     const ownAlly = player.card(automatedGardener, { zone: "field" });
     const foe = opponent.zone("field")[0]!;
     const foeAlly = opponent.card(automatedGardener, { zone: "field" });
-    expect(game.state.objects[self.objectId]!.damage).toBe(12);
+    expect(game.markedDamage(self.objectId)).toBe(12);
     player.activate(relentlessOutburst, {
       reservePayment: player
         .cards(woodlandSquirrels, { zone: "hand" })
@@ -106,10 +106,10 @@ describe("Relentless Outburst — damage for every six counters", () => {
         .map((card) => ({ kind: "card" as const, cardId: card.objectId })),
     });
     passEffectsStack(game);
-    expect(game.state.objects[ownAlly.objectId]!.damage).toBe(2);
-    expect(game.state.objects[foe.objectId]!.damage).toBe(2);
-    expect(game.state.objects[foeAlly.objectId]!.damage).toBe(2);
-    expect(game.state.objects[self.objectId]!.damage).toBe(14);
+    expect(game.markedDamage(ownAlly.objectId)).toBe(2);
+    expect(game.markedDamage(foe.objectId)).toBe(2);
+    expect(game.markedDamage(foeAlly.objectId)).toBe(2);
+    expect(game.markedDamage(self.objectId)).toBe(14);
   });
 });
 
@@ -162,7 +162,7 @@ describe("Relentless Outburst — Class Bonus damage 35+ replacement", () => {
         ...(enabled ? { targets: { "target-1": [foe.objectId] } } : {}),
       });
       passEffectsStack(game);
-      const beforeBlast = game.state.objects[foe.objectId]!.damage;
+      const beforeBlast = game.markedDamage(foe.objectId);
       player.activate(nascentBlast, {
         reservePayment: payment.slice(3, 6).map((card) => ({
           kind: "card" as const,
@@ -171,7 +171,7 @@ describe("Relentless Outburst — Class Bonus damage 35+ replacement", () => {
         targets: { "target-1": [foe.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[foe.objectId]!.damage).toBe(beforeBlast + (enabled ? 4 : 3));
+      expect(game.markedDamage(foe.objectId)).toBe(beforeBlast + (enabled ? 4 : 3));
     }
   });
 });

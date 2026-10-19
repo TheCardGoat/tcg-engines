@@ -87,10 +87,10 @@ it("Candlelight Hourglass charges only on its controller's recollection, taxes o
     passEffectsStack(game);
     const opponent = player.id === p.id ? q : p;
     const target = opponent.card(targetAlly ? giantTortoise : champion);
-    const damage = game.state.objects[target.objectId]!.damage;
+    const damage = game.markedDamage(target.objectId);
     player.declareAttack(ally, target);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[target.objectId]!.damage).toBe(damage + 3);
+    expect(game.markedDamage(target.objectId)).toBe(damage + 3);
   };
   expect(charge()).toBe(0);
   advanceToMain(game, q.id);

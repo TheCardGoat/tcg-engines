@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-name"
   relation: "current_index"
 ---
-
 # Parts of a Card - Name
 
 The name of the card will be found in the middle section of the top bar between the card cost and the card element.
@@ -21,7 +20,7 @@ General Rules:
       2. Champions Bonus restriction abilities will use a champion's name for determining when the restriction ability is unlocked. The restriction ability follows the convention of \[Name] Bonus.
       3. Champions that have the Name of a champion card somewhere in their name do not receive the benefit of being a named champion for the purposes of naming conventions, such as for restriction abilities or lineages.
 
-{% hint style="warning" %} <img src="/files/ykDuBaDTi2AqdknHSpvG" alt="" data-size="original">![](/files/j1tBGk7dOS4ZrHzudZDA)\
+{% hint style="warning" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FBcDTSZWPqWIDCyrCce10%2Fmord.jpg?alt=media&amp;token=929b2e1e-2b44-45e5-8956-a6cd4d779d64" alt="" data-size="original">![](https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FIlHVbnVvmE8MfRGCemNi%2Fstrikemord.jpg?alt=media\&token=4e537517-dee9-45ef-a244-37d27d643a2d)\
 \
 Striking Tides will not have its restriction ability active if the player only controls Flawless Spirit of Mordred.
 {% endhint %}

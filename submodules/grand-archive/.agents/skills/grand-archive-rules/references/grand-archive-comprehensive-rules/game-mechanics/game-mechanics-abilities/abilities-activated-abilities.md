@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-activated-abilities"
   relation: "current_index"
 ---
-
 # Abilities -  Activated Abilities
 
 #### General Rules:

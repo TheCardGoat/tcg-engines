@@ -48,6 +48,7 @@ export function openingPlacement(
       z: 22 + slot * 0.3,
       height: 90,
       angle: 0,
+      rotationX: 0,
     };
   if (!rival && beat.hand === "review") {
     const pose = inspectionSpreadPose(view.camera, {

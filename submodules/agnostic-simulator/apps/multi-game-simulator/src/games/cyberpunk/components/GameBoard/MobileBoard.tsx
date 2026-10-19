@@ -2012,6 +2012,7 @@ export function MobileBoard({
             <div ref={activityFeedRef} className={classes.activityFeed}>
               <EventLogPanel
                 embedded
+                density="compact"
                 entries={eventLogEntries}
                 turnPlayerLabel={cyberpunkTurnPlayerLabels(
                   matchState,

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { InteractionPanel } from "@tcg/simulator-ui";
 import type { SimulatorRendererProps } from "@tcg/simulator-contract";
 
@@ -6,6 +7,10 @@ import { PaymentSelectionPrompt } from "./PaymentSelection/PaymentSelectionPromp
 import { usePaymentSelection } from "./PaymentSelection/PaymentSelectionContext";
 import { useEngine } from "../engine";
 import classes from "./CyberpunkInteractionPanel.module.css";
+
+// The hidden adapter driver only needs a render when its projection changes.
+// Animation phases, pending flags and prompt controls must not rebuild it.
+const DiagnosticInteractionPanel = memo(InteractionPanel);
 
 interface CyberpunkInteractionPanelProps extends SimulatorRendererProps {
   promptPlacement?: "player" | "rival";
@@ -46,7 +51,7 @@ export function CyberpunkInteractionPanel({
           InteractionPanel is hidden adapter/debug output, not the visible
           Cyberpunk player prompt above. */}
       <div className={classes.testOnlyInteractionPanel}>
-        <InteractionPanel fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
+        <DiagnosticInteractionPanel fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
       </div>
     </div>
   );

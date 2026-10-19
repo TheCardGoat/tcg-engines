@@ -1,3 +1,4 @@
+import { grandArchiveObjectMarkedDamage } from "../../game/object-state.ts";
 import type { GrandArchiveProposedEvent } from "../../kernel/events.ts";
 import { grandArchiveDecisionId } from "../../game/identity.ts";
 import { grandArchiveCharacteristicsAreSiegeable } from "../../game/functional-subtypes.ts";
@@ -348,15 +349,21 @@ function playerLossFlowEvents(
 }
 
 function lethalCombatParticipantIds(
+  program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   object: GrandArchiveCardInstance,
   life: number,
 ): readonly GrandArchiveObjectId[] {
+  const isChampion = grandArchiveObjectCurrentCharacteristics(
+    program,
+    state,
+    object,
+  ).types.includes("CHAMPION");
   let resetIndex = -1;
   for (let index = state.eventHistory.length - 1; index >= 0; index -= 1) {
     const event = state.eventHistory[index]!;
     if (
-      (event.type === "damage-cleared" && event.objectId === object.id) ||
+      (!isChampion && event.type === "damage-cleared" && event.objectId === object.id) ||
       (event.type === "object-moved" && event.objectId === object.id && event.to === "field") ||
       (event.type === "object-created" && event.object.id === object.id) ||
       (event.type === "tokens-summoned" &&
@@ -373,7 +380,12 @@ function lethalCombatParticipantIds(
     readonly combatParticipantIds?: readonly GrandArchiveObjectId[];
   }[] = [];
   for (const event of state.eventHistory.slice(resetIndex + 1)) {
-    if (event.type === "damage-marked" && event.objectId === object.id) {
+    if (
+      event.type === "damage-marked" &&
+      event.objectId === object.id &&
+      !event.asDurabilityLoss &&
+      (event.asTemporaryDamage !== true) === isChampion
+    ) {
       contributions.push({
         delta: event.amount,
         combatDamage: event.combatDamage === true,
@@ -382,11 +394,12 @@ function lethalCombatParticipantIds(
       });
       continue;
     }
-    if (event.type === "damage-removed" && event.objectId === object.id) {
+    if (isChampion && event.type === "damage-removed" && event.objectId === object.id) {
       contributions.push({ delta: -event.amount, combatDamage: false });
       continue;
     }
     if (
+      isChampion &&
       event.type === "counter-changed" &&
       event.objectId === object.id &&
       event.counter === "damage"
@@ -394,7 +407,9 @@ function lethalCombatParticipantIds(
       contributions.push({ delta: event.delta, combatDamage: false });
     }
   }
-  let markedDamage = object.damage - contributions.reduce((total, entry) => total + entry.delta, 0);
+  let markedDamage =
+    grandArchiveObjectMarkedDamage(program, state, object) -
+    contributions.reduce((total, entry) => total + entry.delta, 0);
   for (const contribution of contributions) {
     const before = markedDamage;
     markedDamage += contribution.delta;
@@ -455,7 +470,11 @@ function collectDamageStateBasedEvents(
       bindings: {},
     });
     const immortal = grandArchiveObjectHasActiveKeyword(program, state, object, "immortality");
-    if (isUnit && life !== undefined && object.damage >= life) {
+    if (
+      isUnit &&
+      life !== undefined &&
+      grandArchiveObjectMarkedDamage(program, state, object) >= life
+    ) {
       if (!immortal) {
         deaths.push(object);
         if (characteristics.types.includes("CHAMPION")) losingPlayers.add(object.controllerId);
@@ -474,7 +493,8 @@ function collectDamageStateBasedEvents(
       abilityBearerId: object.id,
       bindings: {},
     });
-    const killedByIds = life === undefined ? [] : lethalCombatParticipantIds(state, object, life);
+    const killedByIds =
+      life === undefined ? [] : lethalCombatParticipantIds(program, state, object, life);
     events.push({
       type: "object-moved",
       objectId: object.id,
@@ -661,12 +681,14 @@ export function collectGrandArchiveStateBasedEvents(
   );
   if (championAbsentPlayers.size > 0) {
     return [
-      ...[...championAbsentPlayers].map((playerId): GrandArchiveProposedEvent => ({
-        type: "player-lost",
-        playerId,
-        reason: "champion-absent",
-        cause: { kind: "rule", rule: "champion-absent-state-check" },
-      })),
+      ...[...championAbsentPlayers].map(
+        (playerId): GrandArchiveProposedEvent => ({
+          type: "player-lost",
+          playerId,
+          reason: "champion-absent",
+          cause: { kind: "rule", rule: "champion-absent-state-check" },
+        }),
+      ),
       ...finishEvents(state, championAbsentPlayers),
     ];
   }

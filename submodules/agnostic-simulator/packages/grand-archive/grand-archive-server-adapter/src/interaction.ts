@@ -1,3 +1,7 @@
+import {
+  grandArchiveAbilityActionId,
+  previewGrandArchiveInteraction,
+} from "./interaction-preview.ts";
 import { interactionValueMatches, stableDeclarationValue } from "./interaction-values.ts";
 import {
   INTERACTION_PROTOCOL_VERSION,
@@ -10,17 +14,28 @@ import {
 } from "@tcg/protocol";
 import {
   describeGrandArchiveStructuredDecision,
+  describeGrandArchiveDeclarationVariables,
+  describeGrandArchiveIndependentDeclarationTargets,
+  type GrandArchiveDeclarationTargetConstraint,
   projectGrandArchiveViewerState,
   listGrandArchiveDecisionAnswerCandidates,
   listGrandArchiveLegalCommands,
+  listGrandArchiveAbilityActivationOrigins,
+  listGrandArchiveReservePaymentSources,
   readGrandArchiveWaitState,
   type GrandArchiveCommand,
   type GrandArchiveDecisionAnswerCandidate,
   type GrandArchiveLegalCommand,
   type GrandArchiveMatchRuntime,
 } from "@tcg/grand-archive-engine/simulator";
-import { grandArchivePlayerId } from "@tcg/grand-archive-engine/runtime";
-import type { GrandArchiveObjectId } from "@tcg/grand-archive-engine/runtime";
+import {
+  getGrandArchiveAnnouncementModes,
+  grandArchiveObjectPrintedAbilities,
+  grandArchiveActiveMasteryAbilities,
+  grandArchivePlayerMastery,
+  grandArchivePlayerId,
+} from "@tcg/grand-archive-engine/runtime";
+import type { GrandArchiveObjectId, GrandArchiveTargetId } from "@tcg/grand-archive-engine/runtime";
 
 type GrandArchiveDecision = NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>;
 
@@ -150,12 +165,17 @@ function decisionPresentation(decision: GrandArchiveDecision): GrandArchiveDecis
         instruction: "Choose a direction for the effect.",
         intent: "choose-option",
       };
-    case "resolve-distribution":
+    case "resolve-distribution": {
+      const resource =
+        decision.payload.kind === "damage"
+          ? "damage"
+          : `${typeof decision.payload.counter === "string" ? decision.payload.counter : decision.payload.counter.named} counters`;
       return {
         title: "Distribute amount",
-        instruction: `Distribute ${decision.amount} among the eligible objects.`,
+        instruction: `Assign ${decision.amount} ${resource} among the eligible objects.`,
         intent: "choose-option",
       };
+    }
     case "resolve-move-partition":
       return {
         title: "Separate cards",
@@ -165,7 +185,7 @@ function decisionPresentation(decision: GrandArchiveDecision): GrandArchiveDecis
     case "resolve-counter-allocation":
       return {
         title: "Allocate counters",
-        instruction: `Allocate at least ${decision.minimum} counters among the eligible objects.`,
+        instruction: `${decision.operation === "remove" ? "Remove" : "Move"} ${decision.minimum === decision.maximum ? decision.minimum : `${decision.minimum}–${decision.maximum}`} ${decision.counter.replace(/^named:/, "")} counters from the eligible objects.`,
         intent: "choose-option",
       };
     case "announce-effect-materialization":
@@ -191,6 +211,7 @@ function decisionPresentation(decision: GrandArchiveDecision): GrandArchiveDecis
 
 export interface GrandArchiveInteractionProjection {
   readonly view: EngineInteractionView;
+  readonly commandNamesByActionId: ReadonlyMap<string, GrandArchiveCommand["move"]>;
   readonly commandsByActionId: ReadonlyMap<string, readonly GrandArchiveLegalCommand[]>;
 }
 
@@ -275,14 +296,14 @@ function objectChoiceLabel(runtime: GrandArchiveMatchRuntime, id: string): strin
   const player = runtime.state.players[grandArchivePlayerId(id)];
   if (player) return player.name;
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return id;
-  const card = runtime.program.cardsById[object.activeDefinitionId ?? object.definitionId];
+  const card =
+    runtime.program.cardsById[object ? (object.activeDefinitionId ?? object.definitionId) : id];
   const name = card
     ? card.layout.kind === "single-faced"
       ? card.layout.face.name
       : card.layout.defaultFace.name
-    : object.definitionId;
-  return `${name} (${id})`;
+    : (object?.definitionId ?? id);
+  return object?.nameOverride ?? name;
 }
 
 function declarationValueLabel(runtime: GrandArchiveMatchRuntime, value: unknown): string {
@@ -297,6 +318,61 @@ function declarationValueLabel(runtime: GrandArchiveMatchRuntime, value: unknown
       .join(", ")}}`;
   }
   return String(value);
+}
+
+function targetChoiceLabel(runtime: GrandArchiveMatchRuntime, id: string): string {
+  const label = objectChoiceLabel(runtime, id);
+  const object = runtime.state.objects[id as GrandArchiveObjectId];
+  const wait = runtime.waitState();
+  if (!object || !("playerId" in wait)) return label;
+  return object.controllerId === wait.playerId ? `your ${label}` : `opponent's ${label}`;
+}
+
+/** Keep protocol mode IDs stable while displaying the native card's mode text. */
+function declarationModeLabels(
+  runtime: GrandArchiveMatchRuntime,
+  command: GrandArchiveDeclarationCommand,
+  playerId: import("@tcg/grand-archive-engine/runtime").GrandArchivePlayerId,
+): ReadonlyMap<string, string> {
+  if (!command.modeIds?.length) return new Map();
+  const sourceId = command.move === "activate-ability" ? command.sourceId : command.cardId;
+  const source = sourceId ? runtime.state.objects[sourceId] : undefined;
+  const mastery =
+    command.move === "activate-ability" && command.masteryName !== undefined
+      ? grandArchivePlayerMastery(runtime.state, playerId, command.masteryName)
+      : undefined;
+  if (!source && !mastery) return new Map();
+  const abilities = source
+    ? grandArchiveObjectPrintedAbilities(runtime.program, source, runtime.state)
+    : grandArchiveActiveMasteryAbilities(runtime.program, runtime.state, playerId);
+  const ability = abilities.find((candidate) =>
+    command.move === "activate-ability"
+      ? candidate.kind === "activated" && candidate.id === command.abilityId
+      : candidate.kind === "card-resolution",
+  );
+  if (ability?.kind !== "activated" && ability?.kind !== "card-resolution") return new Map();
+  const modes =
+    ("cascade" in ability ? ability.cascade?.modes : undefined) ??
+    getGrandArchiveAnnouncementModes(ability.modes, ability.effect, {
+      program: runtime.program,
+      state: runtime.state,
+      sourceId,
+      abilityBearerId: sourceId,
+      controllerId: source?.controllerId ?? playerId,
+      abilityId: ability.id,
+      bindings: {
+        ...(mastery
+          ? {
+              masterySourcePlayer: [playerId],
+              masterySourceName: mastery.name,
+              masterySourceTimestamp: mastery.timestamp,
+            }
+          : {}),
+        ...command.targets,
+      },
+      variables: command.variables,
+    })?.modes;
+  return new Map(modes?.map((mode) => [mode.id, mode.text]));
 }
 
 function commandChoiceLabel(
@@ -316,10 +392,13 @@ function commandChoiceLabel(
   if (command.targets) {
     const targets = Object.values(command.targets).flat();
     if (targets.length > 0) {
-      details.push(`targets: ${targets.map((id) => objectChoiceLabel(runtime, id)).join(", ")}`);
+      details.push(`Target ${targets.map((id) => targetChoiceLabel(runtime, id)).join(", ")}`);
     }
   }
-  if (command.modeIds?.length) details.push(`modes: ${command.modeIds.join(", ")}`);
+  if (command.modeIds?.length) {
+    const labels = declarationModeLabels(runtime, command, legal.playerId);
+    details.push(command.modeIds.map((id) => labels.get(id) ?? id).join(" · "));
+  }
   if (command.variables && Object.keys(command.variables).length > 0) {
     details.push(
       Object.entries(command.variables)
@@ -333,7 +412,15 @@ function commandChoiceLabel(
     ),
     ...(command.costSelections ?? []).flat().map((id) => objectChoiceLabel(runtime, id)),
   ];
-  if (payments.length > 0) details.push(`payment: ${payments.join(", ")}`);
+  if (payments.length > 0) {
+    const counts = new Map<string, number>();
+    for (const name of payments) counts.set(name, (counts.get(name) ?? 0) + 1);
+    details.push(
+      `Pay with ${[...counts]
+        .map(([name, count]) => (count > 1 ? `${name} ×${count}` : name))
+        .join(", ")}`,
+    );
+  }
   if (command.costOptionIndex !== undefined)
     details.push(`cost option ${command.costOptionIndex + 1}`);
   if (command.payOptionalCost !== undefined) {
@@ -343,6 +430,7 @@ function commandChoiceLabel(
     "move",
     "cardId",
     "sourceId",
+    "masteryName",
     "abilityId",
     "targets",
     "modeIds",
@@ -365,7 +453,7 @@ function commandChoiceGroupKey(command: GrandArchiveCommand): string | null {
     case "activate-card":
       return `activate-card:${command.cardId}`;
     case "activate-ability":
-      return `activate-ability:${command.sourceId}:${command.abilityId}`;
+      return `activate-ability:${command.sourceId ?? `mastery:${command.masteryName}`}:${command.abilityId}`;
     case "materialize":
       return `materialize:${command.cardId}`;
     case "bestow-boon":
@@ -447,7 +535,15 @@ function declarationSubmissionValues(
 function declarationChoicesAreCorrelated(
   commands: readonly GrandArchiveDeclarationCommand[],
 ): boolean {
-  const records = commands.map(declarationSubmissionValues);
+  // Identity choices for a reserve payment are validated by the engine on
+  // submission. Keep its size in the correlation check (e.g. optional costs).
+  const records: Readonly<Record<string, InteractionSubmissionValue>>[] = commands.map(
+    (command) => ({
+      ...declarationSubmissionValues(command),
+      "reserve-payment": command.reservePayment?.length ?? 0,
+    }),
+  );
+  const distinctRecords = new Set(records.map(stableDeclarationValue)).size;
   const inputIds = [...new Set(records.flatMap((record) => Object.keys(record)))];
   let combinations = 1;
   for (const inputId of inputIds) {
@@ -455,15 +551,82 @@ function declarationChoicesAreCorrelated(
       records.map((record) => stableDeclarationValue(record[inputId] ?? null)),
     ).size;
     combinations *= distinct;
-    if (combinations > commands.length) return true;
+    if (combinations > distinctRecords) return true;
   }
   return false;
+}
+
+function declarationReserveSources(
+  runtime: GrandArchiveMatchRuntime,
+  entry: GrandArchiveLegalCommand,
+) {
+  const command = entry.command;
+  return listGrandArchiveReservePaymentSources(
+    runtime.program,
+    runtime.state,
+    entry.playerId,
+    isDeclarationCommand(command)
+      ? command.move === "activate-ability"
+        ? command.sourceId
+        : command.cardId
+      : undefined,
+  );
+}
+
+function exactDeclarationKey(
+  command: GrandArchiveCommand,
+  independentReserve: boolean,
+  independentVariables = false,
+  independentTargets = false,
+): string {
+  if (
+    (!independentReserve && !independentVariables && !independentTargets) ||
+    !isDeclarationCommand(command)
+  )
+    return stableDeclarationValue(command);
+  const { reservePayment, variables, targets, ...declaration } = command;
+  return stableDeclarationValue({
+    ...declaration,
+    ...(!independentTargets ? { targets } : {}),
+    ...(!independentVariables ? { variables, reserveUnits: reservePayment?.length ?? 0 } : {}),
+  });
 }
 
 function exactDeclarationInput(
   runtime: GrandArchiveMatchRuntime,
   entries: readonly GrandArchiveLegalCommand[],
+  independentReserve = false,
+  independentVariables = false,
+  independentTargets = false,
 ): InteractionInput {
+  const options = new Map<string, { id: string; text: { key: string }; enabled: boolean }>();
+  for (const entry of entries) {
+    const id = exactDeclarationKey(
+      entry.command,
+      independentReserve,
+      independentVariables,
+      independentTargets,
+    );
+    if (options.has(id)) continue;
+    const command = entry.command;
+    let label = commandChoiceLabel(runtime, entry);
+    if (
+      (independentReserve || independentVariables || independentTargets) &&
+      isDeclarationCommand(command)
+    ) {
+      const { reservePayment, variables, targets, ...declaration } = command;
+      label = commandChoiceLabel(runtime, {
+        ...entry,
+        command: {
+          ...declaration,
+          ...(!independentVariables ? { variables } : {}),
+          ...(!independentTargets ? { targets } : {}),
+        },
+      });
+      if (!independentVariables) label += ` · Pay ${reservePayment?.length ?? 0} reserve`;
+    }
+    options.set(id, { id, text: { key: label }, enabled: true });
+  }
   return {
     id: "legal-declaration",
     kind: "option-selection",
@@ -471,32 +634,190 @@ function exactDeclarationInput(
     required: true,
     min: 1,
     max: 1,
-    options: entries.map((entry) => ({
-      id: stableDeclarationValue(entry.command),
-      text: { key: commandChoiceLabel(runtime, entry) },
+    options: [...options.values()],
+  };
+}
+
+/** Native candidates are independent of the bot's enumerated target combinations.
+ * Forms whose target schema varies across modes/numbers keep their correlated declarations
+ * until the engine exposes those dependencies as an interactive declaration schema. */
+function independentDeclarationTargets(
+  runtime: GrandArchiveMatchRuntime,
+  entries: readonly GrandArchiveLegalCommand[],
+): readonly GrandArchiveDeclarationTargetConstraint[] | null {
+  let descriptions: readonly GrandArchiveDeclarationTargetConstraint[] | undefined;
+  let fingerprint: string | undefined;
+  const seen = new Set<string>();
+  for (const entry of entries) {
+    if (!isDeclarationCommand(entry.command)) return null;
+    const { targets: _targets, reservePayment: _payment, ...base } = entry.command;
+    const key = stableDeclarationValue(base);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const current = describeGrandArchiveIndependentDeclarationTargets(
+      runtime.program,
+      runtime.state,
+      entry.playerId,
+      entry.command,
+    );
+    if (current === null) return null;
+    const currentFingerprint = stableDeclarationValue(current);
+    if (fingerprint !== undefined && fingerprint !== currentFingerprint) return null;
+    fingerprint = currentFingerprint;
+    descriptions = current;
+  }
+  return descriptions ?? null;
+}
+
+function nativeTargetInputs(
+  runtime: GrandArchiveMatchRuntime,
+  targets: readonly GrandArchiveDeclarationTargetConstraint[],
+): InteractionInput[] {
+  return targets.map((target) => ({
+    id: `target:${target.binding}`,
+    kind: "entity-selection",
+    role: "target",
+    text: { key: `Choose ${target.binding.replaceAll("-", " ")}.` },
+    required: target.minimum > 0,
+    min: target.minimum,
+    max: target.maximum,
+    ordered: target.ordered,
+    entityKinds: target.candidateIds.length
+      ? [...new Set(target.candidateIds.map((id) => entityKindForId(runtime, id)))]
+      : ["card"],
+    candidates: target.candidateIds.map((id) => ({
+      entity: entityRefForId(runtime, id),
+      text: { key: structuredCandidateLabel(runtime, id) },
       enabled: true,
     })),
-  };
+  }));
+}
+
+function submittedNativeTargets(
+  constraints: readonly GrandArchiveDeclarationTargetConstraint[],
+  values: InteractionSubmission["values"],
+): Record<string, GrandArchiveTargetId[]> | null {
+  const targets: Record<string, GrandArchiveTargetId[]> = {};
+  for (const target of constraints) {
+    const submitted = values[`target:${target.binding}`] ?? [];
+    if (
+      !Array.isArray(submitted) ||
+      submitted.length < target.minimum ||
+      submitted.length > target.maximum ||
+      new Set(submitted).size !== submitted.length
+    )
+      return null;
+    const ids = submitted.map((id) => target.candidateIds.find((candidate) => candidate === id));
+    if (ids.some((id) => id === undefined)) return null;
+    targets[target.binding] = ids.filter((id): id is GrandArchiveTargetId => id !== undefined);
+  }
+  return targets;
 }
 
 function structuredDeclarationInputs(
   runtime: GrandArchiveMatchRuntime,
   entries: readonly GrandArchiveLegalCommand[],
+  nativeTargets = independentDeclarationTargets(runtime, entries),
 ): InteractionInput[] | null {
   const commands = entries.flatMap((entry) =>
     isDeclarationCommand(entry.command) ? [entry.command] : [],
   );
   if (commands.length !== entries.length) return null;
+  const independentTargets = (nativeTargets?.length ?? 0) > 0;
+  const targetInputs = independentTargets ? nativeTargetInputs(runtime, nativeTargets ?? []) : [];
+  const variableDescriptions = entries.map((entry) =>
+    describeGrandArchiveDeclarationVariables(
+      runtime.program,
+      runtime.state,
+      entry.playerId,
+      entry.command,
+    ),
+  );
+  const variableInputs: InteractionInput[] = (["X", "Y", "Z"] as const).flatMap((symbol) => {
+    const constraints = variableDescriptions.flatMap((description) =>
+      description.filter((constraint) => constraint.symbol === symbol),
+    );
+    if (!constraints.length) return [];
+    const minima = constraints.flatMap((constraint) =>
+      constraint.minimum === undefined ? [] : [constraint.minimum],
+    );
+    const maxima = constraints.flatMap((constraint) =>
+      constraint.maximum === undefined ? [] : [constraint.maximum],
+    );
+    return [
+      {
+        id: `variable:${symbol}`,
+        kind: "number" as const,
+        text: { key: `Choose ${symbol}.` },
+        required: constraints.length === entries.length,
+        step: 1,
+        ...(minima.length === constraints.length ? { min: Math.min(...minima) } : {}),
+        ...(maxima.length === constraints.length ? { max: Math.max(...maxima) } : {}),
+      },
+    ];
+  });
+  const independentVariables = variableInputs.length > 0;
   const hasUnprojectedDeclarationField = commands.some(
     (command) =>
       ("prepareAbilityIndexes" in command && command.prepareAbilityIndexes !== undefined) ||
       ("revealForImbue" in command && command.revealForImbue !== undefined) ||
       command.paymentContributions !== undefined,
   );
-  if (hasUnprojectedDeclarationField || declarationChoicesAreCorrelated(commands)) {
-    return [exactDeclarationInput(runtime, entries)];
+  if (
+    independentVariables ||
+    hasUnprojectedDeclarationField ||
+    declarationChoicesAreCorrelated(
+      independentTargets
+        ? commands.map((command) => ({ ...command, targets: undefined }))
+        : commands,
+    )
+  ) {
+    const reserveCounts = commands.map((command) => command.reservePayment?.length ?? 0);
+    const sources =
+      Math.max(...reserveCounts) > 0 || independentVariables
+        ? declarationReserveSources(runtime, entries[0]!)
+        : [];
+    const minimum = independentVariables ? 0 : Math.min(...reserveCounts);
+    const maximum = independentVariables ? sources.length : Math.max(...reserveCounts);
+    const independentReserve = maximum > 0 && (independentVariables || sources.length > minimum);
+    const declaration = exactDeclarationInput(
+      runtime,
+      entries,
+      independentReserve,
+      independentVariables,
+      independentTargets,
+    );
+    if (!independentReserve) return [declaration, ...variableInputs, ...targetInputs];
+    const candidateIds = sources.map((source) =>
+      source.kind === "card" ? source.cardId : source.objectId,
+    );
+    return [
+      declaration,
+      ...variableInputs,
+      ...targetInputs,
+      {
+        id: "reserve-payment",
+        kind: "entity-selection",
+        role: "cost",
+        text: {
+          key: independentVariables
+            ? "Choose reserve payment sources for the declared values."
+            : "Choose the number of reserve payment sources shown in your declaration.",
+        },
+        required: minimum > 0,
+        ordered: false,
+        min: minimum,
+        max: maximum,
+        entityKinds: [...new Set(candidateIds.map((id) => entityKindForId(runtime, id)))],
+        candidates: candidateIds.map((id) => ({
+          entity: entityRefForId(runtime, id),
+          text: { key: structuredCandidateLabel(runtime, id) },
+          enabled: true,
+        })),
+      },
+    ];
   }
-  const inputs: InteractionInput[] = [];
+  const inputs: InteractionInput[] = [...targetInputs];
   // The engine enumerates these selections as combinations. Cost-component order is
   // represented separately by costPaymentOrders, not by the order cards are clicked.
   const addEntitySelection = (
@@ -505,8 +826,9 @@ function structuredDeclarationInputs(
     role: "target" | "cost",
     selections: readonly (readonly string[])[],
     ordered = false,
+    availableIds?: readonly string[],
   ) => {
-    const candidateIds = [...new Set(selections.flat())];
+    const candidateIds = [...new Set(availableIds ?? selections.flat())];
     if (candidateIds.length === 0) return;
     inputs.push({
       id,
@@ -527,7 +849,12 @@ function structuredDeclarationInputs(
       })),
     });
   };
-  const addOptions = (id: string, text: string, values: readonly (readonly string[])[]) => {
+  const addOptions = (
+    id: string,
+    text: string,
+    values: readonly (readonly string[])[],
+    labels: ReadonlyMap<string, string> = new Map(),
+  ) => {
     const optionIds = [...new Set(values.flat())];
     if (optionIds.length === 0) return;
     inputs.push({
@@ -539,7 +866,7 @@ function structuredDeclarationInputs(
       max: Math.max(...values.map((value) => value.length)),
       options: optionIds.map((optionId) => ({
         id: optionId,
-        text: { key: optionId },
+        text: { key: labels.get(optionId) ?? optionId },
         enabled: true,
       })),
     });
@@ -577,26 +904,18 @@ function structuredDeclarationInputs(
   );
   addOptions("activation-method", "Choose an activation method.", activationMethods);
 
-  for (const symbol of ["X", "Y", "Z"] as const) {
-    const values = commands.flatMap((command) => command.variables?.[symbol] ?? []);
-    if (values.length === 0) continue;
-    inputs.push({
-      id: `variable:${symbol}`,
-      kind: "number",
-      text: { key: `Choose ${symbol}.` },
-      required: true,
-      min: Math.min(...values),
-      max: Math.max(...values),
-      step: 1,
-    });
-  }
   addOptions(
     "modes",
     "Choose modes.",
     commands.map((command) => command.modeIds ?? []),
+    new Map(
+      commands.flatMap((command) => [
+        ...declarationModeLabels(runtime, command, entries[0]!.playerId),
+      ]),
+    ),
   );
   const bindings = [...new Set(commands.flatMap((command) => Object.keys(command.targets ?? {})))];
-  for (const binding of bindings) {
+  for (const binding of independentTargets ? [] : bindings) {
     addEntitySelection(
       `target:${binding}`,
       `Choose ${binding.replaceAll("-", " ")}.`,
@@ -613,6 +932,12 @@ function structuredDeclarationInputs(
         payment.kind === "card" ? payment.cardId : payment.objectId,
       ),
     ),
+    false,
+    commands.some((command) => (command.reservePayment?.length ?? 0) > 0)
+      ? declarationReserveSources(runtime, entries[0]!).map((source) =>
+          source.kind === "card" ? source.cardId : source.objectId,
+        )
+      : [],
   );
   const costSelectionCount = Math.max(
     0,
@@ -788,7 +1113,11 @@ function structuredDecisionActionId(decisionId: string): string {
 }
 
 function entityKindForId(runtime: GrandArchiveMatchRuntime, id: string) {
-  if (runtime.state.objects[id as GrandArchiveObjectId]) return "card" as const;
+  if (
+    runtime.state.objects[id as GrandArchiveObjectId] ||
+    runtime.program.cardsById[id]?.definitionKind === "card"
+  )
+    return "card" as const;
   if (id in runtime.state.players) return "player" as const;
   return "effect" as const;
 }
@@ -799,7 +1128,12 @@ function entityRefForId(runtime: GrandArchiveMatchRuntime, id: string) {
     return { kind, instanceId: id, ownerId: id } as const;
   }
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return { kind, instanceId: id } as const;
+  if (!object)
+    return {
+      kind,
+      instanceId: id,
+      ...(runtime.program.cardsById[id]?.definitionKind === "card" ? { definitionId: id } : {}),
+    } as const;
   return {
     kind,
     instanceId: id,
@@ -826,7 +1160,7 @@ function structuredCandidateLabel(runtime: GrandArchiveMatchRuntime, id: string)
   const player = runtime.state.players[grandArchivePlayerId(id)];
   if (player) return player.name;
   const object = runtime.state.objects[id as GrandArchiveObjectId];
-  if (!object) return id;
+  if (!object) return objectChoiceLabel(runtime, id);
   if (object.facing === "face-down" && object.zone === "banishment") return "Face-down card";
   return objectChoiceLabel(runtime, id);
 }
@@ -970,8 +1304,10 @@ function semanticDecisionAnswerValues(
           : [],
       };
     } else if (glimpse.kind === "starcall") {
-      values["glimpse-order"] = {
-        top: [],
+      // Each native card choice has a separate conditional partition. Merging
+      // these with reorder would expose destinations from the other branch.
+      values[`starcall-order:${String(glimpse.cardId)}`] = {
+        starcall: typeof glimpse.cardId === "string" ? [glimpse.cardId] : [],
         bottom: Array.isArray(glimpse.bottom)
           ? glimpse.bottom.filter((id): id is string => typeof id === "string")
           : [],
@@ -1065,12 +1401,36 @@ function semanticDecisionAnswerValues(
   return values;
 }
 
+/** Glimpse enumeration proposes declarations; only native-proven answers may create UI steps. */
+function semanticDecisionCandidates(
+  runtime: GrandArchiveMatchRuntime,
+  decision: GrandArchiveDecision,
+): readonly GrandArchiveDecisionAnswerCandidate[] {
+  const candidates = listGrandArchiveDecisionAnswerCandidates(
+    runtime.program,
+    runtime.state,
+    decision,
+  );
+  if (decision.kind !== "resolve-glimpse") return candidates;
+  return candidates.filter(
+    (candidate) =>
+      runtime.probe(
+        {
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: candidate.answer,
+        },
+        { playerId: decision.playerId, expectedStateVersion: runtime.state.stateVersion },
+      ).ok,
+  );
+}
+
 function semanticDecisionInputs(
   runtime: GrandArchiveMatchRuntime,
   decision: GrandArchiveDecision,
-  candidates: readonly GrandArchiveDecisionAnswerCandidate[] = listGrandArchiveDecisionAnswerCandidates(
-    runtime.program,
-    runtime.state,
+  candidates: readonly GrandArchiveDecisionAnswerCandidate[] = semanticDecisionCandidates(
+    runtime,
     decision,
   ),
 ): InteractionInput[] {
@@ -1089,7 +1449,7 @@ function semanticDecisionInputs(
   );
   const inputIds = [...new Set(answerValues.flatMap((values) => Object.keys(values)))];
   const priority = (id: string) =>
-    id === "accept"
+    id === "accept" || id === "glimpse-action"
       ? 0
       : id.includes("costOption") || id.includes("optional")
         ? 1
@@ -1097,9 +1457,12 @@ function semanticDecisionInputs(
           ? 2
           : id.includes("mode")
             ? 3
-            : id.startsWith("target:") || id.includes("target") || id.includes("attacker")
+            : id === "cardId" ||
+                id.startsWith("target:") ||
+                id.includes("target") ||
+                id.includes("attacker")
               ? 4
-              : id.includes("payment") || id.includes("cost")
+              : id.toLowerCase().includes("payment") || id.includes("cost")
                 ? 5
                 : id.includes("order")
                   ? 6
@@ -1116,6 +1479,7 @@ function semanticDecisionInputs(
       return (
         candidateValues.every(
           (value) =>
+            value === undefined ||
             typeof value === "string" ||
             typeof value === "number" ||
             typeof value === "boolean" ||
@@ -1128,22 +1492,51 @@ function semanticDecisionInputs(
           ...new Map(
             answerValues.flatMap((values) => {
               if (values[id] === undefined) return [];
-              const all = earlierDiscriminators.map((inputId) => {
-                const value = values[inputId]!;
-                return {
-                  inputId,
-                  value: Array.isArray(value) ? [...value] : (value as string | number | boolean),
-                };
+              const all = earlierDiscriminators.flatMap((inputId) => {
+                const value = values[inputId];
+                if (value === undefined) return [];
+                return [
+                  {
+                    inputId,
+                    value: Array.isArray(value) ? [...value] : (value as string | number | boolean),
+                  },
+                ];
               });
               if (all.length === 0 && values.accept === true)
                 all.push({ inputId: "accept", value: true });
-              return all.length > 0 ? [[stableDeclarationValue(all), { all }] as const] : [];
+              // A field is required only if every candidate in this branch needs it.
+              // For example, a zero-cost Starcall must not inherit another card's payment.
+              const hasMatchingOmission = answerValues.some(
+                (candidate) =>
+                  candidate[id] === undefined &&
+                  all.every(
+                    (condition) =>
+                      stableDeclarationValue(candidate[condition.inputId]) ===
+                      stableDeclarationValue(condition.value),
+                  ),
+              );
+              return all.length > 0 && !hasMatchingOmission
+                ? [[stableDeclarationValue(all), { all }] as const]
+                : [];
             }),
           ).values(),
         ]
       : [];
     const requiredWhen = conditionalRequirements.length > 0 ? conditionalRequirements : undefined;
-    const text = { key: id.replaceAll(".", " ").replaceAll(":", " ").replaceAll("-", " ") };
+    const text = {
+      key:
+        id === "glimpse-order" || id.startsWith("starcall-order:")
+          ? "Arrange the viewed cards"
+          : id === "glimpse-action"
+            ? "Choose how to use the viewed cards"
+            : id === "cardId"
+              ? decision.kind === "resolve-glimpse"
+                ? "Choose a card to Starcall"
+                : "Choose a card"
+              : id === "reservePayment"
+                ? "Choose cards to pay reserve"
+                : id.replaceAll(".", " ").replaceAll(":", " ").replaceAll("-", " "),
+    };
     const common = { id, text, required, ...(requiredWhen ? { requiredWhen } : {}) };
     if (present.every((value) => typeof value === "boolean")) {
       return [
@@ -1181,7 +1574,7 @@ function semanticDecisionInputs(
           {
             ...common,
             kind: "entity-allocation",
-            role: id.includes("payment") || id.includes("cost") ? "cost" : "target",
+            role: id.toLowerCase().includes("payment") || id.includes("cost") ? "cost" : "target",
             entityKinds: [...new Set(keys.map((key) => entityKindForId(runtime, key)))],
             totalMin: Math.min(...totals),
             totalMax: Math.max(...totals),
@@ -1213,13 +1606,18 @@ function semanticDecisionInputs(
               key:
                 decision.kind === "resolve-glimpse"
                   ? key === "top"
-                    ? "Top"
-                    : "Bottom"
-                  : `Group ${Number(key) + 1}`,
+                    ? "Top of deck"
+                    : key === "starcall"
+                      ? "Starcall"
+                      : "Bottom of deck"
+                  : partitionRouteLabel(decision, Number(key)),
             },
             kind: "destination" as const,
             ordered: true,
             orderDirection: "top-first" as const,
+            candidateIds: [
+              ...new Set(records.flatMap((record) => (record[key] as string[] | undefined) ?? [])),
+            ],
             min: Math.min(
               ...records.map((record) => (record[key] as string[] | undefined)?.length ?? 0),
             ),
@@ -1250,7 +1648,9 @@ function semanticDecisionInputs(
       const ordered =
         decision.kind === "order-retaliation-damage" ||
         decision.kind === "order-triggered-abilities" ||
-        decision.kind === "resolve-glimpse";
+        (decision.kind === "resolve-glimpse" &&
+          Math.max(...arrays.map((value) => value.length)) > 1 &&
+          !id.includes("Payment"));
       return [
         {
           ...common,
@@ -1263,7 +1663,7 @@ function semanticDecisionInputs(
               }
             : {
                 role:
-                  id.includes("payment") || id.includes("cost")
+                  id.toLowerCase().includes("payment") || id.includes("cost")
                     ? ("cost" as const)
                     : id.includes("attacker") || id.includes("weapon")
                       ? ("attacker" as const)
@@ -1287,11 +1687,21 @@ function semanticDecisionInputs(
       {
         ...common,
         kind: "option-selection",
+        implicit: required && optionIds.length === 1 && arrays.every((value) => value.length === 1),
         min: Math.min(...arrays.map((value) => value.length)),
         max: Math.max(...arrays.map((value) => value.length)),
         options: optionIds.map((optionId) => ({
           id: optionId,
-          text: { key: optionId },
+          text: {
+            key:
+              id === "glimpse-action"
+                ? optionId === "reorder"
+                  ? "Return cards to deck"
+                  : optionId === "starcall"
+                    ? "Starcall"
+                    : optionId
+                : optionId,
+          },
           enabled: true,
         })),
         ...(decision.kind === "resolve-effect-choice" &&
@@ -1310,6 +1720,17 @@ function semanticDecisionInputs(
   });
 }
 
+function partitionRouteLabel(
+  decision: NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>,
+  index: number,
+): string {
+  if (decision.kind !== "resolve-move-partition") return `Group ${index + 1}`;
+  const destination = decision.destinations[index];
+  if (!destination) return `Group ${index + 1}`;
+  const placement = destination.placement.kind === "top" ? "Top" : "Bottom";
+  return `${placement} of ${destination.zone.replaceAll("-", " ")}`;
+}
+
 function structuredDecisionInput(
   runtime: GrandArchiveMatchRuntime,
   decision: NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>,
@@ -1319,13 +1740,22 @@ function structuredDecisionInput(
     runtime.state,
     decision,
   );
-  if (description.kind === "semantic") return null;
+  if (description.kind === "semantic" || description.kind === "trigger-announcement") return null;
   const presentation = decisionPresentation(decision);
   const common = {
     id: decisionInputId(decision),
     text: { key: presentation.instruction },
     required: true,
   } as const;
+  if (description.kind === "number") {
+    return {
+      ...common,
+      kind: "number",
+      min: description.minimum,
+      ...(description.maximum !== undefined ? { max: description.maximum } : {}),
+      step: 1,
+    };
+  }
   if (description.kind === "boolean") {
     const labels =
       decision.kind === "choose-preserve-destination"
@@ -1374,7 +1804,7 @@ function structuredDecisionInput(
       candidates,
       routes: description.routeIds.map((id, index) => ({
         id,
-        text: { key: `Group ${index + 1}` },
+        text: { key: partitionRouteLabel(decision, index) },
         kind: "destination" as const,
         ordered: true,
         orderDirection: "top-first" as const,
@@ -1382,6 +1812,25 @@ function structuredDecisionInput(
         max: candidates.length,
       })),
       assignment: "exhaustive",
+    };
+  }
+  if (description.kind === "repeated-selection") {
+    // Infinity is a native bound; the wire contract accepts finite safe integers.
+    const maximum = Math.min(description.maximum, Number.MAX_SAFE_INTEGER);
+    return {
+      ...common,
+      kind: "entity-allocation",
+      role: "target",
+      entityKinds: [...new Set(description.candidateIds.map((id) => entityKindForId(runtime, id)))],
+      totalMin: description.minimum,
+      totalMax: maximum,
+      candidates: description.candidateIds.map((id) => ({
+        entity: entityRefForId(runtime, id),
+        text: { key: structuredCandidateLabel(runtime, id) },
+        enabled: maximum > 0,
+        min: 0,
+        max: maximum,
+      })),
     };
   }
   if (description.kind === "allocation") {
@@ -1437,7 +1886,7 @@ function structuredDecisionInput(
     entityKinds: [...new Set(candidates.map((candidate) => candidate.entity.kind))],
     min: description.minimum,
     max: description.maximum,
-    ordered: description.ordered,
+    ordered: description.ordered && description.maximum > 1,
     candidates,
   };
 }
@@ -1446,6 +1895,42 @@ function structuredDecisionInputs(
   runtime: GrandArchiveMatchRuntime,
   decision: GrandArchiveDecision,
 ): InteractionInput[] {
+  const description = describeGrandArchiveStructuredDecision(
+    runtime.program,
+    runtime.state,
+    decision,
+  );
+  if (description.kind === "trigger-announcement") {
+    return [
+      ...(description.modes && description.modes.options.length > 0
+        ? [
+            {
+              id: "modes",
+              kind: "option-selection" as const,
+              text: { key: "Choose modes." },
+              required: description.modes.minimum > 0,
+              min: description.modes.minimum,
+              max: description.modes.maximum,
+              options: description.modes.options.map((mode) => ({
+                id: mode.id,
+                text: { key: mode.text },
+                enabled: true,
+              })),
+            },
+          ]
+        : []),
+      ...description.variables.map((variable) => ({
+        id: `variable:${variable.symbol}`,
+        kind: "number" as const,
+        text: { key: `Choose ${variable.symbol}.` },
+        required: true,
+        step: 1,
+        ...(variable.minimum !== undefined ? { min: variable.minimum } : {}),
+        ...(variable.maximum !== undefined ? { max: variable.maximum } : {}),
+      })),
+      ...nativeTargetInputs(runtime, description.targets),
+    ];
+  }
   const input = structuredDecisionInput(runtime, decision);
   return input ? [input] : semanticDecisionInputs(runtime, decision);
 }
@@ -1454,8 +1939,26 @@ function structuredDecisionAction(
   runtime: GrandArchiveMatchRuntime,
   decision: NonNullable<GrandArchiveMatchRuntime["state"]["decision"]>,
 ): InteractionAction | null {
+  if (
+    decision.kind === "announce-triggered-ability" &&
+    describeGrandArchiveStructuredDecision(runtime.program, runtime.state, decision).kind !==
+      "trigger-announcement"
+  ) {
+    const preview = previewGrandArchiveInteraction(runtime, decision.playerId, {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: runtime.state.stateVersion,
+      actionId: structuredDecisionActionId(decision.id),
+      values: {},
+    });
+    if (preview.result.status !== "unavailable") return preview.result.action;
+  }
   const inputs = structuredDecisionInputs(runtime, decision);
-  if (inputs.length === 0) return null;
+  if (
+    inputs.length === 0 &&
+    describeGrandArchiveStructuredDecision(runtime.program, runtime.state, decision).kind !==
+      "trigger-announcement"
+  )
+    return null;
   const incarnationMap = Object.fromEntries(
     inputs
       .flatMap((input) => ("candidates" in input ? input.candidates : []))
@@ -1510,6 +2013,7 @@ function decisionRequirement(input: InteractionInput | undefined) {
 }
 
 function commandForStructuredDeclaration(
+  runtime: GrandArchiveMatchRuntime,
   entries: readonly GrandArchiveLegalCommand[],
   submission: InteractionSubmission,
   inputs: readonly InteractionInput[],
@@ -1519,65 +2023,109 @@ function commandForStructuredDeclaration(
       isDeclarationCommand(entry.command),
   );
   if (declarations.length !== entries.length) return null;
+  const nativeTargets = independentDeclarationTargets(runtime, entries);
+  const independentTargets = (nativeTargets?.length ?? 0) > 0;
   const exactChoice = submission.values["legal-declaration"];
-  if (Array.isArray(exactChoice) && exactChoice.length === 1) {
-    return (
-      declarations.find((entry) => stableDeclarationValue(entry.command) === exactChoice[0]) ?? null
-    );
+  const independentReserve = inputs.some((input) => input.id === "reserve-payment");
+  const independentVariables = inputs.some((input) => input.id.startsWith("variable:"));
+  const selected =
+    Array.isArray(exactChoice) && exactChoice.length === 1
+      ? declarations.find(
+          (entry) =>
+            exactDeclarationKey(
+              entry.command,
+              independentReserve,
+              independentVariables,
+              independentTargets,
+            ) === exactChoice[0],
+        )
+      : declarations.find((entry) => {
+          const command = entry.command;
+          return Object.entries(submission.values).every(([inputId, submitted]) => {
+            const input = inputs.find((candidate) => candidate.id === inputId);
+            if (!input) return false;
+            const valueMatches = (actual: unknown, expected: unknown) =>
+              interactionValueMatches(input, actual, expected);
+            if (inputId === "pay-optional-cost")
+              return valueMatches(submitted, command.payOptionalCost ?? false);
+            if (inputId === "cost-option")
+              return valueMatches(submitted, [String(command.costOptionIndex)]);
+            if (inputId === "activation-method")
+              return valueMatches(
+                submitted,
+                "activationMethod" in command && command.activationMethod
+                  ? [command.activationMethod]
+                  : [],
+              );
+            if (inputId === "modes") return valueMatches(submitted, command.modeIds ?? []);
+            if (inputId.startsWith("variable:")) {
+              const symbol = inputId.slice("variable:".length) as "X" | "Y" | "Z";
+              return valueMatches(submitted, command.variables?.[symbol]);
+            }
+            if (inputId.startsWith("target:")) {
+              if (independentTargets) return true;
+              return valueMatches(
+                submitted,
+                command.targets?.[inputId.slice("target:".length)] ?? [],
+              );
+            }
+            if (inputId === "reserve-payment") {
+              return (
+                Array.isArray(submitted) &&
+                submitted.length === (command.reservePayment?.length ?? 0)
+              );
+            }
+            if (inputId.startsWith("additional-cost:")) {
+              const index = Number(inputId.slice("additional-cost:".length));
+              return valueMatches(submitted, command.costSelections?.[index] ?? []);
+            }
+            if (inputId === "cost-order") {
+              return valueMatches(submitted, [
+                stableDeclarationValue(command.costPaymentOrders ?? []),
+              ]);
+            }
+            if (inputId.startsWith("additional:")) {
+              const field = inputId.slice("additional:".length) as
+                | "brewIngredientIds"
+                | "kindleCardIds"
+                | "floatingMemoryCardIds";
+              return valueMatches(submitted, declarationEntityField(command, field));
+            }
+            return false;
+          });
+        });
+  if (!selected) return null;
+  const variables: Partial<Record<"X" | "Y" | "Z", number>> = {};
+  for (const symbol of ["X", "Y", "Z"] as const) {
+    const value = submission.values[`variable:${symbol}`];
+    if (value === undefined) continue;
+    if (typeof value !== "number" || !Number.isSafeInteger(value)) return null;
+    variables[symbol] = value;
   }
-  return (
-    declarations.find((entry) => {
-      const command = entry.command;
-      return Object.entries(submission.values).every(([inputId, submitted]) => {
-        const input = inputs.find((candidate) => candidate.id === inputId);
-        if (!input) return false;
-        const valueMatches = (actual: unknown, expected: unknown) =>
-          interactionValueMatches(input, actual, expected);
-        if (inputId === "pay-optional-cost")
-          return valueMatches(submitted, command.payOptionalCost ?? false);
-        if (inputId === "cost-option")
-          return valueMatches(submitted, [String(command.costOptionIndex)]);
-        if (inputId === "activation-method")
-          return valueMatches(
-            submitted,
-            "activationMethod" in command && command.activationMethod
-              ? [command.activationMethod]
-              : [],
-          );
-        if (inputId === "modes") return valueMatches(submitted, command.modeIds ?? []);
-        if (inputId.startsWith("variable:")) {
-          const symbol = inputId.slice("variable:".length) as "X" | "Y" | "Z";
-          return valueMatches(submitted, command.variables?.[symbol]);
-        }
-        if (inputId.startsWith("target:")) {
-          return valueMatches(submitted, command.targets?.[inputId.slice("target:".length)] ?? []);
-        }
-        if (inputId === "reserve-payment") {
-          return valueMatches(
-            submitted,
-            (command.reservePayment ?? []).map((payment) =>
-              payment.kind === "card" ? payment.cardId : payment.objectId,
-            ),
-          );
-        }
-        if (inputId.startsWith("additional-cost:")) {
-          const index = Number(inputId.slice("additional-cost:".length));
-          return valueMatches(submitted, command.costSelections?.[index] ?? []);
-        }
-        if (inputId === "cost-order") {
-          return valueMatches(submitted, [stableDeclarationValue(command.costPaymentOrders ?? [])]);
-        }
-        if (inputId.startsWith("additional:")) {
-          const field = inputId.slice("additional:".length) as
-            | "brewIngredientIds"
-            | "kindleCardIds"
-            | "floatingMemoryCardIds";
-          return valueMatches(submitted, declarationEntityField(command, field));
-        }
-        return false;
-      });
-    }) ?? null
-  );
+  let declared = independentVariables
+    ? { ...selected, command: { ...selected.command, variables } }
+    : selected;
+  if (independentTargets) {
+    const targets = submittedNativeTargets(nativeTargets ?? [], submission.values);
+    if (!targets) return null;
+    declared = { ...declared, command: { ...declared.command, targets } };
+  }
+  if (!independentReserve) return declared;
+  const submittedPayment = submission.values["reserve-payment"];
+  if (submittedPayment !== undefined && !Array.isArray(submittedPayment)) return null;
+  // An omitted optional selection means zero sources, never the seed payment
+  // chosen by bot enumeration. The runtime validates the full quoted cost.
+  const paymentIds = submittedPayment ?? [];
+  const sources = declarationReserveSources(runtime, selected);
+  const reservePayment = paymentIds.flatMap((id) => {
+    const source = sources.find(
+      (source) => (source.kind === "card" ? source.cardId : source.objectId) === id,
+    );
+    return source ? [source] : [];
+  });
+  if (reservePayment.length !== paymentIds.length || new Set(paymentIds).size !== paymentIds.length)
+    return null;
+  return { ...declared, command: { ...declared.command, reservePayment } };
 }
 
 function commandForStructuredAttack(
@@ -1665,6 +2213,7 @@ function buildGrandArchiveInteraction(
   });
   const decisionAction =
     decision?.playerId === playerId ? structuredDecisionAction(runtime, decision) : null;
+  const commandNamesByActionId = new Map<string, GrandArchiveCommand["move"]>();
   const commandsByActionId = new Map<string, readonly GrandArchiveLegalCommand[]>();
   const commandGroups = groupLegalCommands(
     legal.filter((entry) => !decisionAction || entry.command.move !== "answer-decision"),
@@ -1682,23 +2231,63 @@ function buildGrandArchiveInteraction(
     const id = `${requestId}:${index}`;
     commandsByActionId.set(id, entries);
     const first = entries[0]!;
+    commandNamesByActionId.set(id, first.command.move);
     const source = sourceId(first.command);
+    const hasPaymentChoice =
+      isDeclarationCommand(first.command) &&
+      (first.command.reservePayment?.length ?? 0) > 0 &&
+      declarationReserveSources(runtime, first).length > first.command.reservePayment!.length;
+    const hasVariableChoice =
+      isDeclarationCommand(first.command) && Object.keys(first.command.variables ?? {}).length > 0;
+    const nativeTargets = independentDeclarationTargets(runtime, entries);
+    const hasTargetChoice = (nativeTargets?.length ?? 0) > 0;
     const declarationInputs =
-      entries.length > 1
-        ? (structuredDeclarationInputs(runtime, entries) ??
+      entries.length > 1 || hasPaymentChoice || hasVariableChoice || hasTargetChoice
+        ? (structuredDeclarationInputs(runtime, entries, nativeTargets) ??
           structuredAttackInputs(runtime, entries))
         : null;
     return {
       id,
       requestId,
       intent: intentForCommand(first.command),
-      text: { key: entries.length === 1 ? commandChoiceLabel(runtime, first) : first.label },
+      text: {
+        key:
+          entries.length === 1 && !hasPaymentChoice && !hasVariableChoice && !hasTargetChoice
+            ? commandChoiceLabel(runtime, first)
+            : first.label,
+      },
       enabled: true,
       ...(source ? { source: entityRefForId(runtime, source) } : {}),
-      inputs: entries.length === 1 ? [] : (declarationInputs ?? []),
+      inputs: declarationInputs ?? [],
     };
   });
+  // Native origins do not require a complete bot-enumerated payment/announcement.
+  // Preserve the existing forms until all their declaration families have native previews.
+  const representedAbilities = new Set(
+    legal.flatMap((entry) =>
+      entry.command.move === "activate-ability" ? [grandArchiveAbilityActionId(entry.command)] : [],
+    ),
+  );
+  for (const origin of listGrandArchiveAbilityActivationOrigins(
+    runtime.program,
+    runtime.state,
+    playerId,
+  )) {
+    const actionId = grandArchiveAbilityActionId(origin.command);
+    if (representedAbilities.has(actionId)) continue;
+    const preview = previewGrandArchiveInteraction(runtime, actorId, {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion,
+      actionId,
+      values: {},
+    });
+    if (preview.result.status === "ready" || preview.result.status === "incomplete") {
+      actions.push(preview.result.action);
+      commandNamesByActionId.set(actionId, "activate-ability");
+    }
+  }
   if (decisionAction) {
+    commandNamesByActionId.set(decisionAction.id, "answer-decision");
     commandsByActionId.set(
       decisionAction.id,
       legal.filter((entry) => entry.command.move === "answer-decision"),
@@ -1769,6 +2358,7 @@ function buildGrandArchiveInteraction(
         : {}),
       actions,
     },
+    commandNamesByActionId,
     commandsByActionId,
   };
 }
@@ -1789,13 +2379,36 @@ export function commandForGrandArchiveSubmission(
       runtime.state,
       decision,
     );
+    if (description.kind === "trigger-announcement") {
+      const targets = submittedNativeTargets(description.targets, submission.values);
+      if (!targets) return null;
+      const modeIds = description.modes ? (submission.values.modes ?? []) : undefined;
+      if (
+        modeIds !== undefined &&
+        (!Array.isArray(modeIds) || modeIds.some((id) => typeof id !== "string"))
+      )
+        return null;
+      const variables: Partial<Record<"X" | "Y" | "Z", number>> = {};
+      for (const variable of description.variables) {
+        const value = submission.values[`variable:${variable.symbol}`];
+        if (typeof value !== "number" || !Number.isSafeInteger(value)) return null;
+        variables[variable.symbol] = value;
+      }
+      return {
+        playerId,
+        stateVersion: runtime.state.stateVersion,
+        command: {
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: { targets, variables, ...(modeIds !== undefined ? { modeIds } : {}) },
+        },
+        label: decisionPresentation(decision).title,
+      };
+    }
     const structuredInput = structuredDecisionInput(runtime, decision);
     if (!structuredInput) {
-      const candidates = listGrandArchiveDecisionAnswerCandidates(
-        runtime.program,
-        runtime.state,
-        decision,
-      );
+      const candidates = semanticDecisionCandidates(runtime, decision);
       const hasOptionalComplexAnswer =
         candidates.some((candidate) => candidate.answer === false) &&
         candidates.some(
@@ -1836,6 +2449,39 @@ export function commandForGrandArchiveSubmission(
     }
     const input = structuredInput;
     const submittedAnswer = submission.values[input.id];
+    if (description.kind === "repeated-selection") {
+      if (!submittedAnswer || typeof submittedAnswer !== "object" || Array.isArray(submittedAnswer))
+        return null;
+      const amounts: [string, number][] = [];
+      for (const [id, count] of Object.entries(submittedAnswer)) {
+        if (
+          !description.candidateIds.includes(id) ||
+          typeof count !== "number" ||
+          !Number.isSafeInteger(count) ||
+          count < 0
+        )
+          return null;
+        amounts.push([id, count]);
+      }
+      const total = amounts.reduce((sum, [, count]) => sum + count, 0);
+      if (
+        !Number.isSafeInteger(total) ||
+        total < description.minimum ||
+        total > description.maximum
+      )
+        return null;
+      return {
+        playerId,
+        stateVersion: runtime.state.stateVersion,
+        command: {
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: amounts.flatMap(([id, count]) => Array.from({ length: count }, () => id)),
+        },
+        label: decisionPresentation(decision).title,
+      };
+    }
     const answer =
       description.kind === "partition" &&
       submittedAnswer &&
@@ -1877,8 +2523,13 @@ export function commandForGrandArchiveSubmission(
   const entries = projection.commandsByActionId.get(submission.actionId);
   const action = projection.view.actions.find((candidate) => candidate.id === submission.actionId);
   if (!entries || !action) return null;
-  if (entries.length === 1) return entries[0]!;
-  const structuredDeclaration = commandForStructuredDeclaration(entries, submission, action.inputs);
+  if (entries.length === 1 && action.inputs.length === 0) return entries[0]!;
+  const structuredDeclaration = commandForStructuredDeclaration(
+    runtime,
+    entries,
+    submission,
+    action.inputs,
+  );
   if (structuredDeclaration) return structuredDeclaration;
   const structuredAttack = commandForStructuredAttack(entries, submission, action.inputs);
   if (structuredAttack) return structuredAttack;

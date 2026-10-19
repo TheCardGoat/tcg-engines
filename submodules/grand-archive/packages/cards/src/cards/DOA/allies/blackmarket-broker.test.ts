@@ -47,7 +47,7 @@ describe("Blackmarket Broker preparation and stealth", () => {
       if (expected < 3) {
         q.declareAttack(woodlandSquirrels, card);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[card.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(card.objectId)).toBe(1);
       } else {
         const before = game.state;
         expect(() => q.declareAttack(woodlandSquirrels, card)).toThrow();

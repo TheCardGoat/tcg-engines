@@ -60,12 +60,12 @@ describe("Storm of Thorns — turn-long prevention and unit retaliation", () => 
       targets: { "target-1": [protectedAlly.objectId] },
     });
     passEffectsStack(game);
-    expect(game.state.objects[protectedAlly.objectId]!.damage).toBe(2);
-    expect(game.state.objects[opposingAlly.objectId]!.damage).toBe(0);
+    expect(game.markedDamage(protectedAlly.objectId)).toBe(2);
+    expect(game.markedDamage(opposingAlly.objectId)).toBe(0);
 
     opponent.declareAttack(opposingAlly, protectedAlly);
     game.resolveCombatWithoutRetaliation();
-    expect(game.state.objects[protectedAlly.objectId]!.damage).toBe(3);
-    expect(game.state.objects[opposingAlly.objectId]!.damage).toBe(1);
+    expect(game.markedDamage(protectedAlly.objectId)).toBe(3);
+    expect(game.markedDamage(opposingAlly.objectId)).toBe(1);
   });
 });

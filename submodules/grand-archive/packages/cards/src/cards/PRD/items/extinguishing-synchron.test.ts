@@ -57,22 +57,20 @@ describe("Extinguishing Synchron — earned refinement and recovery", () => {
           expect(refinement()).toBe(n + 1);
         }
         opportunity(p);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(1 + 2 * count);
+        expect(game.markedDamage(hero.objectId)).toBe(1 + 2 * count);
         const before = game.state;
         expect(() => q.activateAbility(source, "Tx8noEw78s-a2")).toThrow();
         expect(game.state).toEqual(before);
         p.activateAbility(source, "Tx8noEw78s-a2");
         expect(game.state.objects[source.objectId]!.zone).toBe("banishment");
         expect(refinement()).toBe(0);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(1 + 2 * count);
+        expect(game.markedDamage(hero.objectId)).toBe(1 + 2 * count);
         const paid = game.state;
         expect(() => p.activateAbility(source, "Tx8noEw78s-a2")).toThrow();
         expect(game.state).toEqual(paid);
         passEffectsStack(game);
-        expect(game.state.objects[hero.objectId]!.damage).toBe(
-          Math.max(0, 1 + 2 * count - (2 + count)),
-        );
-        expect(game.state.objects[foe.objectId]!.damage).toBe(2);
-        expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe(2);
+        expect(game.markedDamage(hero.objectId)).toBe(Math.max(0, 1 + 2 * count - (2 + count)));
+        expect(game.markedDamage(foe.objectId)).toBe(2);
+        expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe(2);
       });
 });

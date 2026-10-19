@@ -4,7 +4,6 @@ official_source:
   url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects"
   relation: "current_index"
 ---
-
 # State-based Checks and Effects
 
 State-based effects occur as a result of conditions in the state of the game being met and often do not require any additional input from the player to be completed.
@@ -29,7 +28,7 @@ State-based effects occur as a result of conditions in the state of the game bei
 10. Activations/Materializations/Bestowments: While an activation/materialization/bestowment is pending resolution, the game will check legality for its resolution, including the presence of its source card in the effects stack. If that activation/materialization/bestowment doesn't have its corresponding source card, it will fizzle.
     1. Restriction abilities are checked statically as part of state-based checks while a card, ability, or other effect is pending resolution. If the requirements to unlock the restriction are not met when they are checked, the restriction ability is lost statically. This will simultaneously cause any dependent effects or targeting statuses to stop and can cause fizzling.
 
-{% hint style="info" %} <img src="/files/ikI0PpXIgPjy3Xu3nMhp" alt="" data-size="original">\
+{% hint style="info" %} <img src="https://4259813486-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fn9JVmMhIsFO8d99Lam5B%2Fuploads%2FCfiW4PLM4nj9cNlfiEvM%2Ffroistbind.jpg?alt=media&amp;token=a21db457-36b1-4e65-9ea8-1b6d9d58be0e" alt="" data-size="original">\
 \
 E.g., If Frostbind banishes the card that is a source for one or more card activations that are pending resolution, each of those instances will Fizzle as a result of the state-based checks that occur after Frostbind resolves and banishes that card.
 {% endhint %}

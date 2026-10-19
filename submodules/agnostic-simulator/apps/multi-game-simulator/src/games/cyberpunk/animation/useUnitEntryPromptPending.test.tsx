@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, cleanup, renderHook } from "@testing-library/react";
+import { cleanup, renderHook } from "@testing-library/react";
 import type { AnimationPlanV2, EntityTransferStepV2 } from "@tcg/protocol";
 import { compileAnimationPlan } from "@tcg/simulator-runtime/animation";
 import { afterEach, expect, test, vi } from "vite-plus/test";
@@ -47,20 +47,18 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-test("entry prompt waits for settle and releases without waiting for other animation steps", async () => {
+test("entry prompt is available during flight as soon as its destination is mounted", () => {
   vi.useFakeTimers();
-  vi.spyOn(performance, "now").mockReturnValue(0);
   const view = renderHook(useUnitEntryPromptPending, {
     initialProps: runtime("first", "preparing"),
   });
   expect(view.result.current).toBe(true);
   view.rerender(runtime("first", "running"));
-  await act(() => vi.advanceTimersByTime(531));
-  expect(view.result.current).toBe(true);
-  await act(() => vi.advanceTimersByTime(1));
   expect(view.result.current).toBe(false);
-  view.rerender(runtime("second", "running"));
+  view.rerender(runtime("second", "preparing"));
   expect(view.result.current).toBe(true);
+  view.rerender(runtime("second", "running"));
+  expect(view.result.current).toBe(false);
   view.rerender(runtime("second", "reflowing"));
   expect(view.result.current).toBe(false);
   expect(vi.getTimerCount()).toBe(0);

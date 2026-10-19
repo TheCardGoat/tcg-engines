@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 import { ClockReadout, ConnectionPanel, TurnIndicator } from "@tcg/simulator-ui";
+import { isRuntimeRecoveryCode } from "@tcg/protocol";
+import { LiveRuntimeRecoveryBanner } from "../simulator/recovery/LiveRuntimeRecoveryBanner";
+import {
+  reconcileRuntimeRecovery,
+  type LiveRuntimeRecovery,
+} from "../simulator/recovery/liveRuntimeRecovery";
 
 import { buildMountedHref } from "../routes/router-paths.ts";
 import { ActionAttentionReminder } from "../simulator/attention/ActionAttentionReminder";
@@ -13,12 +19,16 @@ import {
 export default function SimulatorUiFixturesPage() {
   const [state, setState] = useState<SimulatorUiFixtureState>("connected");
   const [showAttention, setShowAttention] = useState(false);
+  const [recovery, setRecovery] = useState<LiveRuntimeRecovery | null>(null);
   const diagnostic = fixtureDiagnostic(state);
 
   useEffect(() => {
     const resolvedState = readFixtureState();
     setState(resolvedState);
     setShowAttention(new URLSearchParams(window.location.search).get("attention") === "1");
+    const code = new URLSearchParams(window.location.search).get("recovery") ?? undefined;
+    if (isRuntimeRecoveryCode(code))
+      setRecovery({ code, version: 38, phase: "blocked", incidentId: "fixture-reference" });
     document.title = `Simulator UI fixtures · ${resolvedState}`;
   }, []);
 
@@ -67,6 +77,15 @@ export default function SimulatorUiFixturesPage() {
       </nav>
 
       <section className={classes.viewport} aria-label={`${state} simulator chrome`}>
+        {recovery && (
+          <LiveRuntimeRecoveryBanner
+            recovery={recovery}
+            onRetry={() => {
+              // Fixture response only; hosted recovery is covered by LiveMatch.page tests.
+              setRecovery(reconcileRuntimeRecovery({ ...recovery, phase: "syncing" }, 38, true));
+            }}
+          />
+        )}
         <div className={classes.topRail}>
           <TurnIndicator turn={4} phase="Main" step={state === "connected" ? "Action" : "Paused"} />
           <div className={classes.clocks}>

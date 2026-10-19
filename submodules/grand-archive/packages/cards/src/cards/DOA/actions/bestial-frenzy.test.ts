@@ -112,20 +112,20 @@ describe("Bestial Frenzy selects one mode or up to two with class, with independ
         }
         game.resolveCombatWithoutRetaliation();
         const damage = modes.includes("beast-power") && !both ? 3 : 2;
-        expect(game.state.objects[foe.objectId]!.damage).toBe(damage);
-        expect(game.state.objects[tortoise.objectId]!.damage).toBe(
+        expect(game.markedDamage(foe.objectId)).toBe(damage);
+        expect(game.markedDamage(tortoise.objectId)).toBe(
           modes.includes("beast-cleave") ? damage : 0,
         );
         if (both) {
           p.declareAttack(wolf, foe);
           game.resolveCombatWithoutRetaliation();
-          expect(game.state.objects[foe.objectId]!.damage).toBe(5);
+          expect(game.markedDamage(foe.objectId)).toBe(5);
         }
         advanceToMain(game, p.id, game.state.turn.number);
         expect(level()).toBe(2);
         expect(() => p.execute(cleave)).toThrow();
         p.declareAttack(wolf, foe);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[foe.objectId]!.damage).toBe((both ? 5 : damage) + 2);
+        expect(game.markedDamage(foe.objectId)).toBe((both ? 5 : damage) + 2);
       });
 });

@@ -17,10 +17,10 @@ describe("Crystallized Anthem prevention", () => {
     for (let hit = 1; hit <= 2; hit++) {
       p.activate(p.cards(pyroclasticFlow, { zone: "hand" })[0]!, { reservePayment: pay(4) });
       passEffectsStack(game);
-      expect(game.state.objects[hero.objectId]!.damage).toBe((hit - 1) * 2);
-      expect(game.state.objects[p.card(giantTortoise).objectId]!.damage).toBe((hit - 1) * 2);
-      expect(game.state.objects[foe.objectId]!.damage).toBe(hit * 2);
-      expect(game.state.objects[q.card(giantTortoise).objectId]!.damage).toBe(hit * 2);
+      expect(game.markedDamage(hero.objectId)).toBe((hit - 1) * 2);
+      expect(game.markedDamage(p.card(giantTortoise).objectId)).toBe((hit - 1) * 2);
+      expect(game.markedDamage(foe.objectId)).toBe(hit * 2);
+      expect(game.markedDamage(q.card(giantTortoise).objectId)).toBe(hit * 2);
       expect(game.state.players[p.id]!.mastery?.counters["named:sheen"]).toBe(4);
     }
   });

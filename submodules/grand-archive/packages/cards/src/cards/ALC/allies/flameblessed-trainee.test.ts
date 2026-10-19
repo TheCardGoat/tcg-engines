@@ -91,18 +91,18 @@ describe("Flameblessed Trainee — optional Fire discard for this attack", () =>
               hand.filter((ref) => ref.objectId !== selected?.objectId),
             );
             expect(player.zone("graveyard")).toEqual(selected ? [...grave, selected] : grave);
-            expect(game.state.objects[target.objectId]!.damage).toBe(0);
+            expect(game.markedDamage(target.objectId)).toBe(0);
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[target.objectId]!.damage).toBe(succeeds ? 4 : 1);
+            expect(game.markedDamage(target.objectId)).toBe(succeeds ? 4 : 1);
             advanceToRecollection(game, opponent.id);
             advanceToRecollection(game, player.id);
             reachMain(game);
             const championTarget = opponent.card(champion);
-            const damage = game.state.objects[championTarget.objectId]!.damage;
+            const damage = game.markedDamage(championTarget.objectId);
             player.declareAttack(trainee, championTarget);
             passEffectsStack(game);
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[championTarget.objectId]!.damage).toBe(damage + 1);
+            expect(game.markedDamage(championTarget.objectId)).toBe(damage + 1);
           });
         }
     }

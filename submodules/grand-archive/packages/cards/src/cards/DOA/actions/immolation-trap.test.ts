@@ -55,7 +55,7 @@ describe("Immolation Trap's damaged-ally restriction and class discount", () => 
           targets: { "target-1": [target.objectId] },
         });
         passEffectsStack(game);
-        expect(game.state.objects[target.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(target.objectId)).toBe(1);
         const ready = game.state;
         for (const ref of [other, p.card(champion)]) {
           expect(() =>

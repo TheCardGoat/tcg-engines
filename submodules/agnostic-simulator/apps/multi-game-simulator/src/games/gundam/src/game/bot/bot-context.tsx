@@ -29,6 +29,7 @@ import { useGundamGame } from "../context.tsx";
  * labs mount a provider; other simulator surfaces hide AI controls.
  */
 export interface VsAiContextValue {
+  readonly error: string | null;
   readonly mode: BotPlayMode;
   readonly speed: BotSpeed;
   readonly strategyName: string;
@@ -69,6 +70,7 @@ export interface VsAiProviderProps {
  */
 export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAiProviderProps) {
   const { adapter } = useGundamGame();
+  const [error, setError] = useState<string | null>(() => bot.getError?.() ?? null);
   const [mode, setModeState] = useState<BotPlayMode>(() => bot.getMode());
   const [speed, setSpeedState] = useState<BotSpeed>(() => bot.getSpeed());
   const [strategyName, setStrategyName] = useState<string>(() => bot.getStrategyName());
@@ -127,6 +129,15 @@ export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAi
     [bot, notifyDiagnostics],
   );
 
+  useEffect(
+    () =>
+      bot.subscribeStatus?.(() => {
+        setModeState(bot.getMode());
+        setError(bot.getError?.() ?? null);
+      }),
+    [bot],
+  );
+
   // NB: the provider does NOT dispose the bot in a cleanup effect.
   // React StrictMode double-mounts in dev — on the first unmount we'd
   // tear down the bot's runtime subscription, and the re-mount would
@@ -136,6 +147,7 @@ export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAi
 
   const value = useMemo<VsAiContextValue>(
     () => ({
+      error,
       mode,
       speed,
       strategyName,
@@ -163,7 +175,7 @@ export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAi
         setStrategyName(botRef.current.getStrategyName());
       },
     }),
-    [mode, speed, strategyName],
+    [error, mode, speed, strategyName],
   );
 
   const diagnosticsValue = useMemo<VsAiDiagnosticsContextValue>(

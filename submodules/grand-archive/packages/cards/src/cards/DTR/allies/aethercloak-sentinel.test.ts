@@ -72,7 +72,7 @@ describe("Aethercloak Sentinel - grouped Ranged, Spellshroud and Taunt", () => {
       if (rested) {
         p.declareAttack(source, q.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(5);
+        expect(game.markedDamage(q.card(champion).objectId)).toBe(5);
       }
       advanceToMain(game, q.id);
       const pending = game.state;
@@ -93,11 +93,11 @@ describe("Aethercloak Sentinel - grouped Ranged, Spellshroud and Taunt", () => {
         }
         q.declareAttack(q.card(giantTortoise), source);
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[source.objectId]!.damage).toBe(1);
+        expect(game.markedDamage(source.objectId)).toBe(1);
       } else {
         q.declareAttack(q.card(giantTortoise), p.card(champion));
         game.resolveCombatWithoutRetaliation();
-        expect(game.state.objects[p.card(champion).objectId]!.damage).toBe(1);
+        expect(game.markedDamage(p.card(champion).objectId)).toBe(1);
       }
     });
 });
@@ -208,7 +208,7 @@ describe("Aethercloak Sentinel - optional class loading and hand-only draw", () 
             p.declareAttack(p.card(champion), q.card(champion), { weaponIds: [weapon.objectId] });
             expect(game.state.objects[charge.objectId]!.zone).toBe("intent");
             game.resolveCombatWithoutRetaliation();
-            expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(2);
+            expect(game.markedDamage(q.card(champion).objectId)).toBe(2);
             expect(game.state.objects[charge.objectId]!.zone).toBe("graveyard");
           }
         });

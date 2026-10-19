@@ -11,7 +11,27 @@ export type { GrandArchivePlayerId } from "./game/identity.ts";
 export type { GrandArchiveMatchProgram } from "./kernel/match-program.ts";
 export type { GrandArchiveMatchState } from "./game/model.ts";
 export {
+  listGrandArchiveReservePaymentSources,
+  type GrandArchiveCostPreviewStep,
+} from "./procedures/activation/costs.ts";
+export {
+  listGrandArchiveAbilityActivationOrigins,
+  previewGrandArchiveAbilityActivation,
+  type GrandArchiveAbilityActivationOrigin,
+  type GrandArchiveAbilityActivationPreview,
+} from "./commands/ability-activation-preview.ts";
+export {
+  previewGrandArchiveTriggerAnnouncement,
+  type GrandArchiveTriggerAnnouncementPreview,
+  type GrandArchiveTriggerPreviewStep,
+} from "./commands/trigger-announcement-preview.ts";
+export type { GrandArchiveTriggerAnnouncement } from "./procedures/activation/trigger-announcement.ts";
+export {
   describeGrandArchiveStructuredDecision,
+  describeGrandArchiveDeclarationVariables,
+  describeGrandArchiveIndependentDeclarationTargets,
+  type GrandArchiveDeclarationTargetConstraint,
+  type GrandArchiveDeclarationVariableConstraint,
   listGrandArchiveDecisionAnswerCandidates,
   listGrandArchiveLegalCommands,
   listGrandArchiveLegalMoves,

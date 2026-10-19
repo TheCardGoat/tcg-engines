@@ -3,6 +3,8 @@ import type { GrandArchiveBoardProjection } from "./types";
 
 export interface GrandArchivePresentationSnapshot {
   readonly projection: GrandArchiveBoardProjection;
+  readonly openingObserved?: boolean;
+  readonly openingDealt?: readonly ("self" | "opponent")[];
   readonly poses: ReadonlyMap<string, GrandArchivePose>;
 }
 

@@ -128,7 +128,7 @@ export function proveDelugeStats(
       const enabled = mode === "enter" || mode === "at" || mode === "above";
       if (!attack) p.declareAttack(source, q.card(champion));
       game.resolveCombatWithoutRetaliation();
-      expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(
+      expect(game.markedDamage(q.card(champion).objectId)).toBe(
         face.stats.power! + (enabled ? powerBonus : 0),
       );
       if (!attack) stats(enabled);
@@ -163,7 +163,7 @@ export function proveDelugeStats(
         targets: { "target-1": [source.objectId] },
       });
       passEffectsStack(game);
-      expect(game.state.objects[source.objectId]!.damage).toBe(face.stats.life);
+      expect(game.markedDamage(source.objectId)).toBe(face.stats.life);
       expect(p.zone("field")).toContainEqual(source);
       const removed = p.cards(glacialGuidance, { zone: "graveyard" })[0]!;
       p.pass();

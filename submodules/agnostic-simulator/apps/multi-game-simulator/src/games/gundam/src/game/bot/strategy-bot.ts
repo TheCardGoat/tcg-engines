@@ -1,4 +1,7 @@
+import { createDecisionClient } from "../../../../../simulator/bot/decision-worker";
+import { createGundamBotPlanner, type GundamBotInput, type GundamBotContext } from "./bot-decision";
 import {
+  GUNDAM_AUTOMATED_ACTION_STRATEGIES,
   asPlayerId,
   getSafeGundamAutomatedActionStrategyOption,
   takeAutomatedActionWithFallback,
@@ -67,6 +70,8 @@ export interface StrategyBotOptions {
 
 export interface StrategyBotHandle {
   /** Current mode. */
+  getError(): string | null;
+  subscribeStatus(listener: () => void): () => void;
   getMode(): BotPlayMode;
   /** Current speed bucket. */
   getSpeed(): BotSpeed;
@@ -133,6 +138,8 @@ export function attachStrategyBot(
   // attach a real strategy bot if needed.
   if (import.meta.env.SSR) {
     return {
+      getError: () => null,
+      subscribeStatus: () => () => {},
       getMode: () => "paused",
       getSpeed: () => "balanced",
       getStrategyName: () => options.strategy?.name ?? "noop",
@@ -152,6 +159,27 @@ export function attachStrategyBot(
   let mode: BotPlayMode = options.playMode ?? "auto";
   let timer: ReturnType<typeof setTimeout> | null = null;
   let timerRevision = 0;
+  let disposed = false;
+  let error: string | null = null;
+  const statusListeners = new Set<() => void>();
+  const notifyStatus = () => {
+    for (const listener of statusListeners) listener();
+  };
+  const client = createDecisionClient<
+    GundamBotInput,
+    ReturnType<ReturnType<typeof createGundamBotPlanner>>,
+    GundamBotContext
+  >({
+    createWorker: () =>
+      new Worker(new URL("./bot-decision.worker.ts", import.meta.url), { type: "module" }),
+    context: () => ({
+      players: staticResources.players,
+      catalog: [...staticResources.catalog.entries()],
+      setupCards: staticResources.setupCards,
+    }),
+    fallback: (input, context) => createGundamBotPlanner(context)(input),
+  });
+  let pending: { cancelDelay: () => void } | null = null;
   const decisionListeners = new Set<BotDecisionSink>();
 
   const emitDecision = (record: BotDecisionRecord): void => {
@@ -161,6 +189,9 @@ export function attachStrategyBot(
 
   const clearTimer = (): void => {
     timerRevision += 1;
+    pending?.cancelDelay();
+    pending = null;
+    client.cancel();
     if (timer !== null) {
       clearTimeout(timer);
       timer = null;
@@ -169,47 +200,91 @@ export function attachStrategyBot(
 
   const shouldAct = (): boolean => {
     const state = runtime.getState();
-    if (state.ctx.status.gameEnded) return false;
+    if (disposed || state.ctx.status.gameEnded) return false;
     if (state.ctx.status.activePlayer !== player) return false;
     return !animationGate.isBlocked();
   };
 
-  const submit = (): TakeAutomatedActionWithFallbackResult | undefined => {
+  const submit = (
+    preparedCandidates?: ReturnType<ReturnType<typeof createGundamBotPlanner>>,
+  ): TakeAutomatedActionWithFallbackResult | undefined => {
     if (!shouldAct()) return undefined;
     const decisionSink =
       options.onDecision || decisionListeners.size > 0 ? emitDecision : undefined;
     const result = takeAutomatedActionWithFallback(runtime, player, strategy, staticResources, {
       maxCandidateAttempts: options.maxCandidateAttempts,
+      ...(preparedCandidates ? { preparedCandidates } : {}),
       ...(decisionSink ? { decisionSink } : {}),
     });
     options.onAction?.(result);
     return result;
   };
 
+  const start = (delayMs: number): TakeAutomatedActionWithFallbackResult | undefined => {
+    if (!shouldAct() || pending) return;
+    const registered = GUNDAM_AUTOMATED_ACTION_STRATEGIES.find(
+      (option) => option.strategy === strategy,
+    );
+    if (typeof Worker === "undefined" || !registered) {
+      if (!delayMs) return submit();
+      const revision = timerRevision;
+      timer = setTimeout(() => {
+        if (revision === timerRevision) {
+          timer = null;
+          submit();
+        }
+      }, delayMs);
+      return;
+    }
+    const before = runtime.getState();
+    const revision = timerRevision;
+    let cancelDelay = () => {};
+    const delay = new Promise<void>((resolve) => {
+      const handle = setTimeout(resolve, delayMs);
+      cancelDelay = () => {
+        clearTimeout(handle);
+        resolve();
+      };
+    });
+    const work = { cancelDelay };
+    pending = work;
+    const current = () =>
+      !disposed && revision === timerRevision && runtime.getState() === before && shouldAct();
+    const request: GundamBotInput = {
+      state: before,
+      player,
+      strategyId: registered.id,
+      instances: [...staticResources.cardsMaps.instances.entries()],
+      definitions: [...staticResources.cardsMaps.definitions.entries()],
+    };
+    void Promise.all([client.request(request), delay])
+      .then(([ranked]) => {
+        if (pending !== work || !current() || !ranked) return;
+        pending = null;
+        submit(ranked);
+      })
+      .catch((failure: unknown) => {
+        if (pending !== work || !current()) return;
+        error = failure instanceof Error ? failure.message : String(failure);
+        mode = "paused";
+        notifyStatus();
+      })
+      .finally(() => {
+        work.cancelDelay();
+        if (pending === work) pending = null;
+      });
+  };
   const schedule = (): void => {
-    if (mode !== "auto") return;
-    if (!shouldAct()) return;
-
+    if (mode !== "auto" || !shouldAct()) return;
     clearTimer();
-    const revision = ++timerRevision;
-    const delay = BOT_SPEED_MS[speed];
-    timer = setTimeout(() => {
-      // Stale-timer guard: another schedule/clear call may have fired
-      // between `setTimeout` and this callback. If so, bail out — the
-      // newer revision will own the next submit.
-      if (revision !== timerRevision) return;
-      timer = null;
-      // State may have moved since scheduling (e.g. viewer took an
-      // action). Re-check whether it's still the bot's turn; submit
-      // returns undefined if not.
-      submit();
-    }, delay);
+    start(BOT_SPEED_MS[speed]);
   };
 
   // React to state updates — in auto mode, any transition that lands
   // us on the bot's turn queues the next action. In step/paused mode,
   // the subscription just keeps us alive but takes no action.
   const unsubscribe = runtime.onStateUpdate(() => {
+    clearTimer();
     if (mode === "auto") schedule();
   });
   const unsubscribeAnimationGate = animationGate.subscribe(() => {
@@ -227,11 +302,19 @@ export function attachStrategyBot(
   if (mode === "auto") schedule();
 
   return {
+    getError: () => error,
+    subscribeStatus: (listener) => {
+      statusListeners.add(listener);
+      return () => statusListeners.delete(listener);
+    },
     getMode: () => mode,
     getSpeed: () => speed,
     getStrategyName: () => strategy.name,
     setMode(nextMode: BotPlayMode): void {
+      error = null;
       mode = nextMode;
+      clearTimer();
+      notifyStatus();
       if (nextMode === "auto") {
         schedule();
       } else {
@@ -248,17 +331,24 @@ export function attachStrategyBot(
       }
     },
     setStrategy(nextStrategy: CandidateStrategy): void {
+      clearTimer();
+      error = null;
       strategy = nextStrategy;
+      notifyStatus();
+      if (mode === "auto") schedule();
     },
     subscribeDecisions(listener: BotDecisionSink): () => void {
       decisionListeners.add(listener);
       return () => decisionListeners.delete(listener);
     },
     stepOnce(): TakeAutomatedActionWithFallbackResult | undefined {
-      return submit();
+      return start(0);
     },
     dispose(): void {
+      disposed = true;
       clearTimer();
+      client.dispose();
+      statusListeners.clear();
       unsubscribe();
       unsubscribeAnimationGate();
       decisionListeners.clear();

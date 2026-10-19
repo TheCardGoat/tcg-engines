@@ -61,7 +61,47 @@ export interface GrandArchiveContextualCost {
   readonly payerId: GrandArchivePlayerId;
 }
 
+export type GrandArchiveCostPreviewStep = {
+  readonly id: string;
+  readonly status: "complete" | "missing" | "invalid";
+} & (
+  | {
+      readonly kind: "reserve-payment";
+      readonly startIndex: number;
+      readonly amount: number;
+      readonly candidates: readonly GrandArchiveReservePaymentSource[];
+    }
+  | {
+      readonly kind: "cost-selection";
+      readonly selectionIndex: number;
+      readonly cost: GrandArchiveAbilityCost;
+      readonly candidateIds: readonly GrandArchiveObjectId[];
+      readonly minimum: number;
+      readonly maximum?: number;
+      readonly allowRepeated: boolean;
+    }
+  | {
+      readonly kind: "cost-order";
+      readonly path: readonly number[];
+      readonly costs: readonly GrandArchiveAbilityCost[];
+    }
+  | { readonly kind: "cost-option"; readonly costs: readonly GrandArchiveAbilityCost[] }
+  | { readonly kind: "optional-cost"; readonly cost: GrandArchiveAbilityCost }
+);
+
+export interface GrandArchiveCostPreview {
+  readonly status: "ready" | "incomplete" | "invalid" | "unavailable";
+  readonly steps: readonly GrandArchiveCostPreviewStep[];
+  readonly message?: string;
+}
+interface CostPreviewObserver {
+  readonly visibleObjectIds: ReadonlySet<GrandArchiveObjectId>;
+  readonly step: (step: GrandArchiveCostPreviewStep) => void;
+}
+class MissingCostPreviewInput extends Error {}
+
 interface CostCursor {
+  readonly preview?: CostPreviewObserver;
   reservePaymentIndex: number;
   selectionIndex: number;
   readonly reservePayment: readonly GrandArchiveReservePaymentSource[];
@@ -135,6 +175,49 @@ export function assertGrandArchiveReservePaymentDistinct(
   }
 }
 
+function availableReservePaymentSource(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  objectId: GrandArchiveObjectId,
+  excludedCardId?: GrandArchiveObjectId,
+): GrandArchiveReservePaymentSource | undefined {
+  const object = state.objects[objectId];
+  if (!object) return undefined;
+  if (object.zone === "hand" && object.ownerId === playerId && object.id !== excludedCardId) {
+    return { kind: "card", cardId: object.id };
+  }
+  if (
+    object.zone === "field" &&
+    object.controllerId === playerId &&
+    !object.states.has("rested") &&
+    grandArchiveObjectHasActiveKeyword(program, state, object, "reservable")
+  ) {
+    return { kind: "reservable", objectId: object.id };
+  }
+  return undefined;
+}
+
+/** Available identities, without enumerating payment combinations. The full
+ * command must still validate costs against its payment preview state. */
+export function listGrandArchiveReservePaymentSources(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  playerId: GrandArchivePlayerId,
+  excludedCardId?: GrandArchiveObjectId,
+): readonly GrandArchiveReservePaymentSource[] {
+  return Object.values(state.objects).flatMap((object) => {
+    const source = availableReservePaymentSource(
+      program,
+      state,
+      playerId,
+      object.id,
+      excludedCardId,
+    );
+    return source ? [source] : [];
+  });
+}
+
 /**
  * Consumes an ordered portion of one declared reserve payment. A unit is paid
  * either by reserving another hand card or by resting a ready Reservable object.
@@ -161,9 +244,8 @@ export function payGrandArchiveReserveCost(
         const object = state.objects[source.cardId];
         if (
           !object ||
-          object.ownerId !== playerId ||
-          object.zone !== "hand" ||
-          object.id === excludedCardId
+          availableReservePaymentSource(program, state, playerId, object.id, excludedCardId)
+            ?.kind !== "card"
         ) {
           throw new Error("Reserve payment cards must be other cards in the payer's hand");
         }
@@ -180,10 +262,8 @@ export function payGrandArchiveReserveCost(
         const object = state.objects[source.objectId];
         if (
           !object ||
-          object.controllerId !== playerId ||
-          object.zone !== "field" ||
-          object.states.has("rested") ||
-          !grandArchiveObjectHasActiveKeyword(program, state, object, "reservable")
+          availableReservePaymentSource(program, state, playerId, object.id, excludedCardId)
+            ?.kind !== "reservable"
         ) {
           throw new Error(
             "Reservable payment sources must be ready field objects controlled by the payer with active Reservable",
@@ -364,6 +444,27 @@ function selectCostObjects(
     );
   });
   const bounds = selectionBounds(cost.count, evaluation);
+  if (cursor.preview) {
+    if (cost.kind === "select-and-move" && cost.random)
+      throw new GrandArchiveUnsupportedRuleError("Random payment outcomes cannot be previewed");
+    if (eligible.some((object) => !cursor.preview!.visibleObjectIds.has(object.id)))
+      throw new GrandArchiveUnsupportedRuleError("Cost candidates include private identities");
+    const all = cost.count.kind === "all";
+    cursor.preview.step({
+      id: `payment:selection:${cursor.selectionIndex}`,
+      kind: "cost-selection",
+      selectionIndex: cursor.selectionIndex,
+      cost,
+      candidateIds: eligible.map((object) => object.id),
+      minimum: all ? eligible.length : bounds.minimum,
+      ...(all || Number.isFinite(bounds.maximum)
+        ? { maximum: all ? eligible.length : bounds.maximum }
+        : {}),
+      allowRepeated: cost.kind === "select-and-remove-counters",
+      status: cursor.costSelections[cursor.selectionIndex] === undefined ? "missing" : "complete",
+    });
+  }
+
   const selected =
     cost.kind === "select-and-move" && cost.random
       ? (() => {
@@ -469,6 +570,14 @@ function pay(
     case "all": {
       const key = costPathKey(path);
       const declaration = cursor.costPaymentOrders.get(key);
+      if (cursor.preview && cost.costs.length > 1)
+        cursor.preview.step({
+          id: `payment:order:${key}`,
+          kind: "cost-order",
+          path,
+          costs: cost.costs,
+          status: declaration === undefined ? "missing" : "complete",
+        });
       const order = declaration?.order ?? cost.costs.map((_, index) => index);
       if (declaration) {
         assertExactCostPermutation(order, cost.costs.length);
@@ -480,6 +589,12 @@ function pay(
       return;
     }
     case "one-of": {
+      cursor.preview?.step({
+        id: "payment:option",
+        kind: "cost-option",
+        costs: cost.costs,
+        status: command.costOptionIndex === undefined ? "missing" : "complete",
+      });
       const index = command.costOptionIndex ?? 0;
       const selected = cost.costs[index];
       if (!selected) throw new Error("Selected cost option does not exist");
@@ -487,6 +602,12 @@ function pay(
       return;
     }
     case "optional":
+      cursor.preview?.step({
+        id: "payment:optional",
+        kind: "optional-cost",
+        cost: cost.cost,
+        status: command.payOptionalCost === undefined ? "missing" : "complete",
+      });
       cursor.bindings[cost.bindPaidAs] = command.payOptionalCost === true;
       if (command.payOptionalCost) {
         pay(cost.cost, command, evaluation, cursor, payerId, [...path, 0]);
@@ -494,6 +615,23 @@ function pay(
       return;
     case "pay-reserve": {
       const amount = evaluateGrandArchiveAmount(cost.amount, evaluation);
+      if (cursor.preview && amount > 0)
+        cursor.preview.step({
+          id: `payment:reserve:${cursor.reservePaymentIndex}`,
+          kind: "reserve-payment",
+          startIndex: cursor.reservePaymentIndex,
+          amount,
+          candidates: listGrandArchiveReservePaymentSources(
+            evaluation.program,
+            evaluation.state,
+            payerId,
+            evaluation.sourceId,
+          ),
+          status:
+            cursor.reservePayment.length < cursor.reservePaymentIndex + amount
+              ? "missing"
+              : "complete",
+        });
       const result = payGrandArchiveReserveCost(
         evaluation.program,
         evaluation.state,
@@ -510,6 +648,8 @@ function pay(
       return;
     }
     case "pay-memory": {
+      if (cursor.preview)
+        throw new GrandArchiveUnsupportedRuleError("Random memory payment cannot be previewed");
       const amount = evaluateGrandArchiveAmount(cost.amount, evaluation);
       const memory = evaluation.state.zones[payerId].memory;
       if (memory.length < amount) throw new Error("Not enough cards in memory to pay cost");
@@ -849,9 +989,19 @@ export function payGrandArchiveAbilityCost(
   command: PaymentCommand,
   evaluation: GrandArchiveEvaluationContext,
 ): GrandArchiveCostPaymentResult {
+  return evaluateAbilityCost(cost, command, evaluation);
+}
+
+function evaluateAbilityCost(
+  cost: GrandArchiveAbilityCost,
+  command: PaymentCommand,
+  evaluation: GrandArchiveEvaluationContext,
+  preview?: CostPreviewObserver,
+): GrandArchiveCostPaymentResult {
   assertGrandArchiveReservePaymentDistinct(command.reservePayment ?? []);
   const costPaymentOrders = indexCostPaymentOrders(command.costPaymentOrders ?? []);
   const cursor: CostCursor = {
+    ...(preview ? { preview } : {}),
     reservePaymentIndex: 0,
     selectionIndex: 0,
     reservePayment: command.reservePayment ?? [],
@@ -873,6 +1023,41 @@ export function payGrandArchiveAbilityCost(
   }
   assertEveryCostPaymentOrderUsed(cursor);
   return { events: cursor.events, paidBindings: cursor.bindings, paidUnits: cursor.paidUnits };
+}
+
+/** Runs the same payment traversal as execution, stopping at the first missing
+ * declaration. Proposed events are local only; random outcomes are never disclosed. */
+export function previewGrandArchiveAbilityCost(
+  cost: GrandArchiveAbilityCost,
+  command: PaymentCommand,
+  evaluation: GrandArchiveEvaluationContext,
+  visibleObjectIds: ReadonlySet<GrandArchiveObjectId>,
+): GrandArchiveCostPreview {
+  const steps: GrandArchiveCostPreviewStep[] = [];
+  try {
+    evaluateAbilityCost(cost, command, evaluation, {
+      visibleObjectIds,
+      step: (step) => {
+        if (steps.some((previous) => previous.id === step.id))
+          throw new GrandArchiveUnsupportedRuleError(
+            "Multiple independent choices share one payment declaration field",
+          );
+        steps.push(step);
+        if (step.status === "missing") throw new MissingCostPreviewInput();
+      },
+    });
+    return { status: "ready", steps };
+  } catch (error) {
+    if (error instanceof MissingCostPreviewInput) return { status: "incomplete", steps };
+    if (error instanceof GrandArchiveUnsupportedRuleError)
+      return { status: "unavailable", steps, message: error.message };
+    if (error instanceof Error && error.constructor === Error) {
+      const last = steps.at(-1);
+      if (last) steps[steps.length - 1] = { ...last, status: "invalid" };
+      return { status: "invalid", steps, message: error.message };
+    }
+    throw error;
+  }
 }
 
 /**

@@ -31,6 +31,7 @@ import type {
   SendFreeTextChatMessageMsg,
   SkipOpponentTurnMsg,
   SubmitInteractionMsg,
+  PreviewInteractionMsg,
   SubscribeEventMsg,
   SubscribeMatchmakingDashboardMsg,
   UnsubscribeEventMsg,
@@ -80,6 +81,7 @@ import type {
   TimeoutNotificationPayload,
   TournamentUpdatePayload,
 } from "./payloads.js";
+import type { InteractionPreviewResult } from "./interactions.js";
 import type { PlayableGameSlug } from "./games.js";
 import type { z } from "zod";
 import type {
@@ -109,6 +111,7 @@ export interface ClientToServerEvents {
   join_game: (payload: Payload<JoinGameMsg>) => void;
   execute_move: (payload: Payload<ExecuteMoveMsg>) => void;
   submit_interaction: (payload: Payload<SubmitInteractionMsg>) => void;
+  preview_interaction: (payload: Payload<PreviewInteractionMsg>) => void;
   reconnect: (payload: Payload<ReconnectMsg>) => void;
   leave_game: (payload: Payload<LeaveGameMsg>) => void;
   send_chat_message: (payload: Payload<SendChatMessageMsg>) => void;
@@ -132,6 +135,11 @@ export interface ClientToServerEvents {
 }
 
 export interface ServerToClientEvents {
+  interaction_preview: (payload: {
+    gameId: string;
+    correlationId: string;
+    result: InteractionPreviewResult;
+  }) => void;
   preparation_state: (payload: { snapshot: PreparationSnapshot; correlationId?: string }) => void;
   preparation_command_result: (payload: {
     result: PreparationCommandResult;
