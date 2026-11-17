@@ -4,6 +4,7 @@ import type { CardPlayedPayload } from "../../../types";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { resolveTargetPlayerIds } from "./player-target-resolver";
+import { isLockedInkwellCard } from "../../state/locked-inkwell";
 
 type ResolvedReturnRandomFromInkwellInput = {
   returnCount?: number;
@@ -59,12 +60,18 @@ export function resolveReturnRandomFromInkwellEffect(
       zone: "inkwell",
       playerId: targetPlayerId,
     }) as string[];
-    const returnCount = normalizeReturnCount(effect, inkwellCards.length, resolvedInput);
+    // The count reads every card in the inkwell; locked starting ink (Pack Rush,
+    // CR 10.2.2.1) stays there, so only the other cards can be returned.
+    const movableCards = inkwellCards.filter((cardId) => !isLockedInkwellCard(ctx.cards, cardId));
+    const returnCount = Math.min(
+      movableCards.length,
+      normalizeReturnCount(effect, inkwellCards.length, resolvedInput),
+    );
     if (returnCount <= 0) {
       continue;
     }
 
-    const cardsToReturn = ctx.framework.random.shuffle([...inkwellCards]).slice(0, returnCount);
+    const cardsToReturn = ctx.framework.random.shuffle([...movableCards]).slice(0, returnCount);
     for (const cardId of cardsToReturn) {
       ctx.framework.zones.moveCard(cardId, {
         zone: "hand",

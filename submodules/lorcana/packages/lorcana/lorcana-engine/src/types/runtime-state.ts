@@ -18,6 +18,7 @@ import type {
 } from "@tcg/lorcana-types";
 import type { CardInstanceId, MatchState, PlayerId } from "#core";
 import type { CardPlayedPayload, DynamicAmountEventSnapshot } from "./domain-events";
+import type { LorcanaMatchRules } from "./match-rules";
 import type { ResolutionSelectionContext } from "./resolution-selection";
 import type { SlottedTargetInput } from "../targeting/slotted-targets";
 
@@ -601,6 +602,12 @@ export interface LorcanaCardMeta extends Record<string, unknown> {
   replacementAbilities?: ReplacementAbilityKind[];
   /** Where to send this card when its action effects finish resolving, overriding the default discard */
   afterPlayDestination?: "bottom-of-deck";
+  /**
+   * Starting ink placed by the match rules (Pack Rush, CR 10.2.2): this card
+   * can't be moved from the inkwell to any other zone (10.2.2.1) and can't be
+   * chosen for effects (10.2.2.2). It is exerted and readied like any ink.
+   */
+  lockedInInkwell?: boolean;
 }
 
 /**
@@ -629,8 +636,16 @@ export interface LorcanaG {
    *
    * Keys are the player IDs whose win threshold is raised.
    * The map only contains overrides — missing entries use the default 20.
+   * In a match whose `matchRules.loreToWin` is not 20 (e.g. Pack Rush, 15),
+   * every player has an entry, starting at that goal.
    */
   loreToWin?: Record<PlayerId, number>;
+
+  /**
+   * Match-level rule options set when the match was created (e.g. Pack Rush).
+   * Absent for a normal match. Only non-default values are stored.
+   */
+  matchRules?: LorcanaMatchRules;
 
   /** Turn metadata - reset each turn */
   turnMetadata: TurnMetadata;

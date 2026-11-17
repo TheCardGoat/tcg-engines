@@ -67,6 +67,8 @@ export interface TestFixtureCardState {
   atLocation?: TestCardInput;
   isDrying?: boolean;
   publicFaceState?: "faceUp" | "faceDown";
+  /** Locked starting ink (Pack Rush, CR 10.2.2); for cards in the inkwell. */
+  lockedInInkwell?: boolean;
 }
 
 export type TestFixtureCardEntry = TestCardInput | TestFixtureCardState;

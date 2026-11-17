@@ -61,6 +61,7 @@ import {
   getCurrentSelectionInput,
   getEffectTargetSelectionInput,
 } from "./selection-state";
+import { isLockedInkwellCard } from "../../state/locked-inkwell";
 
 type CardDefinitionLike = {
   actionSubtype?: string | null;
@@ -220,10 +221,13 @@ function resolveSourceCards(
   }
 
   if (from === "discard" || from === "inkwell") {
-    const cardsInZone = ctx.framework.zones.getCards({
-      zone: from,
-      playerId: sourcePlayerId,
-    }) as CardInstanceId[];
+    // Locked starting ink (Pack Rush, CR 10.2.2) can't leave the inkwell or be chosen.
+    const cardsInZone = (
+      ctx.framework.zones.getCards({
+        zone: from,
+        playerId: sourcePlayerId,
+      }) as CardInstanceId[]
+    ).filter((cardId) => !isLockedInkwellCard(ctx.cards, cardId));
     if (hasExplicitTargetSelection) {
       const zoneSet = new Set(cardsInZone);
       const selectedInZone = selectedTargets.filter((cardId) => zoneSet.has(cardId));

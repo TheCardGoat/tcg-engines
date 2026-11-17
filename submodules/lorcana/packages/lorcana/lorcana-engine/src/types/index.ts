@@ -114,6 +114,13 @@ export type {
 export { createDefaultCardMeta, createInitialLorcanaG } from "./runtime-state";
 
 export type {
+  LorcanaEmptyDeckRule,
+  LorcanaMatchRules,
+  LorcanaMatchRulesInput,
+  LorcanaStartingInkwellRule,
+} from "./match-rules";
+
+export type {
   ChoiceResolutionSelectionContext,
   NameCardResolutionSelectionContext,
   OptionalResolutionSelectionContext,
