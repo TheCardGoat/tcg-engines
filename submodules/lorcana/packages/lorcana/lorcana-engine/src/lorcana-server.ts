@@ -24,6 +24,7 @@ import type {
   LorcanaG,
   PendingActionEffect,
   LorcanaProjectedBoardView,
+  LorcanaMatchRulesInput,
   LorcanaRuntimeMoveInputs,
 } from "./types";
 
@@ -49,7 +50,7 @@ import type {
   AutomatedActionTraceSink,
   AutomatedActionStrategyOption,
 } from "./automation";
-import { lorcanaRuntimeConfig } from "./runtime-game";
+import { lorcanaRuntimeConfig, withLorcanaMatchRules } from "./runtime-game";
 import { type LorcanaCardsMaps } from "./engine-initialization";
 
 export type LorcanaEngineDeckEntry = {
@@ -78,6 +79,13 @@ export type LorcanaEngineInit = {
   timeControl?: import("#core").TimeControlConfig;
   /** Skip game initialization — used for deserialization fast path. */
   _skipInitialization?: boolean;
+  /**
+   * Match-level rule options (opening hand size, lore to win, empty-deck rule,
+   * starting inkwell), e.g. Pack Rush (CR 10.2). Omitted: the normal game.
+   * Applied when the match is created; a restored match keeps the rules it was
+   * created with (they are part of its state), so omit them when restoring.
+   */
+  matchRules?: LorcanaMatchRulesInput;
 };
 
 export class LorcanaServer extends LorcanaEngineBase {
@@ -88,12 +96,23 @@ export class LorcanaServer extends LorcanaEngineBase {
     super(init);
     const staticResources = this.getResolvedStaticResources();
 
+    const baseRuntimeConfig: MatchRuntimeConfig = {
+      ...(lorcanaRuntimeConfig as unknown as MatchRuntimeConfig),
+      ...(init._fixtureSetup ? { setup: init._fixtureSetup } : {}),
+      timeControl: init.timeControl,
+    };
+    const runtimeConfig =
+      init.matchRules && !init._skipInitialization
+        ? withLorcanaMatchRules(
+            baseRuntimeConfig,
+            init.matchRules,
+            init.players.map((player) => player.id),
+            createCardsMapsFromStaticResources(staticResources).owners,
+          )
+        : baseRuntimeConfig;
+
     const serverEngineConfig: ServerEngineConfig = {
-      runtimeConfig: {
-        ...(lorcanaRuntimeConfig as unknown as MatchRuntimeConfig),
-        ...(init._fixtureSetup ? { setup: init._fixtureSetup } : {}),
-        timeControl: init.timeControl,
-      },
+      runtimeConfig,
       players: init.players,
       seed: init.seed,
       gameID: init.gameID,

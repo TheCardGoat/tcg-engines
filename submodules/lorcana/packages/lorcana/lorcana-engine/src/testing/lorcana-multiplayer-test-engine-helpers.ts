@@ -249,6 +249,7 @@ function materializeZoneDefinitions(
           atLocation: entry.atLocation,
           isDrying: entry.isDrying,
           publicFaceState: entry.publicFaceState,
+          lockedInInkwell: entry.lockedInInkwell,
         },
       };
     }

@@ -29,6 +29,7 @@ import { getOrBuildMoveRegistry } from "../../runtime-moves/rules/move-registry-
 import { hasTemporaryKeyword } from "../../runtime-moves/effects/temporary-effects";
 import { getEffectsForCard } from "../../rules/static-effect-registry";
 import { resolveTurnOwnerId } from "../../core/runtime/turn-owner";
+import { isLockedInkwellCard } from "../../runtime-moves/state/locked-inkwell";
 
 type FilterRecord = Record<string, unknown>;
 
@@ -1339,6 +1340,13 @@ function resolveCandidateTargetsInternal(
           strictUnknownFilters: queryContext?.strictUnknownFilters,
         }),
       ),
+    );
+  }
+
+  // Locked starting ink (Pack Rush, CR 10.2.2.2) can't be chosen for effects.
+  if (descriptor.selector === "chosen") {
+    resolvedCandidates = resolvedCandidates.filter(
+      (cardId) => !isLockedInkwellCard(ctx.cards, cardId),
     );
   }
 

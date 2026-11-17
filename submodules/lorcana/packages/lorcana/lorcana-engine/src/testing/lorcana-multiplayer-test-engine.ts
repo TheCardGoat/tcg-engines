@@ -35,6 +35,7 @@ import type {
   CardInput,
   LorcanaCardDefinition,
   LorcanaG,
+  LorcanaMatchRulesInput,
   LorcanaMatchState,
   LorcanaProjectedBoardView,
   LorcanaProjectedCard,
@@ -114,6 +115,12 @@ export interface LorcanaTestEngineConfig {
   capturePatches?: boolean;
   /** Time control configuration for the match. Defaults to no clock. */
   timeControl?: TimeControlConfig;
+  /**
+   * Match-level rule options (e.g. Pack Rush). A starting inkwell is placed when
+   * the match is created and then replaced by the fixture's zones; use
+   * `lockedInInkwell` on fixture inkwell cards to test locked ink.
+   */
+  matchRules?: LorcanaMatchRulesInput;
 }
 
 export interface LorcanaFixtureInitOptions extends LorcanaTestEngineConfig {
@@ -199,6 +206,7 @@ export class LorcanaMultiplayerTestEngine {
       capturePatches: config.capturePatches,
       debugServerCommunication: debugMode,
       timeControl: config.timeControl,
+      matchRules: config.matchRules,
     };
     this.serverEngine = new LorcanaServer(serverInitParams);
 
@@ -347,6 +355,7 @@ export class LorcanaMultiplayerTestEngine {
       staticResources: bundle.staticResources,
       capturePatches: resolvedOptions.capturePatches,
       timeControl: resolvedOptions.timeControl,
+      matchRules: resolvedOptions.matchRules,
     };
 
     const engine = new LorcanaMultiplayerTestEngine(config, resolvedOptions);
@@ -588,6 +597,9 @@ export class LorcanaMultiplayerTestEngine {
       }
       if (typeof fixtureState.exerted === "boolean") {
         nextMeta.state = fixtureState.exerted ? "exerted" : "ready";
+      }
+      if (fixtureState.lockedInInkwell === true) {
+        nextMeta.lockedInInkwell = true;
       }
       if (typeof fixtureState.damage === "number" && Number.isFinite(fixtureState.damage)) {
         nextMeta.damage = Math.max(0, Math.floor(fixtureState.damage));

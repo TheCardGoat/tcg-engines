@@ -6,6 +6,7 @@ import { recordCardDrawnThisTurn } from "../../state/turn-metrics";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
 import { resolveTargetPlayerIds } from "./player-target-resolver";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
+import { drawCardsUnderMatchRules } from "../../state/match-rules";
 
 export function isDrawUntilHandSizeEffect(effect: unknown): effect is DrawUntilHandSizeEffect {
   return (
@@ -41,7 +42,7 @@ export function resolveDrawUntilHandSizeEffect(
       continue;
     }
 
-    const drawnCards = ctx.framework.zones.drawCards({
+    const drawnCards = drawCardsUnderMatchRules(ctx, {
       from: { zone: "deck", playerId },
       to: { zone: "hand", playerId },
       count: drawAmount,

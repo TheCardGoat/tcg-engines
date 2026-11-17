@@ -44,25 +44,20 @@ export const jafarLampThief: CharacterCard = {
   abilities: [
     {
       effect: {
-        steps: [
+        amount: 2,
+        destinations: [
           {
-            amount: 2,
-            destinations: [
-              {
-                zone: "deck-bottom",
-                remainder: true,
-                ordering: "player-choice",
-              },
-            ],
-            target: "CONTROLLER",
-            type: "scry",
+            zone: "deck-top",
+            min: 1,
+            max: 1,
           },
           {
-            target: "CHOSEN_CHARACTER",
-            type: "put-on-bottom",
+            zone: "deck-bottom",
+            remainder: true,
           },
         ],
-        type: "sequence",
+        target: "CONTROLLER",
+        type: "scry",
       },
       id: "eye-1",
       name: "I AM YOUR MASTER NOW",

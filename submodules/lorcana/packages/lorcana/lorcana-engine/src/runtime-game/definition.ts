@@ -5,7 +5,13 @@
  */
 
 import type { Draft } from "mutative";
-import type { BoardSetupContext, PacketAnimationContext, PlayerId } from "#core";
+import type {
+  BoardSetupContext,
+  MoveExecutionContext,
+  MoveRecord,
+  PacketAnimationContext,
+  PlayerId,
+} from "#core";
 import {
   filterMatchView,
   type FilteredMatchView,
@@ -20,6 +26,14 @@ import { lorcanaRuntimeFlow } from "../flow/runtime-flow-config";
 import { projectLorcanaBoardView } from "./project-board";
 import { deriveLorcanaPacketAnimations } from "./lorcanaPacketAnimations";
 import { buildZoneRegistry } from "../core/runtime/zone-registry";
+import {
+  applyMatchRulesToInitialG,
+  normalizeLorcanaMatchRules,
+  placeStartingInkwell,
+  refillEmptyDecksAfterMove,
+  validateStartingInkwellRule,
+} from "../runtime-moves/state/match-rules";
+import type { LorcanaMatchRulesInput } from "../types";
 
 const DECK_ZONE_ID = "deck" as const;
 
@@ -30,6 +44,26 @@ function isMoveToLocationBoardMoveAnimationPayload(
     payload !== null &&
     typeof payload === "object" &&
     (payload as { variant?: unknown }).variant === "move-to-location"
+  );
+}
+
+/**
+ * Run each move, then apply the match's empty-deck rule (Pack Rush, CR 10.2.5)
+ * once the move has settled. A no-op unless the match uses
+ * `matchRules.emptyDeck: "reshuffle-discard"`.
+ */
+function withEmptyDeckRefill(moves: MoveRecord): MoveRecord {
+  return Object.fromEntries(
+    Object.entries(moves).map(([moveId, move]) => [
+      moveId,
+      {
+        ...move,
+        execute: (context: MoveExecutionContext) => {
+          move.execute(context);
+          refillEmptyDecksAfterMove(context);
+        },
+      },
+    ]),
   );
 }
 
@@ -88,7 +122,7 @@ export const lorcanaRuntimeConfig: MatchRuntimeConfig = {
     }
   },
 
-  moves: lorcanaRuntimeMoves,
+  moves: withEmptyDeckRefill(lorcanaRuntimeMoves),
   flow: lorcanaRuntimeFlow,
   zones: lorcanaRuntimeZones,
 
@@ -130,3 +164,48 @@ export const lorcanaRuntimeConfig: MatchRuntimeConfig = {
   // It does not alter the raw EngineBoardProjection builder output.
   deriveRuntimeCard: createLorcanaRuntimeCardDeriver(),
 };
+
+/**
+ * Apply match rule options (e.g. Pack Rush, CR 10.2) to a runtime config: the
+ * rules are stored in the initial `G`, and a starting inkwell is placed by
+ * `boardSetup`. Returns `config` itself when `input` is undefined, so a match
+ * created without options uses the unchanged config.
+ *
+ * @param owners - card instance ids owned by each player, to check `card-ids`
+ * @throws Error when an option is invalid.
+ */
+export function withLorcanaMatchRules(
+  config: MatchRuntimeConfig,
+  input: LorcanaMatchRulesInput | undefined,
+  playerIds: readonly string[],
+  owners: Readonly<Record<string, readonly string[]>>,
+): MatchRuntimeConfig {
+  if (!input) {
+    return config;
+  }
+
+  const rules = normalizeLorcanaMatchRules(input);
+  const startingInkwell = input.startingInkwell;
+  if (startingInkwell) {
+    validateStartingInkwellRule(startingInkwell, playerIds, owners);
+  }
+
+  const baseSetup = config.setup;
+  const baseBoardSetup = config.boardSetup;
+  return {
+    ...config,
+    ...(rules ? { setup: (args) => applyMatchRulesToInitialG(baseSetup(args), rules) } : {}),
+    ...(startingInkwell
+      ? {
+          boardSetup: (draft, ctx) => {
+            baseBoardSetup?.(draft, ctx);
+            placeStartingInkwell(
+              draft,
+              ctx.players.map((player) => player.id),
+              startingInkwell,
+            );
+          },
+        }
+      : {}),
+  };
+}

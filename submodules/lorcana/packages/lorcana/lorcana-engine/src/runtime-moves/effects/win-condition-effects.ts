@@ -19,6 +19,8 @@ import type { Draft } from "mutative";
 import type { PlayerId } from "#core";
 import type { LorcanaCard } from "@tcg/lorcana-types";
 import type { LorcanaG, LorcanaMatchState } from "../../types";
+import { DEFAULT_LORE_TO_WIN } from "../state/game-state-check";
+import { getBaseLoreToWin } from "../state/match-rules";
 
 type WinConditionCtx = {
   G: Draft<LorcanaG>;
@@ -46,6 +48,9 @@ type WinConditionCtx = {
  */
 export function recomputeLoreToWin(ctx: WinConditionCtx): void {
   const overrides: Record<PlayerId, number> = {};
+  // The match's lore goal (20, or e.g. 15 in Pack Rush, CR 10.2.4) is the base
+  // that card modifications raise.
+  const baseLoreToWin = getBaseLoreToWin(ctx.G);
 
   const cardIndex = ctx.framework.state._zonesPrivate?.cardIndex ?? {};
 
@@ -80,7 +85,7 @@ export function recomputeLoreToWin(ctx: WinConditionCtx): void {
         // Player IDs are available from the lore map in G.
         for (const playerId of Object.keys(ctx.G.lore) as PlayerId[]) {
           if (playerId === controllerId) continue;
-          const current = overrides[playerId] ?? 20;
+          const current = overrides[playerId] ?? baseLoreToWin;
           // The highest override wins (multiple Donalds don't stack, rule 4.4.c)
           overrides[playerId] = Math.max(current, effect.loreRequired);
         }
@@ -90,16 +95,23 @@ export function recomputeLoreToWin(ctx: WinConditionCtx): void {
         effect.target === "EACH_PLAYER"
       ) {
         for (const playerId of Object.keys(ctx.G.lore) as PlayerId[]) {
-          const current = overrides[playerId] ?? 20;
+          const current = overrides[playerId] ?? baseLoreToWin;
           overrides[playerId] = Math.max(current, effect.loreRequired);
         }
       }
     }
   }
 
-  // Only store non-default values to keep the map lean
+  // Players no card affects need the match's base goal.
+  if (baseLoreToWin !== DEFAULT_LORE_TO_WIN) {
+    for (const playerId of Object.keys(ctx.G.lore) as PlayerId[]) {
+      overrides[playerId] ??= baseLoreToWin;
+    }
+  }
+
+  // Only store values other than the default 20 to keep the map lean
   const nonDefault = Object.fromEntries(
-    Object.entries(overrides).filter(([, threshold]) => threshold !== 20),
+    Object.entries(overrides).filter(([, threshold]) => threshold !== DEFAULT_LORE_TO_WIN),
   ) as Record<PlayerId, number>;
 
   ctx.G.loreToWin = Object.keys(nonDefault).length > 0 ? nonDefault : undefined;

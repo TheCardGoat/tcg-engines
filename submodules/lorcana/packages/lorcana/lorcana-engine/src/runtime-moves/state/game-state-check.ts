@@ -98,18 +98,20 @@ export const DEFAULT_LORE_TO_WIN = 20;
  * Check whether any player has reached the lore threshold required to win
  * (§1.8.1.1).
  *
- * The threshold is normally {@link DEFAULT_LORE_TO_WIN} (20) but may be raised
+ * The threshold is normally {@link DEFAULT_LORE_TO_WIN} (20), or the match's
+ * `G.matchRules.loreToWin` (e.g. 15 in Pack Rush, CR 10.2.4), and may be raised
  * per-player by win-condition-modification static abilities (e.g. Donald Duck –
- * Flustered Sorcerer). Modified thresholds are stored in `G.loreToWin`.
+ * Flustered Sorcerer). Thresholds are stored in `G.loreToWin`.
  *
  * Returns `{ winner, loreToWin }` for the first player whose lore meets the
  * threshold, or `undefined` if no player has won yet.
  */
 export function checkLoreWinCondition(
-  G: Pick<LorcanaG, "lore" | "loreToWin">,
+  G: Pick<LorcanaG, "lore" | "loreToWin" | "matchRules">,
 ): { winner: PlayerId; loreToWin: number } | undefined {
+  const baseLoreToWin = G.matchRules?.loreToWin ?? DEFAULT_LORE_TO_WIN;
   for (const [playerId, lore] of Object.entries(G.lore)) {
-    const loreToWin = G.loreToWin?.[playerId as PlayerId] ?? DEFAULT_LORE_TO_WIN;
+    const loreToWin = G.loreToWin?.[playerId as PlayerId] ?? baseLoreToWin;
     if (lore >= loreToWin) {
       return { winner: playerId as PlayerId, loreToWin };
     }
@@ -126,6 +128,8 @@ export function checkLoreWinCondition(
  *
  * A player loses the game if their turn ends with no cards in their deck.
  * Called after end-turn abilities and this-turn stat expiry finish, before the next turn.
+ * In a match with `matchRules.emptyDeck: "reshuffle-discard"` (Pack Rush, CR 10.2.5)
+ * passTurn refills the deck from the discard instead and the player doesn't lose.
  */
 export function checkDeckEmptyForPlayer(ctx: DeckCheckCtx, playerId: PlayerId): boolean {
   const deckCards = ctx.framework.zones.getCards({ zone: "deck", playerId });

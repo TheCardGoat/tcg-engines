@@ -61,6 +61,11 @@ import {
   createPendingActionEffect,
   enqueuePendingActionEffect,
 } from "../../resolution/action-effects/pending-action-effects";
+import {
+  drawCardsUnderMatchRules,
+  refillDeckFromDiscard,
+  reshufflesDiscardOnEmptyDeck,
+} from "../../state/match-rules";
 
 type PassTurnExecutionContext = Pick<
   MoveExecutionContext<LorcanaRuntimeMoveInputs["passTurn"]>,
@@ -362,7 +367,7 @@ function drawForTurn(ctx: PassTurnExecutionContext, playerId: PlayerId, turnNumb
     return;
   }
 
-  const drawnCards = ctx.framework.zones.drawCards({
+  const drawnCards = drawCardsUnderMatchRules(ctx, {
     from: { zone: "deck", playerId },
     to: { zone: "hand", playerId },
     count: 1,
@@ -627,7 +632,11 @@ export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): vo
         if (stopTurnTransitionForGameEnd(ctx)) return;
 
         // CR 3.4.1.1–3.4.2: finish end-turn abilities and stat expiry before deck loss.
-        if (checkDeckEmptyForPlayer(ctx, transitionState.previousPlayer)) {
+        // Pack Rush (CR 10.2.5): the player doesn't lose; their discard becomes
+        // their new deck (with an empty discard the deck simply stays empty).
+        if (reshufflesDiscardOnEmptyDeck(ctx.G)) {
+          refillDeckFromDiscard(ctx, transitionState.previousPlayer);
+        } else if (checkDeckEmptyForPlayer(ctx, transitionState.previousPlayer)) {
           const losingPlayer = transitionState.previousPlayer;
           ctx.G.pendingTurnTransition = undefined;
           ctx.framework.events.endGame({

@@ -45,6 +45,7 @@ import {
 import type { SlottedTargetKind } from "../../../targeting/slotted-targets";
 import { hasBodyguard, hasMayEnterPlayExertedOption } from "../../../card-utils";
 import { getShiftRules, resolveShiftTargetCandidates } from "../../rules/play-card-rules";
+import { isLockedInkwellCard } from "../../state/locked-inkwell";
 
 type MoveDamageEndpoint = NonNullable<MoveDamageEffect["from"] | MoveDamageEffect["to"]>;
 type MoveDamageRefValue = Extract<MoveDamageEndpoint, { ref: string }>["ref"];
@@ -1497,6 +1498,10 @@ function getEligibleZoneCardsForPlayCardEffect(
   }
 
   return zoneCardsAccum.filter((cardId) => {
+    // Locked starting ink (Pack Rush, CR 10.2.2) can't leave the inkwell or be chosen.
+    if (isLockedInkwellCard(args.ctx.cards, cardId)) {
+      return false;
+    }
     const definition = args.ctx.cards.getDefinition(cardId) as
       | { actionSubtype?: string; cost?: number; cardType?: string; classifications?: string[] }
       | undefined;

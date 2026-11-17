@@ -4,6 +4,7 @@ import { hasStaticCardRestriction } from "../runtime-moves/rules/static-ability-
 import { getOrBuildMoveRegistry } from "../runtime-moves/rules/move-registry-cache";
 import { resolveTurnOwnerId } from "../core/runtime/turn-owner";
 import { checkLoreWinCondition } from "../runtime-moves/state/game-state-check";
+import { getOpeningHandSize } from "../runtime-moves/state/match-rules";
 
 function canAutoAdvanceBeginningPhase(state: MatchState): boolean {
   return (
@@ -48,13 +49,15 @@ export const lorcanaRuntimeFlow: RuntimeFlowDefinition = {
             name: "Alter Hand",
             order: 2,
             onEnter: (ctx: RuntimeLifecycleContext) => {
-              // Draw initial hands for each player (7 cards each)
+              // Draw initial hands for each player (7 cards each, or the
+              // match's opening hand size, e.g. 5 in Pack Rush, CR 10.2.3)
+              const openingHandSize = getOpeningHandSize(ctx.G);
               for (const playerId of ctx.framework.state.playerIds) {
                 ctx.framework.zones.shuffle({ zone: "deck", playerId });
                 ctx.framework.zones.drawCards({
                   from: { zone: "deck", playerId },
                   to: { zone: "hand", playerId },
-                  count: 7,
+                  count: openingHandSize,
                 });
               }
             },

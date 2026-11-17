@@ -7,6 +7,10 @@ import type { ZoneRegistry } from "./zone-registry";
 import { resolveZoneIdFromRegistry } from "./zone-registry";
 import type { UndoBarrierReason } from "./match-runtime.types";
 import { invalidateStaticEffects } from "../../runtime-moves/rules/static-effects-invalidation";
+import {
+  isInkwellZoneKey,
+  isLockedInkwellCardMeta,
+} from "../../runtime-moves/state/locked-inkwell";
 
 // =============================================================================
 // Zone Operations API
@@ -243,6 +247,16 @@ export function createZoneOperations(
 
     moveCard(cardId: string, toZone: ZoneRef, options?: { index?: number; faceDown?: boolean }) {
       const resolvedToZone = resolveZoneId(toZone);
+      // Locked starting ink (Pack Rush, CR 10.2.2.1) can't be moved from the
+      // inkwell to any other zone; an effect that would move it does nothing to it.
+      const currentZone = zones.private.cardIndex[cardId]?.zoneKey;
+      if (
+        isLockedInkwellCardMeta(zones.private.cardMeta?.[cardId]) &&
+        isInkwellZoneKey(currentZone) &&
+        !isInkwellZoneKey(resolvedToZone)
+      ) {
+        return;
+      }
       const previous = setCardZone(cardId, resolvedToZone, options?.index);
 
       invalidateCardViews?.();

@@ -7,6 +7,7 @@ import { resolveCurrentTurnPlayerId } from "../../../targeting/runtime";
 import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
 import { recordCardDrawnThisTurn } from "../../state/turn-metrics";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
+import { drawCardsUnderMatchRules } from "../../state/match-rules";
 
 type ResolvedDrawEffectInput = {
   drawAmount?: number;
@@ -95,7 +96,7 @@ export function resolveDrawEffect(
   );
   let totalDrawn = 0;
   for (const playerId of targetPlayerIds) {
-    const drawnCards = ctx.framework.zones.drawCards({
+    const drawnCards = drawCardsUnderMatchRules(ctx, {
       from: { zone: "deck", playerId },
       to: { zone: "hand", playerId },
       count: drawAmount,
